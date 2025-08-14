@@ -1,0 +1,93 @@
+[project]
+name = "rhizome"
+description = "a project template"
+readme = "README.md"
+authors = [
+    { name = "Matrix", email = "MatrixManAtYrService@users.noreply.github.com" },
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.116.1",
+    "httpx>=0.28.1",
+    "structlog>=25.4.0",
+    "typer>=0.16.0",
+    "uvicorn>=0.35.0",
+    "xdg-base-dirs>=6.0.2",
+]
+# [[[cog
+# import os
+# version = os.environ["VERSION"]
+# cog.out(f'version = "{version}"')
+# ]]]
+version = "0.1.0-dev202512170800"
+# [[[end]]]
+
+[project.scripts]
+rhizome = "rhizome.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+packages = ["src/rhizome"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort (import sorting)
+    "UP",  # pyupgrade
+    "B" ,  # flake8-bugbear
+    "SIM", # flake8-simplify
+    "A",   # flake8-builtins
+    "ANN", # flake8-annotations
+    "C"  , # flake8-comprehensions
+]
+
+fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["rhizome"]
+force-single-line = false
+combine-as-imports = true
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pdoc>=14.0.0",
+]
+
+[tool.pyright]
+include = ["src/rhizome"]
+
+exclude = [
+    "**/__pycache__",
+    "**/.*",
+    "**/.git",
+    "**/venv",
+    "**/result",
+    "**/target",
+    "**/dist",
+    "**/build",
+]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "error"
+reportUnknownMemberType = "error"
+reportUnknownArgumentType = "error"
+reportUnknownVariableType = "error"
+reportUnknownParameterType = "error"
+reportMissingParameterType = "error"
+reportMissingReturnType = "error"
+reportUntypedFunctionDecorator = "error"
+reportUntypedClassDecorator = "error"
+reportUntypedBaseClass = "error"
+reportUntypedNamedTuple = "error"
+reportAny = "error"
