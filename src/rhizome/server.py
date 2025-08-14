@@ -5,10 +5,27 @@ import structlog
 import uvicorn
 from fastapi import FastAPI
 
+from pydantic import BaseModel
+
 from rhizome.config import Home
 from rhizome.logging import setup_logging
+from rhizome.portforward import start_portforward, start_portforward_legacy
 from rhizome.proc import ProcessListResponse, NewProcessResponse, process_manager
 from rhizome.sleeper import start_sleeper
+
+
+class PortforwardRequest(BaseModel):
+    """Request model for port forward requests."""
+    kube_context: str
+    kube_namespace: str
+    kube_deployment: str
+    sql_connection: str
+    local_port: int = 3306
+
+
+class SleeperRequest(BaseModel):
+    """Request model for sleeper requests."""
+    iterations: int = 5
 
 logger = structlog.get_logger()
 
@@ -38,9 +55,21 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/sleeper")
-async def sleeper() -> NewProcessResponse:
+async def sleeper(request: SleeperRequest) -> NewProcessResponse:
     """Start a sleeper subprocess for testing rhizome process management."""
-    return await start_sleeper()
+    return await start_sleeper(iterations=request.iterations)
+
+
+@app.post("/portforward")
+async def portforward(request: PortforwardRequest) -> NewProcessResponse:
+    """Start a kubectl port-forward subprocess for database access."""
+    return await start_portforward(
+        kube_context=request.kube_context,
+        kube_namespace=request.kube_namespace,
+        kube_deployment=request.kube_deployment,
+        sql_connection=request.sql_connection,
+        local_port=request.local_port
+    )
 
 
 @app.get("/ps")

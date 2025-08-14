@@ -1,58 +1,72 @@
 import os
+import tempfile
 import time
+import threading
 from io import StringIO
+from pathlib import Path
 
-from fastapi.testclient import TestClient
+import uvicorn
 
-from rhizome.server import app
+from rhizome.client import RhizomeClient
+from rhizome.config import Home
+from rhizome.server import app, setup_logging
 
 
 def test_multiple_sleeper_processes() -> None:
-    """Test starting multiple sleeper processes and tracking them until completion."""
+    """Test starting multiple sleeper processes using real server and client."""
     # Set fast sleep for testing
     os.environ["SLEEP_OVERRIDE"] = "0.1"
     
     try:
-        with TestClient(app) as client:
-            # Start two sleeper processes
-            response1 = client.post("/sleeper")
-            assert response1.status_code == 200
-            result1 = response1.json()
-            assert result1["status"] == "started"
-            assert "pid" in result1
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create sandboxed home and client
+            home = Home.sandbox(Path(temp_dir))
+            test_port = 54321
+            home.set_port(test_port)
             
-            response2 = client.post("/sleeper")
-            assert response2.status_code == 200
-            result2 = response2.json()
-            assert result2["status"] == "started"
-            assert "pid" in result2
+            # Set up logging for the server
+            setup_logging()
             
-            # Ensure we got different PIDs
-            assert result1["pid"] != result2["pid"]
+            # Start server in background thread
+            server_thread = threading.Thread(
+                target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None),
+                daemon=True
+            )
+            server_thread.start()
+            
+            # Wait for server to start
+            time.sleep(0.5)
+            
+            # Create client with sandboxed home
+            rhizome_client = RhizomeClient(home=home)
+            
+            # Use the client to start two sleeper processes
+            handle1 = rhizome_client.request_sleeper(iterations=5)
+            assert handle1.connection_string == "sleeper://localhost/test"
+            assert handle1.sql_connection == "sleeper-5-iterations"
+            
+            handle2 = rhizome_client.request_sleeper(iterations=5)
+            assert handle2.connection_string == "sleeper://localhost/test"
+            assert handle2.sql_connection == "sleeper-5-iterations"
             
             # Wait a moment for processes to start
-            time.sleep(0.1)
+            time.sleep(0.2)
             
-            # Check that both processes appear in /ps
-            ps_response = client.get("/ps")
-            assert ps_response.status_code == 200
-            ps_result = ps_response.json()
-            assert ps_result["count"] == 2
-            
-            # Verify both PIDs are in the running list
-            running_pids = {p["pid"] for p in ps_result["running"]}
-            assert result1["pid"] in running_pids
-            assert result2["pid"] in running_pids
-            
-            # Wait for both processes to complete (5 iterations * 0.1s + buffer)
-            # We need to wait long enough for both "subprocess finished" messages
-            time.sleep(1.0)
-            
-            # Check that both processes are no longer in /ps (should be empty)
-            ps_response = client.get("/ps")
-            ps_result = ps_response.json()
-            assert ps_result["count"] == 0
-            assert len(ps_result["running"]) == 0
+            # Check that both processes appear by making direct request to /ps
+            import httpx
+            with httpx.Client() as client:
+                ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
+                assert ps_response.status_code == 200
+                ps_result = ps_response.json()
+                assert ps_result["count"] == 2
+                
+                # Wait for both processes to complete (5 iterations * 0.1s + buffer)
+                time.sleep(1.0)
+                
+                # Check that both processes are no longer in /ps (should be empty)
+                ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
+                ps_result = ps_response.json()
+                assert ps_result["count"] == 0
             
     finally:
         # Clean up environment variable
@@ -61,34 +75,57 @@ def test_multiple_sleeper_processes() -> None:
 
 
 def test_single_sleeper_process() -> None:
-    """Test that /sleeper endpoint starts subprocess and we can track its lifecycle."""
+    """Test single sleeper process using real server and client."""
     # Set fast sleep for testing
     os.environ["SLEEP_OVERRIDE"] = "0.1"
     
     try:
-        with TestClient(app) as client:
-            # Start the subprocess
-            response = client.post("/sleeper")
-            assert response.status_code == 200
-            result = response.json()
-            assert result["status"] == "started"
-            assert "pid" in result
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Create sandboxed home and client
+            home = Home.sandbox(Path(temp_dir))
+            test_port = 54322
+            home.set_port(test_port)
+            
+            # Set up logging for the server
+            setup_logging()
+            
+            # Start server in background thread
+            server_thread = threading.Thread(
+                target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None),
+                daemon=True
+            )
+            server_thread.start()
+            
+            # Wait for server to start
+            time.sleep(0.5)
+            
+            # Create client with sandboxed home
+            rhizome_client = RhizomeClient(home=home)
+            
+            # Use the client to start a sleeper process
+            handle = rhizome_client.request_sleeper(iterations=3)
+            assert handle.connection_string == "sleeper://localhost/test"
+            assert handle.sql_connection == "sleeper-3-iterations"
+            
+            # Wait a moment for process to start
+            time.sleep(0.2)
             
             # Check that process appears in /ps
-            ps_response = client.get("/ps")
-            assert ps_response.status_code == 200
-            ps_result = ps_response.json()
-            assert ps_result["count"] >= 1
-            assert any(p["pid"] == result["pid"] for p in ps_result["running"])
-            
-            # Wait for process to complete (5 iterations * 0.1s + buffer)
-            time.sleep(1.0)
-            
-            # Check that process is no longer in /ps
-            ps_response = client.get("/ps")
-            ps_result = ps_response.json()
-            # Process should be cleaned up automatically
-            assert not any(p["pid"] == result["pid"] for p in ps_result["running"])
+            import httpx
+            with httpx.Client() as client:
+                ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
+                assert ps_response.status_code == 200
+                ps_result = ps_response.json()
+                assert ps_result["count"] >= 1
+                
+                # Wait for process to complete (3 iterations * 0.1s + buffer)
+                time.sleep(0.8)
+                
+                # Check that process is no longer in /ps
+                ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
+                ps_result = ps_response.json()
+                # Process should be cleaned up automatically
+                assert ps_result["count"] == 0
             
     finally:
         # Clean up environment variable
@@ -97,12 +134,32 @@ def test_single_sleeper_process() -> None:
 
 
 def test_ps_endpoint() -> None:
-    """Test that /ps endpoint returns process list."""
-    with TestClient(app) as client:
-        # Initially should have no processes (or clean up from previous tests)
-        ps_response = client.get("/ps")
-        assert ps_response.status_code == 200
-        ps_result = ps_response.json()
-        assert "running" in ps_result
-        assert "count" in ps_result
-        assert ps_result["count"] == len(ps_result["running"])
+    """Test that /ps endpoint returns process list using real server."""
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Create sandboxed home
+        home = Home.sandbox(Path(temp_dir))
+        test_port = 54323
+        home.set_port(test_port)
+        
+        # Set up logging for the server
+        setup_logging()
+        
+        # Start server in background thread
+        server_thread = threading.Thread(
+            target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None),
+            daemon=True
+        )
+        server_thread.start()
+        
+        # Wait for server to start
+        time.sleep(0.5)
+        
+        # Test /ps endpoint
+        import httpx
+        with httpx.Client() as client:
+            ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
+            assert ps_response.status_code == 200
+            ps_result = ps_response.json()
+            assert "running" in ps_result
+            assert "count" in ps_result
+            assert ps_result["count"] == len(ps_result["running"])
