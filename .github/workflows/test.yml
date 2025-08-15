@@ -16,7 +16,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,6 +36,7 @@ jobs:
           purge-last-accessed: 0
           purge-primary-key: never
 
+      # This script invokes nix such that the CI environment and the dev environment are identical
       - name: Run steps.sh
         run: ./steps.sh
         env:
