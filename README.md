@@ -1,9 +1,10 @@
-[![Test](https://github.com/matt.rixman/rhizome/workflows/Test/badge.svg)](https://github.corp.clover.com/matt-rixman/rhizome/actions/workflows/test.yml) \[[docs](https://matrixmanatyrservice.github.io/rhizome/rhizome.html)\]
+[![Test](https://github.corp.clover.com/matt.rixman/rhizome/workflows/Test/badge.svg)](https://github.corp.clover.com/matt-rixman/rhizome/actions/workflows/test.yml) \[[docs](https://github.corp.clover.com/pages/matt-rixman/rhizome/)\]
 
 ** Under construction, come back later **
 
-Rhizome is a db access helper for Clover apps.
-With it, you can write apps that do this:
+Rhizome is a db access helper for use by test tools that want to make assertions about data.
+
+When it's ready, you'll be able to write apps that do this:
 
 ```python3
 from sqlmodel import Field, Session, SQLModel, create_engine, select
