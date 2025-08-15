@@ -33,32 +33,38 @@
           inherit system;
           overlays = [
             # Override ALL Python packages to redirect PyPI URLs to Artifactory
-            (final: prev: {
-              python312Packages = prev.python312Packages.overrideScope (pyFinal: pyPrev:
-                pkgs.lib.mapAttrs (name: pkg: 
-                  if pkg ? overrideAttrs && pkg ? src then
-                    pkg.overrideAttrs (old: 
-                      if old ? src && old.src ? overrideAttrs then {
-                        src = old.src.overrideAttrs (srcAttrs: 
-                          if srcAttrs ? url then {
-                            url = builtins.replaceStrings 
-                              ["https://files.pythonhosted.org/packages"] 
-                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                              srcAttrs.url;
-                          } else if srcAttrs ? urls then {
-                            urls = map (url: builtins.replaceStrings 
-                              ["https://files.pythonhosted.org/packages"] 
-                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                              url
-                            ) srcAttrs.urls;
-                          } else srcAttrs
-                        );
-                      } else old
-                    )
-                  else pkg
-                ) pyPrev
-              );
-            })
+            (final: prev: 
+              let
+                overridePythonPackages = pythonPkgs: pythonPkgs.overrideScope (pyFinal: pyPrev:
+                  pkgs.lib.mapAttrs (name: pkg: 
+                    if pkg ? overrideAttrs && pkg ? src then
+                      pkg.overrideAttrs (old: 
+                        if old ? src && old.src ? overrideAttrs then {
+                          src = old.src.overrideAttrs (srcAttrs: 
+                            if srcAttrs ? url then {
+                              url = builtins.replaceStrings 
+                                ["https://files.pythonhosted.org/packages"] 
+                                ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
+                                srcAttrs.url;
+                            } else if srcAttrs ? urls then {
+                              urls = map (url: builtins.replaceStrings 
+                                ["https://files.pythonhosted.org/packages"] 
+                                ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
+                                url
+                              ) srcAttrs.urls;
+                            } else srcAttrs
+                          );
+                        } else old
+                      )
+                    else pkg
+                  ) pyPrev
+                );
+              in {
+                python312Packages = overridePythonPackages prev.python312Packages;
+                python313Packages = overridePythonPackages prev.python313Packages;
+                python311Packages = overridePythonPackages prev.python311Packages;
+              }
+            )
           ];
         };
 
