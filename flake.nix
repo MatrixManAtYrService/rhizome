@@ -36,13 +36,14 @@
           inherit system;
           overlays = [
             # Override ALL Python packages to redirect PyPI URLs to Artifactory
-            (final: prev: 
+            (final: prev:
               let
-                overlayFuncs = artifactoryLib.mkNixpkgsOverlay { 
-                  cacert = final.cacert; 
-                  lib = nixpkgs.lib; 
+                overlayFuncs = artifactoryLib.mkNixpkgsOverlay {
+                  cacert = final.cacert;
+                  lib = nixpkgs.lib;
                 };
-              in {
+              in
+              {
                 python312Packages = overlayFuncs.python312Packages prev.python312Packages;
                 python313Packages = overlayFuncs.python313Packages prev.python313Packages;
                 python311Packages = overlayFuncs.python311Packages prev.python311Packages;
@@ -77,14 +78,14 @@
         };
 
         editableHatchling = (final: prev: {
-              ${constants.name} = prev.${constants.name}.overrideAttrs (old: {
-                nativeBuildInputs =
-                  old.nativeBuildInputs
-                  ++ final.resolveBuildSystem {
-                    editables = [ ];
-                  };
-              });
-            });
+          ${constants.name} = prev.${constants.name}.overrideAttrs (old: {
+            nativeBuildInputs =
+              old.nativeBuildInputs
+              ++ final.resolveBuildSystem {
+                editables = [ ];
+              };
+          });
+        });
 
 
 
