@@ -68,20 +68,32 @@
               });
             });
 
-        zscalerOverlay = (final: prev: {
-              iniconfig = prev.iniconfig.overrideAttrs (old: {
-                src = old.src.overrideAttrs(_: {
-                  SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-certificates.crt";
-                });
-              });
-            });
+        artifactoryOverlay = (final: prev: {
+          # Override specific build dependencies that aren't in uv.lock
+          flit-core = if prev ? flit-core then prev.flit-core.overrideAttrs (old: {
+            src = old.src.overrideAttrs (srcAttrs: 
+              if srcAttrs ? url then {
+                url = builtins.replaceStrings 
+                  ["https://files.pythonhosted.org"] 
+                  ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                  srcAttrs.url;
+              } else if srcAttrs ? urls then {
+                urls = map (url: builtins.replaceStrings 
+                  ["https://files.pythonhosted.org"] 
+                  ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                  url
+                ) srcAttrs.urls;
+              } else srcAttrs
+            );
+          }) else prev.flit-core or {};
+        });
 
 
         editablePythonSet = pythonSet.overrideScope (
           nixpkgs.lib.composeManyExtensions [
             editableOverlay
             editableHatchling
-            zscalerOverlay
+            artifactoryOverlay
           ]
         );
 

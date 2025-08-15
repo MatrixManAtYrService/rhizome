@@ -72,7 +72,7 @@ url = "https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/simp
 explicit = true
 
 [tool.uv.sources]
-iniconfig = { index = "my-index"}
+iniconfig = { index = "artifactory"}
 
 [tool.pyright]
 include = ["src/rhizome"]
