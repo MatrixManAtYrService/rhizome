@@ -69,7 +69,7 @@
             });
 
         zscalerOverlay = (final: prev: {
-              ${constants.name} = prev.${constants.name}.overrideAttrs (old: {
+              iniconfig = prev.iniconfig.overrideAttrs (old: {
                 src = old.src.overrideAttrs(_: {
                   SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-certificates.crt";
                 });
