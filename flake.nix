@@ -29,50 +29,23 @@
   outputs = { self, nixpkgs, flake-utils, uv2nix, pyproject-nix, pyproject-build-systems }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        # Import Artifactory overlay functions
+        artifactoryLib = import ./nix/artifactory.nix { lib = nixpkgs.lib; };
+
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
             # Override ALL Python packages to redirect PyPI URLs to Artifactory
             (final: prev: 
               let
-                # URL transformation function
-                redirectToArtifactory = url: builtins.replaceStrings 
-                  ["https://files.pythonhosted.org/packages"] 
-                  ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                  url;
-
-                # Common SSL attributes for corporate network
-                sslAttrs = {
-                  SSL_CERT_FILE = "${final.cacert}/etc/ssl/certs/ca-bundle.crt";
-                  curlOpts = "--cacert ${final.cacert}/etc/ssl/certs/ca-bundle.crt";
+                overlayFuncs = artifactoryLib.mkNixpkgsOverlay { 
+                  cacert = final.cacert; 
+                  lib = nixpkgs.lib; 
                 };
-
-                # Override source URLs and add SSL config
-                overrideSourceAttrs = srcAttrs: 
-                  if srcAttrs ? url then
-                    { url = redirectToArtifactory srcAttrs.url; } // sslAttrs
-                  else if srcAttrs ? urls then
-                    { urls = map redirectToArtifactory srcAttrs.urls; } // sslAttrs
-                  else srcAttrs;
-
-                # Override a single Python package
-                overridePackage = pkg:
-                  if pkg ? overrideAttrs && pkg ? src then
-                    pkg.overrideAttrs (old: 
-                      if old ? src && old.src ? overrideAttrs then {
-                        src = old.src.overrideAttrs overrideSourceAttrs;
-                      } else old
-                    )
-                  else pkg;
-
-                # Override all packages in a Python package set
-                overridePythonPackages = pythonPkgs: pythonPkgs.overrideScope (pyFinal: pyPrev:
-                  nixpkgs.lib.mapAttrs (name: pkg: overridePackage pkg) pyPrev
-                );
               in {
-                python312Packages = overridePythonPackages prev.python312Packages;
-                python313Packages = overridePythonPackages prev.python313Packages;
-                python311Packages = overridePythonPackages prev.python311Packages;
+                python312Packages = overlayFuncs.python312Packages prev.python312Packages;
+                python313Packages = overlayFuncs.python313Packages prev.python313Packages;
+                python311Packages = overlayFuncs.python311Packages prev.python311Packages;
               }
             )
           ];
@@ -98,35 +71,10 @@
             overlay
             # Apply Artifactory URL redirection to build system packages too
             (final: prev: 
-              let
-                # Reuse the same transformation functions
-                redirectToArtifactory = url: builtins.replaceStrings 
-                  ["https://files.pythonhosted.org/packages"] 
-                  ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                  url;
-                
-                sslAttrs = {
-                  SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-                  curlOpts = "--cacert ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-                };
-
-                overrideSourceAttrs = srcAttrs: 
-                  if srcAttrs ? url then
-                    { url = redirectToArtifactory srcAttrs.url; } // sslAttrs
-                  else if srcAttrs ? urls then
-                    { urls = map redirectToArtifactory srcAttrs.urls; } // sslAttrs
-                  else srcAttrs;
-
-                overridePackage = pkg:
-                  if pkg ? overrideAttrs && pkg ? src then
-                    pkg.overrideAttrs (old: 
-                      if old ? src && old.src ? overrideAttrs then {
-                        src = old.src.overrideAttrs overrideSourceAttrs;
-                      } else old
-                    )
-                  else pkg;
-              in
-              pkgs.lib.mapAttrs (name: pkg: overridePackage pkg) prev
+              artifactoryLib.mkPyprojectOverlay { 
+                cacert = pkgs.cacert; 
+                lib = pkgs.lib; 
+              } prev
             )
           ]
         );
