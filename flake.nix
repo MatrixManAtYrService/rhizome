@@ -36,7 +36,7 @@
             (final: prev: 
               let
                 overridePythonPackages = pythonPkgs: pythonPkgs.overrideScope (pyFinal: pyPrev:
-                  pkgs.lib.mapAttrs (name: pkg: 
+                  nixpkgs.lib.mapAttrs (name: pkg: 
                     if pkg ? overrideAttrs && pkg ? src then
                       pkg.overrideAttrs (old: 
                         if old ? src && old.src ? overrideAttrs then {
