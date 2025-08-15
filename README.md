@@ -1,4 +1,6 @@
-[![Test](https://github.com/MatrixManAtYrService/hello-template/workflows/Test/badge.svg)](https://github.com/MatrixManAtYrService/hello-template/actions/workflows/test.yml) \[[docs](https://matrixmanatyrservice.github.io/hello-template/hello.html)\]
+[![Test](https://github.com/matt.rixman/rhizome/workflows/Test/badge.svg)](https://github.corp.clover.com/matt-rixman/rhizome/actions/workflows/test.yml) \[[docs](https://matrixmanatyrservice.github.io/rhizome/rhizome.html)\]
+
+** Under construction, come back later **
 
 Rhizome is a db access helper for Clover apps.
 With it, you can write apps that do this:
