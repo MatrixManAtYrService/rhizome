@@ -46,12 +46,18 @@
                                 ["https://files.pythonhosted.org/packages"] 
                                 ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                                 srcAttrs.url;
+                              # Add certificate bundle for corporate network
+                              SSL_CERT_FILE = "${final.cacert}/etc/ssl/certs/ca-bundle.crt";
+                              curlOpts = "--cacert ${final.cacert}/etc/ssl/certs/ca-bundle.crt";
                             } else if srcAttrs ? urls then {
                               urls = map (url: builtins.replaceStrings 
                                 ["https://files.pythonhosted.org/packages"] 
                                 ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                                 url
                               ) srcAttrs.urls;
+                              # Add certificate bundle for corporate network
+                              SSL_CERT_FILE = "${final.cacert}/etc/ssl/certs/ca-bundle.crt";
+                              curlOpts = "--cacert ${final.cacert}/etc/ssl/certs/ca-bundle.crt";
                             } else srcAttrs
                           );
                         } else old
@@ -98,12 +104,18 @@
                             ["https://files.pythonhosted.org/packages"] 
                             ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                             srcAttrs.url;
+                          # Add certificate bundle for corporate network
+                          SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+                          curlOpts = "--cacert ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
                         } else if srcAttrs ? urls then {
                           urls = map (url: builtins.replaceStrings 
                             ["https://files.pythonhosted.org/packages"] 
                             ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                             url
                           ) srcAttrs.urls;
+                          # Add certificate bundle for corporate network
+                          SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+                          curlOpts = "--cacert ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
                         } else srcAttrs
                       );
                     } else old
