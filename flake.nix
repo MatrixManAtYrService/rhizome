@@ -31,6 +31,35 @@
       let
         pkgs = import nixpkgs {
           inherit system;
+          overlays = [
+            # Override ALL Python packages to redirect PyPI URLs to Artifactory
+            (final: prev: {
+              python312Packages = prev.python312Packages.overrideScope (pyFinal: pyPrev:
+                pkgs.lib.mapAttrs (name: pkg: 
+                  if pkg ? overrideAttrs && pkg ? src then
+                    pkg.overrideAttrs (old: 
+                      if old ? src && old.src ? overrideAttrs then {
+                        src = old.src.overrideAttrs (srcAttrs: 
+                          if srcAttrs ? url then {
+                            url = builtins.replaceStrings 
+                              ["https://files.pythonhosted.org"] 
+                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                              srcAttrs.url;
+                          } else if srcAttrs ? urls then {
+                            urls = map (url: builtins.replaceStrings 
+                              ["https://files.pythonhosted.org"] 
+                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                              url
+                            ) srcAttrs.urls;
+                          } else srcAttrs
+                        );
+                      } else old
+                    )
+                  else pkg
+                ) pyPrev
+              );
+            })
+          ];
         };
 
         # Import project constants
@@ -68,50 +97,12 @@
               });
             });
 
-        artifactoryOverlay = 
-          let
-            # Helper function to override package URLs
-            overridePackageUrl = pkg: 
-              if pkg ? overrideAttrs then
-                pkg.overrideAttrs (old: {
-                  src = old.src.overrideAttrs (srcAttrs: 
-                    if srcAttrs ? url then {
-                      url = builtins.replaceStrings 
-                        ["https://files.pythonhosted.org"] 
-                        ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
-                        srcAttrs.url;
-                    } else if srcAttrs ? urls then {
-                      urls = map (url: builtins.replaceStrings 
-                        ["https://files.pythonhosted.org"] 
-                        ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
-                        url
-                      ) srcAttrs.urls;
-                    } else srcAttrs
-                  );
-                })
-              else pkg;
-          in
-          (final: prev: 
-            # Override common build system packages that might not be in uv.lock
-            builtins.listToAttrs (map (name: {
-              inherit name;
-              value = if prev ? ${name} then overridePackageUrl prev.${name} else {};
-            }) [
-              "flit-core" 
-              "setuptools" 
-              "wheel" 
-              "hatchling"
-              "build"
-              "pip"
-            ])
-          );
 
 
         editablePythonSet = pythonSet.overrideScope (
           nixpkgs.lib.composeManyExtensions [
             editableOverlay
             editableHatchling
-            artifactoryOverlay
           ]
         );
 
