@@ -30,7 +30,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         # Import Artifactory overlay functions
-        artifactoryLib = import ./nix/artifactory.nix { lib = nixpkgs.lib; };
+        artifactoryLib = import ./nix/artifactory.nix { inherit (nixpkgs) lib; };
 
         pkgs = import nixpkgs {
           inherit system;
@@ -39,8 +39,8 @@
             (final: prev:
               let
                 overlayFuncs = artifactoryLib.mkNixpkgsOverlay {
-                  cacert = final.cacert;
-                  lib = nixpkgs.lib;
+                  inherit (final) cacert;
+                  inherit (nixpkgs) lib;
                 };
               in
               {
@@ -77,7 +77,7 @@
           root = "$REPO_ROOT";
         };
 
-        editableHatchling = (final: prev: {
+        editableHatchling = final: prev: {
           ${constants.name} = prev.${constants.name}.overrideAttrs (old: {
             nativeBuildInputs =
               old.nativeBuildInputs
@@ -85,7 +85,7 @@
                 editables = [ ];
               };
           });
-        });
+        };
 
 
 
@@ -98,7 +98,7 @@
 
         pythonEnv = pythonSet.mkVirtualEnv constants.name workspace.deps.default;
       in
-      rec {
+      {
         packages = {
           default = pythonEnv;
           nix-analysis = pkgs.callPackage ./nix/nix-analysis.nix { };

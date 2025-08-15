@@ -1,4 +1,4 @@
-[![Test](https://github.corp.clover.com/matt.rixman/rhizome/workflows/Test/badge.svg)](https://github.corp.clover.com/matt-rixman/rhizome/actions/workflows/test.yml) \[[docs](https://github.corp.clover.com/pages/matt-rixman/rhizome/)\]
+[![Test](https://github.corp.clover.com/matt-rixman/rhizome/workflows/Test/badge.svg)](https://github.corp.clover.com/matt-rixman/rhizome/actions/workflows/test.yml) \[[docs](https://github.corp.clover.com/pages/matt-rixman/rhizome/)\]
 
 ** Under construction, come back later **
 
