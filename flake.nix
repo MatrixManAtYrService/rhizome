@@ -58,10 +58,7 @@
           root = "$REPO_ROOT";
         };
 
-        editablePythonSet = pythonSet.overrideScope (
-          nixpkgs.lib.composeManyExtensions [
-            editableOverlay
-            (final: prev: {
+        editableHatchling = (final: prev: {
               ${constants.name} = prev.${constants.name}.overrideAttrs (old: {
                 nativeBuildInputs =
                   old.nativeBuildInputs
@@ -69,7 +66,22 @@
                     editables = [ ];
                   };
               });
-            })
+            });
+
+        zscalerOverlay = (final: prev: {
+              ${constants.name} = prev.${constants.name}.overrideAttrs (old: {
+                src = old.src.overrideAttrs(_: {
+                  SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-certificates.crt";
+                });
+              });
+            });
+
+
+        editablePythonSet = pythonSet.overrideScope (
+          nixpkgs.lib.composeManyExtensions [
+            editableOverlay
+            editableHatchling
+            zscalerOverlay
           ]
         );
 

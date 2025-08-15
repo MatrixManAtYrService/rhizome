@@ -66,9 +66,13 @@ dev = [
     "pdoc>=14.0.0",
 ]
 
-[tool.uv]
-index-url = "https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/simple"
-extra-index-url = ["https://pypi.org/simple/"]
+[[tool.uv.index]]
+name = "artifactory"
+url = "https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/simple"
+explicit = true
+
+[tool.uv.sources]
+iniconfig = { index = "my-index"}
 
 [tool.pyright]
 include = ["src/rhizome"]
