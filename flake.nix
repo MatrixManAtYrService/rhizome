@@ -69,13 +69,6 @@
           nixpkgs.lib.composeManyExtensions [
             pyproject-build-systems.overlays.default
             overlay
-            # Apply Artifactory URL redirection to build system packages too
-            (final: prev: 
-              artifactoryLib.mkPyprojectOverlay { 
-                cacert = pkgs.cacert; 
-                lib = pkgs.lib; 
-              } prev
-            )
           ]
         );
 
