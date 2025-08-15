@@ -42,13 +42,13 @@
                         src = old.src.overrideAttrs (srcAttrs: 
                           if srcAttrs ? url then {
                             url = builtins.replaceStrings 
-                              ["https://files.pythonhosted.org"] 
-                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                              ["https://files.pythonhosted.org/packages"] 
+                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                               srcAttrs.url;
                           } else if srcAttrs ? urls then {
                             urls = map (url: builtins.replaceStrings 
-                              ["https://files.pythonhosted.org"] 
-                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                              ["https://files.pythonhosted.org/packages"] 
+                              ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                               url
                             ) srcAttrs.urls;
                           } else srcAttrs
@@ -89,13 +89,13 @@
                       src = old.src.overrideAttrs (srcAttrs: 
                         if srcAttrs ? url then {
                           url = builtins.replaceStrings 
-                            ["https://files.pythonhosted.org"] 
-                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                            ["https://files.pythonhosted.org/packages"] 
+                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                             srcAttrs.url;
                         } else if srcAttrs ? urls then {
                           urls = map (url: builtins.replaceStrings 
-                            ["https://files.pythonhosted.org"] 
-                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                            ["https://files.pythonhosted.org/packages"] 
+                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
                             url
                           ) srcAttrs.urls;
                         } else srcAttrs
