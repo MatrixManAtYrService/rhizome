@@ -35,35 +35,39 @@
             # Override ALL Python packages to redirect PyPI URLs to Artifactory
             (final: prev: 
               let
+                # URL transformation function
+                redirectToArtifactory = url: builtins.replaceStrings 
+                  ["https://files.pythonhosted.org/packages"] 
+                  ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
+                  url;
+
+                # Common SSL attributes for corporate network
+                sslAttrs = {
+                  SSL_CERT_FILE = "${final.cacert}/etc/ssl/certs/ca-bundle.crt";
+                  curlOpts = "--cacert ${final.cacert}/etc/ssl/certs/ca-bundle.crt";
+                };
+
+                # Override source URLs and add SSL config
+                overrideSourceAttrs = srcAttrs: 
+                  if srcAttrs ? url then
+                    { url = redirectToArtifactory srcAttrs.url; } // sslAttrs
+                  else if srcAttrs ? urls then
+                    { urls = map redirectToArtifactory srcAttrs.urls; } // sslAttrs
+                  else srcAttrs;
+
+                # Override a single Python package
+                overridePackage = pkg:
+                  if pkg ? overrideAttrs && pkg ? src then
+                    pkg.overrideAttrs (old: 
+                      if old ? src && old.src ? overrideAttrs then {
+                        src = old.src.overrideAttrs overrideSourceAttrs;
+                      } else old
+                    )
+                  else pkg;
+
+                # Override all packages in a Python package set
                 overridePythonPackages = pythonPkgs: pythonPkgs.overrideScope (pyFinal: pyPrev:
-                  nixpkgs.lib.mapAttrs (name: pkg: 
-                    if pkg ? overrideAttrs && pkg ? src then
-                      pkg.overrideAttrs (old: 
-                        if old ? src && old.src ? overrideAttrs then {
-                          src = old.src.overrideAttrs (srcAttrs: 
-                            if srcAttrs ? url then {
-                              url = builtins.replaceStrings 
-                                ["https://files.pythonhosted.org/packages"] 
-                                ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                                srcAttrs.url;
-                              # Add certificate bundle for corporate network
-                              SSL_CERT_FILE = "${final.cacert}/etc/ssl/certs/ca-bundle.crt";
-                              curlOpts = "--cacert ${final.cacert}/etc/ssl/certs/ca-bundle.crt";
-                            } else if srcAttrs ? urls then {
-                              urls = map (url: builtins.replaceStrings 
-                                ["https://files.pythonhosted.org/packages"] 
-                                ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                                url
-                              ) srcAttrs.urls;
-                              # Add certificate bundle for corporate network
-                              SSL_CERT_FILE = "${final.cacert}/etc/ssl/certs/ca-bundle.crt";
-                              curlOpts = "--cacert ${final.cacert}/etc/ssl/certs/ca-bundle.crt";
-                            } else srcAttrs
-                          );
-                        } else old
-                      )
-                    else pkg
-                  ) pyPrev
+                  nixpkgs.lib.mapAttrs (name: pkg: overridePackage pkg) pyPrev
                 );
               in {
                 python312Packages = overridePythonPackages prev.python312Packages;
@@ -94,34 +98,35 @@
             overlay
             # Apply Artifactory URL redirection to build system packages too
             (final: prev: 
-              pkgs.lib.mapAttrs (name: pkg: 
-                if pkg ? overrideAttrs && pkg ? src then
-                  pkg.overrideAttrs (old: 
-                    if old ? src && old.src ? overrideAttrs then {
-                      src = old.src.overrideAttrs (srcAttrs: 
-                        if srcAttrs ? url then {
-                          url = builtins.replaceStrings 
-                            ["https://files.pythonhosted.org/packages"] 
-                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                            srcAttrs.url;
-                          # Add certificate bundle for corporate network
-                          SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-                          curlOpts = "--cacert ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-                        } else if srcAttrs ? urls then {
-                          urls = map (url: builtins.replaceStrings 
-                            ["https://files.pythonhosted.org/packages"] 
-                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
-                            url
-                          ) srcAttrs.urls;
-                          # Add certificate bundle for corporate network
-                          SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-                          curlOpts = "--cacert ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-                        } else srcAttrs
-                      );
-                    } else old
-                  )
-                else pkg
-              ) prev
+              let
+                # Reuse the same transformation functions
+                redirectToArtifactory = url: builtins.replaceStrings 
+                  ["https://files.pythonhosted.org/packages"] 
+                  ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python/packages/packages"] 
+                  url;
+                
+                sslAttrs = {
+                  SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+                  curlOpts = "--cacert ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+                };
+
+                overrideSourceAttrs = srcAttrs: 
+                  if srcAttrs ? url then
+                    { url = redirectToArtifactory srcAttrs.url; } // sslAttrs
+                  else if srcAttrs ? urls then
+                    { urls = map redirectToArtifactory srcAttrs.urls; } // sslAttrs
+                  else srcAttrs;
+
+                overridePackage = pkg:
+                  if pkg ? overrideAttrs && pkg ? src then
+                    pkg.overrideAttrs (old: 
+                      if old ? src && old.src ? overrideAttrs then {
+                        src = old.src.overrideAttrs overrideSourceAttrs;
+                      } else old
+                    )
+                  else pkg;
+              in
+              pkgs.lib.mapAttrs (name: pkg: overridePackage pkg) prev
             )
           ]
         );
