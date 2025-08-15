@@ -40,10 +40,10 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     yield
     # Shutdown
     logger.info("Shutting down server, cleaning up processes")
-    
+
     # Clean up all processes and tasks
     await process_manager.cleanup()
-    
+
     # Clean up port file
     if _home is not None:
         port_file = _home.state / "port"
@@ -88,13 +88,13 @@ def run(home: Home | None = None) -> None:
     port = _home.get_port()
     if port is None:
         raise ValueError("No port found in home configuration")
-    
+
     # Set up unified logging before starting uvicorn
     setup_logging()
-    
+
     uvicorn.run(
-        app, 
-        host="127.0.0.1", 
+        app,
+        host="127.0.0.1",
         port=port,
         log_config=None,  # Disable uvicorn's default logging config
         access_log=True   # Keep access logs but they'll go through our handler

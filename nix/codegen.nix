@@ -26,14 +26,11 @@ let
     "nix/version.nix"
     "pyproject.toml"
     "src/${constants.name}/__init__.py"
-    "src/${constants.name}/cli.py"
   ];
 
   # Files that contain project constants/template information
   constantsFiles = [
     "pyproject.toml"
-    "src/${constants.name}/cli.py"
-    "tests/test_cli.py"
   ];
 
   # Generate version check

@@ -42,11 +42,11 @@ async def start_portforward(kube_context, kube_namespace, kube_deployment, sql_c
     # Two modes:
     # 1. Simulation (RHIZOME_SIMULATE=true) - Shows parameters, simulates kubectl
     # 2. Real (RHIZOME_SIMULATE=false) - Executes actual kubectl commands
-    
+
     # Real implementation steps (commented):
     # 1. Check if port already forwarded (lsof)
     # 2. Start connection script in pod (kubectl exec)
-    # 3. Parse logs for remote port (kubectl logs) 
+    # 3. Parse logs for remote port (kubectl logs)
     # 4. Start port-forward (kubectl port-forward)
 ```
 
@@ -91,7 +91,7 @@ def get_handle() -> Handle:
     return client.request_portforward(
         kube_context="gke_clover-prod-kubernetes_us-central1_na-prod-us-central1-cluster",
         kube_namespace="gke-cloudsql-access",
-        kube_deployment="gke-cloudsql-access", 
+        kube_deployment="gke-cloudsql-access",
         sql_connection="clover-prod-databases:us-central1:billing-bookkeeper",
         local_port=3306
     )
@@ -153,7 +153,7 @@ POST /sleeper
 POST /portforward
 {
   "kube_context": "gke_clover-prod-kubernetes_us-central1_na-prod-us-central1-cluster",
-  "kube_namespace": "gke-cloudsql-access", 
+  "kube_namespace": "gke-cloudsql-access",
   "kube_deployment": "gke-cloudsql-access",
   "sql_connection": "clover-prod-databases:us-central1:billing-bookkeeper",
   "local_port": 3306
@@ -179,7 +179,7 @@ GET /ps
 ## Key Design Principles
 
 1. **Separation of concerns**: Generic process management vs specific implementations
-2. **Async throughout**: Non-blocking subprocess creation and output streaming  
+2. **Async throughout**: Non-blocking subprocess creation and output streaming
 3. **Real-time output**: Live subprocess output appears immediately in server logs
 4. **Automatic cleanup**: Processes self-remove when completed
 5. **Environment isolation**: Minimal, focused environment configuration modules

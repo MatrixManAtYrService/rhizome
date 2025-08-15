@@ -48,22 +48,22 @@ def test_port_cleanup_on_server_shutdown() -> None:
     with tempfile.TemporaryDirectory() as temp_dir:
         home = Home.sandbox(Path(temp_dir))
         test_port = get_open_port()
-        
+
         # Set up port file
         home.set_port(test_port)
         port_file = home.state / "port"
         assert port_file.exists()
-        
+
         # Set the global _home variable to our sandbox home
         import rhizome.server
         rhizome.server._home = home
-        
+
         # Create test client and trigger shutdown event
         with TestClient(app) as client:
             # Make a request to ensure the app is running
             response = client.get("/ps")
             assert response.status_code == 200
-        
+
         # After the context manager exits, the shutdown event should have been triggered
         # and the port file should be cleaned up
         assert not port_file.exists()

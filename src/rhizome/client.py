@@ -1,7 +1,7 @@
 """
 Rhizome client for communicating with the rhizome server to manage port forwarding.
 
-This module provides the client interface for requesting port forwards from the 
+This module provides the client interface for requesting port forwards from the
 rhizome server and getting connection handles back.
 """
 
@@ -18,14 +18,14 @@ from rhizome.config import Home
 class Handle:
     """
     Database connection handle returned by rhizome.
-    
+
     Contains the connection string and port information needed to connect
     to a database through kubectl port-forward managed by rhizome server.
     """
     connection_string: str
     local_port: int
     sql_connection: str  # The original SQL connection name
-    
+
     def __post_init__(self) -> None:
         """Validate that the connection is available."""
         # TODO: Add connection validation logic if needed
@@ -34,11 +34,11 @@ class Handle:
 
 class RhizomeClient:
     """Client for communicating with the rhizome server."""
-    
+
     def __init__(self, home: Home | None = None) -> None:
         self.home = home or Home()
         self._base_url: str | None = None
-    
+
     @property
     def base_url(self) -> str:
         """Get the rhizome server URL from the port file."""
@@ -50,25 +50,25 @@ class RhizomeClient:
                 )
             self._base_url = f"http://0.0.0.0:{port}"
         return self._base_url
-    
+
     def request_portforward(
-        self, 
+        self,
         kube_context: str,
-        kube_namespace: str, 
+        kube_namespace: str,
         kube_deployment: str,
         sql_connection: str,
         local_port: int = 3306
     ) -> Handle:
         """
         Request a port forward from the rhizome server.
-        
+
         Args:
             kube_context: Kubernetes context name
             kube_namespace: Kubernetes namespace
             kube_deployment: Kubernetes deployment name
             sql_connection: SQL connection string (e.g., "clover-prod-databases:us-central1:billing-bookkeeper")
             local_port: Local port to forward to (default: 3306)
-            
+
         Returns:
             Handle: Connection handle with connection string and port info
         """
@@ -85,26 +85,26 @@ class RhizomeClient:
                 }
             )
             response.raise_for_status()
-            
+
         # Wait a moment for the port forward to establish
         time.sleep(2)
-        
+
         # Build connection string
         connection_string = f"mysql://localhost:{local_port}"
-        
+
         return Handle(
             connection_string=connection_string,
             local_port=local_port,
             sql_connection=sql_connection
         )
-    
+
     def request_sleeper(self, iterations: int = 5) -> Handle:
         """
         Request a sleeper process from the rhizome server.
-        
+
         Args:
             iterations: Number of times the sleeper should count (default: 5)
-            
+
         Returns:
             Handle: Connection handle with sleeper process info
         """
@@ -115,10 +115,10 @@ class RhizomeClient:
                 json={"iterations": iterations}
             )
             response.raise_for_status()
-            
+
         # Wait a moment for the process to start
         time.sleep(0.1)
-        
+
         # Return a handle (sleeper doesn't have a real connection string)
         return Handle(
             connection_string=f"sleeper://localhost/test",

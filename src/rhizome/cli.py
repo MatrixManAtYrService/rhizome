@@ -14,13 +14,7 @@ app = typer.Typer(help="Auth handler for clover db connections")
 def version_callback(value: bool) -> None:
     """Show version and exit."""
     if value:
-        # [[[cog
-        # import os
-        # project_name = os.environ.get("PROJECT_NAME", "hello")
-        # cog.out(f'        typer.echo(f"{project_name} {{__version__}}")')
-        # ]]]
-        typer.echo(f"{__version__}")
-        # [[[end]]]
+        typer.echo(f"rhizome {__version__}")
         raise typer.Exit()
 
 
