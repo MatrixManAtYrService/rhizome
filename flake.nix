@@ -80,6 +80,31 @@
           nixpkgs.lib.composeManyExtensions [
             pyproject-build-systems.overlays.default
             overlay
+            # Apply Artifactory URL redirection to build system packages too
+            (final: prev: 
+              pkgs.lib.mapAttrs (name: pkg: 
+                if pkg ? overrideAttrs && pkg ? src then
+                  pkg.overrideAttrs (old: 
+                    if old ? src && old.src ? overrideAttrs then {
+                      src = old.src.overrideAttrs (srcAttrs: 
+                        if srcAttrs ? url then {
+                          url = builtins.replaceStrings 
+                            ["https://files.pythonhosted.org"] 
+                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                            srcAttrs.url;
+                        } else if srcAttrs ? urls then {
+                          urls = map (url: builtins.replaceStrings 
+                            ["https://files.pythonhosted.org"] 
+                            ["https://artifactory.corp.clover.com/artifactory/api/pypi/libs-python"] 
+                            url
+                          ) srcAttrs.urls;
+                        } else srcAttrs
+                      );
+                    } else old
+                  )
+                else pkg
+              ) prev
+            )
           ]
         );
 
