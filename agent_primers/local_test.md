@@ -61,7 +61,7 @@ SELECT * FROM fee_summary;
 
 ### 4. Cleanup
 ```bash
-tilt down    # Stop applications
+tilt down    # Stop applications (Ctrl+C if using --stream)
 make down    # Delete cluster
 ```
 
@@ -110,6 +110,26 @@ The `fee_summary` table schema matches the SQLModel definition exactly:
 2. **Next**: Test rhizome port-forwarding to local cluster
 3. **Future**: SQLModel query tests, sanitization tests
 
+## Corporate Environment Support
+
+### Certificate Authority Issues
+The Kind config automatically mounts corporate certificates:
+- `/etc/ssl/certs` → container `/etc/ssl/certs`
+- `/etc/pki` → container `/etc/pki`
+
+This resolves image pull failures due to corporate TLS inspection (Zscaler, etc.).
+
+### Image Pull Troubleshooting
+If you see certificate errors:
+```
+Error: ImagePullBackOff
+x509: certificate signed by unknown authority
+```
+
+1. Verify certificates are mounted: `kubectl describe pod mysql`
+2. Recreate cluster: `make down && make up`
+3. Check corporate proxy/VPN settings
+
 ## Troubleshooting
 
 ### Cluster Won't Start
@@ -132,3 +152,8 @@ make up       # Retry
 - Wait for readiness probe (30s initial delay)
 - Check pod logs: `kubectl logs mysql`
 - Verify credentials: user/pass
+
+### Corporate Network Issues
+- Ensure VPN/proxy is configured
+- Check certificate mounting in Kind config
+- Verify Podman can pull images independently
