@@ -1,0 +1,24 @@
+# Kind cluster configuration for rhizome testing
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: rhizome-test
+
+# Single node cluster for simplicity
+nodes:
+- role: control-plane
+  # Port mappings for services if needed
+  extraPortMappings:
+  - containerPort: 30000
+    hostPort: 30000
+    protocol: TCP
+  - containerPort: 30001
+    hostPort: 30001
+    protocol: TCP
+
+# Networking configuration
+networking:
+  # Disable default CNI to avoid conflicts
+  disableDefaultCNI: false
+  # Use default pod and service subnets
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: "10.96.0.0/12"

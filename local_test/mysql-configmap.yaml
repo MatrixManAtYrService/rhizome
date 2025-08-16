@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-script
+  namespace: default
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS test;
+    USE test;
+    
+    CREATE TABLE IF NOT EXISTS fee_summary (
+      id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+      uuid CHAR(26) NOT NULL,
+      billing_entity_uuid CHAR(26) NOT NULL,
+      billing_date DATE NOT NULL,
+      fee_category VARCHAR(25) NOT NULL,
+      fee_code VARCHAR(25) NOT NULL,
+      currency CHAR(3) NOT NULL,
+      total_period_units DECIMAL(12,4) NOT NULL DEFAULT '0.0000',
+      abs_period_units DECIMAL(12,4) NOT NULL DEFAULT '0.0000',
+      total_basis_amount DECIMAL(12,3) NOT NULL DEFAULT '0.000',
+      abs_basis_amount DECIMAL(12,3) NOT NULL DEFAULT '0.000',
+      total_fee_amount DECIMAL(12,3) NOT NULL DEFAULT '0.000',
+      fee_rate_uuid CHAR(26) NOT NULL,
+      request_uuid CHAR(26) NOT NULL,
+      invoice_info_uuid VARCHAR(26) DEFAULT NULL,
+      fee_code_ledger_account_uuid VARCHAR(26) DEFAULT NULL,
+      credit_ledger_account_uuid VARCHAR(26) DEFAULT NULL,
+      debit_ledger_account_uuid VARCHAR(26) DEFAULT NULL,
+      exclude_from_invoice SMALLINT NOT NULL DEFAULT '0',
+      created_timestamp DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+      modified_timestamp DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+      PRIMARY KEY (id),
+      UNIQUE KEY fee_summary_key1 (uuid),
+      UNIQUE KEY fee_summary_key2 (billing_entity_uuid,billing_date,fee_category,fee_code,currency),
+      UNIQUE KEY fee_summary_key4 (request_uuid,billing_entity_uuid,id),
+      UNIQUE KEY fee_summary_key3 (invoice_info_uuid,id)
+    );
+    
+    -- Insert sample data from diff3r-spa JSON (fee_summary_1)
+    INSERT INTO fee_summary (
+      id, uuid, billing_entity_uuid, billing_date, fee_category, fee_code, 
+      currency, total_period_units, abs_period_units, total_basis_amount, 
+      abs_basis_amount, total_fee_amount, fee_rate_uuid, request_uuid, 
+      invoice_info_uuid, fee_code_ledger_account_uuid, credit_ledger_account_uuid, 
+      debit_ledger_account_uuid, exclude_from_invoice, created_timestamp, modified_timestamp
+    ) VALUES (
+      74347, 'K576N1W35XYEVW7VH1JVDY1XRT', 'JW8H2B9BT6B11R2HHXY3HYQCN6', 
+      '2025-06-01', 'APP_SUB_3P_RETAIL', 'MW63DAWPN6JGY.S', 'USD', 
+      1.0000, 1.0000, 0.000, 0.000, 9.99, 
+      'J65DRB7XHQQ1RTYJSBSTQQBW7K', 'KNFZA2P2E2KMGKMATSY1RSD8TY', 
+      'NFX80F4EH68BEW08384RX7RBMC', 'DMW4K1XGB16DAEQ2ZRSJACE1WS', 
+      'KBERX62EJMWD8KEVFZRX0H875Z', '5XNJ7KBDBGNKVRFZYMCZJ6G5E7', 
+      0, '2025-06-02 14:56:15.960436', '2025-06-02 15:06:43.387646'
+    ) ON DUPLICATE KEY UPDATE uuid=uuid;

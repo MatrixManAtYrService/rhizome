@@ -50,6 +50,7 @@
               }
             )
           ];
+          config.allowUnfree = true;
         };
 
         # Import project constants
@@ -126,6 +127,18 @@
             pyright
             nixpkgs-fmt
             nix-output-monitor
+            kind
+            gnumake
+            tilt
+            kubernetes-helm
+            (google-cloud-sdk.withExtraComponents [
+              google-cloud-sdk.components.gke-gcloud-auth-plugin
+              google-cloud-sdk.components.kubectl
+            ])
+            _1password-cli
+            yq
+            k9s
+            mariadb_114
           ];
           env = {
             UV_NO_SYNC = "1";

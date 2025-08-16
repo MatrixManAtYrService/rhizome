@@ -1,0 +1,27 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: rhizome-test # name that you want to give to your cluster (will still be prefixed with `k3d-`)
+servers: 1 # single server node for simplicity
+agents: 0 # no agent nodes needed for testing
+kubeAPI: # Kubernetes API configuration
+  host: "localhost" # important for the `server` setting in the kubeconfig
+  hostIP: "127.0.0.1" # where the Kubernetes API will be listening on
+  hostPort: "6443" # standard Kubernetes API port
+image: rancher/k3s:v1.28.8-k3s1 # use specific stable version
+network: k3d # use the custom Podman network we created
+options:
+  k3d: # k3d runtime settings
+    wait: true # wait for cluster to be usable before returning
+    timeout: "60s" # timeout for cluster creation
+  k3s: # k3s runtime settings
+    extraArgs:
+      - arg: --disable=traefik # disable traefik for simplicity
+        nodeFilters:
+          - server:*
+      - arg: --disable=servicelb # disable service load balancer for simplicity
+        nodeFilters:
+          - server:*
+  kubeconfig:
+    updateDefaultKubeconfig: false # don't modify default kubeconfig
+    switchCurrentContext: false # don't switch context automatically

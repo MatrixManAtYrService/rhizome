@@ -7,6 +7,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "base58>=2.1.1",
     "fastapi>=0.116.1",
     "httpx>=0.28.1",
     "pybritive>=2.2.3",
