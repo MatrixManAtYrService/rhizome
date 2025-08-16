@@ -14,14 +14,6 @@ nodes:
   - containerPort: 30001
     hostPort: 30001
     protocol: TCP
-  # Mount local certificates into the node
-  extraMounts:
-  - hostPath: /etc/ssl/certs
-    containerPath: /etc/ssl/certs
-    readOnly: true
-  - hostPath: /etc/pki
-    containerPath: /etc/pki
-    readOnly: true
 
 # Networking configuration
 networking:

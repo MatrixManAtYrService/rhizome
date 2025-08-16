@@ -1,4 +1,4 @@
-.PHONY: help up down clean status
+.PHONY: help up down clean status load-images
 
 # Rhizome local development environment using Kind
 CLUSTER_CONFIG = kind-config.yaml
@@ -8,16 +8,28 @@ KUBECONFIG_PATH = $(CURDIR)/local_test/kubeconfig
 help:
 	@echo "*** Rhizome Local Development Environment ***"
 	@echo "Usage:"
-	@echo "  make up     - Create Kind cluster and export kubeconfig"
-	@echo "  make down   - Delete Kind cluster and cleanup"
-	@echo "  make status - Show cluster status"
-	@echo "  make clean  - Clean up all resources"
+	@echo "  make up          - Create Kind cluster and export kubeconfig"
+	@echo "  make load-images - Pre-pull and load images into Kind cluster"
+	@echo "  make down        - Delete Kind cluster and cleanup"
+	@echo "  make status      - Show cluster status"
+	@echo "  make clean       - Clean up all resources"
 	@echo ""
 	@echo "Workflow:"
-	@echo "  1. make up     # Create cluster"
-	@echo "  2. tilt up     # Deploy MySQL and services"
-	@echo "  3. tilt down   # Stop services"
-	@echo "  4. make down   # Delete cluster"
+	@echo "  1. make up          # Create cluster"
+	@echo "  2. make load-images # Pre-load images (if corporate network)"
+	@echo "  3. tilt up --stream # Deploy MySQL and services"
+	@echo "  4. tilt down        # Stop services"
+	@echo "  5. make down        # Delete cluster"
+
+load-images:
+	@echo "*** Pre-pulling and loading images into Kind cluster ***"
+	@echo "Pulling MySQL image with Podman..."
+	docker pull mysql:8.0
+	
+	@echo "Loading MySQL image into Kind cluster..."
+	kind load docker-image mysql:8.0 --name $(CLUSTER_NAME)
+	
+	@echo "✅ Images loaded into cluster"
 
 up:
 	@echo "*** Creating Kind cluster for rhizome testing ***"

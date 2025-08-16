@@ -112,12 +112,16 @@ The `fee_summary` table schema matches the SQLModel definition exactly:
 
 ## Corporate Environment Support
 
-### Certificate Authority Issues
-The Kind config automatically mounts corporate certificates:
-- `/etc/ssl/certs` → container `/etc/ssl/certs`
-- `/etc/pki` → container `/etc/pki`
+### Image Pull in Corporate Networks
+For corporate networks with TLS inspection (Zscaler, etc.), use the pre-loading workflow:
 
-This resolves image pull failures due to corporate TLS inspection (Zscaler, etc.).
+```bash
+make up           # Create cluster
+make load-images  # Pre-pull with Podman, load into Kind
+tilt up --stream  # Deploy using local images
+```
+
+This bypasses certificate issues by using your configured Podman to pull images, then loading them directly into Kind.
 
 ### Image Pull Troubleshooting
 If you see certificate errors:
@@ -126,9 +130,9 @@ Error: ImagePullBackOff
 x509: certificate signed by unknown authority
 ```
 
-1. Verify certificates are mounted: `kubectl describe pod mysql`
-2. Recreate cluster: `make down && make up`
-3. Check corporate proxy/VPN settings
+Use `make load-images` to pre-load the MySQL image into Kind.
+
+**TODO**: It should be possible to configure Kind to mount corporate certificates directly into the cluster nodes, eliminating the need for pre-loading. This would involve mounting `/etc/ssl/certs` and `/etc/pki` as `extraMounts` in the Kind configuration, but requires additional containerd configuration to recognize the certificates.
 
 ## Troubleshooting
 
