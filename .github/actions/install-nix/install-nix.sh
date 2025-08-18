@@ -13,7 +13,7 @@ arch=$(uname -m)
 echo "Downloading nix-portable for architecture: $arch"
 
 curl_retries=5
-while ! curl -sS -o "$HOME/nix-portable" -v --fail -L "https://github.com/DavHau/nix-portable/releases/latest/download/nix-portable-${arch}"
+while ! curl -sS -o "$HOME/nix-portable" --fail -L "https://github.com/DavHau/nix-portable/releases/latest/download/nix-portable-${arch}"
 do
   sleep 1
   ((curl_retries--))
@@ -57,6 +57,7 @@ echo "$nix_config" >> "$GITHUB_ENV"
 echo "EOF" >> "$GITHUB_ENV"
 
 echo "NIX_PORTABLE_PATH=$HOME/nix-portable" >> "$GITHUB_ENV"
+echo "NP_RUNTIME=proot" >> "$GITHUB_ENV"
 
 # Set NIX_PATH if requested
 if [[ -n "${INPUT_NIX_PATH:-}" ]]; then
