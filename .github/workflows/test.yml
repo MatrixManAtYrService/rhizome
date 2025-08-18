@@ -30,7 +30,9 @@ jobs:
         with:
           primary-key: nix-${{ hashFiles('**/*.nix', '**/flake.lock') }}
           restore-prefixes-first-match: nix-
-          gc-max-store-size: 8G
+          paths: |
+            ~/.nix-portable
+          nix: false
           purge: true
           purge-prefixes: nix-
           purge-created: 0

@@ -6,96 +6,14 @@ if nix_path="$(type -p nix)" ; then
   exit
 fi
 
-if [[ ($OSTYPE =~ linux) && ($INPUT_ENABLE_KVM == 'true') ]]; then
-  enable_kvm() {
-    echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-install-nix-action-kvm.rules
-    sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
-  }
+echo "::group::Installing nix-portable"
 
-  echo '::group::Enabling KVM support'
-  enable_kvm && echo 'Enabled KVM' || echo 'KVM is not available'
-  echo '::endgroup::'
-fi
+# Download nix-portable
+arch=$(uname -m)
+echo "Downloading nix-portable for architecture: $arch"
 
-# GitHub command to put the following log messages into a group which is collapsed by default
-echo "::group::Installing Nix"
-
-# Create a temporary workdir
-workdir=$(mktemp -d)
-trap 'rm -rf "$workdir"' EXIT
-
-# Configure Nix
-add_config() {
-  echo "$1" >> "$workdir/nix.conf"
-}
-add_config "show-trace = true"
-# Set jobs to number of cores
-add_config "max-jobs = auto"
-if [[ $OSTYPE =~ darwin ]]; then
-  add_config "ssl-cert-file = /etc/ssl/cert.pem"
-fi
-# Allow binary caches specified at user level
-if [[ $INPUT_SET_AS_TRUSTED_USER == 'true' ]]; then
-  add_config "trusted-users = root ${USER:-}"
-fi
-# Add a GitHub access token.
-# Token-less access is subject to lower rate limits.
-if [[ -n "${INPUT_GITHUB_ACCESS_TOKEN:-}" ]]; then
-  echo "::debug::Using the provided github_access_token for github.com"
-  add_config "access-tokens = github.com=$INPUT_GITHUB_ACCESS_TOKEN"
-# Use the default GitHub token if available.
-# Skip this step if running an Enterprise instance. The default token there does not work for github.com.
-elif [[ -n "${GITHUB_TOKEN:-}" && $GITHUB_SERVER_URL == "https://github.com" ]]; then
-  echo "::debug::Using the default GITHUB_TOKEN for github.com"
-  add_config "access-tokens = github.com=$GITHUB_TOKEN"
-else
-  echo "::debug::Continuing without a GitHub access token"
-fi
-# Append extra nix configuration if provided
-if [[ -n "${INPUT_EXTRA_NIX_CONFIG:-}" ]]; then
-  add_config "$INPUT_EXTRA_NIX_CONFIG"
-fi
-if [[ ! $INPUT_EXTRA_NIX_CONFIG =~ "experimental-features" ]]; then
-  add_config "experimental-features = nix-command flakes"
-fi
-# Always allow substituting from the cache, even if the derivation has `allowSubstitutes = false`.
-# This is a CI optimisation to avoid having to download the inputs for already-cached derivations to rebuild trivial text files.
-if [[ ! $INPUT_EXTRA_NIX_CONFIG =~ "always-allow-substitutes" ]]; then
-  add_config "always-allow-substitutes = true"
-fi
-
-# Nix installer flags
-installer_options=(
-  --no-channel-add
-  --nix-extra-conf-file "$workdir/nix.conf"
-)
-
-# only use the nix-daemon settings if on darwin (which get ignored) or systemd is supported
-if [[ (! $INPUT_INSTALL_OPTIONS =~ "--no-daemon") && ($OSTYPE =~ darwin || -e /run/systemd/system) ]]; then
-  installer_options+=(
-    --daemon
-    --daemon-user-count "$(python3 -c 'import multiprocessing as mp; print(mp.cpu_count() * 2)')"
-  )
-else
-  # "fix" the following error when running nix*
-  # error: the group 'nixbld' specified in 'build-users-group' does not exist
-  add_config "build-users-group ="
-  sudo mkdir -p /etc/nix
-  sudo chmod 0755 /etc/nix
-  sudo cp "$workdir/nix.conf" /etc/nix/nix.conf
-fi
-
-if [[ -n "${INPUT_INSTALL_OPTIONS:-}" ]]; then
-  IFS=' ' read -r -a extra_installer_options <<< "$INPUT_INSTALL_OPTIONS"
-  installer_options=("${extra_installer_options[@]}" "${installer_options[@]}")
-fi
-
-echo "installer options: ${installer_options[*]}"
-
-# There is --retry-on-errors, but only newer curl versions support that
 curl_retries=5
-nix_version=2.30.2
-while ! curl -sS -o "$workdir/install" -v --fail -L "${INPUT_INSTALL_URL:-https://releases.nixos.org/nix/nix-${nix_version}/install}"
+while ! curl -sS -o "$HOME/nix-portable" -v --fail -L "https://github.com/DavHau/nix-portable/releases/latest/download/nix-portable-${arch}"
 do
   sleep 1
   ((curl_retries--))
@@ -105,21 +23,53 @@ do
   fi
 done
 
-sh "$workdir/install" "${installer_options[@]}"
+chmod +x "$HOME/nix-portable"
 
-# Set paths
-echo "/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
-# new path for nix 2.14
-echo "$HOME/.nix-profile/bin" >> "$GITHUB_PATH"
+# Create a symlink so scripts can call 'nix' directly
+mkdir -p "$HOME/.local/bin"
+ln -s "$HOME/nix-portable" "$HOME/.local/bin/nix"
 
+# Add to PATH so scripts can find 'nix'
+echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+# Build nix configuration and set as environment variable
+nix_config="experimental-features = nix-command flakes"$'\n'
+nix_config+="show-trace = true"$'\n'
+nix_config+="max-jobs = auto"$'\n'
+
+# Add GitHub access token if available
+if [[ -n "${INPUT_GITHUB_ACCESS_TOKEN:-}" ]]; then
+  echo "::debug::Using provided GitHub access token"
+  nix_config+="access-tokens = github.com=$INPUT_GITHUB_ACCESS_TOKEN"$'\n'
+elif [[ -n "${GITHUB_TOKEN:-}" && $GITHUB_SERVER_URL == "https://github.com" ]]; then
+  echo "::debug::Using default GITHUB_TOKEN"
+  nix_config+="access-tokens = github.com=$GITHUB_TOKEN"$'\n'
+fi
+
+# Add extra nix configuration if provided
+if [[ -n "${INPUT_EXTRA_NIX_CONFIG:-}" ]]; then
+  nix_config+="$INPUT_EXTRA_NIX_CONFIG"$'\n'
+fi
+
+# Set environment variables for subsequent steps
+echo "NIX_CONFIG<<EOF" >> "$GITHUB_ENV"
+echo "$nix_config" >> "$GITHUB_ENV"
+echo "EOF" >> "$GITHUB_ENV"
+
+echo "NIX_PORTABLE_PATH=$HOME/nix-portable" >> "$GITHUB_ENV"
+
+# Set NIX_PATH if requested
 if [[ -n "${INPUT_NIX_PATH:-}" ]]; then
   echo "NIX_PATH=${INPUT_NIX_PATH}" >> "$GITHUB_ENV"
 fi
 
-# Set temporary directory (if not already set) to fix https://github.com/cachix/install-nix-action/issues/197
+# Set temporary directory for better performance
 if [[ -z "${TMPDIR:-}" ]]; then
   echo "TMPDIR=${RUNNER_TEMP}" >> "$GITHUB_ENV"
 fi
 
-# Close the log message group which was opened above
+echo "nix-portable installed successfully at $HOME/nix-portable"
+echo "Testing installation..."
+"$HOME/nix-portable" nix --version
+
 echo "::endgroup::"
