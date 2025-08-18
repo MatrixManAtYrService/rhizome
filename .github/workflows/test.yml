@@ -17,15 +17,16 @@ on:
 jobs:
   test:
     runs-on: [ self-hosted ]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: ./.github/actions/install-nix
 
       - name: Restore and save Nix store
-        uses: matt-rixman/cache-nix-action@main
+        uses: ./.github/actions/cache-nix
         with:
           primary-key: nix-${{ hashFiles('**/*.nix', '**/flake.lock') }}
           restore-prefixes-first-match: nix-
