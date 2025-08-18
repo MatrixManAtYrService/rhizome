@@ -32,11 +32,9 @@
         # Import Artifactory overlay functions
         artifactoryLib = import ./nix/artifactory.nix { inherit (nixpkgs) lib; };
 
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            # Override ALL Python packages to redirect PyPI URLs to Artifactory
-            (final: prev:
+
+        # Override Python packages in nixpkgs to redirect PyPI URLs to Artifactory
+        nixpkgsArtifactoryOverlay = (final: prev:
               let
                 overlayFuncs = artifactoryLib.mkNixpkgsOverlay {
                   inherit (final) cacert;
@@ -48,7 +46,20 @@
                 python313Packages = overlayFuncs.python313Packages prev.python313Packages;
                 python311Packages = overlayFuncs.python311Packages prev.python311Packages;
               }
-            )
+            );
+
+        # Override Python packages fetched via pypkg to redirect PyPI URLs to Artifactory
+        pyprojectArtifactoryOverlay = (final: prev:
+          artifactoryLib.mkPyprojectOverlay {
+            cacert = pkgs.cacert;
+            lib = pkgs.lib;
+          } prev
+        );
+
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            nixpkgsArtifactoryOverlay
           ];
           config.allowUnfree = true;
         };
@@ -61,16 +72,18 @@
           workspaceRoot = ./.;
         };
 
-        overlay = workspace.mkPyprojectOverlay {
+        pyprojectOverlay = workspace.mkPyprojectOverlay {
           sourcePreference = "wheel";
         };
+
 
         pythonSet = (pkgs.callPackage pyproject-nix.build.packages {
           inherit python;
         }).overrideScope (
           nixpkgs.lib.composeManyExtensions [
             pyproject-build-systems.overlays.default
-            overlay
+            pyprojectOverlay
+            pyprojectArtifactoryOverlay
           ]
         );
 

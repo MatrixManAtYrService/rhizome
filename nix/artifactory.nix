@@ -60,4 +60,13 @@ in
       python313Packages = overridePythonPackages;
       python311Packages = overridePythonPackages;
     };
+
+    # Convenience function to create a pyproject overlay
+    mkPyprojectOverlay = { cacert, lib }:
+      let
+        sslAttrs = mkSslAttrs cacert;
+        overrideSourceAttrs = mkOverrideSourceAttrs sslAttrs;
+        overridePackage = mkOverridePackage overrideSourceAttrs;
+      in
+      mkPackageSetOverlay lib overridePackage;
 }

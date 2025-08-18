@@ -19,7 +19,7 @@ nix run .#codegen
 nix run .#nix-analysis
 nix run .#python-analysis
 
-# Tests - run pytest in the development environment
+# Tests
 $NIX_CMD develop --command pytest
 
 # Generate documentation
