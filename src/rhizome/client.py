@@ -5,11 +5,13 @@ This module provides the client interface for requesting port forwards from the
 rhizome server and getting connection handles back.
 """
 
+import json
 import time
 from dataclasses import dataclass
-from pathlib import Path
+from typing import Any
 
 import httpx
+from httpx_sse import connect_sse
 
 from rhizome.config import Home
 
@@ -90,12 +92,71 @@ class RhizomeClient:
         time.sleep(2)
 
         # Build connection string
-        connection_string = f"mysql://localhost:{local_port}"
+        connection_string = f"mysql://0.0.0.0:{local_port}"
 
         return Handle(
             connection_string=connection_string,
             local_port=local_port,
             sql_connection=sql_connection
+        )
+
+    def request_localk8s(
+        self,
+        kube_context: str,
+        kube_namespace: str,
+        kube_deployment: str,
+        local_port: int = 3306,
+        delay: float = 2.0
+    ) -> Handle:
+        """
+        Request a port forward to local Kubernetes cluster from the rhizome server.
+
+        This method uses Server-Sent Events to wait for credentials to be provided
+        by the server, ensuring the connection is ready for immediate use.
+
+        Args:
+            kube_context: Kubernetes context name (e.g., "kind-rhizome-test")
+            kube_namespace: Kubernetes namespace (e.g., "default")
+            kube_deployment: Kubernetes deployment/pod name (e.g., "mysql")
+            local_port: Local port to forward to (default: 3306)
+            delay: Delay before server provides credentials (for testing)
+
+        Returns:
+            Handle: Connection handle with full connection string including credentials
+        """
+        # Track timing for testing
+        start_time = time.time()
+        credentials: dict[str, Any] = {}
+
+        # Connect to SSE endpoint for credential streaming
+        with httpx.Client() as client, connect_sse(
+            client, "POST",
+            f"{self.base_url}/localk8s",
+            json={
+                "kube_context": kube_context,
+                "kube_namespace": kube_namespace,
+                "kube_deployment": kube_deployment,
+                "local_port": local_port,
+                "delay": delay
+            }
+        ) as event_source:
+            for sse in event_source.iter_sse():
+                if sse.event == "status":
+                    status_data = json.loads(sse.data)
+                    print(f"Status: {status_data['status']}")
+
+                elif sse.event == "credentials":
+                    credentials = json.loads(sse.data)
+                    print(f"Credentials received after {time.time() - start_time:.2f}s")
+                    break
+
+        if not credentials:
+            raise RuntimeError("Failed to receive credentials from server")
+
+        return Handle(
+            connection_string=credentials["connection_string"],
+            local_port=local_port,
+            sql_connection=f"localk8s:{kube_namespace}:{kube_deployment}"
         )
 
     def request_sleeper(self, iterations: int = 5) -> Handle:
@@ -121,7 +182,7 @@ class RhizomeClient:
 
         # Return a handle (sleeper doesn't have a real connection string)
         return Handle(
-            connection_string=f"sleeper://localhost/test",
+            connection_string="sleeper://localhost/test",
             local_port=0,  # No actual port for sleeper
             sql_connection=f"sleeper-{iterations}-iterations"
         )

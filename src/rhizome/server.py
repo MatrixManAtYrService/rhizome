@@ -1,16 +1,18 @@
+import asyncio
+import json
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 import structlog
 import uvicorn
 from fastapi import FastAPI
-
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from rhizome.config import Home
 from rhizome.logging import setup_logging
-from rhizome.portforward import start_portforward, start_portforward_legacy
-from rhizome.proc import ProcessListResponse, NewProcessResponse, process_manager
+from rhizome.portforward import start_portforward
+from rhizome.proc import NewProcessResponse, ProcessListResponse, process_manager
 from rhizome.sleeper import start_sleeper
 
 
@@ -26,6 +28,15 @@ class PortforwardRequest(BaseModel):
 class SleeperRequest(BaseModel):
     """Request model for sleeper requests."""
     iterations: int = 5
+
+
+class LocalK8sRequest(BaseModel):
+    """Request model for local K8s port forward with credentials."""
+    kube_context: str
+    kube_namespace: str
+    kube_deployment: str
+    local_port: int = 3306
+    delay: float = 2.0  # Delay before supplying credentials (for testing)
 
 logger = structlog.get_logger()
 
@@ -69,6 +80,69 @@ async def portforward(request: PortforwardRequest) -> NewProcessResponse:
         kube_deployment=request.kube_deployment,
         sql_connection=request.sql_connection,
         local_port=request.local_port
+    )
+
+
+async def localk8s_credentials_generator(request: LocalK8sRequest) -> AsyncGenerator[str, None]:
+    """
+    Generate SSE stream for local K8s credentials.
+
+    This simulates the credential retrieval process that would normally
+    involve vault, auth flows, etc. For testing, it uses hard-coded credentials
+    with a configurable delay.
+    """
+    # First, start the port forward process
+    logger.info(f"Starting port forward for {request.kube_deployment}")
+
+    try:
+        # Start port forward (but with a fake sql_connection for local k8s)
+        port_forward_response = await start_portforward(
+            kube_context=request.kube_context,
+            kube_namespace=request.kube_namespace,
+            kube_deployment=request.kube_deployment,
+            sql_connection=f"localk8s:{request.kube_namespace}:{request.kube_deployment}",
+            local_port=request.local_port
+        )
+        logger.info(f"Port forward started with PID {port_forward_response.pid}")
+    except Exception as e:
+        logger.error(f"Failed to start port forward: {e}")
+        yield f"event: error\ndata: {json.dumps({'error': f'Failed to start port forward: {e}'})}\n\n"
+        return
+
+    # Send initial status
+    yield f"event: status\ndata: {json.dumps({'status': 'port_forward_started', 'pid': port_forward_response.pid})}\n\n"
+
+    # Give kubectl a moment to establish the port forward
+    await asyncio.sleep(1.0)
+
+    # Wait for the specified delay (simulating credential retrieval)
+    logger.info(f"Waiting {request.delay}s for credentials...")
+    yield f"event: status\ndata: {json.dumps({'status': 'retrieving_credentials', 'delay': request.delay})}\n\n"
+
+    await asyncio.sleep(request.delay)
+
+    # Send credentials (hard-coded for local testing)
+    credentials = {
+        "username": "user",
+        "password": "pass",
+        "database": "test",
+        "connection_string": f"mysql+pymysql://user:pass@localhost:{request.local_port}/test"
+    }
+
+    logger.info("Credentials retrieved, sending to client")
+    yield f"event: credentials\ndata: {json.dumps(credentials)}\n\n"
+
+
+@app.post("/localk8s")
+async def localk8s(request: LocalK8sRequest) -> StreamingResponse:
+    """Start local K8s port forward and stream credentials via SSE."""
+    return StreamingResponse(
+        localk8s_credentials_generator(request),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        }
     )
 
 

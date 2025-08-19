@@ -1,7 +1,7 @@
 """
-Local Test environment configuration.
+Local Test Sleeper environment configuration.
 
-This module provides access to local testing functionality using the sleeper process.
+This module provides access to local sleeper process testing functionality.
 Used for testing rhizome client-server communication without external dependencies.
 """
 

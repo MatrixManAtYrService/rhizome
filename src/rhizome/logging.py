@@ -22,12 +22,12 @@ def setup_logging() -> None:
         cache_logger_on_first_use=True,
     )
 
-    # Create formatter using structlog
+    # Create formatter using structlog with wider message field
     formatter = structlog.stdlib.ProcessorFormatter(
         foreign_pre_chain=shared_processors,
         processors=[
             structlog.stdlib.ProcessorFormatter.remove_processors_meta,
-            structlog.dev.ConsoleRenderer(),
+            structlog.dev.ConsoleRenderer(pad_event=40),
         ],
     )
 
@@ -41,7 +41,22 @@ def setup_logging() -> None:
     root_logger.addHandler(handler)
     root_logger.setLevel(logging.INFO)
 
-    # Configure specific loggers to prevent duplicate logging
+    # Set up a simple formatter for verbose external libraries
+    simple_formatter = logging.Formatter('%(asctime)s %(message)s', datefmt='%H:%M:%S')
+    simple_handler = logging.StreamHandler()
+    simple_handler.setFormatter(simple_formatter)
+
+    # Configure specific loggers to use simple formatting or prevent duplicate logging
     for logger_name in ("uvicorn", "uvicorn.error", "uvicorn.access", "fastapi"):
-        logging.getLogger(logger_name).handlers.clear()
-        logging.getLogger(logger_name).propagate = True
+        logger = logging.getLogger(logger_name)
+        logger.handlers.clear()
+        logger.propagate = False
+        logger.addHandler(simple_handler)
+        logger.setLevel(logging.INFO)
+
+    # Configure httpx to use simple formatting (it has very verbose messages)
+    httpx_logger = logging.getLogger("httpx")
+    httpx_logger.handlers.clear()
+    httpx_logger.propagate = False
+    httpx_logger.addHandler(simple_handler)
+    httpx_logger.setLevel(logging.INFO)

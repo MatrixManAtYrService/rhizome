@@ -1,19 +1,12 @@
-import socket
 import tempfile
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from rhizome.config import Home
-from rhizome.server import app, _home
+from rhizome.server import app
+from tests.utils import get_open_port
 
-
-def get_open_port() -> int:
-    sock = socket.socket()
-    sock.bind(('', 0))
-    test_port = sock.getsockname()[1]
-    sock.close()
-    return test_port
 
 def test_port_storage_in_sandbox() -> None:
     """Test that port number gets set and retrieved correctly using a sandbox directory."""
@@ -56,7 +49,7 @@ def test_port_cleanup_on_server_shutdown() -> None:
 
         # Set the global _home variable to our sandbox home
         import rhizome.server
-        rhizome.server._home = home
+        rhizome.server._home = home  # type: ignore
 
         # Create test client and trigger shutdown event
         with TestClient(app) as client:

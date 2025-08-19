@@ -68,7 +68,7 @@ make down    # Delete cluster
 ## Database Configuration
 
 - **Database**: `test`
-- **Username**: `user` 
+- **Username**: `user`
 - **Password**: `pass`
 - **Table**: `fee_summary` (matches SQLModel exactly)
 - **Sample Data**: Single record from diff3r JSON (ID 74347)

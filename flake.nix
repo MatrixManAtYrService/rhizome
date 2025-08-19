@@ -34,32 +34,31 @@
 
 
         # Override Python packages in nixpkgs to redirect PyPI URLs to Artifactory
-        nixpkgsArtifactoryOverlay = (final: prev:
-              let
-                overlayFuncs = artifactoryLib.mkNixpkgsOverlay {
-                  inherit (final) cacert;
-                  inherit (nixpkgs) lib;
-                };
-              in
-              {
-                python312Packages = overlayFuncs.python312Packages prev.python312Packages;
-                python313Packages = overlayFuncs.python313Packages prev.python313Packages;
-                python311Packages = overlayFuncs.python311Packages prev.python311Packages;
-              }
-            );
+        nixpkgsArtifactoryOverlay = final: prev:
+          let
+            overlayFuncs = artifactoryLib.mkNixpkgsOverlay {
+              inherit (final) cacert;
+              inherit (nixpkgs) lib;
+            };
+          in
+          {
+            python312Packages = overlayFuncs.python312Packages prev.python312Packages;
+            python313Packages = overlayFuncs.python313Packages prev.python313Packages;
+            python311Packages = overlayFuncs.python311Packages prev.python311Packages;
+          };
 
         # Override Python packages fetched via pypkg to redirect PyPI URLs to Artifactory
-        pyprojectArtifactoryOverlay = (final: prev:
-          artifactoryLib.mkPyprojectOverlay {
-            cacert = pkgs.cacert;
-            lib = pkgs.lib;
-          } prev
-        );
+        pyprojectArtifactoryOverlay = final: prev:
+          artifactoryLib.mkPyprojectOverlay
+            {
+              inherit (pkgs) cacert lib;
+            }
+            prev;
 
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
-            nixpkgsArtifactoryOverlay
+            # nixpkgsArtifactoryOverlay
           ];
           config.allowUnfree = true;
         };
@@ -83,7 +82,7 @@
           nixpkgs.lib.composeManyExtensions [
             pyproject-build-systems.overlays.default
             pyprojectOverlay
-            pyprojectArtifactoryOverlay
+            # pyprojectArtifactoryOverlay
           ]
         );
 

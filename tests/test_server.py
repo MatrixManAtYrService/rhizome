@@ -1,8 +1,7 @@
 import os
 import tempfile
-import time
 import threading
-from io import StringIO
+import time
 from pathlib import Path
 
 import uvicorn

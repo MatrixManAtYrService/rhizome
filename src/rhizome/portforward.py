@@ -13,8 +13,6 @@ traffic from a local port to a service/pod port in a Kubernetes cluster.
 """
 
 import os
-import sys
-from typing import Dict, Any
 
 from rhizome.proc import NewProcessResponse, process_manager
 
@@ -52,25 +50,39 @@ async def start_portforward(
     if os.environ.get("RHIZOME_SIMULATE", "true").lower() == "true":
         return await _simulate_portforward(kube_context, kube_namespace, kube_deployment, sql_connection, local_port)
 
-    # Real implementation would be:
-    # 1. Check if port is already forwarded (lsof -i :local_port)
-    # 2. Start connection script in pod:
-    #    kubectl --context {kube_context} -n {kube_namespace} exec -it deployment/{kube_deployment} --
-    #    nohup sh -c "/home/nonroot/createConnection.sh {sql_connection} > /proc/1/fd/1 2>&1 &"
-    # 3. Wait and get remote port from logs:
-    #    kubectl --context {kube_context} -n {kube_namespace} logs deployment/{kube_deployment} --since 10s
-    # 4. Start port-forward:
-    #    kubectl --context {kube_context} -n {kube_namespace} port-forward deployment/{kube_deployment} {local_port}:{remote_port}
+    # For local K8s (Kind cluster), we can forward directly to the MySQL pod
+    # This is different from production where we need connection scripts
+    if sql_connection.startswith("localk8s:"):
+        # Direct port-forward to MySQL pod in local Kind cluster
+        args = [
+            "kubectl",
+            "--context", kube_context,
+            "-n", kube_namespace,
+            "port-forward",
+            f"pod/{kube_deployment}",  # Direct pod access for local testing
+            f"{local_port}:3306"  # MySQL default port
+        ]
+    else:
+        # Production implementation would be:
+        # 1. Check if port is already forwarded (lsof -i :local_port)
+        # 2. Start connection script in pod:
+        #    kubectl --context {kube_context} -n {kube_namespace} exec -it deployment/{kube_deployment} --
+        #    nohup sh -c "/home/nonroot/createConnection.sh {sql_connection} > /proc/1/fd/1 2>&1 &"
+        # 3. Wait and get remote port from logs:
+        #    kubectl --context {kube_context} -n {kube_namespace} logs deployment/{kube_deployment} --since 10s
+        # 4. Start port-forward:
+        #    kubectl --context {kube_context} -n {kube_namespace} port-forward \
+        #    deployment/{kube_deployment} {local_port}:{remote_port}
 
-    # Build the actual kubectl port-forward command
-    args = [
-        "kubectl",
-        "--context", kube_context,
-        "-n", kube_namespace,
-        "port-forward",
-        f"deployment/{kube_deployment}",
-        f"{local_port}:3307"  # This would be the remote_port from logs in real implementation
-    ]
+        # Build the actual kubectl port-forward command for production
+        args = [
+            "kubectl",
+            "--context", kube_context,
+            "-n", kube_namespace,
+            "port-forward",
+            f"deployment/{kube_deployment}",
+            f"{local_port}:3307"  # This would be the remote_port from logs in real implementation
+        ]
 
     # Use the generic process manager to start the process
     return await process_manager.start_process(args, process_name)
@@ -84,28 +96,30 @@ async def _simulate_portforward(
     local_port: int
 ) -> NewProcessResponse:
     """Simulate port-forward for development/testing."""
-    sleep_duration = os.environ.get("SLEEP_OVERRIDE", "1")
     process_name = "portforward"
 
-    # Simulation that shows the actual parameters being used
-    python_code = f"""
-from time import sleep
-print("Starting kubectl port-forward simulation...")
-print("Context: {kube_context}")
-print("Namespace: {kube_namespace}")
-print("Deployment: {kube_deployment}")
-print("SQL Connection: {sql_connection}")
-print("Local Port: {local_port}")
-print("")
-
-for i in range(15):  # Longer simulation for port-forward
-    print(f"Forwarding localhost:{local_port} -> pod:3307 (iteration {{i}})")
-    sleep({sleep_duration})
-print("Port-forward terminated")
-"""
-
-    # Build command args for simulation
-    args = [sys.executable, "-c", python_code]
+    # In simulation mode, run the actual kubectl command but with logging prefix
+    # This lets us see real kubectl output while still being in "simulation" mode
+    if sql_connection.startswith("localk8s:"):
+        # Same command as real mode but for simulation
+        args = [
+            "kubectl",
+            "--context", kube_context,
+            "-n", kube_namespace,
+            "port-forward",
+            f"pod/{kube_deployment}",
+            f"{local_port}:3306"
+        ]
+    else:
+        # For non-local connections, use the deployment version
+        args = [
+            "kubectl",
+            "--context", kube_context,
+            "-n", kube_namespace,
+            "port-forward",
+            f"deployment/{kube_deployment}",
+            f"{local_port}:3307"
+        ]
 
     # Use the generic process manager to start the process
     return await process_manager.start_process(args, process_name)
