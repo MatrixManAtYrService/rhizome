@@ -15,7 +15,8 @@ def setup_logging() -> None:
 
     # Configure structlog
     structlog.configure(
-        processors=shared_processors + [
+        processors=shared_processors
+        + [
             structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
         ],
         logger_factory=structlog.stdlib.LoggerFactory(),
@@ -42,7 +43,7 @@ def setup_logging() -> None:
     root_logger.setLevel(logging.INFO)
 
     # Set up a simple formatter for verbose external libraries
-    simple_formatter = logging.Formatter('%(asctime)s %(message)s', datefmt='%H:%M:%S')
+    simple_formatter = logging.Formatter("%(asctime)s %(message)s", datefmt="%H:%M:%S")
     simple_handler = logging.StreamHandler()
     simple_handler.setFormatter(simple_formatter)
 

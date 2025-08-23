@@ -10,7 +10,6 @@ from rhizome.server import run
 app = typer.Typer(help="Auth handler for clover db connections")
 
 
-
 def version_callback(value: bool) -> None:
     """Show version and exit."""
     if value:
@@ -30,9 +29,8 @@ def start(
         ),
     ] = False,
 ) -> None:
-
     sock = socket.socket()
-    sock.bind(('', 0))
+    sock.bind(("", 0))
     port = sock.getsockname()[1]
 
     home = Home()

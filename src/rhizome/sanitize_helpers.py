@@ -24,10 +24,10 @@ def hash_uuid_to_base58(uuid_str: str, target_length: int) -> str:
         str: A base58-encoded hash prefixed with "Hash" and truncated/padded to target_length
     """
     # Create SHA256 hash of the UUID
-    hash_bytes = hashlib.sha256(uuid_str.encode('utf-8')).digest()
+    hash_bytes = hashlib.sha256(uuid_str.encode("utf-8")).digest()
 
     # Encode to base58
-    base58_hash = base58.b58encode(hash_bytes).decode('ascii')
+    base58_hash = base58.b58encode(hash_bytes).decode("ascii")
 
     # Prefix with "Hash" to make it clear this is not a real UUID
     prefix = "Hash"

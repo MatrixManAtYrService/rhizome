@@ -71,7 +71,7 @@ class ProcessManager:
             await asyncio.gather(
                 self._stream_stdout(process, process_logger),
                 self._stream_stderr(process, process_logger),
-                return_exceptions=True
+                return_exceptions=True,
             )
         except Exception as e:
             process_logger.error("Error in output streaming", error=str(e))
@@ -85,9 +85,7 @@ class ProcessManager:
         """Start a generic async subprocess with output streaming."""
         # Start async subprocess
         process = await asyncio.create_subprocess_exec(
-            *args,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
+            *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
 
         # Add to our tracking set
@@ -104,10 +102,7 @@ class ProcessManager:
         process_logger = structlog.get_logger(process_name).bind(pid=process.pid)
         process_logger.info("subprocess started")
 
-        return NewProcessResponse(
-            status="started",
-            pid=process.pid
-        )
+        return NewProcessResponse(status="started", pid=process.pid)
 
     def list_processes(self) -> ProcessListResponse:
         """List running processes."""
@@ -118,10 +113,7 @@ class ProcessManager:
         # Return list of running processes
         running = [ProcessInfo(pid=p.pid) for p in self._processes]
 
-        return ProcessListResponse(
-            running=running,
-            count=len(running)
-        )
+        return ProcessListResponse(running=running, count=len(running))
 
     async def cleanup(self) -> None:
         """Clean up all running processes and tasks."""

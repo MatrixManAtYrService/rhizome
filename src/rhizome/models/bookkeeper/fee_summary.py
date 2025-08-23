@@ -22,6 +22,7 @@ class FeeSummary(SQLModel, table=True):
     This model represents fee summary records in the billing system,
     containing aggregated fee information for billing entities.
     """
+
     __tablename__ = "fee_summary"  # type: ignore
 
     id: int = Field(primary_key=True, description="Primary key, auto-incrementing")
@@ -97,7 +98,7 @@ def sanitize(fee_summary: FeeSummary) -> FeeSummary:
         debit_ledger_account_uuid=sanitize_uuid_field(fee_summary.debit_ledger_account_uuid, 26),
         exclude_from_invoice=fee_summary.exclude_from_invoice,
         created_timestamp=fee_summary.created_timestamp,
-        modified_timestamp=fee_summary.modified_timestamp
+        modified_timestamp=fee_summary.modified_timestamp,
     )
 
     return sanitized

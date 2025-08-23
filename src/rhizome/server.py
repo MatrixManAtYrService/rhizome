@@ -18,6 +18,7 @@ from rhizome.sleeper import start_sleeper
 
 class PortforwardRequest(BaseModel):
     """Request model for port forward requests."""
+
     kube_context: str
     kube_namespace: str
     kube_deployment: str
@@ -27,16 +28,19 @@ class PortforwardRequest(BaseModel):
 
 class SleeperRequest(BaseModel):
     """Request model for sleeper requests."""
+
     iterations: int = 5
 
 
 class LocalK8sRequest(BaseModel):
     """Request model for local K8s port forward with credentials."""
+
     kube_context: str
     kube_namespace: str
     kube_deployment: str
     local_port: int = 3306
     delay: float = 2.0  # Delay before supplying credentials (for testing)
+
 
 logger = structlog.get_logger()
 
@@ -79,7 +83,7 @@ async def portforward(request: PortforwardRequest) -> NewProcessResponse:
         kube_namespace=request.kube_namespace,
         kube_deployment=request.kube_deployment,
         sql_connection=request.sql_connection,
-        local_port=request.local_port
+        local_port=request.local_port,
     )
 
 
@@ -101,7 +105,7 @@ async def localk8s_credentials_generator(request: LocalK8sRequest) -> AsyncGener
             kube_namespace=request.kube_namespace,
             kube_deployment=request.kube_deployment,
             sql_connection=f"localk8s:{request.kube_namespace}:{request.kube_deployment}",
-            local_port=request.local_port
+            local_port=request.local_port,
         )
         logger.info(f"Port forward started with PID {port_forward_response.pid}")
     except Exception as e:
@@ -126,7 +130,7 @@ async def localk8s_credentials_generator(request: LocalK8sRequest) -> AsyncGener
         "username": "user",
         "password": "pass",
         "database": "test",
-        "connection_string": f"mysql+pymysql://user:pass@localhost:{request.local_port}/test"
+        "connection_string": f"mysql+pymysql://user:pass@localhost:{request.local_port}/test",
     }
 
     logger.info("Credentials retrieved, sending to client")
@@ -142,7 +146,7 @@ async def localk8s(request: LocalK8sRequest) -> StreamingResponse:
         headers={
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
-        }
+        },
     )
 
 
@@ -171,5 +175,5 @@ def run(home: Home | None = None) -> None:
         host="127.0.0.1",
         port=port,
         log_config=None,  # Disable uvicorn's default logging config
-        access_log=True   # Keep access logs but they'll go through our handler
+        access_log=True,  # Keep access logs but they'll go through our handler
     )

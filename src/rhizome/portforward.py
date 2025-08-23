@@ -12,17 +12,11 @@ A typical port-forward process runs indefinitely until terminated, forwarding
 traffic from a local port to a service/pod port in a Kubernetes cluster.
 """
 
-import os
-
 from rhizome.proc import NewProcessResponse, process_manager
 
 
 async def start_portforward(
-    kube_context: str,
-    kube_namespace: str,
-    kube_deployment: str,
-    sql_connection: str,
-    local_port: int = 3306
+    kube_context: str, kube_namespace: str, kube_deployment: str, sql_connection: str, local_port: int = 3306
 ) -> NewProcessResponse:
     """
     Start a kubectl port-forward subprocess for database access.
@@ -45,22 +39,19 @@ async def start_portforward(
     """
     process_name = "portforward"
 
-    # For now, simulate the behavior for development/testing
-    # TODO: Implement the actual kubectl port-forward logic
-    if os.environ.get("RHIZOME_SIMULATE", "true").lower() == "true":
-        return await _simulate_portforward(kube_context, kube_namespace, kube_deployment, sql_connection, local_port)
-
     # For local K8s (Kind cluster), we can forward directly to the MySQL pod
     # This is different from production where we need connection scripts
     if sql_connection.startswith("localk8s:"):
         # Direct port-forward to MySQL pod in local Kind cluster
         args = [
             "kubectl",
-            "--context", kube_context,
-            "-n", kube_namespace,
+            "--context",
+            kube_context,
+            "-n",
+            kube_namespace,
             "port-forward",
             f"pod/{kube_deployment}",  # Direct pod access for local testing
-            f"{local_port}:3306"  # MySQL default port
+            f"{local_port}:3306",  # MySQL default port
         ]
     else:
         # Production implementation would be:
@@ -77,48 +68,13 @@ async def start_portforward(
         # Build the actual kubectl port-forward command for production
         args = [
             "kubectl",
-            "--context", kube_context,
-            "-n", kube_namespace,
+            "--context",
+            kube_context,
+            "-n",
+            kube_namespace,
             "port-forward",
             f"deployment/{kube_deployment}",
-            f"{local_port}:3307"  # This would be the remote_port from logs in real implementation
-        ]
-
-    # Use the generic process manager to start the process
-    return await process_manager.start_process(args, process_name)
-
-
-async def _simulate_portforward(
-    kube_context: str,
-    kube_namespace: str,
-    kube_deployment: str,
-    sql_connection: str,
-    local_port: int
-) -> NewProcessResponse:
-    """Simulate port-forward for development/testing."""
-    process_name = "portforward"
-
-    # In simulation mode, run the actual kubectl command but with logging prefix
-    # This lets us see real kubectl output while still being in "simulation" mode
-    if sql_connection.startswith("localk8s:"):
-        # Same command as real mode but for simulation
-        args = [
-            "kubectl",
-            "--context", kube_context,
-            "-n", kube_namespace,
-            "port-forward",
-            f"pod/{kube_deployment}",
-            f"{local_port}:3306"
-        ]
-    else:
-        # For non-local connections, use the deployment version
-        args = [
-            "kubectl",
-            "--context", kube_context,
-            "-n", kube_namespace,
-            "port-forward",
-            f"deployment/{kube_deployment}",
-            f"{local_port}:3307"
+            f"{local_port}:3307",  # This would be the remote_port from logs in real implementation
         ]
 
     # Use the generic process manager to start the process
@@ -133,5 +89,5 @@ async def start_portforward_legacy() -> NewProcessResponse:
         kube_namespace="test-namespace",
         kube_deployment="test-deployment",
         sql_connection="test:connection",
-        local_port=3306
+        local_port=3306,
     )

@@ -24,6 +24,7 @@ class Handle:
     Contains the connection string and port information needed to connect
     to a database through kubectl port-forward managed by rhizome server.
     """
+
     connection_string: str
     local_port: int
     sql_connection: str  # The original SQL connection name
@@ -47,19 +48,12 @@ class RhizomeClient:
         if self._base_url is None:
             port = self.home.get_port()
             if port is None:
-                raise RuntimeError(
-                    "Rhizome server port not found. Make sure the rhizome server is running."
-                )
+                raise RuntimeError("Rhizome server port not found. Make sure the rhizome server is running.")
             self._base_url = f"http://0.0.0.0:{port}"
         return self._base_url
 
     def request_portforward(
-        self,
-        kube_context: str,
-        kube_namespace: str,
-        kube_deployment: str,
-        sql_connection: str,
-        local_port: int = 3306
+        self, kube_context: str, kube_namespace: str, kube_deployment: str, sql_connection: str, local_port: int = 3306
     ) -> Handle:
         """
         Request a port forward from the rhizome server.
@@ -83,8 +77,8 @@ class RhizomeClient:
                     "kube_namespace": kube_namespace,
                     "kube_deployment": kube_deployment,
                     "sql_connection": sql_connection,
-                    "local_port": local_port
-                }
+                    "local_port": local_port,
+                },
             )
             response.raise_for_status()
 
@@ -94,19 +88,10 @@ class RhizomeClient:
         # Build connection string
         connection_string = f"mysql://0.0.0.0:{local_port}"
 
-        return Handle(
-            connection_string=connection_string,
-            local_port=local_port,
-            sql_connection=sql_connection
-        )
+        return Handle(connection_string=connection_string, local_port=local_port, sql_connection=sql_connection)
 
     def request_localk8s(
-        self,
-        kube_context: str,
-        kube_namespace: str,
-        kube_deployment: str,
-        local_port: int = 3306,
-        delay: float = 2.0
+        self, kube_context: str, kube_namespace: str, kube_deployment: str, local_port: int = 3306, delay: float = 2.0
     ) -> Handle:
         """
         Request a port forward to local Kubernetes cluster from the rhizome server.
@@ -129,17 +114,21 @@ class RhizomeClient:
         credentials: dict[str, Any] = {}
 
         # Connect to SSE endpoint for credential streaming
-        with httpx.Client() as client, connect_sse(
-            client, "POST",
-            f"{self.base_url}/localk8s",
-            json={
-                "kube_context": kube_context,
-                "kube_namespace": kube_namespace,
-                "kube_deployment": kube_deployment,
-                "local_port": local_port,
-                "delay": delay
-            }
-        ) as event_source:
+        with (
+            httpx.Client() as client,
+            connect_sse(
+                client,
+                "POST",
+                f"{self.base_url}/localk8s",
+                json={
+                    "kube_context": kube_context,
+                    "kube_namespace": kube_namespace,
+                    "kube_deployment": kube_deployment,
+                    "local_port": local_port,
+                    "delay": delay,
+                },
+            ) as event_source,
+        ):
             for sse in event_source.iter_sse():
                 if sse.event == "status":
                     status_data = json.loads(sse.data)
@@ -156,7 +145,7 @@ class RhizomeClient:
         return Handle(
             connection_string=credentials["connection_string"],
             local_port=local_port,
-            sql_connection=f"localk8s:{kube_namespace}:{kube_deployment}"
+            sql_connection=f"localk8s:{kube_namespace}:{kube_deployment}",
         )
 
     def request_sleeper(self, iterations: int = 5) -> Handle:
@@ -171,10 +160,7 @@ class RhizomeClient:
         """
         # Make request to rhizome server to start sleeper
         with httpx.Client() as client:
-            response = client.post(
-                f"{self.base_url}/sleeper",
-                json={"iterations": iterations}
-            )
+            response = client.post(f"{self.base_url}/sleeper", json={"iterations": iterations})
             response.raise_for_status()
 
         # Wait a moment for the process to start
@@ -184,9 +170,5 @@ class RhizomeClient:
         return Handle(
             connection_string="sleeper://localhost/test",
             local_port=0,  # No actual port for sleeper
-            sql_connection=f"sleeper-{iterations}-iterations"
+            sql_connection=f"sleeper-{iterations}-iterations",
         )
-
-
-# Global client instance
-client = RhizomeClient()
