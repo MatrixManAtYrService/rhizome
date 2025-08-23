@@ -58,7 +58,7 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [
-            nixpkgsArtifactoryOverlay
+            # nixpkgsArtifactoryOverlay
           ];
           config.allowUnfree = true;
         };
@@ -82,7 +82,7 @@
           nixpkgs.lib.composeManyExtensions [
             pyproject-build-systems.overlays.default
             pyprojectOverlay
-            pyprojectArtifactoryOverlay
+            # pyprojectArtifactoryOverlay
           ]
         );
 
