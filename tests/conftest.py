@@ -5,6 +5,7 @@ import tempfile
 import threading
 import time
 from collections.abc import Generator
+from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
@@ -13,6 +14,13 @@ import uvicorn
 from rhizome.config import Home
 from rhizome.server import app, setup_logging
 from tests.utils import get_open_port
+
+
+@dataclass
+class RunningServer:
+    """Represents a running rhizome server instance for testing."""
+    port: int
+    home: Home
 
 
 @pytest.fixture(scope="session")
@@ -96,14 +104,14 @@ def local_mysql(local_cluster: None) -> None:
 
 
 @pytest.fixture(scope="module")
-def rhizome_server(local_mysql: None) -> Generator[tuple[int, Home], None, None]:
+def rhizome_server(local_mysql: None) -> Generator[RunningServer, None, None]:
     """Start a rhizome server for testing.
 
     Args:
         local_mysql: Consumes the local_mysql fixture.
 
     Returns:
-        tuple[int, Home]: The port number and Home instance for the server.
+        RunningServer: Server instance with port and home attributes.
     """
     with tempfile.TemporaryDirectory() as temp_dir:
         # Create sandboxed home
@@ -122,4 +130,4 @@ def rhizome_server(local_mysql: None) -> Generator[tuple[int, Home], None, None]
         server_thread.start()
         time.sleep(0.5)  # Give server time to start
 
-        yield test_port, home
+        yield RunningServer(port=test_port, home=home)

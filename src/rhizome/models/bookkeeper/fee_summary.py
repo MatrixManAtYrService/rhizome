@@ -10,12 +10,13 @@ from __future__ import annotations
 import datetime
 from decimal import Decimal
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
 
+from ...models.base import SanitizableModel
 from ...sanitize_helpers import sanitize_uuid_field
 
 
-class FeeSummary(SQLModel, table=True):
+class FeeSummary(SanitizableModel, table=True):
     """
     SQLModel for the `fee_summary` table.
 
@@ -61,44 +62,28 @@ class FeeSummary(SQLModel, table=True):
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
     modified_timestamp: datetime.datetime = Field(description="Timestamp when the record was last modified")
 
-
-def sanitize(fee_summary: FeeSummary) -> FeeSummary:
-    """
-    Sanitize a FeeSummary instance for safe use in testing/analysis.
-
-    This function creates a copy of the fee summary with UUIDs replaced by
-    deterministic SHA256 hashes encoded in base58, maintaining the original
-    character length and prefixed with "Hash".
-
-    Args:
-        fee_summary: The FeeSummary instance to sanitize
-
-    Returns:
-        FeeSummary: A sanitized copy of the fee summary
-    """
-    # Create a new instance without session state to avoid SQLAlchemy issues
-    sanitized = FeeSummary(
-        id=fee_summary.id,
-        uuid=sanitize_uuid_field(fee_summary.uuid, 26),  # type: ignore
-        billing_entity_uuid=sanitize_uuid_field(fee_summary.billing_entity_uuid, 26),  # type: ignore
-        billing_date=fee_summary.billing_date,
-        fee_category=fee_summary.fee_category,
-        fee_code=fee_summary.fee_code,
-        currency=fee_summary.currency,
-        total_period_units=fee_summary.total_period_units,
-        abs_period_units=fee_summary.abs_period_units,
-        total_basis_amount=fee_summary.total_basis_amount,
-        abs_basis_amount=fee_summary.abs_basis_amount,
-        total_fee_amount=fee_summary.total_fee_amount,
-        fee_rate_uuid=sanitize_uuid_field(fee_summary.fee_rate_uuid, 26),  # type: ignore
-        request_uuid=sanitize_uuid_field(fee_summary.request_uuid, 26),  # type: ignore
-        invoice_info_uuid=sanitize_uuid_field(fee_summary.invoice_info_uuid, 26),
-        fee_code_ledger_account_uuid=sanitize_uuid_field(fee_summary.fee_code_ledger_account_uuid, 26),
-        credit_ledger_account_uuid=sanitize_uuid_field(fee_summary.credit_ledger_account_uuid, 26),
-        debit_ledger_account_uuid=sanitize_uuid_field(fee_summary.debit_ledger_account_uuid, 26),
-        exclude_from_invoice=fee_summary.exclude_from_invoice,
-        created_timestamp=fee_summary.created_timestamp,
-        modified_timestamp=fee_summary.modified_timestamp,
-    )
-
-    return sanitized
+    def sanitize(self) -> FeeSummary:
+        """Return a sanitized copy of this FeeSummary instance."""
+        return FeeSummary(
+            id=self.id,
+            uuid=sanitize_uuid_field(self.uuid, 26),  # type: ignore
+            billing_entity_uuid=sanitize_uuid_field(self.billing_entity_uuid, 26),  # type: ignore
+            billing_date=self.billing_date,
+            fee_category=self.fee_category,
+            fee_code=self.fee_code,
+            currency=self.currency,
+            total_period_units=self.total_period_units,
+            abs_period_units=self.abs_period_units,
+            total_basis_amount=self.total_basis_amount,
+            abs_basis_amount=self.abs_basis_amount,
+            total_fee_amount=self.total_fee_amount,
+            fee_rate_uuid=sanitize_uuid_field(self.fee_rate_uuid, 26),  # type: ignore
+            request_uuid=sanitize_uuid_field(self.request_uuid, 26),  # type: ignore
+            invoice_info_uuid=sanitize_uuid_field(self.invoice_info_uuid, 26),
+            fee_code_ledger_account_uuid=sanitize_uuid_field(self.fee_code_ledger_account_uuid, 26),
+            credit_ledger_account_uuid=sanitize_uuid_field(self.credit_ledger_account_uuid, 26),
+            debit_ledger_account_uuid=sanitize_uuid_field(self.debit_ledger_account_uuid, 26),
+            exclude_from_invoice=self.exclude_from_invoice,
+            created_timestamp=self.created_timestamp,
+            modified_timestamp=self.modified_timestamp,
+        )

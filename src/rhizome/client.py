@@ -8,12 +8,19 @@ rhizome server and getting connection handles back.
 import json
 import time
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, TypeVar
 
 import httpx
 from httpx_sse import connect_sse
+from sqlmodel import Session, create_engine
+from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 from rhizome.config import Home
+from rhizome.models.base import SanitizableModel
+
+TFirst = TypeVar("TFirst", bound=SanitizableModel)
+TAll = TypeVar("TAll", bound=SanitizableModel)
+TOne = TypeVar("TOne", bound=SanitizableModel)
 
 
 @dataclass
@@ -172,3 +179,65 @@ class RhizomeClient:
             local_port=0,  # No actual port for sleeper
             sql_connection=f"sleeper-{iterations}-iterations",
         )
+
+    def select_first(self, connection_string: str, query: SelectOfScalar[TFirst]) -> TFirst | None:
+        """
+        Execute a query and return the first sanitized result or None.
+
+        Args:
+            connection_string: Database connection string
+            query: SQLModel query to execute
+
+        Returns:
+            First sanitized model instance or None
+        """
+        engine = create_engine(connection_string)
+        with Session(engine) as session:
+            result = session.exec(query).first()
+            if result is None:
+                return None
+            if not hasattr(result, "sanitize"):
+                raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
+            return result.sanitize()
+
+    def select_all(self, connection_string: str, query: SelectOfScalar[TAll]) -> list[TAll]:
+        """
+        Execute a query and return all sanitized results.
+
+        Args:
+            connection_string: Database connection string
+            query: SQLModel query to execute
+
+        Returns:
+            List of sanitized model instances
+        """
+        engine = create_engine(connection_string)
+        with Session(engine) as session:
+            results = session.exec(query).all()
+            sanitized_results: list[TAll] = []
+            for result in results:
+                if not hasattr(result, "sanitize"):
+                    raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
+                sanitized_results.append(result.sanitize())
+            return sanitized_results
+
+    def select_one(self, connection_string: str, query: SelectOfScalar[TOne]) -> TOne:
+        """
+        Execute a query and return exactly one sanitized result.
+
+        Args:
+            connection_string: Database connection string
+            query: SQLModel query to execute
+
+        Returns:
+            Single sanitized model instance
+
+        Raises:
+            Exception: If zero or more than one results found
+        """
+        engine = create_engine(connection_string)
+        with Session(engine) as session:
+            result = session.exec(query).one()
+            if not hasattr(result, "sanitize"):
+                raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
+            return result.sanitize()
