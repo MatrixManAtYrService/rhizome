@@ -7,7 +7,7 @@ that simulate their behavior without requiring actual external infrastructure.
 
 from unittest.mock import AsyncMock
 
-from rhizome.tools import CommandResult, GcloudTool, KubectlTool, LogLine, LsofTool, OnePasswordTool, PortInfo
+from rhizome.tools import BritiveInfo, CommandResult, GcloudTool, KubectlTool, LogLine, LsofTool, OnePasswordTool, PortInfo, PybritiveTool
 
 
 class MockKubectlTool(KubectlTool):
@@ -95,6 +95,20 @@ class MockGcloudTool(GcloudTool):
     async def set_cluster_server(self, cluster_name: str, server_url: str) -> CommandResult:
         """Mock setting cluster server - always succeeds."""
         return CommandResult(returncode=0, stdout=f"Cluster '{cluster_name}' set.", stderr="")
+
+
+class MockPybritiveTool(PybritiveTool):
+    """Mock pybritive tool that returns test credentials."""
+
+    async def checkout(self, resource_path: str) -> BritiveInfo:
+        """Return mock credentials for testing."""
+        # Return mock credentials based on the nushell output format
+        return BritiveInfo(
+            username="btu.matthew.rixman.63854",
+            password="v4REDACTEDav",
+            host="db-maxscale-usprod.global.clover.network",
+            port=3326,
+        )
 
 
 class MockLsofTool(LsofTool):

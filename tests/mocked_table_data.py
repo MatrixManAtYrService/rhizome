@@ -15,11 +15,13 @@ from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
 from rhizome.environments.demo.billing_event import DemoBillingEvent
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.environments.dev.billing_event import DevBillingEvent
+from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
 from rhizome.models.base import SanitizableModel
 from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
 from rhizome.models.billing_event.app_metered_event import AppMeteredEvent
+from rhizome.models.na_billing.stage_charge import StageCharge
 
 T = TypeVar("T", bound=SanitizableModel)
 
@@ -168,6 +170,34 @@ def get_mock_app_metered_event() -> AppMeteredEvent:
     )
 
 
+def get_mock_stage_charge() -> StageCharge:
+    """Get mock stage charge data based on production record 1."""
+    return StageCharge(
+        id=1,
+        uuid="S9GBXXVC8P72J",
+        merchant_id=210342,
+        currency="USD",
+        amount=429,
+        tax=None,
+        developer_portion=None,
+        status="REFUND_DOWNGRADE_PENDING",
+        developer_status=None,
+        status_owner="AppBillingController",
+        type="PRORATED_SUBSCRIPTION",
+        tax_classification_code=None,
+        start_date=datetime.datetime(2018, 2, 20, 20, 49, 9),
+        end_date=datetime.datetime(2018, 3, 1, 0, 0, 0),
+        created_time=datetime.datetime(2018, 2, 21, 21, 14, 23),
+        modified_time=datetime.datetime(2018, 2, 21, 21, 14, 23),
+        export_month=None,
+        status_modified_time=None,
+        request_uuid="DKTJC5HM7PD5R",
+        promoted_time=None,
+        promoted_id=None,
+        parent_id=None,
+    )
+
+
 def assert_fee_summary(actual: FeeSummary, expected: FeeSummary) -> None:
     """Assert that actual fee summary matches expected sanitized structure."""
     assert actual is not None, "Fee summary should exist"
@@ -203,6 +233,23 @@ def assert_app_metered_event(actual: AppMeteredEvent, expected: AppMeteredEvent)
     # Check that non-UUID fields match expected values
     assert actual.environment == expected.environment, f"Expected environment {expected.environment}, got {actual.environment}"
     assert actual.count == expected.count, f"Expected count {expected.count}, got {actual.count}"
+    assert actual.id == expected.id, f"Expected id {expected.id}, got {actual.id}"
+
+
+def assert_stage_charge(actual: StageCharge, expected: StageCharge) -> None:
+    """Assert that actual stage charge matches expected sanitized structure."""
+    assert actual is not None, "Stage charge should exist"
+
+    # Check that UUID fields are sanitized (hashed)
+    assert actual.uuid.startswith("Hash"), "uuid should be sanitized"
+    assert actual.request_uuid.startswith("Hash"), "request_uuid should be sanitized"
+
+    # Check that non-UUID fields match expected values
+    assert actual.merchant_id == expected.merchant_id, f"Expected merchant_id {expected.merchant_id}, got {actual.merchant_id}"
+    assert actual.currency == expected.currency, f"Expected currency {expected.currency}, got {actual.currency}"
+    assert actual.amount == expected.amount, f"Expected amount {expected.amount}, got {actual.amount}"
+    assert actual.status == expected.status, f"Expected status {expected.status}, got {actual.status}"
+    assert actual.type == expected.type, f"Expected type {expected.type}, got {actual.type}"
     assert actual.id == expected.id, f"Expected id {expected.id}, got {actual.id}"
 
 
@@ -266,6 +313,16 @@ TEST_DATA_SPECS: dict[type[SanitizableModel], dict[type[Any], TestDataSpec[Any]]
             get_mock_data=get_mock_app_metered_event,  # Mocked tests use production mock data
             get_expected_data=get_mock_demo_app_metered_event,  # Real tests expect demo-specific data
             check_assertions=assert_app_metered_event,
+        ),
+    },
+    StageCharge: {
+        # For na-billing environment
+        NorthAmericaBilling: TestDataSpec(
+            model_class=StageCharge,
+            use_id=1,  # Using record ID 1 from the sample data
+            get_mock_data=get_mock_stage_charge,
+            get_expected_data=get_mock_stage_charge,  # Real tests expect production data
+            check_assertions=assert_stage_charge,
         ),
     },
 }

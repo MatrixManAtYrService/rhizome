@@ -23,13 +23,15 @@ from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
 from rhizome.environments.demo.billing_event import DemoBillingEvent
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.environments.dev.billing_event import DevBillingEvent
+from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
 from rhizome.models.base import SanitizableModel
 from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
 from rhizome.models.billing_event.app_metered_event import AppMeteredEvent
+from rhizome.models.na_billing.stage_charge import StageCharge
 from rhizome.tools import Tools
-from tests.mocked_subprocesses import MockGcloudTool, MockKubectlTool, MockLsofTool, MockOnePasswordTool
+from tests.mocked_subprocesses import MockGcloudTool, MockKubectlTool, MockLsofTool, MockOnePasswordTool, MockPybritiveTool
 from tests.mocked_table_data import TEST_DATA_SPECS
 
 ENVIRONMENT_DATABASE_COMBINATIONS = [
@@ -39,6 +41,7 @@ ENVIRONMENT_DATABASE_COMBINATIONS = [
     (NorthAmericaBillingEvent, AppMeteredEvent),
     (DevBillingEvent, AppMeteredEvent),
     (DemoBillingEvent, AppMeteredEvent),
+    (NorthAmericaBilling, StageCharge),
 ]
 
 
@@ -58,7 +61,8 @@ def test_mocked_environment_database_access(
         kubectl=MockKubectlTool(),
         onepassword=MockOnePasswordTool(),
         lsof=MockLsofTool(),
-        gcloud=MockGcloudTool()
+        gcloud=MockGcloudTool(),
+        pybritive=MockPybritiveTool()
     )
 
     # Mock SQLModel database session to return appropriate test data

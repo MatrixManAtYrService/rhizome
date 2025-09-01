@@ -48,9 +48,16 @@ class ClusterCredentials:
     username: str
     password: str
     host: str
+
+
+@dataclass
+class BritiveInfo:
+    """Information returned by pybritive checkout."""
+
+    username: str
+    password: str
+    host: str
     port: int
-    database: str
-    connection_string: str
 
 
 class KubectlTool(ABC):
@@ -109,6 +116,14 @@ class LsofTool(ABC):
     @abstractmethod
     async def check_port(self, port: int) -> list[PortInfo]:
         """Check if a port is in use."""
+
+
+class PybritiveTool(ABC):
+    """Abstract pybritive tool for temporary database credentials."""
+
+    @abstractmethod
+    async def checkout(self, resource_path: str) -> BritiveInfo:
+        """Checkout temporary credentials from Britive."""
 
 
 # Concrete implementations using actual subprocess calls
@@ -269,6 +284,65 @@ class ExternalLsofTool(LsofTool):
             return []  # Error checking port, assume not in use
 
 
+class ExternalPybritiveTool(PybritiveTool):
+    """External pybritive tool using subprocess."""
+
+    async def checkout(self, resource_path: str) -> BritiveInfo:
+        """Checkout temporary credentials from Britive."""
+        result = await self._run_command(["pybritive", "checkout", resource_path])
+        
+        if not result.success:
+            raise RuntimeError(f"Pybritive checkout failed: {result.stderr}")
+        
+        lines = [line.strip() for line in result.stdout.splitlines()]
+        
+        # Parse the pybritive output
+        # Expected format:
+        # Temp MySQL username: {username}
+        # Temp password: {password} 
+        # For billing in usprod connect to server: {host}:{port}
+        
+        username = ""
+        password = ""
+        host = ""
+        port = 0
+        
+        for line in lines:
+            if line.startswith("Temp MySQL username:"):
+                username = line.split(":", 1)[1].strip()
+            elif line.startswith("Temp password:"):
+                password = line.split(":", 1)[1].strip()
+            elif line.startswith("For billing in usprod connect to server:"):
+                server_info = line.split(":", 2)[-1].strip()  # Get everything after the last ':'
+                if ":" in server_info:
+                    host, port_str = server_info.rsplit(":", 1)
+                    port = int(port_str)
+                else:
+                    host = server_info
+                    port = 3326  # Default MySQL port
+        
+        if not all([username, password, host, port]):
+            raise RuntimeError(f"Failed to parse pybritive output: {result.stdout}")
+        
+        return BritiveInfo(username=username, password=password, host=host, port=port)
+
+    async def _run_command(self, args: list[str]) -> CommandResult:
+        """Run a pybritive command and return result."""
+        import asyncio
+        
+        process = await asyncio.create_subprocess_exec(
+            *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await process.communicate()
+
+        return CommandResult(
+            returncode=process.returncode or 0,
+            stdout=stdout.decode() if stdout else "",
+            stderr=stderr.decode() if stderr else "",
+        )
+
+
 class Tools:
     """Container for all external tool dependencies with dependency injection."""
 
@@ -278,6 +352,7 @@ class Tools:
         gcloud: GcloudTool | None = None,
         onepassword: OnePasswordTool | None = None,
         lsof: LsofTool | None = None,
+        pybritive: PybritiveTool | None = None,
     ) -> None:
         """
         Initialize tools with optional dependency injection.
@@ -287,8 +362,10 @@ class Tools:
             gcloud: gcloud tool (defaults to ExternalGcloudTool)
             onepassword: 1Password CLI tool (defaults to ExternalOnePasswordTool)
             lsof: lsof tool (defaults to ExternalLsofTool)
+            pybritive: pybritive tool (defaults to ExternalPybritiveTool)
         """
         self.kubectl = kubectl or ExternalKubectlTool()
         self.gcloud = gcloud or ExternalGcloudTool()
         self.onepassword = onepassword or ExternalOnePasswordTool()
         self.lsof = lsof or ExternalLsofTool()
+        self.pybritive = pybritive or ExternalPybritiveTool()
