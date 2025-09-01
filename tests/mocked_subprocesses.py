@@ -7,7 +7,7 @@ that simulate their behavior without requiring actual external infrastructure.
 
 from unittest.mock import AsyncMock
 
-from rhizome.tools import CommandResult, KubectlTool, LogLine, LsofTool, OnePasswordTool, PortInfo
+from rhizome.tools import CommandResult, GcloudTool, KubectlTool, LogLine, LsofTool, OnePasswordTool, PortInfo
 
 
 class MockKubectlTool(KubectlTool):
@@ -35,12 +35,28 @@ class MockKubectlTool(KubectlTool):
         """Return a mock subprocess for port forwarding."""
         mock_process = AsyncMock()
         mock_process.pid = 12345
+        mock_process.returncode = None  # Process is running
+        
+        # Create a mock stdout that yields a few messages then stops
+        stdout_lines = [
+            f"Forwarding from 127.0.0.1:{local_port} -> {remote_port}\n".encode(),
+            f"Forwarding from [::1]:{local_port} -> {remote_port}\n".encode(),
+            b"",  # Empty bytes to signal end of output
+        ]
+        stdout_iterator = iter(stdout_lines)
+        
+        async def mock_stdout_readline():
+            try:
+                return next(stdout_iterator)
+            except StopIteration:
+                return b""  # Return empty bytes when no more lines
+        
         mock_process.stdout = AsyncMock()
         mock_process.stderr = AsyncMock()
-        mock_process.stdout.readline = AsyncMock(
-            return_value=f"Forwarding from 127.0.0.1:{local_port} -> {remote_port}\n".encode()
-        )
+        mock_process.stdout.readline = mock_stdout_readline
         mock_process.stderr.readline = AsyncMock(return_value=b"")
+        mock_process.wait = AsyncMock(return_value=0)  # Process completes successfully
+        
         return mock_process
 
     async def cluster_info(self, context: str) -> CommandResult:
@@ -69,12 +85,41 @@ class MockOnePasswordTool(OnePasswordTool):
             return "mock_prod_password_789"
 
 
+class MockGcloudTool(GcloudTool):
+    """Mock gcloud tool that simulates Google Cloud operations."""
+
+    async def get_cluster_credentials(self, project: str, cluster: str, region: str) -> CommandResult:
+        """Mock getting cluster credentials - always succeeds."""
+        return CommandResult(returncode=0, stdout="kubeconfig entry generated", stderr="")
+
+    async def set_cluster_server(self, cluster_name: str, server_url: str) -> CommandResult:
+        """Mock setting cluster server - always succeeds."""
+        return CommandResult(returncode=0, stdout=f"Cluster '{cluster_name}' set.", stderr="")
+
+
 class MockLsofTool(LsofTool):
-    """Mock lsof tool that reports ports as available."""
+    """Mock lsof tool that simulates port usage correctly for mocked tests."""
+    
+    def __init__(self):
+        self._forwarded_ports: set[int] = set()
+        self._call_count: dict[int, int] = {}
 
     async def check_port(self, port: int) -> list[PortInfo]:
-        """Return empty list indicating port is available."""
-        return []
+        """
+        Return port info based on call patterns.
+        
+        First call for a port: return empty (port available for forwarding)
+        Subsequent calls: return port info (port is now forwarded and in use)
+        """
+        self._call_count[port] = self._call_count.get(port, 0) + 1
+        
+        # First call: port is available for forwarding
+        if self._call_count[port] == 1:
+            return []
+        
+        # Subsequent calls: port is now forwarded and in use
+        # This helps _wait_for_port_forward succeed
+        return [PortInfo(pid=12345, process_name="kubectl", port=port)]
 
 
 class MockNAProductionKubectlTool(MockKubectlTool):

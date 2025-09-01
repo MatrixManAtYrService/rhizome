@@ -176,6 +176,69 @@ GET /ps
 - **Fast testing**: `SLEEP_OVERRIDE=0.1` for quick test execution
 - **Simulation mode**: `RHIZOME_SIMULATE=true` for kubectl-free testing
 
+## Testing Architecture
+
+### Tool Abstraction and Mocking Strategy
+
+The codebase implements a comprehensive testing strategy using dependency injection and mocking to isolate external tool dependencies:
+
+#### `src/rhizome/tools.py` - Tool Abstraction Layer
+- **Abstract base classes** define interfaces for external tools:
+  - `KubectlTool` - Kubernetes operations (exec, logs, port-forward, cluster info)
+  - `OnePasswordTool` - Secret retrieval operations
+  - `LsofTool` - Port usage checking operations
+  - `GcloudTool` - Google Cloud operations
+- **Concrete implementations** provide real subprocess-based functionality:
+  - `ExternalKubectlTool` - Real kubectl commands via `asyncio.create_subprocess_exec`
+  - `ExternalOnePasswordTool` - Real 1Password CLI operations
+  - `ExternalLsofTool` - Real lsof port checking
+  - `ExternalGcloudTool` - Real gcloud operations
+- **`Tools` container class** enables dependency injection with defaults to real implementations
+
+#### `tests/mocked_subprocesses.py` - Mock Tool Implementations
+- **`MockKubectlTool`** - Simulates CloudSQL proxy behavior without real kubectl:
+  - Returns predefined log output with mock port information
+  - Provides mock subprocess objects for port forwarding
+  - Simulates cluster info and pod status responses
+- **`MockOnePasswordTool`** - Returns environment-specific mock passwords:
+  - Maps 1Password references to predefined test credentials
+  - Eliminates dependency on actual 1Password CLI and vault access
+- **`MockLsofTool`** - Always reports ports as available:
+  - Returns empty lists indicating no port conflicts
+  - Enables test isolation without actual port checking
+- **Specialized mocks** like `MockNAProductionKubectlTool` for environment-specific testing
+
+#### `tests/test_environment_access.py` - Dual Testing Strategy
+The test suite implements a comprehensive approach with both mocked and real infrastructure testing:
+
+**Mocked Testing (`test_mocked_environment_database_access`)**:
+- Uses mock tools via dependency injection: `Tools(kubectl=MockKubectlTool(), onepassword=MockOnePasswordTool(), lsof=MockLsofTool())`
+- Mocks SQLModel database sessions with `monkeypatch` to return predefined test data
+- Tests all environment/database combinations (6 combinations across na/dev/demo environments and billing-bookkeeper/billing-event databases)
+- Validates data structure and business logic without external dependencies
+- Fast execution suitable for continuous integration
+
+**Real Infrastructure Testing (`test_real_environment_database_access`)**:
+- Uses real tools (default `RhizomeClient` with `ExternalKubectlTool`, etc.)
+- Requires `@pytest.mark.external_infra` marker and actual cluster access
+- Tests against live databases with real kubectl port forwarding
+- Validates end-to-end functionality including network connectivity and authentication
+- Slower execution, typically run in staging/integration environments
+
+### Test Data Management
+- **`tests/mocked_table_data.py`** provides test specifications per model/environment combination
+- Each test spec defines:
+  - `get_mock_data()` - Synthetic data for mocked tests
+  - `get_expected_data()` - Real data expectations for infrastructure tests
+  - `check_assertions()` - Validation logic for both test types
+
+### Testing Benefits
+1. **Fast feedback loop** - Mocked tests run quickly without external dependencies
+2. **Comprehensive coverage** - All environment/database combinations tested
+3. **Isolation** - Mocked tests don't interfere with production systems
+4. **Integration validation** - Real tests verify actual infrastructure connectivity
+5. **Maintainability** - Abstract interfaces allow easy mock implementation updates
+
 ## Key Design Principles
 
 1. **Separation of concerns**: Generic process management vs specific implementations
@@ -183,7 +246,9 @@ GET /ps
 3. **Real-time output**: Live subprocess output appears immediately in server logs
 4. **Automatic cleanup**: Processes self-remove when completed
 5. **Environment isolation**: Minimal, focused environment configuration modules
-6. **Testability**: Simulation modes and sandbox configurations for testing
+6. **Testability**: Simulation modes, sandbox configurations, and comprehensive mocking for testing
+7. **Dependency injection**: Abstract tool interfaces enable easy testing and mocking
+8. **Dual testing strategy**: Both mocked (fast) and real infrastructure (comprehensive) test coverage
 
 ## Future Extensions
 
@@ -192,3 +257,10 @@ To add new process types:
 2. Add endpoint in `server.py` that calls the function
 3. Create environment modules in `src/rhizome/environments/*/` as needed
 4. All subprocess management handled automatically by `ProcessManager`
+
+To add new external tool dependencies:
+1. Define abstract interface in `src/rhizome/tools.py`
+2. Implement concrete external version using subprocess
+3. Create mock implementation in `tests/mocked_subprocesses.py`
+4. Add to `Tools` container class with dependency injection support
+5. Update tests to use mock implementations for fast testing

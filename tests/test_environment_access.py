@@ -29,7 +29,7 @@ from rhizome.models.base import SanitizableModel
 from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
 from rhizome.models.billing_event.app_metered_event import AppMeteredEvent
 from rhizome.tools import Tools
-from tests.mocked_subprocesses import MockKubectlTool, MockLsofTool, MockOnePasswordTool
+from tests.mocked_subprocesses import MockGcloudTool, MockKubectlTool, MockLsofTool, MockOnePasswordTool
 from tests.mocked_table_data import TEST_DATA_SPECS
 
 ENVIRONMENT_DATABASE_COMBINATIONS = [
@@ -57,7 +57,8 @@ def test_mocked_environment_database_access(
     mock_tools = Tools(
         kubectl=MockKubectlTool(),
         onepassword=MockOnePasswordTool(),
-        lsof=MockLsofTool()
+        lsof=MockLsofTool(),
+        gcloud=MockGcloudTool()
     )
 
     # Mock SQLModel database session to return appropriate test data
