@@ -55,10 +55,13 @@
             }
             prev;
 
+        # Use artifactory as a proxy for PyPI?
+        useArtifactory = builtins.getEnv "USE_ARTIFACTORY_PYPI_PROXY" != "";
+        
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [
-            # nixpkgsArtifactoryOverlay
+          overlays = nixpkgs.lib.optionals useArtifactory [
+            nixpkgsArtifactoryOverlay
           ];
           config.allowUnfree = true;
         };
@@ -79,11 +82,12 @@
         pythonSet = (pkgs.callPackage pyproject-nix.build.packages {
           inherit python;
         }).overrideScope (
-          nixpkgs.lib.composeManyExtensions [
+          nixpkgs.lib.composeManyExtensions ([
             pyproject-build-systems.overlays.default
             pyprojectOverlay
-            # pyprojectArtifactoryOverlay
-          ]
+          ] ++ nixpkgs.lib.optionals useArtifactory [
+            pyprojectArtifactoryOverlay
+          ])
         );
 
         editableOverlay = workspace.mkEditablePyprojectOverlay {
