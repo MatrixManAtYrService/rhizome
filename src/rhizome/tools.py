@@ -289,12 +289,17 @@ class ExternalPybritiveTool(PybritiveTool):
 
     async def checkout(self, resource_path: str) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
+        import structlog
+        
+        log = structlog.get_logger()
         result = await self._run_command(["pybritive", "checkout", resource_path])
         
         if not result.success:
+            log.error("Pybritive checkout failed", stderr=result.stderr, stdout=result.stdout)
             raise RuntimeError(f"Pybritive checkout failed: {result.stderr}")
         
         lines = [line.strip() for line in result.stdout.splitlines()]
+        log.debug("Pybritive raw output", lines=lines)
         
         # Parse the pybritive output
         # Expected format:
@@ -313,15 +318,32 @@ class ExternalPybritiveTool(PybritiveTool):
             elif line.startswith("Temp password:"):
                 password = line.split(":", 1)[1].strip()
             elif line.startswith("For billing in usprod connect to server:"):
-                server_info = line.split(":", 2)[-1].strip()  # Get everything after the last ':'
-                if ":" in server_info:
-                    host, port_str = server_info.rsplit(":", 1)
+                # Parse "For billing in usprod connect to server: host:port"
+                server_part = line.split("connect to server:", 1)[1].strip()
+                if ":" in server_part:
+                    host, port_str = server_part.rsplit(":", 1)
                     port = int(port_str)
                 else:
-                    host = server_info
+                    host = server_part
                     port = 3326  # Default MySQL port
         
+        # Log parsed credentials (redacting password)
+        log.info(
+            "Pybritive credentials parsed",
+            username=username,
+            password="[REDACTED]" if password else "",
+            host=host,
+            port=port,
+            resource_path=resource_path,
+        )
+        
         if not all([username, password, host, port]):
+            log.error("Failed to parse pybritive output", missing_fields={
+                "username": bool(username),
+                "password": bool(password), 
+                "host": bool(host),
+                "port": bool(port)
+            })
             raise RuntimeError(f"Failed to parse pybritive output: {result.stdout}")
         
         return BritiveInfo(username=username, password=password, host=host, port=port)
