@@ -27,11 +27,11 @@ class DemoBillingEvent(DatabaseEnvironment):
 
     def get_sql_connection(self) -> str:
         """Get CloudSQL connection string."""
-        return "clover-dev-managed:us-west1:billing-event-demo"
+        return "clover-dev-managed:us-west1:billing-event-demo2"
 
     def get_database_name(self) -> str:
         """Get database name."""
-        return "billing-event-demo"
+        return "billing-event-dev"
 
     def get_username(self) -> str:
         """Get database username."""
