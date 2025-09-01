@@ -57,7 +57,7 @@
 
         # Use artifactory as a proxy for PyPI?
         useArtifactory = builtins.getEnv "USE_ARTIFACTORY_PYPI_PROXY" != "";
-        
+
         pkgs = import nixpkgs {
           inherit system;
           overlays = nixpkgs.lib.optionals useArtifactory [

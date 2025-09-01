@@ -1,17 +1,17 @@
 """Rhizome environments package."""
 
-from rhizome.environments.demo import DemoBillingEvent, DemoBookkeeper
-from rhizome.environments.dev import DevBillingEvent, DevBookkeeper
+from rhizome.environments.demo import DemoBillingBookkeeper, DemoBillingEvent
+from rhizome.environments.dev import DevBillingBookkeeper, DevBillingEvent
 from rhizome.environments.local_test import LocalTest
+from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
-from rhizome.environments.na_prod.bookeeper import NorthAmericaBookkeeper
 
 __all__ = [
     "LocalTest",
-    "NorthAmericaBookkeeper", 
+    "NorthAmericaBillingBookkeeper",
     "NorthAmericaBillingEvent",
-    "DevBookkeeper",
-    "DevBillingEvent", 
-    "DemoBookkeeper",
+    "DevBillingBookkeeper",
+    "DevBillingEvent",
+    "DemoBillingBookkeeper",
     "DemoBillingEvent",
 ]

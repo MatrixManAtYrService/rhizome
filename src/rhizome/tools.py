@@ -78,6 +78,10 @@ class KubectlTool(ABC):
     async def get_pod_status(self, pod_name: str, context: str | None = None) -> CommandResult:
         """Get pod status."""
 
+    @abstractmethod
+    async def unset_cluster_ca(self, cluster_name: str) -> CommandResult:
+        """Unset cluster certificate authority data."""
+
 
 class GcloudTool(ABC):
     """Abstract gcloud tool for Google Cloud operations."""
@@ -158,9 +162,7 @@ class ExternalKubectlTool(KubectlTool):
             f"{local_port}:{remote_port}",
         ]
 
-        process = await asyncio.create_subprocess_exec(
-            *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-        )
+        process = await asyncio.create_subprocess_exec(*args)
         return process
 
     async def get_pod_status(self, pod_name: str, context: str | None = None) -> CommandResult:
@@ -169,6 +171,12 @@ class ExternalKubectlTool(KubectlTool):
         if context:
             args.extend(["--context", context])
         return await self._run_command(args)
+
+    async def unset_cluster_ca(self, cluster_name: str) -> CommandResult:
+        """Unset cluster certificate authority data."""
+        return await self._run_command(
+            ["kubectl", "config", "unset", f"clusters.{cluster_name}.certificate-authority-data"]
+        )
 
     async def _run_command(self, args: list[str]) -> CommandResult:
         """Run a kubectl command and return result."""

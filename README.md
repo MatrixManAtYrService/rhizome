@@ -8,18 +8,18 @@ When it's ready, you'll be able to write apps that do this:
 
 ```python3
 from sqlmodel import Field, Session, SQLModel, create_engine, select
-from rhizome.models.bookeeper import fee_summary
+from rhizome.models.billing_bookkeeper import fee_summary
 import rhizome as r
 
 
 # forward ports and checkout credentials
-handle = r.environments.na_prod.bookeeper.get_handle()
+handle = r.environments.na_prod.billing_bookkeeper.get_handle()
 
 engine = create_engine(handle.connection_string)
 with Session(engine) as session:
 
   # contains models for each table
-  FS = r.models.bookkeeper.FeeSummary
+  FS = r.models.billing_bookkeeper.FeeSummary
   statement = select(FS).where(FS.billing_entity_uuid="JW8H2B9BT6B11R2HHXY3HYQCN6")
 
   # the modles have per-table sanitization functions

@@ -11,8 +11,10 @@ import asyncio
 import socket
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, TypeVar
+from urllib.parse import quote_plus
 
 from rhizome.client import RhizomeClient
+from rhizome.cluster import connect_cluster
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig
 from rhizome.portforward import cloudsql_port_forward
 
@@ -33,6 +35,17 @@ class DatabaseEnvironment(Environment, ABC):
         """Initialize database environment with CloudSQL port forwarding."""
         self.client = client
         self.local_port = self._find_unused_port()
+
+        # Connect to the cluster first
+        asyncio.run(
+            connect_cluster(
+                project=self.get_project(),
+                cluster=self.get_cluster_name(),
+                region=self.get_cluster_region(),
+                server=self.get_cluster_server(),
+                tools=client.tools,
+            )
+        )
 
         # Start CloudSQL port forward using the environment-specific configuration
         asyncio.run(
@@ -56,6 +69,22 @@ class DatabaseEnvironment(Environment, ABC):
             except OSError:
                 continue  # Port is in use, try the next one
         raise RuntimeError("No unused ports available in range")
+
+    @abstractmethod
+    def get_project(self) -> str:
+        """Get the Google Cloud project for this environment."""
+
+    @abstractmethod
+    def get_cluster_name(self) -> str:
+        """Get the Kubernetes cluster name for this environment."""
+
+    @abstractmethod
+    def get_cluster_region(self) -> str:
+        """Get the Kubernetes cluster region for this environment."""
+
+    @abstractmethod
+    def get_cluster_server(self) -> str:
+        """Get the Kubernetes cluster server for this environment."""
 
     @abstractmethod
     def get_kube_context(self) -> str:
@@ -111,7 +140,8 @@ class DatabaseEnvironment(Environment, ABC):
     def _get_connection_string(self) -> str:
         """Build the connection string for this environment."""
         db_config = self.get_database_config()
-        return f"mysql+pymysql://{db_config.username}:{db_config.password}@{db_config.host}:{db_config.port}/{db_config.database}"
+        encoded_password = quote_plus(db_config.password)
+        return f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}"
 
     def select_first(self, query: SelectOfScalar[TFirst]) -> TFirst | None:
         """Execute a query and return the first sanitized result or None."""

@@ -10,42 +10,45 @@ from pathlib import Path
 
 import pytest
 import uvicorn
+from _pytest.config import Config
+from _pytest.config.argparsing import Parser
+from _pytest.nodes import Item
 
 from rhizome.config import Home
 from rhizome.server import app, setup_logging
 from tests.utils import get_open_port
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: Parser) -> None:
     """Add custom pytest command line options."""
     parser.addoption(
-        "--local-cluster", 
-        action="store_true", 
-        default=False, 
-        help="run tests that require a local Kind cluster"
+        "--local-cluster",
+        action="store_true",
+        default=False,
+        help="run tests that require a local Kind cluster",
     )
     parser.addoption(
-        "--external-infra", 
-        action="store_true", 
-        default=False, 
-        help="run tests that require external infrastructure (production CloudSQL, 1Password, etc.)"
+        "--external-infra",
+        action="store_true",
+        default=False,
+        help="run tests that require external infrastructure (production CloudSQL, 1Password, etc.)",
     )
 
 
-def pytest_configure(config):
+def pytest_configure(config: Config) -> None:
     """Register custom markers."""
     config.addinivalue_line("markers", "local_cluster: mark test as requiring a local Kind cluster")
     config.addinivalue_line("markers", "external_infra: mark test as requiring external infrastructure")
 
 
-def pytest_collection_modifyitems(config, items):
+def pytest_collection_modifyitems(config: Config, items: list[Item]) -> None:
     """Skip cluster and external infra tests unless their respective options are passed."""
     local_cluster_enabled = config.getoption("--local-cluster")
     external_infra_enabled = config.getoption("--external-infra")
-    
+
     skip_local_cluster = pytest.mark.skip(reason="need --local-cluster option to run")
     skip_external_infra = pytest.mark.skip(reason="need --external-infra option to run")
-    
+
     for item in items:
         if "local_cluster" in item.keywords and not local_cluster_enabled:
             item.add_marker(skip_local_cluster)

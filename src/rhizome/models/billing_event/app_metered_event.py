@@ -26,7 +26,7 @@ class AppMeteredEvent(SanitizableModel, table=True):
 
     __tablename__ = "app_metered_event"  # type: ignore
 
-    id: int = Field(primary_key=True, description="Primary key, auto-incrementing")
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the app metered event")
     merchant_uuid: str = Field(max_length=13, description="UUID of the merchant")
     developer_app_uuid: str = Field(max_length=13, description="UUID of the developer application")

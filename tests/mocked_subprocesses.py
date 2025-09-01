@@ -5,7 +5,6 @@ This module contains mock implementations of external tools (kubectl, 1Password,
 that simulate their behavior without requiring actual external infrastructure.
 """
 
-import asyncio
 from unittest.mock import AsyncMock
 
 from rhizome.tools import CommandResult, KubectlTool, LogLine, LsofTool, OnePasswordTool, PortInfo
@@ -51,6 +50,10 @@ class MockKubectlTool(KubectlTool):
     async def get_pod_status(self, pod_name: str, context: str | None = None) -> CommandResult:
         """Mock pod status."""
         return CommandResult(returncode=0, stdout="Running", stderr="")
+
+    async def unset_cluster_ca(self, cluster_name: str) -> CommandResult:
+        """Mock unset cluster CA."""
+        return CommandResult(returncode=0, stdout="", stderr="")
 
 
 class MockOnePasswordTool(OnePasswordTool):

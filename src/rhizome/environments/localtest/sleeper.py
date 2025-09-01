@@ -25,6 +25,6 @@ def get_handle(client: RhizomeClient | None = None, iterations: int = 5) -> Hand
         Handle: Connection handle with sleeper process info
     """
     if client is None:
-        client = RhizomeClient()
+        client = RhizomeClient(data_in_logs=False)
 
     return client.request_sleeper(iterations=iterations)

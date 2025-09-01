@@ -9,7 +9,7 @@ from sqlmodel import select
 
 from rhizome.client import RhizomeClient
 from rhizome.environments import LocalTest
-from rhizome.models.bookkeeper.fee_summary import FeeSummary
+from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
 from tests.conftest import RunningServer
 
 
@@ -17,7 +17,7 @@ from tests.conftest import RunningServer
 def test_mysql_connection_and_sanitization(rhizome_server: RunningServer) -> None:
     """Test MySQL connection, data query, and sanitization functionality."""
     # Create client instance with the test home
-    client = RhizomeClient(home=rhizome_server.home)
+    client = RhizomeClient(home=rhizome_server.home, data_in_logs=False)
 
     # Create LocalTest environment which handles port forwarding and connection
     local_test = LocalTest(client)

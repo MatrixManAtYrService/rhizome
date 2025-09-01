@@ -27,7 +27,7 @@ def get_handle(client: RhizomeClient | None = None, local_port: int = 3306, dela
         Handle: Connection handle with MySQL connection string including credentials
     """
     if client is None:
-        client = RhizomeClient()
+        client = RhizomeClient(data_in_logs=False)
 
     # Request port forward to local Kind cluster MySQL with SSE credential waiting
     return client.request_localk8s(

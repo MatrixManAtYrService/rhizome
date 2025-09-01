@@ -6,13 +6,22 @@ to verify the data structure and sanitization behavior.
 """
 
 import datetime
+from collections.abc import Callable
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Any, Callable, Type
+from typing import Any, TypeVar
 
+from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
+from rhizome.environments.demo.billing_event import DemoBillingEvent
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from rhizome.environments.dev.billing_event import DevBillingEvent
+from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
+from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
 from rhizome.models.base import SanitizableModel
+from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
 from rhizome.models.billing_event.app_metered_event import AppMeteredEvent
-from rhizome.models.bookkeeper.fee_summary import FeeSummary
+
+T = TypeVar("T", bound=SanitizableModel)
 
 
 def get_mock_fee_summary() -> FeeSummary:
@@ -22,7 +31,7 @@ def get_mock_fee_summary() -> FeeSummary:
         uuid="JW8H2B9BT6B11R2HHXY3HYQCN6",
         billing_entity_uuid="MERCHANT_UUID_EXAMPLE_123456",
         billing_date=datetime.date(2025, 1, 15),
-        fee_category="Processing",
+        fee_category="APP_SUB_3P_RETAIL",
         fee_code="MW63DAWPN6JGY.S",
         currency="USD",
         total_period_units=Decimal("1.0000"),
@@ -162,13 +171,13 @@ def get_mock_app_metered_event() -> AppMeteredEvent:
 def assert_fee_summary(actual: FeeSummary, expected: FeeSummary) -> None:
     """Assert that actual fee summary matches expected sanitized structure."""
     assert actual is not None, "Fee summary should exist"
-    
+
     # Check that UUID fields are sanitized (hashed)
     assert actual.billing_entity_uuid.startswith("Hash"), "billing_entity_uuid should be sanitized"
     assert actual.uuid.startswith("Hash"), "uuid should be sanitized"
     assert actual.fee_rate_uuid.startswith("Hash"), "fee_rate_uuid should be sanitized"
     assert actual.request_uuid.startswith("Hash"), "request_uuid should be sanitized"
-    
+
     # Check that non-UUID fields match expected values
     assert actual.fee_code == expected.fee_code, f"Expected fee_code {expected.fee_code}, got {actual.fee_code}"
     assert actual.currency == expected.currency, f"Expected currency {expected.currency}, got {actual.currency}"
@@ -180,7 +189,7 @@ def assert_fee_summary(actual: FeeSummary, expected: FeeSummary) -> None:
 def assert_app_metered_event(actual: AppMeteredEvent, expected: AppMeteredEvent) -> None:
     """Assert that actual app metered event matches expected sanitized structure."""
     assert actual is not None, "App metered event should exist"
-    
+
     # Check that UUID fields are sanitized (hashed)
     assert actual.uuid.startswith("Hash"), "uuid should be sanitized"
     assert actual.merchant_uuid.startswith("Hash"), "merchant_uuid should be sanitized"
@@ -190,7 +199,7 @@ def assert_app_metered_event(actual: AppMeteredEvent, expected: AppMeteredEvent)
         assert actual.cos_event_uuid.startswith("Hash"), "cos_event_uuid should be sanitized"
     if actual.billing_event_uuid:
         assert actual.billing_event_uuid.startswith("Hash"), "billing_event_uuid should be sanitized"
-    
+
     # Check that non-UUID fields match expected values
     assert actual.environment == expected.environment, f"Expected environment {expected.environment}, got {actual.environment}"
     assert actual.count == expected.count, f"Expected count {expected.count}, got {actual.count}"
@@ -198,43 +207,36 @@ def assert_app_metered_event(actual: AppMeteredEvent, expected: AppMeteredEvent)
 
 
 @dataclass
-class TestDataSpec:
+class TestDataSpec[T: SanitizableModel]:
     """Specification for test data including mock generation and assertion."""
-    
-    model_class: Type[SanitizableModel]
+
+    model_class: type[T]
     use_id: int
-    get_mock_data: Callable[[], SanitizableModel]
-    get_expected_data: Callable[[], SanitizableModel] 
-    check_assertions: Callable[[SanitizableModel, SanitizableModel], None]
+    get_mock_data: Callable[[], T]
+    get_expected_data: Callable[[], T]
+    check_assertions: Callable[[T, T], None]
 
 
-# Import environment classes for the registry
-from rhizome.environments.demo.billing_event import DemoBillingEvent
-from rhizome.environments.demo.bookeeper import DemoBookkeeper
-from rhizome.environments.dev.billing_event import DevBillingEvent
-from rhizome.environments.dev.bookeeper import DevBookkeeper
-from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
-from rhizome.environments.na_prod.bookeeper import NorthAmericaBookkeeper
 
 # Registry of test data specifications by model class and environment class
-TEST_DATA_SPECS: dict[Type[SanitizableModel], dict[Type[Any], TestDataSpec]] = {
+TEST_DATA_SPECS: dict[type[SanitizableModel], dict[type[Any], TestDataSpec[Any]]] = {
     FeeSummary: {
         # For mocked tests, all environments use the same mock data
-        NorthAmericaBookkeeper: TestDataSpec(
+        NorthAmericaBillingBookkeeper: TestDataSpec(
             model_class=FeeSummary,
             use_id=74347,  # Production record ID
             get_mock_data=get_mock_fee_summary,
             get_expected_data=get_mock_fee_summary,  # Real tests expect production data
             check_assertions=assert_fee_summary,
         ),
-        DevBookkeeper: TestDataSpec(
+        DevBillingBookkeeper: TestDataSpec(
             model_class=FeeSummary,
             use_id=30,  # Dev uses record ID 30
             get_mock_data=get_mock_fee_summary,  # Mocked tests use production mock data
             get_expected_data=get_mock_dev_fee_summary,  # Real tests expect dev data
             check_assertions=assert_fee_summary,
         ),
-        DemoBookkeeper: TestDataSpec(
+        DemoBillingBookkeeper: TestDataSpec(
             model_class=FeeSummary,
             use_id=30,  # Demo uses record ID 30
             get_mock_data=get_mock_fee_summary,  # Mocked tests use production mock data
@@ -245,21 +247,21 @@ TEST_DATA_SPECS: dict[Type[SanitizableModel], dict[Type[Any], TestDataSpec]] = {
     AppMeteredEvent: {
         # For mocked tests, all environments use the same mock data
         NorthAmericaBillingEvent: TestDataSpec(
-            model_class=AppMeteredEvent, 
+            model_class=AppMeteredEvent,
             use_id=883,  # Production record ID
             get_mock_data=get_mock_app_metered_event,
             get_expected_data=get_mock_app_metered_event,  # Real tests expect production data
             check_assertions=assert_app_metered_event,
         ),
         DevBillingEvent: TestDataSpec(
-            model_class=AppMeteredEvent, 
+            model_class=AppMeteredEvent,
             use_id=1,  # Dev uses record ID 1
             get_mock_data=get_mock_app_metered_event,  # Mocked tests use production mock data
             get_expected_data=get_mock_dev_app_metered_event,  # Real tests expect dev data
             check_assertions=assert_app_metered_event,
         ),
         DemoBillingEvent: TestDataSpec(
-            model_class=AppMeteredEvent, 
+            model_class=AppMeteredEvent,
             use_id=1,  # Demo uses record ID 1
             get_mock_data=get_mock_app_metered_event,  # Mocked tests use production mock data
             get_expected_data=get_mock_demo_app_metered_event,  # Real tests expect demo-specific data

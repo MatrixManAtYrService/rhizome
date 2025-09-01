@@ -55,9 +55,9 @@ async def start_portforward(kube_context, kube_namespace, kube_deployment, sql_c
 #### `src/rhizome/server.py` - FastAPI Server
 - **Lifespan management** - Process cleanup on shutdown
 - **Endpoints**:
-  - `POST /sleeper` ’ `start_sleeper()`
-  - `POST /portforward` ’ `start_portforward(request.params)`
-  - `GET /ps` ’ `process_manager.list_processes()`
+  - `POST /sleeper` ï¿½ `start_sleeper()`
+  - `POST /portforward` ï¿½ `start_portforward(request.params)`
+  - `GET /ps` ï¿½ `process_manager.list_processes()`
 - **`PortforwardRequest` model** - Validates JSON payload for kubectl parameters
 
 #### `src/rhizome/config.py` - Configuration Management
@@ -85,7 +85,7 @@ class RhizomeClient:
 
 ### Environment Configurations
 
-#### `src/rhizome/environments/na_prod/bookeeper.py` - Environment-Specific Config
+#### `src/rhizome/environments/na_prod/billing_bookkeeper.py` - Environment-Specific Config
 ```python
 def get_handle() -> Handle:
     return client.request_portforward(
@@ -101,22 +101,22 @@ def get_handle() -> Handle:
 
 ### 1. Client Request Flow
 ```
-User Code ’ Environment Module ’ RhizomeClient ’ HTTP Request ’ FastAPI Server
+User Code ï¿½ Environment Module ï¿½ RhizomeClient ï¿½ HTTP Request ï¿½ FastAPI Server
 ```
 
 ### 2. Process Creation Flow
 ```
-FastAPI Endpoint ’ Process Type Module ’ ProcessManager.start_process() ’ async subprocess
+FastAPI Endpoint ï¿½ Process Type Module ï¿½ ProcessManager.start_process() ï¿½ async subprocess
 ```
 
 ### 3. Output Streaming Flow
 ```
-subprocess stdout ’ stream_process_output() ’ structlog ’ console (with PID/process name)
+subprocess stdout ï¿½ stream_process_output() ï¿½ structlog ï¿½ console (with PID/process name)
 ```
 
 ### 4. Process Tracking Flow
 ```
-ProcessManager._processes set ’ /ps endpoint ’ JSON response with running PIDs
+ProcessManager._processes set ï¿½ /ps endpoint ï¿½ JSON response with running PIDs
 ```
 
 ## Process Lifecycle

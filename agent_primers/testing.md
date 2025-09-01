@@ -25,7 +25,7 @@ Added via `pytest_addoption()` in `conftest.py`:
 
 ### Test Execution
 - `pytest` - runs only unit tests
-- `pytest --local-cluster` - runs unit + local cluster tests  
+- `pytest --local-cluster` - runs unit + local cluster tests
 - `pytest --external-infra` - runs unit + external infra tests
 - `pytest --local-cluster --external-infra` - runs all tests
 
@@ -61,7 +61,7 @@ The local test environment uses separation of concerns:
 ```
 rhizome/
 ├── Makefile                    # Infrastructure management
-├── kind-config.yaml           # Kind cluster configuration  
+├── kind-config.yaml           # Kind cluster configuration
 ├── Tiltfile                   # Application deployment
 └── local_test/                # Local test resources
     ├── kubeconfig             # Generated cluster config

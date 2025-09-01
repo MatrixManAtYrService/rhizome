@@ -1,6 +1,6 @@
 """Dev environment modules."""
 
+from .billing_bookkeeper import DevBillingBookkeeper
 from .billing_event import DevBillingEvent
-from .bookeeper import DevBookkeeper
 
-__all__ = ["DevBookkeeper", "DevBillingEvent"]
+__all__ = ["DevBillingBookkeeper", "DevBillingEvent"]

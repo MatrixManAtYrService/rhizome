@@ -41,6 +41,22 @@ class NorthAmericaBillingEvent(DatabaseEnvironment):
         """Get 1Password reference for credentials."""
         return "op://Shared/EventBillingROCred/password"
 
+    def get_project(self) -> str:
+        """Get the Google Cloud project for this environment."""
+        return "clover-prod-kubernetes"
+
+    def get_cluster_name(self) -> str:
+        """Get the Kubernetes cluster name for this environment."""
+        return "na-prod-us-central1-cluster"
+
+    def get_cluster_region(self) -> str:
+        """Get the Kubernetes cluster region for this environment."""
+        return "us-central1"
+
+    def get_cluster_server(self) -> str:
+        """Get the Kubernetes cluster server for this environment."""
+        return "https://na-prod-ingress-nginx.prod.dsm06.clover.network"
+
     @property
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""

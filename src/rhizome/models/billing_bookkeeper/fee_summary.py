@@ -26,7 +26,7 @@ class FeeSummary(SanitizableModel, table=True):
 
     __tablename__ = "fee_summary"  # type: ignore
 
-    id: int = Field(primary_key=True, description="Primary key, auto-incrementing")
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the fee summary")
     billing_entity_uuid: str = Field(max_length=26, description="UUID of the billing entity")
     billing_date: datetime.date = Field(description="Date for which the fee is being calculated")
