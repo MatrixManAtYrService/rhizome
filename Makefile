@@ -1,4 +1,4 @@
-.PHONY: help up down clean status load-images
+.PHONY: help up down clean status load-images test-help
 
 # Rhizome local development environment using Kind
 CLUSTER_CONFIG = kind-config.yaml
@@ -8,22 +8,25 @@ KUBECONFIG_PATH = $(CURDIR)/local_test/kubeconfig
 help:
 	@echo "*** Rhizome Local Development Environment ***"
 	@echo "Usage:"
-	@echo "  make up          - Create Kind cluster and export kubeconfig"
-	@echo "  make load-images - Pre-pull and load images into Kind cluster"
-	@echo "  make down        - Delete Kind cluster and cleanup"
-	@echo "  make status      - Show cluster status"
-	@echo "  make clean       - Clean up all resources"
+	@echo "  make help           - Show this help message"
+	@echo "  make up             - Create Kind cluster and export kubeconfig"
+	@echo "  make load-images    - Pre-pull and load images (only needed behind corporate proxy)"
+	@echo "  make down           - Delete Kind cluster and cleanup"
+	@echo "  make status         - Show cluster status"
+	@echo "  make clean          - Clean up all resources"
+	@echo "  make test-help      - Show pytest custom options"
 	@echo ""
 	@echo "Workflow:"
 	@echo "  1. make up          # Create cluster"
-	@echo "  2. make load-images # Pre-load images (if corporate network)"
-	@echo "  3. tilt up --stream # Deploy MySQL and services"
-	@echo "  4. tilt down        # Stop services"
-	@echo "  5. make down        # Delete cluster"
+	@echo "  2. make load-images # Pre-load images (only if corporate network blocks kind image pulls)"
+	@echo "  3. tilt up --stream # Deploy kubernetes resources into local cluster (for use by local tests"
+	@echo "  4. hackity hack     # Write code, run tests, repeat"
+	@echo "  5. tilt down        # Stop services"
+	@echo "  6. make down        # Delete cluster"
 
 load-images:
 	@echo "*** Pre-pulling and loading images into Kind cluster ***"
-	@echo "Pulling MySQL image with Podman..."
+	@echo "Pulling MySQL image..."
 	docker pull mysql:8.0
 	
 	@echo "Loading MySQL image into Kind cluster..."
@@ -95,3 +98,20 @@ clean: down
 	docker container prune -f || true
 	
 	@echo "✅ Deep cleanup complete"
+
+test-help:
+	@echo "*** Rhizome Test Options ***"
+	@echo ""
+	@echo "Custom pytest options:"
+	@echo "  --local-cluster     Run tests that require a local Kind cluster"
+	@echo ""
+	@echo "Usage examples:"
+	@echo "  pytest                       # Run tests with no infra requirements"
+	@echo "  pytest --local-cluster       # Like above, but include tests which require a local cluster"
+	@echo "  pytest --external-infra      # Like above, but include tests which talk to external infra"
+	@echo "  pytest --local-cluster --external-infra  # Run tests which talk to both"
+	@echo ""
+	@echo "Prerequisites for --local-cluster tests:"
+	@echo "  1. make up                   # Create Kind cluster"
+	@echo "  2. tilt up --stream          # Deploy MySQL with test data"
+	@echo "  3. export KUBECONFIG=$(KUBECONFIG_PATH)"

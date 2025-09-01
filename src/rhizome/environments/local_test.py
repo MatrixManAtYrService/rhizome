@@ -28,10 +28,10 @@ class LocalTest(Environment):
         # Get an available port and request port forward
         available_port = get_open_port()
         handle = client.request_localk8s(
-            kube_context="kind-rhizome-test", 
-            kube_namespace="default", 
+            kube_context="kind-rhizome-test",
+            kube_namespace="default",
             kube_deployment="mysql",
-            local_port=available_port
+            local_port=available_port,
         )
         self.local_port = handle.local_port
 
@@ -63,9 +63,7 @@ class LocalTest(Environment):
     def _get_connection_string(self) -> str:
         """Build the connection string for this environment."""
         db_config = self.get_database_config()
-        return (
-            f"mysql+pymysql://{db_config.username}:{db_config.password}@{db_config.host}:{db_config.port}/{db_config.database}"
-        )
+        return f"mysql+pymysql://{db_config.username}:{db_config.password}@{db_config.host}:{db_config.port}/{db_config.database}"
 
     def select_first(self, query: SelectOfScalar[TFirst]) -> TFirst | None:
         """Execute a query and return the first sanitized result or None."""

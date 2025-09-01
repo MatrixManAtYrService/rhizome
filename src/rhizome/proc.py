@@ -115,6 +115,13 @@ class ProcessManager:
 
         return ProcessListResponse(running=running, count=len(running))
 
+    def register_process(self, process: asyncio.subprocess.Process, process_name: str) -> None:
+        """Register a process for tracking and output streaming."""
+        self._processes.add(process)
+        task = asyncio.create_task(self.stream_process_output(process, process.pid, process_name))
+        self._output_tasks.add(task)
+        task.add_done_callback(self._output_tasks.discard)
+
     async def cleanup(self) -> None:
         """Clean up all running processes and tasks."""
         # Cancel all output streaming tasks

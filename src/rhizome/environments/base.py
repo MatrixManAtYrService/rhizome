@@ -42,4 +42,4 @@ class Environment(ABC):
     @property
     @abstractmethod
     def name(self) -> str:
-        """Environment name for display purposes."""
+        """Environment name for display purposes in logs and debugging, not used for connections."""

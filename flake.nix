@@ -153,12 +153,14 @@
             mariadb_114
           ];
           env = {
+            KUBECONFIG = "/Users/matt.rixman/src/rhizome/local_test/kubeconfig";
             UV_NO_SYNC = "1";
             UV_PYTHON = python.interpreter;
             UV_PYTHON_DOWNLOADS = "never";
           };
           shellHook = ''
             export REPO_ROOT=$(pwd)
+            export KUBECONFIG=/Users/matt.rixman/src/rhizome/local_test/kubeconfig
           '';
         };
       });

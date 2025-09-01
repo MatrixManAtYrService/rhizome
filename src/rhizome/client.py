@@ -17,6 +17,7 @@ from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 from rhizome.config import Home
 from rhizome.models.base import SanitizableModel
+from rhizome.tools import Tools
 
 TFirst = TypeVar("TFirst", bound=SanitizableModel)
 TAll = TypeVar("TAll", bound=SanitizableModel)
@@ -45,8 +46,9 @@ class Handle:
 class RhizomeClient:
     """Client for communicating with the rhizome server."""
 
-    def __init__(self, home: Home | None = None) -> None:
+    def __init__(self, home: Home | None = None, tools: Tools | None = None) -> None:
         self.home = home or Home()
+        self.tools = tools or Tools()
         self._base_url: str | None = None
 
     @property

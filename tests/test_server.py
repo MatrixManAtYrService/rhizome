@@ -28,8 +28,7 @@ def test_multiple_sleeper_processes() -> None:
 
             # Start server in background thread
             server_thread = threading.Thread(
-                target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None),
-                daemon=True
+                target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None), daemon=True
             )
             server_thread.start()
 
@@ -53,6 +52,7 @@ def test_multiple_sleeper_processes() -> None:
 
             # Check that both processes appear by making direct request to /ps
             import httpx
+
             with httpx.Client() as client:
                 ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
                 assert ps_response.status_code == 200
@@ -90,8 +90,7 @@ def test_single_sleeper_process() -> None:
 
             # Start server in background thread
             server_thread = threading.Thread(
-                target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None),
-                daemon=True
+                target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None), daemon=True
             )
             server_thread.start()
 
@@ -111,6 +110,7 @@ def test_single_sleeper_process() -> None:
 
             # Check that process appears in /ps
             import httpx
+
             with httpx.Client() as client:
                 ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
                 assert ps_response.status_code == 200
@@ -145,8 +145,7 @@ def test_ps_endpoint() -> None:
 
         # Start server in background thread
         server_thread = threading.Thread(
-            target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None),
-            daemon=True
+            target=lambda: uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None), daemon=True
         )
         server_thread.start()
 
@@ -155,6 +154,7 @@ def test_ps_endpoint() -> None:
 
         # Test /ps endpoint
         import httpx
+
         with httpx.Client() as client:
             ps_response = client.get(f"http://0.0.0.0:{test_port}/ps")
             assert ps_response.status_code == 200

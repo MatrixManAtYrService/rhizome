@@ -49,6 +49,7 @@ def test_port_cleanup_on_server_shutdown() -> None:
 
         # Set the global _home variable to our sandbox home
         import rhizome.server
+
         rhizome.server._home = home  # type: ignore
 
         # Create test client and trigger shutdown event

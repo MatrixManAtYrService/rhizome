@@ -4,6 +4,7 @@ Test local Kubernetes MySQL integration.
 Verifies rhizome can connect to local Kind cluster MySQL and query expected data.
 """
 
+import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
@@ -12,6 +13,7 @@ from rhizome.models.bookkeeper.fee_summary import FeeSummary
 from tests.conftest import RunningServer
 
 
+@pytest.mark.local_cluster
 def test_mysql_connection_and_sanitization(rhizome_server: RunningServer) -> None:
     """Test MySQL connection, data query, and sanitization functionality."""
     # Create client instance with the test home
@@ -21,9 +23,7 @@ def test_mysql_connection_and_sanitization(rhizome_server: RunningServer) -> Non
     local_test = LocalTest(client)
 
     # Execute query with automatic sanitization
-    fee_summary = local_test.select_first(
-        select(FeeSummary).where(FeeSummary.id == 74347)
-    )
+    fee_summary = local_test.select_first(select(FeeSummary).where(FeeSummary.id == 74347))
 
     assert fee_summary is not None, "Test data with ID 74347 should exist"
 

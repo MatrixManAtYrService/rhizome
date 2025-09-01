@@ -16,9 +16,47 @@ from rhizome.server import app, setup_logging
 from tests.utils import get_open_port
 
 
+def pytest_addoption(parser):
+    """Add custom pytest command line options."""
+    parser.addoption(
+        "--local-cluster", 
+        action="store_true", 
+        default=False, 
+        help="run tests that require a local Kind cluster"
+    )
+    parser.addoption(
+        "--external-infra", 
+        action="store_true", 
+        default=False, 
+        help="run tests that require external infrastructure (production CloudSQL, 1Password, etc.)"
+    )
+
+
+def pytest_configure(config):
+    """Register custom markers."""
+    config.addinivalue_line("markers", "local_cluster: mark test as requiring a local Kind cluster")
+    config.addinivalue_line("markers", "external_infra: mark test as requiring external infrastructure")
+
+
+def pytest_collection_modifyitems(config, items):
+    """Skip cluster and external infra tests unless their respective options are passed."""
+    local_cluster_enabled = config.getoption("--local-cluster")
+    external_infra_enabled = config.getoption("--external-infra")
+    
+    skip_local_cluster = pytest.mark.skip(reason="need --local-cluster option to run")
+    skip_external_infra = pytest.mark.skip(reason="need --external-infra option to run")
+    
+    for item in items:
+        if "local_cluster" in item.keywords and not local_cluster_enabled:
+            item.add_marker(skip_local_cluster)
+        if "external_infra" in item.keywords and not external_infra_enabled:
+            item.add_marker(skip_external_infra)
+
+
 @dataclass
 class RunningServer:
     """Represents a running rhizome server instance for testing."""
+
     port: int
     home: Home
 
@@ -33,27 +71,19 @@ def local_cluster() -> None:
     # Set KUBECONFIG to local test config to avoid touching remote infrastructure
     kubeconfig_path = Path("local_test/kubeconfig").absolute()
     if not kubeconfig_path.exists():
-        raise Exception(
-            f"Local kubeconfig not found at {kubeconfig_path}. "
-            "Run 'make up' to create the Kind cluster."
-        )
+        raise Exception(f"Local kubeconfig not found at {kubeconfig_path}. Run 'make up' to create the Kind cluster.")
 
     os.environ["KUBECONFIG"] = str(kubeconfig_path)
 
     # Check if Kind cluster is available
     import subprocess
+
     try:
         result = subprocess.run(
-            ["kubectl", "cluster-info", "--context", "kind-rhizome-test"],
-            capture_output=True,
-            text=True,
-            timeout=10
+            ["kubectl", "cluster-info", "--context", "kind-rhizome-test"], capture_output=True, text=True, timeout=10
         )
         if result.returncode != 0:
-            raise Exception(
-                f"Kind cluster 'rhizome-test' not available. "
-                f"Run 'make up' first. Error: {result.stderr}"
-            )
+            raise Exception(f"Kind cluster 'rhizome-test' not available. Run 'make up' first. Error: {result.stderr}")
     except subprocess.TimeoutExpired as e:
         raise Exception("Timeout checking Kind cluster availability.") from e
     except FileNotFoundError as e:
@@ -74,28 +104,28 @@ def local_mysql(local_cluster: None) -> None:
 
     try:
         # Check if MySQL pod is ready
-        result = subprocess.run([
-            "kubectl", "get", "pod", "mysql",
-            "-o", "jsonpath={.status.phase}"
-        ], capture_output=True, text=True, timeout=10)
+        result = subprocess.run(
+            ["kubectl", "get", "pod", "mysql", "-o", "jsonpath={.status.phase}"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
 
         if result.returncode != 0 or result.stdout.strip() != "Running":
             raise Exception(
-                "MySQL pod not ready. Run 'tilt up' to deploy MySQL. "
-                f"Current status: {result.stdout.strip()}"
+                f"MySQL pod not ready. Run 'tilt up' to deploy MySQL. Current status: {result.stdout.strip()}"
             )
 
         # Check if MySQL is actually ready (not just running)
-        result = subprocess.run([
-            "kubectl", "get", "pod", "mysql",
-            "-o", "jsonpath={.status.conditions[?(@.type==\"Ready\")].status}"
-        ], capture_output=True, text=True, timeout=10)
+        result = subprocess.run(
+            ["kubectl", "get", "pod", "mysql", "-o", 'jsonpath={.status.conditions[?(@.type=="Ready")].status}'],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
 
         if result.stdout.strip() != "True":
-            raise Exception(
-                "MySQL pod is running but not ready. "
-                "Wait for the readiness probe to pass."
-            )
+            raise Exception("MySQL pod is running but not ready. Wait for the readiness probe to pass.")
 
     except subprocess.TimeoutExpired as e:
         raise Exception("Timeout checking MySQL pod status.") from e

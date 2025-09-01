@@ -1,0 +1,286 @@
+"""
+Tool abstractions for external command dependencies.
+
+This module provides injectable tool dependencies to enable testing and mocking
+of external tools like kubectl, gcloud, 1password CLI, and lsof.
+"""
+
+import asyncio
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
+
+@dataclass
+class CommandResult:
+    """Result of a command execution."""
+
+    returncode: int
+    stdout: str
+    stderr: str
+
+    @property
+    def success(self) -> bool:
+        """True if command succeeded (returncode 0)."""
+        return self.returncode == 0
+
+
+@dataclass
+class PortInfo:
+    """Information about a port in use."""
+
+    pid: int
+    process_name: str
+    port: int
+
+
+@dataclass
+class LogLine:
+    """A single log line with metadata."""
+
+    content: str
+    timestamp: str | None = None
+
+
+@dataclass
+class ClusterCredentials:
+    """Database connection credentials."""
+
+    username: str
+    password: str
+    host: str
+    port: int
+    database: str
+    connection_string: str
+
+
+class KubectlTool(ABC):
+    """Abstract kubectl tool for Kubernetes operations."""
+
+    @abstractmethod
+    async def cluster_info(self, context: str) -> CommandResult:
+        """Get cluster information."""
+
+    @abstractmethod
+    async def exec_in_pod(self, context: str, namespace: str, deployment: str, command: list[str]) -> CommandResult:
+        """Execute command in a pod."""
+
+    @abstractmethod
+    async def get_logs(self, context: str, namespace: str, deployment: str, since: str = "10s") -> list[LogLine]:
+        """Get recent logs from a deployment."""
+
+    @abstractmethod
+    async def port_forward(
+        self, context: str, namespace: str, resource: str, local_port: int, remote_port: int
+    ) -> asyncio.subprocess.Process:
+        """Start port forwarding process (returns running process)."""
+
+    @abstractmethod
+    async def get_pod_status(self, pod_name: str, context: str | None = None) -> CommandResult:
+        """Get pod status."""
+
+
+class GcloudTool(ABC):
+    """Abstract gcloud tool for Google Cloud operations."""
+
+    @abstractmethod
+    async def get_cluster_credentials(self, project: str, cluster: str, region: str) -> CommandResult:
+        """Get cluster credentials."""
+
+    @abstractmethod
+    async def set_cluster_server(self, cluster_name: str, server_url: str) -> CommandResult:
+        """Set cluster server URL."""
+
+
+class OnePasswordTool(ABC):
+    """Abstract 1Password CLI tool."""
+
+    @abstractmethod
+    async def read_secret(self, reference: str) -> str:
+        """Read a secret from 1Password."""
+
+
+class LsofTool(ABC):
+    """Abstract lsof tool for checking port usage."""
+
+    @abstractmethod
+    async def check_port(self, port: int) -> list[PortInfo]:
+        """Check if a port is in use."""
+
+
+# Concrete implementations using actual subprocess calls
+
+
+class ExternalKubectlTool(KubectlTool):
+    """External kubectl tool using subprocess."""
+
+    async def cluster_info(self, context: str) -> CommandResult:
+        """Get cluster information."""
+        return await self._run_command(["kubectl", "cluster-info", "--context", context])
+
+    async def exec_in_pod(self, context: str, namespace: str, deployment: str, command: list[str]) -> CommandResult:
+        """Execute command in a pod."""
+        args = [
+            "kubectl",
+            "--context",
+            context,
+            "-n",
+            namespace,
+            "exec",
+            "-it",
+            f"deployment/{deployment}",
+            "--",
+        ] + command
+        return await self._run_command(args)
+
+    async def get_logs(self, context: str, namespace: str, deployment: str, since: str = "10s") -> list[LogLine]:
+        """Get recent logs from a deployment."""
+        result = await self._run_command(
+            ["kubectl", "--context", context, "-n", namespace, "logs", f"deployment/{deployment}", "--since", since]
+        )
+
+        if not result.success:
+            return []
+
+        return [LogLine(content=line) for line in result.stdout.splitlines() if line.strip()]
+
+    async def port_forward(
+        self, context: str, namespace: str, resource: str, local_port: int, remote_port: int
+    ) -> asyncio.subprocess.Process:
+        """Start port forwarding process (returns running process)."""
+        args = [
+            "kubectl",
+            "--context",
+            context,
+            "-n",
+            namespace,
+            "port-forward",
+            resource,
+            f"{local_port}:{remote_port}",
+        ]
+
+        process = await asyncio.create_subprocess_exec(
+            *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+        return process
+
+    async def get_pod_status(self, pod_name: str, context: str | None = None) -> CommandResult:
+        """Get pod status."""
+        args = ["kubectl", "get", "pod", pod_name, "-o", "jsonpath={.status.phase}"]
+        if context:
+            args.extend(["--context", context])
+        return await self._run_command(args)
+
+    async def _run_command(self, args: list[str]) -> CommandResult:
+        """Run a kubectl command and return result."""
+        process = await asyncio.create_subprocess_exec(
+            *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await process.communicate()
+
+        return CommandResult(
+            returncode=process.returncode or 0,
+            stdout=stdout.decode() if stdout else "",
+            stderr=stderr.decode() if stderr else "",
+        )
+
+
+class ExternalGcloudTool(GcloudTool):
+    """External gcloud tool using subprocess."""
+
+    async def get_cluster_credentials(self, project: str, cluster: str, region: str) -> CommandResult:
+        """Get cluster credentials."""
+        return await self._run_command(
+            ["gcloud", "--project", project, "container", "clusters", "get-credentials", cluster, "--region", region]
+        )
+
+    async def set_cluster_server(self, cluster_name: str, server_url: str) -> CommandResult:
+        """Set cluster server URL."""
+        return await self._run_command(["kubectl", "config", "set-cluster", cluster_name, "--server", server_url])
+
+    async def _run_command(self, args: list[str]) -> CommandResult:
+        """Run a gcloud command and return result."""
+        process = await asyncio.create_subprocess_exec(
+            *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await process.communicate()
+
+        return CommandResult(
+            returncode=process.returncode or 0,
+            stdout=stdout.decode() if stdout else "",
+            stderr=stderr.decode() if stderr else "",
+        )
+
+
+class ExternalOnePasswordTool(OnePasswordTool):
+    """External 1Password CLI tool using subprocess."""
+
+    async def read_secret(self, reference: str) -> str:
+        """Read a secret from 1Password."""
+        process = await asyncio.create_subprocess_exec(
+            "op", "read", reference, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await process.communicate()
+
+        if process.returncode != 0:
+            raise RuntimeError(f"Failed to read secret {reference}: {stderr.decode()}")
+
+        return stdout.decode().strip()
+
+
+class ExternalLsofTool(LsofTool):
+    """External lsof tool using subprocess."""
+
+    async def check_port(self, port: int) -> list[PortInfo]:
+        """Check if a port is in use."""
+        try:
+            process = await asyncio.create_subprocess_exec(
+                "lsof", "-i", f":{port}", stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+            )
+
+            stdout, _ = await process.communicate()
+
+            if process.returncode != 0:
+                return []  # Port not in use
+
+            lines = stdout.decode().splitlines()
+            port_info: list[PortInfo] = []
+
+            for line in lines[1:]:  # Skip header
+                parts = line.split()
+                if len(parts) >= 2:
+                    port_info.append(
+                        PortInfo(pid=int(parts[1]) if parts[1].isdigit() else 0, process_name=parts[0], port=port)
+                    )
+
+            return port_info
+
+        except Exception:
+            return []  # Error checking port, assume not in use
+
+
+class Tools:
+    """Container for all external tool dependencies with dependency injection."""
+
+    def __init__(
+        self,
+        kubectl: KubectlTool | None = None,
+        gcloud: GcloudTool | None = None,
+        onepassword: OnePasswordTool | None = None,
+        lsof: LsofTool | None = None,
+    ) -> None:
+        """
+        Initialize tools with optional dependency injection.
+
+        Args:
+            kubectl: kubectl tool (defaults to ExternalKubectlTool)
+            gcloud: gcloud tool (defaults to ExternalGcloudTool)
+            onepassword: 1Password CLI tool (defaults to ExternalOnePasswordTool)
+            lsof: lsof tool (defaults to ExternalLsofTool)
+        """
+        self.kubectl = kubectl or ExternalKubectlTool()
+        self.gcloud = gcloud or ExternalGcloudTool()
+        self.onepassword = onepassword or ExternalOnePasswordTool()
+        self.lsof = lsof or ExternalLsofTool()
