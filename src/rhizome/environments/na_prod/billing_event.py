@@ -1,7 +1,7 @@
 """
-NA Production Bookkeeper environment configuration.
+NA Production Billing Event environment configuration.
 
-This module provides access to the billing-bookkeeper database in the
+This module provides access to the billing-event database in the
 na-prod-us-central1 cluster through CloudSQL proxy port-forwarding.
 """
 
@@ -10,8 +10,8 @@ from __future__ import annotations
 from rhizome.environments.database_environment import DatabaseEnvironment
 
 
-class NorthAmericaBookkeeper(DatabaseEnvironment):
-    """North America production bookkeeper environment using CloudSQL."""
+class NorthAmericaBillingEvent(DatabaseEnvironment):
+    """North America production billing event environment using CloudSQL."""
 
     def get_kube_context(self) -> str:
         """Get Kubernetes context for NA production."""
@@ -27,15 +27,15 @@ class NorthAmericaBookkeeper(DatabaseEnvironment):
 
     def get_sql_connection(self) -> str:
         """Get CloudSQL connection string."""
-        return "clover-prod-databases:us-central1:billing-bookkeeper"
+        return "clover-prod-databases:us-central1:billing-event"
 
     def get_database_name(self) -> str:
         """Get database name."""
-        return "billing-bookkeeper-prod"
+        return "billing-event-prod"
 
     def get_username(self) -> str:
         """Get database username."""
-        return "billing-bookkeeper-ro"
+        return "billing-event-ro"
 
     def get_onepassword_reference(self) -> str:
         """Get 1Password reference for credentials."""
@@ -44,4 +44,4 @@ class NorthAmericaBookkeeper(DatabaseEnvironment):
     @property
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""
-        return "NorthAmericaBookkeeper"
+        return "NorthAmericaBillingEvent"

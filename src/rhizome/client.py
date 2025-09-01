@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Any, TypeVar
 
 import httpx
+import structlog
 from httpx_sse import connect_sse
 from sqlmodel import Session, create_engine
 from sqlmodel.sql._expression_select_cls import SelectOfScalar
@@ -46,10 +47,12 @@ class Handle:
 class RhizomeClient:
     """Client for communicating with the rhizome server."""
 
-    def __init__(self, home: Home | None = None, tools: Tools | None = None) -> None:
+    def __init__(self, home: Home | None = None, tools: Tools | None = None, *, data_in_logs: bool) -> None:
         self.home = home or Home()
+        self.logger = structlog.get_logger("rhizome.client")
         self.tools = tools or Tools()
         self._base_url: str | None = None
+        self.data_in_logs = data_in_logs
 
     @property
     def base_url(self) -> str:
@@ -182,6 +185,64 @@ class RhizomeClient:
             sql_connection=f"sleeper-{iterations}-iterations",
         )
 
+    def _log_query_result(self, query: Any, result: Any, method: str) -> None:
+        """Log query and result data using structured logging for debugging external infrastructure tests."""
+        if not self.data_in_logs:
+            return
+            
+        try:
+            # Extract query information
+            query_str = str(query)
+            
+            # Extract result data if it exists
+            if result is None:
+                self.logger.info(
+                    "Database query executed",
+                    method=method,
+                    query=query_str,
+                    result_count=0,
+                    result="None"
+                )
+            elif isinstance(result, list):
+                # For select_all - log count and first few records
+                self.logger.info(
+                    "Database query executed", 
+                    method=method,
+                    query=query_str,
+                    result_count=len(result),
+                    **{f"result_{i}_{k}": v for i, item in enumerate(result[:3]) for k, v in self._extract_model_fields(item).items()}
+                )
+            else:
+                # For select_first and select_one - log the single result
+                result_fields = self._extract_model_fields(result)
+                self.logger.info(
+                    "Database query executed",
+                    method=method, 
+                    query=query_str,
+                    result_count=1,
+                    **{f"result_{k}": v for k, v in result_fields.items()}
+                )
+        except Exception as e:
+            # Don't let logging issues break the actual query
+            self.logger.warning("Failed to log query result", error=str(e))
+
+    def _extract_model_fields(self, model: Any) -> dict[str, Any]:
+        """Extract field values from a model for logging."""
+        try:
+            # Get all non-private attributes from the model
+            fields = {}
+            if hasattr(model, '__dict__'):
+                for key, value in model.__dict__.items():
+                    if not key.startswith('_'):
+                        # Convert complex types to string for logging
+                        if isinstance(value, (str, int, float, bool)) or value is None:
+                            fields[key] = value
+                        else:
+                            fields[key] = str(value)
+            return fields
+        except Exception:
+            return {"error": "Could not extract model fields"}
+
     def select_first(self, connection_string: str, query: SelectOfScalar[TFirst]) -> TFirst | None:
         """
         Execute a query and return the first sanitized result or None.
@@ -196,11 +257,20 @@ class RhizomeClient:
         engine = create_engine(connection_string)
         with Session(engine) as session:
             result = session.exec(query).first()
+            
+            # Log the raw result before sanitization for debugging
+            self._log_query_result(query, result, "select_first")
+            
             if result is None:
                 return None
             if not hasattr(result, "sanitize"):
                 raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
-            return result.sanitize()
+            sanitized_result = result.sanitize()
+            
+            # Log the sanitized result as well
+            self._log_query_result(query, sanitized_result, "select_first_sanitized")
+            
+            return sanitized_result
 
     def select_all(self, connection_string: str, query: SelectOfScalar[TAll]) -> list[TAll]:
         """
@@ -216,11 +286,19 @@ class RhizomeClient:
         engine = create_engine(connection_string)
         with Session(engine) as session:
             results = session.exec(query).all()
+            
+            # Log the raw results before sanitization for debugging
+            self._log_query_result(query, results, "select_all")
+            
             sanitized_results: list[TAll] = []
             for result in results:
                 if not hasattr(result, "sanitize"):
                     raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
                 sanitized_results.append(result.sanitize())
+            
+            # Log the sanitized results as well
+            self._log_query_result(query, sanitized_results, "select_all_sanitized")
+            
             return sanitized_results
 
     def select_one(self, connection_string: str, query: SelectOfScalar[TOne]) -> TOne:
@@ -240,6 +318,15 @@ class RhizomeClient:
         engine = create_engine(connection_string)
         with Session(engine) as session:
             result = session.exec(query).one()
+            
+            # Log the raw result before sanitization for debugging
+            self._log_query_result(query, result, "select_one")
+            
             if not hasattr(result, "sanitize"):
                 raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
-            return result.sanitize()
+            sanitized_result = result.sanitize()
+            
+            # Log the sanitized result as well
+            self._log_query_result(query, sanitized_result, "select_one_sanitized")
+            
+            return sanitized_result

@@ -36,7 +36,7 @@ def test_multiple_sleeper_processes() -> None:
             time.sleep(0.5)
 
             # Create client with sandboxed home
-            rhizome_client = RhizomeClient(home=home)
+            rhizome_client = RhizomeClient(home=home, data_in_logs=False)
 
             # Use the client to start two sleeper processes
             handle1 = rhizome_client.request_sleeper(iterations=5)
@@ -98,7 +98,7 @@ def test_single_sleeper_process() -> None:
             time.sleep(0.5)
 
             # Create client with sandboxed home
-            rhizome_client = RhizomeClient(home=home)
+            rhizome_client = RhizomeClient(home=home, data_in_logs=False)
 
             # Use the client to start a sleeper process
             handle = rhizome_client.request_sleeper(iterations=3)

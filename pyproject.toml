@@ -106,4 +106,4 @@ reportUntypedNamedTuple = "error"
 reportAny = "error"
 
 [tool.pytest.ini_options]
-addopts = "-sv"
+addopts = "-sv --tb=short"
