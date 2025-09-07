@@ -26,35 +26,32 @@ from rhizome.environments.dev.billing_event import DevBillingEvent
 from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
-from rhizome.models.base import SanitizableModel
+from rhizome.models.base import RhizomeModel
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
 from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
-from rhizome.models.na_billing.stage_charge_v1 import StageChargeV1
+from rhizome.models.billing.stage_charge_v1 import StageChargeV1
 from rhizome.tools import Tools
 from tests.mocked_subprocesses import MockGcloudTool, MockKubectlTool, MockLsofTool, MockOnePasswordTool, MockPybritiveTool
-from tests.mocked_table_data import TEST_DATA_SPECS
 
-ENVIRONMENT_DATABASE_COMBINATIONS = [
-    (NorthAmericaBillingBookkeeper, FeeSummaryV1),
-    (DevBillingBookkeeper, FeeSummaryV1),
-    (DemoBillingBookkeeper, FeeSummaryV1),
-    (NorthAmericaBillingEvent, AppMeteredEventV1),
-    (DevBillingEvent, AppMeteredEventV1),
-    (DemoBillingEvent, AppMeteredEventV1),
-    (NorthAmericaBilling, StageChargeV1),
+
+# Environment classes to test
+ENVIRONMENT_CLASSES = [
+    NorthAmericaBillingBookkeeper,
+    DevBillingBookkeeper, 
+    DemoBillingBookkeeper,
+    NorthAmericaBillingEvent,
+    DevBillingEvent,
+    DemoBillingEvent,
+    NorthAmericaBilling,
 ]
 
 
-@pytest.mark.parametrize("environment_class,model_class", ENVIRONMENT_DATABASE_COMBINATIONS)
+@pytest.mark.parametrize("environment_class", ENVIRONMENT_CLASSES)
 def test_mocked_environment_database_access(
     monkeypatch: pytest.MonkeyPatch,
     environment_class: type,
-    model_class: type[SanitizableModel],
 ) -> None:
     """Test database access across all environment/database combinations using mocks (no external dependencies)."""
-
-    # Get test specification for this model class and environment
-    test_spec = TEST_DATA_SPECS[model_class][environment_class]
 
     # Create mocked tools
     mock_tools = Tools(
@@ -65,60 +62,92 @@ def test_mocked_environment_database_access(
         pybritive=MockPybritiveTool()
     )
 
-    # Mock SQLModel database session to return appropriate test data
-    mock_session = MagicMock()
-    test_data = test_spec.get_mock_data()
-    mock_exec_result = MagicMock()
-    mock_exec_result.first.return_value = test_data
-    mock_session.exec.return_value = mock_exec_result
-
-    def mock_session_context(engine: object) -> object:
-        class MockSessionContext:
-            def __enter__(self) -> object:
-                return mock_session
-
-            def __exit__(self, *args: object) -> None:
-                pass
-
-        return MockSessionContext()
-
-    def mock_create_engine(cs: str) -> MagicMock:
-        return MagicMock()
-
-    monkeypatch.setattr("rhizome.client.create_engine", mock_create_engine)
-    monkeypatch.setattr("rhizome.client.Session", mock_session_context)
-
     # Create client instance with mocked tools
     temp_home = Home(state=Path(tempfile.mkdtemp()))
     client = RhizomeClient(home=temp_home, tools=mock_tools, data_in_logs=False)
 
-    # Query the table using the model class and test specification
+    # Create environment instance to get table_situation
     env_instance = environment_class(client)
-    result = env_instance.select_first(select(model_class).where(model_class.id == test_spec.use_id))
+    
+    # Test each table in the environment's table_situation
+    for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
+        # Skip tables where model_class is None (not yet implemented)
+        if model_class is None:
+            continue
+            
+        # Get expected data from the emplacement class
+        try:
+            expected_data = emplacement_class.get_expected()
+        except NotImplementedError:
+            # Skip tables where expected data is not yet implemented
+            continue
+            
+        # Mock SQLModel database session to return the expected data
+        mock_session = MagicMock()
+        mock_exec_result = MagicMock()
+        mock_exec_result.first.return_value = expected_data
+        mock_session.exec.return_value = mock_exec_result
 
-    # Is the mocked data present? For mocked tests, we compare against the same mock data
-    expected = test_spec.get_mock_data()
-    test_spec.check_assertions(result, expected)
+        def mock_session_context(engine: object) -> object:
+            class MockSessionContext:
+                def __enter__(self) -> object:
+                    return mock_session
+
+                def __exit__(self, *args: object) -> None:
+                    pass
+
+            return MockSessionContext()
+
+        def mock_create_engine(cs: str) -> MagicMock:
+            return MagicMock()
+
+        monkeypatch.setattr("rhizome.client.create_engine", mock_create_engine)
+        monkeypatch.setattr("rhizome.client.Session", mock_session_context)
+
+        # Query the table using the model class
+        result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
+
+        # Verify the mocked data is returned and matches expected structure
+        assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"
+        assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"
 
 
 @pytest.mark.external_infra
-@pytest.mark.parametrize("environment_class,model_class", ENVIRONMENT_DATABASE_COMBINATIONS)
+@pytest.mark.parametrize("environment_class", ENVIRONMENT_CLASSES)
 def test_real_environment_database_access(
-    environment_class: type, model_class: type[SanitizableModel]
+    environment_class: type,
 ) -> None:
     """Test database access across all environment/database combinations using real external infrastructure."""
 
-    test_spec = TEST_DATA_SPECS[model_class][environment_class]
     with tempfile.TemporaryDirectory() as temp_dir:
-
         # Create client instance with real tools (using default RhizomeClient "tools" kwarg)
         home = Home.sandbox(Path(temp_dir))
         client = RhizomeClient(home=home, data_in_logs=True)
 
-        # Query the table using the model class and test specification
+        # Create environment instance to get table_situation
         env_instance = environment_class(client)
-        result = env_instance.select_first(select(model_class).where(model_class.id == test_spec.use_id))
+        
+        # Test each table in the environment's table_situation
+        for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
+            # Skip tables where model_class is None (not yet implemented)
+            if model_class is None:
+                continue
+                
+            # Get expected data from the emplacement class
+            try:
+                expected_data = emplacement_class.get_expected()
+            except NotImplementedError:
+                # Skip tables where expected data is not yet implemented
+                continue
 
-        # Is the expected data present? For real tests, we compare against environment-specific expected data
-        expected = test_spec.get_expected_data()
-        test_spec.check_assertions(result, expected)
+            # Query the table using the model class and expected ID
+            result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
+
+            # Verify the real data matches the expected structure
+            assert result is not None, f"Real data should exist for {table_name} in {env_instance.name}"
+            
+            # Use the emplacement class's assert_match method if available, otherwise basic assertions
+            if hasattr(emplacement_class, 'assert_match'):
+                emplacement_class().assert_match(result, expected_data)
+            else:
+                assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"

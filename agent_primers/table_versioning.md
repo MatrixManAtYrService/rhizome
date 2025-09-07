@@ -45,7 +45,7 @@ src/rhizome/models/
 │   ├── app_metered_event.py    # Base class (table=False)  
 │   ├── app_metered_event_v1.py # V1 implementation (table=True)
 │   └── app_metered_event_v2.py # Future V2 with new fields
-└── na_billing/
+└── billing/
     ├── stage_charge.py         # Base class (table=False)
     ├── stage_charge_v1.py      # V1 implementation (table=True)
     └── stage_charge_v2.py      # Future V2 with new fields

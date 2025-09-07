@@ -7,19 +7,31 @@ dev cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.environments.dev.expected_data.billing_event_app_metered_event import AppMeteredEventDev
+from rhizome.environments.dev.expected_data.billing_event_app_subscription_event import AppSubscriptionEventDev
+from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
+from rhizome.models.billing_event.table_list import BillingEventTable
 
-
-class DevBillingEventModel(Enum):
-    """Table version mapping for DevBillingEvent environment."""
-    AppMeteredEvent = AppMeteredEventV1
+models: dict[BillingEventTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingEventTable.app_metered_event: (AppMeteredEventV1, AppMeteredEventDev),
+    BillingEventTable.app_subscription_event: (None, AppSubscriptionEventDev),  # Model not yet implemented
+}
 
 
 class DevBillingEvent(DatabaseEnvironment):
     """Development billing event environment using CloudSQL."""
+
+    def tables(self) -> list[StrEnum]:
+        return list(BillingEventTable)
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+        if not isinstance(table_name, BillingEventTable):
+            raise ValueError(f"Expected BillingEventTable, got {type(table_name)}")
+        return models[table_name]
 
     def get_kube_context(self) -> str:
         """Get Kubernetes context for dev environment."""

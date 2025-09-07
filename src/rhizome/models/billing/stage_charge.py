@@ -13,7 +13,7 @@ from typing import Literal
 
 from sqlmodel import Field
 
-from ...models.base import SanitizableModel
+from ...models.base import RhizomeModel
 from ...sanitize_helpers import sanitize_uuid_field
 
 
@@ -73,7 +73,7 @@ class ChargeType(str, Enum):
     PARTIAL_MONTH = "PARTIAL_MONTH"
 
 
-class StageCharge(SanitizableModel, table=False):
+class StageCharge(RhizomeModel, table=False):
     """
     SQLModel for the `stage_charge` table.
 

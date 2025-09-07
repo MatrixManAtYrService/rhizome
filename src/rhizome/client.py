@@ -18,12 +18,12 @@ from sqlmodel import Session, create_engine
 from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 from rhizome.config import Home
-from rhizome.models.base import SanitizableModel
+from rhizome.models.base import RhizomeModel
 from rhizome.tools import Tools
 
-TFirst = TypeVar("TFirst", bound=SanitizableModel)
-TAll = TypeVar("TAll", bound=SanitizableModel)
-TOne = TypeVar("TOne", bound=SanitizableModel)
+TFirst = TypeVar("TFirst", bound=RhizomeModel)
+TAll = TypeVar("TAll", bound=RhizomeModel)
+TOne = TypeVar("TOne", bound=RhizomeModel)
 
 
 @dataclass
@@ -187,7 +187,7 @@ class RhizomeClient:
         )
 
     def _log_query_result(
-        self, query: SelectOfScalar[Any], result: SanitizableModel | Sequence[SanitizableModel] | None, method: str
+        self, query: SelectOfScalar[Any], result: RhizomeModel | Sequence[RhizomeModel] | None, method: str
     ) -> None:
         """Log query and result data using structured logging for debugging external infrastructure tests."""
         if not self.data_in_logs:
@@ -220,7 +220,7 @@ class RhizomeClient:
                     },
                 )
             else:
-                if isinstance(result, SanitizableModel):
+                if isinstance(result, RhizomeModel):
                     # For select_first and select_one - log the single result
                     result_fields = self._extract_model_fields(result)
                     self.logger.info(
@@ -234,7 +234,7 @@ class RhizomeClient:
             # Don't let logging issues break the actual query
             self.logger.warning("Failed to log query result", error=str(e))
 
-    def _extract_model_fields(self, model: SanitizableModel) -> dict[str, Any]:
+    def _extract_model_fields(self, model: RhizomeModel) -> dict[str, Any]:
         """Extract field values from a model for logging."""
         try:
             # Get all non-private attributes from the model

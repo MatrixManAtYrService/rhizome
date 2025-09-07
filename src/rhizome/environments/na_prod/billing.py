@@ -7,27 +7,78 @@ through direct connection using pybritive for temporary credentials.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 from typing import TYPE_CHECKING
 
-from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig
-from rhizome.models.na_billing.stage_charge_v1 import StageChargeV1
+from rhizome.environments.base import DatabaseConfig, PortForwardConfig
+from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.environments.na_prod.expected_data.billing_stage_charge import StageChargeNaProd
+from rhizome.models.base import Emplacement, RhizomeModel
+from rhizome.models.billing.stage_charge_v1 import StageChargeV1
+from rhizome.models.billing.table_list import BillingTable
 
-
-class NorthAmericaBillingModel(Enum):
-    """Table version mapping for NorthAmericaBilling environment."""
-    StageCharge = StageChargeV1
+models: dict[BillingTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingTable.stage_charge: (StageChargeV1, StageChargeNaProd),
+}
 
 if TYPE_CHECKING:
     from rhizome.client import RhizomeClient
 
 
-class NorthAmericaBilling(Environment):
+class NorthAmericaBilling(DatabaseEnvironment):
     """North America production billing environment using direct database connection."""
 
-    def __init__(self, client: RhizomeClient) -> None:
-        """Initialize North America billing environment with pybritive credentials."""
+    def __init__(self, client) -> None:
+        """Initialize North America billing environment with direct connection (no port forwarding)."""
         self.client = client
+        
+        # Initialize table_situation without port forwarding setup
+        self.table_situation = {
+            table: (self.situate_table(table)) for table in self.tables()
+        }
+
+    def tables(self) -> list[StrEnum]:
+        return list(BillingTable)
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+        if not isinstance(table_name, BillingTable):
+            raise ValueError(f"Expected BillingTable, got {type(table_name)}")
+        return models[table_name]
+
+    # Since this environment uses direct connection, we need to provide stubs for the abstract methods
+    # that DatabaseEnvironment expects, but they won't be called due to our custom __init__
+    def get_kube_context(self) -> str:
+        raise NotImplementedError("Direct connection environment - no Kubernetes context needed")
+    
+    def get_kube_namespace(self) -> str:
+        raise NotImplementedError("Direct connection environment - no Kubernetes namespace needed")
+    
+    def get_kube_deployment(self) -> str:
+        raise NotImplementedError("Direct connection environment - no Kubernetes deployment needed")
+    
+    def get_sql_connection(self) -> str:
+        raise NotImplementedError("Direct connection environment - no CloudSQL connection needed")
+    
+    def get_project(self) -> str:
+        raise NotImplementedError("Direct connection environment - no GCP project needed")
+    
+    def get_cluster_name(self) -> str:
+        raise NotImplementedError("Direct connection environment - no cluster name needed")
+    
+    def get_cluster_region(self) -> str:
+        raise NotImplementedError("Direct connection environment - no cluster region needed")
+    
+    def get_cluster_server(self) -> str:
+        raise NotImplementedError("Direct connection environment - no cluster server needed")
+    
+    def get_database_name(self) -> str:
+        return "billing"
+    
+    def get_username(self) -> str:
+        raise NotImplementedError("Direct connection environment - username obtained from pybritive")
+    
+    def get_onepassword_reference(self) -> str:
+        raise NotImplementedError("Direct connection environment - credentials from pybritive")
 
     def get_database_config(self) -> DatabaseConfig:
         """Get database configuration using pybritive temporary credentials."""
@@ -87,3 +138,8 @@ class NorthAmericaBilling(Environment):
     def select_one(self, query):
         """Execute a query and return exactly one sanitized result."""
         return self.client.select_one(self._get_connection_string(), query)
+
+    @property
+    def name(self) -> str:
+        """Environment name for display purposes in logs and debugging, not used for connections."""
+        return "NorthAmericaBilling"

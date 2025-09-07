@@ -7,19 +7,31 @@ demo cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_summary import FeeSummaryDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_settlement import SettlementDemo
+from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
 
-
-class DemoBillingBookkeeperModel(Enum):
-    """Table version mapping for DemoBillingBookkeeper environment."""
-    FeeSummary = FeeSummaryV1
+models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingBookkeeperTable.fee_summary: (FeeSummaryV1, FeeSummaryDemo),
+    BillingBookkeeperTable.settlement: (None, SettlementDemo),  # Model not yet implemented
+}
 
 
 class DemoBillingBookkeeper(DatabaseEnvironment):
     """Demo bookkeeper environment using CloudSQL."""
+
+    def tables(self) -> list[StrEnum]:
+        return list(BillingBookkeeperTable)
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+        if not isinstance(table_name, BillingBookkeeperTable):
+            raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
+        return models[table_name]
 
     def get_kube_context(self) -> str:
         """Get Kubernetes context for demo environment."""

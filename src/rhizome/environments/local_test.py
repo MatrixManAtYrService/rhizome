@@ -11,11 +11,11 @@ if TYPE_CHECKING:
     from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
     from rhizome.client import RhizomeClient
-    from rhizome.models.base import SanitizableModel
+    from rhizome.models.base import RhizomeModel
 
-TFirst = TypeVar("TFirst", bound="SanitizableModel")
-TAll = TypeVar("TAll", bound="SanitizableModel")
-TOne = TypeVar("TOne", bound="SanitizableModel")
+TFirst = TypeVar("TFirst", bound="RhizomeModel")
+TAll = TypeVar("TAll", bound="RhizomeModel")
+TOne = TypeVar("TOne", bound="RhizomeModel")
 
 
 class LocalTest(Environment):

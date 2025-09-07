@@ -70,20 +70,20 @@ async def _discover_remote_port(
     log: structlog.BoundLogger,
 ) -> int:
     """Poll logs to discover the remote port for CloudSQL proxy."""
-    log.info("Waiting for Cloud SQL proxy to establish connection...")
+    source = "mock" if tools.is_mocked() else "subprocess"
+    log.info("Waiting for Cloud SQL proxy to establish connection...", source=source)
     for i in range(20):  # Poll for up to 60 seconds
-        await asyncio.sleep(3)
         logs = await tools.kubectl.get_logs(
             context=kube_context,
             namespace=kube_namespace,
             deployment=kube_deployment,
             since="15s",
         )
-        log.info("Checking logs for remote port", attempt=i, logs=logs)
+        log.info("Checking logs for remote port", attempt=i, logs=logs, source=source)
 
         # Parse logs for remote port
         for log_line in logs:
-            log.info("Checking log line", line=log_line.content)
+            log.info("Checking log line", line=log_line.content, source=source)
             if (
                 "Starting proxy for connectionName" in log_line.content
                 and "on port" in log_line.content
@@ -92,8 +92,9 @@ async def _discover_remote_port(
                 match = re.search(r"on port '(\d+)'", log_line.content)
                 if match:
                     remote_port = int(match.group(1))
-                    log.info("Found remote port", port=remote_port)
+                    log.info("Found remote port", port=remote_port, source=source)
                     return remote_port
+        await asyncio.sleep(3)
     raise RuntimeError("Failed to discover remote port from logs")
 
 
@@ -103,14 +104,15 @@ async def _wait_for_port_forward(
     log: structlog.BoundLogger,
 ) -> None:
     """Wait for the port-forward to start listening."""
-    log.info("Waiting for port-forward to start listening...")
+    source = "mock" if tools.is_mocked() else "subprocess"
+    log.info("Waiting for port-forward to start listening...", source=source)
     for _ in range(10):
-        await asyncio.sleep(1)
         port_info = await tools.lsof.check_port(local_port)
         if port_info:
-            log.info("Port is listening!", port_info=port_info)
+            log.info("Port is listening!", port_info=port_info, source=source)
             return
-    log.error("Port-forward did not start listening in time.")
+        await asyncio.sleep(1)
+    log.error("Port-forward did not start listening in time.", source=source)
     raise RuntimeError("Port-forward did not start listening in time.")
 
 

@@ -10,26 +10,47 @@ from __future__ import annotations
 import asyncio
 import socket
 from abc import ABC, abstractmethod
+from enum import Enum, StrEnum
 from typing import TYPE_CHECKING, TypeVar
 from urllib.parse import quote_plus
 
 from rhizome.client import RhizomeClient
 from rhizome.cluster import connect_cluster
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig
+from rhizome.models.base import RhizomeModel, Emplacement
 from rhizome.portforward import cloudsql_port_forward
 
 if TYPE_CHECKING:
     from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
-    from rhizome.models.base import SanitizableModel
+    from rhizome.models.base import RhizomeModel
 
-TFirst = TypeVar("TFirst", bound="SanitizableModel")
-TAll = TypeVar("TAll", bound="SanitizableModel")
-TOne = TypeVar("TOne", bound="SanitizableModel")
+TFirst = TypeVar("TFirst", bound="RhizomeModel")
+TAll = TypeVar("TAll", bound="RhizomeModel")
+TOne = TypeVar("TOne", bound="RhizomeModel")
 
 
 class DatabaseEnvironment(Environment, ABC):
-    """Base class for database environments using CloudSQL proxy."""
+    """Base class for database environments."""
+
+    
+    table_situation: dict[StrEnum, tuple[type[RhizomeModel], type[Emplacement]]]
+
+
+    @abstractmethod
+    def tables(self) -> list[StrEnum]:
+        """
+        Returns a list of table names expected to be present in this environment.
+        Need not be exhaustive, just include the ones that we need to work with.
+        """
+
+
+    @abstractmethod
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+        """
+        Indicates which data should be expected from which table.
+        Returns tuple of (ModelClass, EmplacementClass).
+        """
 
     def __init__(self, client: RhizomeClient) -> None:
         """Initialize database environment with CloudSQL port forwarding."""
@@ -58,6 +79,11 @@ class DatabaseEnvironment(Environment, ABC):
                 tools=client.tools,
             )
         )
+
+        # get models and expected data from child class
+        self.table_situation = {
+            table: (self.situate_table(table)) for table in self.tables()
+        }
 
     def _find_unused_port(self, start_port: int = 30000) -> int:
         """Find an unused local port starting from the given port number."""
@@ -113,6 +139,7 @@ class DatabaseEnvironment(Environment, ABC):
     @abstractmethod
     def get_onepassword_reference(self) -> str:
         """Get the 1Password reference for credentials."""
+
 
     def get_database_config(self) -> DatabaseConfig:
         """Get database config using 1Password for credentials."""

@@ -22,8 +22,9 @@ async def connect_cluster(
     This function replicates the logic from the nushell `connect-cluster` function.
     """
     log = structlog.get_logger()
+    source = "mock" if tools.is_mocked() else "subprocess"
 
-    log.info("Getting cluster credentials...")
+    log.info("Getting cluster credentials...", source=source)
     result = await tools.gcloud.get_cluster_credentials(
         project=project, cluster=cluster, region=region
     )
@@ -36,7 +37,7 @@ async def connect_cluster(
         raise RuntimeError("Failed to get cluster credentials")
 
     fqcn = f"gke_{project}_{region}_{cluster}"
-    log.info("Setting cluster server...", fqcn=fqcn, server=server)
+    log.info("Setting cluster server...", fqcn=fqcn, server=server, source=source)
     result = await tools.gcloud.set_cluster_server(cluster_name=fqcn, server_url=server)
     if not result.success:
         log.error(
@@ -46,7 +47,7 @@ async def connect_cluster(
         )
         raise RuntimeError("Failed to set cluster server")
 
-    log.info("Unsetting certificate authority data...")
+    log.info("Unsetting certificate authority data...", source=source)
     # There is no specific tool for this, so we use the internal _run_command
     # from the kubectl tool. This is a bit of a hack, but it's the cleanest way
     # to do it without adding a new method to the KubectlTool interface.

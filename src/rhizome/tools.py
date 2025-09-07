@@ -391,3 +391,13 @@ class Tools:
         self.onepassword = onepassword or ExternalOnePasswordTool()
         self.lsof = lsof or ExternalLsofTool()
         self.pybritive = pybritive or ExternalPybritiveTool()
+
+    def is_mocked(self) -> bool:
+        """Check if any of the tools are mocked (non-External implementations)."""
+        return (
+            not self.kubectl.__class__.__name__.startswith("External") or
+            not self.gcloud.__class__.__name__.startswith("External") or
+            not self.onepassword.__class__.__name__.startswith("External") or
+            not self.lsof.__class__.__name__.startswith("External") or
+            not self.pybritive.__class__.__name__.startswith("External")
+        )

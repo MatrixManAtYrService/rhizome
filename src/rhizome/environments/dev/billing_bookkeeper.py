@@ -7,20 +7,32 @@ dev cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.environments.dev.expected_data.billing_bookkeeper_fee_summary import FeeSummaryDev
+from rhizome.environments.dev.expected_data.billing_bookkeeper_settlement import SettlementDev
+from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
 
-
-class DevBillingBookkeeperModel(Enum):
-    FeeSummary = FeeSummaryV1
-    #... more tables go here
-
+models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingBookkeeperTable.fee_summary: (FeeSummaryV1, FeeSummaryDev),
+    BillingBookkeeperTable.settlement: (None, SettlementDev),  # Model not yet implemented
+}
 
 
 class DevBillingBookkeeper(DatabaseEnvironment):
     """Development bookkeeper environment using CloudSQL."""
+
+    def tables(self) -> list[StrEnum]:
+        return list(BillingBookkeeperTable)
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+        # Cast the StrEnum to the specific table enum for type safety
+        if not isinstance(table_name, BillingBookkeeperTable):
+            raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
+        return models[table_name]
 
     def get_kube_context(self) -> str:
         """Get Kubernetes context for dev environment."""

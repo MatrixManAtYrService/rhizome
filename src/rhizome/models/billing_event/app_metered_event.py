@@ -12,11 +12,11 @@ from decimal import Decimal
 
 from sqlmodel import Field
 
-from ...models.base import SanitizableModel
+from ...models.base import RhizomeModel
 from ...sanitize_helpers import sanitize_uuid_field
 
 
-class AppMeteredEvent(SanitizableModel, table=False):
+class AppMeteredEvent(RhizomeModel, table=False):
     """
     SQLModel for the `app_metered_event` table.
 

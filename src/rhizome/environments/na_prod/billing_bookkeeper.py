@@ -7,19 +7,31 @@ na-prod-us-central1 cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.environments.na_prod.expected_data.billing_bookkeeper_fee_summary import FeeSummaryNaProd
+from rhizome.environments.na_prod.expected_data.billing_bookkeeper_settlement import SettlementNaProd
+from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
 
-
-class NorthAmericaBillingBookkeeperModel(Enum):
-    """Table version mapping for NorthAmericaBillingBookkeeper environment."""
-    FeeSummary = FeeSummaryV1
+models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingBookkeeperTable.fee_summary: (FeeSummaryV1, FeeSummaryNaProd),
+    BillingBookkeeperTable.settlement: (None, SettlementNaProd),  # Model not yet implemented
+}
 
 
 class NorthAmericaBillingBookkeeper(DatabaseEnvironment):
     """North America production billing bookkeeper environment using CloudSQL."""
+
+    def tables(self) -> list[StrEnum]:
+        return list(BillingBookkeeperTable)
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+        if not isinstance(table_name, BillingBookkeeperTable):
+            raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
+        return models[table_name]
 
     def get_kube_context(self) -> str:
         """Get Kubernetes context for NA production."""
