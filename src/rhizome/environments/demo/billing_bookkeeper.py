@@ -9,12 +9,12 @@ from __future__ import annotations
 
 from enum import StrEnum
 
-from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.environments.base import Environment, PortForwardConfig, SecretManager
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_summary import FeeSummaryDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_settlement import SettlementDemo
 from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
-from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
+from rhizome.models.table_list import BillingBookkeeperTable
 
 models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
     BillingBookkeeperTable.fee_summary: (FeeSummaryV1, FeeSummaryDemo),
@@ -22,7 +22,7 @@ models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]
 }
 
 
-class DemoBillingBookkeeper(DatabaseEnvironment):
+class DemoBillingBookkeeper(Environment):
     """Demo bookkeeper environment using CloudSQL."""
 
     def tables(self) -> list[StrEnum]:
@@ -33,49 +33,27 @@ class DemoBillingBookkeeper(DatabaseEnvironment):
             raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
         return models[table_name]
 
-    def get_kube_context(self) -> str:
-        """Get Kubernetes context for demo environment."""
-        return "gke_clover-dev-kubernetes_us-west1_dev-us-west1-cluster"
+    def get_port_forward_config(self) -> PortForwardConfig:
+        """Get port forwarding configuration for demo environment."""
+        return PortForwardConfig(
+            project="clover-dev-kubernetes",
+            cluster="dev-us-west1-cluster",
+            region="us-west1",
+            server="https://dev-us-west1-ingress-nginx.dev.pdx13.clover.network",
+            kube_context="gke_clover-dev-kubernetes_us-west1_dev-us-west1-cluster",
+            kube_namespace="gke-cloudsql-access",
+            kube_deployment="gke-cloudsql-access",
+            sql_connection="clover-dev-managed:us-west1:billing-bookkeeper-demo2",
+            database_name="billing-bookkeeper-dev",
+            username="billing-bookkeeper",
+            secret_reference="op://Shared/EventBillingROCred-dev/password",
+            secret_manager=SecretManager.ONEPASSWORD,
+        )
 
-    def get_kube_namespace(self) -> str:
-        """Get Kubernetes namespace for CloudSQL access."""
-        return "gke-cloudsql-access"
-
-    def get_kube_deployment(self) -> str:
-        """Get Kubernetes deployment for CloudSQL access."""
-        return "gke-cloudsql-access"
-
-    def get_sql_connection(self) -> str:
-        """Get CloudSQL connection string."""
-        return "clover-dev-managed:us-west1:billing-bookkeeper-demo2"
-
-    def get_database_name(self) -> str:
-        """Get database name."""
-        return "billing-bookkeeper-dev"
-
-    def get_username(self) -> str:
-        """Get database username."""
-        return "billing-bookkeeper"
-
-    def get_onepassword_reference(self) -> str:
-        """Get 1Password reference for credentials."""
-        return "op://Shared/EventBillingROCred-dev/password"
-
-    def get_project(self) -> str:
-        """Get the Google Cloud project for this environment."""
-        return "clover-dev-kubernetes"
-
-    def get_cluster_name(self) -> str:
-        """Get the Kubernetes cluster name for this environment."""
-        return "dev-us-west1-cluster"
-
-    def get_cluster_region(self) -> str:
-        """Get the Kubernetes cluster region for this environment."""
-        return "us-west1"
-
-    def get_cluster_server(self) -> str:
-        """Get the Kubernetes cluster server for this environment."""
-        return "https://dev-us-west1-ingress-nginx.dev.pdx13.clover.network"
+    def get_database_config(self):
+        """Get database configuration using port forwarding."""
+        port_forward_config = self.get_port_forward_config()
+        return self.get_database_config_from_port_forward(port_forward_config)
 
     @property
     def name(self) -> str:
