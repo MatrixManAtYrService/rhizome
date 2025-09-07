@@ -19,6 +19,8 @@ class MockKubectlTool(KubectlTool):
 
     async def get_logs(self, context: str, namespace: str, deployment: str, since: str = "10s") -> list[LogLine]:
         """Return logs with CloudSQL proxy port information."""
+        # Create a dynamic mock log that will match any SQL connection pattern
+        # The mock will contain a pattern that the port discovery logic will find
         return [
             LogLine(
                 content=(
