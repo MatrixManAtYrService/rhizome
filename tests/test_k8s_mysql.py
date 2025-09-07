@@ -9,7 +9,7 @@ from sqlmodel import select
 
 from rhizome.client import RhizomeClient
 from rhizome.environments import LocalTest
-from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
 from tests.conftest import RunningServer
 
 
@@ -23,7 +23,7 @@ def test_mysql_connection_and_sanitization(rhizome_server: RunningServer) -> Non
     local_test = LocalTest(client)
 
     # Execute query with automatic sanitization
-    fee_summary = local_test.select_first(select(FeeSummary).where(FeeSummary.id == 74347))
+    fee_summary = local_test.select_first(select(FeeSummaryV1).where(FeeSummaryV1.id == 74347))
 
     assert fee_summary is not None, "Test data with ID 74347 should exist"
 

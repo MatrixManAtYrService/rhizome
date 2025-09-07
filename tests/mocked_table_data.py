@@ -19,16 +19,16 @@ from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
 from rhizome.models.base import SanitizableModel
-from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
-from rhizome.models.billing_event.app_metered_event import AppMeteredEvent
-from rhizome.models.na_billing.stage_charge import StageCharge
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
+from rhizome.models.na_billing.stage_charge_v1 import StageChargeV1
 
 T = TypeVar("T", bound=SanitizableModel)
 
 
-def get_mock_fee_summary() -> FeeSummary:
+def get_mock_fee_summary() -> FeeSummaryV1:
     """Get mock fee summary data based on production record 74347."""
-    return FeeSummary(
+    return FeeSummaryV1(
         id=74347,
         uuid="JW8H2B9BT6B11R2HHXY3HYQCN6",
         billing_entity_uuid="MERCHANT_UUID_EXAMPLE_123456",
@@ -53,9 +53,9 @@ def get_mock_fee_summary() -> FeeSummary:
     )
 
 
-def get_mock_dev_app_metered_event() -> AppMeteredEvent:
+def get_mock_dev_app_metered_event() -> AppMeteredEventV1:
     """Get mock dev app metered event data based on dev record 1."""
-    return AppMeteredEvent(
+    return AppMeteredEventV1(
         id=1,
         uuid="HashHFsoa39Za8PAEn1rYUP7si",
         merchant_uuid="HashEzEYnSWUd",
@@ -74,9 +74,9 @@ def get_mock_dev_app_metered_event() -> AppMeteredEvent:
     )
 
 
-def get_mock_dev_fee_summary() -> FeeSummary:
+def get_mock_dev_fee_summary() -> FeeSummaryV1:
     """Get mock dev fee summary data based on dev record 30."""
-    return FeeSummary(
+    return FeeSummaryV1(
         id=30,
         uuid="HashDwRegsuuYDX9RnVzfZport",
         billing_entity_uuid="HashHvx2teX4epSXNfDrrx956N",
@@ -101,9 +101,9 @@ def get_mock_dev_fee_summary() -> FeeSummary:
     )
 
 
-def get_mock_demo_app_metered_event() -> AppMeteredEvent:
+def get_mock_demo_app_metered_event() -> AppMeteredEventV1:
     """Get mock demo app metered event data based on demo record 1."""
-    return AppMeteredEvent(
+    return AppMeteredEventV1(
         id=1,
         uuid="HashHFsoa39Za8PAEn1rYUP7si",
         merchant_uuid="HashEzEYnSWUd",
@@ -122,9 +122,9 @@ def get_mock_demo_app_metered_event() -> AppMeteredEvent:
     )
 
 
-def get_mock_demo_fee_summary() -> FeeSummary:
+def get_mock_demo_fee_summary() -> FeeSummaryV1:
     """Get mock demo fee summary data based on demo record 30."""
-    return FeeSummary(
+    return FeeSummaryV1(
         id=30,
         uuid="HashDwRegsuuYDX9RnVzfZport",
         billing_entity_uuid="HashHvx2teX4epSXNfDrrx956N",
@@ -149,9 +149,9 @@ def get_mock_demo_fee_summary() -> FeeSummary:
     )
 
 
-def get_mock_app_metered_event() -> AppMeteredEvent:
+def get_mock_app_metered_event() -> AppMeteredEventV1:
     """Get mock app metered event data based on production record 883 (sanitized)."""
-    return AppMeteredEvent(
+    return AppMeteredEventV1(
         id=883,
         uuid="Hash9V77timzh69Cy55VSsAXFV",
         merchant_uuid="HashFmpNZhreq",
@@ -170,9 +170,9 @@ def get_mock_app_metered_event() -> AppMeteredEvent:
     )
 
 
-def get_mock_stage_charge() -> StageCharge:
+def get_mock_stage_charge() -> StageChargeV1:
     """Get mock stage charge data based on production record 1."""
-    return StageCharge(
+    return StageChargeV1(
         id=1,
         uuid="S9GBXXVC8P72J",
         merchant_id=210342,
@@ -198,7 +198,7 @@ def get_mock_stage_charge() -> StageCharge:
     )
 
 
-def assert_fee_summary(actual: FeeSummary, expected: FeeSummary) -> None:
+def assert_fee_summary(actual: FeeSummaryV1, expected: FeeSummaryV1) -> None:
     """Assert that actual fee summary matches expected sanitized structure."""
     assert actual is not None, "Fee summary should exist"
 
@@ -216,7 +216,7 @@ def assert_fee_summary(actual: FeeSummary, expected: FeeSummary) -> None:
     assert actual.fee_category == expected.fee_category, f"Expected fee_category {expected.fee_category}, got {actual.fee_category}"
 
 
-def assert_app_metered_event(actual: AppMeteredEvent, expected: AppMeteredEvent) -> None:
+def assert_app_metered_event(actual: AppMeteredEventV1, expected: AppMeteredEventV1) -> None:
     """Assert that actual app metered event matches expected sanitized structure."""
     assert actual is not None, "App metered event should exist"
 
@@ -236,7 +236,7 @@ def assert_app_metered_event(actual: AppMeteredEvent, expected: AppMeteredEvent)
     assert actual.id == expected.id, f"Expected id {expected.id}, got {actual.id}"
 
 
-def assert_stage_charge(actual: StageCharge, expected: StageCharge) -> None:
+def assert_stage_charge(actual: StageChargeV1, expected: StageChargeV1) -> None:
     """Assert that actual stage charge matches expected sanitized structure."""
     assert actual is not None, "Stage charge should exist"
 
@@ -267,58 +267,58 @@ class TestDataSpec[T: SanitizableModel]:
 
 # Registry of test data specifications by model class and environment class
 TEST_DATA_SPECS: dict[type[SanitizableModel], dict[type[Any], TestDataSpec[Any]]] = {
-    FeeSummary: {
+    FeeSummaryV1: {
         # For mocked tests, all environments use the same mock data
         NorthAmericaBillingBookkeeper: TestDataSpec(
-            model_class=FeeSummary,
+            model_class=FeeSummaryV1,
             use_id=74347,  # Production record ID
             get_mock_data=get_mock_fee_summary,
             get_expected_data=get_mock_fee_summary,  # Real tests expect production data
             check_assertions=assert_fee_summary,
         ),
         DevBillingBookkeeper: TestDataSpec(
-            model_class=FeeSummary,
+            model_class=FeeSummaryV1,
             use_id=30,  # Dev uses record ID 30
             get_mock_data=get_mock_fee_summary,  # Mocked tests use production mock data
             get_expected_data=get_mock_dev_fee_summary,  # Real tests expect dev data
             check_assertions=assert_fee_summary,
         ),
         DemoBillingBookkeeper: TestDataSpec(
-            model_class=FeeSummary,
+            model_class=FeeSummaryV1,
             use_id=30,  # Demo uses record ID 30
             get_mock_data=get_mock_fee_summary,  # Mocked tests use production mock data
             get_expected_data=get_mock_demo_fee_summary,  # Real tests expect demo-specific data
             check_assertions=assert_fee_summary,
         ),
     },
-    AppMeteredEvent: {
+    AppMeteredEventV1: {
         # For mocked tests, all environments use the same mock data
         NorthAmericaBillingEvent: TestDataSpec(
-            model_class=AppMeteredEvent,
+            model_class=AppMeteredEventV1,
             use_id=883,  # Production record ID
             get_mock_data=get_mock_app_metered_event,
             get_expected_data=get_mock_app_metered_event,  # Real tests expect production data
             check_assertions=assert_app_metered_event,
         ),
         DevBillingEvent: TestDataSpec(
-            model_class=AppMeteredEvent,
+            model_class=AppMeteredEventV1,
             use_id=1,  # Dev uses record ID 1
             get_mock_data=get_mock_app_metered_event,  # Mocked tests use production mock data
             get_expected_data=get_mock_dev_app_metered_event,  # Real tests expect dev data
             check_assertions=assert_app_metered_event,
         ),
         DemoBillingEvent: TestDataSpec(
-            model_class=AppMeteredEvent,
+            model_class=AppMeteredEventV1,
             use_id=1,  # Demo uses record ID 1
             get_mock_data=get_mock_app_metered_event,  # Mocked tests use production mock data
             get_expected_data=get_mock_demo_app_metered_event,  # Real tests expect demo-specific data
             check_assertions=assert_app_metered_event,
         ),
     },
-    StageCharge: {
+    StageChargeV1: {
         # For na-billing environment
         NorthAmericaBilling: TestDataSpec(
-            model_class=StageCharge,
+            model_class=StageChargeV1,
             use_id=1,  # Using record ID 1 from the sample data
             get_mock_data=get_mock_stage_charge,
             get_expected_data=get_mock_stage_charge,  # Real tests expect production data

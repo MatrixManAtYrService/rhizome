@@ -16,7 +16,7 @@ from ...models.base import SanitizableModel
 from ...sanitize_helpers import sanitize_uuid_field
 
 
-class FeeSummary(SanitizableModel, table=True):
+class FeeSummary(SanitizableModel, table=False):
     """
     SQLModel for the `fee_summary` table.
 
@@ -24,7 +24,6 @@ class FeeSummary(SanitizableModel, table=True):
     containing aggregated fee information for billing entities.
     """
 
-    __tablename__ = "fee_summary"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the fee summary")

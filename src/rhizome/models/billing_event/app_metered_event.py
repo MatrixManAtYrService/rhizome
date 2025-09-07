@@ -16,7 +16,7 @@ from ...models.base import SanitizableModel
 from ...sanitize_helpers import sanitize_uuid_field
 
 
-class AppMeteredEvent(SanitizableModel, table=True):
+class AppMeteredEvent(SanitizableModel, table=False):
     """
     SQLModel for the `app_metered_event` table.
 
@@ -24,7 +24,6 @@ class AppMeteredEvent(SanitizableModel, table=True):
     containing usage data for metered applications.
     """
 
-    __tablename__ = "app_metered_event"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the app metered event")

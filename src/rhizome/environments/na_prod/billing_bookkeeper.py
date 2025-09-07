@@ -7,7 +7,15 @@ na-prod-us-central1 cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
+from enum import Enum
+
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+
+
+class NorthAmericaBillingBookkeeperModel(Enum):
+    """Table version mapping for NorthAmericaBillingBookkeeper environment."""
+    FeeSummary = FeeSummaryV1
 
 
 class NorthAmericaBillingBookkeeper(DatabaseEnvironment):

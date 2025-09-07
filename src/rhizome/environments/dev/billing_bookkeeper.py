@@ -7,7 +7,16 @@ dev cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
+from enum import Enum
+
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+
+
+class DevBillingBookkeeperModel(Enum):
+    FeeSummary = FeeSummaryV1
+    #... more tables go here
+
 
 
 class DevBillingBookkeeper(DatabaseEnvironment):

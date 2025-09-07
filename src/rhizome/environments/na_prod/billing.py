@@ -7,9 +7,16 @@ through direct connection using pybritive for temporary credentials.
 
 from __future__ import annotations
 
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig
+from rhizome.models.na_billing.stage_charge_v1 import StageChargeV1
+
+
+class NorthAmericaBillingModel(Enum):
+    """Table version mapping for NorthAmericaBilling environment."""
+    StageCharge = StageChargeV1
 
 if TYPE_CHECKING:
     from rhizome.client import RhizomeClient

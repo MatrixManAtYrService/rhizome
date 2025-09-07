@@ -7,7 +7,15 @@ na-prod-us-central1 cluster through CloudSQL proxy port-forwarding.
 
 from __future__ import annotations
 
+from enum import Enum
+
 from rhizome.environments.database_environment import DatabaseEnvironment
+from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
+
+
+class NorthAmericaBillingEventModel(Enum):
+    """Table version mapping for NorthAmericaBillingEvent environment."""
+    AppMeteredEvent = AppMeteredEventV1
 
 
 class NorthAmericaBillingEvent(DatabaseEnvironment):

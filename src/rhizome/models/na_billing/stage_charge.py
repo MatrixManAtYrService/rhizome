@@ -73,7 +73,7 @@ class ChargeType(str, Enum):
     PARTIAL_MONTH = "PARTIAL_MONTH"
 
 
-class StageCharge(SanitizableModel, table=True):
+class StageCharge(SanitizableModel, table=False):
     """
     SQLModel for the `stage_charge` table.
 
@@ -81,7 +81,6 @@ class StageCharge(SanitizableModel, table=True):
     containing charge information for apps and subscriptions.
     """
 
-    __tablename__ = "stage_charge"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True, description="Unique identifier for the stage charge")

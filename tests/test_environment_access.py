@@ -27,21 +27,21 @@ from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
 from rhizome.models.base import SanitizableModel
-from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
-from rhizome.models.billing_event.app_metered_event import AppMeteredEvent
-from rhizome.models.na_billing.stage_charge import StageCharge
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
+from rhizome.models.na_billing.stage_charge_v1 import StageChargeV1
 from rhizome.tools import Tools
 from tests.mocked_subprocesses import MockGcloudTool, MockKubectlTool, MockLsofTool, MockOnePasswordTool, MockPybritiveTool
 from tests.mocked_table_data import TEST_DATA_SPECS
 
 ENVIRONMENT_DATABASE_COMBINATIONS = [
-    (NorthAmericaBillingBookkeeper, FeeSummary),
-    (DevBillingBookkeeper, FeeSummary),
-    (DemoBillingBookkeeper, FeeSummary),
-    (NorthAmericaBillingEvent, AppMeteredEvent),
-    (DevBillingEvent, AppMeteredEvent),
-    (DemoBillingEvent, AppMeteredEvent),
-    (NorthAmericaBilling, StageCharge),
+    (NorthAmericaBillingBookkeeper, FeeSummaryV1),
+    (DevBillingBookkeeper, FeeSummaryV1),
+    (DemoBillingBookkeeper, FeeSummaryV1),
+    (NorthAmericaBillingEvent, AppMeteredEventV1),
+    (DevBillingEvent, AppMeteredEventV1),
+    (DemoBillingEvent, AppMeteredEventV1),
+    (NorthAmericaBilling, StageChargeV1),
 ]
 
 
