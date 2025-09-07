@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, TypeVar
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig
-from tests.utils import get_open_port
+from rhizome.utils import get_open_port
 
 if TYPE_CHECKING:
     from sqlmodel.sql._expression_select_cls import SelectOfScalar

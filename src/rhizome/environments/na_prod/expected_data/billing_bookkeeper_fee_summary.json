@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "uuid": "HashC3wCTJp3xAubZT75vSdr8k",
+  "billing_entity_uuid": "HashHz7MGWbwJ31fXa6XhLGAC7",
+  "billing_date": "2025-03-01",
+  "fee_category": "APP_METER_3P_RETAIL",
+  "fee_code": "66W0SJ09CF0P2.M",
+  "currency": "USD",
+  "total_period_units": "386.0000",
+  "abs_period_units": "386.0000",
+  "total_basis_amount": "0.000",
+  "abs_basis_amount": "0.000",
+  "total_fee_amount": "19.300",
+  "fee_rate_uuid": "Hash2VcFuzfgjYC8nNeumzzZzC",
+  "request_uuid": "Hash64ZCcorRn3BmuzC7mmTkLs",
+  "invoice_info_uuid": "Hash4mApmanAb2qRJhDVqEceW9",
+  "fee_code_ledger_account_uuid": "HashBWSaQE4AQwQWgzMtBRzWQb",
+  "credit_ledger_account_uuid": "Hash3eWm6wHunAC2LREfkGKZkD",
+  "debit_ledger_account_uuid": "HashBhz1SepUgkTkv7qwV1vs9Y",
+  "exclude_from_invoice": 0,
+  "created_timestamp": "2025-03-03T21:13:28.632128",
+  "modified_timestamp": "2025-05-01T04:29:50.869337"
+}

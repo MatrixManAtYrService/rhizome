@@ -67,6 +67,7 @@ async def _discover_remote_port(
     kube_context: str,
     kube_namespace: str,
     kube_deployment: str,
+    sql_connection: str,  # Add sql_connection parameter
     log: structlog.BoundLogger,
 ) -> int:
     """Poll logs to discover the remote port for CloudSQL proxy."""
@@ -85,7 +86,7 @@ async def _discover_remote_port(
         for log_line in logs:
             log.info("Checking log line", line=log_line.content, source=source)
             if (
-                "Starting proxy for connectionName" in log_line.content
+                f"Starting proxy for connectionName '{sql_connection}'" in log_line.content
                 and "on port" in log_line.content
             ):
                 # Extract port from log line like "Starting proxy for ... on port '12345'"
@@ -169,6 +170,7 @@ async def cloudsql_port_forward(
         kube_context=kube_context,
         kube_namespace=kube_namespace,
         kube_deployment=kube_deployment,
+        sql_connection=sql_connection,  # Pass sql_connection
         log=log,
     )
 

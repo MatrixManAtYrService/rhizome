@@ -1,0 +1,23 @@
+{
+  "id": 30,
+  "uuid": "HashDwRegsuuYDX9RnVzfZport",
+  "billing_entity_uuid": "HashHvx2teX4epSXNfDrrx956N",
+  "billing_date": "2024-01-01",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "PaymentsPDVT",
+  "currency": "GBP",
+  "total_period_units": "3.0000",
+  "abs_period_units": "3.0000",
+  "total_basis_amount": "0.000",
+  "abs_basis_amount": "0.000",
+  "total_fee_amount": "0.000",
+  "fee_rate_uuid": "Hash2BtY3zBxDEJzfEUGDRvSLQ",
+  "request_uuid": "HashFZB5xUQ3fZK3Cq5CULKogo",
+  "invoice_info_uuid": null,
+  "fee_code_ledger_account_uuid": null,
+  "credit_ledger_account_uuid": null,
+  "debit_ledger_account_uuid": null,
+  "exclude_from_invoice": 0,
+  "created_timestamp": "2023-10-18T11:23:57.951306",
+  "modified_timestamp": "2025-04-29T11:20:37.501474"
+}

@@ -1,0 +1,17 @@
+{
+  "id": 1066,
+  "uuid": "Hash44ujaGnBWeZDZJZWXfPoHg",
+  "merchant_uuid": "HashC5Y6gYE5P",
+  "developer_app_uuid": "Hash7oo2s44Tw",
+  "environment": "usprod",
+  "app_metered_uuid": "HashBWJmkZPs1",
+  "count": 1,
+  "basis_amount": null,
+  "basis_currency": null,
+  "action_timestamp": "2025-03-07T00:00:00",
+  "credit_for_trial": 0,
+  "cos_event_uuid": "Hash2HYYPmwXph1ubpLsFMtBvj",
+  "processed_timestamp": "2025-03-10T13:36:41.706235",
+  "billing_event_uuid": "HashGjAJdQjN6WQjpeYJEP8k4s",
+  "created_timestamp": "2025-03-07T14:41:14.645253"
+}

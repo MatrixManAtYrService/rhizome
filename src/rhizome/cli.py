@@ -5,9 +5,13 @@ import typer
 
 from rhizome import __version__
 from rhizome.config import Home
+from rhizome.environments.environment_list import RhizomeEnvironment
 from rhizome.server import run
+from rhizome.sync_data import sync_data, sync_schema
 
 app = typer.Typer(help="Database access helper for test tools")
+sync_app = typer.Typer(help="Synchronize database schemas, models, and data.")
+app.add_typer(sync_app, name="sync")
 
 
 def version_callback(value: bool) -> None:
@@ -39,20 +43,34 @@ def serve(
     run(home)
 
 
-@app.command()
-def sync(
-    version: Annotated[
+@sync_app.command()
+def data(
+    env: Annotated[
+        RhizomeEnvironment | None,
+        typer.Option(help="The environment to sync. If not provided, all are synced."),
+    ] = None,
+    verbose: Annotated[
         bool,
-        typer.Option(
-            "--version",
-            callback=version_callback,
-            is_eager=True,
-            help="Show version and exit",
-        ),
+        typer.Option(help="Show full stack trace on error."),
     ] = False,
 ) -> None:
-    """Synchronize database schemas and models (placeholder for future functionality)."""
-    typer.echo("sync")
+    """Syncs the expected data for all environments."""
+    sync_data(env, verbose=verbose)
+
+
+@sync_app.command()
+def schema(
+    env: Annotated[
+        RhizomeEnvironment | None,
+        typer.Option(help="The environment to sync. If not provided, all are synced."),
+    ] = None,
+    verbose: Annotated[
+        bool,
+        typer.Option(help="Show full stack trace on error."),
+    ] = False,
+) -> None:
+    """Syncs the schema for all environments."""
+    sync_schema(env, verbose=verbose)
 
 
 def main() -> None:

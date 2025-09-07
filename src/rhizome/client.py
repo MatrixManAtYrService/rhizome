@@ -334,3 +334,19 @@ class RhizomeClient:
             self._log_query_result(query, sanitized_result, "select_one_sanitized")
 
             return sanitized_result
+
+    def execute_raw_query(self, connection_string: str, query: str) -> Any:
+        """
+        Execute a raw SQL query and return the result.
+
+        Args:
+            connection_string: Database connection string
+            query: Raw SQL query to execute
+
+        Returns:
+            The result of the query execution.
+        """
+        engine = create_engine(connection_string)
+        with Session(engine) as session:
+            result = session.exec(query)
+            return result.first()
