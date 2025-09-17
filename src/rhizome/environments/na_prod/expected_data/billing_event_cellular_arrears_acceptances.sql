@@ -1,0 +1,21 @@
+CREATE TABLE `cellular_arrears_acceptances` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `merchant_uuid` varchar(13) DEFAULT NULL,
+  `request_uuid` varchar(30) NOT NULL,
+  `acceptance_id` varchar(36) DEFAULT NULL,
+  `agreement_id` varchar(36) DEFAULT NULL,
+  `device_serial` varchar(16) DEFAULT NULL,
+  `activation_date` timestamp NULL DEFAULT NULL,
+  `deactivation_date` timestamp NULL DEFAULT NULL,
+  `deleted_date` timestamp NULL DEFAULT NULL,
+  `num_days_prorated` int DEFAULT NULL,
+  `iccid` varchar(26) DEFAULT NULL,
+  `status` enum('INPROGRESS','COMPLETE','ERROR','SKIPPED') DEFAULT NULL,
+  `is_oobe` tinyint(1) DEFAULT '0',
+  `reason` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_acceptance_id` (`acceptance_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_merchant_uuid_request_uuid` (`merchant_uuid`,`request_uuid`),
+  CONSTRAINT `cellular_arrears_acceptances_ibfk_1` FOREIGN KEY (`merchant_uuid`, `request_uuid`) REFERENCES `cellular_billing_arrears_info` (`merchant_uuid`, `request_uuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1368 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

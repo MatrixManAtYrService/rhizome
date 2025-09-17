@@ -1,0 +1,22 @@
+CREATE TABLE `merchant_evolution` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `merchant_uuid` char(13) NOT NULL,
+  `reseller_uuid` char(13) NOT NULL,
+  `merchant_name` varchar(127) NOT NULL,
+  `seasonal` tinyint(1) DEFAULT NULL,
+  `tax_exempt` tinyint(1) DEFAULT NULL,
+  `mlc_merchant_created_event_datetime` datetime DEFAULT NULL COMMENT 'Date and time of MLC merchant-created event',
+  `mlc_merchant_created_event_uuid` varchar(13) DEFAULT NULL,
+  `created_in_bookkeeper_datetime` datetime DEFAULT NULL COMMENT 'Date and time merchant created in bookkeeper as a result of a terms acceptance event',
+  `terms_accepted_datetime` datetime DEFAULT NULL COMMENT 'Date and time of the terms acceptance event that triggered merchant creation in bookkeeper',
+  `agreement_event_uuid` varchar(26) DEFAULT NULL COMMENT 'UUID of the terms acceptance event that triggered merchant creation in bookkeeper',
+  `close_date` date DEFAULT NULL COMMENT 'Date the merchant was closed',
+  `effective_close_date` date DEFAULT NULL COMMENT 'Date the merchant was effectively closed',
+  `mlc_close_event_uuid` varchar(13) DEFAULT NULL,
+  `created_timestamp` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `modified_timestamp` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `billable_merchant_type` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `merchant_evolution_key1` (`merchant_uuid`),
+  UNIQUE KEY `merchant_evolution_key2` (`reseller_uuid`,`merchant_uuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
