@@ -1,5 +1,6 @@
 """Schema synchronization functionality."""
 
+from enum import StrEnum
 from pathlib import Path
 from typing import Any, cast
 
@@ -8,6 +9,7 @@ import typer
 from rhizome.client import RhizomeClient
 from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
 from rhizome.git_diff import ChangeTracker, SchemaChangeClassifier
+from rhizome.models.table_list import BillingBookkeeperTable, BillingEventTable, BillingTable
 
 
 def get_database_short_name(environment_name: str) -> str:
@@ -29,6 +31,53 @@ def get_database_short_name(environment_name: str) -> str:
             result.append("_")
         result.append(char.lower())
     return "".join(result)
+
+
+def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnum] | None:
+    """Get the table enum list for a given environment."""
+    env_str = str(env_enum)
+
+    if "billing_bookkeeper" in env_str:
+        return list(BillingBookkeeperTable)
+    elif "billing_event" in env_str:
+        return list(BillingEventTable)
+    elif "billing" in env_str and "bookkeeper" not in env_str and "event" not in env_str:
+        return list(BillingTable)
+    else:
+        return None
+
+
+def _create_lightweight_environment(env_class: type, client: RhizomeClient) -> Any:
+    """Create environment instance without initializing table_situation."""
+    # We need the environment instance for connection and name info,
+    # but we can't use the normal constructor because it tries to build table_situation
+    # Instead, we'll manually create the instance and set minimal required attributes
+
+    # Create the instance without calling __init__
+    env_instance = env_class.__new__(env_class)
+
+    # Set minimal required attributes
+    env_instance.client = client
+
+    # Call the parent __init__ but skip table_situation creation
+    # We'll do this by temporarily overriding the abstract methods
+    original_tables = env_class.tables
+    original_situate_table = env_class.situate_table
+
+    try:
+        # Provide dummy implementations that won't be called
+        env_class.tables = lambda self: []
+        env_class.situate_table = lambda self, table: (None, None)
+
+        # Now we can call __init__ safely
+        env_instance.__init__(client)
+
+    finally:
+        # Restore original methods
+        env_class.tables = original_tables
+        env_class.situate_table = original_situate_table
+
+    return env_instance
 
 
 def _convert_query_result_to_sequence(result: object) -> tuple[Any, ...] | list[Any] | None:
@@ -111,7 +160,8 @@ def _sync_environment_schema(
     verbose: bool,
 ) -> None:
     """Sync schema for all tables in an environment."""
-    env_instance = env_class(client)
+    # Create lightweight environment instance that doesn't require table_situation
+    env_instance = _create_lightweight_environment(env_class, client)
     typer.echo(f"Syncing environment: {env_instance.name}")
 
     # Get environment folder name from the enum value
@@ -124,8 +174,14 @@ def _sync_environment_schema(
     # Get database short name from the environment name
     db_short_name = get_database_short_name(env_instance.name)
 
-    # Get all tables from the environment
-    for table_name in env_instance.tables():
+    # Get all tables from the table enum (not from environment.tables())
+    table_list = _get_table_enum_for_environment(env_enum)
+    if not table_list:
+        typer.echo(f"  Warning: No table enum found for {env_enum}")
+        return
+
+    # Try to sync schema for all tables in the enum
+    for table_name in table_list:
         # Construct file path using naming conventions
         file_path = f"src/rhizome/environments/{env_folder}/expected_data/{db_short_name}_{table_name}.sql"
 
