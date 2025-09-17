@@ -63,6 +63,9 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
 
             try:
                 result = env_instance.client.execute_raw_query(env_instance.get_connection_string(), query_str)
+                result_length = len(cast(Any, result)) if result and hasattr(result, '__len__') else 'N/A'
+                typer.echo(f"    Query result type: {type(result)}, length: {result_length}")
+
                 if result and isinstance(result, tuple | list):
                     # Type narrow to sequence with explicit cast
                     result_seq = cast(tuple[Any, ...] | list[Any], result)
@@ -79,6 +82,11 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
 
                         # Track changes to this file
                         change_tracker.track_file(file_path)
+                        typer.echo(f"    ✓ Tracked file: {file_path}")
+                    else:
+                        typer.echo(f"    ⚠ Result sequence too short: {len(result_seq)} items")
+                else:
+                    typer.echo(f"    ⚠ No result or unexpected result type: {result}")
 
             except Exception as e:
                 if verbose:
