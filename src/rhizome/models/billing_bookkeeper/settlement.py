@@ -42,18 +42,10 @@ class Settlement(RhizomeModel, table=False):
     currency: str = Field(max_length=3, description="Currency code")
     total_amount: Decimal = Field(max_digits=12, decimal_places=3, description="Total settlement amount")
     fee_amount: Decimal = Field(max_digits=12, decimal_places=3, description="Fee amount")
-    tax1_amount: Decimal = Field(
-        default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 1 amount"
-    )
-    tax2_amount: Decimal = Field(
-        default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 2 amount"
-    )
-    tax3_amount: Decimal = Field(
-        default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 3 amount"
-    )
-    tax4_amount: Decimal = Field(
-        default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 4 amount"
-    )
+    tax1_amount: Decimal = Field(default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 1 amount")
+    tax2_amount: Decimal = Field(default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 2 amount")
+    tax3_amount: Decimal = Field(default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 3 amount")
+    tax4_amount: Decimal = Field(default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Tax 4 amount")
     lookup_ledger_account_key: str = Field(max_length=32, description="Ledger account lookup key")
     gl_code: str | None = Field(default=None, max_length=40, description="General ledger code")
     item_code: str | None = Field(default=None, max_length=30, description="Item code")

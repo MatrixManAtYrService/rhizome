@@ -40,9 +40,7 @@ class AppSubscriptionEvent(RhizomeModel, table=False):
     environment: str = Field(max_length=25, description="Environment (e.g., usprod)")
     action_type: ActionType = Field(description="Type of action (INSTALL, UNINSTALL, SUBSCRIPTION_CHANGE)")
     app_subscription_uuid: str = Field(max_length=13, description="UUID of the app subscription")
-    app_subscription_cost: Decimal = Field(
-        max_digits=12, decimal_places=3, description="Cost of the app subscription"
-    )
+    app_subscription_cost: Decimal = Field(max_digits=12, decimal_places=3, description="Cost of the app subscription")
     bundled_with_plan: bool = Field(default=False, description="Whether bundled with a plan")
     trial_end_date: datetime.date | None = Field(default=None, description="End date of trial period")
     is_hidden_or_sys_app: bool = Field(default=False, description="Whether this is a hidden or system app")
