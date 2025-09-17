@@ -1,0 +1,20 @@
+CREATE TABLE `app_subscription_event` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(26) NOT NULL,
+  `merchant_uuid` char(13) NOT NULL,
+  `developer_app_uuid` char(13) NOT NULL,
+  `environment` varchar(25) NOT NULL,
+  `action_type` enum('INSTALL','UNINSTALL','SUBSCRIPTION_CHANGE') NOT NULL,
+  `app_subscription_uuid` char(13) NOT NULL,
+  `app_subscription_cost` decimal(12,3) NOT NULL,
+  `bundled_with_plan` tinyint(1) NOT NULL DEFAULT '0',
+  `trial_end_date` date DEFAULT NULL,
+  `is_hidden_or_sys_app` tinyint(1) NOT NULL DEFAULT '0',
+  `cos_event_uuid` varchar(26) DEFAULT NULL,
+  `action_timestamp` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `processed_timestamp` datetime(6) DEFAULT NULL,
+  `app_subscription_daily_uuid` char(26) DEFAULT NULL,
+  `created_timestamp` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `app_subscription_event_key1` (`uuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=33670 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
