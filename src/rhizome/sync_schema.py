@@ -36,18 +36,26 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
                         if len(result_seq) > 1:
                             # The result of SHOW CREATE TABLE is a tuple, the second element is the statement
                             create_table_statement = str(result_seq[1])
-                            module_path = emplacement_class.__module__
-                            parts = module_path.split(".")
-                            env_name = parts[2]
-                            db_and_table_name = parts[4]
-                            file_path = f"src/rhizome/environments/{env_name}/expected_data/{db_and_table_name}.sql"
 
-                            # Write the file
-                            with open(file_path, "w") as f:
-                                f.write(create_table_statement)
+                            # Get file path from emplacement class module
+                            try:
+                                module_path = emplacement_class.__module__
+                                parts = module_path.split(".")
+                                if len(parts) >= 5:
+                                    env_name = parts[2]
+                                    db_and_table_name = parts[4]
+                                    file_path = f"src/rhizome/environments/{env_name}/expected_data/{db_and_table_name}.sql"
 
-                            # Track changes to this file
-                            change_tracker.track_file(file_path)
+                                    # Write the file
+                                    with open(file_path, "w") as f:
+                                        f.write(create_table_statement)
+
+                                    # Track changes to this file
+                                    change_tracker.track_file(file_path)
+                                else:
+                                    typer.secho(f"    Warning: Unexpected module path format: {module_path}", fg=typer.colors.YELLOW)
+                            except (AttributeError, IndexError) as e:
+                                typer.secho(f"    Warning: Could not extract file path from {emplacement_class}: {e}", fg=typer.colors.YELLOW)
 
                 except Exception as e:
                     if verbose:
