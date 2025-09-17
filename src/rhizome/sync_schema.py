@@ -55,17 +55,23 @@ class LightweightEnvironment:
         self.client = client
         self._env_class = env_class
 
-        # Create a temporary instance to get the name and config
-        # We'll monkey-patch the methods to avoid table_situation creation
+        # Create a temporary instance, but monkey-patch to skip table_situation
+        # We need to preserve port forwarding setup for connection strings
         original_init = env_class.__init__
 
-        def dummy_init(instance: object, client_arg: RhizomeClient) -> None:
+        def patched_init(instance: object, client_arg: RhizomeClient) -> None:
             # Use setattr to avoid type checker issues with object
             instance.client = client_arg
-            # Skip the table_situation initialization
+
+            # Set up port forwarding if needed (copied from base Environment.__init__)
+            port_forward_config = instance.get_port_forward_config()  # type: ignore
+            if port_forward_config is not None:
+                instance._setup_port_forwarding(port_forward_config)  # type: ignore
+
+            # Skip the table_situation initialization - this is what we want to avoid
 
         try:
-            env_class.__init__ = dummy_init  # type: ignore
+            env_class.__init__ = patched_init  # type: ignore
             self._temp_instance = env_class(client)
         finally:
             env_class.__init__ = original_init  # type: ignore
