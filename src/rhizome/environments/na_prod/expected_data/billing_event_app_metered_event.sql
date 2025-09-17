@@ -16,4 +16,4 @@ CREATE TABLE `app_metered_event` (
   `created_timestamp` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_metered_event_key1` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6584 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=6834 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
