@@ -239,10 +239,10 @@ def get_file_diffs(file_paths: Sequence[str | Path]) -> list[git.Diff]:
         if not relative_paths:
             return []
 
-        # Get diffs for these specific files using the working tree vs index
+        # Get diffs for these specific files using the working tree vs HEAD
         # Convert to tuple of Path objects for GitPython compatibility
         path_objects = tuple(Path(p) for p in relative_paths)
-        diffs = repo.index.diff(None, paths=path_objects, create_patch=True)
+        diffs = repo.index.diff("HEAD", paths=path_objects, create_patch=True)
         return list(diffs)
 
     except (git.InvalidGitRepositoryError, git.GitCommandError, OSError):
