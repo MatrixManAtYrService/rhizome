@@ -124,7 +124,7 @@ class TestChangeTracker:
 
         summary = tracker.get_summary()
 
-        expected = FileSummary(trivial=[], nontrivial=[], none=[])
+        expected = FileSummary(trivial=[], nontrivial=[], none=[], new=[])
         assert summary == expected
 
     def test_get_detailed_summary_empty(self) -> None:

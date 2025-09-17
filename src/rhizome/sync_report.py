@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
 
-import typer
 from rich.console import Console
 from rich.table import Table
 
@@ -102,10 +101,7 @@ def check_table_sync_status(
     """Check the synchronization status for a single table."""
     # Get environment folder name
     env_str = str(env_enum)
-    if env_str.startswith("na_prod_"):
-        env_folder = "na_prod"
-    else:
-        env_folder = env_str.split("_")[0]
+    env_folder = "na_prod" if env_str.startswith("na_prod_") else env_str.split("_")[0]
 
     # Get database short name
     db_short_name = get_database_short_name(env_name)
@@ -152,21 +148,18 @@ def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnu
         return None
 
 
-def sync_report(env: RhizomeEnvironment | None = None) -> None:
-    """Generate a report of sync status for all environment/table pairs."""
+def _collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatus]:
+    """Collect sync statuses for all environment/table pairs."""
     console = Console()
-
-    # Collect all statuses
     all_statuses: list[TableSyncStatus] = []
 
     environments_to_check = environment_type.items()
     if env:
         environments_to_check = [(env, environment_type[env])]
 
-    for env_enum, env_class in environments_to_check:
+    for env_enum, _ in environments_to_check:
         try:
             # Get table list without instantiating the environment
-            # Look up the table enum directly
             table_list = _get_table_enum_for_environment(env_enum)
             if not table_list:
                 console.print(f"[yellow]Warning: No table enum found for {env_enum}[/yellow]")
@@ -180,76 +173,128 @@ def sync_report(env: RhizomeEnvironment | None = None) -> None:
             console.print(f"[red]Error checking {env_enum}: {e}[/red]")
             continue
 
-    # Group statuses by category
-    schema_only = [s for s in all_statuses if s.status == SyncStatus.SCHEMA_ONLY]
-    schema_model = [s for s in all_statuses if s.status == SyncStatus.SCHEMA_MODEL]
-    schema_model_emplacement = [s for s in all_statuses if s.status == SyncStatus.SCHEMA_MODEL_EMPLACEMENT]
-    complete = [s for s in all_statuses if s.status == SyncStatus.COMPLETE]
-    missing = [s for s in all_statuses if s.status == SyncStatus.MISSING]
+    return all_statuses
 
-    # Print summary
+
+def _group_statuses_by_category(all_statuses: list[TableSyncStatus]) -> dict[str, list[TableSyncStatus]]:
+    """Group statuses by sync status category."""
+    return {
+        "schema_only": [s for s in all_statuses if s.status == SyncStatus.SCHEMA_ONLY],
+        "schema_model": [s for s in all_statuses if s.status == SyncStatus.SCHEMA_MODEL],
+        "schema_model_emplacement": [s for s in all_statuses if s.status == SyncStatus.SCHEMA_MODEL_EMPLACEMENT],
+        "complete": [s for s in all_statuses if s.status == SyncStatus.COMPLETE],
+        "missing": [s for s in all_statuses if s.status == SyncStatus.MISSING],
+    }
+
+
+def _print_sync_summary(
+    console: Console,
+    all_statuses: list[TableSyncStatus],
+    grouped: dict[str, list[TableSyncStatus]]
+) -> None:
+    """Print the sync status summary."""
     console.print("\n[bold]Sync Status Summary[/bold]")
     console.print(f"Total environment/table pairs: {len(all_statuses)}")
-    console.print(f"  ✅ Complete: {len(complete)}")
-    console.print(f"  ⚠️  Schema + Model + Emplacement (no data): {len(schema_model_emplacement)}")
-    console.print(f"  🔶 Schema + Model (no emplacement/data): {len(schema_model)}")
-    console.print(f"  📄 Schema Only: {len(schema_only)}")
-    console.print(f"  ❌ Missing: {len(missing)}")
+    console.print(f"  ✅ Complete: {len(grouped['complete'])}")
+    console.print(f"  ⚠️  Schema + Model + Emplacement (no data): {len(grouped['schema_model_emplacement'])}")
+    console.print(f"  🔶 Schema + Model (no emplacement/data): {len(grouped['schema_model'])}")
+    console.print(f"  📄 Schema Only: {len(grouped['schema_only'])}")
+    console.print(f"  ❌ Missing: {len(grouped['missing'])}")
 
-    # Create detailed table
-    if all_statuses:
-        console.print("\n[bold]Detailed Status[/bold]")
-        table = Table(title="Environment/Table Sync Status")
-        table.add_column("Environment", style="cyan")
-        table.add_column("Table", style="magenta")
-        table.add_column("Schema", style="green")
-        table.add_column("Model", style="blue")
-        table.add_column("Emplacement", style="yellow")
-        table.add_column("Data", style="green")
-        table.add_column("Status", style="bold")
 
-        # Sort by status for better readability
-        all_statuses.sort(key=lambda x: (x.status, x.environment, x.table))
+def _print_detailed_table(console: Console, all_statuses: list[TableSyncStatus]) -> None:
+    """Print the detailed status table."""
+    if not all_statuses:
+        return
 
-        for status in all_statuses:
-            table.add_row(
-                status.environment,
-                status.table,
-                "✓" if status.has_schema else "✗",
-                "✓" if status.has_model else "✗",
-                "✓" if status.has_emplacement else "✗",
-                "✓" if status.has_data else "✗",
-                status.status_emoji,
-            )
+    console.print("\n[bold]Detailed Status[/bold]")
+    table = Table(title="Environment/Table Sync Status")
+    table.add_column("Environment", style="cyan")
+    table.add_column("Table", style="magenta")
+    table.add_column("Schema", style="green")
+    table.add_column("Model", style="blue")
+    table.add_column("Emplacement", style="yellow")
+    table.add_column("Data", style="green")
+    table.add_column("Status", style="bold")
 
-        console.print(table)
+    # Sort by status for better readability
+    all_statuses.sort(key=lambda x: (x.status, x.environment, x.table))
 
-    # Print recommendations
-    if schema_only:
-        console.print("\n[yellow]📄 Schema Only (needs model generation):[/yellow]")
-        for status in schema_only[:5]:  # Show first 5
-            console.print(f"  - {status.environment}/{status.table}")
-        if len(schema_only) > 5:
-            console.print(f"  ... and {len(schema_only) - 5} more")
+    for status in all_statuses:
+        table.add_row(
+            status.environment,
+            status.table,
+            "✓" if status.has_schema else "✗",
+            "✓" if status.has_model else "✗",
+            "✓" if status.has_emplacement else "✗",
+            "✓" if status.has_data else "✗",
+            status.status_emoji,
+        )
 
-    if schema_model:
-        console.print("\n[yellow]🔶 Schema + Model (needs emplacement):[/yellow]")
-        for status in schema_model[:5]:
-            console.print(f"  - {status.environment}/{status.table}")
-        if len(schema_model) > 5:
-            console.print(f"  ... and {len(schema_model) - 5} more")
+    console.print(table)
 
+
+def _print_status_group(console: Console, statuses: list[TableSyncStatus], title: str, color: str) -> None:
+    """Print a group of statuses with a title."""
+    if not statuses:
+        return
+
+    console.print(f"\n[{color}]{title}:[/{color}]")
+    for status in statuses[:5]:
+        console.print(f"  - {status.environment}/{status.table}")
+    if len(statuses) > 5:
+        console.print(f"  ... and {len(statuses) - 5} more")
+
+
+def _print_recommendations(console: Console, grouped: dict[str, list[TableSyncStatus]]) -> None:
+    """Print recommendations based on sync status."""
+    _print_status_group(
+        console,
+        grouped["schema_only"],
+        "📄 Schema Only (needs model generation)",
+        "yellow"
+    )
+
+    _print_status_group(
+        console,
+        grouped["schema_model"],
+        "🔶 Schema + Model (needs emplacement)",
+        "yellow"
+    )
+
+    schema_model_emplacement = grouped["schema_model_emplacement"]
     if schema_model_emplacement:
-        console.print("\n[yellow]⚠️  Ready for data sync:[/yellow]")
-        for status in schema_model_emplacement[:5]:
-            console.print(f"  - {status.environment}/{status.table}")
-        if len(schema_model_emplacement) > 5:
-            console.print(f"  ... and {len(schema_model_emplacement) - 5} more")
+        _print_status_group(
+            console,
+            schema_model_emplacement,
+            "⚠️  Ready for data sync",
+            "yellow"
+        )
         console.print("\n[green]Run 'rhizome sync data' to fetch data for these tables[/green]")
 
-    if missing:
-        console.print("\n[red]❌ Missing everything:[/red]")
-        for status in missing[:5]:
-            console.print(f"  - {status.environment}/{status.table}")
-        if len(missing) > 5:
-            console.print(f"  ... and {len(missing) - 5} more")
+    _print_status_group(
+        console,
+        grouped["missing"],
+        "❌ Missing everything",
+        "red"
+    )
+
+
+def sync_report(env: RhizomeEnvironment | None = None) -> None:
+    """Generate a report of sync status for all environment/table pairs."""
+    console = Console()
+
+    # Collect all statuses
+    all_statuses = _collect_sync_statuses(env)
+
+    # Group statuses by category
+    grouped = _group_statuses_by_category(all_statuses)
+
+    # Print summary
+    _print_sync_summary(console, all_statuses, grouped)
+
+    # Print detailed table
+    _print_detailed_table(console, all_statuses)
+
+    # Print recommendations
+    _print_recommendations(console, grouped)

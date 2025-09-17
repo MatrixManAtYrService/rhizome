@@ -47,37 +47,37 @@ def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnu
         return None
 
 
-def _create_lightweight_environment(env_class: type, client: RhizomeClient) -> Any:
-    """Create environment instance without initializing table_situation."""
-    # We need the environment instance for connection and name info,
-    # but we can't use the normal constructor because it tries to build table_situation
-    # Instead, we'll manually create the instance and set minimal required attributes
+class LightweightEnvironment:
+    """Lightweight environment for schema sync that doesn't require table_situation."""
 
-    # Create the instance without calling __init__
-    env_instance = env_class.__new__(env_class)
+    def __init__(self, env_class: type, client: RhizomeClient) -> None:
+        """Initialize with just the essentials needed for schema sync."""
+        self.client = client
+        self._env_class = env_class
 
-    # Set minimal required attributes
-    env_instance.client = client
+        # Create a temporary instance to get the name and config
+        # We'll monkey-patch the methods to avoid table_situation creation
+        original_init = env_class.__init__
 
-    # Call the parent __init__ but skip table_situation creation
-    # We'll do this by temporarily overriding the abstract methods
-    original_tables = env_class.tables
-    original_situate_table = env_class.situate_table
+        def dummy_init(instance: object, client_arg: RhizomeClient) -> None:
+            # Use setattr to avoid type checker issues with object
+            instance.client = client_arg
+            # Skip the table_situation initialization
 
-    try:
-        # Provide dummy implementations that won't be called
-        env_class.tables = lambda self: []
-        env_class.situate_table = lambda self, table: (None, None)
+        try:
+            env_class.__init__ = dummy_init  # type: ignore
+            self._temp_instance = env_class(client)
+        finally:
+            env_class.__init__ = original_init  # type: ignore
 
-        # Now we can call __init__ safely
-        env_instance.__init__(client)
+    @property
+    def name(self) -> str:
+        """Get environment name."""
+        return self._temp_instance.name
 
-    finally:
-        # Restore original methods
-        env_class.tables = original_tables
-        env_class.situate_table = original_situate_table
-
-    return env_instance
+    def get_connection_string(self) -> str:
+        """Get connection string for database access."""
+        return self._temp_instance.get_connection_string()
 
 
 def _convert_query_result_to_sequence(result: object) -> tuple[Any, ...] | list[Any] | None:
@@ -161,15 +161,12 @@ def _sync_environment_schema(
 ) -> None:
     """Sync schema for all tables in an environment."""
     # Create lightweight environment instance that doesn't require table_situation
-    env_instance = _create_lightweight_environment(env_class, client)
+    env_instance = LightweightEnvironment(env_class, client)
     typer.echo(f"Syncing environment: {env_instance.name}")
 
     # Get environment folder name from the enum value
     env_str = str(env_enum)
-    if env_str.startswith("na_prod_"):
-        env_folder = "na_prod"
-    else:
-        env_folder = env_str.split("_")[0]  # e.g., "dev_billing_bookkeeper" -> "dev"
+    env_folder = "na_prod" if env_str.startswith("na_prod_") else env_str.split("_")[0]
 
     # Get database short name from the environment name
     db_short_name = get_database_short_name(env_instance.name)

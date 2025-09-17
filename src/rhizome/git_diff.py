@@ -18,6 +18,7 @@ class ChangeType(StrEnum):
     TRIVIAL = "trivial"
     NONTRIVIAL = "nontrivial"
     NONE = "none"
+    NEW = "new"
 
 
 @dataclass
@@ -35,6 +36,7 @@ class SummaryStats:
     trivial_count: int
     nontrivial_count: int
     unchanged_count: int
+    new_count: int
     total_files: int
 
 
@@ -45,6 +47,7 @@ class FileSummary:
     trivial: list[str]
     nontrivial: list[str]
     none: list[str]
+    new: list[str]
 
 
 @dataclass
@@ -282,10 +285,29 @@ class ChangeTracker:
             if relative_path in diff_map:
                 change_type = self.classifier.classify_changes(diff_map[relative_path])
             else:
-                # No diff found, file was unchanged
-                change_type = ChangeType.NONE
+                # No diff found - check if it's a new file or unchanged
+                change_type = self._check_if_new_file(file_path)
 
             self.changes[file_path] = change_type
+
+    def _check_if_new_file(self, file_path: str) -> ChangeType:
+        """Check if a file is new (untracked) or unchanged."""
+        try:
+            repo = git.Repo(search_parent_directories=True)
+            relative_path = self._get_relative_path(file_path)
+
+            # Check if file exists and is untracked
+            if Path(file_path).exists():
+                untracked_files = repo.untracked_files
+                if relative_path in untracked_files:
+                    return ChangeType.NEW
+
+            # File exists but is tracked and unchanged
+            return ChangeType.NONE
+
+        except (git.InvalidGitRepositoryError, ValueError, OSError):
+            # If we can't determine git status, assume unchanged
+            return ChangeType.NONE
 
     def _get_relative_path(self, file_path: str) -> str:
         """Get relative path from repo root."""
@@ -305,19 +327,23 @@ class ChangeTracker:
         trivial_files: list[str] = []
         nontrivial_files: list[str] = []
         none_files: list[str] = []
+        new_files: list[str] = []
 
         for file_path, change_type in self.changes.items():
             if change_type == ChangeType.TRIVIAL:
                 trivial_files.append(file_path)
             elif change_type == ChangeType.NONTRIVIAL:
                 nontrivial_files.append(file_path)
+            elif change_type == ChangeType.NEW:
+                new_files.append(file_path)
             else:
                 none_files.append(file_path)
 
         # Sort nontrivial changes for better visibility
         nontrivial_files.sort()
+        new_files.sort()
 
-        return FileSummary(trivial=trivial_files, nontrivial=nontrivial_files, none=none_files)
+        return FileSummary(trivial=trivial_files, nontrivial=nontrivial_files, none=none_files, new=new_files)
 
     def get_detailed_summary(self) -> DetailedSummary:
         """
@@ -333,6 +359,7 @@ class ChangeTracker:
                 trivial_count=len(file_summary.trivial),
                 nontrivial_count=len(file_summary.nontrivial),
                 unchanged_count=len(file_summary.none),
+                new_count=len(file_summary.new),
                 total_files=len(self.changes),
             ),
             files=file_summary,
@@ -350,6 +377,7 @@ class ChangeTracker:
                 "trivial_count": detailed_summary.summary.trivial_count,
                 "nontrivial_count": detailed_summary.summary.nontrivial_count,
                 "unchanged_count": detailed_summary.summary.unchanged_count,
+                "new_count": detailed_summary.summary.new_count,
                 "total_files": detailed_summary.summary.total_files,
                 "error_count": len(errors),
             },
@@ -357,20 +385,8 @@ class ChangeTracker:
                 "trivial": detailed_summary.files.trivial,
                 "nontrivial": detailed_summary.files.nontrivial,
                 "none": detailed_summary.files.none,
+                "new": detailed_summary.files.new,
             },
             "errors": errors,
         }
         typer.echo(json.dumps(summary_dict, indent=2))
-
-        # If there are nontrivial changes, highlight them
-        nontrivial_files = detailed_summary.files.nontrivial
-        if nontrivial_files:
-            typer.echo(f"\n⚠️  {len(nontrivial_files)} files with nontrivial changes:")
-            for file_path in nontrivial_files:
-                typer.echo(f"  • {file_path}")
-
-        # If there are errors, highlight them
-        if errors:
-            typer.echo(f"\n❌ {len(errors)} errors occurred:")
-            for error in errors:
-                typer.echo(f"  • {error}")
