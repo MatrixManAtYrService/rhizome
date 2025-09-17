@@ -115,7 +115,11 @@ def _sync_environment_schema(
     typer.echo(f"Syncing environment: {env_instance.name}")
 
     # Get environment folder name from the enum value
-    env_folder = str(env_enum).split("_")[0]  # e.g., "dev_billing_bookkeeper" -> "dev"
+    env_str = str(env_enum)
+    if env_str.startswith("na_prod_"):
+        env_folder = "na_prod"
+    else:
+        env_folder = env_str.split("_")[0]  # e.g., "dev_billing_bookkeeper" -> "dev"
 
     # Get database short name from the environment name
     db_short_name = get_database_short_name(env_instance.name)
