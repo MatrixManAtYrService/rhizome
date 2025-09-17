@@ -1,0 +1,18 @@
+{
+  "id": 87,
+  "uuid": "Hash5vC4BFnAP4tmo2AkSnwNTV",
+  "merchant_uuid": "Hash5F4azGcxP",
+  "developer_app_uuid": "Hash5NBy6t672",
+  "environment": "usprod",
+  "action_type": "UNINSTALL",
+  "app_subscription_uuid": "HashCU3q7Z6YY",
+  "app_subscription_cost": "0.000",
+  "bundled_with_plan": false,
+  "trial_end_date": null,
+  "is_hidden_or_sys_app": false,
+  "cos_event_uuid": "HashBjeR8t1knzFVQPVDaCMLkT",
+  "action_timestamp": "2025-03-01T18:39:05",
+  "processed_timestamp": null,
+  "app_subscription_daily_uuid": null,
+  "created_timestamp": "2025-03-03T16:03:27.768251"
+}

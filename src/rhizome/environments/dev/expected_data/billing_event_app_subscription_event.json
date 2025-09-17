@@ -1,0 +1,18 @@
+{
+  "id": 11595,
+  "uuid": "HashEMrFdLCiuPRAGNdA7YgZGB",
+  "merchant_uuid": "Hash3QGz9wM3e",
+  "developer_app_uuid": "Hash62nqYdmPM",
+  "environment": "dev::dev1",
+  "action_type": "INSTALL",
+  "app_subscription_uuid": "Hash9HR6VpCFb",
+  "app_subscription_cost": "10.000",
+  "bundled_with_plan": false,
+  "trial_end_date": "2024-04-01",
+  "is_hidden_or_sys_app": false,
+  "cos_event_uuid": "HashCGKLQRVQ1rFmazqdjaeH1z",
+  "action_timestamp": "2024-04-01T21:55:21",
+  "processed_timestamp": "2024-04-03T18:06:47.710192",
+  "app_subscription_daily_uuid": "HashCUMbPfqQ1qBX4sXY8Xg1Sk",
+  "created_timestamp": "2024-04-03T18:06:17.510973"
+}

@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "uuid": "HashFZSMwEqtgXLeGRYPrLXyFR",
+  "settlement_date": "2025-03-01",
+  "billing_entity_uuid": "HashHz7MGWbwJ31fXa6XhLGAC7",
+  "entity_uuid": "HashHz8ZwFUXH",
+  "alternate_id": "209214661883",
+  "payable_receivable": "RECEIVABLE",
+  "currency": "USD",
+  "total_amount": "7.990",
+  "fee_amount": "7.990",
+  "tax1_amount": "0.000",
+  "tax2_amount": "0.000",
+  "tax3_amount": "0.000",
+  "tax4_amount": "0.000",
+  "lookup_ledger_account_key": "Incur.App.KYJZVTERDATK6",
+  "gl_code": null,
+  "item_code": "KYJZVTERDATK6",
+  "last_invoice_num": "202503/000000001",
+  "request_uuid": "HashDqFdXZcVCsFc9fTQHXuK34",
+  "created_timestamp": "2025-03-05T14:25:24.442916",
+  "modified_timestamp": "2025-03-05T14:25:24"
+}
