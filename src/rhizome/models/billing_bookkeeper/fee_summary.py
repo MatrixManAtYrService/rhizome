@@ -24,7 +24,6 @@ class FeeSummary(RhizomeModel, table=False):
     containing aggregated fee information for billing entities.
     """
 
-
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the fee summary")
     billing_entity_uuid: str = Field(max_length=26, description="UUID of the billing entity")

@@ -5,15 +5,14 @@ Expected data for settlement table in na_prod environment.
 from __future__ import annotations
 
 from rhizome.models.base import Emplacement
-# TODO: Create SettlementV1 model class
-# from rhizome.models.billing_bookkeeper.settlement_v1 import SettlementV1
+from rhizome.models.billing_bookkeeper.settlement_v1 import SettlementV1
 
 
-class SettlementNaProd(Emplacement):
+class SettlementNaProd(Emplacement[SettlementV1]):
     """Expected data for Settlement in na_prod environment."""
 
     @classmethod
-    def get_expected(cls):
+    def get_expected(cls) -> SettlementV1:
         """Get expected settlement data for na_prod environment."""
         raise NotImplementedError(
             f"Expected data for {cls.__name__} not yet implemented. "

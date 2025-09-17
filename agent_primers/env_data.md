@@ -6,7 +6,7 @@ This document describes the new environment-specific data architecture that repl
 
 Previously, test data was centralized in `tests/mocked_table_data.py`, which:
 - Mixed test data for different environments in one place
-- Used complex parameterization to handle environment/table combinations  
+- Used complex parameterization to handle environment/table combinations
 - Made it difficult to manage environment-specific data variations
 - Required maintaining separate mock and expected data structures
 
@@ -51,7 +51,7 @@ models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]
 class DevBillingBookkeeper(DatabaseEnvironment):
     def tables(self) -> list[StrEnum]:
         return list(BillingBookkeeperTable)
-    
+
     def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
         if not isinstance(table_name, BillingBookkeeperTable):
             raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
@@ -102,9 +102,9 @@ src/rhizome/environments/
 
 ### ✅ Completed
 - [x] `RhizomeModel` base class (renamed from `SanitizableModel`)
-- [x] Generic `Emplacement[T]` abstract base class  
+- [x] Generic `Emplacement[T]` abstract base class
 - [x] `StrEnum` table lists for all databases:
-  - [x] `BillingBookkeeperTable` 
+  - [x] `BillingBookkeeperTable`
   - [x] `BillingEventTable`
   - [x] `BillingTable`
 - [x] `DatabaseEnvironment` base class with `tables()` and `situate_table()` methods
@@ -118,14 +118,14 @@ src/rhizome/environments/
 
 **Dev Environment:**
 - [ ] `FeeSummaryDev` (✅ completed)
-- [ ] `SettlementDev` 
+- [ ] `SettlementDev`
 - [ ] `AppMeteredEventDev`
 - [ ] `AppSubscriptionEventDev`
 
 **Demo Environment:**
 - [ ] `FeeSummaryDemo`
 - [ ] `SettlementDemo`
-- [ ] `AppMeteredEventDemo` 
+- [ ] `AppMeteredEventDemo`
 - [ ] `AppSubscriptionEventDemo`
 
 **NA Prod Environment:**

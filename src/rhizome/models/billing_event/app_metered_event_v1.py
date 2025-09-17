@@ -15,11 +15,11 @@ from .app_metered_event import AppMeteredEvent
 class AppMeteredEventV1(AppMeteredEvent, table=True):
     """
     Version 1 of the AppMeteredEvent model.
-    
+
     Currently a name-only inheritance from the base AppMeteredEvent class.
     As schema changes are introduced in different environments, subsequent
     versions (V2, V3, etc.) will not be so trivial and will contain
     actual field modifications, additions, or removals.
     """
-    
+
     __tablename__ = "app_metered_event"  # type: ignore

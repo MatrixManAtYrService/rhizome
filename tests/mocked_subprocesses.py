@@ -7,7 +7,17 @@ that simulate their behavior without requiring actual external infrastructure.
 
 from unittest.mock import AsyncMock
 
-from rhizome.tools import BritiveInfo, CommandResult, GcloudTool, KubectlTool, LogLine, LsofTool, OnePasswordTool, PortInfo, PybritiveTool
+from rhizome.tools import (
+    BritiveInfo,
+    CommandResult,
+    GcloudTool,
+    KubectlTool,
+    LogLine,
+    LsofTool,
+    OnePasswordTool,
+    PortInfo,
+    PybritiveTool,
+)
 
 
 class MockKubectlTool(KubectlTool):
@@ -22,12 +32,7 @@ class MockKubectlTool(KubectlTool):
         # Create a dynamic mock log that will match any SQL connection pattern
         # The mock will contain a pattern that the port discovery logic will find
         return [
-            LogLine(
-                content=(
-                    "Starting proxy for connectionName "
-                    "'mock-connection' on port '62956'"
-                )
-            ),
+            LogLine(content=("Starting proxy for connectionName 'mock-connection' on port '62956'")),
             LogLine(content="Ready for new connections"),
         ]
 
@@ -38,7 +43,7 @@ class MockKubectlTool(KubectlTool):
         mock_process = AsyncMock()
         mock_process.pid = 12345
         mock_process.returncode = None  # Process is running
-        
+
         # Create a mock stdout that yields a few messages then stops
         stdout_lines = [
             f"Forwarding from 127.0.0.1:{local_port} -> {remote_port}\n".encode(),
@@ -46,19 +51,19 @@ class MockKubectlTool(KubectlTool):
             b"",  # Empty bytes to signal end of output
         ]
         stdout_iterator = iter(stdout_lines)
-        
-        async def mock_stdout_readline():
+
+        async def mock_stdout_readline() -> bytes:
             try:
                 return next(stdout_iterator)
             except StopIteration:
                 return b""  # Return empty bytes when no more lines
-        
+
         mock_process.stdout = AsyncMock()
         mock_process.stderr = AsyncMock()
         mock_process.stdout.readline = mock_stdout_readline
         mock_process.stderr.readline = AsyncMock(return_value=b"")
         mock_process.wait = AsyncMock(return_value=0)  # Process completes successfully
-        
+
         return mock_process
 
     async def cluster_info(self, context: str) -> CommandResult:
@@ -115,24 +120,24 @@ class MockPybritiveTool(PybritiveTool):
 
 class MockLsofTool(LsofTool):
     """Mock lsof tool that simulates port usage correctly for mocked tests."""
-    
-    def __init__(self):
+
+    def __init__(self) -> None:
         self._forwarded_ports: set[int] = set()
         self._call_count: dict[int, int] = {}
 
     async def check_port(self, port: int) -> list[PortInfo]:
         """
         Return port info based on call patterns.
-        
+
         First call for a port: return empty (port available for forwarding)
         Subsequent calls: return port info (port is now forwarded and in use)
         """
         self._call_count[port] = self._call_count.get(port, 0) + 1
-        
+
         # First call: port is available for forwarding
         if self._call_count[port] == 1:
             return []
-        
+
         # Subsequent calls: port is now forwarded and in use
         # This helps _wait_for_port_forward succeed
         return [PortInfo(pid=12345, process_name="kubectl", port=port)]

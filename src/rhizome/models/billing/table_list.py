@@ -12,4 +12,5 @@ from enum import StrEnum, auto
 
 class BillingTable(StrEnum):
     """Table identifiers for billing database."""
+
     stage_charge = auto()

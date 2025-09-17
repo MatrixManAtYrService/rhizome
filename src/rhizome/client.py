@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from typing import Any, TypeVar
 
 import httpx
+import sqlalchemy
 import structlog
 from httpx_sse import connect_sse
 from sqlmodel import Session, create_engine
@@ -335,7 +336,7 @@ class RhizomeClient:
 
             return sanitized_result
 
-    def execute_raw_query(self, connection_string: str, query: str) -> Any:
+    def execute_raw_query(self, connection_string: str, query: str) -> object | None:
         """
         Execute a raw SQL query and return the result.
 
@@ -347,6 +348,6 @@ class RhizomeClient:
             The result of the query execution.
         """
         engine = create_engine(connection_string)
-        with Session(engine) as session:
-            result = session.exec(query)
+        with engine.connect() as connection:
+            result = connection.execute(sqlalchemy.text(query))
             return result.first()

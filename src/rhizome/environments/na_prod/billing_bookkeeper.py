@@ -8,17 +8,19 @@ na-prod-us-central1 cluster through CloudSQL proxy port-forwarding.
 from __future__ import annotations
 
 from enum import StrEnum
+from typing import Any
 
-from rhizome.environments.base import Environment, PortForwardConfig, SecretManager
+from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
 from rhizome.environments.na_prod.expected_data.billing_bookkeeper_fee_summary import FeeSummaryNaProd
 from rhizome.environments.na_prod.expected_data.billing_bookkeeper_settlement import SettlementNaProd
 from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.settlement_v1 import SettlementV1
 from rhizome.models.table_list import BillingBookkeeperTable
 
-models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]]]] = {
     BillingBookkeeperTable.fee_summary: (FeeSummaryV1, FeeSummaryNaProd),
-    BillingBookkeeperTable.settlement: (None, SettlementNaProd),  # Model not yet implemented
+    BillingBookkeeperTable.settlement: (SettlementV1, SettlementNaProd),
 }
 
 
@@ -28,10 +30,13 @@ class NorthAmericaBillingBookkeeper(Environment):
     def tables(self) -> list[StrEnum]:
         return list(BillingBookkeeperTable)
 
-    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement]]:
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement[Any]]]:
         if not isinstance(table_name, BillingBookkeeperTable):
             raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
-        return models[table_name]
+        model_class, emplacement_class = models[table_name]
+        if model_class is None:
+            raise NotImplementedError(f"Model class for {table_name} not yet implemented")
+        return model_class, emplacement_class
 
     def get_port_forward_config(self) -> PortForwardConfig:
         """Get port forwarding configuration for NA production environment."""
@@ -50,7 +55,7 @@ class NorthAmericaBillingBookkeeper(Environment):
             secret_manager=SecretManager.ONEPASSWORD,
         )
 
-    def get_database_config(self):
+    def get_database_config(self) -> DatabaseConfig:
         """Get database configuration using port forwarding."""
         port_forward_config = self.get_port_forward_config()
         return self.get_database_config_from_port_forward(port_forward_config)

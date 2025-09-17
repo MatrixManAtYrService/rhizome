@@ -11,7 +11,10 @@ connections without requiring external infrastructure.
 """
 
 import tempfile
+from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 from unittest.mock import MagicMock
 
 import pytest
@@ -26,40 +29,36 @@ from rhizome.environments.dev.billing_event import DevBillingEvent
 from rhizome.environments.na_prod.billing import NorthAmericaBilling
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
-from rhizome.models.base import RhizomeModel
-from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
-from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
-from rhizome.models.billing.stage_charge_v1 import StageChargeV1
 from rhizome.tools import Tools
-from tests.mocked_subprocesses import MockGcloudTool, MockKubectlTool, MockLsofTool, MockOnePasswordTool, MockPybritiveTool
+from tests.mocked_subprocesses import (
+    MockGcloudTool,
+    MockKubectlTool,
+    MockLsofTool,
+    MockOnePasswordTool,
+    MockPybritiveTool,
+)
 
 
-# Environment classes to test
-ENVIRONMENT_CLASSES = [
-    NorthAmericaBillingBookkeeper,
-    DevBillingBookkeeper, 
-    DemoBillingBookkeeper,
-    NorthAmericaBillingEvent,
-    DevBillingEvent,
-    DemoBillingEvent,
-    NorthAmericaBilling,
-]
+@dataclass
+class EnvironmentMocks:
+    """Container for mocks associated with an environment class."""
+
+    environment_class: type
+    mock_tools: Tools
+    client: RhizomeClient
+    env_instance: Any
+    table_mocks: dict[Any, tuple[Any, Callable[[object], object], Callable[[str], MagicMock]]]
 
 
-@pytest.mark.parametrize("environment_class", ENVIRONMENT_CLASSES)
-def test_mocked_environment_database_access(
-    monkeypatch: pytest.MonkeyPatch,
-    environment_class: type,
-) -> None:
-    """Test database access across all environment/database combinations using mocks (no external dependencies)."""
-
+def create_environment_mocks(environment_class: type) -> EnvironmentMocks:
+    """Create all mocks needed for testing an environment class."""
     # Create mocked tools
     mock_tools = Tools(
         kubectl=MockKubectlTool(),
         onepassword=MockOnePasswordTool(),
         lsof=MockLsofTool(),
         gcloud=MockGcloudTool(),
-        pybritive=MockPybritiveTool()
+        pybritive=MockPybritiveTool(),
     )
 
     # Create client instance with mocked tools
@@ -68,48 +67,102 @@ def test_mocked_environment_database_access(
 
     # Create environment instance to get table_situation
     env_instance = environment_class(client)
-    
-    # Test each table in the environment's table_situation
+
+    # Create mocks for each table
+    table_mocks: dict[Any, tuple[Any, Callable[[object], object], Callable[[str], MagicMock]]] = {}
     for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
         # Skip tables where model_class is None (not yet implemented)
         if model_class is None:
             continue
-            
+
         # Get expected data from the emplacement class
         try:
             expected_data = emplacement_class.get_expected()
         except NotImplementedError:
             # Skip tables where expected data is not yet implemented
             continue
-            
+
         # Mock SQLModel database session to return the expected data
         mock_session = MagicMock()
         mock_exec_result = MagicMock()
         mock_exec_result.first.return_value = expected_data
         mock_session.exec.return_value = mock_exec_result
 
-        def mock_session_context(engine: object) -> object:
+        def create_mock_session_context(session_obj: MagicMock) -> Callable[[object], object]:
+            """Create a mock session context factory."""
+
             class MockSessionContext:
                 def __enter__(self) -> object:
-                    return mock_session
+                    return session_obj
 
                 def __exit__(self, *args: object) -> None:
                     pass
 
-            return MockSessionContext()
+            def session_context_factory(engine: object) -> object:
+                return MockSessionContext()
+
+            return session_context_factory
+
+        mock_session_context = create_mock_session_context(mock_session)
 
         def mock_create_engine(cs: str) -> MagicMock:
             return MagicMock()
+
+        table_mocks[table_name] = (expected_data, mock_session_context, mock_create_engine)
+
+    return EnvironmentMocks(
+        environment_class=environment_class,
+        mock_tools=mock_tools,
+        client=client,
+        env_instance=env_instance,
+        table_mocks=table_mocks,
+    )
+
+
+# Environment classes to test
+ENVIRONMENT_CLASSES = [
+    NorthAmericaBillingBookkeeper,
+    DevBillingBookkeeper,
+    DemoBillingBookkeeper,
+    NorthAmericaBillingEvent,
+    DevBillingEvent,
+    DemoBillingEvent,
+    NorthAmericaBilling,
+]
+
+# Pre-create all mocks for each environment class
+ENVIRONMENT_MOCKS = {cls: create_environment_mocks(cls) for cls in ENVIRONMENT_CLASSES}
+
+
+@pytest.mark.parametrize("environment_class,mocks", ENVIRONMENT_MOCKS.items())
+def test_mocked_environment_database_access(
+    monkeypatch: pytest.MonkeyPatch,
+    environment_class: type,
+    mocks: EnvironmentMocks,
+) -> None:
+    """Test database access across all environment/database combinations using mocks (no external dependencies)."""
+
+    # Test each table with pre-created mocks
+    for table_name, (model_class, _) in mocks.env_instance.table_situation.items():
+        # Skip tables where model_class is None (not yet implemented)
+        if model_class is None:
+            continue
+
+        # Skip if no mocks were created for this table
+        if table_name not in mocks.table_mocks:
+            continue
+
+        expected_data, mock_session_context, mock_create_engine = mocks.table_mocks[table_name]
 
         monkeypatch.setattr("rhizome.client.create_engine", mock_create_engine)
         monkeypatch.setattr("rhizome.client.Session", mock_session_context)
 
         # Query the table using the model class
-        result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
+        result = mocks.env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
 
         # Verify the mocked data is returned and matches expected structure
-        assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"
-        assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"
+        assert result is not None, f"Query should return data for {table_name} in {mocks.env_instance.name}"
+        assert result.id == expected_data.id, f"ID should match for {table_name} in {mocks.env_instance.name}"
 
 
 @pytest.mark.external_infra
@@ -126,13 +179,13 @@ def test_real_environment_database_access(
 
         # Create environment instance to get table_situation
         env_instance = environment_class(client)
-        
+
         # Test each table in the environment's table_situation
         for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
             # Skip tables where model_class is None (not yet implemented)
             if model_class is None:
                 continue
-                
+
             # Get expected data from the emplacement class
             try:
                 expected_data = emplacement_class.get_expected()
@@ -145,9 +198,9 @@ def test_real_environment_database_access(
 
             # Verify the real data matches the expected structure
             assert result is not None, f"Real data should exist for {table_name} in {env_instance.name}"
-            
+
             # Use the emplacement class's assert_match method if available, otherwise basic assertions
-            if hasattr(emplacement_class, 'assert_match'):
+            if hasattr(emplacement_class, "assert_match"):
                 emplacement_class().assert_match(result, expected_data)
             else:
                 assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"

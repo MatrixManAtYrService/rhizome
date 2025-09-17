@@ -25,9 +25,7 @@ async def connect_cluster(
     source = "mock" if tools.is_mocked() else "subprocess"
 
     log.info("Getting cluster credentials...", source=source)
-    result = await tools.gcloud.get_cluster_credentials(
-        project=project, cluster=cluster, region=region
-    )
+    result = await tools.gcloud.get_cluster_credentials(project=project, cluster=cluster, region=region)
     if not result.success:
         log.error(
             "Failed to get cluster credentials",

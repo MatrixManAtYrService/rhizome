@@ -24,7 +24,6 @@ class AppMeteredEvent(RhizomeModel, table=False):
     containing usage data for metered applications.
     """
 
-
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the app metered event")
     merchant_uuid: str = Field(max_length=13, description="UUID of the merchant")

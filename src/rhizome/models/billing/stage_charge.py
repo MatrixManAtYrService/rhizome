@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import datetime
 from enum import Enum
-from typing import Literal
 
 from sqlmodel import Field
 
@@ -19,7 +18,7 @@ from ...sanitize_helpers import sanitize_uuid_field
 
 class ChargeStatus(str, Enum):
     """Enum for charge status values."""
-    
+
     PENDING = "PENDING"
     IN_PROGRESS = "IN_PROGRESS"
     BILLED = "BILLED"
@@ -55,7 +54,7 @@ class ChargeStatus(str, Enum):
 
 class DeveloperStatus(str, Enum):
     """Enum for developer status values."""
-    
+
     DISBURSED = "DISBURSED"
     DISBURSE_FAILED = "DISBURSE_FAILED"
     DISBURSE_PENDING = "DISBURSE_PENDING"
@@ -66,7 +65,7 @@ class DeveloperStatus(str, Enum):
 
 class ChargeType(str, Enum):
     """Enum for charge type values."""
-    
+
     SUBSCRIPTION = "SUBSCRIPTION"
     METERED = "METERED"
     PRORATED_SUBSCRIPTION = "PRORATED_SUBSCRIPTION"
@@ -80,7 +79,6 @@ class StageCharge(RhizomeModel, table=False):
     This model represents stage charge records in the North America billing system,
     containing charge information for apps and subscriptions.
     """
-
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True, description="Unique identifier for the stage charge")

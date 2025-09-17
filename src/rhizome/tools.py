@@ -290,28 +290,28 @@ class ExternalPybritiveTool(PybritiveTool):
     async def checkout(self, resource_path: str) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
         import structlog
-        
+
         log = structlog.get_logger()
         result = await self._run_command(["pybritive", "checkout", resource_path])
-        
+
         if not result.success:
             log.error("Pybritive checkout failed", stderr=result.stderr, stdout=result.stdout)
             raise RuntimeError(f"Pybritive checkout failed: {result.stderr}")
-        
+
         lines = [line.strip() for line in result.stdout.splitlines()]
         log.debug("Pybritive raw output", lines=lines)
-        
+
         # Parse the pybritive output
         # Expected format:
         # Temp MySQL username: {username}
-        # Temp password: {password} 
+        # Temp password: {password}
         # For billing in usprod connect to server: {host}:{port}
-        
+
         username = ""
         password = ""
         host = ""
         port = 0
-        
+
         for line in lines:
             if line.startswith("Temp MySQL username:"):
                 username = line.split(":", 1)[1].strip()
@@ -326,7 +326,7 @@ class ExternalPybritiveTool(PybritiveTool):
                 else:
                     host = server_part
                     port = 3326  # Default MySQL port
-        
+
         # Log parsed credentials (redacting password)
         log.info(
             "Pybritive credentials parsed",
@@ -336,22 +336,25 @@ class ExternalPybritiveTool(PybritiveTool):
             port=port,
             resource_path=resource_path,
         )
-        
+
         if not all([username, password, host, port]):
-            log.error("Failed to parse pybritive output", missing_fields={
-                "username": bool(username),
-                "password": bool(password), 
-                "host": bool(host),
-                "port": bool(port)
-            })
+            log.error(
+                "Failed to parse pybritive output",
+                missing_fields={
+                    "username": bool(username),
+                    "password": bool(password),
+                    "host": bool(host),
+                    "port": bool(port),
+                },
+            )
             raise RuntimeError(f"Failed to parse pybritive output: {result.stdout}")
-        
+
         return BritiveInfo(username=username, password=password, host=host, port=port)
 
     async def _run_command(self, args: list[str]) -> CommandResult:
         """Run a pybritive command and return result."""
         import asyncio
-        
+
         process = await asyncio.create_subprocess_exec(
             *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
@@ -395,9 +398,9 @@ class Tools:
     def is_mocked(self) -> bool:
         """Check if any of the tools are mocked (non-External implementations)."""
         return (
-            not self.kubectl.__class__.__name__.startswith("External") or
-            not self.gcloud.__class__.__name__.startswith("External") or
-            not self.onepassword.__class__.__name__.startswith("External") or
-            not self.lsof.__class__.__name__.startswith("External") or
-            not self.pybritive.__class__.__name__.startswith("External")
+            not self.kubectl.__class__.__name__.startswith("External")
+            or not self.gcloud.__class__.__name__.startswith("External")
+            or not self.onepassword.__class__.__name__.startswith("External")
+            or not self.lsof.__class__.__name__.startswith("External")
+            or not self.pybritive.__class__.__name__.startswith("External")
         )

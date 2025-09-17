@@ -5,15 +5,14 @@ Expected data for app_subscription_event table in dev environment.
 from __future__ import annotations
 
 from rhizome.models.base import Emplacement
-# TODO: Create AppSubscriptionEventV1 model class
-# from rhizome.models.billing_event.app_subscription_event_v1 import AppSubscriptionEventV1
+from rhizome.models.billing_event.app_subscription_event_v1 import AppSubscriptionEventV1
 
 
-class AppSubscriptionEventDev(Emplacement):
+class AppSubscriptionEventDev(Emplacement[AppSubscriptionEventV1]):
     """Expected data for AppSubscriptionEvent in dev environment."""
 
     @classmethod
-    def get_expected(cls):
+    def get_expected(cls) -> AppSubscriptionEventV1:
         """Get expected app subscription event data for dev environment."""
         raise NotImplementedError(
             f"Expected data for {cls.__name__} not yet implemented. "

@@ -15,11 +15,11 @@ from .fee_summary import FeeSummary
 class FeeSummaryV1(FeeSummary, table=True):
     """
     Version 1 of the FeeSummary model.
-    
+
     Currently a name-only inheritance from the base FeeSummary class.
     As schema changes are introduced in different environments, subsequent
     versions (V2, V3, etc.) will not be so trivial and will contain
     actual field modifications, additions, or removals.
     """
-    
+
     __tablename__ = "fee_summary"  # type: ignore

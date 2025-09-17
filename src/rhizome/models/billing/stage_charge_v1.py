@@ -15,11 +15,11 @@ from .stage_charge import StageCharge
 class StageChargeV1(StageCharge, table=True):
     """
     Version 1 of the StageCharge model.
-    
+
     Currently a name-only inheritance from the base StageCharge class.
     As schema changes are introduced in different environments, subsequent
     versions (V2, V3, etc.) will not be so trivial and will contain
     actual field modifications, additions, or removals.
     """
-    
+
     __tablename__ = "stage_charge"  # type: ignore

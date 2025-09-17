@@ -9,6 +9,7 @@ requires-python = ">=3.12"
 dependencies = [
     "base58>=2.1.1",
     "fastapi>=0.116.1",
+    "gitpython>=3.1.45",
     "httpx>=0.28.1",
     "httpx-sse>=0.4.1",
     "pybritive>=2.2.3",

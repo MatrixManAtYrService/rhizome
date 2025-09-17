@@ -86,21 +86,17 @@ async def _discover_remote_port(
         for log_line in logs:
             log.info("Checking log line", line=log_line.content, source=source)
             # Check if this is a CloudSQL proxy start line
-            is_proxy_start = (
-                "Starting proxy for connectionName" in log_line.content
-                and "on port" in log_line.content
-            )
-            
+            is_proxy_start = "Starting proxy for connectionName" in log_line.content and "on port" in log_line.content
+
             # For mocked tests, be more flexible with connection name matching
             if source == "mock":
                 connection_matches = is_proxy_start
             else:
                 # For real environments, require exact SQL connection match
                 connection_matches = (
-                    is_proxy_start and
-                    f"Starting proxy for connectionName '{sql_connection}'" in log_line.content
+                    is_proxy_start and f"Starting proxy for connectionName '{sql_connection}'" in log_line.content
                 )
-            
+
             if connection_matches:
                 # Extract port from log line like "Starting proxy for ... on port '12345'"
                 match = re.search(r"on port '(\d+)'", log_line.content)

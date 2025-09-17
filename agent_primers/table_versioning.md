@@ -42,7 +42,7 @@ src/rhizome/models/
 │   ├── fee_summary_v1.py       # V1 implementation (table=True)
 │   └── fee_summary_v2.py       # Future V2 with new fields
 ├── billing_event/
-│   ├── app_metered_event.py    # Base class (table=False)  
+│   ├── app_metered_event.py    # Base class (table=False)
 │   ├── app_metered_event_v1.py # V1 implementation (table=True)
 │   └── app_metered_event_v2.py # Future V2 with new fields
 └── billing/
@@ -56,12 +56,12 @@ src/rhizome/models/
 # src/rhizome/models/billing_bookkeeper/fee_summary.py
 class FeeSummary(SanitizableModel, table=False):
     """Base FeeSummary model - defines common fields across all versions."""
-    
+
     id: int | None = Field(default=None, primary_key=True)
     uuid: str = Field(max_length=26, unique=True)
     billing_entity_uuid: str = Field(max_length=26)
     # ... other common fields
-    
+
     def sanitize(self) -> FeeSummary:
         """Return sanitized copy."""
         # ... sanitization logic
@@ -73,30 +73,30 @@ class FeeSummary(SanitizableModel, table=False):
 class FeeSummaryV1(FeeSummary, table=True):
     """
     Version 1 of the FeeSummary model.
-    
+
     Currently a name-only inheritance from the base FeeSummary class.
     As schema changes are introduced in different environments, subsequent
     versions (V2, V3, etc.) will not be so trivial and will contain
     actual field modifications, additions, or removals.
     """
-    
+
     __tablename__ = "fee_summary"
 ```
 
 ### Example: Future V2 Implementation
 ```python
-# src/rhizome/models/billing_bookkeeper/fee_summary_v2.py  
+# src/rhizome/models/billing_bookkeeper/fee_summary_v2.py
 class FeeSummaryV2(FeeSummary, table=True):
     """
     Version 2 of the FeeSummary model.
-    
+
     Adds new fields introduced in schema migration X.Y.Z:
     - processing_status: Track processing state
     - external_reference: Link to external billing system
     """
-    
+
     __tablename__ = "fee_summary"
-    
+
     # New fields in V2
     processing_status: str | None = Field(default=None, max_length=20)
     external_reference: str | None = Field(default=None, max_length=50)
@@ -108,8 +108,8 @@ class FeeSummaryV2(FeeSummary, table=True):
 class DevBillingBookkeeperModel(Enum):
     """Table version mapping for DevBillingBookkeeper environment."""
     FeeSummary = FeeSummaryV2  # Dev has the new schema
-    
-# src/rhizome/environments/na_prod/billing_bookkeeper.py  
+
+# src/rhizome/environments/na_prod/billing_bookkeeper.py
 class NorthAmericaBillingBookkeeperModel(Enum):
     """Table version mapping for NorthAmericaBillingBookkeeper environment."""
     FeeSummary = FeeSummaryV1  # Prod still on old schema
@@ -141,7 +141,7 @@ from rhizome.models.billing_bookkeeper.fee_summary_v2 import FeeSummaryV2
 def get_processing_status(fee: FeeSummaryV2) -> str:
     return fee.processing_status  # Field only exists in V2
 
-# Query using versioned class - only works with V2+ environments  
+# Query using versioned class - only works with V2+ environments
 statement = select(FeeSummaryV2).where(FeeSummaryV2.processing_status == "PENDING")
 ```
 
@@ -167,7 +167,7 @@ def test_fee_calculation_all_environments():
     from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
     # Test logic using only common fields
 
-# Version-specific test - uses V2 class  
+# Version-specific test - uses V2 class
 def test_processing_status_tracking():
     from rhizome.models.billing_bookkeeper.fee_summary_v2 import FeeSummaryV2
     # Test logic using V2-specific fields
@@ -199,7 +199,7 @@ ENVIRONMENT_DATABASE_COMBINATIONS = [
    ```python
    class FeeSummaryV2(FeeSummary, table=True):
        __tablename__ = "fee_summary"
-       
+
        # New field in V2
        processing_status: str | None = Field(default=None, max_length=20)
    ```
@@ -209,8 +209,8 @@ ENVIRONMENT_DATABASE_COMBINATIONS = [
    # First: Dev environment gets V2
    class DevBillingBookkeeperModel(Enum):
        FeeSummary = FeeSummaryV2
-   
-   # Later: Production environments get V2  
+
+   # Later: Production environments get V2
    class NorthAmericaBillingBookkeeperModel(Enum):
        FeeSummary = FeeSummaryV2
    ```
@@ -243,7 +243,7 @@ The type checker enforces version compatibility:
 def safe_function(fee: FeeSummary) -> str:
     return fee.uuid
 
-# ❌ Type error - processing_status doesn't exist in base class  
+# ❌ Type error - processing_status doesn't exist in base class
 def unsafe_function(fee: FeeSummary) -> str:
     return fee.processing_status  # Type error!
 

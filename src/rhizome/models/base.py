@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Generic, TypeVar
+from typing import Any, TypeVar
 
 from sqlmodel import SQLModel, select
+from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 T = TypeVar("T", bound="RhizomeModel")
 
@@ -20,7 +21,7 @@ class RhizomeModel(SQLModel, ABC):
         """Return a sanitized copy of this model instance."""
 
 
-class Emplacement(ABC, Generic[T]):
+class Emplacement[T: "RhizomeModel"](ABC):
     """
     Extra metadata about a RhizomeModel which can only be known if we also know which
     environment we're working in.
@@ -37,7 +38,7 @@ class Emplacement(ABC, Generic[T]):
         """
 
     @classmethod
-    def expectation_query(cls, model: T) -> T:
+    def expectation_query(cls, model: type[T]) -> SelectOfScalar[T]:
         """
         Returns a query that will be used to fetch the expected data.
         """
