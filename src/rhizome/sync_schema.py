@@ -45,7 +45,6 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
                             # Write the file
                             with open(file_path, "w") as f:
                                 f.write(create_table_statement)
-                            typer.echo(f"    Wrote schema to {file_path}")
 
                             # Track changes to this file
                             change_tracker.track_file(file_path)
@@ -54,6 +53,9 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
                     if verbose:
                         raise
                     typer.secho(f"    Error syncing table {table_name}: {e}", fg=typer.colors.RED)
+
+    # Debug: Show how many files were tracked
+    typer.echo(f"\nTracked {len(change_tracker.tracked_files)} files for change detection")
 
     # Analyze tracked files and print summary
     change_tracker.analyze_tracked_files()
