@@ -8,6 +8,7 @@ from rhizome.config import Home
 from rhizome.environments.environment_list import RhizomeEnvironment
 from rhizome.server import run
 from rhizome.sync_data import sync_data
+from rhizome.sync_report import sync_report
 from rhizome.sync_schema import sync_schema
 
 app = typer.Typer(help="Database access helper for test tools")
@@ -72,6 +73,17 @@ def schema(
 ) -> None:
     """Syncs the schema for all environments."""
     sync_schema(env, verbose=verbose)
+
+
+@sync_app.command()
+def report(
+    env: Annotated[
+        RhizomeEnvironment | None,
+        typer.Option(help="The environment to check. If not provided, all are checked."),
+    ] = None,
+) -> None:
+    """Generate a report of sync status for all environment/table pairs."""
+    sync_report(env)
 
 
 def main() -> None:
