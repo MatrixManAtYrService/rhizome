@@ -338,9 +338,10 @@ class ChangeTracker:
             files=file_summary,
         )
 
-    def print_summary(self) -> None:
+    def print_summary(self, errors: list[str] | None = None) -> None:
         """Print a formatted summary of changes."""
         detailed_summary = self.get_detailed_summary()
+        errors = errors or []
 
         typer.echo("\nChange Summary:")
         # Convert to dict for JSON serialization
@@ -350,12 +351,14 @@ class ChangeTracker:
                 "nontrivial_count": detailed_summary.summary.nontrivial_count,
                 "unchanged_count": detailed_summary.summary.unchanged_count,
                 "total_files": detailed_summary.summary.total_files,
+                "error_count": len(errors),
             },
             "files": {
                 "trivial": detailed_summary.files.trivial,
                 "nontrivial": detailed_summary.files.nontrivial,
                 "none": detailed_summary.files.none,
             },
+            "errors": errors,
         }
         typer.echo(json.dumps(summary_dict, indent=2))
 
@@ -365,3 +368,9 @@ class ChangeTracker:
             typer.echo(f"\n⚠️  {len(nontrivial_files)} files with nontrivial changes:")
             for file_path in nontrivial_files:
                 typer.echo(f"  • {file_path}")
+
+        # If there are errors, highlight them
+        if errors:
+            typer.echo(f"\n❌ {len(errors)} errors occurred:")
+            for error in errors:
+                typer.echo(f"  • {error}")

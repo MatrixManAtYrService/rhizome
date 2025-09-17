@@ -31,6 +31,103 @@ def get_database_short_name(environment_name: str) -> str:
     return "".join(result)
 
 
+def _convert_query_result_to_sequence(result: object) -> tuple[Any, ...] | list[Any] | None:
+    """Convert SQLAlchemy Row or other result objects to a sequence."""
+    if not result or not hasattr(result, "__len__"):
+        return None
+
+    if len(cast(Any, result)) == 0:
+        return None
+
+    try:
+        if hasattr(result, "_tuple"):
+            # SQLAlchemy Row to tuple
+            return cast(Any, result)._tuple()
+        elif isinstance(result, tuple | list):
+            return cast(tuple[Any, ...] | list[Any], result)
+        else:
+            # Try to convert to list
+            return list(cast(Any, result))
+    except Exception:
+        return None
+
+
+def _sync_table_schema(
+    env_instance: object,
+    table_name: str,
+    file_path: str,
+    change_tracker: ChangeTracker,
+    errors: list[str],
+    verbose: bool,
+) -> None:
+    """Sync schema for a single table."""
+    typer.echo(f"  Syncing table: {table_name}")
+    query_str = f"SHOW CREATE TABLE {table_name}"
+
+    try:
+        result = cast(Any, env_instance).client.execute_raw_query(
+            cast(Any, env_instance).get_connection_string(), query_str
+        )
+        result_length = len(result) if result and hasattr(result, "__len__") else "N/A"
+        typer.echo(f"    Query result type: {type(result)}, length: {result_length}")
+
+        # Convert result to sequence
+        result_seq = _convert_query_result_to_sequence(result)
+
+        if result_seq and len(result_seq) > 1:
+            # The result of SHOW CREATE TABLE is a tuple, the second element is the statement
+            create_table_statement = str(result_seq[1])
+
+            # Ensure directory exists
+            Path(file_path).parent.mkdir(parents=True, exist_ok=True)
+
+            # Write the file
+            with open(file_path, "w") as f:
+                f.write(create_table_statement)
+
+            # Track changes to this file
+            change_tracker.track_file(file_path)
+            typer.echo(f"    ✓ Tracked file: {file_path}")
+        else:
+            seq_len = len(result_seq) if result_seq else 0
+            error_msg = f"Result sequence too short or conversion failed for {table_name}: {seq_len} items"
+            errors.append(error_msg)
+            typer.echo(f"    ⚠ {error_msg}")
+
+    except Exception as e:
+        error_msg = f"Error syncing table {table_name}: {e}"
+        errors.append(error_msg)
+        if verbose:
+            raise
+        typer.secho(f"    {error_msg}", fg=typer.colors.RED)
+
+
+def _sync_environment_schema(
+    env_enum: RhizomeEnvironment,
+    env_class: type,
+    client: RhizomeClient,
+    change_tracker: ChangeTracker,
+    errors: list[str],
+    verbose: bool,
+) -> None:
+    """Sync schema for all tables in an environment."""
+    env_instance = env_class(client)
+    typer.echo(f"Syncing environment: {env_instance.name}")
+
+    # Get environment folder name from the enum value
+    env_folder = str(env_enum).split("_")[0]  # e.g., "dev_billing_bookkeeper" -> "dev"
+
+    # Get database short name from the environment name
+    db_short_name = get_database_short_name(env_instance.name)
+
+    # Get all tables from the environment
+    for table_name in env_instance.tables():
+        # Construct file path using naming conventions
+        file_path = f"src/rhizome/environments/{env_folder}/expected_data/{db_short_name}_{table_name}.sql"
+
+        _sync_table_schema(env_instance, str(table_name), file_path, change_tracker, errors, verbose)
+
+
 def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False) -> None:
     """Syncs the schema for all environments and reports on changes."""
     typer.echo("Syncing schema...")
@@ -39,63 +136,19 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
     # Initialize change tracker with schema classifier
     change_tracker = ChangeTracker(SchemaChangeClassifier())
 
+    # Track errors
+    errors: list[str] = []
+
     environments_to_sync = environment_type.items()
     if env:
         environments_to_sync = [(env, environment_type[env])]
 
     for env_enum, env_class in environments_to_sync:
-        env_instance = env_class(client)
-        typer.echo(f"Syncing environment: {env_instance.name}")
-
-        # Get environment folder name from the enum value
-        env_folder = str(env_enum).split("_")[0]  # e.g., "dev_billing_bookkeeper" -> "dev"
-
-        # Get database short name from the environment name
-        db_short_name = get_database_short_name(env_instance.name)
-
-        # Get all tables from the environment
-        for table_name in env_instance.tables():
-            typer.echo(f"  Syncing table: {table_name}")
-            query_str = f"SHOW CREATE TABLE {table_name}"
-
-            # Construct file path using naming conventions
-            file_path = f"src/rhizome/environments/{env_folder}/expected_data/{db_short_name}_{table_name}.sql"
-
-            try:
-                result = env_instance.client.execute_raw_query(env_instance.get_connection_string(), query_str)
-                result_length = len(cast(Any, result)) if result and hasattr(result, '__len__') else 'N/A'
-                typer.echo(f"    Query result type: {type(result)}, length: {result_length}")
-
-                if result and isinstance(result, tuple | list):
-                    # Type narrow to sequence with explicit cast
-                    result_seq = cast(tuple[Any, ...] | list[Any], result)
-                    if len(result_seq) > 1:
-                        # The result of SHOW CREATE TABLE is a tuple, the second element is the statement
-                        create_table_statement = str(result_seq[1])
-
-                        # Ensure directory exists
-                        Path(file_path).parent.mkdir(parents=True, exist_ok=True)
-
-                        # Write the file
-                        with open(file_path, "w") as f:
-                            f.write(create_table_statement)
-
-                        # Track changes to this file
-                        change_tracker.track_file(file_path)
-                        typer.echo(f"    ✓ Tracked file: {file_path}")
-                    else:
-                        typer.echo(f"    ⚠ Result sequence too short: {len(result_seq)} items")
-                else:
-                    typer.echo(f"    ⚠ No result or unexpected result type: {result}")
-
-            except Exception as e:
-                if verbose:
-                    raise
-                typer.secho(f"    Error syncing table {table_name}: {e}", fg=typer.colors.RED)
+        _sync_environment_schema(env_enum, env_class, client, change_tracker, errors, verbose)
 
     # Debug: Show how many files were tracked
     typer.echo(f"\nTracked {len(change_tracker.tracked_files)} files for change detection")
 
     # Analyze tracked files and print summary
     change_tracker.analyze_tracked_files()
-    change_tracker.print_summary()
+    change_tracker.print_summary(errors)
