@@ -19,7 +19,10 @@ class BillingTable(StrEnum):
 class BillingBookkeeperTable(StrEnum):
     """Table identifiers for billing_bookkeeper database."""
 
+    billing_entity = auto()
+    fee_rate = auto()
     fee_summary = auto()
+    invoice_info = auto()
     settlement = auto()
 
 
