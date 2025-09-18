@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "test_consumer_failure_uuid1",
+  "environment": "dev",
+  "reference_id": "test_ref_id_1",
+  "consumer_source": "MLC",
+  "payload": "test payload data for consumer failure",
+  "channel": "test_channel",
+  "topic": "billing.consumer.failure.test",
+  "cause": "validation_error",
+  "message": "Test consumer failure message",
+  "created_timestamp": "2024-01-15T10:30:00.123456"
+}

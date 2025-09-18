@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "request_uuid": "test_request_uuid_12345678901",
+  "merchant_uuid": "test_merchant_1",
+  "billing_date": "2024-01-15",
+  "merchant_plan_uuid": "test_plan_123",
+  "billing_event_uuid": "test_billing_event_uuid_01",
+  "total_units": 100,
+  "created_at": "2024-01-15T10:30:00",
+  "updated_at": "2024-01-15T10:30:00"
+}

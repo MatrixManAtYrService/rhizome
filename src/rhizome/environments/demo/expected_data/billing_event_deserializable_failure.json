@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "uuid": "demo_deserializable_fail_1",
+  "topic": "billing.deserializable.failure.demo",
+  "channel": "demo_channel",
+  "environment": "demo",
+  "consumer_source": "AGREEMENT",
+  "b64": "ZGVtbyBiYXNlNjQgZW5jb2RlZCBkYXRhIGZvciBkZXNlcmlhbGl6YWJsZSBmYWlsdXJl",
+  "created_timestamp": "2024-01-15T10:30:00.123456"
+}

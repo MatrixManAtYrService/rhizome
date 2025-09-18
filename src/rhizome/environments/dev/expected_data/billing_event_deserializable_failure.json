@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "uuid": "test_deserializable_fail_1",
+  "topic": "billing.deserializable.failure.test",
+  "channel": "test_channel",
+  "environment": "dev",
+  "consumer_source": "MLC",
+  "b64": "dGVzdCBiYXNlNjQgZW5jb2RlZCBkYXRhIGZvciBkZXNlcmlhbGl6YWJsZSBmYWlsdXJl",
+  "created_timestamp": "2024-01-15T10:30:00.123456"
+}

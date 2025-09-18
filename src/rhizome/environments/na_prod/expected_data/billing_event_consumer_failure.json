@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "prod_consumer_failure_uuid_1",
+  "environment": "usprod",
+  "reference_id": "prod_ref_id_1",
+  "consumer_source": "MLC",
+  "payload": "production payload data for consumer failure",
+  "channel": "prod_channel",
+  "topic": "billing.consumer.failure.prod",
+  "cause": "timeout_error",
+  "message": "Production consumer failure message",
+  "created_timestamp": "2024-01-15T10:30:00.123456"
+}

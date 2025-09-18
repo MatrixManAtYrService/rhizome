@@ -11,15 +11,24 @@ from enum import StrEnum
 from typing import Any
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.na_prod.expected_data.billing_bookkeeper_billing_entity import BillingEntityNaProd
+from rhizome.environments.na_prod.expected_data.billing_bookkeeper_fee_rate import FeeRateNaProd
 from rhizome.environments.na_prod.expected_data.billing_bookkeeper_fee_summary import FeeSummaryNaProd
+from rhizome.environments.na_prod.expected_data.billing_bookkeeper_invoice_info import InvoiceInfoNaProd
 from rhizome.environments.na_prod.expected_data.billing_bookkeeper_settlement import SettlementNaProd
 from rhizome.models.base import Emplacement, RhizomeModel
+from rhizome.models.billing_bookkeeper.billing_entity_v1 import BillingEntityV1
+from rhizome.models.billing_bookkeeper.fee_rate_v1 import FeeRateV1
 from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.invoice_info_v1 import InvoiceInfoV1
 from rhizome.models.billing_bookkeeper.settlement_v1 import SettlementV1
 from rhizome.models.table_list import BillingBookkeeperTable
 
 models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]]]] = {
+    BillingBookkeeperTable.billing_entity: (BillingEntityV1, BillingEntityNaProd),
+    BillingBookkeeperTable.fee_rate: (FeeRateV1, FeeRateNaProd),
     BillingBookkeeperTable.fee_summary: (FeeSummaryV1, FeeSummaryNaProd),
+    BillingBookkeeperTable.invoice_info: (InvoiceInfoV1, InvoiceInfoNaProd),
     BillingBookkeeperTable.settlement: (SettlementV1, SettlementNaProd),
 }
 

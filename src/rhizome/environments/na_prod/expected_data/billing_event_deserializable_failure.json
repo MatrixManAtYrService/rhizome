@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "uuid": "prod_deserializable_fail_1",
+  "topic": "billing.deserializable.failure.prod",
+  "channel": "prod_channel",
+  "environment": "usprod",
+  "consumer_source": "MLC",
+  "b64": "cHJvZCBiYXNlNjQgZW5jb2RlZCBkYXRhIGZvciBkZXNlcmlhbGl6YWJsZSBmYWlsdXJl",
+  "created_timestamp": "2024-01-15T10:30:00.123456"
+}

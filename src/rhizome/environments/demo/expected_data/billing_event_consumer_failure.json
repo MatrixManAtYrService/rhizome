@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "demo_consumer_failure_uuid1",
+  "environment": "demo",
+  "reference_id": "demo_ref_id_1",
+  "consumer_source": "AGREEMENT",
+  "payload": "demo payload data for consumer failure",
+  "channel": "demo_channel",
+  "topic": "billing.consumer.failure.demo",
+  "cause": "processing_error",
+  "message": "Demo consumer failure message",
+  "created_timestamp": "2024-01-15T10:30:00.123456"
+}
