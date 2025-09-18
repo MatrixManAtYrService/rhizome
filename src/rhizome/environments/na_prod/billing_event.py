@@ -27,7 +27,6 @@ from rhizome.environments.na_prod.expected_data.billing_event_consumer_failure_h
 from rhizome.environments.na_prod.expected_data.billing_event_deserializable_failure import DeserializableFailureNaProd
 from rhizome.environments.na_prod.expected_data.billing_event_event_filter import EventFilterNaProd
 from rhizome.environments.na_prod.expected_data.billing_event_event_ignored import EventIgnoredNaProd
-from rhizome.environments.na_prod.expected_data.billing_event_flyway_schema_history import FlywaySchemaHistoryNaProd
 from rhizome.environments.na_prod.expected_data.billing_event_iccid_carrier import IccidCarrierNaProd
 from rhizome.environments.na_prod.expected_data.billing_event_job_assassination_contract import JobAssassinationContractNaProd
 from rhizome.environments.na_prod.expected_data.billing_event_jobrunr_backgroundjobservers import JobrunrBackgroundjobserversNaProd
@@ -71,7 +70,6 @@ from rhizome.models.billing_event.consumer_failure_history_v1 import ConsumerFai
 from rhizome.models.billing_event.deserializable_failure_v1 import DeserializableFailureV1
 from rhizome.models.billing_event.event_filter_v1 import EventFilterV1
 from rhizome.models.billing_event.event_ignored_v1 import EventIgnoredV1
-from rhizome.models.billing_event.flyway_schema_history_v1 import FlywaySchemaHistoryV1
 from rhizome.models.billing_event.iccid_carrier_v1 import IccidCarrierV1
 from rhizome.models.billing_event.job_assassination_contract_v1 import JobAssassinationContractV1
 from rhizome.models.billing_event.jobrunr_backgroundjobservers_v1 import JobrunrBackgroundjobserversV1
@@ -117,7 +115,6 @@ models: dict[BillingEventTable, tuple[type[RhizomeModel] | None, type[Emplacemen
     BillingEventTable.deserializable_failure: (DeserializableFailureV1, DeserializableFailureNaProd),
     BillingEventTable.event_filter: (EventFilterV1, EventFilterNaProd),
     BillingEventTable.event_ignored: (EventIgnoredV1, EventIgnoredNaProd),
-    BillingEventTable.flyway_schema_history: (FlywaySchemaHistoryV1, FlywaySchemaHistoryNaProd),
     BillingEventTable.iccid_carrier: (IccidCarrierV1, IccidCarrierNaProd),
     BillingEventTable.job_assassination_contract: (JobAssassinationContractV1, JobAssassinationContractNaProd),
     BillingEventTable.jobrunr_backgroundjobservers: (JobrunrBackgroundjobserversV1, JobrunrBackgroundjobserversNaProd),

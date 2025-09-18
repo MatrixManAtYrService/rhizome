@@ -8,11 +8,13 @@ billing-event database, along with sanitization functions.
 from __future__ import annotations
 
 import datetime
+from typing import TypeVar
 
 from sqlmodel import Field
 
 from ...models.base import RhizomeModel
-from ...sanitize_helpers import sanitize_uuid_field
+
+T = TypeVar("T", bound="AsOfMerchantPlan")
 
 
 class AsOfMerchantPlan(RhizomeModel, table=False):
@@ -30,17 +32,8 @@ class AsOfMerchantPlan(RhizomeModel, table=False):
     trial_start_date: datetime.date | None = Field(default=None, description="Start date of trial period")
     trial_days: int | None = Field(default=None, description="Number of trial days")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
-    modifier: str | None = Field(default=None, max_length=25, description="Modifier for the plan")
 
-    def sanitize(self) -> AsOfMerchantPlan:
+    def sanitize(self: T) -> T:
         """Return a sanitized copy of this AsOfMerchantPlan instance."""
-        return AsOfMerchantPlan(
-            id=self.id,
-            uuid=sanitize_uuid_field(self.uuid, 26),  # type: ignore
-            as_of_merchant_uuid=sanitize_uuid_field(self.as_of_merchant_uuid, 26),  # type: ignore
-            merchant_plan_uuid=sanitize_uuid_field(self.merchant_plan_uuid, 13),  # type: ignore
-            trial_start_date=self.trial_start_date,
-            trial_days=self.trial_days,
-            created_timestamp=self.created_timestamp,
-            modifier=self.modifier,
-        )
+        # This will be overridden by concrete subclasses
+        raise NotImplementedError("Subclasses must implement sanitize()")

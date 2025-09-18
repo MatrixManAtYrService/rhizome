@@ -7,11 +7,15 @@ from .app_subscription_current_v1 import AppSubscriptionCurrentV1
 from .app_subscription_daily import AppSubscriptionDaily
 from .app_subscription_daily_v1 import AppSubscriptionDailyV1
 from .as_of_merchant import AsOfMerchant
-from .as_of_merchant_v1 import AsOfMerchantV1
+# Note: V1 and V2 are imported directly by environment files to avoid table conflicts
+# from .as_of_merchant_v1 import AsOfMerchantV1
+# from .as_of_merchant_v2 import AsOfMerchantV2
 from .as_of_merchant_device import AsOfMerchantDevice
 from .as_of_merchant_device_v1 import AsOfMerchantDeviceV1
 from .as_of_merchant_plan import AsOfMerchantPlan
-from .as_of_merchant_plan_v1 import AsOfMerchantPlanV1
+# Note: V1 and V2 are imported directly by environment files to avoid table conflicts
+# from .as_of_merchant_plan_v1 import AsOfMerchantPlanV1
+# from .as_of_merchant_plan_v2 import AsOfMerchantPlanV2
 from .backfill_acceptance import BackfillAcceptance
 from .backfill_acceptance_v1 import BackfillAcceptanceV1
 from .billing_event_history import BillingEventHistory
@@ -30,8 +34,6 @@ from .event_filter import EventFilter
 from .event_filter_v1 import EventFilterV1
 from .event_ignored import EventIgnored
 from .event_ignored_v1 import EventIgnoredV1
-from .flyway_schema_history import FlywaySchemaHistory
-from .flyway_schema_history_v1 import FlywaySchemaHistoryV1
 from .iccid_carrier import IccidCarrier
 from .iccid_carrier_v1 import IccidCarrierV1
 from .job_assassination_contract import JobAssassinationContract
@@ -89,9 +91,9 @@ __all__ = [
     "AppMeteredEvent", "AppMeteredEventV1",
     "AppSubscriptionCurrent", "AppSubscriptionCurrentV1",
     "AppSubscriptionDaily", "AppSubscriptionDailyV1",
-    "AsOfMerchant", "AsOfMerchantV1",
+    "AsOfMerchant",  # V1/V2 imported directly by environments
     "AsOfMerchantDevice", "AsOfMerchantDeviceV1",
-    "AsOfMerchantPlan", "AsOfMerchantPlanV1",
+    "AsOfMerchantPlan",  # V1/V2 imported directly by environments
     "BackfillAcceptance", "BackfillAcceptanceV1",
     "BillingEventHistory", "BillingEventHistoryV1",
     "CellularArrearsAcceptances", "CellularArrearsAcceptancesV1",
@@ -101,7 +103,6 @@ __all__ = [
     "DeserializableFailure", "DeserializableFailureV1",
     "EventFilter", "EventFilterV1",
     "EventIgnored", "EventIgnoredV1",
-    "FlywaySchemaHistory", "FlywaySchemaHistoryV1",
     "IccidCarrier", "IccidCarrierV1",
     "JobAssassinationContract", "JobAssassinationContractV1",
     "JobrunrBackgroundjobservers", "JobrunrBackgroundjobserversV1",

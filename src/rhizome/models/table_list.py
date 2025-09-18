@@ -45,7 +45,6 @@ class BillingEventTable(StrEnum):
     deserializable_failure = auto()
     event_filter = auto()
     event_ignored = auto()
-    flyway_schema_history = auto()
     iccid_carrier = auto()
     job_assassination_contract = auto()
     jobrunr_backgroundjobservers = auto()

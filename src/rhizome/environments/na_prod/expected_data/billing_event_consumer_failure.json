@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "uuid": "prod_consumer_failure_uuid_1",
+  "uuid": "prod_consumer_failure_01",
   "environment": "usprod",
   "reference_id": "prod_ref_id_1",
   "consumer_source": "MLC",

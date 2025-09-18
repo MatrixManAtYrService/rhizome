@@ -244,6 +244,25 @@ meta_data: str | None = Field(
 )
 ```
 
+#### Tables Without Standard ID Primary Key
+Some tables (like `flyway_schema_history`) use different primary key structures and don't have an `id` field:
+```python
+# Inherit from SQLModel directly instead of RhizomeModel
+class FlywaySchemaHistory(SQLModel, table=False):
+    """Special case: table with non-standard primary key."""
+
+    # Use the actual primary key from the schema
+    installed_rank: int = Field(primary_key=True, description="Installation rank")
+    # ... other fields
+
+    def sanitize(self: T) -> T:
+        """Custom sanitize method for non-RhizomeModel tables."""
+        return FlywaySchemaHistory(
+            installed_rank=self.installed_rank,
+            # ... other fields
+        )
+```
+
 #### Field Type Mapping from SQL
 - `varchar(N)` → `str` with `Field(max_length=N)`
 - `int unsigned AUTO_INCREMENT` → `int | None = Field(default=None, primary_key=True)`
@@ -355,3 +374,153 @@ src/rhizome/environments/{env}/{database}.py
 3. **Review generated models** for any needed customizations
 4. **Add real test data** to emplacement classes as needed
 5. **Run tests** to ensure everything works correctly
+
+## Environment-Scoped Schema Versioning (V1/V2 Models)
+
+### Problem Statement
+
+When database schemas evolve differently across environments, you may encounter:
+- **Field mismatches**: Fields exist in dev/demo but not in na_prod (e.g., `request_uuid`, `modifier`)
+- **SQL errors**: "Unknown column" errors when models include fields not present in certain environments
+- **SQLAlchemy conflicts**: "Table already defined" errors when V1 and V2 models use the same `__tablename__`
+
+### Solution: Environment-Scoped MetaData
+
+The solution uses separate SQLAlchemy registries to avoid table conflicts while maintaining type safety.
+
+#### 1. Create Separate MetaData Registries
+
+```python
+# src/rhizome/models/metadata_registry.py
+from sqlalchemy.orm import registry
+from sqlmodel import SQLModel
+
+# Create separate registries for each environment type
+na_prod_registry = registry()
+dev_demo_registry = registry()
+
+class NaProdSQLModel(SQLModel, registry=na_prod_registry):
+    """SQLModel base for na_prod environment models (V1)."""
+    pass
+
+class DevDemoSQLModel(SQLModel, registry=dev_demo_registry):
+    """SQLModel base for dev/demo environment models (V2)."""
+    pass
+```
+
+#### 2. Create Version-Specific Models
+
+**Base Model (table=False)** - Contains only fields present in ALL environments:
+```python
+# src/rhizome/models/billing_event/as_of_merchant.py
+class AsOfMerchant(RhizomeModel, table=False):
+    """Base AsOfMerchant model - fields present in all environments."""
+    uuid: str = Field(...)
+    merchant_uuid: str = Field(...)
+    # ... other common fields
+    # NO request_uuid here - not in all environments
+
+    def sanitize(self: T) -> T:
+        # Subclasses implement this
+        raise NotImplementedError("Subclasses must implement sanitize()")
+```
+
+**V1 Model (na_prod)** - Uses NaProdSQLModel registry:
+```python
+# src/rhizome/models/billing_event/as_of_merchant_v1.py
+from ..metadata_registry import NaProdSQLModel
+
+class AsOfMerchantV1(AsOfMerchant, NaProdSQLModel, table=True):
+    """V1 for na_prod - no request_uuid field."""
+    __tablename__ = "as_of_merchant"
+
+    def sanitize(self) -> AsOfMerchantV1:
+        return AsOfMerchantV1(
+            uuid=sanitize_uuid_field(self.uuid, 26),
+            # ... other fields (NO request_uuid)
+        )
+```
+
+**V2 Model (dev/demo)** - Uses DevDemoSQLModel registry:
+```python
+# src/rhizome/models/billing_event/as_of_merchant_v2.py
+from ..metadata_registry import DevDemoSQLModel
+
+class AsOfMerchantV2(AsOfMerchant, DevDemoSQLModel, table=True):
+    """V2 for dev/demo - includes request_uuid field."""
+    __tablename__ = "as_of_merchant"  # Same name, different registry!
+
+    # Additional field in V2
+    request_uuid: str | None = Field(default=None, max_length=26)
+
+    def sanitize(self) -> AsOfMerchantV2:
+        return AsOfMerchantV2(
+            uuid=sanitize_uuid_field(self.uuid, 26),
+            request_uuid=sanitize_uuid_field(self.request_uuid, 26),
+            # ... other fields
+        )
+```
+
+#### 3. Environment-Specific Model Usage
+
+**na_prod environment** imports and uses V1:
+```python
+# src/rhizome/environments/na_prod/billing_event.py
+from rhizome.models.billing_event.as_of_merchant_v1 import AsOfMerchantV1
+
+models: dict[BillingEventTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingEventTable.as_of_merchant: (AsOfMerchantV1, AsOfMerchantNaProd),
+    # ...
+}
+```
+
+**dev/demo environments** import and use V2:
+```python
+# src/rhizome/environments/dev/billing_event.py
+from rhizome.models.billing_event.as_of_merchant_v2 import AsOfMerchantV2
+
+models: dict[BillingEventTable, tuple[type[RhizomeModel], type[Emplacement]]] = {
+    BillingEventTable.as_of_merchant: (AsOfMerchantV2, AsOfMerchantDemo),
+    # ...
+}
+```
+
+### Key Benefits
+
+1. **No SQLAlchemy Conflicts**: Separate registries allow same `__tablename__` in different models
+2. **Type Safety**: Each environment gets correct model type with appropriate fields
+3. **Static Analysis**: IDEs and mypy can provide accurate autocomplete and type checking
+4. **SQL Compatibility**: Only fields that exist in each environment are included in queries
+
+### User Experience
+
+```python
+# In na_prod environment - V1 model returned
+na_merchant = na_env.select_first(select(AsOfMerchantV1).where(...))
+# na_merchant.request_uuid  # ← Field doesn't exist (type safe!)
+
+# In dev environment - V2 model returned
+dev_merchant = dev_env.select_first(select(AsOfMerchantV2).where(...))
+dev_merchant.request_uuid  # ← Field exists and accessible
+```
+
+### When to Use This Pattern
+
+Apply environment-scoped versioning when:
+- **Schema differences exist** across environments for the same logical table
+- **SQL errors occur** due to missing columns in certain environments
+- **You need type safety** to prevent accessing non-existent fields
+- **All environments can't be updated simultaneously** (progressive rollouts)
+
+### Implementation Checklist
+
+1. ✅ Create `metadata_registry.py` with separate registries
+2. ✅ Update base model to exclude environment-specific fields
+3. ✅ Create V1 model inheriting from `NaProdSQLModel`
+4. ✅ Create V2 model inheriting from `DevDemoSQLModel` with additional fields
+5. ✅ Update environment imports to use appropriate version
+6. ✅ Remove V1/V2 imports from models `__init__.py` to avoid conflicts
+7. ✅ Test that all environments load without table conflicts
+8. ✅ Verify `rhizome sync report` works across all environments
+
+This pattern ensures that data flows work seamlessly when schemas match across environments, but provides compile-time type errors when attempting to access fields that don't exist in specific environments.

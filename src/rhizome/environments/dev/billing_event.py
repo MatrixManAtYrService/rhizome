@@ -29,7 +29,6 @@ from rhizome.environments.dev.expected_data.billing_event_event_filter import Ev
 from rhizome.environments.dev.expected_data.billing_event_jobrunr_backgroundjobservers import JobrunrBackgroundjobserversDev
 from rhizome.environments.dev.expected_data.billing_event_jobrunr_jobs import JobrunrJobsDev
 from rhizome.environments.dev.expected_data.billing_event_event_ignored import EventIgnoredDev
-from rhizome.environments.dev.expected_data.billing_event_flyway_schema_history import FlywaySchemaHistoryDev
 from rhizome.environments.dev.expected_data.billing_event_iccid_carrier import IccidCarrierDev
 from rhizome.environments.dev.expected_data.billing_event_job_assassination_contract import JobAssassinationContractDev
 from rhizome.environments.dev.expected_data.billing_event_jobrunr_metadata import JobrunrMetadataDev
@@ -59,9 +58,9 @@ from rhizome.models.billing_event.app_metered_event_v1 import AppMeteredEventV1
 from rhizome.models.billing_event.app_subscription_current_v1 import AppSubscriptionCurrentV1
 from rhizome.models.billing_event.app_subscription_daily_v1 import AppSubscriptionDailyV1
 from rhizome.models.billing_event.app_subscription_event_v1 import AppSubscriptionEventV1
-from rhizome.models.billing_event.as_of_merchant_v1 import AsOfMerchantV1
+from rhizome.models.billing_event.as_of_merchant_v2 import AsOfMerchantV2
 from rhizome.models.billing_event.as_of_merchant_device_v1 import AsOfMerchantDeviceV1
-from rhizome.models.billing_event.as_of_merchant_plan_v1 import AsOfMerchantPlanV1
+from rhizome.models.billing_event.as_of_merchant_plan_v2 import AsOfMerchantPlanV2
 from rhizome.models.billing_event.backfill_acceptance_v1 import BackfillAcceptanceV1
 from rhizome.models.billing_event.billing_event_history_v1 import BillingEventHistoryV1
 from rhizome.models.billing_event.cellular_arrears_acceptances_v1 import CellularArrearsAcceptancesV1
@@ -73,7 +72,6 @@ from rhizome.models.billing_event.event_filter_v1 import EventFilterV1
 from rhizome.models.billing_event.jobrunr_backgroundjobservers_v1 import JobrunrBackgroundjobserversV1
 from rhizome.models.billing_event.jobrunr_jobs_v1 import JobrunrJobsV1
 from rhizome.models.billing_event.event_ignored_v1 import EventIgnoredV1
-from rhizome.models.billing_event.flyway_schema_history_v1 import FlywaySchemaHistoryV1
 from rhizome.models.billing_event.iccid_carrier_v1 import IccidCarrierV1
 from rhizome.models.billing_event.job_assassination_contract_v1 import JobAssassinationContractV1
 from rhizome.models.billing_event.jobrunr_metadata_v1 import JobrunrMetadataV1
@@ -105,9 +103,9 @@ models: dict[BillingEventTable, tuple[type[RhizomeModel] | None, type[Emplacemen
     BillingEventTable.app_subscription_current: (AppSubscriptionCurrentV1, AppSubscriptionCurrentDev),
     BillingEventTable.app_subscription_daily: (AppSubscriptionDailyV1, AppSubscriptionDailyDev),
     BillingEventTable.app_subscription_event: (AppSubscriptionEventV1, AppSubscriptionEventDev),
-    BillingEventTable.as_of_merchant: (AsOfMerchantV1, AsOfMerchantDev),
+    BillingEventTable.as_of_merchant: (AsOfMerchantV2, AsOfMerchantDev),
     BillingEventTable.as_of_merchant_device: (AsOfMerchantDeviceV1, AsOfMerchantDeviceDev),
-    BillingEventTable.as_of_merchant_plan: (AsOfMerchantPlanV1, AsOfMerchantPlanDev),
+    BillingEventTable.as_of_merchant_plan: (AsOfMerchantPlanV2, AsOfMerchantPlanDev),
     BillingEventTable.backfill_acceptance: (BackfillAcceptanceV1, BackfillAcceptanceDev),
     BillingEventTable.billing_event_history: (BillingEventHistoryV1, BillingEventHistoryDev),
     BillingEventTable.cellular_arrears_acceptances: (CellularArrearsAcceptancesV1, CellularArrearsAcceptancesDev),
@@ -119,7 +117,6 @@ models: dict[BillingEventTable, tuple[type[RhizomeModel] | None, type[Emplacemen
     BillingEventTable.jobrunr_backgroundjobservers: (JobrunrBackgroundjobserversV1, JobrunrBackgroundjobserversDev),
     BillingEventTable.jobrunr_jobs: (JobrunrJobsV1, JobrunrJobsDev),
     BillingEventTable.event_ignored: (EventIgnoredV1, EventIgnoredDev),
-    BillingEventTable.flyway_schema_history: (FlywaySchemaHistoryV1, FlywaySchemaHistoryDev),
     BillingEventTable.iccid_carrier: (IccidCarrierV1, IccidCarrierDev),
     BillingEventTable.job_assassination_contract: (JobAssassinationContractV1, JobAssassinationContractDev),
     BillingEventTable.jobrunr_metadata: (JobrunrMetadataV1, JobrunrMetadataDev),
