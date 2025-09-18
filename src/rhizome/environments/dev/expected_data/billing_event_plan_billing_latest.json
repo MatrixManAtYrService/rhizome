@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "merchant_uuid": "HashASjVRZtLJ",
+  "environment": "dev::demo2",
+  "last_billing_date": "2024-07-01",
+  "last_billed_plan_uuid": "Hash5EmM7oawG",
+  "last_plan_billing_method": "Advance",
+  "billing_event_uuid": "Hash8EoTmk2RV6ZypQNPiQSb8D",
+  "created_timestamp": "2024-01-22T17:00:28.385722",
+  "modified_timestamp": "2024-04-19T14:10:17.167997"
+}

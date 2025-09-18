@@ -1,0 +1,9 @@
+{
+  "id": 459848,
+  "uuid": "HashGdgZeiTJZKj77G94afrWXRDkBKhs",
+  "hash": "882515d3b9e3647d74ee9e6cce6d6910248dcd99e5cbc63b5e207507ffd85223",
+  "namespace": "mlcEvent",
+  "meta_data": "{\n\"project\": \"clover-prod-apps\",\n\"subscription\": \"usprod-mlcevent-topic-billevt-subscription\",\n\"messageId\": \"13977706095931110\",\n\"x-datadog-parent-id\": \"3208734983683050153\",\n\"x-datadog-tags\": \"_dd.p.tid=67b47b0200000000\",\n\"Mlc-Event-Schema-Version\": \"14\",\n\"x-datadog-sampling-priority\": \"-1\",\n\"x-datadog-trace-id\": \"6628808438852492961\",\n\"traceparent\": \"00-67b47b02000000005bfe422779ea1ea1-2c87b77790cc0aa9-00\",\n\"tracestate\": \"dd=s:-1;t.tid:67b47b0200000000\",\n\"message_id\": \"3XAAPDPF3J2JW\",\n\"x-clover-appenv\": \"usprod\",\n\"SERIALIZATION\": \"JSON\",\n\"X-Clover-Appenv\": \"usprod\"\n}",
+  "processed_timestamp": null,
+  "created_timestamp": "2025-02-18T12:20:18.800424"
+}

@@ -1,0 +1,16 @@
+{
+  "id": 163,
+  "merchant_uuid": "HashBfADmE88d",
+  "request_uuid": "HashD44KXBWPf3inYptaxU5GwfHoAN",
+  "acceptance_id": "HashGjwX2u4wgGPZ2G6Ew7dJhqnUtGFqbSk5",
+  "agreement_id": "HashPnvu8pcyAmuAHyKru3GrWKoCUTdRLeuM",
+  "device_serial": "C043UN02620459",
+  "activation_date": "2024-03-22T00:00:00",
+  "deactivation_date": null,
+  "deleted_date": "2025-02-13T00:00:00",
+  "num_days_prorated": null,
+  "iccid": "89011703274212324240",
+  "status": "SKIPPED",
+  "is_oobe": true,
+  "reason": "Agreement was deleted before the billing date and is not active."
+}

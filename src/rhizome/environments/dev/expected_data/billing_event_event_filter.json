@@ -1,10 +1,10 @@
 {
   "id": 1,
-  "uuid": "test-event-filter-uuid-123456789012",
-  "criteria": "MERCHANT",
+  "uuid": "HashD73iSAr2BfeCBatyPQB6WyobeATrTLQp",
+  "criteria": "RESELLER",
   "action": "INCLUDE",
-  "value": "test_merchant_123",
-  "created_timestamp": "2024-01-15T10:30:00.123456",
-  "begin_timestamp": "2024-01-15T10:30:00.123456",
-  "end_timestamp": null
+  "value": "K4MN2D032RJS2",
+  "created_timestamp": "2022-10-11T16:23:13.038873",
+  "begin_timestamp": null,
+  "end_timestamp": "2023-05-03T17:02:39.189245"
 }

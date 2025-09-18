@@ -1,0 +1,5 @@
+{
+  "id": "07c96bfc-1598-4b4b-859e-51cd7f2e881f",
+  "script": "v007__alter_table_backgroundjobserver_add_delete_config.sql",
+  "installedOn": "2023-07-25T19:02:15.420023491"
+}

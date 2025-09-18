@@ -1,0 +1,17 @@
+{
+  "id": "35566132-7dce-444f-9727-55a7780165cf",
+  "workerPoolSize": 16,
+  "pollIntervalInSeconds": 15,
+  "firstHeartbeat": "2025-09-03T06:14:56.580781",
+  "lastHeartbeat": "2025-09-18T22:14:32.559201",
+  "running": 1,
+  "systemTotalMemory": 4194304000,
+  "systemFreeMemory": 2833305600,
+  "systemCpuLoad": "0.02",
+  "processMaxMemory": 3145728000,
+  "processFreeMemory": 2793303344,
+  "processAllocatedMemory": 352424656,
+  "processCpuLoad": "0.02",
+  "deleteSucceededJobsAfter": "PT36H",
+  "permanentlyDeleteJobsAfter": "PT72H"
+}

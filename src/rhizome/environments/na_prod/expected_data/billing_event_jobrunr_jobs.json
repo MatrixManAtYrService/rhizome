@@ -1,0 +1,11 @@
+{
+  "id": "00550f9f-5627-4cbd-828f-f8ab2878bf04",
+  "version": 4,
+  "jobAsJson": "{\"version\":4,\"jobSignature\":\"com.clover.billing.spring.async_eventing.job.handler.PendingEventStaleCleanupJobRequestHandler.run(com.clover.billing.spring.async_eventing.job.request.PendingEventStaleCleanupJobRequest)\",\"jobName\":\"Stale-Event-Cleanup-Job\",\"jobDetails\":{\"className\":\"com.clover.billing.spring.async_eventing.job.handler.PendingEventStaleCleanupJobRequestHandler\",\"staticFieldName\":null,\"methodName\":\"run\",\"jobParameters\":[{\"className\":\"com.clover.billing.spring.async_eventing.job.request.PendingEventStaleCleanupJobRequest\",\"actualClassName\":\"com.clover.billing.spring.async_eventing.job.request.PendingEventStaleCleanupJobRequest\",\"object\":{}}],\"cacheable\":true},\"id\":\"00550f9f-5627-4cbd-828f-f8ab2878bf04\",\"jobHistory\":[{\"@class\":\"org.jobrunr.jobs.states.ScheduledState\",\"state\":\"SCHEDULED\",\"createdAt\":\"2025-09-18T01:10:18.870039296Z\",\"scheduledAt\":\"2025-09-18T01:10:25.219460543Z\",\"recurringJobId\":\"RecurringStaleEventCleanupJob\",\"reason\":\"Scheduled by recurring job 'Stale-Event-Cleanup-Job'\"},{\"@class\":\"org.jobrunr.jobs.states.EnqueuedState\",\"state\":\"ENQUEUED\",\"createdAt\":\"2025-09-18T01:10:18.889020566Z\"},{\"@class\":\"org.jobrunr.jobs.states.ProcessingState\",\"state\":\"PROCESSING\",\"createdAt\":\"2025-09-18T01:10:18.947760772Z\",\"serverId\":\"5a581890-9bc1-478a-8ba5-b8fcc92d38ac\",\"updatedAt\":\"2025-09-18T01:10:18.947760772Z\"},{\"@class\":\"org.jobrunr.jobs.states.SucceededState\",\"state\":\"SUCCEEDED\",\"createdAt\":\"2025-09-18T01:10:18.970292931Z\",\"latencyDuration\":0.058740206,\"processDuration\":0.022531476}],\"metadata\":{\"@class\":\"java.util.concurrent.ConcurrentHashMap\",\"jobRunrDashboardLog-3\":{\"@class\":\"org.jobrunr.jobs.context.JobDashboardLogger$JobDashboardLogLines\",\"logLines\":[]}},\"recurringJobId\":\"RecurringStaleEventCleanupJob\"}",
+  "jobSignature": "com.clover.billing.spring.async_eventing.job.handler.PendingEventStaleCleanupJobRequestHandler.run(com.clover.billing.spring.async_eventing.job.request.PendingEventStaleCleanupJobRequest)",
+  "state": "SUCCEEDED",
+  "createdAt": "2025-09-18T01:10:18.870039",
+  "updatedAt": "2025-09-18T01:10:18.970293",
+  "scheduledAt": null,
+  "recurringJobId": "RecurringStaleEventCleanupJob"
+}

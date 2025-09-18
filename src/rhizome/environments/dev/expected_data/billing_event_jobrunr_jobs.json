@@ -1,0 +1,11 @@
+{
+  "id": "00fd0433-6a10-4cc5-9733-c3651e2dd34f",
+  "version": 4,
+  "jobAsJson": "{\"version\":4,\"jobSignature\":\"com.clover.billing.spring.async_eventing.job.handler.PendingEventCatchupJobRequestHandler.run(com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest)\",\"jobName\":\"Event-Catchup-Job\",\"jobDetails\":{\"className\":\"com.clover.billing.spring.async_eventing.job.handler.PendingEventCatchupJobRequestHandler\",\"staticFieldName\":null,\"methodName\":\"run\",\"jobParameters\":[{\"className\":\"com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest\",\"actualClassName\":\"com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest\",\"object\":{}}],\"cacheable\":true},\"id\":\"00fd0433-6a10-4cc5-9733-c3651e2dd34f\",\"jobHistory\":[{\"@class\":\"org.jobrunr.jobs.states.ScheduledState\",\"state\":\"SCHEDULED\",\"createdAt\":\"2025-09-17T16:40:38.959662066Z\",\"scheduledAt\":\"2025-09-17T16:40:45.046777354Z\",\"recurringJobId\":\"RecurringEventCatchupJob\",\"reason\":\"Scheduled by recurring job 'Event-Catchup-Job'\"},{\"@class\":\"org.jobrunr.jobs.states.EnqueuedState\",\"state\":\"ENQUEUED\",\"createdAt\":\"2025-09-17T16:40:38.971294509Z\"},{\"@class\":\"org.jobrunr.jobs.states.ProcessingState\",\"state\":\"PROCESSING\",\"createdAt\":\"2025-09-17T16:40:38.985432513Z\",\"serverId\":\"2da7f612-8ace-4b7d-82da-792d055219f5\",\"updatedAt\":\"2025-09-17T16:40:38.985432513Z\"},{\"@class\":\"org.jobrunr.jobs.states.SucceededState\",\"state\":\"SUCCEEDED\",\"createdAt\":\"2025-09-17T16:40:39.008323460Z\",\"latencyDuration\":0.014138004,\"processDuration\":0.022889968}],\"metadata\":{\"@class\":\"java.util.concurrent.ConcurrentHashMap\",\"jobRunrDashboardLog-3\":{\"@class\":\"org.jobrunr.jobs.context.JobDashboardLogger$JobDashboardLogLines\",\"logLines\":[]}},\"recurringJobId\":\"RecurringEventCatchupJob\"}",
+  "jobSignature": "com.clover.billing.spring.async_eventing.job.handler.PendingEventCatchupJobRequestHandler.run(com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest)",
+  "state": "SUCCEEDED",
+  "createdAt": "2025-09-17T16:40:38.959662",
+  "updatedAt": "2025-09-17T16:40:39.008323",
+  "scheduledAt": null,
+  "recurringJobId": "RecurringEventCatchupJob"
+}

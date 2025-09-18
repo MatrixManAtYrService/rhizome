@@ -1,0 +1,5 @@
+{
+  "id": "00709674-2d2e-4520-aaba-712abee37171",
+  "script": "v002__create_recurring_job_table.sql",
+  "installedOn": "2022-07-05T21:49:43.150478510"
+}

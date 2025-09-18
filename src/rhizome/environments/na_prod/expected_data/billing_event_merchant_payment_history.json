@@ -1,0 +1,14 @@
+{
+  "id": 49,
+  "uuid": "Hash3vKo718HX7tD34dUACxVJ1",
+  "merchant_uuid": "HashGJ1wrFhF7",
+  "environment": "usprod",
+  "billing_entity_uuid": "HashDqoj9Xi334fF2u9Zp8EnZj",
+  "payment_date": "2025-03-22",
+  "currency": null,
+  "total_amount": "30.270",
+  "num_payments": 2,
+  "billing_event_uuid": "HashEsFD2L2AeUe3JaLk2Bypok",
+  "request_uuid": "Hash4ZAwRVrwxAC73uQfcM3kDg",
+  "created_timestamp": "2025-03-24T13:45:47.921702"
+}

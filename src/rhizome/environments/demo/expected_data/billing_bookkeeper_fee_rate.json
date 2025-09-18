@@ -1,0 +1,15 @@
+{
+  "id": 27,
+  "uuid": "HashAkcbhsqyuWQsWBFcZqSNEp",
+  "billing_entity_uuid": "Hash9tgiz95RstKGnPvK77ELz3",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "PaymentsPDVT",
+  "currency": "GBP",
+  "effective_date": "2023-10-01",
+  "apply_type": "PER_ITEM",
+  "per_item_amount": "0.000",
+  "percentage": null,
+  "created_timestamp": "2023-10-12T15:18:43.580891",
+  "modified_timestamp": "2023-10-12T15:18:43.580891",
+  "audit_id": null
+}

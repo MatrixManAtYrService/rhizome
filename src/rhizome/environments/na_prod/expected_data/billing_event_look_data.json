@@ -1,0 +1,6 @@
+{
+  "id": 25392,
+  "look_uuid": "Hash2TxXvam6SX6kr66254EJXAZsW3Vy",
+  "payload": "{\"eventType\":\"RESELLER_DEVICE_ASSIGNMENT\",\"sourceUrl\":\"https://www.clover.com\",\"eventDate\":1738321328649,\"merchantBankAccountChange\":null,\"merchantOwnerEmailChange\":null,\"merchantAccountStatusChange\":null,\"device\":null,\"shippedDevice\":null,\"programExpressCode\":null,\"merchantModified\":null,\"merchantPlanChange\":null,\"merchantCreated\":null,\"resellerDeviceAssignment\":{\"com.clover.mlc.event.messaging.ResellerDeviceAssignmentData\":{\"resellerUuid\":null,\"deviceSerialNumber\":{\"string\":\"C042UN93650155\"}}},\"merchantAccountActivated\":null,\"eventUuid\":{\"string\":\"PF4BAMATGSNWR\"},\"merchantShellCreated\":null,\"version\":{\"int\":14}}",
+  "created_timestamp": "2025-01-31T11:02:25.277862"
+}

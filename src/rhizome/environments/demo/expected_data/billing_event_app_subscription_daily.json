@@ -1,0 +1,13 @@
+{
+  "id": 58,
+  "uuid": "HashvZQ6UxLSkwZMMHwXoGoYVQ",
+  "merchant_uuid": "HashBG9dtfUVg",
+  "developer_app_uuid": "HashGSHtLskNy",
+  "environment": "dev::dev1",
+  "event_date": "2024-04-01",
+  "starting_app_subscription_uuid": null,
+  "ending_app_subscription_uuid": "HashFxwCHA7LC",
+  "highest_app_subscription_uuid": "HashFxwCHA7LC",
+  "billing_event_uuid": "HashHcQ3XiqcXKbb5VKcBVyVkW",
+  "created_timestamp": "2024-04-03T18:06:46.866576"
+}

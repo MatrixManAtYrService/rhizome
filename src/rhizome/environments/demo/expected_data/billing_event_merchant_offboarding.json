@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "HashCHyGshyGjoDB54YSLDpzr2AmH6ZdhYy8",
+  "merchant_uuid": "HashFpQcRKK4M",
+  "environment": "dev::dev1",
+  "step": "INITIATE",
+  "due_date": "2024-06-03",
+  "created_timestamp": "2024-06-06T18:13:05.815074",
+  "offboard_timestamp": "2024-06-06T18:13:05.815038",
+  "deleted_timestamp": null
+}

@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashAXizoKAcfWKrx6NB3kvLVQ",
+  "billing_entity_uuid": "Hash5A1cYNL5CBXQBfbKdDrSEV",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "PaymentsPDVT",
+  "currency": "USD",
+  "effective_date": "2025-01-01",
+  "apply_type": "PER_ITEM",
+  "per_item_amount": "0.000",
+  "percentage": null,
+  "created_timestamp": "2025-01-30T16:37:58.775434",
+  "modified_timestamp": "2025-01-30T16:38:33.706835",
+  "audit_id": "Hash5vQoc3JVzoh6FxgeGL5uEj"
+}

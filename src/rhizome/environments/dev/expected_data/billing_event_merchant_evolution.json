@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "merchant_uuid": "HashHAyZLja9W",
+  "reseller_uuid": "Hash5YGnPfx67",
+  "merchant_name": "ML-Merchant22025-08-26T14:57:50.085Z",
+  "seasonal": false,
+  "tax_exempt": true,
+  "mlc_merchant_created_event_datetime": "2025-08-26T14:57:51",
+  "mlc_merchant_created_event_uuid": "Hash5d15V8VzX",
+  "created_in_bookkeeper_datetime": "2025-08-26T15:03:27",
+  "terms_accepted_datetime": "2025-08-26T15:03:27",
+  "agreement_event_uuid": "HashEz8hApsC9pXLBGo4rYtcJo",
+  "close_date": null,
+  "effective_close_date": null,
+  "mlc_close_event_uuid": null,
+  "created_timestamp": "2025-08-26T14:57:52.412841",
+  "modified_timestamp": "2025-08-26T15:03:28.545924",
+  "billable_merchant_type": null
+}

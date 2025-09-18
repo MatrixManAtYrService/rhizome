@@ -1,14 +1,14 @@
 {
   "id": 1,
-  "uuid": "demo_failure_history_uuid_1",
-  "environment": "demo",
-  "reference_id": "demo_ref_id_1",
-  "consumer_source": "AGREEMENT",
-  "payload": "demo payload data for consumer failure history",
-  "channel": "demo_channel",
-  "topic": "billing.consumer.failure.history.demo",
-  "cause": "processing_error",
-  "message": "Demo consumer failure history message",
-  "comment": "Demo comment about this historical failure",
-  "created_timestamp": "2024-01-15T10:30:00.123456"
+  "uuid": "HashF2PrqunwsU7HNsYZPf73cJ",
+  "environment": "dev::dev26",
+  "reference_id": "HashF7TEphQyv",
+  "consumer_source": "MLC",
+  "payload": "{\"eventType\":\"MERCHANT_CREATED\",\"sourceUrl\":\"https://dev26.dev.clover.com\",\"eventDate\":1657084685548,\"merchantBankAccountChange\":null,\"merchantOwnerEmailChange\":null,\"merchantAccountStatusChange\":null,\"device\":null,\"shippedDevice\":null,\"programExpressCode\":null,\"merchantModified\":null,\"merchantPlanChange\":null,\"merchantCreated\":{\"com.clover.mlc.event.messaging.MerchantCreatedData\":{\"merchant\":{\"merchantUuid\":{\"string\":\"H92CFKMC51Q61\"},\"resellerUuid\":{\"string\":\"3DCF18FAMKM4Y\"},\"name\":{\"string\":\"TestAutomation-20220706-05.004-RoSxf\"},\"mid\":{\"string\":\"813423245427\"},\"bemid\":{\"string\":\"946217707880\"},\"tid\":{\"string\":\"8048000\"},\"gatewayConfig\":{\"string\":\"{\\\"mid\\\":\\\"813423245427\\\",\\\"tid\\\":\\\"8048000\\\",\\\"mcc\\\":\\\"4119\\\",\\\"supports_tipping\\\":\\\"false\\\",\\\"supports_preauth\\\":\\\"false\\\",\\\"supports_bulkcapture\\\":\\\"false\\\",\\\"token_type\\\":\\\"0001\\\",\\\"bemid\\\":\\\"946217707880\\\",\\\"debit_key_code\\\":\\\"350\\\",\\\"closeHour\\\":1,\\\"group_id\\\":\\\"10001\\\",\\\"tcc\\\":\\\"12\\\"}\"},\"owner\":{\"string\":\"clovermailtesting+20220706-05.004-tTp2H@gmail.com\"},\"servicePlan\":{\"string\":\"CO_TERMINAL\"},\"containsStation\":{\"boolean\":false},\"address\":{\"com.clover.mlc.event.messaging.MerchantAddressData\":{\"state\":{\"string\":\"CA\"},\"country\":{\"string\":\"US\"}}},\"businessLevel\":{\"string\":\"350123456880\"},\"bank\":{\"string\":\"846980100883\"},\"bankMarker\":{\"string\":\"999\"},\"accountStatus\":null,\"entitlements\":{\"array\":[{\"name\":{\"string\":\"AMEX\"},\"serviceEntitlementNumber\":{\"string\":\"000001311346001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"EDS\"},\"serviceEntitlementNumber\":{\"string\":\"000000084015001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"EBT\"},\"serviceEntitlementNumber\":{\"string\":\"\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"PURCHASE CARD\"},\"serviceEntitlementNumber\":{\"string\":\"000000471046001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"DINERS CLUB\"},\"serviceEntitlementNumber\":{\"string\":\"000000000000001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"DISCOVER\"},\"serviceEntitlementNumber\":{\"string\":\"601103072952001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"MASTERCARD\"},\"serviceEntitlementNumber\":{\"string\":\"846217707001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"JCB\"},\"serviceEntitlementNumber\":{\"string\":\"000000000000000\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}},{\"name\":{\"string\":\"VISA\"},\"serviceEntitlementNumber\":{\"string\":\"846217707001\"},\"serviceType\":{\"string\":\"\"},\"alphaId\":{\"string\":\"\"}}]}},\"contact\":{\"string\":\"OwnerName-20220706-05.004-RoSxf\"},\"numDevices\":{\"int\":5},\"mccCode\":{\"string\":\"4119\"},\"newPlanType\":{\"string\":\"PAYMENTS_PLUS\"},\"newPlanUuid\":{\"string\":\"901B8TJHKM9PA\"},\"previousServicePlan\":null,\"ownerMobilePhoneNumber\":null,\"programExpressCodes\":{\"array\":[]},\"payeezyMerchant\":null}},\"resellerDeviceAssignment\":null,\"merchantAccountActivated\":null,\"eventUuid\":{\"string\":\"1MW9YBC6VS5K6\"}}",
+  "channel": "inbound",
+  "topic": "mlcevent",
+  "cause": "Oops! We made a mistake. Please try again later.",
+  "message": "com.clover.api.cosmerchantplan.ApiException",
+  "comment": null,
+  "created_timestamp": "2022-07-06T05:18:07.116430"
 }

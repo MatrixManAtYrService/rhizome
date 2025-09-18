@@ -1,0 +1,14 @@
+{
+  "id": 17,
+  "uuid": "HashGFaqvbwNo49exS7wTGsYB5",
+  "billing_entity_uuid": "Hash3n3XNxh4rUGMYudzqb2sd1",
+  "entity_uuid": "HashGs3cvfauV",
+  "alternate_id": "555123",
+  "billing_date": "2024-01-01",
+  "invoice_num": "008/202401/IN0000002",
+  "currency": "GBP",
+  "total_amount": "0.000",
+  "document_uuid": "HashAgCG1P4zwTjRwH5h6xVwmj",
+  "request_uuid": "Hash3fKhzUSMaeKQLFdCcQt7Pz",
+  "created_timestamp": "2023-10-18T11:24:13.872195"
+}

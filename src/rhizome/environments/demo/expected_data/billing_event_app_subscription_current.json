@@ -1,0 +1,14 @@
+{
+  "id": 97,
+  "uuid": "Hash6pW7s2KKdK5fXN8eEUmCNG",
+  "merchant_uuid": "HashAVjxQBHZb",
+  "developer_app_uuid": "HashFKN4UTcRU",
+  "environment": "dev::dev1",
+  "app_subscription_uuid": "Hash2dBDXoNbp",
+  "app_subscription_cost": "10.000",
+  "bundled_with_plan": false,
+  "trial_end_date": "2024-05-08",
+  "last_advance_date": "2024-06-01",
+  "created_timestamp": "2024-04-09T13:45:54.482737",
+  "modified_timestamp": "2024-06-01T14:01:28.713743"
+}

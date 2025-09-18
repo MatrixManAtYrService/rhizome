@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "HashGsWzVdpftZvetFZaYcCwk9",
+  "reference_id": "Hash5YukjjfMa",
+  "consumer_source": "MLC",
+  "payload": "{\"eventType\":\"MERCHANT_PLAN_CHANGED\",\"sourceUrl\":\"https://dev1.dev.clover.com\",\"eventDate\":1756294599000,\"merchantBankAccountChange\":null,\"merchantOwnerEmailChange\":null,\"merchantAccountStatusChange\":null,\"device\":null,\"shippedDevice\":null,\"programExpressCode\":null,\"merchantModified\":null,\"merchantPlanChange\":{\"com.clover.mlc.event.messaging.MerchantPlanChangeData\":{\"merchant\":{\"merchantUuid\":{\"string\":\"YX2JSEMM789M5\"},\"resellerUuid\":{\"string\":\"0H8HV04MA1RPY\"},\"name\":{\"string\":\"Merchant2021-01-14T22:43:49.755Z\"},\"mid\":null,\"bemid\":null,\"tid\":null,\"gatewayConfig\":null,\"owner\":{\"string\":\"davidbenkirk@gmail.com\"},\"servicePlan\":{\"string\":\"CO_REGISTER\"},\"containsStation\":null,\"address\":{\"com.clover.mlc.event.messaging.MerchantAddressData\":{\"state\":{\"string\":\"TX\"},\"country\":{\"string\":\"US\"}}},\"businessLevel\":null,\"bank\":null,\"bankMarker\":{\"string\":\"123\"},\"accountStatus\":{\"string\":\"16\"},\"entitlements\":null},\"oldPlanType\":{\"string\":\"RETAIL\"},\"oldPlanUuid\":{\"string\":\"PAT4012NRRNAE\"},\"newPlanType\":{\"string\":\"REGISTER_LITE\"},\"newPlanUuid\":{\"string\":\"7V38F28FZMXZT\"},\"previousServicePlan\":{\"string\":\"CO_REGISTER\"}}},\"merchantCreated\":null,\"resellerDeviceAssignment\":null,\"merchantAccountActivated\":null,\"eventUuid\":{\"string\":\"5RPQXR6H7VZ5G\"},\"merchantShellCreated\":null,\"version\":{\"int\":15}}",
+  "channel": "inbound",
+  "topic": "dev1-mlcevent-topic",
+  "ignore_reason": "UNKNOWN_MERCHANT",
+  "message": "Merchant evolution does not exist for merchant.",
+  "created_timestamp": "2025-08-27T11:36:42.040682"
+}

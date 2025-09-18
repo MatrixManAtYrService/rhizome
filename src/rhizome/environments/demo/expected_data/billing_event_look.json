@@ -1,0 +1,9 @@
+{
+  "id": 36988,
+  "uuid": "Hash8jdk7ZUW59y729JjVjKJB5Xh5S7P",
+  "hash": "18395e53de1c5d1f76deca1768d642fea1d362732589d5365b68de3a7cde5c75",
+  "namespace": "AcceptanceCreatedPayload",
+  "meta_data": "{\n\"project\": \"clover-dev-managed\",\n\"subscription\": \"dev1-agreement-k8s-agreement-topic-billevt-subscription\",\n\"messageId\": \"16302014126499674\",\n\"X-Clover-Appenv\": \"dev::dev1\"\n}",
+  "processed_timestamp": "2025-09-17T15:35:43.113966",
+  "created_timestamp": "2025-09-17T15:35:43.099915"
+}

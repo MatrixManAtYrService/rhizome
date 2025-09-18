@@ -1,13 +1,13 @@
 {
-  "id": 1,
-  "uuid": "demo_consumer_failure_uuid1",
-  "environment": "demo",
-  "reference_id": "demo_ref_id_1",
-  "consumer_source": "AGREEMENT",
-  "payload": "demo payload data for consumer failure",
-  "channel": "demo_channel",
-  "topic": "billing.consumer.failure.demo",
-  "cause": "processing_error",
-  "message": "Demo consumer failure message",
-  "created_timestamp": "2024-01-15T10:30:00.123456"
+  "id": 120737,
+  "uuid": "Hash3gKuQvvsd1uv28yVdBbUrS",
+  "environment": "dev::demo2",
+  "reference_id": "HashCYAV1TKN4",
+  "consumer_source": "MLC",
+  "payload": "{\"eventType\":\"MERCHANT_ACCOUNT_STATUS_CHANGED\",\"sourceUrl\":\"https://demo2.dev.clover.com\",\"eventDate\":1705410965754,\"merchantBankAccountChange\":null,\"merchantOwnerEmailChange\":null,\"merchantAccountStatusChange\":{\"com.clover.mlc.event.messaging.MerchantAccounStatusChangeData\":{\"merchant\":{\"merchantUuid\":{\"string\":\"PZKS4DV31CB01\"},\"resellerUuid\":{\"string\":\"G8RTNG2ESQTXW\"},\"name\":{\"string\":\"KarlTestMerchant\"},\"mid\":{\"string\":\"111111122233\"},\"bemid\":{\"string\":\"111111122233\"},\"tid\":null,\"gatewayConfig\":{\"string\":\"{\\\"mid\\\":\\\"111111122233\\\",\\\"mcc\\\":\\\"4121\\\",\\\"supports_tipping\\\":\\\"false\\\",\\\"supports_preauth\\\":\\\"false\\\",\\\"supports_bulkcapture\\\":\\\"false\\\",\\\"supports_multi_pay_token\\\":\\\"false\\\",\\\"storeId\\\":\\\"1111111222\\\"}\"},\"owner\":{\"string\":\"testfdsfd@clover.com\"},\"servicePlan\":{\"string\":\"CO_TERMINAL\"},\"containsStation\":null,\"address\":{\"com.clover.mlc.event.messaging.MerchantAddressData\":{\"state\":{\"string\":\"ST\"},\"country\":{\"string\":\"GB\"}}},\"businessLevel\":null,\"bank\":null,\"bankMarker\":{\"string\":\"216\"},\"accountStatus\":{\"string\":\"OPEN\"},\"entitlements\":{\"array\":[{\"name\":{\"string\":\"VISA\"},\"serviceEntitlementNumber\":null,\"serviceType\":null,\"alphaId\":null}]}},\"newAccountStatus\":{\"string\":\"OPEN\"},\"previousAccountStatus\":{\"string\":\"CLOSED\"},\"source\":\"BACKFILL_API\"}},\"device\":null,\"shippedDevice\":null,\"programExpressCode\":null,\"merchantModified\":null,\"merchantPlanChange\":null,\"merchantCreated\":null,\"resellerDeviceAssignment\":null,\"merchantAccountActivated\":null,\"eventUuid\":{\"string\":\"GDSN7NQ64FM5T\"}}",
+  "channel": "inbound",
+  "topic": "mlcevent",
+  "cause": "com.clover.api.bookkeeper.ApiException",
+  "message": "Not Found >>> BBB translating MLC message  [ env= dev::demo2 ][ eventType = MERCHANT_ACCOUNT_STATUS_CHANGED ][ eventDate = 2024-01-16T13:16:05.754Z ][ mlc-message = {\"eventType\":\"MERCHANT_ACCOUNT_STATUS_CHANGED\",\"sourceUrl\":\"https://demo2.dev.clover.com\",\"eventDate\":1705410965754,\"merchantBankAccountChange\":null,\"merchantOwnerEmailChange\":null,\"merchantAccountStatusChange\":{\"com.clover.mlc.event.messaging.MerchantAccounStatusChangeData\":{\"merchant\":{\"merchantUuid\":{\"string\":\"PZKS4DV31CB01\"},\"...",
+  "created_timestamp": "2024-01-16T13:16:06.058910"
 }

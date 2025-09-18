@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash8Ysg8hroFTQ6CAjWDTnnZt",
+  "environment": "usprod",
+  "reference_id": "Hash5bQokvrJd",
+  "event_source": "APP_RATES",
+  "event_context_json": null,
+  "input_event_uuid": null,
+  "input": null,
+  "output": "{\"environment\":\"usprod\",\"eventTimestamp\":\"2025-03-12T13:34:28.197814955Z\",\"eventUuid\":\"3S7DXMFM7XZYFJEQKAHDXH5SK1\",\"merchantEvents\":null,\"planEvents\":null,\"appRatesEvents\":[{\"code\":\"AppRatesChanged\",\"effectiveDateTime\":\"2023-10-31T16:16:17Z\",\"developerUuid\":\"PVP5QM2HJT3C2\",\"developerName\":\"Coastal Pay\",\"vendorCode\":\"V20889.0000\",\"glCode\":null,\"devAppUuid\":\"594JW2TA2085M\",\"appName\":\"Dual Pricing\",\"party\":\"THIRD\",\"subscriptionRates\":[{\"appSubUuid\":\"CE4BSK8227QQM\",\"appSubName\":\"Coastal Pay\",\"hasTrial\":true,\"rates\":[{\"currency\":\"USD\",\"cost\":0.0}]},{\"appSubUuid\":\"7EE9Z2HPF8YFP\",\"appSubName\":\"Bronze Tier\",\"hasTrial\":true,\"rates\":[{\"currency\":\"USD\",\"cost\":19.95}]}],\"meteredRates\":null}],\"appSubEvents\":null,\"appMeterEvents\":null,\"cellularEvents\":null,\"miscEvents\":null,\"revenueEvents\":null,\"memoEvents\":[{\"heading\":\"AppRatesMemo\",\"moment\":\"2025-03-12\",\"properties\":{\"PROP_AGGREGATION_UUID\":\"6JVBJBQ6ZWHXPPYXTC8D0A78GS\"}}]}",
+  "channel": "outbound",
+  "topic": "billing-event-topic",
+  "comment": "Lost App Rates Event",
+  "created_timestamp": "2025-03-24T18:24:52.932313"
+}

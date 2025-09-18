@@ -1,0 +1,16 @@
+{
+  "id": 32,
+  "merchant_uuid": "HashJ3UEZrFMt",
+  "request_uuid": "HashJ2LjGED3iHA82TkcZmbHuw9HgK",
+  "acceptance_id": "Hash9oQRCocfszcP3oHTj5evYAsR2RsbVJjV",
+  "agreement_id": "HashH4EqePRwm7BY9d51v83uX9LL9DhB2VSv",
+  "device_serial": "C035ET23130317",
+  "activation_date": "2023-10-19T00:00:00",
+  "deactivation_date": null,
+  "deleted_date": null,
+  "num_days_prorated": 13,
+  "iccid": "89011702278667570810",
+  "status": "COMPLETE",
+  "is_oobe": true,
+  "reason": null
+}

@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "Hash4mApmanAb2qRJhDVqEceW9",
+  "billing_entity_uuid": "HashHz7MGWbwJ31fXa6XhLGAC7",
+  "entity_uuid": "HashHz8ZwFUXH",
+  "alternate_id": "209214661883",
+  "billing_date": "2025-03-01",
+  "invoice_num": "202503/000000001",
+  "currency": "USD",
+  "total_amount": "77.240",
+  "document_uuid": "HashHDHgNeRNXtyFmacJ1nbQHS",
+  "request_uuid": "HashEfKpuQH9dnKJSzdpJnL9YD",
+  "created_timestamp": "2025-03-05T14:09:03.277946"
+}

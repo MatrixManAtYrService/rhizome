@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "acceptance_id": "HashCYmEAQUaWLBXnRVftA1WRw2WpDvFbenR",
+  "merchant_id": "Hash4fz7m5LmE",
+  "account_id": "HashBaxVF3Pmh",
+  "type": "BILLING",
+  "comment": "",
+  "serial_number": null,
+  "iccid": null,
+  "created_timestamp": "2025-02-15T23:57:42.492198"
+}

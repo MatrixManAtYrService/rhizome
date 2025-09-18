@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "merchant_uuid": "Hash2UkP2B4Vs",
+  "reseller_uuid": "HashDzGwH2ZpU",
+  "merchant_name": "TestRamonAlpha925",
+  "seasonal": null,
+  "tax_exempt": null,
+  "mlc_merchant_created_event_datetime": "2025-09-02T10:12:28",
+  "mlc_merchant_created_event_uuid": "Hash5b9xXM6Gh",
+  "created_in_bookkeeper_datetime": null,
+  "terms_accepted_datetime": null,
+  "agreement_event_uuid": null,
+  "close_date": null,
+  "effective_close_date": null,
+  "mlc_close_event_uuid": null,
+  "created_timestamp": "2025-09-02T10:12:29.251322",
+  "modified_timestamp": "2025-09-02T10:12:29.251322",
+  "billable_merchant_type": null
+}

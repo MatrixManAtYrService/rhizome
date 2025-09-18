@@ -1,0 +1,13 @@
+{
+  "id": 123,
+  "uuid": "Hash2yYHQhJ2G1BtC5Kyrom7Nz",
+  "merchant_uuid": "HashFcaKaC43W",
+  "developer_app_uuid": "HashJ6rwaEdu5",
+  "environment": "usprod",
+  "event_date": "2025-03-25",
+  "starting_app_subscription_uuid": null,
+  "ending_app_subscription_uuid": "Hash7BWS7U7Kt",
+  "highest_app_subscription_uuid": "Hash7BWS7U7Kt",
+  "billing_event_uuid": "Hash4TV2NymRJnXcZf4jHTxX5m",
+  "created_timestamp": "2025-03-26T12:26:49.333699"
+}

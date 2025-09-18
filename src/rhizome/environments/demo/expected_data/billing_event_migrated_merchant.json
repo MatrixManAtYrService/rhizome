@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "reseller_uuid": "Hash3iVFLFSwf",
+  "merchant_uuid": "Hash9yiQs1prw",
+  "backbook_merchant": true,
+  "added_to_ebb_group": true,
+  "plan_trials_migrated": false,
+  "apps_migrated": true,
+  "app_sub_events_caught_up": false,
+  "app_meter_events_caught_up": false,
+  "created_timestamp": "2025-07-22T10:21:43.848922",
+  "modified_timestamp": "2025-07-22T10:21:43.971288"
+}

@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "uuid": "HashEz8hApsC9pXLBGo4rYtcJo",
+  "merchant_uuid": "HashHAyZLja9W",
+  "account_id": "Hash9mhHmgca7",
+  "acceptance_id": "Hash62HxAhaMdoZWEBTsSVdrCoFtRaQUyZPj",
+  "agreement_id": "Hash9KJTWbRF6QYqoY51m9HTmVFRUgNZTxF4",
+  "agreement_type": "BILLING",
+  "agreement_event_type": "INVALIDATED",
+  "action": "STALE",
+  "acceptance_created_datetime": "2025-08-26T15:03:27",
+  "acceptance_modified_datetime": "2025-08-27T14:26:13",
+  "acceptance_deleted_datetime": "2025-08-27T14:26:13",
+  "acceptance_expiration_datetime": null,
+  "serial_number": null,
+  "iccid": null,
+  "is_oobe": null,
+  "created_timestamp": "2025-08-26T15:03:28.601130",
+  "modified_timestamp": "2025-08-27T14:26:14.369584"
+}

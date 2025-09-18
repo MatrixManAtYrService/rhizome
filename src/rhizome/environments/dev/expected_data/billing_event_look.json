@@ -1,0 +1,9 @@
+{
+  "id": 113506,
+  "uuid": "Hash3mqo6rCNszT3584BJ1uCjJ5mQ7TB",
+  "hash": "51b4564a66a0aa7d17b43d7c57016c621477b094479d064d282db69a6dd59572",
+  "namespace": "mlcEvent",
+  "meta_data": "{\n\"project\": \"clover-dev-managed\",\n\"subscription\": \"dev1-mlcevent-topic-billevt-subscription\",\n\"messageId\": \"13470435780931822\",\n\"x-clover-appenv\": \"dev::dev1\",\n\"message_id\": \"08GDP7FDWYCW0\",\n\"X-Clover-Appenv\": \"dev::dev1\",\n\"Mlc-Event-Schema-Version\": \"14\",\n\"SERIALIZATION\": \"JSON\"\n}",
+  "processed_timestamp": null,
+  "created_timestamp": "2025-01-09T16:01:20.950212"
+}

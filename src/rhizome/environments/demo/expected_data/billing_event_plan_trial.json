@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "Hash5KywmAEZnCW4yJbCyeNj5x",
+  "merchant_uuid": "Hash7DSX9u2Le",
+  "environment": "dev::demo2",
+  "effective_datetime": "2025-01-21T10:44:20",
+  "merchant_plan_uuid": "Hash5EmM7oawG",
+  "trial_start_date": "2025-01-21",
+  "trial_days": 30,
+  "billing_event_uuid": "HashGPcXuvWw124XgnusLcMHQr",
+  "created_timestamp": "2025-01-21T10:44:23.640524"
+}

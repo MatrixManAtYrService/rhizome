@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "Hash9iXjxd8dDsvcGM55KUss8V",
+  "reference_id": "HashHpoth2umW",
+  "consumer_source": "MLC",
+  "payload": "{\"eventType\":\"DEVICE_ACTIVATED\",\"sourceUrl\":\"https://demo2.dev.clover.com\",\"eventDate\":1757341866000,\"merchantBankAccountChange\":null,\"merchantOwnerEmailChange\":null,\"merchantAccountStatusChange\":null,\"device\":{\"com.clover.mlc.event.messaging.DeviceData\":{\"merchant\":{\"merchantUuid\":{\"string\":\"9SNH2EA51B3B1\"},\"resellerUuid\":{\"string\":\"GPRT8H1J3MNKE\"},\"name\":{\"string\":\"TestAuto7936\"},\"mid\":{\"string\":\"9692368541965\"},\"bemid\":{\"string\":\"9692368541965\"},\"tid\":null,\"gatewayConfig\":{\"string\":\"{\\\"mid\\\":\\\"9692368541965\\\",\\\"mcc\\\":\\\"7394\\\",\\\"storeId\\\":\\\"98653449\\\",\\\"supports_tipping\\\":\\\"false\\\",\\\"supports_preauth\\\":\\\"false\\\",\\\"supports_bulkcapture\\\":\\\"false\\\",\\\"supports_multi_pay_token\\\":\\\"false\\\"}\"},\"owner\":{\"string\":\"surega.subburengan+automationtest@clover.com\"},\"servicePlan\":{\"string\":\"CO_TERMINAL\"},\"containsStation\":null,\"address\":{\"com.clover.mlc.event.messaging.MerchantAddressData\":{\"state\":{\"string\":\"FL\"},\"country\":{\"string\":\"GB\"}}},\"businessLevel\":null,\"bank\":null,\"bankMarker\":null,\"accountStatus\":{\"string\":\"OPEN\"},\"entitlements\":{\"array\":[{\"name\":{\"string\":\"CASHBACK\"},\"serviceEntitlementNumber\":null,\"serviceType\":null,\"alphaId\":null},{\"name\":{\"string\":\"MASTERCARD\"},\"serviceEntitlementNumber\":null,\"serviceType\":null,\"alphaId\":null},{\"name\":{\"string\":\"MANUAL_REFUND\"},\"serviceEntitlementNumber\":null,\"serviceType\":null,\"alphaId\":null},{\"name\":{\"string\":\"VISA\"},\"serviceEntitlementNumber\":null,\"serviceType\":null,\"alphaId\":null}]}},\"serialNumber\":{\"string\":\"C041USD1519211\"},\"equipmentNumber\":null,\"originatingSerialNumber\":null,\"activationCode\":null,\"provisionedViaShipping\":false,\"activationType\":null}},\"shippedDevice\":null,\"programExpressCode\":null,\"merchantModified\":null,\"merchantPlanChange\":null,\"merchantCreated\":null,\"resellerDeviceAssignment\":null,\"merchantAccountActivated\":null,\"eventUuid\":{\"string\":\"4N6MN5HJ11SV0\"},\"merchantShellCreated\":null,\"version\":{\"int\":15}}",
+  "channel": "inbound",
+  "topic": "demo2-mlcevent-topic",
+  "ignore_reason": "PRE_ACCEPTANCE",
+  "message": "Merchant has not accepted billing terms.",
+  "created_timestamp": "2025-09-08T14:31:07.971282"
+}

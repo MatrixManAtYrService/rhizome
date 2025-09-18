@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "Hash34TLpHUgbEMxKe8emasGSq",
+  "merchant_uuid": "Hash9vN5cki2V",
+  "environment": "usprod",
+  "effective_datetime": "2025-04-15T19:40:33",
+  "merchant_plan_uuid": "Hash3tvtoQJQV",
+  "trial_start_date": "2025-04-15",
+  "trial_days": 60,
+  "billing_event_uuid": "Hash5fDML7bf2p1QtNXCLikdNx",
+  "created_timestamp": "2025-04-15T19:40:35.677899"
+}

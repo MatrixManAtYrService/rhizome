@@ -1,0 +1,12 @@
+{
+  "id": 2787,
+  "environment": "usprod",
+  "merchant_id": "Hash9KH4483DH",
+  "input_event_uuid": null,
+  "billing_event_uuid": "Hash3NAtdTsXVPe5GpUTmkPG1z",
+  "event_source": "APP_SUB_DAILY",
+  "event_context_json": null,
+  "input": null,
+  "output": "{\"environment\":\"usprod\",\"eventTimestamp\":\"2025-02-28T16:37:16.466306944Z\",\"eventUuid\":\"REMKH6K22QS66V7JVM5EDDB515\",\"merchantEvents\":null,\"planEvents\":null,\"appRatesEvents\":null,\"appSubEvents\":[{\"code\":\"AppLevelUnsubscribe\",\"effectiveDateTime\":\"2025-02-04T00:00:00Z\",\"merchUuid\":\"PHZ57ZQD1BQY1\",\"devAppUuid\":\"W2ZB0CS1NWP66\",\"appSubUuid\":\"7YWJMABZ8K8W2\",\"merchPlanUuid\":null,\"numUnits\":null,\"basisUnits\":null,\"basisAmt\":null,\"basisCurrency\":null,\"appSubMods\":null}],\"appMeterEvents\":null,\"cellularEvents\":null,\"miscEvents\":null,\"revenueEvents\":null,\"memoEvents\":null}",
+  "created_timestamp": "2025-02-28T16:37:16.538748"
+}

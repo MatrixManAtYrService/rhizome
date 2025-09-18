@@ -1,0 +1,6 @@
+{
+  "id": "RecurringEventCatchupJob",
+  "version": 1,
+  "jobAsJson": "{\"version\":0,\"jobSignature\":\"com.clover.billing.spring.async_eventing.job.handler.PendingEventCatchupJobRequestHandler.run(com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest)\",\"jobName\":\"Event-Catchup-Job\",\"jobDetails\":{\"className\":\"com.clover.billing.spring.async_eventing.job.handler.PendingEventCatchupJobRequestHandler\",\"staticFieldName\":null,\"methodName\":\"run\",\"jobParameters\":[{\"className\":\"com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest\",\"actualClassName\":\"com.clover.billing.spring.async_eventing.job.request.PendingEventCatchupJobRequest\",\"object\":{}}],\"cacheable\":true},\"id\":\"RecurringEventCatchupJob\",\"scheduleExpression\":\"PT10M\",\"zoneId\":\"GMT\",\"createdAt\":\"2025-09-10T06:25:25.086652221Z\"}",
+  "createdAt": 1757485525086
+}
