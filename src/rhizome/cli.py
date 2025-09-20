@@ -59,9 +59,13 @@ def data(
         bool,
         typer.Option(help="Show full stack trace on error."),
     ] = False,
+    missing_only: Annotated[
+        bool,
+        typer.Option(help="Only sync data for tables that are missing it."),
+    ] = False,
 ) -> None:
     """Syncs the expected data for all environments."""
-    sync_data(env, table_names=table, verbose=verbose)
+    sync_data(env, table_names=table, verbose=verbose, missing_only=missing_only)
 
 
 @sync_app.command()
@@ -78,9 +82,13 @@ def schema(
         bool,
         typer.Option(help="Show full stack trace on error."),
     ] = False,
+    missing_only: Annotated[
+        bool,
+        typer.Option(help="Only sync schemas for tables that are missing them."),
+    ] = False,
 ) -> None:
     """Syncs the schema for all environments."""
-    sync_schema(env, table_names=table, verbose=verbose)
+    sync_schema(env, table_names=table, verbose=verbose, missing_only=missing_only)
 
 
 @sync_app.command()

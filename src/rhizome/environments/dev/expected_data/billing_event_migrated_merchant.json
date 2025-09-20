@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "reseller_uuid": "placeholder",
+  "merchant_uuid": "placeholder",
+  "backbook_merchant": false,
+  "added_to_ebb_group": false,
+  "plan_trials_migrated": false,
+  "apps_migrated": false,
+  "app_sub_events_caught_up": false,
+  "app_meter_events_caught_up": false,
+  "created_timestamp": "2025-09-20T00:00:00",
+  "modified_timestamp": "2025-09-20T00:00:00"
+}

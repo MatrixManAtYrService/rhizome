@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder_mph",
+  "merchant_uuid": "placeholder",
+  "environment": "dev",
+  "billing_entity_uuid": "billing_entity_uuid_1",
+  "payment_date": "2025-09-20",
+  "currency": "USD",
+  "total_amount": 123.456,
+  "num_payments": 1,
+  "billing_event_uuid": "billing_event_uuid_1",
+  "request_uuid": "request_uuid_1",
+  "created_timestamp": "2025-09-20T00:00:00"
+}

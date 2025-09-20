@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "environment": "na_prod",
+  "reference_id": "placeholder",
+  "event_source": "MLC",
+  "event_context_json": null,
+  "input_event_uuid": null,
+  "input": null,
+  "output": "output_placeholder",
+  "channel": "channel_placeholder",
+  "topic": "topic_placeholder",
+  "created_timestamp": "2025-09-20T00:00:00"
+}

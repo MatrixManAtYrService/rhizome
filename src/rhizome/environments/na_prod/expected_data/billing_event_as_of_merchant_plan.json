@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "as_of_merchant_uuid": "placeholder_long",
+  "merchant_plan_uuid": "placeholder",
+  "trial_start_date": null,
+  "trial_days": null,
+  "created_timestamp": "2025-09-20T00:00:00"
+}

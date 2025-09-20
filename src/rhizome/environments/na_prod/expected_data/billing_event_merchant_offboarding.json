@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "merchant_uuid": "placeholder",
+  "environment": "na_prod",
+  "step": "INITIATE",
+  "due_date": "2025-09-20",
+  "created_timestamp": "2025-09-20T00:00:00",
+  "offboard_timestamp": "2025-09-20T00:00:00",
+  "deleted_timestamp": null
+}

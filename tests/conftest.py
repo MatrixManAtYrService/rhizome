@@ -4,7 +4,7 @@ import os
 import tempfile
 import threading
 import time
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -14,6 +14,7 @@ from _pytest.config import Config
 from _pytest.config.argparsing import Parser
 from _pytest.nodes import Item
 
+from rhizome.client import RhizomeClient
 from trifolium.config import Home
 from rhizome.server import app, setup_logging
 from tests.utils import get_open_port
@@ -164,3 +165,25 @@ def rhizome_server(local_mysql: None) -> Generator[RunningServer, None, None]:
         time.sleep(0.5)  # Give server time to start
 
         yield RunningServer(port=test_port, home=home)
+
+
+@pytest.fixture(scope="module")
+def real_rhizome_client() -> Generator[RhizomeClient, None, None]:
+    """Create a single RhizomeClient for use with real infrastructure tests."""
+    with tempfile.TemporaryDirectory() as temp_dir:
+        home = Home.sandbox(Path(temp_dir))
+        client = RhizomeClient(home=home, data_in_logs=True)
+        yield client
+
+
+@pytest.fixture(scope="module")
+def real_env_instance_factory(real_rhizome_client: RhizomeClient) -> Callable[[type], object]:
+    """Provide a factory to get memoized environment instances for real infrastructure tests."""
+    _cache: dict[type, object] = {}
+
+    def get_instance(env_class: type) -> object:
+        if env_class not in _cache:
+            _cache[env_class] = env_class(real_rhizome_client)
+        return _cache[env_class]
+
+    return get_instance

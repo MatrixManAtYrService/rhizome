@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "acceptance_id": "acceptance_id_placeholder",
+  "merchant_id": "placeholder",
+  "account_id": "placeholder",
+  "type": "BILLING",
+  "comment": "comment_placeholder",
+  "serial_number": null,
+  "iccid": null,
+  "created_timestamp": "2025-09-20T00:00:00"
+}
