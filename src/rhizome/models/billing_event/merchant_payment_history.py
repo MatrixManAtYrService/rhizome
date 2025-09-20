@@ -32,7 +32,7 @@ class MerchantPaymentHistory(RhizomeModel, table=False):
     payment_date: datetime.date = Field(description="Date of the payment")
     currency: str | None = Field(default=None, max_length=3, description="Currency code for the payment")
     total_amount: Decimal = Field(
-        default=Decimal('0.000'), max_digits=12, decimal_places=3, description="Total payment amount"
+        default=Decimal("0.000"), max_digits=12, decimal_places=3, description="Total payment amount"
     )
     num_payments: int = Field(default=0, description="Number of payments")
     billing_event_uuid: str = Field(max_length=26, description="UUID of the billing event")

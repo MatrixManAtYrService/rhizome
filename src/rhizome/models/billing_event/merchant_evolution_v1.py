@@ -7,8 +7,8 @@ billable_merchant_type field.
 
 from __future__ import annotations
 
-from ..metadata_registry import NaProdSQLModel
 from ...sanitize_helpers import sanitize_uuid_field
+from ..metadata_registry import NaProdSQLModel
 from .merchant_evolution import MerchantEvolution
 
 

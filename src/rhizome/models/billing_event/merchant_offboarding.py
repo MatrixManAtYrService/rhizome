@@ -46,7 +46,9 @@ class MerchantOffboarding(RhizomeModel, table=False):
     due_date: datetime.date = Field(description="Due date for the offboarding")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
     offboard_timestamp: datetime.datetime = Field(description="Timestamp for the offboarding")
-    deleted_timestamp: datetime.datetime | None = Field(default=None, description="Timestamp when the record was deleted")
+    deleted_timestamp: datetime.datetime | None = Field(
+        default=None, description="Timestamp when the record was deleted"
+    )
 
     def sanitize(self) -> MerchantOffboarding:
         """Return a sanitized copy of this MerchantOffboarding instance."""

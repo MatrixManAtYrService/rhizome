@@ -2,7 +2,8 @@
 SQLModel definition for the cellular_billing_arrears_info table, version 1.
 
 This module provides the V1 implementation of the CellularBillingArrearsInfo model.
-Currently, CellularBillingArrearsInfoV1 is identical to the base CellularBillingArrearsInfo class (name-only inheritance),
+Currently, CellularBillingArrearsInfoV1 is identical to the base CellularBillingArrearsInfo class
+(name-only inheritance),
 but as the table schema evolves across environments, future versions (V2, V3, etc.) will
 contain actual schema differences (new columns, modified types, etc.).
 """

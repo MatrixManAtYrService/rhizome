@@ -18,6 +18,7 @@ from ...sanitize_helpers import sanitize_uuid_field
 
 class PlanType(str, Enum):
     """Enum for plan types."""
+
     CLASSIC = "CLASSIC"
     PAYMENTS = "PAYMENTS"
     PAYMENTS_PLUS = "PAYMENTS_PLUS"
@@ -47,7 +48,9 @@ class PlanMeta(RhizomeModel, table=False):
     value: str | None = Field(default=None, max_length=2048, description="Value of the metadata property")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
     modified_timestamp: datetime.datetime = Field(description="Timestamp when the record was last modified")
-    deleted_timestamp: datetime.datetime | None = Field(default=None, description="Timestamp when the record was deleted")
+    deleted_timestamp: datetime.datetime | None = Field(
+        default=None, description="Timestamp when the record was deleted"
+    )
 
     def sanitize(self) -> PlanMeta:
         """Return a sanitized copy of this PlanMeta instance."""

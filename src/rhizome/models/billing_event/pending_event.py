@@ -38,7 +38,9 @@ class PendingEvent(RhizomeModel, table=False):
     payload: str = Field(description="Event payload data")
     channel: str = Field(max_length=25, description="Channel through which the event was received")
     topic: str = Field(max_length=127, description="Topic of the event")
-    processor_uuid: str | None = Field(default=None, max_length=26, description="UUID of the processor handling the event")
+    processor_uuid: str | None = Field(
+        default=None, max_length=26, description="UUID of the processor handling the event"
+    )
     processing_start_timestamp: datetime.datetime | None = Field(
         default=None, description="Timestamp when processing started"
     )

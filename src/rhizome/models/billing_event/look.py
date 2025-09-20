@@ -24,12 +24,18 @@ class Look(RhizomeModel, table=False):
     containing hash-based references with namespace organization.
     """
 
-    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing unsigned integer")
+    id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing unsigned integer"
+    )
     uuid: str = Field(max_length=32, description="UUID identifier for the look entry")
     hash: str = Field(max_length=64, description="Hash value for content identification")
     namespace: str = Field(max_length=32, description="Namespace for organizing look entries")
-    meta_data: str | None = Field(default=None, sa_column=Column("metadata", String(1024)), description="Optional metadata as JSON or string")
-    processed_timestamp: datetime.datetime | None = Field(default=None, description="Timestamp when the entry was processed")
+    meta_data: str | None = Field(
+        default=None, sa_column=Column("metadata", String(1024)), description="Optional metadata as JSON or string"
+    )
+    processed_timestamp: datetime.datetime | None = Field(
+        default=None, description="Timestamp when the entry was processed"
+    )
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
 
     def sanitize(self) -> Look:

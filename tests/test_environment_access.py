@@ -196,6 +196,7 @@ def test_mocked_environment_database_access(
     class MockSessionContext:
         def __enter__(self) -> object:
             return mock_session
+
         def __exit__(self, *args: object) -> None:
             pass
 

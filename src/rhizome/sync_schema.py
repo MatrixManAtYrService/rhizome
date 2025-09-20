@@ -7,6 +7,7 @@ from typing import Any, cast
 import typer
 
 from rhizome.client import RhizomeClient
+from rhizome.environments.base import Environment
 from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
 from rhizome.git_diff import ChangeTracker, SchemaChangeClassifier
 from rhizome.models.table_list import BillingBookkeeperTable, BillingEventTable, BillingTable
@@ -59,8 +60,8 @@ class LightweightEnvironment:
         # We need to preserve port forwarding setup for connection strings
         original_init = env_class.__init__
 
-        def patched_init(instance: object, client_arg: RhizomeClient) -> None:
-            # Use setattr to avoid type checker issues with object
+        def patched_init(instance: Environment, client_arg: RhizomeClient) -> None:
+            # Set the client attribute directly
             instance.client = client_arg
 
             # Set up port forwarding if needed (copied from base Environment.__init__)

@@ -2,7 +2,8 @@
 SQLModel definition for the deserializable_failure table, version 1.
 
 This module provides the V1 implementation of the DeserializableFailure model.
-Currently, DeserializableFailureV1 is identical to the base DeserializableFailure class (name-only inheritance),
+Currently, DeserializableFailureV1 is identical to the base DeserializableFailure class
+(name-only inheritance),
 but as the table schema evolves across environments, future versions (V2, V3, etc.) will
 contain actual schema differences (new columns, modified types, etc.).
 """

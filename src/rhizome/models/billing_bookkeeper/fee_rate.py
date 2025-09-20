@@ -44,7 +44,9 @@ class FeeRate(RhizomeModel, table=False):
     currency: str = Field(max_length=3, description="Currency code (ISO 3-letter)")
     effective_date: datetime.date = Field(description="Date when this rate becomes effective")
     apply_type: ApplyType = Field(description="How to apply the fee (DEFAULT, PER_ITEM, PERCENTAGE, BOTH, NONE, FLAT)")
-    per_item_amount: Decimal | None = Field(default=None, max_digits=12, decimal_places=3, description="Per-item fee amount")
+    per_item_amount: Decimal | None = Field(
+        default=None, max_digits=12, decimal_places=3, description="Per-item fee amount"
+    )
     percentage: Decimal | None = Field(default=None, max_digits=5, decimal_places=2, description="Percentage fee")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
     modified_timestamp: datetime.datetime = Field(description="Timestamp when the record was last modified")

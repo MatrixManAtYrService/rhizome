@@ -52,10 +52,18 @@ class MerchantAcceptance(RhizomeModel, table=False):
     agreement_type: str = Field(max_length=25, description="Type of agreement")
     agreement_event_type: AgreementEventType = Field(description="Event type for the agreement")
     action: AcceptanceAction = Field(description="Action taken on the acceptance")
-    acceptance_created_datetime: datetime.datetime | None = Field(default=None, description="When the acceptance was created")
-    acceptance_modified_datetime: datetime.datetime | None = Field(default=None, description="When the acceptance was modified")
-    acceptance_deleted_datetime: datetime.datetime | None = Field(default=None, description="When the acceptance was deleted")
-    acceptance_expiration_datetime: datetime.datetime | None = Field(default=None, description="When the acceptance expires")
+    acceptance_created_datetime: datetime.datetime | None = Field(
+        default=None, description="When the acceptance was created"
+    )
+    acceptance_modified_datetime: datetime.datetime | None = Field(
+        default=None, description="When the acceptance was modified"
+    )
+    acceptance_deleted_datetime: datetime.datetime | None = Field(
+        default=None, description="When the acceptance was deleted"
+    )
+    acceptance_expiration_datetime: datetime.datetime | None = Field(
+        default=None, description="When the acceptance expires"
+    )
     serial_number: str | None = Field(default=None, max_length=32, description="Device serial number")
     iccid: str | None = Field(default=None, max_length=22, description="ICCID of the device")
     is_oobe: bool | None = Field(default=None, description="Whether this is an out-of-box experience")

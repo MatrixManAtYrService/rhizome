@@ -30,7 +30,9 @@ class AsOfMerchant(RhizomeModel, table=False):
     merchant_uuid: str = Field(max_length=13, description="UUID of the merchant")
     as_of_timestamp: datetime.datetime = Field(description="Timestamp for this snapshot")
     event_datetime: datetime.datetime | None = Field(default=None, description="Datetime when the event occurred")
-    billing_event_uuid: str | None = Field(default=None, max_length=26, description="UUID of the associated billing event")
+    billing_event_uuid: str | None = Field(
+        default=None, max_length=26, description="UUID of the associated billing event"
+    )
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
 
     def sanitize(self: T) -> T:

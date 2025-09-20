@@ -29,8 +29,12 @@ class JobrunrJobs(RhizomeModel, table=False):
     state: str = Field(max_length=36, description="Current state of the job")
     createdAt: datetime.datetime = Field(description="Timestamp when the job was created")
     updatedAt: datetime.datetime = Field(description="Timestamp when the job was last updated")
-    scheduledAt: datetime.datetime | None = Field(default=None, description="Timestamp when the job is scheduled to run")
-    recurringJobId: str | None = Field(default=None, max_length=128, description="ID of the recurring job this belongs to")
+    scheduledAt: datetime.datetime | None = Field(
+        default=None, description="Timestamp when the job is scheduled to run"
+    )
+    recurringJobId: str | None = Field(
+        default=None, max_length=128, description="ID of the recurring job this belongs to"
+    )
 
     def sanitize(self) -> JobrunrJobs:
         """Return a sanitized copy of this JobrunrJobs instance."""

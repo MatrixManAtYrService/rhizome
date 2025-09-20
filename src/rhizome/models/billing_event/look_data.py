@@ -23,7 +23,9 @@ class LookData(RhizomeModel, table=False):
     containing the actual content referenced by look table entries.
     """
 
-    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing unsigned integer")
+    id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing unsigned integer"
+    )
     look_uuid: str = Field(max_length=32, description="UUID reference to the look table entry")
     payload: bytes = Field(description="Binary payload data")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")

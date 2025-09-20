@@ -23,7 +23,9 @@ class JobrunrBackgroundjobservers(RhizomeModel, table=False):
     containing information about server status, performance metrics, and configuration.
     """
 
-    id: str | None = Field(default=None, primary_key=True, max_length=36, description="Primary key, UUID of the background job server")
+    id: str | None = Field(
+        default=None, primary_key=True, max_length=36, description="Primary key, UUID of the background job server"
+    )
     workerPoolSize: int = Field(description="Size of the worker pool")
     pollIntervalInSeconds: int = Field(description="Polling interval in seconds")
     firstHeartbeat: datetime.datetime = Field(description="Timestamp of the first heartbeat")
@@ -36,8 +38,12 @@ class JobrunrBackgroundjobservers(RhizomeModel, table=False):
     processFreeMemory: int = Field(description="Process free memory in bytes")
     processAllocatedMemory: int = Field(description="Process allocated memory in bytes")
     processCpuLoad: Decimal = Field(max_digits=3, decimal_places=2, description="Process CPU load percentage")
-    deleteSucceededJobsAfter: str | None = Field(default=None, max_length=32, description="Duration after which succeeded jobs are deleted")
-    permanentlyDeleteJobsAfter: str | None = Field(default=None, max_length=32, description="Duration after which jobs are permanently deleted")
+    deleteSucceededJobsAfter: str | None = Field(
+        default=None, max_length=32, description="Duration after which succeeded jobs are deleted"
+    )
+    permanentlyDeleteJobsAfter: str | None = Field(
+        default=None, max_length=32, description="Duration after which jobs are permanently deleted"
+    )
 
     def sanitize(self) -> JobrunrBackgroundjobservers:
         """Return a sanitized copy of this JobrunrBackgroundjobservers instance."""

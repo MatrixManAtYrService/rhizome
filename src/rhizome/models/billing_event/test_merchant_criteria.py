@@ -18,6 +18,7 @@ from ...sanitize_helpers import sanitize_uuid_field
 
 class CriteriaType(str, Enum):
     """Enum for criteria types."""
+
     SOURCE = "SOURCE"
     EMAIL = "EMAIL"
 
@@ -35,7 +36,9 @@ class TestMerchantCriteria(RhizomeModel, table=False):
     type: CriteriaType = Field(description="Type of criteria (SOURCE or EMAIL)")
     value: str = Field(max_length=255, description="Value for the criteria")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
-    deleted_timestamp: datetime.datetime | None = Field(default=None, description="Timestamp when the record was deleted")
+    deleted_timestamp: datetime.datetime | None = Field(
+        default=None, description="Timestamp when the record was deleted"
+    )
 
     def sanitize(self) -> TestMerchantCriteria:
         """Return a sanitized copy of this TestMerchantCriteria instance."""

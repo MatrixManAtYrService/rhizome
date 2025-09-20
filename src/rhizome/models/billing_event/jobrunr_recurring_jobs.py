@@ -20,7 +20,9 @@ class JobrunrRecurringJobs(RhizomeModel, table=False):
     containing jobs that are scheduled to run repeatedly.
     """
 
-    id: str | None = Field(default=None, primary_key=True, max_length=128, description="Primary key, identifier of the recurring job")
+    id: str | None = Field(
+        default=None, primary_key=True, max_length=128, description="Primary key, identifier of the recurring job"
+    )
     version: int = Field(description="Version number of the recurring job")
     jobAsJson: str = Field(description="Job definition as JSON")
     createdAt: int = Field(default=0, description="Timestamp when the recurring job was created (epoch time)")

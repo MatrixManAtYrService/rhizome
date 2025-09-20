@@ -23,7 +23,7 @@ class AppSubscriptionEventNaProd(Emplacement[AppSubscriptionEventV1]):
         if not file_path.exists():
             raise NotImplementedError(
                 f"Expected data for {cls.__name__} not yet implemented. "
-                f"JSON file {file_path.name} is missing. Run \'rhizome sync data\' to generate it."
+                f"JSON file {file_path.name} is missing. Run 'rhizome sync data' to generate it."
             )
         with open(file_path) as f:
             data = json.load(f)

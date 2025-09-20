@@ -9,8 +9,8 @@ from __future__ import annotations
 
 from sqlmodel import Field
 
-from ..metadata_registry import DevDemoSQLModel
 from ...sanitize_helpers import sanitize_uuid_field
+from ..metadata_registry import DevDemoSQLModel
 from .merchant_evolution import MerchantEvolution
 
 

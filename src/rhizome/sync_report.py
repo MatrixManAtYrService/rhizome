@@ -76,7 +76,7 @@ def get_database_short_name(environment_name: str) -> str:
         if environment_name.startswith("na_prod_"):
             return environment_name[8:]  # Remove "na_prod_"
         elif environment_name.startswith("dev_") or environment_name.startswith("demo_"):
-            return environment_name[environment_name.index("_") + 1:]  # Remove first part
+            return environment_name[environment_name.index("_") + 1 :]  # Remove first part
         else:
             return environment_name
     else:
@@ -188,9 +188,7 @@ def _group_statuses_by_category(all_statuses: list[TableSyncStatus]) -> dict[str
 
 
 def _print_sync_summary(
-    console: Console,
-    all_statuses: list[TableSyncStatus],
-    grouped: dict[str, list[TableSyncStatus]]
+    console: Console, all_statuses: list[TableSyncStatus], grouped: dict[str, list[TableSyncStatus]]
 ) -> None:
     """Print the sync status summary."""
     console.print("\n[bold]Sync Status Summary[/bold]")
@@ -248,36 +246,16 @@ def _print_status_group(console: Console, statuses: list[TableSyncStatus], title
 
 def _print_recommendations(console: Console, grouped: dict[str, list[TableSyncStatus]]) -> None:
     """Print recommendations based on sync status."""
-    _print_status_group(
-        console,
-        grouped["schema_only"],
-        "📄 Schema Only (needs model generation)",
-        "yellow"
-    )
+    _print_status_group(console, grouped["schema_only"], "📄 Schema Only (needs model generation)", "yellow")
 
-    _print_status_group(
-        console,
-        grouped["schema_model"],
-        "🔶 Schema + Model (needs emplacement)",
-        "yellow"
-    )
+    _print_status_group(console, grouped["schema_model"], "🔶 Schema + Model (needs emplacement)", "yellow")
 
     schema_model_emplacement = grouped["schema_model_emplacement"]
     if schema_model_emplacement:
-        _print_status_group(
-            console,
-            schema_model_emplacement,
-            "⚠️  Ready for data sync",
-            "yellow"
-        )
+        _print_status_group(console, schema_model_emplacement, "⚠️  Ready for data sync", "yellow")
         console.print("\n[green]Run 'rhizome sync data' to fetch data for these tables[/green]")
 
-    _print_status_group(
-        console,
-        grouped["missing"],
-        "❌ Missing everything",
-        "red"
-    )
+    _print_status_group(console, grouped["missing"], "❌ Missing everything", "red")
 
 
 def sync_report(env: RhizomeEnvironment | None = None) -> None:

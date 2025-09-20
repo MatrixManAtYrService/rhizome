@@ -29,8 +29,12 @@ class AppSubscriptionDaily(RhizomeModel, table=False):
     developer_app_uuid: str = Field(max_length=13, description="UUID of the developer application")
     environment: str = Field(max_length=25, description="Environment (e.g., usprod)")
     event_date: datetime.date = Field(description="Date for this daily record")
-    starting_app_subscription_uuid: str | None = Field(default=None, max_length=13, description="UUID of subscription at start of day")
-    ending_app_subscription_uuid: str | None = Field(default=None, max_length=13, description="UUID of subscription at end of day")
+    starting_app_subscription_uuid: str | None = Field(
+        default=None, max_length=13, description="UUID of subscription at start of day"
+    )
+    ending_app_subscription_uuid: str | None = Field(
+        default=None, max_length=13, description="UUID of subscription at end of day"
+    )
     highest_app_subscription_uuid: str = Field(max_length=13, description="UUID of highest subscription during the day")
     billing_event_uuid: str | None = Field(default=None, max_length=26, description="UUID of the billing event")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")

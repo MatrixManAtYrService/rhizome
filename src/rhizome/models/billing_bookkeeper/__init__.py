@@ -13,4 +13,13 @@ from .fee_summary_v1 import FeeSummaryV1
 from .invoice_info import InvoiceInfo
 from .invoice_info_v1 import InvoiceInfoV1
 
-__all__ = ["BillingEntity", "BillingEntityV1", "FeeRate", "FeeRateV1", "FeeSummary", "FeeSummaryV1", "InvoiceInfo", "InvoiceInfoV1"]
+__all__ = [
+    "BillingEntity",
+    "BillingEntityV1",
+    "FeeRate",
+    "FeeRateV1",
+    "FeeSummary",
+    "FeeSummaryV1",
+    "InvoiceInfo",
+    "InvoiceInfoV1",
+]

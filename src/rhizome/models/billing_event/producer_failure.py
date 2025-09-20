@@ -18,6 +18,7 @@ from ...sanitize_helpers import sanitize_uuid_field
 
 class EventSource(str, Enum):
     """Enum for event source types."""
+
     MLC = "MLC"
     PLAN_ADVANCE = "PLAN_ADVANCE"
     CELLULAR_ARREARS = "CELLULAR_ARREARS"

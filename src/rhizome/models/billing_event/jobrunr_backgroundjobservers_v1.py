@@ -2,7 +2,8 @@
 SQLModel definition for the jobrunr_backgroundjobservers table, version 1.
 
 This module provides the V1 implementation of the JobrunrBackgroundjobservers model.
-Currently, JobrunrBackgroundjobserversV1 is identical to the base JobrunrBackgroundjobservers class (name-only inheritance),
+Currently, JobrunrBackgroundjobserversV1 is identical to the base JobrunrBackgroundjobservers class
+(name-only inheritance),
 but as the table schema evolves across environments, future versions (V2, V3, etc.) will
 contain actual schema differences (new columns, modified types, etc.).
 """

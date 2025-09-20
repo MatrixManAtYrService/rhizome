@@ -29,13 +29,25 @@ class MerchantEvolution(RhizomeModel, table=False):
     merchant_name: str = Field(max_length=127, description="Name of the merchant")
     seasonal: bool | None = Field(default=None, description="Whether the merchant is seasonal")
     tax_exempt: bool | None = Field(default=None, description="Whether the merchant is tax exempt")
-    mlc_merchant_created_event_datetime: datetime.datetime | None = Field(default=None, description="Date and time of MLC merchant-created event")
-    mlc_merchant_created_event_uuid: str | None = Field(default=None, max_length=13, description="UUID of the MLC merchant created event")
-    created_in_bookkeeper_datetime: datetime.datetime | None = Field(default=None, description="Date and time merchant created in bookkeeper")
-    terms_accepted_datetime: datetime.datetime | None = Field(default=None, description="Date and time of the terms acceptance event")
-    agreement_event_uuid: str | None = Field(default=None, max_length=26, description="UUID of the terms acceptance event")
+    mlc_merchant_created_event_datetime: datetime.datetime | None = Field(
+        default=None, description="Date and time of MLC merchant-created event"
+    )
+    mlc_merchant_created_event_uuid: str | None = Field(
+        default=None, max_length=13, description="UUID of the MLC merchant created event"
+    )
+    created_in_bookkeeper_datetime: datetime.datetime | None = Field(
+        default=None, description="Date and time merchant created in bookkeeper"
+    )
+    terms_accepted_datetime: datetime.datetime | None = Field(
+        default=None, description="Date and time of the terms acceptance event"
+    )
+    agreement_event_uuid: str | None = Field(
+        default=None, max_length=26, description="UUID of the terms acceptance event"
+    )
     close_date: datetime.date | None = Field(default=None, description="Date the merchant was closed")
-    effective_close_date: datetime.date | None = Field(default=None, description="Date the merchant was effectively closed")
+    effective_close_date: datetime.date | None = Field(
+        default=None, description="Date the merchant was effectively closed"
+    )
     mlc_close_event_uuid: str | None = Field(default=None, max_length=13, description="UUID of the MLC close event")
     created_timestamp: datetime.datetime = Field(description="Timestamp when the record was created")
     modified_timestamp: datetime.datetime = Field(description="Timestamp when the record was last modified")

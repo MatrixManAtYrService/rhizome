@@ -22,7 +22,9 @@ class JobrunrMetadata(RhizomeModel, table=False):
     containing key-value pairs for system configuration and state.
     """
 
-    id: str | None = Field(default=None, primary_key=True, max_length=156, description="Primary key, unique identifier for the metadata entry")
+    id: str | None = Field(
+        default=None, primary_key=True, max_length=156, description="Primary key, unique identifier for metadata entry"
+    )
     name: str = Field(max_length=92, description="Name of the metadata entry")
     owner: str = Field(max_length=64, description="Owner of the metadata entry")
     value: str = Field(description="Value of the metadata entry")

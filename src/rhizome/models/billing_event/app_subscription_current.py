@@ -25,7 +25,9 @@ class AppSubscriptionCurrent(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: str = Field(max_length=26, unique=True, description="Unique identifier for the app subscription current record")
+    uuid: str = Field(
+        max_length=26, unique=True, description="Unique identifier for the app subscription current record"
+    )
     merchant_uuid: str = Field(max_length=13, description="UUID of the merchant")
     developer_app_uuid: str = Field(max_length=13, description="UUID of the developer application")
     environment: str = Field(max_length=25, description="Environment (e.g., usprod)")
