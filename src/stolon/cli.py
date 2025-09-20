@@ -37,14 +37,15 @@ def internal_token(
     typer.echo(f"🌐 Starting authentication server on http://localhost:{port}")
     typer.echo(f"🔐 Opening browser for authentication with {domain}")
 
-    # Open browser to our enhanced auth page
-    auth_url = f"http://localhost:{port}"
-    webbrowser.open(auth_url)
+    # Open browser directly to Clover admin page for extension integration
+    clover_admin_url = f"https://{domain}/admin"
+    webbrowser.open(clover_admin_url)
 
     typer.echo("⏳ Waiting for authentication...")
-    typer.echo("   1. Log in to Clover admin when prompted")
-    typer.echo("   2. Return to the browser tab for automatic token detection")
-    typer.echo("   3. Or use manual token entry if needed")
+    typer.echo("   1. Log in to Clover admin in the opened browser tab")
+    typer.echo("   2. Browser extension will offer to send token automatically")
+    typer.echo("   3. Click 'Send Token' when prompted by the extension")
+    typer.echo(f"   4. Or visit http://localhost:{port} for manual entry")
 
     # Handle requests until we get a token
     while server.captured_token is None:

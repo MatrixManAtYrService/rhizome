@@ -22,6 +22,8 @@ class InterceptorHandler(BaseHTTPRequestHandler):
             self.handle_callback()
         elif parsed.path == "/auth/check":
             self.handle_token_check()
+        elif parsed.path == "/stolon/status":
+            self.handle_status_check()
         else:
             self.send_404()
 
@@ -272,6 +274,18 @@ class InterceptorHandler(BaseHTTPRequestHandler):
 
         self.wfile.write(response.encode())
 
+    def handle_status_check(self) -> None:
+        """Handle status check from browser extension."""
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+
+        # Check if we're waiting for a token
+        waiting = not (hasattr(self.server, 'captured_token') and self.server.captured_token)
+        response = f'{{"waiting_for_token": {str(waiting).lower()}, "domain": "{self.server.clover_domain}"}}'
+        self.wfile.write(response.encode())
+
     def send_success_response(self) -> None:
         """Send success response."""
         self.send_response(200)
@@ -297,9 +311,11 @@ class InterceptorHandler(BaseHTTPRequestHandler):
         self.wfile.write(b'<h1>404 Not Found</h1>')
 
 
+STOLON_AUTH_PORT = 49152  # High port number to avoid collisions
+
 def start_auth_server(clover_domain: str) -> tuple[HTTPServer, int]:
     """Start the authentication server and return server instance and port."""
-    server = HTTPServer(("localhost", 0), InterceptorHandler)
+    server = HTTPServer(("localhost", STOLON_AUTH_PORT), InterceptorHandler)
     server.captured_token = None
     server.clover_domain = clover_domain
     port = server.server_port
