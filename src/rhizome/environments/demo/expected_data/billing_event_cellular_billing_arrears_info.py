@@ -19,6 +19,12 @@ class CellularBillingArrearsInfoDemo(Emplacement[CellularBillingArrearsInfoV1]):
         """Get expected cellular billing arrears info data for demo environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "billing_event_cellular_billing_arrears_info.json"
+
+        if not file_path.exists():
+            raise NotImplementedError(
+                f"Expected data for {cls.__name__} not yet implemented. "
+                f"JSON file {file_path.name} is missing. Run \'rhizome sync data\' to generate it."
+            )
         with open(file_path) as f:
             data = json.load(f)
         return CellularBillingArrearsInfoV1.model_validate(data)

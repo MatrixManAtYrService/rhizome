@@ -4,6 +4,9 @@ Expected data for test_merchant_criteria table in dev environment.
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from rhizome.models.base import Emplacement
 from rhizome.models.billing_event.test_merchant_criteria_v1 import TestMerchantCriteriaV1
 
@@ -13,8 +16,15 @@ class TestMerchantCriteriaDev(Emplacement[TestMerchantCriteriaV1]):
 
     @classmethod
     def get_expected(cls) -> TestMerchantCriteriaV1:
-        """Get expected test_merchant_criteria data for dev environment."""
-        raise NotImplementedError(
-            f"Expected data for {cls.__name__} not yet implemented. "
-            f"Please add test data based on real data from this environment."
-        )
+        """Get expected data from JSON file."""
+        module_path = Path(__file__).parent
+        file_path = module_path / "billing_event_test_merchant_criteria.json"
+
+        if not file_path.exists():
+            raise NotImplementedError(
+                f"Expected data for {cls.__name__} not yet implemented. "
+                f"JSON file {file_path.name} is missing. Run \'rhizome sync data\' to generate it."
+            )
+        with open(file_path) as f:
+            data = json.load(f)
+        return TestMerchantCriteriaV1.model_validate(data)

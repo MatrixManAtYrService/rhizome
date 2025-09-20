@@ -157,16 +157,16 @@ for cls in ENVIRONMENT_CLASSES:
         continue
 
 # Generate test parameters: one test per environment/table combination
-TEST_PARAMETERS = []
-for env_class, env_instance in ENVIRONMENT_INSTANCES.items():
-    for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
+TEST_PARAMETERS = []  # type: ignore
+for env_class, env_instance in ENVIRONMENT_INSTANCES.items():  # type: ignore
+    for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():  # type: ignore
         # Skip tables where model_class is None (not yet implemented)
         if model_class is None:
             continue
-        TEST_PARAMETERS.append((env_class, table_name, model_class, emplacement_class))
+        TEST_PARAMETERS.append((env_class, table_name, model_class, emplacement_class))  # type: ignore
 
 
-@pytest.mark.parametrize("environment_class,table_name,model_class,emplacement_class", TEST_PARAMETERS)
+@pytest.mark.parametrize("environment_class,table_name,model_class,emplacement_class", TEST_PARAMETERS)  # type: ignore
 def test_mocked_environment_database_access(
     monkeypatch: pytest.MonkeyPatch,
     environment_class: type,
@@ -177,11 +177,11 @@ def test_mocked_environment_database_access(
     """Test database access for a specific environment/table combination using mocks."""
 
     # Get environment instance
-    env_instance = ENVIRONMENT_INSTANCES[environment_class]
+    env_instance = ENVIRONMENT_INSTANCES[environment_class]  # type: ignore
 
     # Try to get expected data - this should FAIL if JSON is missing
     try:
-        expected_data = emplacement_class.get_expected()
+        expected_data = emplacement_class.get_expected()  # type: ignore
     except (FileNotFoundError, ValueError) as e:
         pytest.fail(f"Missing or invalid test data for {environment_class.__name__}/{table_name}: {e}")
     except NotImplementedError:
@@ -209,11 +209,11 @@ def test_mocked_environment_database_access(
     monkeypatch.setattr("rhizome.client.Session", mock_session_context_factory)
 
     # Query the table using the model class
-    result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
+    result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))  # type: ignore
 
     # Verify the mocked data is returned and matches expected structure
-    assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"
-    assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"
+    assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"  # type: ignore
+    assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"  # type: ignore
 
 
 @pytest.mark.external_infra

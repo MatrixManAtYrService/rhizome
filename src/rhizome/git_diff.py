@@ -180,29 +180,26 @@ class DataChangeClassifier:
 
     def classify_changes(self, diff_item: git.Diff) -> ChangeType:
         """
-        Classify data changes as trivial, nontrivial, or none.
+        Classify data changes as changed or unchanged.
 
-        For data files, we might consider trivial changes to be:
-        - Timestamp updates only
-        - ID value changes only
+        For data files, there's no concept of "trivial" vs "nontrivial" changes -
+        the data either changed or it didn't.
 
         Args:
             diff_item: GitPython Diff object
 
         Returns:
-            ChangeType enum value
+            ChangeType.NONTRIVIAL if data changed, ChangeType.NONE if unchanged
         """
         if not diff_item.diff:
             return ChangeType.NONE
 
-        # For now, classify all data changes as nontrivial
-        # This can be enhanced later with specific data change logic
         diff_text = diff_item.diff.decode("utf-8") if isinstance(diff_item.diff, bytes) else str(diff_item.diff)
 
         if not diff_text or not diff_text.strip():
             return ChangeType.NONE
 
-        # Simple check: if there are any +/- lines with content, it's nontrivial
+        # Simple check: if there are any +/- lines with content, the data changed
         lines = diff_text.split("\n")
         for line in lines:
             if (line.startswith("+") or line.startswith("-")) and line[1:].strip():

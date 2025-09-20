@@ -81,7 +81,7 @@ from rhizome.models.billing_event.look_v1 import LookV1
 from rhizome.models.billing_event.look_data_v1 import LookDataV1
 from rhizome.models.billing_event.managed_item_v1 import ManagedItemV1
 from rhizome.models.billing_event.merchant_acceptance_v1 import MerchantAcceptanceV1
-from rhizome.models.billing_event.merchant_evolution_v1 import MerchantEvolutionV1
+from rhizome.models.billing_event.merchant_evolution_v2 import MerchantEvolutionV2
 from rhizome.models.billing_event.merchant_offboarding_v1 import MerchantOffboardingV1
 from rhizome.models.billing_event.merchant_payment_v1 import MerchantPaymentV1
 from rhizome.models.billing_event.merchant_payment_history_v1 import MerchantPaymentHistoryV1
@@ -126,7 +126,7 @@ models: dict[BillingEventTable, tuple[type[RhizomeModel] | None, type[Emplacemen
     BillingEventTable.look_data: (LookDataV1, LookDataDemo),
     BillingEventTable.managed_item: (ManagedItemV1, ManagedItemDemo),
     BillingEventTable.merchant_acceptance: (MerchantAcceptanceV1, MerchantAcceptanceDemo),
-    BillingEventTable.merchant_evolution: (MerchantEvolutionV1, MerchantEvolutionDemo),
+    BillingEventTable.merchant_evolution: (MerchantEvolutionV2, MerchantEvolutionDemo),
     BillingEventTable.merchant_offboarding: (MerchantOffboardingV1, MerchantOffboardingDemo),
     BillingEventTable.merchant_payment: (MerchantPaymentV1, MerchantPaymentDemo),
     BillingEventTable.merchant_payment_history: (MerchantPaymentHistoryV1, MerchantPaymentHistoryDemo),

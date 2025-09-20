@@ -221,15 +221,92 @@ When you see tables with "🔶 Missing emplacement" status:
        @classmethod
        def get_expected(cls) -> {TableName}V1:
            """Get expected {table} data for {environment} environment."""
-           raise NotImplementedError(
-               f"Expected data for {cls.__name__} not yet implemented. "
-               f"Please add test data based on real data from this environment."
-           )
+           module_path = Path(__file__).parent
+           file_path = module_path / "{database}_{table}.json"
+
+           if not file_path.exists():
+               raise NotImplementedError(
+                   f"Expected data for {cls.__name__} not yet implemented. "
+                   f"JSON file {file_path.name} is missing. Run 'rhizome sync data' to generate it."
+               )
+
+           with open(file_path) as f:
+               data = json.load(f)
+           return {TableName}V1.model_validate(data)
    ```
 
 2. **Update environment files**:
    - Add imports for V1 models and emplacement classes
    - Add entries to `models` dictionary: `BillingEventTable.{table}: ({TableName}V1, {TableName}{Environment})`
+
+### Improved Emplacement Strategy (Recommended)
+
+**IMPORTANT**: The strategy shown above is now **superseded** by an improved approach that prevents confusion between "not implemented" vs "data not synced". Use this pattern for all new emplacement classes:
+
+#### The Problem
+The original pattern with `raise NotImplementedError` caused confusion:
+- `rhizome sync report` would show data as ready to sync
+- `rhizome sync data` would successfully create JSON files
+- But tests would still be skipped with "Test data not yet implemented"
+- Users couldn't tell if the issue was missing implementation or missing data
+
+#### The Solution: Smart JSON File Detection
+
+**Template for new emplacement classes:**
+```python
+"""Expected data for {table} table in {environment} environment."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from rhizome.models.base import Emplacement
+from rhizome.models.{database}.{table}_v1 import {TableName}V1
+
+
+class {TableName}{Environment}(Emplacement[{TableName}V1]):
+    """Expected data for {TableName} in {environment} environment."""
+
+    @classmethod
+    def get_expected(cls) -> {TableName}V1:
+        """Get expected {table} data for {environment} environment."""
+        module_path = Path(__file__).parent
+        file_path = module_path / "{database}_{table}.json"
+
+        if not file_path.exists():
+            raise NotImplementedError(
+                f"Expected data for {cls.__name__} not yet implemented. "
+                f"JSON file {file_path.name} is missing. Run 'rhizome sync data' to generate it."
+            )
+
+        with open(file_path) as f:
+            data = json.load(f)
+        return {TableName}V1.model_validate(data)
+```
+
+#### Key Benefits
+1. **Only raises NotImplementedError when JSON file is actually missing**
+2. **Provides clear guidance**: Tells users exactly what command to run
+3. **Automatically works**: Once JSON file is created, no code changes needed
+4. **Prevents sync confusion**: Clear distinction between implementation vs data issues
+
+#### Migration Strategy for Existing Files
+For existing emplacement classes that already have the old pattern:
+
+1. **Batch update using general-purpose agent** with this pattern
+2. **Files with existing JSON**: Replace NotImplementedError with JSON reading
+3. **Files without JSON**: Use the smart detection pattern
+4. **Add required imports**: `import json` and `from pathlib import Path`
+
+#### Workflow Integration
+This strategy integrates seamlessly with the sync workflow:
+
+1. **Create emplacement class**: Use smart detection pattern
+2. **Run sync report**: Shows missing data (because JSON file doesn't exist)
+3. **Run sync data**: Creates JSON file with real data
+4. **Automatic functionality**: Emplacement class now works without modification
+5. **Run tests**: All tests pass, no more skipped tests
 
 ### Common Patterns and Solutions
 

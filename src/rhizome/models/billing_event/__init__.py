@@ -57,7 +57,9 @@ from .managed_item_v1 import ManagedItemV1
 from .merchant_acceptance import MerchantAcceptance
 from .merchant_acceptance_v1 import MerchantAcceptanceV1
 from .merchant_evolution import MerchantEvolution
-from .merchant_evolution_v1 import MerchantEvolutionV1
+# Note: V1 and V2 are imported directly by environment files to avoid table conflicts
+# from .merchant_evolution_v1 import MerchantEvolutionV1
+# from .merchant_evolution_v2 import MerchantEvolutionV2
 from .merchant_offboarding import MerchantOffboarding
 from .merchant_offboarding_v1 import MerchantOffboardingV1
 from .mlc_captured_event import MlcCapturedEvent
@@ -114,7 +116,7 @@ __all__ = [
     "LookData", "LookDataV1",
     "ManagedItem", "ManagedItemV1",
     "MerchantAcceptance", "MerchantAcceptanceV1",
-    "MerchantEvolution", "MerchantEvolutionV1",
+    "MerchantEvolution",
     "MerchantOffboarding", "MerchantOffboardingV1",
     "MerchantPayment", "MerchantPaymentV1",
     "MerchantPaymentHistory", "MerchantPaymentHistoryV1",

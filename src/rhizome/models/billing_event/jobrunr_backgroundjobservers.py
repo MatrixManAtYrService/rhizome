@@ -23,7 +23,7 @@ class JobrunrBackgroundjobservers(RhizomeModel, table=False):
     containing information about server status, performance metrics, and configuration.
     """
 
-    id: str = Field(primary_key=True, max_length=36, description="Primary key, UUID of the background job server")
+    id: str | None = Field(default=None, primary_key=True, max_length=36, description="Primary key, UUID of the background job server")
     workerPoolSize: int = Field(description="Size of the worker pool")
     pollIntervalInSeconds: int = Field(description="Polling interval in seconds")
     firstHeartbeat: datetime.datetime = Field(description="Timestamp of the first heartbeat")

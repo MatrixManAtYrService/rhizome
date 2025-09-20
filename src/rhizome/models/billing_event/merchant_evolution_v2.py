@@ -1,25 +1,30 @@
-"""SQLModel V1 definition for the merchant_evolution table.
+"""SQLModel V2 definition for the merchant_evolution table.
 
-This module provides the V1 SQLModel class for the merchant_evolution table from the
-billing-event database. V1 is used in na_prod environments that do not have the
+This module provides the V2 SQLModel class for the merchant_evolution table from the
+billing-event database. V2 is used in dev/demo environments that include the
 billable_merchant_type field.
 """
 
 from __future__ import annotations
 
-from ..metadata_registry import NaProdSQLModel
+from sqlmodel import Field
+
+from ..metadata_registry import DevDemoSQLModel
 from ...sanitize_helpers import sanitize_uuid_field
 from .merchant_evolution import MerchantEvolution
 
 
-class MerchantEvolutionV1(MerchantEvolution, NaProdSQLModel, table=True):
-    """V1 for na_prod - no billable_merchant_type field."""
+class MerchantEvolutionV2(MerchantEvolution, DevDemoSQLModel, table=True):
+    """V2 for dev/demo - includes billable_merchant_type field."""
 
     __tablename__ = "merchant_evolution"  # type: ignore
 
-    def sanitize(self) -> MerchantEvolutionV1:
+    # Additional field in V2
+    billable_merchant_type: str | None = Field(default=None, max_length=25, description="Type of billable merchant")
+
+    def sanitize(self) -> MerchantEvolutionV2:
         """Return a sanitized copy of this MerchantEvolution instance."""
-        return MerchantEvolutionV1(
+        return MerchantEvolutionV2(
             id=self.id,
             merchant_uuid=sanitize_uuid_field(self.merchant_uuid, 13),  # type: ignore
             reseller_uuid=sanitize_uuid_field(self.reseller_uuid, 13),  # type: ignore
@@ -36,4 +41,5 @@ class MerchantEvolutionV1(MerchantEvolution, NaProdSQLModel, table=True):
             mlc_close_event_uuid=sanitize_uuid_field(self.mlc_close_event_uuid, 13),
             created_timestamp=self.created_timestamp,
             modified_timestamp=self.modified_timestamp,
+            billable_merchant_type=self.billable_merchant_type,
         )

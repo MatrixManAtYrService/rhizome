@@ -22,7 +22,7 @@ class JobrunrJobs(RhizomeModel, table=False):
     containing job definitions, state, and scheduling information.
     """
 
-    id: str = Field(primary_key=True, max_length=36, description="Primary key, UUID of the job")
+    id: str | None = Field(default=None, primary_key=True, max_length=36, description="Primary key, UUID of the job")
     version: int = Field(description="Version number of the job")
     jobAsJson: str | None = Field(default=None, description="Job definition as JSON")
     jobSignature: str = Field(max_length=512, description="Signature of the job")

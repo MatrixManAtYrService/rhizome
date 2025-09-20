@@ -20,7 +20,7 @@ class JobrunrMigrations(RhizomeModel, table=False):
     tracking which migration scripts have been executed.
     """
 
-    id: str = Field(primary_key=True, max_length=36, description="Primary key, UUID of the migration")
+    id: str | None = Field(default=None, primary_key=True, max_length=36, description="Primary key, UUID of the migration")
     script: str = Field(max_length=64, description="Name of the migration script")
     installedOn: str = Field(max_length=29, description="Timestamp when the migration was installed")
 
