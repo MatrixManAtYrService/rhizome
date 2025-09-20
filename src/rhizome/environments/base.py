@@ -109,6 +109,45 @@ class Environment(ABC):
         # Initialize table situation
         self.table_situation = {table: self.situate_table(table) for table in self.tables()}
 
+    def get_model(self, table_name: StrEnum) -> type[RhizomeModel]:
+        """
+        Get the appropriate model class for a given table in this environment.
+
+        This method returns the correct versioned model (V1, V2, etc.) based on
+        what this specific environment is configured to use, eliminating the need
+        for users to know which version to import.
+
+        Args:
+            table_name: The table enum value (e.g., BillingBookkeeperTable.fee_summary)
+
+        Returns:
+            The model class appropriate for this environment (e.g., FeeSummaryV1 or FeeSummaryV2)
+
+        Raises:
+            KeyError: If the table is not configured for this environment
+            ValueError: If the table's model class is None (not yet implemented)
+
+        Example:
+            >>> db = DevBillingBookkeeper(client)
+            >>> FeeSummary = db.get_model(BillingBookkeeperTable.fee_summary)
+            >>> # FeeSummary is now the correct version for DevBillingBookkeeper
+        """
+        if table_name not in self.table_situation:
+            raise KeyError(
+                f"Table {table_name} is not configured for environment {self.name}. "
+                f"Available tables: {', '.join(str(t) for t in self.table_situation.keys())}"
+            )
+
+        model_class, _ = self.table_situation[table_name]
+
+        if model_class is None:
+            raise ValueError(
+                f"Model for table {table_name} is not yet implemented in environment {self.name}. "
+                f"Please check if the model class has been created and registered."
+            )
+
+        return model_class
+
     def _setup_port_forwarding(self, config: PortForwardConfig) -> None:
         """Set up port forwarding using the provided configuration."""
         from rhizome.cluster import connect_cluster

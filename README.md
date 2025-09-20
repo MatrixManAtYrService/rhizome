@@ -1,53 +1,67 @@
 [![Test](https://github.corp.clover.com/matt-rixman/rhizome/workflows/Test/badge.svg)](https://github.corp.clover.com/matt-rixman/rhizome/actions/workflows/test.yml) \[[docs](https://github.corp.clover.com/pages/matt-rixman/rhizome/)\]
 
-** Under construction, come back later **
+# Trifolium
 
-Rhizome is a db access helper for use by test tools that want to make assertions about data.
+Two species of clover, with different ways of propagating:
 
-When it's ready, you'll be able to write apps that do this:
+- *Trifolium repens* is a species of flowering clover which repoduces in the normal way (bees, pollen, etc) but which also reproduces asexually via **stolons**.
+- *Trifolium ambiguum* is also a species clover, also with a typical flowering reproductive cycle, but it's mode of asexual reproduction involves **rhizomes**.
+
+Rhizomes and stolons are similar in that they grow out horizontally from one clover and connect it to other nearby clover.
+They're different in that rhizomes do this underground (another plant that does this is hops 🍺), and stolons do this aboveground (strawberries also do this 🍓).
+
+`rhizome` is a data access layer for clover's databases, and `stolon` is a data access layer for clover's http API's.
+
+## As a Repository for Tribal Knowledge
+
+If you want to access clover data, there are a variety of questions you might ask:
+
+- do I need to forward a port anywhere?
+- what host should I talk to?
+- what user/pass should I use
+- what columns/attributes are available?
+- should I expect certain environments to differ from others?
+
+This project aims to capture the answers to these questions in code.
+
+## Local Servers
+
+Trifolium also aims to separate the "business logic" of a test from the complexities of data access or API usage.
+This is valuable because it makes either side of the problem simpler, and also because it will allow us to run the "same test" both locally and in situations where the data access methods are different (such as in retool).
+
+In the local mode it requires that two servers be running.
+To start these, run `rhizome serve` and `stolon serve`.
+
+Then you can run code like this:
 
 ```python3
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-from rhizome.models.billing_bookkeeper import fee_summary
-import rhizome as r
+from sqlmodel import select
+from rhizome.client import RhizomeClient
+from rhizome.environments import DevBillingBookkeeper
+from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
 
+db = DevBillingBookkeeper(RhizomeClient(data_in_logs=False))
 
-# forward ports and checkout credentials
-handle = r.environments.na_prod.billing_bookkeeper.get_handle()
+# Get the correct FeeSummary version for this environment
+FeeSummary = db.get_model(BillingBookkeeperTable.fee_summary)
 
-engine = create_engine(handle.connection_string)
-with Session(engine) as session:
-
-  # contains models for each table
-  FS = r.models.billing_bookkeeper.FeeSummary
-  statement = select(FS).where(FS.billing_entity_uuid="JW8H2B9BT6B11R2HHXY3HYQCN6")
-
-  # the modles have per-table sanitization functions
-  fs = r.sanitize(session.exec(statement).first())
-  print(fs.fee_code)
+fee_summary = db.select_first(
+    select(FeeSummary).where(FeeSummary.id == 30)
+)
+assert fee_summary # fail if there is no fee summary with id == 30
+safe_fee_summary = fee_summary.sanitize()
+assert safe_fee_summary.total_period_units == 3
 ```
 
-You'll need to have the rhizome server running in order to use any apps that use the rhizome client, just run `rhizome` and leave the terminal open.
-```
-$ rhizome
-rhizome is waiting for connections.
-```
+If you have a rhizome server running, it will handle the "tribal knowledge" part.
+It connects to the right servers, forwards the right ports, and summons the right credentials.
+Sometimes it'll need you to log in on its behalf so that it can get a session token or the correct credientials.
 
-As you use apps that import rhizome, this you'll get feedback in this terminal.
-```
-$ rhizome
-rhizome is waiting for clients
-Forwarding clover-prod-databases:us-central1:billing-bookkeeper to local port 51234
-  kubectl:   Starting proxy for connectionName 'clover-prod-databases:us-central1:billing-bookkeeper' on port '62956' with health check port on '61801'
-  kubectl:     2025/08/14 21:28:36 Listening on 127.0.0.1:62956 for clover-prod-databases:us-central1:billing-bookkeeper
-  kubectl:     2025/08/14 21:28:36 Ready for new connections
-  kubectl:   Forwarding localhost:51234 to remote port 62956...
-  kubectl:   Forwarding from 127.0.0.1:51234 -> 62956
-  kubectl:   Forwarding from [::1]:51234 -> 62956
-Fetching 1password/EventBillingROCred
-Checking out britive/Resources/COS-RO-USProd/COS-RO-USProd-profile
-  kubectl:   Handling connection for 51234
-```
+Since the server is running in a separate terminal, there is a dedicated place for informing you what's being done on your behalf.
+Debugging things like authentication or flaky servers happens within the server.
+This keeps the test logic simple and easy to read.
 
-
+In a place like retool, where tabular data is made available directly by the environment, the rhizome client will handle supplying the corect data for each call.
+In this case, it'll be necessary to analyze a local run and extract the queries such that a retool app can be generated which knows which queries should be used where.
+This mode is a TODO.
 

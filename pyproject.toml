@@ -30,13 +30,14 @@ version = "0.1.0-dev202512170800"
 
 [project.scripts]
 rhizome = "rhizome.cli:main"
+stolon = "stolon.cli:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-packages = ["src/rhizome"]
+packages = ["src/rhizome", "src/stolon"]
 
 [tool.ruff]
 line-length = 120
@@ -61,7 +62,7 @@ fixable = ["ALL"]
 "__init__.py" = ["E501"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["rhizome"]
+known-first-party = ["rhizome", "stolon"]
 force-single-line = false
 combine-as-imports = true
 
@@ -80,7 +81,7 @@ explicit = true
 iniconfig = { index = "artifactory"}
 
 [tool.pyright]
-include = ["src/rhizome"]
+include = ["src/rhizome", "src/stolon"]
 
 exclude = [
     "**/__pycache__",
