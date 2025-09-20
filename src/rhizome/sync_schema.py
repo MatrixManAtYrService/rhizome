@@ -113,7 +113,6 @@ def _sync_table_schema(
     table_name: str,
     file_path: str,
     change_tracker: ChangeTracker,
-    errors: list[str],
     verbose: bool,
 ) -> None:
     """Sync schema for a single table."""
@@ -147,12 +146,12 @@ def _sync_table_schema(
         else:
             seq_len = len(result_seq) if result_seq else 0
             error_msg = f"Result sequence too short or conversion failed for {table_name}: {seq_len} items"
-            errors.append(error_msg)
+            change_tracker.add_error(error_msg)
             typer.echo(f"    ⚠ {error_msg}")
 
     except Exception as e:
         error_msg = f"Error syncing table {table_name}: {e}"
-        errors.append(error_msg)
+        change_tracker.add_error(error_msg)
         if verbose:
             raise
         typer.secho(f"    {error_msg}", fg=typer.colors.RED)
@@ -163,8 +162,8 @@ def _sync_environment_schema(
     env_class: type,
     client: RhizomeClient,
     change_tracker: ChangeTracker,
-    errors: list[str],
     verbose: bool,
+    tables_to_sync: set[tuple[str, str]] | None,
 ) -> None:
     """Sync schema for all tables in an environment."""
     # Create lightweight environment instance that doesn't require table_situation
@@ -186,33 +185,54 @@ def _sync_environment_schema(
 
     # Try to sync schema for all tables in the enum
     for table_name in table_list:
+        if tables_to_sync is not None:
+            if (str(env_enum), str(table_name)) not in tables_to_sync:
+                continue
         # Construct file path using naming conventions
         file_path = f"src/rhizome/environments/{env_folder}/expected_data/{db_short_name}_{table_name}.sql"
 
-        _sync_table_schema(env_instance, str(table_name), file_path, change_tracker, errors, verbose)
+        _sync_table_schema(env_instance, str(table_name), file_path, change_tracker, verbose)
 
 
-def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False) -> None:
+def sync_schema(
+    env: RhizomeEnvironment | None = None, *, verbose: bool = False, missing_only: bool = False
+) -> None:
     """Syncs the schema for all environments and reports on changes."""
     typer.echo("Syncing schema...")
+
+    tables_to_sync: set[tuple[str, str]] | None = None
+    if missing_only:
+        from rhizome.sync_report import SyncStatus, _collect_sync_statuses
+
+        typer.echo("Checking for missing schemas...")
+        all_statuses = _collect_sync_statuses(env)
+        tables_to_sync = {
+            (status.environment, status.table)
+            for status in all_statuses
+            if status.status == SyncStatus.MISSING
+        }
+        if not tables_to_sync:
+            typer.echo("No missing schemas to sync.")
+            return
+        typer.echo(f"Found {len(tables_to_sync)} tables with missing schemas.")
+
     client = RhizomeClient(data_in_logs=True)
 
     # Initialize change tracker with schema classifier
     change_tracker = ChangeTracker(SchemaChangeClassifier())
-
-    # Track errors
-    errors: list[str] = []
 
     environments_to_sync = environment_type.items()
     if env:
         environments_to_sync = [(env, environment_type[env])]
 
     for env_enum, env_class in environments_to_sync:
-        _sync_environment_schema(env_enum, env_class, client, change_tracker, errors, verbose)
+        _sync_environment_schema(
+            env_enum, env_class, client, change_tracker, verbose, tables_to_sync
+        )
 
     # Debug: Show how many files were tracked
     typer.echo(f"\nTracked {len(change_tracker.tracked_files)} files for change detection")
 
     # Analyze tracked files and print summary
     change_tracker.analyze_tracked_files()
-    change_tracker.print_summary(errors)
+    change_tracker.print_summary()

@@ -256,6 +256,7 @@ class ChangeTracker:
         self.classifier = classifier
         self.changes: dict[str, ChangeType] = {}
         self.tracked_files: list[str] = []
+        self.errors: list[str] = []
 
     def track_file(self, file_path: str | Path) -> None:
         """
@@ -265,6 +266,10 @@ class ChangeTracker:
             file_path: Path to the file to track
         """
         self.tracked_files.append(str(file_path))
+
+    def add_error(self, error_message: str) -> None:
+        """Add an error to be reported in the summary."""
+        self.errors.append(error_message)
 
     def analyze_tracked_files(self) -> None:
         """Analyze all tracked files for changes."""
@@ -362,10 +367,9 @@ class ChangeTracker:
             files=file_summary,
         )
 
-    def print_summary(self, errors: list[str] | None = None) -> None:
+    def print_summary(self) -> None:
         """Print a formatted summary of changes."""
         detailed_summary = self.get_detailed_summary()
-        errors = errors or []
 
         typer.echo("\nChange Summary:")
         # Convert to dict for JSON serialization
@@ -376,7 +380,7 @@ class ChangeTracker:
                 "unchanged_count": detailed_summary.summary.unchanged_count,
                 "new_count": detailed_summary.summary.new_count,
                 "total_files": detailed_summary.summary.total_files,
-                "error_count": len(errors),
+                "error_count": len(self.errors),
             },
             "files": {
                 "trivial": detailed_summary.files.trivial,
@@ -384,6 +388,6 @@ class ChangeTracker:
                 "none": detailed_summary.files.none,
                 "new": detailed_summary.files.new,
             },
-            "errors": errors,
+            "errors": self.errors,
         }
         typer.echo(json.dumps(summary_dict, indent=2))

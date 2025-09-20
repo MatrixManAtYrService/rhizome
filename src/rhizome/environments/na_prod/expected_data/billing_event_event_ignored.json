@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "reference_id": "placeholder",
+  "consumer_source": "MLC",
+  "payload": "{}",
+  "channel": "channel_placeholder",
+  "topic": "topic_placeholder",
+  "ignore_reason": "ignore_reason_placeholder",
+  "message": null,
+  "created_timestamp": "2025-09-20T00:00:00"
+}

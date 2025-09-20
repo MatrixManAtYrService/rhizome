@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "merchant_uuid": "placeholder",
+  "account_id": "placeholder",
+  "acceptance_id": "acceptance_id_placeholder",
+  "agreement_id": "agreement_id_placeholder",
+  "agreement_type": "agreement_type",
+  "agreement_event_type": "CREATED",
+  "action": "ACCEPTED",
+  "acceptance_created_datetime": null,
+  "acceptance_modified_datetime": null,
+  "acceptance_deleted_datetime": null,
+  "acceptance_expiration_datetime": null,
+  "serial_number": null,
+  "iccid": null,
+  "is_oobe": null,
+  "created_timestamp": "2025-09-20T00:00:00",
+  "modified_timestamp": "2025-09-20T00:00:00"
+}

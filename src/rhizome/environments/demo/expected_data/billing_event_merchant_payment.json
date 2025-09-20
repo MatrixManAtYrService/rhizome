@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "merchant_uuid": "placeholder",
+  "environment": "demo",
+  "billing_entity_uuid": "placeholder_long",
+  "requested_thru_date": "2025-09-20",
+  "request_uuid": null,
+  "created_timestamp": "2025-09-20T00:00:00",
+  "modified_timestamp": "2025-09-20T00:00:00"
+}

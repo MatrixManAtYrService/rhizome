@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "uuid": "uuid_placeholder",
+  "criteria": "RESELLER",
+  "item": "item_placeholder",
+  "created_timestamp": "2025-09-20T00:00:00",
+  "begin_timestamp": null,
+  "end_timestamp": null
+}

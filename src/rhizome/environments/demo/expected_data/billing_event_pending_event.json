@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "environment": "demo",
+  "reference_id": "placeholder",
+  "consumer_source": "MLC",
+  "payload": "{}",
+  "channel": "channel_placeholder",
+  "topic": "topic_placeholder",
+  "processor_uuid": null,
+  "processing_start_timestamp": null,
+  "created_timestamp": "2025-09-20T00:00:00"
+}

@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "uuid": "Hash6tA2AQf9Ats3QcAc8vCXUD",
+  "merchant_uuid": "Hash5Bkxo7UZn",
+  "account_id": "Hash5zJTzwmqf",
+  "acceptance_id": "HashHzvvF7U9RPj3MnTX78TPzvfbPJFG3ikQ",
+  "agreement_id": "Hash4Wz3Q8odJUE33PmRvYQSoVpSLv9ETRFW",
+  "agreement_type": "CELLULAR_ARREARS",
+  "agreement_event_type": "CREATED",
+  "action": "ACCEPTED",
+  "acceptance_created_datetime": "2025-09-19T14:06:09",
+  "acceptance_modified_datetime": "2025-09-19T14:06:09",
+  "acceptance_deleted_datetime": null,
+  "acceptance_expiration_datetime": null,
+  "serial_number": "C045EQ22730071",
+  "iccid": "89011702278668446200",
+  "is_oobe": true,
+  "created_timestamp": "2025-09-19T14:06:10.184696",
+  "modified_timestamp": "2025-09-19T14:06:10.184696"
+}
