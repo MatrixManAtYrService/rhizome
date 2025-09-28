@@ -212,9 +212,7 @@ class Environment(ABC):
         """Helper method to get database config for direct credential access (pybritive)."""
         if secret_manager == SecretManager.PYBRITIVE:
             # For pybritive, we get all connection details from the checkout
-            britive_info = await self.client.tools.pybritive.checkout(
-                resource_path=secret_reference, pattern=pattern
-            )
+            britive_info = await self.client.tools.pybritive.checkout(resource_path=secret_reference, pattern=pattern)
             return DatabaseConfig(
                 host=britive_info.host,
                 port=britive_info.port,

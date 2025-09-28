@@ -53,7 +53,6 @@ class Emplacement[T: "RhizomeModel"](ABC):
             assert actual.model_dump() == expected.model_dump()
         except AssertionError as e:
             from rhizome.test_utils import enhance_assertion_error_with_fix_commands
-            enhanced_error = enhance_assertion_error_with_fix_commands(
-                e, self.__class__.__module__
-            )
+
+            enhanced_error = enhance_assertion_error_with_fix_commands(e, self.__class__.__module__)
             raise enhanced_error from e

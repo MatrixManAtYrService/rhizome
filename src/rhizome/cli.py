@@ -53,7 +53,9 @@ def data(
     ] = None,
     table: Annotated[
         list[str] | None,
-        typer.Option(help="Specific table(s) to sync. Can be specified multiple times. If not provided, all tables are synced."),
+        typer.Option(
+            help="Specific table(s) to sync. Can be specified multiple times. If not provided, all tables are synced."
+        ),
     ] = None,
     verbose: Annotated[
         bool,
@@ -76,7 +78,9 @@ def schema(
     ] = None,
     table: Annotated[
         list[str] | None,
-        typer.Option(help="Specific table(s) to sync. Can be specified multiple times. If not provided, all tables are synced."),
+        typer.Option(
+            help="Specific table(s) to sync. Can be specified multiple times. If not provided, all tables are synced."
+        ),
     ] = None,
     verbose: Annotated[
         bool,

@@ -158,9 +158,7 @@ def sync_schema(
         typer.echo("Checking for missing schemas...")
         all_statuses = collect_sync_statuses(env)
         tables_to_sync_map = {
-            (status.environment, status.table)
-            for status in all_statuses
-            if status.status == SyncStatus.MISSING
+            (status.environment, status.table) for status in all_statuses if status.status == SyncStatus.MISSING
         }
         if not tables_to_sync_map:
             typer.echo("No missing schemas to sync.")
@@ -175,9 +173,7 @@ def sync_schema(
         environments_to_sync = [(env, environment_type[env])]
 
     for env_enum, env_class in environments_to_sync:
-        _sync_environment_schema(
-            env_enum, env_class, client, change_tracker, verbose, tables_to_sync_map, table_names
-        )
+        _sync_environment_schema(env_enum, env_class, client, change_tracker, verbose, tables_to_sync_map, table_names)
 
     typer.echo(f"\nTracked {len(change_tracker.tracked_files)} files for change detection")
     change_tracker.analyze_tracked_files()

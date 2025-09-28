@@ -7,8 +7,8 @@ from pathlib import Path
 import uvicorn
 
 from rhizome.client import RhizomeClient
-from trifolium.config import Home
 from rhizome.server import app, setup_logging
+from trifolium.config import Home
 
 
 def test_multiple_sleeper_processes() -> None:

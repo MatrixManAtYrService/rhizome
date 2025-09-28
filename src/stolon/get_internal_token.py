@@ -36,27 +36,29 @@ def get_internal_token(domain: str) -> str:
     config_file = home.config / "trifolium.json"
     is_first_time = not config_file.exists() or config.internal_token_preference == InternalTokenPreference.PROMPT
 
-    if is_first_time and config.internal_token_preference == InternalTokenPreference.PROMPT:
-        # Only show first-time setup if config file didn't exist or is still default
-        if not config_file.exists():
-            typer.echo("🤖 First-time setup: How would you like to handle internal token capture in the future?")
-            typer.echo("")
-            typer.echo("Options:")
-            typer.echo("  1. auto    - Automatically capture tokens without asking")
-            typer.echo("  2. prompt  - Always ask for confirmation before capturing tokens")
-            typer.echo("")
+    if (
+        is_first_time
+        and config.internal_token_preference == InternalTokenPreference.PROMPT
+        and not config_file.exists()
+    ):
+        typer.echo("🤖 First-time setup: How would you like to handle internal token capture in the future?")
+        typer.echo("")
+        typer.echo("Options:")
+        typer.echo("  1. auto    - Automatically capture tokens without asking")
+        typer.echo("  2. prompt  - Always ask for confirmation before capturing tokens")
+        typer.echo("")
 
-            choice = typer.prompt("Enter your preference (auto/prompt)", default="auto")
+        choice = typer.prompt("Enter your preference (auto/prompt)", default="auto")
 
-            if choice.lower() in ["auto", "a", "1"]:
-                config.internal_token_preference = InternalTokenPreference.AUTO
-                typer.echo("✅ Set to automatically capture tokens in the future")
-            else:
-                config.internal_token_preference = InternalTokenPreference.PROMPT
-                typer.echo("✅ Will prompt for confirmation each time")
+        if choice.lower() in ["auto", "a", "1"]:
+            config.internal_token_preference = InternalTokenPreference.AUTO
+            typer.echo("✅ Set to automatically capture tokens in the future")
+        else:
+            config.internal_token_preference = InternalTokenPreference.PROMPT
+            typer.echo("✅ Will prompt for confirmation each time")
 
-            home.save_config(config)
-            typer.echo("")
+        home.save_config(config)
+        typer.echo("")
 
     # If user has selected prompt preference, ask for confirmation each time
     if config.internal_token_preference == InternalTokenPreference.PROMPT:
@@ -94,15 +96,16 @@ def get_internal_token(domain: str) -> str:
 
     # Wait until we get a token (server runs in background thread)
     import time
+
     try:
         while server.captured_token is None:
             time.sleep(0.5)
     except KeyboardInterrupt:
         typer.echo("\n❌ Authentication cancelled by user")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
     except Exception as e:
         typer.echo(f"❌ Error during authentication: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e
 
     # Got the token!
     token = server.captured_token

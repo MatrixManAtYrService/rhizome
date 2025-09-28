@@ -55,7 +55,7 @@ async def auth_page() -> str:
 
     clover_url = f"https://{_current_auth_session.clover_domain}/admin"
 
-    return f'''
+    return f"""
     <!DOCTYPE html>
     <html>
     <head>
@@ -68,7 +68,10 @@ async def auth_page() -> str:
                 margin: 0; padding: 40px; background: #f8f9fa; min-height: 100vh;
                 display: flex; flex-direction: column; align-items: center; justify-content: center;
             }}
-            .container {{ max-width: 600px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }}
+            .container {{
+                max-width: 600px; background: white; padding: 40px; border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }}
             .logo {{ text-align: center; margin-bottom: 30px; font-size: 32px; }}
             .section {{ margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; }}
             .token-section {{ background: #fff3cd; border-left: 4px solid #ffc107; }}
@@ -108,7 +111,9 @@ async def auth_page() -> str:
                 <h3>How to get your token:</h3>
                 <ol>
                     <li><strong>Open Clover admin:</strong>
-                        <button class="button" onclick="openCloverAdmin()">Open {_current_auth_session.clover_domain}/admin</button>
+                        <button class="button" onclick="openCloverAdmin()">
+                            Open {_current_auth_session.clover_domain}/admin
+                        </button>
                     </li>
                     <li><strong>Log in</strong> with your credentials</li>
                     <li><strong>Open developer tools</strong> (F12 or right-click → Inspect)</li>
@@ -149,7 +154,8 @@ async def auth_page() -> str:
                 .then(response => {{
                     if (response.ok) {{
                         document.getElementById('status').innerHTML =
-                            '<div style="color: #155724; background: #d4edda; padding: 15px; border-radius: 5px; margin: 15px 0;">' +
+                            '<div style="color: #155724; background: #d4edda; ' +
+                            'padding: 15px; border-radius: 5px; margin: 15px 0;">' +
                             '✅ Token submitted successfully! This tab will close in 3 seconds...</div>';
                         setTimeout(() => window.close(), 3000);
                     }} else {{
@@ -158,7 +164,8 @@ async def auth_page() -> str:
                 }})
                 .catch(error => {{
                     document.getElementById('status').innerHTML =
-                        '<div style="color: #721c24; background: #f8d7da; padding: 15px; border-radius: 5px; margin: 15px 0;">' +
+                        '<div style="color: #721c24; background: #f8d7da; ' +
+                        'padding: 15px; border-radius: 5px; margin: 15px 0;">' +
                         '❌ Error submitting token. Please try again.</div>';
                     button.textContent = originalText;
                     button.disabled = false;
@@ -167,13 +174,13 @@ async def auth_page() -> str:
         </script>
     </body>
     </html>
-    '''
+    """
 
 
 @router.get("/auth/callback", response_class=HTMLResponse)
 async def auth_callback() -> str:
     """Handle callback from Clover admin (if we could redirect back)."""
-    return '''
+    return """
     <html><body>
         <h2>Checking for authentication...</h2>
         <script>
@@ -199,7 +206,7 @@ async def auth_callback() -> str:
             window.close();
         </script>
     </body></html>
-    '''
+    """
 
 
 @router.post("/auth/submit")
@@ -225,10 +232,7 @@ async def stolon_status() -> JSONResponse:
         return JSONResponse({"waiting_for_token": False, "domain": ""})
 
     waiting = _current_auth_session.captured_token is None
-    return JSONResponse({
-        "waiting_for_token": waiting,
-        "domain": _current_auth_session.clover_domain
-    })
+    return JSONResponse({"waiting_for_token": waiting, "domain": _current_auth_session.clover_domain})
 
 
 def start_auth_server(clover_domain: str) -> tuple[AuthServer, int]:

@@ -21,7 +21,6 @@ import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
-from trifolium.config import Home
 from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
 from rhizome.environments.demo.billing_event import DemoBillingEvent
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
@@ -38,6 +37,7 @@ from tests.mocked_subprocesses import (
     MockOnePasswordTool,
     MockPybritiveTool,
 )
+from trifolium.config import Home
 
 
 @dataclass
@@ -248,9 +248,7 @@ def test_real_environment_database_access(
     # If no data is found in the real environment, warn and skip.
     # This makes the test tolerant of empty tables in real environments.
     if result is None:
-        print(
-            f"Warning: No real data found for {table_name} in {env_instance.name}. Skipping assertion."
-        )
+        print(f"Warning: No real data found for {table_name} in {env_instance.name}. Skipping assertion.")
         return
 
     # The emplacement class handles the assertion and provides rich error messages

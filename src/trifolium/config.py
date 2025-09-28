@@ -11,12 +11,14 @@ from xdg_base_dirs import xdg_config_home, xdg_state_home
 
 class InternalTokenPreference(StrEnum):
     """User preference for internal token handling."""
+
     AUTO = "auto"
     PROMPT = "prompt"
 
 
 class TrifoliumConfig(BaseModel):
     """Configuration settings for Trifolium components."""
+
     internal_token_preference: InternalTokenPreference = InternalTokenPreference.PROMPT
 
 
@@ -42,10 +44,7 @@ class Home:
         """Create a sandboxed Home for testing."""
         if isinstance(parent, str):
             parent = Path(parent)
-        return Home(
-            config=parent / "config" / "trifolium",
-            state=parent / "state" / "trifolium"
-        )
+        return Home(config=parent / "config" / "trifolium", state=parent / "state" / "trifolium")
 
     def mkdirs(self) -> None:
         """Ensure all directories exist."""

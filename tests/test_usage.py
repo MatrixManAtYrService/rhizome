@@ -9,19 +9,20 @@ Tests require external infrastructure access and should be run with:
     pytest tests/test_usage.py --external-infra
 """
 
-import pytest
 from typing import Any
+
+import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
-from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
 from rhizome.models.table_list import BillingBookkeeperTable
 
 
 @pytest.mark.external_infra
-def test_get_model_returns_correct_version():
+def test_get_model_returns_correct_version() -> None:
     """Test that get_model() returns the appropriate versioned model for each environment."""
     client = RhizomeClient(data_in_logs=False)
 
@@ -53,7 +54,7 @@ def test_get_model_returns_correct_version():
 
 
 @pytest.mark.external_infra
-def test_readme_example_with_get_model():
+def test_readme_example_with_get_model() -> None:
     """Test the exact example from the README using get_model()."""
     # This is the improved API from the README
     db = DevBillingBookkeeper(RhizomeClient(data_in_logs=False))
@@ -61,22 +62,20 @@ def test_readme_example_with_get_model():
     # Get the correct FeeSummary version for this environment
     FeeSummary = db.get_model(BillingBookkeeperTable.fee_summary)
 
-    fee_summary = db.select_first(
-        select(FeeSummary).where(FeeSummary.id == 30)
-    )
+    fee_summary = db.select_first(select(FeeSummary).where(FeeSummary.id == 30))
 
     # The actual assertion may need to be adjusted based on real data
     # For now, we just verify the API works
     if fee_summary:
         safe_fee_summary = fee_summary.sanitize()
         # Check that sanitize returns the same type
-        assert type(safe_fee_summary) == type(fee_summary)
+        assert isinstance(safe_fee_summary, type(fee_summary))
         assert hasattr(safe_fee_summary, "id")
         assert hasattr(safe_fee_summary, "uuid")
 
 
 @pytest.mark.external_infra
-def test_get_model_with_invalid_table():
+def test_get_model_with_invalid_table() -> None:
     """Test that get_model() raises appropriate errors for invalid tables."""
     client = RhizomeClient(data_in_logs=False)
     dev_db = DevBillingBookkeeper(client)
@@ -104,7 +103,7 @@ def test_get_model_with_invalid_table():
 
 
 @pytest.mark.external_infra
-def test_get_model_type_safety():
+def test_get_model_type_safety() -> None:
     """Test that get_model() preserves type safety across different versions."""
     client = RhizomeClient(data_in_logs=False)
 
@@ -140,7 +139,7 @@ def test_get_model_type_safety():
 
 
 @pytest.mark.external_infra
-def test_multiple_tables_with_get_model():
+def test_multiple_tables_with_get_model() -> None:
     """Test get_model() with multiple tables in the same environment."""
     client = RhizomeClient(data_in_logs=False)
     dev_db = DevBillingBookkeeper(client)

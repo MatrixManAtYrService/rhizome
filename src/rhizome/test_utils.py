@@ -36,7 +36,7 @@ def generate_sync_fix_commands(emplacement_module_path: str, table_name: str = "
         db_prefixes = ["billing_bookkeeper", "billing_event", "billing"]
         for prefix in sorted(db_prefixes, key=len, reverse=True):  # Longest first
             if db_and_table.startswith(prefix + "_"):
-                table_name = db_and_table[len(prefix) + 1:]
+                table_name = db_and_table[len(prefix) + 1 :]
                 break
 
     # Map environment folder to CLI environment names using the actual enum
@@ -53,10 +53,7 @@ def generate_sync_fix_commands(emplacement_module_path: str, table_name: str = "
     if table_name:
         fix_message += f" --table {table_name}"
 
-    fix_message += (
-        f"\n\n2. Then sync data:\n"
-        f"   rhizome sync data --env {cli_env}"
-    )
+    fix_message += f"\n\n2. Then sync data:\n   rhizome sync data --env {cli_env}"
 
     if table_name:
         fix_message += f" --table {table_name}"
@@ -104,9 +101,7 @@ def _infer_cli_environment(env_folder: str, db_and_table: str) -> str:
 
 
 def enhance_assertion_error_with_fix_commands(
-    original_error: AssertionError,
-    emplacement_module_path: str,
-    table_name: str = ""
+    original_error: AssertionError, emplacement_module_path: str, table_name: str = ""
 ) -> AssertionError:
     """
     Enhance an AssertionError with suggested fix commands.

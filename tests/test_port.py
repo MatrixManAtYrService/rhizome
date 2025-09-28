@@ -3,9 +3,9 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from trifolium.config import Home
 from rhizome.server import app
 from tests.utils import get_open_port
+from trifolium.config import Home
 
 
 def test_port_storage_in_sandbox() -> None:

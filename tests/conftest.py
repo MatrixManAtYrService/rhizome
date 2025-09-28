@@ -15,9 +15,9 @@ from _pytest.config.argparsing import Parser
 from _pytest.nodes import Item
 
 from rhizome.client import RhizomeClient
-from trifolium.config import Home
 from rhizome.server import app, setup_logging
 from tests.utils import get_open_port
+from trifolium.config import Home
 
 
 def pytest_addoption(parser: Parser) -> None:
