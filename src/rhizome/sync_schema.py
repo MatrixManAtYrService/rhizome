@@ -164,6 +164,7 @@ def _sync_environment_schema(
     client: RhizomeClient,
     change_tracker: ChangeTracker,
     errors: list[str],
+    table_names: list[str] | None,
     verbose: bool,
 ) -> None:
     """Sync schema for all tables in an environment."""
@@ -184,15 +185,31 @@ def _sync_environment_schema(
         typer.echo(f"  Warning: No table enum found for {env_enum}")
         return
 
-    # Try to sync schema for all tables in the enum
-    for table_name in table_list:
+    # Filter tables if specific table names were provided
+    tables_to_sync = table_list
+    if table_names:
+        # Convert table_names to lowercase for case-insensitive matching
+        target_table_names = [name.lower() for name in table_names]
+        tables_to_sync = [
+            table_name for table_name in table_list
+            if str(table_name).lower() in target_table_names
+        ]
+
+        # Warn if some specified tables weren't found in this environment
+        found_table_names = [str(table_name).lower() for table_name in tables_to_sync]
+        missing_tables = [name for name in target_table_names if name not in found_table_names]
+        if missing_tables:
+            typer.echo(f"  Warning: Tables not found in {env_instance.name}: {', '.join(missing_tables)}")
+
+    # Try to sync schema for filtered tables
+    for table_name in tables_to_sync:
         # Construct file path using naming conventions
         file_path = f"src/rhizome/environments/{env_folder}/expected_data/{db_short_name}_{table_name}.sql"
 
         _sync_table_schema(env_instance, str(table_name), file_path, change_tracker, errors, verbose)
 
 
-def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False) -> None:
+def sync_schema(env: RhizomeEnvironment | None = None, *, table_names: list[str] | None = None, verbose: bool = False) -> None:
     """Syncs the schema for all environments and reports on changes."""
     typer.echo("Syncing schema...")
     client = RhizomeClient(data_in_logs=True)
@@ -208,7 +225,7 @@ def sync_schema(env: RhizomeEnvironment | None = None, *, verbose: bool = False)
         environments_to_sync = [(env, environment_type[env])]
 
     for env_enum, env_class in environments_to_sync:
-        _sync_environment_schema(env_enum, env_class, client, change_tracker, errors, verbose)
+        _sync_environment_schema(env_enum, env_class, client, change_tracker, errors, table_names, verbose)
 
     # Debug: Show how many files were tracked
     typer.echo(f"\nTracked {len(change_tracker.tracked_files)} files for change detection")

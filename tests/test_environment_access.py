@@ -249,10 +249,25 @@ def test_real_environment_database_access(
             result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
 
             # Verify the real data matches the expected structure
-            assert result is not None, f"Real data should exist for {table_name} in {env_instance.name}"
+            try:
+                assert result is not None, f"Real data should exist for {table_name} in {env_instance.name}"
+            except AssertionError as e:
+                from rhizome.test_utils import enhance_assertion_error_with_fix_commands
+                enhanced_error = enhance_assertion_error_with_fix_commands(
+                    e, emplacement_class.__module__, str(table_name)
+                )
+                raise enhanced_error from e
 
             # Use the emplacement class's assert_match method if available, otherwise basic assertions
             if hasattr(emplacement_class, "assert_match"):
                 emplacement_class().assert_match(result, expected_data)
             else:
-                assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"
+                # Enhanced basic assertion with fix commands
+                try:
+                    assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"
+                except AssertionError as e:
+                    from rhizome.test_utils import enhance_assertion_error_with_fix_commands
+                    enhanced_error = enhance_assertion_error_with_fix_commands(
+                        e, emplacement_class.__module__, str(table_name)
+                    )
+                    raise enhanced_error from e

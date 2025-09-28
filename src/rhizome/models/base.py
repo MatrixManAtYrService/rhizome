@@ -48,4 +48,12 @@ class Emplacement[T: "RhizomeModel"](ABC):
         """Assert that the actual data matches expected data."""
         if expected is None:
             expected = self.get_expected()
-        assert actual.model_dump() == expected.model_dump()
+
+        try:
+            assert actual.model_dump() == expected.model_dump()
+        except AssertionError as e:
+            from rhizome.test_utils import enhance_assertion_error_with_fix_commands
+            enhanced_error = enhance_assertion_error_with_fix_commands(
+                e, self.__class__.__module__
+            )
+            raise enhanced_error from e

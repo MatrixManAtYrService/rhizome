@@ -51,13 +51,17 @@ def data(
         RhizomeEnvironment | None,
         typer.Option(help="The environment to sync. If not provided, all are synced."),
     ] = None,
+    table: Annotated[
+        list[str] | None,
+        typer.Option(help="Specific table(s) to sync. Can be specified multiple times. If not provided, all tables are synced."),
+    ] = None,
     verbose: Annotated[
         bool,
         typer.Option(help="Show full stack trace on error."),
     ] = False,
 ) -> None:
     """Syncs the expected data for all environments."""
-    sync_data(env, verbose=verbose)
+    sync_data(env, table_names=table, verbose=verbose)
 
 
 @sync_app.command()
@@ -66,13 +70,17 @@ def schema(
         RhizomeEnvironment | None,
         typer.Option(help="The environment to sync. If not provided, all are synced."),
     ] = None,
+    table: Annotated[
+        list[str] | None,
+        typer.Option(help="Specific table(s) to sync. Can be specified multiple times. If not provided, all tables are synced."),
+    ] = None,
     verbose: Annotated[
         bool,
         typer.Option(help="Show full stack trace on error."),
     ] = False,
 ) -> None:
     """Syncs the schema for all environments."""
-    sync_schema(env, verbose=verbose)
+    sync_schema(env, table_names=table, verbose=verbose)
 
 
 @sync_app.command()

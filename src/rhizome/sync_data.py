@@ -5,7 +5,7 @@ from rhizome.environments.environment_list import RhizomeEnvironment, environmen
 from rhizome.git_diff import ChangeTracker, DataChangeClassifier
 
 
-def sync_data(env: RhizomeEnvironment | None = None, *, verbose: bool = False) -> None:
+def sync_data(env: RhizomeEnvironment | None = None, *, table_names: list[str] | None = None, verbose: bool = False) -> None:
     """Syncs the expected data for all environments and reports on changes."""
     typer.echo("Syncing data...")
     client = RhizomeClient(data_in_logs=True)
@@ -20,7 +20,25 @@ def sync_data(env: RhizomeEnvironment | None = None, *, verbose: bool = False) -
     for _env_enum, env_class in environments_to_sync:
         env_instance = env_class(client)
         typer.echo(f"Syncing environment: {env_instance.name}")
-        for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
+
+        # Filter tables if specific table names were provided
+        tables_to_sync = env_instance.table_situation.items()
+        if table_names:
+            # Convert table_names to lowercase for case-insensitive matching
+            target_table_names = [name.lower() for name in table_names]
+            tables_to_sync = [
+                (table_name, (model_class, emplacement_class))
+                for table_name, (model_class, emplacement_class) in env_instance.table_situation.items()
+                if str(table_name).lower() in target_table_names
+            ]
+
+            # Warn if some specified tables weren't found in this environment
+            found_table_names = [str(table_name).lower() for table_name, _ in tables_to_sync]
+            missing_tables = [name for name in target_table_names if name not in found_table_names]
+            if missing_tables:
+                typer.echo(f"  Warning: Tables not found in {env_instance.name}: {', '.join(missing_tables)}")
+
+        for table_name, (model_class, emplacement_class) in tables_to_sync:
             if model_class:
                 typer.echo(f"  Syncing table: {table_name}")
                 query = emplacement_class.expectation_query(model_class)
