@@ -87,23 +87,38 @@ from rhizome.environments.na_prod.expected_data.meta_terminal_config_merchant_pr
     TerminalConfigMerchantPropsNaProd,
 )
 from rhizome.environments.na_prod.expected_data.meta_timezones import TimezonesNaProd
+from rhizome.environments.na_prod.expected_data.meta_account import AccountNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_app_bundle import AppAppBundleNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_bundle import AppBundleNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_metered import AppMeteredNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_metered_country import AppMeteredCountryNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_metered_event import AppMeteredEventNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_permission import AppPermissionNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_subscription import AppSubscriptionNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_subscription_country import AppSubscriptionCountryNaProd
+from rhizome.environments.na_prod.expected_data.meta_country import CountryNaProd
+from rhizome.environments.na_prod.expected_data.meta_developer import DeveloperNaProd
+from rhizome.environments.na_prod.expected_data.meta_developer_app import DeveloperAppNaProd
+from rhizome.environments.na_prod.expected_data.meta_device_events import DeviceEventsNaProd
+from rhizome.environments.na_prod.expected_data.meta_device_provision import DeviceProvisionNaProd
+from rhizome.environments.na_prod.expected_data.meta_device_type import DeviceTypeNaProd
 
 models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]] = {
-    MetaTable.account: (Account, None),
-    MetaTable.app_app_bundle: (AppAppBundle, None),
-    MetaTable.app_bundle: (AppBundle, None),
-    MetaTable.app_metered: (AppMetered, None),
-    MetaTable.app_metered_country: (AppMeteredCountry, None),
-    MetaTable.app_metered_event: (AppMeteredEvent, None),
-    MetaTable.app_permission: (AppPermission, None),
-    MetaTable.app_subscription: (AppSubscription, None),
-    MetaTable.app_subscription_country: (AppSubscriptionCountry, None),
-    MetaTable.country: (Country, None),
-    MetaTable.developer: (Developer, None),
-    MetaTable.developer_app: (DeveloperApp, None),
-    MetaTable.device_events: (DeviceEvents, None),
-    MetaTable.device_provision: (DeviceProvision, None),
-    MetaTable.device_type: (DeviceType, None),
+    MetaTable.account: (Account, AccountNaProd),
+    MetaTable.app_app_bundle: (AppAppBundle, AppAppBundleNaProd),
+    MetaTable.app_bundle: (AppBundle, AppBundleNaProd),
+    MetaTable.app_metered: (AppMetered, AppMeteredNaProd),
+    MetaTable.app_metered_country: (AppMeteredCountry, AppMeteredCountryNaProd),
+    MetaTable.app_metered_event: (AppMeteredEvent, AppMeteredEventNaProd),
+    MetaTable.app_permission: (AppPermission, AppPermissionNaProd),
+    MetaTable.app_subscription: (AppSubscription, AppSubscriptionNaProd),
+    MetaTable.app_subscription_country: (AppSubscriptionCountry, AppSubscriptionCountryNaProd),
+    MetaTable.country: (Country, CountryNaProd),
+    MetaTable.developer: (Developer, DeveloperNaProd),
+    MetaTable.developer_app: (DeveloperApp, DeveloperAppNaProd),
+    MetaTable.device_events: (DeviceEvents, DeviceEventsNaProd),
+    MetaTable.device_provision: (DeviceProvision, DeviceProvisionNaProd),
+    MetaTable.device_type: (DeviceType, DeviceTypeNaProd),
     MetaTable.locale: (Locale, LocaleNaProd),
     MetaTable.merchant: (Merchant, MerchantNaProd),
     MetaTable.merchant_address: (MerchantAddress, MerchantAddressNaProd),

@@ -47,9 +47,10 @@ def _parse_test_parameters(nodeid: str) -> dict[str, str]:
             test_params["env"] = params[0]
             # Remove any trailing numbers from table names (e.g. merchant_payment0 -> merchant_payment)
             import re
+
             table_name = params[1]
             # Strip trailing digits and numbers if they exist (handles merchant_payment0, merchant_payment1, etc.)
-            table_name = re.sub(r'\d+$', '', table_name)
+            table_name = re.sub(r"\d+$", "", table_name)
             test_params["table"] = table_name
     return test_params
 
@@ -83,8 +84,8 @@ def _handle_assertion_error(report: object, call: CallInfo, test_params: dict[st
 
     # Suppress the verbose fix commands in individual reports
     if "🔧 SUGGESTED FIX COMMANDS:" in str(call.excinfo.value):
-        env_name = test_params.get('env', 'test')
-        table_name = test_params.get('table', 'unknown')
+        env_name = test_params.get("env", "test")
+        table_name = test_params.get("table", "unknown")
         report.longrepr = f"AssertionError in {env_name}/{table_name} (see summary for fix commands)"
 
 
@@ -153,19 +154,17 @@ def pytest_terminal_summary(terminalreporter: "TerminalReporter") -> None:
         terminalreporter.write_line("")
         terminalreporter.write_line(
             "💡 TIP: If this is a schema evolution issue, the schema sync will update the model definitions.",
-            yellow=True
+            yellow=True,
         )
         terminalreporter.write_line(
-            "💡 IMPORTANT: Always run schema syncs before data syncs to ensure proper ordering.",
-            yellow=True
+            "💡 IMPORTANT: Always run schema syncs before data syncs to ensure proper ordering.", yellow=True
         )
 
     # Show summary for aggregated assertion errors
     if ALL_FAILURES:
         terminalreporter.write_sep("=", "AGGREGATED TEST FAILURES SUMMARY", red=True)
         terminalreporter.write_line(
-            "Multiple tests failed with the same error pattern. Fix commands grouped by environment/table:",
-            red=True
+            "Multiple tests failed with the same error pattern. Fix commands grouped by environment/table:", red=True
         )
 
         # Sort failures by count (most frequent first)
@@ -203,12 +202,12 @@ def pytest_terminal_summary(terminalreporter: "TerminalReporter") -> None:
         terminalreporter.write_line("")
         terminalreporter.write_line(
             "💡 TIP: If this is a schema evolution issue, the schema sync will update the model definitions.",
-            yellow=True
+            yellow=True,
         )
         terminalreporter.write_line(
-            "💡 IMPORTANT: Always run schema syncs before data syncs to ensure proper ordering.",
-            yellow=True
+            "💡 IMPORTANT: Always run schema syncs before data syncs to ensure proper ordering.", yellow=True
         )
+
 
 # --- Standard Fixtures --- #
 

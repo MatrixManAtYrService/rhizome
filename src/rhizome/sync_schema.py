@@ -43,12 +43,30 @@ def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnu
 def create_lightweight_environment(env_class: type[Environment], client: RhizomeClient) -> Environment:
     """Create a lightweight environment instance that skips expensive table_situation setup."""
 
-    # Just create a normal instance but catch any issues during table_situation setup
+    # Try to create a normal instance first
     try:
         return env_class(client)
+    except NotImplementedError:
+        # If table_situation setup fails due to unimplemented models, create a lightweight version
+        # This is needed for schema syncing where we don't need the model/emplacement mappings
+
+        # Create instance without calling __init__
+        env_instance = env_class.__new__(env_class)
+
+        # Manually set up the essential attributes for schema syncing
+        env_instance.client = client
+
+        # Set up port forwarding if needed
+        port_forward_config = env_instance.get_port_forward_config()
+        if port_forward_config is not None:
+            env_instance._setup_port_forwarding(port_forward_config)
+
+        # Skip table_situation initialization for schema syncing
+        env_instance.table_situation = {}
+
+        return env_instance
     except Exception:
-        # If the normal initialization fails, we could implement a lightweight version
-        # For now, let the error propagate since this indicates a real issue
+        # For other errors, let them propagate
         raise
 
 
