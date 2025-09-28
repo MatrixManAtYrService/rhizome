@@ -252,4 +252,4 @@ def test_real_environment_database_access(
         return
 
     # The emplacement class handles the assertion and provides rich error messages
-    emplacement_class().assert_match(result, expected_data)
+    emplacement_class().assert_match(result, expected_data, env_instance.name, table_name)
