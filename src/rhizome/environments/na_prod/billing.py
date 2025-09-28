@@ -11,17 +11,28 @@ from enum import StrEnum
 from typing import Any
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.na_prod.expected_data.billing_app_suppression import AppSuppressionNaProd
+from rhizome.environments.na_prod.expected_data.billing_auto_debit_no_auth_config import AutoDebitNoAuthConfigNaProd
+from rhizome.environments.na_prod.expected_data.billing_bank_routing import BankRoutingNaProd
+from rhizome.environments.na_prod.expected_data.billing_fee import FeeNaProd
+from rhizome.environments.na_prod.expected_data.billing_heartbeat import HeartbeatNaProd
+from rhizome.environments.na_prod.expected_data.billing_server_config import ServerConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_stage_charge import StageChargeNaProd
 from rhizome.models.base import Emplacement, RhizomeModel
+from rhizome.models.billing.app_suppression_v1 import AppSuppressionV1
+from rhizome.models.billing.auto_debit_no_auth_config_v1 import AutoDebitNoAuthConfigV1
+from rhizome.models.billing.bank_routing_v1 import BankRoutingV1
+from rhizome.models.billing.fee_v1 import FeeV1
+from rhizome.models.billing.heartbeat_v1 import HeartbeatV1
+from rhizome.models.billing.server_config_v1 import ServerConfigV1
 from rhizome.models.billing.stage_charge_v1 import StageChargeV1
 from rhizome.models.table_list import BillingTable
 
 models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]] = {
     BillingTable.stage_charge: (StageChargeV1, StageChargeNaProd),
-    # All other tables are not yet implemented
-    BillingTable.app_suppression: (None, None),
-    BillingTable.auto_debit_no_auth_config: (None, None),
-    BillingTable.bank_routing: (None, None),
+    BillingTable.app_suppression: (AppSuppressionV1, AppSuppressionNaProd),
+    BillingTable.auto_debit_no_auth_config: (AutoDebitNoAuthConfigV1, AutoDebitNoAuthConfigNaProd),
+    BillingTable.bank_routing: (BankRoutingV1, BankRoutingNaProd),
     BillingTable.banner_curb: (None, None),
     BillingTable.banner_data: (None, None),
     BillingTable.banner_details: (None, None),
@@ -52,12 +63,12 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.explanation: (None, None),
     BillingTable.explanation_data: (None, None),
     BillingTable.export_tracker: (None, None),
-    BillingTable.fee: (None, None),
+    BillingTable.fee: (FeeV1, FeeNaProd),
     BillingTable.fee_exception: (None, None),
     BillingTable.flight_check: (None, None),
     BillingTable.flight_check_archive: (None, None),
     BillingTable.flight_check_execution: (None, None),
-    BillingTable.heartbeat: (None, None),
+    BillingTable.heartbeat: (HeartbeatV1, HeartbeatNaProd),
     BillingTable.invoice_charge: (None, None),
     BillingTable.job_lock: (None, None),
     BillingTable.merchant_device_info: (None, None),
@@ -87,7 +98,7 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.rev_share: (None, None),
     BillingTable.seasonal_merchant_trans_audit: (None, None),
     BillingTable.seasonal_reseller_info: (None, None),
-    BillingTable.server_config: (None, None),
+    BillingTable.server_config: (ServerConfigV1, ServerConfigNaProd),
     BillingTable.stage_app_metered_event: (None, None),
     BillingTable.stage_charge_capture_error: (None, None),
     BillingTable.stage_charge_history: (None, None),

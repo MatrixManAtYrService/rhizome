@@ -38,7 +38,27 @@ class Account(RhizomeModel, table=True):
     invite_sent: bool | None = Field(default=False)
     auth_issuer: str | None = Field(default=None, max_length=50)
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Account:
         """Return a sanitized copy of this Account instance."""
-        # This will be overridden by concrete subclasses
-        raise NotImplementedError("Subclasses must implement sanitize()")
+        from ...sanitize_helpers import sanitize_uuid_field
+
+        return Account(
+            id=self.id,
+            uuid=sanitize_uuid_field(self.uuid, 13) or self.uuid,
+            name=self.name,
+            email=self.email,
+            primary_merchant_role_id=self.primary_merchant_role_id,
+            primary_developer_role_id=self.primary_developer_role_id,
+            primary_reseller_role_id=self.primary_reseller_role_id,
+            password_hash=self.password_hash,
+            oauth_provider=self.oauth_provider,
+            claim_code=self.claim_code,
+            locked_out=self.locked_out,
+            password_updated_time=self.password_updated_time,
+            is_active=self.is_active,
+            created_time=self.created_time,
+            claimed_time=self.claimed_time,
+            last_login=self.last_login,
+            invite_sent=self.invite_sent,
+            auth_issuer=self.auth_issuer,
+        )

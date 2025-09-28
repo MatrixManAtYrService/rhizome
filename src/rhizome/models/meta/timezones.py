@@ -25,7 +25,13 @@ class Timezones(RhizomeModel, table=True):
     offset: int | None = Field(default=None)
     offset_dst: int | None = Field(default=None)
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Timezones:
         """Return a sanitized copy of this Timezones instance."""
-        # This will be overridden by concrete subclasses
-        raise NotImplementedError("Subclasses must implement sanitize()")
+        return Timezones(
+            id=self.id,
+            name=self.name,
+            display_name=self.display_name,
+            visible=self.visible,
+            offset=self.offset,
+            offset_dst=self.offset_dst,
+        )

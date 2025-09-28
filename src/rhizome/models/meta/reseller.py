@@ -60,7 +60,49 @@ class Reseller(RhizomeModel, table=True):
     type: str | None = Field(default=None, max_length=18)
     source: str = Field(default='INTERNAL', max_length=8)
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Reseller:
         """Return a sanitized copy of this Reseller instance."""
-        # This will be overridden by concrete subclasses
-        raise NotImplementedError("Subclasses must implement sanitize()")
+        from ...sanitize_helpers import sanitize_uuid_field
+
+        return Reseller(
+            id=self.id,
+            parent_id=self.parent_id,
+            uuid=sanitize_uuid_field(self.uuid, 13) or self.uuid,
+            fd_client_id=self.fd_client_id,
+            name=self.name,
+            alternate_name=self.alternate_name,
+            code=self.code,
+            owner_account_id=self.owner_account_id,
+            default_payment_processor_id=self.default_payment_processor_id,
+            default_processor_key_id=self.default_processor_key_id,
+            default_country_code=self.default_country_code,
+            supports_naked_credit=self.supports_naked_credit,
+            created_time=self.created_time,
+            modified_time=self.modified_time,
+            support_phone=self.support_phone,
+            support_email=self.support_email,
+            filter_apps=self.filter_apps,
+            force_phone=self.force_phone,
+            stations_on_classic=self.stations_on_classic,
+            allow_blackhole=self.allow_blackhole,
+            tasq_customer_number=self.tasq_customer_number,
+            is_bulk_purchaser=self.is_bulk_purchaser,
+            partner_support_email=self.partner_support_email,
+            supports_outbound_boarding=self.supports_outbound_boarding,
+            is_rki_identifier=self.is_rki_identifier,
+            enforce_merchant_plan=self.enforce_merchant_plan,
+            is_self_boarding=self.is_self_boarding,
+            is_intercom_enabled=self.is_intercom_enabled,
+            fdmp_configuration_id=self.fdmp_configuration_id,
+            locale_id=self.locale_id,
+            is_codeless_activation=self.is_codeless_activation,
+            reseller_privacy_policy_url=self.reseller_privacy_policy_url,
+            feedback_disabled=self.feedback_disabled,
+            is_rapid_deposit_enabled=self.is_rapid_deposit_enabled,
+            rapid_deposit_service_entitlement_number=self.rapid_deposit_service_entitlement_number,
+            prohibit_tokenization=self.prohibit_tokenization,
+            is_new_billing=self.is_new_billing,
+            plan_group_id=self.plan_group_id,
+            type=self.type,
+            source=self.source,
+        )

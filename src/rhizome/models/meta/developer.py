@@ -72,7 +72,61 @@ class Developer(RhizomeModel, table=True):
     developer_type: str | None = Field(default='EXTERNAL', max_length=16)
     approval_status_modified_time: datetime.datetime | None = Field(default=None)
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Developer:
         """Return a sanitized copy of this Developer instance."""
-        # This will be overridden by concrete subclasses
-        raise NotImplementedError("Subclasses must implement sanitize()")
+        from ...sanitize_helpers import sanitize_uuid_field
+
+        return Developer(
+            id=self.id,
+            uuid=sanitize_uuid_field(self.uuid, 13) or self.uuid,
+            approval_status=self.approval_status,
+            collection_approval_status=self.collection_approval_status,
+            secret=self.secret,
+            owner_account_id=self.owner_account_id,
+            name=self.name,
+            first_name=self.first_name,
+            last_name=self.last_name,
+            email=self.email,
+            phone=self.phone,
+            dob=self.dob,
+            address=self.address,
+            city=self.city,
+            county=self.county,
+            state=self.state,
+            country=self.country,
+            postal_code=self.postal_code,
+            bank_routing_number=self.bank_routing_number,
+            tin=self.tin,
+            tin_dps_uuid=self.tin_dps_uuid,
+            vat_register_number=self.vat_register_number,
+            vat_dps_uuid=self.vat_dps_uuid,
+            business_legal_name=self.business_legal_name,
+            business_address=self.business_address,
+            business_city=self.business_city,
+            business_state=self.business_state,
+            business_country=self.business_country,
+            business_postal_code=self.business_postal_code,
+            billing_status=self.billing_status,
+            billing_status_message=self.billing_status_message,
+            accepted_agreement=self.accepted_agreement,
+            pr_name=self.pr_name,
+            pr_email=self.pr_email,
+            pr_phone=self.pr_phone,
+            website=self.website,
+            created_time=self.created_time,
+            first_submitted_time=self.first_submitted_time,
+            first_approval_time=self.first_approval_time,
+            modified_time=self.modified_time,
+            sensitive_data=self.sensitive_data,
+            infolease_vendor_code=self.infolease_vendor_code,
+            infolease_gl_code=self.infolease_gl_code,
+            rev_share=self.rev_share,
+            is_rev_share_flat_rate=self.is_rev_share_flat_rate,
+            signor_name=self.signor_name,
+            signor_title=self.signor_title,
+            referral_submission_time=self.referral_submission_time,
+            billing_contract_number=self.billing_contract_number,
+            emergency_email=self.emergency_email,
+            developer_type=self.developer_type,
+            approval_status_modified_time=self.approval_status_modified_time,
+        )

@@ -9,10 +9,11 @@ contain actual schema differences (new columns, modified types, etc.).
 
 from __future__ import annotations
 
+from ..metadata_registry import NaProdSQLModel
 from .stage_charge import StageCharge
 
 
-class StageChargeV1(StageCharge, table=True):
+class StageChargeV1(StageCharge, NaProdSQLModel, table=True):
     """
     Version 1 of the StageCharge model.
 

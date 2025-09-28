@@ -22,7 +22,10 @@ class Locale(RhizomeModel, table=True):
     language: str = Field(max_length=2)
     country: str | None = Field(default=None, max_length=2)
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Locale:
         """Return a sanitized copy of this Locale instance."""
-        # This will be overridden by concrete subclasses
-        raise NotImplementedError("Subclasses must implement sanitize()")
+        return Locale(
+            id=self.id,
+            language=self.language,
+            country=self.country,
+        )

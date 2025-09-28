@@ -29,7 +29,17 @@ class Country(RhizomeModel, table=True):
     app_market_billing_enabled: bool | None = Field(default=False)
     vat: bool | None = Field(default=False)
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Country:
         """Return a sanitized copy of this Country instance."""
-        # This will be overridden by concrete subclasses
-        raise NotImplementedError("Subclasses must implement sanitize()")
+        return Country(
+            id=self.id,
+            country_code=self.country_code,
+            default_currency=self.default_currency,
+            default_locale_id=self.default_locale_id,
+            default_timezone_id=self.default_timezone_id,
+            state_province_required=self.state_province_required,
+            zip_postal_required=self.zip_postal_required,
+            county_required=self.county_required,
+            app_market_billing_enabled=self.app_market_billing_enabled,
+            vat=self.vat,
+        )
