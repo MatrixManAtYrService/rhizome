@@ -10,11 +10,14 @@ Two species of clover, with different ways of propagating:
 Rhizomes and stolons are similar in that they grow out horizontally from one clover and connect it to other nearby clover.
 They're different in that rhizomes do this underground (another plant that does this is hops 🍺), and stolons do this aboveground (strawberries also do this 🍓).
 
-`rhizome` is a data access layer for clover's databases, and `stolon` is a data access layer for clover's http API's.
+This project provides two python packages:
+
+- `stolon` is a data access layer for any locally-attached devices and for Clover's http API's.
+- `rhizome` is a data access layer for clover's databases
 
 ## As a Repository for Tribal Knowledge
 
-If you want to access clover data, there are a variety of questions you might ask:
+If you want to access clover databases, there are a variety of questions you might ask:
 
 - do I need to forward a port anywhere?
 - what host should I talk to?
@@ -22,7 +25,14 @@ If you want to access clover data, there are a variety of questions you might as
 - what columns/attributes are available?
 - should I expect certain environments to differ from others?
 
+There are a variety of similar questions that you might ask if you're working with a Clover device or with Clover API's
+
+- how do I get a token?
+- which API should I use for some action or another?
+- how do I reconfigure my device in some way or another?
+
 This project aims to capture the answers to these questions in code.
+The goal is that trifolium users can focus on business/test logic instead, since trifolium itself knows how to do these things.
 
 ## Local Servers
 
@@ -53,7 +63,7 @@ safe_fee_summary = fee_summary.sanitize()
 assert safe_fee_summary.total_period_units == 3
 ```
 
-If you have a rhizome server running, it will handle the "tribal knowledge" part.
+If you have a `rhizome` or `stolon` server running, it will handle the "tribal knowledge" part.
 It connects to the right servers, forwards the right ports, and summons the right credentials.
 Sometimes it'll need you to log in on its behalf so that it can get a session token or the correct credientials.
 
@@ -61,7 +71,4 @@ Since the server is running in a separate terminal, there is a dedicated place f
 Debugging things like authentication or flaky servers happens within the server.
 This keeps the test logic simple and easy to read.
 
-In a place like retool, where tabular data is made available directly by the environment, the rhizome client will handle supplying the corect data for each call.
-In this case, it'll be necessary to analyze a local run and extract the queries such that a retool app can be generated which knows which queries should be used where.
-This mode is a TODO.
 

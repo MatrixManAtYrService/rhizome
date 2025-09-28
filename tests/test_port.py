@@ -3,7 +3,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from rhizome.config import Home
+from trifolium.config import Home
 from rhizome.server import app
 from tests.utils import get_open_port
 
@@ -22,7 +22,7 @@ def test_port_storage_in_sandbox() -> None:
         assert home.get_port() == test_port
 
         # Verify the port file was created in the correct location
-        port_file = home.state / "port"
+        port_file = home.state / "rhizome_port"
         assert port_file.exists()
         assert port_file.read_text().strip() == str(test_port)
 
@@ -44,7 +44,7 @@ def test_port_cleanup_on_server_shutdown() -> None:
 
         # Set up port file
         home.set_port(test_port)
-        port_file = home.state / "port"
+        port_file = home.state / "rhizome_port"
         assert port_file.exists()
 
         # Set the global _home variable to our sandbox home

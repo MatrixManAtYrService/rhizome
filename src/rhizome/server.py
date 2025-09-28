@@ -9,11 +9,11 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from rhizome.config import Home
 from rhizome.logging import setup_logging
 from rhizome.portforward import start_portforward
 from rhizome.proc import NewProcessResponse, ProcessListResponse, process_manager
 from rhizome.sleeper import start_sleeper
+from trifolium.config import Home
 
 
 class PortforwardRequest(BaseModel):
@@ -61,7 +61,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     # Clean up port file
     if _home is not None:
-        port_file = _home.state / "port"
+        port_file = _home.state / "rhizome_port"
         if port_file.exists():
             port_file.unlink()
 

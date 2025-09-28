@@ -14,7 +14,7 @@ from _pytest.config import Config
 from _pytest.config.argparsing import Parser
 from _pytest.nodes import Item
 
-from rhizome.config import Home
+from trifolium.config import Home
 from rhizome.server import app, setup_logging
 from tests.utils import get_open_port
 

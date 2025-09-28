@@ -13,6 +13,7 @@ dependencies = [
     "httpx>=0.28.1",
     "httpx-sse>=0.4.1",
     "pybritive>=2.2.3",
+    "pydantic>=2.0.0",
     "pymysql>=1.1.1",
     "sqlmodel>=0.0.24",
     "structlog>=25.4.0",
@@ -37,7 +38,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-packages = ["src/rhizome", "src/stolon"]
+packages = ["src/rhizome", "src/stolon", "src/trifolium"]
 
 [tool.ruff]
 line-length = 120
@@ -62,7 +63,7 @@ fixable = ["ALL"]
 "__init__.py" = ["E501"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["rhizome", "stolon"]
+known-first-party = ["rhizome", "stolon", "trifolium"]
 force-single-line = false
 combine-as-imports = true
 
@@ -81,7 +82,7 @@ explicit = true
 iniconfig = { index = "artifactory"}
 
 [tool.pyright]
-include = ["src/rhizome", "src/stolon"]
+include = ["src/rhizome", "src/stolon", "src/trifolium"]
 
 exclude = [
     "**/__pycache__",

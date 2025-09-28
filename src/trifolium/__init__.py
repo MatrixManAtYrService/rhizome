@@ -1,4 +1,4 @@
-"""Stolon - HTTP API access helper for Clover services."""
+"""Trifolium - Unified configuration and shared components."""
 
 # [[[cog
 # import os

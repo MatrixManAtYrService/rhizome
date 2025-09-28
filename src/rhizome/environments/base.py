@@ -135,7 +135,7 @@ class Environment(ABC):
         if table_name not in self.table_situation:
             raise KeyError(
                 f"Table {table_name} is not configured for environment {self.name}. "
-                f"Available tables: {', '.join(str(t) for t in self.table_situation.keys())}"
+                f"Available tables: {', '.join(str(t) for t in self.table_situation)}"
             )
 
         model_class, _ = self.table_situation[table_name]

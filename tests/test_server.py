@@ -7,7 +7,7 @@ from pathlib import Path
 import uvicorn
 
 from rhizome.client import RhizomeClient
-from rhizome.config import Home
+from trifolium.config import Home
 from rhizome.server import app, setup_logging
 
 

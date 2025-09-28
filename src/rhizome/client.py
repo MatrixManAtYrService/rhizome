@@ -18,9 +18,9 @@ from httpx_sse import connect_sse
 from sqlmodel import Session, create_engine
 from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
-from rhizome.config import Home
 from rhizome.models.base import RhizomeModel
 from rhizome.tools import Tools
+from trifolium.config import Home
 
 TFirst = TypeVar("TFirst", bound=RhizomeModel)
 TAll = TypeVar("TAll", bound=RhizomeModel)

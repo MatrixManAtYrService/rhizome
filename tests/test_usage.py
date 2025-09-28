@@ -10,13 +10,14 @@ Tests require external infrastructure access and should be run with:
 """
 
 import pytest
+from typing import Any
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
 from rhizome.environments.na_prod.billing_bookkeeper import NorthAmericaBillingBookkeeper
-from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
+from rhizome.models.table_list import BillingBookkeeperTable
 
 
 @pytest.mark.external_infra
@@ -81,9 +82,6 @@ def test_get_model_with_invalid_table():
     dev_db = DevBillingBookkeeper(client)
 
     # Test with a table that doesn't exist in this environment
-    # We need to create a fake enum value for testing
-    from enum import auto
-    from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
 
     # This should raise a KeyError since the table isn't configured
     with pytest.raises(KeyError) as exc_info:
@@ -101,9 +99,7 @@ def test_get_model_with_invalid_table():
             # All tables are configured, so we skip this part of the test
             pytest.skip("All tables are configured in DevBillingBookkeeper")
 
-    if not unconfigured_tables:
-        return  # Skip the assertion if we couldn't test it
-
+    # We only reach here if unconfigured_tables was not empty and an exception was raised
     assert "is not configured for environment" in str(exc_info.value)
 
 
@@ -153,7 +149,7 @@ def test_multiple_tables_with_get_model():
     configured_tables = list(dev_db.table_situation.keys())
 
     # Test that we can get models for all configured tables
-    models = {}
+    models: dict[Any, type[Any]] = {}
     for table in configured_tables:
         try:
             model = dev_db.get_model(table)
@@ -174,10 +170,10 @@ def test_multiple_tables_with_get_model():
     assert len(models) > 0, "No models were successfully retrieved"
 
     # All models should be different classes (not the same class)
-    model_classes = list(models.values())
+    model_classes: list[type[Any]] = list(models.values())
     if len(model_classes) > 1:
         # Check that they're actually different classes
-        first_model = model_classes[0]
+        first_model: type[Any] = model_classes[0]
         for other_model in model_classes[1:]:
             # They might have the same name if they're the same version,
             # but they should be different table classes

@@ -4,12 +4,12 @@ from typing import Annotated
 import typer
 
 from rhizome import __version__
-from rhizome.config import Home
 from rhizome.environments.environment_list import RhizomeEnvironment
 from rhizome.server import run
 from rhizome.sync_data import sync_data
 from rhizome.sync_report import sync_report
 from rhizome.sync_schema import sync_schema
+from trifolium.config import Home
 
 app = typer.Typer(help="Database access helper for test tools")
 sync_app = typer.Typer(help="Synchronize database schemas, models, and data.")

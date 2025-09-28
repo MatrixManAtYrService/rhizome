@@ -21,7 +21,7 @@ import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
-from rhizome.config import Home
+from trifolium.config import Home
 from rhizome.environments.demo.billing_bookkeeper import DemoBillingBookkeeper
 from rhizome.environments.demo.billing_event import DemoBillingEvent
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
