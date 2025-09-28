@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import datetime
 
+from sqlalchemy import Column, String
 from sqlmodel import Field
 
 from ...models.base import RhizomeModel
@@ -27,8 +28,15 @@ class StageEmail(RhizomeModel, table=False):
     reference_type: str | None = Field(default=None, description="reference_type")
     reference_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     type: str | None = Field(default=None, description="type")
-    to: str = Field(max_length=127, description="to")
-    from: str | None = Field(default=None, max_length=127, description="from")
+    to_email: str = Field(
+        sa_column=Column("to", String(127)),
+        description="Email to address"
+    )
+    from_email: str | None = Field(
+        default=None,
+        sa_column=Column("from", String(127)),
+        description="Email from address"
+    )
     from_name: str | None = Field(default=None, max_length=127, description="from_name")
     replyTo: str | None = Field(default=None, max_length=127, description="replyTo")
     bcc: str | None = Field(default=None, max_length=127, description="bcc")
@@ -45,8 +53,8 @@ class StageEmail(RhizomeModel, table=False):
             reference_type=self.reference_type,
             reference_id=self.reference_id,
             type=self.type,
-            to=self.to,
-            from=self.from,
+            to_email=self.to_email,
+            from_email=self.from_email,
             from_name=self.from_name,
             replyTo=self.replyTo,
             bcc=self.bcc,
