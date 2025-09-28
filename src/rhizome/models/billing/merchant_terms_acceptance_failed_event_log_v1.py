@@ -1,0 +1,26 @@
+"""
+SQLModel definition for the merchant_terms_acceptance_failed_event_log table, version 1.
+
+This module provides the V1 implementation of the MerchantTermsAcceptanceFailedEventLog model.
+Currently, MerchantTermsAcceptanceFailedEventLogV1 is identical to the base MerchantTermsAcceptanceFailedEventLog class (name-only inheritance),
+but as the table schema evolves across environments, future versions (V2, V3, etc.) will
+contain actual schema differences (new columns, modified types, etc.).
+"""
+
+from __future__ import annotations
+
+from ..metadata_registry import NaProdSQLModel
+from .merchant_terms_acceptance_failed_event_log import MerchantTermsAcceptanceFailedEventLog
+
+
+class MerchantTermsAcceptanceFailedEventLogV1(MerchantTermsAcceptanceFailedEventLog, NaProdSQLModel, table=True):
+    """
+    Version 1 of the MerchantTermsAcceptanceFailedEventLog model.
+
+    Currently a name-only inheritance from the base MerchantTermsAcceptanceFailedEventLog class.
+    As schema changes are introduced in different environments, subsequent
+    versions (V2, V3, etc.) will not be so trivial and will contain
+    actual field modifications, additions, or removals.
+    """
+
+    __tablename__ = "merchant_terms_acceptance_failed_event_log"  # type: ignore
