@@ -19,6 +19,7 @@ from rhizome.environments.na_prod.billing_bookkeeper import (
     NorthAmericaBillingBookkeeper,
 )
 from rhizome.environments.na_prod.billing_event import NorthAmericaBillingEvent
+from rhizome.environments.na_prod.meta import NorthAmericaMeta
 
 
 class RhizomeEnvironment(StrEnum):
@@ -36,6 +37,7 @@ class RhizomeEnvironment(StrEnum):
     na_prod_billing = auto()
     na_prod_billing_bookkeeper = auto()
     na_prod_billing_event = auto()
+    na_prod_meta = auto()
 
 
 environment_type: dict[RhizomeEnvironment, type[Environment]] = {
@@ -46,4 +48,5 @@ environment_type: dict[RhizomeEnvironment, type[Environment]] = {
     RhizomeEnvironment.na_prod_billing: NorthAmericaBilling,
     RhizomeEnvironment.na_prod_billing_bookkeeper: NorthAmericaBillingBookkeeper,
     RhizomeEnvironment.na_prod_billing_event: NorthAmericaBillingEvent,
+    RhizomeEnvironment.na_prod_meta: NorthAmericaMeta,
 }

@@ -19,4 +19,4 @@ CREATE TABLE `merchant_evolution` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `merchant_evolution_key1` (`merchant_uuid`),
   UNIQUE KEY `merchant_evolution_key2` (`reseller_uuid`,`merchant_uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

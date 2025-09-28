@@ -10,4 +10,4 @@ CREATE TABLE `as_of_merchant_plan` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `as_of_merchant_plan_key1` (`uuid`),
   UNIQUE KEY `as_of_merchant_plan_key2` (`as_of_merchant_uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

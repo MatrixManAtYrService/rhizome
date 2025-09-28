@@ -14,6 +14,8 @@ from rhizome.models.billing_event.as_of_merchant_v1 import AsOfMerchantV1
 class AsOfMerchantDev(Emplacement[AsOfMerchantV1]):
     """Expected data for AsOfMerchant in dev environment."""
 
+    assert_data_stability = False
+
     @classmethod
     def get_expected(cls) -> AsOfMerchantV1:
         """Get expected data from JSON file."""

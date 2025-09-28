@@ -1,0 +1,33 @@
+"""
+SQLModel definition for the app_metered table.
+"""
+
+from __future__ import annotations
+
+import datetime
+from typing import TypeVar
+
+from sqlmodel import Field
+
+from ...models.base import RhizomeModel
+
+T = TypeVar("T", bound="AppMetered")
+
+
+class AppMetered(RhizomeModel, table=True):
+    """
+    SQLModel for the `app_metered` table.
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    uuid: str = Field(max_length=13, unique=True)
+    developer_app_id: int = Field(foreign_key="developer_app.id")
+    label: str = Field(max_length=20)
+    created_time: datetime.datetime | None = Field(default=None)
+    modified_time: datetime.datetime
+    deleted_time: datetime.datetime | None = Field(default=None)
+
+    def sanitize(self: T) -> T:
+        """Return a sanitized copy of this AppMetered instance."""
+        # This will be overridden by concrete subclasses
+        raise NotImplementedError("Subclasses must implement sanitize()")

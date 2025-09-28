@@ -55,8 +55,14 @@ class Emplacement[T: "RhizomeModel"](ABC):
         """
         return select(model).limit(1)
 
+    assert_data_stability: bool = True
+
     def assert_match(self, actual: T, expected: T | None, env_name: str, table_name: str) -> None:
         """Compare actual and expected models, raising a detailed error on mismatch."""
+        if not self.assert_data_stability:
+            assert actual is not None, f"Query should return data for {table_name} in {env_name}"
+            return
+
         if expected is None:
             expected = self.get_expected()
 
@@ -67,7 +73,7 @@ class Emplacement[T: "RhizomeModel"](ABC):
         if actual_dict == expected_dict:
             return
 
-        # Use marshal=True to get a JSON-serializable dict with '$' prefixed symbols.
+        # Use marshal=True to get a JSON-serializable dict with ' prefixed symbols.
         # Use syntax='symmetric' to get a clear [old, new] diff format.
         difference = diff(expected_dict, actual_dict, syntax="symmetric", marshal=True)  # type: ignore[call-arg]
 

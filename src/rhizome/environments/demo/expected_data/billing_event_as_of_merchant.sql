@@ -11,4 +11,4 @@ CREATE TABLE `as_of_merchant` (
   UNIQUE KEY `as_of_merchant_key1` (`uuid`),
   UNIQUE KEY `as_of_merchant_key2` (`merchant_uuid`,`as_of_timestamp` DESC),
   UNIQUE KEY `as_of_merchant_key3` (`as_of_timestamp` DESC,`id` DESC)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

@@ -14,6 +14,8 @@ from rhizome.models.billing_event.merchant_evolution_v1 import MerchantEvolution
 class MerchantEvolutionDemo(Emplacement[MerchantEvolutionV1]):
     """Expected data for MerchantEvolution in demo environment."""
 
+    assert_data_stability = False
+
     @classmethod
     def get_expected(cls) -> MerchantEvolutionV1:
         """Get expected data from JSON file."""

@@ -28,19 +28,11 @@ def get_internal_token(domain: str) -> str:
     Raises:
         typer.Exit: If user cancels or authentication fails
     """
-    # Load user preferences
     home = Home()
-    config = home.load_config()
-
-    # Check if this is the first time (config file just created with default PROMPT)
     config_file = home.config / "trifolium.json"
-    is_first_time = not config_file.exists() or config.internal_token_preference == InternalTokenPreference.PROMPT
 
-    if (
-        is_first_time
-        and config.internal_token_preference == InternalTokenPreference.PROMPT
-        and not config_file.exists()
-    ):
+    # If this is the first time the user has run the command, ask for their preference.
+    if not config_file.exists():
         typer.echo("🤖 First-time setup: How would you like to handle internal token capture in the future?")
         typer.echo("")
         typer.echo("Options:")
@@ -50,6 +42,7 @@ def get_internal_token(domain: str) -> str:
 
         choice = typer.prompt("Enter your preference (auto/prompt)", default="auto")
 
+        config = home.load_config()
         if choice.lower() in ["auto", "a", "1"]:
             config.internal_token_preference = InternalTokenPreference.AUTO
             typer.echo("✅ Set to automatically capture tokens in the future")
@@ -59,6 +52,9 @@ def get_internal_token(domain: str) -> str:
 
         home.save_config(config)
         typer.echo("")
+
+    # Load user preferences
+    config = home.load_config()
 
     # If user has selected prompt preference, ask for confirmation each time
     if config.internal_token_preference == InternalTokenPreference.PROMPT:

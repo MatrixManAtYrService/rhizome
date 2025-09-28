@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.table import Table
 
 from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
-from rhizome.models.table_list import BillingBookkeeperTable, BillingEventTable, BillingTable
+from rhizome.models.table_list import BillingBookkeeperTable, BillingEventTable, BillingTable, MetaTable
 
 
 class SyncStatus(StrEnum):
@@ -136,16 +136,18 @@ def check_table_sync_status(
 
 def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnum] | None:
     """Get the table enum list for a given environment."""
-    env_str = str(env_enum)
-
-    if "billing_bookkeeper" in env_str:
-        return list(BillingBookkeeperTable)
-    elif "billing_event" in env_str:
-        return list(BillingEventTable)
-    elif "billing" in env_str and "bookkeeper" not in env_str and "event" not in env_str:
-        return list(BillingTable)
-    else:
-        return None
+    env_map = {
+        RhizomeEnvironment.dev_billing_bookkeeper: BillingBookkeeperTable,
+        RhizomeEnvironment.demo_billing_bookkeeper: BillingBookkeeperTable,
+        RhizomeEnvironment.na_prod_billing_bookkeeper: BillingBookkeeperTable,
+        RhizomeEnvironment.dev_billing_event: BillingEventTable,
+        RhizomeEnvironment.demo_billing_event: BillingEventTable,
+        RhizomeEnvironment.na_prod_billing_event: BillingEventTable,
+        RhizomeEnvironment.na_prod_billing: BillingTable,
+        RhizomeEnvironment.na_prod_meta: MetaTable,
+    }
+    table_enum = env_map.get(env_enum)
+    return list(table_enum) if table_enum else None
 
 
 def collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatus]:

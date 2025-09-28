@@ -78,7 +78,7 @@ class Environment(ABC):
         """
 
     @abstractmethod
-    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement[Any]]]:
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]:
         """
         Indicates which data should be expected from which table.
         Returns tuple of (ModelClass, EmplacementClass).

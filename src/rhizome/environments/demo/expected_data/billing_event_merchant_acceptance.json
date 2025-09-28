@@ -6,15 +6,15 @@
   "acceptance_id": "HashHzvvF7U9RPj3MnTX78TPzvfbPJFG3ikQ",
   "agreement_id": "Hash4Wz3Q8odJUE33PmRvYQSoVpSLv9ETRFW",
   "agreement_type": "CELLULAR_ARREARS",
-  "agreement_event_type": "CREATED",
+  "agreement_event_type": "INVALIDATED",
   "action": "ACCEPTED",
   "acceptance_created_datetime": "2025-09-19T14:06:09",
-  "acceptance_modified_datetime": "2025-09-19T14:06:09",
-  "acceptance_deleted_datetime": null,
+  "acceptance_modified_datetime": "2025-09-24T13:52:32",
+  "acceptance_deleted_datetime": "2025-09-24T13:52:32",
   "acceptance_expiration_datetime": null,
   "serial_number": "C045EQ22730071",
   "iccid": "89011702278668446200",
   "is_oobe": true,
   "created_timestamp": "2025-09-19T14:06:10.184696",
-  "modified_timestamp": "2025-09-19T14:06:10.184696"
+  "modified_timestamp": "2025-09-24T13:52:33.474478"
 }

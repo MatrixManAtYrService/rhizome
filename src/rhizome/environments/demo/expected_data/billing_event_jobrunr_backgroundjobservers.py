@@ -30,7 +30,11 @@ class JobrunrBackgroundjobserversDemo(Emplacement[JobrunrBackgroundjobserversV1]
         return JobrunrBackgroundjobserversV1.model_validate(data)
 
     def assert_match(
-        self, actual: JobrunrBackgroundjobserversV1, expected: JobrunrBackgroundjobserversV1 | None = None
+        self,
+        actual: JobrunrBackgroundjobserversV1,
+        expected: JobrunrBackgroundjobserversV1 | None,
+        env_name: str,
+        table_name: str,
     ) -> None:
         """Weakened comparison for volatile data. Only checks that the ID matches."""
         if expected is None:
