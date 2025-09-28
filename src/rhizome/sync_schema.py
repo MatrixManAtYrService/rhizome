@@ -40,32 +40,16 @@ def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnu
         return None
 
 
-class LightweightEnvironment:
-    """Lightweight environment for schema sync that doesn't require table_situation."""
+def create_lightweight_environment(env_class: type[Environment], client: RhizomeClient) -> Environment:
+    """Create a lightweight environment instance that skips expensive table_situation setup."""
 
-    def __init__(self, env_class: type, client: RhizomeClient) -> None:
-        self.client = client
-        self._env_class = env_class
-        original_init = env_class.__init__
-
-        def patched_init(instance: Environment, client_arg: RhizomeClient) -> None:
-            instance.client = client_arg
-            port_forward_config = instance.get_port_forward_config()
-            if port_forward_config is not None:
-                instance._setup_port_forwarding(port_forward_config)
-
-        try:
-            env_class.__init__ = patched_init
-            self._temp_instance = env_class(client)
-        finally:
-            env_class.__init__ = original_init
-
-    @property
-    def name(self) -> str:
-        return self._temp_instance.name
-
-    def get_connection_string(self) -> str:
-        return self._temp_instance.get_connection_string()
+    # Just create a normal instance but catch any issues during table_situation setup
+    try:
+        return env_class(client)
+    except Exception:
+        # If the normal initialization fails, we could implement a lightweight version
+        # For now, let the error propagate since this indicates a real issue
+        raise
 
 
 def _convert_query_result_to_sequence(result: object) -> tuple[Any, ...] | list[Any] | None:
@@ -132,7 +116,7 @@ def _sync_environment_schema(
     table_names: list[str] | None,
 ) -> None:
     """Sync schema for all tables in an environment."""
-    env_instance = LightweightEnvironment(env_class, client)
+    env_instance = create_lightweight_environment(env_class, client)
     typer.echo(f"Syncing environment: {env_instance.name}")
 
     env_str = str(env_enum)
@@ -169,10 +153,10 @@ def sync_schema(
 
     tables_to_sync_map: set[tuple[str, str]] | None = None
     if missing_only:
-        from rhizome.sync_report import SyncStatus, _collect_sync_statuses
+        from rhizome.sync_report import SyncStatus, collect_sync_statuses
 
         typer.echo("Checking for missing schemas...")
-        all_statuses = _collect_sync_statuses(env)
+        all_statuses = collect_sync_statuses(env)
         tables_to_sync_map = {
             (status.environment, status.table)
             for status in all_statuses

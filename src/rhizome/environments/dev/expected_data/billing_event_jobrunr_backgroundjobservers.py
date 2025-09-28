@@ -31,12 +31,9 @@ class JobrunrBackgroundjobserversDev(Emplacement[JobrunrBackgroundjobserversV1])
 
     def assert_match(
         self, actual: JobrunrBackgroundjobserversV1, expected: JobrunrBackgroundjobserversV1 | None = None
-    ) -> tuple[dict[str, Any], dict[str, Any]]:
+    ) -> None:
         """Weakened comparison for volatile data. Only checks that the ID matches."""
         if expected is None:
             expected = self.get_expected()
 
         assert actual.id == expected.id, "IDs do not match for volatile table"
-
-        # Return two identical dummy dicts to satisfy the test harness
-        return {"status": "checked"}, {"status": "checked"}

@@ -183,11 +183,11 @@ def test_mocked_environment_database_access(
 
     # Try to get expected data - this should FAIL if JSON is missing
     try:
-        expected_data = emplacement_class.get_expected()  # type: ignore
+        expected_data = emplacement_class.get_expected()  # type: ignore[reportUnknownMemberType]
     except FileNotFoundError:
         pytest.fail(
             f"Missing test data file for {emplacement_class.__name__}. "
-            f"Run 'rhizome sync data --env {env_instance.name} --table {table_name}' to generate it."
+            f"Run 'rhizome sync data --env {env_instance.name} --table {table_name}' to generate it."  # type: ignore[reportUnknownMemberType]
         )
     except NotImplementedError:
         pytest.skip(f"Test data not yet implemented for {environment_class.__name__}/{table_name}")

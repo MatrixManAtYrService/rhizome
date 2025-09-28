@@ -296,6 +296,7 @@ class ExternalPybritiveTool(PybritiveTool):
     async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
         import re
+
         import structlog
 
         log = structlog.get_logger()

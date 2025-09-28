@@ -44,7 +44,7 @@ class Emplacement[T: "RhizomeModel"](ABC):
         """
         return select(model).limit(1)
 
-    def assert_match(self, actual: T, expected: T | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+    def assert_match(self, actual: T, expected: T | None = None) -> None:
         """Prepare actual and expected data for comparison."""
         if expected is None:
             expected = self.get_expected()

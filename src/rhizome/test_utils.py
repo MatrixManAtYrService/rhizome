@@ -62,10 +62,10 @@ def generate_sync_fix_commands(emplacement_module_path: str, table_name: str = "
         fix_message += f" --table {table_name}"
 
     fix_message += (
-        f"\n\n💡 TIP: If this is a schema evolution issue, the schema sync will update "
-        f"the model definitions. If this is a data volatility issue, the data sync "
-        f"will update the expected values.\n"
-        f"💡 IMPORTANT: Always run schema syncs before data syncs to ensure proper ordering."
+        "\n\n💡 TIP: If this is a schema evolution issue, the schema sync will update "
+        "the model definitions. If this is a data volatility issue, the data sync "
+        "will update the expected values.\n"
+        "💡 IMPORTANT: Always run schema syncs before data syncs to ensure proper ordering."
     )
 
     return fix_message
@@ -87,10 +87,7 @@ def _infer_cli_environment(env_folder: str, db_and_table: str) -> str:
         db_type = "billing"
 
     # Construct the expected environment name and validate it exists
-    if env_folder == "na_prod":
-        cli_env_name = f"na_prod_{db_type}"
-    else:
-        cli_env_name = f"{env_folder}_{db_type}"
+    cli_env_name = f"na_prod_{db_type}" if env_folder == "na_prod" else f"{env_folder}_{db_type}"
 
     # Verify this environment exists in our enum
     try:

@@ -107,7 +107,7 @@ class MockGcloudTool(GcloudTool):
 class MockPybritiveTool(PybritiveTool):
     """Mock pybritive tool that returns test credentials."""
 
-    async def checkout(self, resource_path: str) -> BritiveInfo:
+    async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
         """Return mock credentials for testing."""
         # Return mock credentials based on the nushell output format
         return BritiveInfo(

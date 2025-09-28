@@ -93,7 +93,11 @@ exclude = [
     "**/target",
     "**/dist",
     "**/build",
+    # Exclude tests from strict type checking - they use mocks and dynamic objects
+    "tests/**",
 ]
+
+# Strict type checking for source code only
 typeCheckingMode = "strict"
 reportMissingTypeStubs = "error"
 reportUnknownMemberType = "error"

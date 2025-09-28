@@ -148,7 +148,7 @@ def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnu
         return None
 
 
-def _collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatus]:
+def collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatus]:
     """Collect sync statuses for all environment/table pairs."""
     console = Console()
     all_statuses: list[TableSyncStatus] = []
@@ -263,7 +263,7 @@ def sync_report(env: RhizomeEnvironment | None = None) -> None:
     console = Console()
 
     # Collect all statuses
-    all_statuses = _collect_sync_statuses(env)
+    all_statuses = collect_sync_statuses(env)
 
     # Group statuses by category
     grouped = _group_statuses_by_category(all_statuses)

@@ -1,9 +1,12 @@
-import typer
 from pathlib import Path
+from typing import Any
+
+import typer
 
 from rhizome.client import RhizomeClient
 from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
 from rhizome.git_diff import ChangeTracker, DataChangeClassifier
+
 
 def sync_data(
     env: RhizomeEnvironment | None = None,
@@ -17,10 +20,10 @@ def sync_data(
 
     tables_to_sync_map: set[tuple[str, str]] | None = None
     if missing_only:
-        from rhizome.sync_report import SyncStatus, _collect_sync_statuses
+        from rhizome.sync_report import SyncStatus, collect_sync_statuses
 
         typer.echo("Checking for missing data...")
-        all_statuses = _collect_sync_statuses(env)
+        all_statuses = collect_sync_statuses(env)
         tables_to_sync_map = {
             (status.environment, status.table)
             for status in all_statuses
@@ -41,7 +44,7 @@ def sync_data(
     for _env_enum, env_class in environments_to_sync:
         env_instance = env_class(client)
 
-        tables_for_this_env = []
+        tables_for_this_env: list[tuple[Any, Any, Any]] = []
         for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
             if not model_class:
                 continue
@@ -62,23 +65,26 @@ def sync_data(
         typer.echo(f"Syncing environment: {env_instance.name}")
 
         for table_name, model_class, emplacement_class in tables_for_this_env:
+            table_name: Any
+            model_class: Any
+            emplacement_class: Any
             typer.echo(f"  Syncing table: {table_name}")
-            query = emplacement_class.expectation_query(model_class)
+            query: Any = emplacement_class.expectation_query(model_class)
             try:
-                result = env_instance.select_first(query)
+                result: Any = env_instance.select_first(query)
 
                 # Infer path from module path of the emplacement class
-                module_path = emplacement_class.__module__
-                parts = module_path.split(".")
-                env_name = parts[2]
-                db_and_table_name = parts[4]
+                module_path: str = emplacement_class.__module__
+                parts: list[str] = module_path.split(".")
+                env_name: str = parts[2]
+                db_and_table_name: str = parts[4]
                 json_file_path_str = f"src/rhizome/environments/{env_name}/expected_data/{db_and_table_name}.json"
                 json_file_path = Path(json_file_path_str)
                 sql_file_path = json_file_path.with_suffix(".sql")
 
                 if result:
                     # Data found in source, write/overwrite the file
-                    json_data = result.model_dump_json(indent=2)
+                    json_data: str = result.model_dump_json(indent=2)
                     with open(json_file_path, "w") as f:
                         f.write(json_data)
                     typer.echo(f"    Wrote data to {json_file_path_str}")
