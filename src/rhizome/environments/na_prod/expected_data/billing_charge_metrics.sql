@@ -1,0 +1,19 @@
+CREATE TABLE `charge_metrics` (
+  `stmt_month` date NOT NULL,
+  `category` enum('ALL','PLAN','WM','APP') NOT NULL,
+  `net_pending` bigint NOT NULL,
+  `net_incurred` bigint NOT NULL,
+  `net_in_progress` bigint NOT NULL,
+  `net_ach_reject` bigint NOT NULL,
+  `net_billed` bigint NOT NULL,
+  `net_written_off` bigint NOT NULL,
+  `net_waived` bigint NOT NULL,
+  `net_canceled` bigint NOT NULL,
+  `num_charges` bigint NOT NULL,
+  `num_merchants` bigint NOT NULL,
+  `num_in_progress_merchants` bigint NOT NULL,
+  `num_ach_reject_merchants` bigint NOT NULL,
+  `num_incurred_merchants` bigint NOT NULL,
+  `orig_num_incurred_merchants` bigint NOT NULL,
+  PRIMARY KEY (`stmt_month`,`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3

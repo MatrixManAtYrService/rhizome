@@ -24,4 +24,4 @@ CREATE TABLE `stage_charge` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `request_and_uuid` (`request_uuid`,`uuid`),
   UNIQUE KEY `promoted_id_idx` (`promoted_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2379937296 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=2397102802 DEFAULT CHARSET=utf8mb3

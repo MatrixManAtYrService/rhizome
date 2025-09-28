@@ -1,0 +1,21 @@
+CREATE TABLE `app_suppression` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(13) CHARACTER SET latin1 NOT NULL,
+  `developer_app_id` bigint unsigned DEFAULT NULL,
+  `merchant_id` bigint unsigned DEFAULT NULL,
+  `reseller_id` bigint unsigned DEFAULT NULL,
+  `country_id` bigint unsigned DEFAULT NULL,
+  `app_id` bigint unsigned NOT NULL,
+  `app_billable` tinyint(1) DEFAULT '1',
+  `app_exportable` tinyint(1) DEFAULT '1',
+  `context` enum('TRIAL','DEMO','SUNSET','OFFER','OVERRIDE','SYSTEM','FIELD_TEST','OFF_BOARDED','ACH_HOLD','PILOT','DEBIT_NO_AUTH','PROMO','NO_CLOVER_APPS','SEASONAL','FINANCE_EXCEPTION') NOT NULL,
+  `detail` varchar(511) CHARACTER SET latin1 DEFAULT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `finalization_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uuid` (`uuid`),
+  KEY `developer_app` (`app_id`,`context`),
+  KEY `app_suppression_merchant_id` (`merchant_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4253154 DEFAULT CHARSET=utf8mb3
