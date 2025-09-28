@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from abc import ABC, abstractmethod
-from typing import Any, TypeVar
+from typing import TypeVar
 
 from jsondiff import diff  # type: ignore[import-untyped]
 from sqlmodel import SQLModel, select
@@ -25,7 +25,7 @@ class DataMismatchError(AssertionError):
 class RhizomeModel(SQLModel, ABC):
     """Abstract base class for models that support sanitization."""
 
-    id: Any | None = None
+    id: int | None = None
 
     @abstractmethod
     def sanitize(self: T) -> T:
