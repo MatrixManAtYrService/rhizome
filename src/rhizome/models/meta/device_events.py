@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="DeviceEvents")
 
 
-class DeviceEvents(RhizomeModel, table=True):
+class DeviceEvents(RhizomeModel, table=False):
     """
-    SQLModel for the `device_events` table.
+    Base DeviceEvents model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     device_event: str | None = Field(default=None, max_length=13)
     serial_number: str | None = Field(default=None, max_length=32)
     device_type_id: int | None = Field(default=None)

@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="AppSubscription")
 
 
-class AppSubscription(RhizomeModel, table=True):
+class AppSubscription(RhizomeModel, table=False):
     """
-    SQLModel for the `app_subscription` table.
+    Base AppSubscription model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     developer_app_id: int = Field(foreign_key="developer_app.id")
     label: str = Field(max_length=20)

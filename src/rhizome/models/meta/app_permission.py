@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="AppPermission")
 
 
-class AppPermission(RhizomeModel, table=True):
+class AppPermission(RhizomeModel, table=False):
     """
-    SQLModel for the `app_permission` table.
+    Base AppPermission model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     name: str = Field(max_length=100, unique=True)
     created_time: datetime.datetime | None = Field(default=None)
     modified_time: datetime.datetime

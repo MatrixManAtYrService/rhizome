@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.developer_app import DeveloperApp
+from rhizome.models.meta.developer_app_v1 import DeveloperAppV1
 
 
-class DeveloperAppNaProd(Emplacement[DeveloperApp]):
+class DeveloperAppNaProd(Emplacement[DeveloperAppV1]):
     """Expected data for DeveloperApp in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> DeveloperApp:
+    def get_expected(cls) -> DeveloperAppV1:
         """Get expected developer_app data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_developer_app.json"
@@ -28,4 +28,4 @@ class DeveloperAppNaProd(Emplacement[DeveloperApp]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return DeveloperApp.model_validate(data)
+        return DeveloperAppV1.model_validate(data)

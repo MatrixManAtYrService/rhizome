@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="AppMeteredEvent")
 
 
-class AppMeteredEvent(RhizomeModel, table=True):
+class AppMeteredEvent(RhizomeModel, table=False):
     """
-    SQLModel for the `app_metered_event` table.
+    Base AppMeteredEvent model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     merchant_app_id: int = Field(foreign_key="merchant_app.id")
     app_metered_id: int = Field(foreign_key="app_metered.id")

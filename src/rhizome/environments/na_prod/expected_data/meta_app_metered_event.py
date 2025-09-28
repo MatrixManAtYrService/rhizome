@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.app_metered_event import AppMeteredEvent
+from rhizome.models.meta.app_metered_event_v1 import AppMeteredEventV1
 
 
-class AppMeteredEventNaProd(Emplacement[AppMeteredEvent]):
+class AppMeteredEventNaProd(Emplacement[AppMeteredEventV1]):
     """Expected data for AppMeteredEvent in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> AppMeteredEvent:
+    def get_expected(cls) -> AppMeteredEventV1:
         """Get expected app_metered_event data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_app_metered_event.json"
@@ -28,4 +28,4 @@ class AppMeteredEventNaProd(Emplacement[AppMeteredEvent]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return AppMeteredEvent.model_validate(data)
+        return AppMeteredEventV1.model_validate(data)

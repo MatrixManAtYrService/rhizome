@@ -14,9 +14,9 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="ServerFeature")
 
 
-class ServerFeature(RhizomeModel, table=True):
+class ServerFeature(RhizomeModel, table=False):
     """
-    SQLModel for the `server_feature` table.
+    Base ServerFeature model - defines common fields across all versions.
     """
 
     id: int | None = Field(default=None, primary_key=True)

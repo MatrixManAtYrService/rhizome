@@ -9,10 +9,11 @@ contain actual schema differences (new columns, modified types, etc.).
 
 from __future__ import annotations
 
+from ..metadata_registry import BillingEventSQLModel
 from .app_metered_event import AppMeteredEvent
 
 
-class AppMeteredEventV1(AppMeteredEvent, table=True):
+class AppMeteredEventV1(AppMeteredEvent, BillingEventSQLModel, table=True):
     """
     Version 1 of the AppMeteredEvent model.
 

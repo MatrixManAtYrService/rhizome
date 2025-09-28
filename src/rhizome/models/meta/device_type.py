@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="DeviceType")
 
 
-class DeviceType(RhizomeModel, table=True):
+class DeviceType(RhizomeModel, table=False):
     """
-    SQLModel for the `device_type` table.
+    Base DeviceType model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     name: str = Field(max_length=255, unique=True)
     models: str | None = Field(default=None, max_length=255)

@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantGateway")
 
 
-class MerchantGateway(RhizomeModel, table=True):
+class MerchantGateway(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_gateway` table.
+    Base MerchantGateway model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_id: int | None = Field(default=None)
     payment_processor_id: int
     processor_key_id: int | None = Field(default=None, foreign_key="processor_key.id")

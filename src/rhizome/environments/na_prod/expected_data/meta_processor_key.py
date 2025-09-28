@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.processor_key import ProcessorKey
+from rhizome.models.meta.processor_key_v1 import ProcessorKeyV1
 
 
-class ProcessorKeyNaProd(Emplacement[ProcessorKey]):
+class ProcessorKeyNaProd(Emplacement[ProcessorKeyV1]):
     """Expected data for ProcessorKey in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> ProcessorKey:
+    def get_expected(cls) -> ProcessorKeyV1:
         """Get expected processor_key data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_processor_key.json"
@@ -28,4 +28,4 @@ class ProcessorKeyNaProd(Emplacement[ProcessorKey]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return ProcessorKey.model_validate(data)
+        return ProcessorKeyV1.model_validate(data)

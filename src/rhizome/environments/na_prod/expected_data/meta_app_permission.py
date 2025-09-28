@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.app_permission import AppPermission
+from rhizome.models.meta.app_permission_v1 import AppPermissionV1
 
 
-class AppPermissionNaProd(Emplacement[AppPermission]):
+class AppPermissionNaProd(Emplacement[AppPermissionV1]):
     """Expected data for AppPermission in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> AppPermission:
+    def get_expected(cls) -> AppPermissionV1:
         """Get expected app_permission data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_app_permission.json"
@@ -28,4 +28,4 @@ class AppPermissionNaProd(Emplacement[AppPermission]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return AppPermission.model_validate(data)
+        return AppPermissionV1.model_validate(data)

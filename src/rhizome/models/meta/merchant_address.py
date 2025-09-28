@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantAddress")
 
 
-class MerchantAddress(RhizomeModel, table=True):
+class MerchantAddress(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_address` table.
+    Base MerchantAddress model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     address_1: str | None = Field(default=None, max_length=255)
     address_2: str | None = Field(default=None, max_length=255)
     address_3: str | None = Field(default=None, max_length=255)

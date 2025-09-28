@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantRole")
 
 
-class MerchantRole(RhizomeModel, table=True):
+class MerchantRole(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_role` table.
+    Base MerchantRole model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     account_id: int = Field(foreign_key="account.id")
     merchant_id: int = Field(foreign_key="merchant.id")
     role: str = Field(max_length=8)

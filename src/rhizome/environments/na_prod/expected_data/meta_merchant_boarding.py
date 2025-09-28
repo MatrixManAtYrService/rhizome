@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.merchant_boarding import MerchantBoarding
+from rhizome.models.meta.merchant_boarding_v1 import MerchantBoardingV1
 
 
-class MerchantBoardingNaProd(Emplacement[MerchantBoarding]):
+class MerchantBoardingNaProd(Emplacement[MerchantBoardingV1]):
     """Expected data for MerchantBoarding in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> MerchantBoarding:
+    def get_expected(cls) -> MerchantBoardingV1:
         """Get expected merchant_boarding data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_merchant_boarding.json"
@@ -28,4 +28,4 @@ class MerchantBoardingNaProd(Emplacement[MerchantBoarding]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return MerchantBoarding.model_validate(data)
+        return MerchantBoardingV1.model_validate(data)

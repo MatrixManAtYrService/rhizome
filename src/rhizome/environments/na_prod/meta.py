@@ -13,46 +13,46 @@ from typing import Any
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
 from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.meta.account import Account
-from rhizome.models.meta.app_app_bundle import AppAppBundle
-from rhizome.models.meta.app_bundle import AppBundle
-from rhizome.models.meta.app_metered import AppMetered
-from rhizome.models.meta.app_metered_country import AppMeteredCountry
-from rhizome.models.meta.app_metered_event import AppMeteredEvent
-from rhizome.models.meta.app_permission import AppPermission
-from rhizome.models.meta.app_subscription import AppSubscription
-from rhizome.models.meta.app_subscription_country import AppSubscriptionCountry
+from rhizome.models.meta.app_app_bundle_v1 import AppAppBundleV1
+from rhizome.models.meta.app_bundle_v1 import AppBundleV1
+from rhizome.models.meta.app_metered_v1 import AppMeteredV1
+from rhizome.models.meta.app_metered_country_v1 import AppMeteredCountryV1
+from rhizome.models.meta.app_metered_event_v1 import AppMeteredEventV1
+from rhizome.models.meta.app_permission_v1 import AppPermissionV1
+from rhizome.models.meta.app_subscription_v1 import AppSubscriptionV1
+from rhizome.models.meta.app_subscription_country_v1 import AppSubscriptionCountryV1
 from rhizome.models.meta.country import Country
 from rhizome.models.meta.developer import Developer
-from rhizome.models.meta.developer_app import DeveloperApp
-from rhizome.models.meta.device_events import DeviceEvents
-from rhizome.models.meta.device_provision import DeviceProvision
-from rhizome.models.meta.device_type import DeviceType
+from rhizome.models.meta.developer_app_v1 import DeveloperAppV1
+from rhizome.models.meta.device_events_v1 import DeviceEventsV1
+from rhizome.models.meta.device_provision_v1 import DeviceProvisionV1
+from rhizome.models.meta.device_type_v1 import DeviceTypeV1
 from rhizome.models.meta.locale import Locale
 from rhizome.models.meta.merchant import Merchant
-from rhizome.models.meta.merchant_address import MerchantAddress
-from rhizome.models.meta.merchant_app import MerchantApp
-from rhizome.models.meta.merchant_app_subscription_history import (
-    MerchantAppSubscriptionHistory,
+from rhizome.models.meta.merchant_address_v1 import MerchantAddressV1
+from rhizome.models.meta.merchant_app_v1 import MerchantAppV1
+from rhizome.models.meta.merchant_app_subscription_history_v1 import (
+    MerchantAppSubscriptionHistoryV1,
 )
-from rhizome.models.meta.merchant_boarding import MerchantBoarding
-from rhizome.models.meta.merchant_creation_details import MerchantCreationDetails
-from rhizome.models.meta.merchant_gateway import MerchantGateway
-from rhizome.models.meta.merchant_merchant_plan_history import (
-    MerchantMerchantPlanHistory,
+from rhizome.models.meta.merchant_boarding_v1 import MerchantBoardingV1
+from rhizome.models.meta.merchant_creation_details_v1 import MerchantCreationDetailsV1
+from rhizome.models.meta.merchant_gateway_v1 import MerchantGatewayV1
+from rhizome.models.meta.merchant_merchant_plan_history_v1 import (
+    MerchantMerchantPlanHistoryV1,
 )
-from rhizome.models.meta.merchant_plan import MerchantPlan
-from rhizome.models.meta.merchant_plan_group import MerchantPlanGroup
-from rhizome.models.meta.merchant_plan_merchant_plan_group import (
-    MerchantPlanMerchantPlanGroup,
+from rhizome.models.meta.merchant_plan_v1 import MerchantPlanV1
+from rhizome.models.meta.merchant_plan_group_v1 import MerchantPlanGroupV1
+from rhizome.models.meta.merchant_plan_merchant_plan_group_v1 import (
+    MerchantPlanMerchantPlanGroupV1,
 )
-from rhizome.models.meta.merchant_role import MerchantRole
-from rhizome.models.meta.payment_processor import PaymentProcessor
-from rhizome.models.meta.processor_key import ProcessorKey
+from rhizome.models.meta.merchant_role_v1 import MerchantRoleV1
+from rhizome.models.meta.payment_processor_v1 import PaymentProcessorV1
+from rhizome.models.meta.processor_key_v1 import ProcessorKeyV1
 from rhizome.models.meta.reseller import Reseller
-from rhizome.models.meta.reseller_plan_trial import ResellerPlanTrial
-from rhizome.models.meta.server_feature import ServerFeature
-from rhizome.models.meta.terminal_config_merchant_props import (
-    TerminalConfigMerchantProps,
+from rhizome.models.meta.reseller_plan_trial_v1 import ResellerPlanTrialV1
+from rhizome.models.meta.server_feature_v1 import ServerFeatureV1
+from rhizome.models.meta.terminal_config_merchant_props_v1 import (
+    TerminalConfigMerchantPropsV1,
 )
 from rhizome.models.meta.timezones import Timezones
 from rhizome.models.table_list import MetaTable
@@ -105,39 +105,39 @@ from rhizome.environments.na_prod.expected_data.meta_device_type import DeviceTy
 
 models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]] = {
     MetaTable.account: (Account, AccountNaProd),
-    MetaTable.app_app_bundle: (AppAppBundle, AppAppBundleNaProd),
-    MetaTable.app_bundle: (AppBundle, AppBundleNaProd),
-    MetaTable.app_metered: (AppMetered, AppMeteredNaProd),
-    MetaTable.app_metered_country: (AppMeteredCountry, AppMeteredCountryNaProd),
-    MetaTable.app_metered_event: (AppMeteredEvent, AppMeteredEventNaProd),
-    MetaTable.app_permission: (AppPermission, AppPermissionNaProd),
-    MetaTable.app_subscription: (AppSubscription, AppSubscriptionNaProd),
-    MetaTable.app_subscription_country: (AppSubscriptionCountry, AppSubscriptionCountryNaProd),
+    MetaTable.app_app_bundle: (AppAppBundleV1, AppAppBundleNaProd),
+    MetaTable.app_bundle: (AppBundleV1, AppBundleNaProd),
+    MetaTable.app_metered: (AppMeteredV1, AppMeteredNaProd),
+    MetaTable.app_metered_country: (AppMeteredCountryV1, AppMeteredCountryNaProd),
+    MetaTable.app_metered_event: (AppMeteredEventV1, AppMeteredEventNaProd),
+    MetaTable.app_permission: (AppPermissionV1, AppPermissionNaProd),
+    MetaTable.app_subscription: (AppSubscriptionV1, AppSubscriptionNaProd),
+    MetaTable.app_subscription_country: (AppSubscriptionCountryV1, AppSubscriptionCountryNaProd),
     MetaTable.country: (Country, CountryNaProd),
     MetaTable.developer: (Developer, DeveloperNaProd),
-    MetaTable.developer_app: (DeveloperApp, DeveloperAppNaProd),
-    MetaTable.device_events: (DeviceEvents, DeviceEventsNaProd),
-    MetaTable.device_provision: (DeviceProvision, DeviceProvisionNaProd),
-    MetaTable.device_type: (DeviceType, DeviceTypeNaProd),
+    MetaTable.developer_app: (DeveloperAppV1, DeveloperAppNaProd),
+    MetaTable.device_events: (DeviceEventsV1, DeviceEventsNaProd),
+    MetaTable.device_provision: (DeviceProvisionV1, DeviceProvisionNaProd),
+    MetaTable.device_type: (DeviceTypeV1, DeviceTypeNaProd),
     MetaTable.locale: (Locale, LocaleNaProd),
     MetaTable.merchant: (Merchant, MerchantNaProd),
-    MetaTable.merchant_address: (MerchantAddress, MerchantAddressNaProd),
-    MetaTable.merchant_app: (MerchantApp, MerchantAppNaProd),
-    MetaTable.merchant_app_subscription_history: (MerchantAppSubscriptionHistory, MerchantAppSubscriptionHistoryNaProd),
-    MetaTable.merchant_boarding: (MerchantBoarding, MerchantBoardingNaProd),
-    MetaTable.merchant_creation_details: (MerchantCreationDetails, MerchantCreationDetailsNaProd),
-    MetaTable.merchant_gateway: (MerchantGateway, MerchantGatewayNaProd),
-    MetaTable.merchant_merchant_plan_history: (MerchantMerchantPlanHistory, MerchantMerchantPlanHistoryNaProd),
-    MetaTable.merchant_plan: (MerchantPlan, MerchantPlanNaProd),
-    MetaTable.merchant_plan_group: (MerchantPlanGroup, MerchantPlanGroupNaProd),
-    MetaTable.merchant_plan_merchant_plan_group: (MerchantPlanMerchantPlanGroup, MerchantPlanMerchantPlanGroupNaProd),
-    MetaTable.merchant_role: (MerchantRole, MerchantRoleNaProd),
-    MetaTable.payment_processor: (PaymentProcessor, PaymentProcessorNaProd),
-    MetaTable.processor_key: (ProcessorKey, ProcessorKeyNaProd),
+    MetaTable.merchant_address: (MerchantAddressV1, MerchantAddressNaProd),
+    MetaTable.merchant_app: (MerchantAppV1, MerchantAppNaProd),
+    MetaTable.merchant_app_subscription_history: (MerchantAppSubscriptionHistoryV1, MerchantAppSubscriptionHistoryNaProd),
+    MetaTable.merchant_boarding: (MerchantBoardingV1, MerchantBoardingNaProd),
+    MetaTable.merchant_creation_details: (MerchantCreationDetailsV1, MerchantCreationDetailsNaProd),
+    MetaTable.merchant_gateway: (MerchantGatewayV1, MerchantGatewayNaProd),
+    MetaTable.merchant_merchant_plan_history: (MerchantMerchantPlanHistoryV1, MerchantMerchantPlanHistoryNaProd),
+    MetaTable.merchant_plan: (MerchantPlanV1, MerchantPlanNaProd),
+    MetaTable.merchant_plan_group: (MerchantPlanGroupV1, MerchantPlanGroupNaProd),
+    MetaTable.merchant_plan_merchant_plan_group: (MerchantPlanMerchantPlanGroupV1, MerchantPlanMerchantPlanGroupNaProd),
+    MetaTable.merchant_role: (MerchantRoleV1, MerchantRoleNaProd),
+    MetaTable.payment_processor: (PaymentProcessorV1, PaymentProcessorNaProd),
+    MetaTable.processor_key: (ProcessorKeyV1, ProcessorKeyNaProd),
     MetaTable.reseller: (Reseller, ResellerNaProd),
-    MetaTable.reseller_plan_trial: (ResellerPlanTrial, ResellerPlanTrialNaProd),
-    MetaTable.server_feature: (ServerFeature, ServerFeatureNaProd),
-    MetaTable.terminal_config_merchant_props: (TerminalConfigMerchantProps, TerminalConfigMerchantPropsNaProd),
+    MetaTable.reseller_plan_trial: (ResellerPlanTrialV1, ResellerPlanTrialNaProd),
+    MetaTable.server_feature: (ServerFeatureV1, ServerFeatureNaProd),
+    MetaTable.terminal_config_merchant_props: (TerminalConfigMerchantPropsV1, TerminalConfigMerchantPropsNaProd),
     MetaTable.timezones: (Timezones, TimezonesNaProd),
 }
 

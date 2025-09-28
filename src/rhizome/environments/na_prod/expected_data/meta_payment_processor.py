@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.payment_processor import PaymentProcessor
+from rhizome.models.meta.payment_processor_v1 import PaymentProcessorV1
 
 
-class PaymentProcessorNaProd(Emplacement[PaymentProcessor]):
+class PaymentProcessorNaProd(Emplacement[PaymentProcessorV1]):
     """Expected data for PaymentProcessor in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> PaymentProcessor:
+    def get_expected(cls) -> PaymentProcessorV1:
         """Get expected payment_processor data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_payment_processor.json"
@@ -28,4 +28,4 @@ class PaymentProcessorNaProd(Emplacement[PaymentProcessor]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return PaymentProcessor.model_validate(data)
+        return PaymentProcessorV1.model_validate(data)

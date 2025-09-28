@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.reseller_plan_trial import ResellerPlanTrial
+from rhizome.models.meta.reseller_plan_trial_v1 import ResellerPlanTrialV1
 
 
-class ResellerPlanTrialNaProd(Emplacement[ResellerPlanTrial]):
+class ResellerPlanTrialNaProd(Emplacement[ResellerPlanTrialV1]):
     """Expected data for ResellerPlanTrial in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> ResellerPlanTrial:
+    def get_expected(cls) -> ResellerPlanTrialV1:
         """Get expected reseller_plan_trial data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_reseller_plan_trial.json"
@@ -28,4 +28,4 @@ class ResellerPlanTrialNaProd(Emplacement[ResellerPlanTrial]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return ResellerPlanTrial.model_validate(data)
+        return ResellerPlanTrialV1.model_validate(data)

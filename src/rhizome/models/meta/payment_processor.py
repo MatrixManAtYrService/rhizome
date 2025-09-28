@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="PaymentProcessor")
 
 
-class PaymentProcessor(RhizomeModel, table=True):
+class PaymentProcessor(RhizomeModel, table=False):
     """
-    SQLModel for the `payment_processor` table.
+    Base PaymentProcessor model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     name: str | None = Field(default=None, max_length=127)
     payment_gateway_api: str = Field(max_length=31)

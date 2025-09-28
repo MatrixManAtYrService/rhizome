@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantCreationDetails")
 
 
-class MerchantCreationDetails(RhizomeModel, table=True):
+class MerchantCreationDetails(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_creation_details` table.
+    Base MerchantCreationDetails model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_id: int = Field(unique=True, foreign_key="merchant.id")
     creation_source: str = Field(max_length=17)
     source_identifier: str | None = Field(default=None, max_length=255)

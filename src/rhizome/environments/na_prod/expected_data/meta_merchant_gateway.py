@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.merchant_gateway import MerchantGateway
+from rhizome.models.meta.merchant_gateway_v1 import MerchantGatewayV1
 
 
-class MerchantGatewayNaProd(Emplacement[MerchantGateway]):
+class MerchantGatewayNaProd(Emplacement[MerchantGatewayV1]):
     """Expected data for MerchantGateway in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> MerchantGateway:
+    def get_expected(cls) -> MerchantGatewayV1:
         """Get expected merchant_gateway data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_merchant_gateway.json"
@@ -28,4 +28,4 @@ class MerchantGatewayNaProd(Emplacement[MerchantGateway]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return MerchantGateway.model_validate(data)
+        return MerchantGatewayV1.model_validate(data)

@@ -13,12 +13,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="TerminalConfigMerchantProps")
 
 
-class TerminalConfigMerchantProps(RhizomeModel, table=True):
+class TerminalConfigMerchantProps(RhizomeModel, table=False):
     """
-    SQLModel for the `terminal_config_merchant_props` table.
+    Base TerminalConfigMerchantProps model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     country: str | None = Field(default=None, max_length=2)
     currency: str | None = Field(default=None, max_length=3)

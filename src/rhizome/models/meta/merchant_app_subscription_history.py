@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantAppSubscriptionHistory")
 
 
-class MerchantAppSubscriptionHistory(RhizomeModel, table=True):
+class MerchantAppSubscriptionHistory(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_app_subscription_history` table.
+    Base MerchantAppSubscriptionHistory model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_app_id: int = Field(foreign_key="merchant_app.id")
     old_app_subscription_id: int | None = Field(default=None, foreign_key="app_subscription.id")
     created_time: datetime.datetime

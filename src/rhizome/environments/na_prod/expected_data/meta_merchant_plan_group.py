@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.merchant_plan_group import MerchantPlanGroup
+from rhizome.models.meta.merchant_plan_group_v1 import MerchantPlanGroupV1
 
 
-class MerchantPlanGroupNaProd(Emplacement[MerchantPlanGroup]):
+class MerchantPlanGroupNaProd(Emplacement[MerchantPlanGroupV1]):
     """Expected data for MerchantPlanGroup in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> MerchantPlanGroup:
+    def get_expected(cls) -> MerchantPlanGroupV1:
         """Get expected merchant_plan_group data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_merchant_plan_group.json"
@@ -28,4 +28,4 @@ class MerchantPlanGroupNaProd(Emplacement[MerchantPlanGroup]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return MerchantPlanGroup.model_validate(data)
+        return MerchantPlanGroupV1.model_validate(data)

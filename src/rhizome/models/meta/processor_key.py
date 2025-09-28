@@ -13,12 +13,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="ProcessorKey")
 
 
-class ProcessorKey(RhizomeModel, table=True):
+class ProcessorKey(RhizomeModel, table=False):
     """
-    SQLModel for the `processor_key` table.
+    Base ProcessorKey model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     info: str | None = Field(default=None)
 

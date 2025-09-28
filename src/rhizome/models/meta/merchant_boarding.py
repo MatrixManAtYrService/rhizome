@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantBoarding")
 
 
-class MerchantBoarding(RhizomeModel, table=True):
+class MerchantBoarding(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_boarding` table.
+    Base MerchantBoarding model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_id: int = Field(unique=True, foreign_key="merchant.id")
     bill_to_name: str | None = Field(default=None, max_length=50)
     merchant_data: str | None = Field(default=None, max_length=20)

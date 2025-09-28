@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.server_feature import ServerFeature
+from rhizome.models.meta.server_feature_v1 import ServerFeatureV1
 
 
-class ServerFeatureNaProd(Emplacement[ServerFeature]):
+class ServerFeatureNaProd(Emplacement[ServerFeatureV1]):
     """Expected data for ServerFeature in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> ServerFeature:
+    def get_expected(cls) -> ServerFeatureV1:
         """Get expected server_feature data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_server_feature.json"
@@ -28,4 +28,4 @@ class ServerFeatureNaProd(Emplacement[ServerFeature]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return ServerFeature.model_validate(data)
+        return ServerFeatureV1.model_validate(data)

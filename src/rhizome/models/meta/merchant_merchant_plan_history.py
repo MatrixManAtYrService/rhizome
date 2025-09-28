@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="MerchantMerchantPlanHistory")
 
 
-class MerchantMerchantPlanHistory(RhizomeModel, table=True):
+class MerchantMerchantPlanHistory(RhizomeModel, table=False):
     """
-    SQLModel for the `merchant_merchant_plan_history` table.
+    Base MerchantMerchantPlanHistory model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_id: int
     old_merchant_plan_id: int | None = Field(default=None)
     new_merchant_plan_id: int | None = Field(default=None)

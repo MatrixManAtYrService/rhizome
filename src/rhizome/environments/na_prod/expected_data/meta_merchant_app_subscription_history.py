@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.merchant_app_subscription_history import MerchantAppSubscriptionHistory
+from rhizome.models.meta.merchant_app_subscription_history_v1 import MerchantAppSubscriptionHistoryV1
 
 
-class MerchantAppSubscriptionHistoryNaProd(Emplacement[MerchantAppSubscriptionHistory]):
+class MerchantAppSubscriptionHistoryNaProd(Emplacement[MerchantAppSubscriptionHistoryV1]):
     """Expected data for MerchantAppSubscriptionHistory in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> MerchantAppSubscriptionHistory:
+    def get_expected(cls) -> MerchantAppSubscriptionHistoryV1:
         """Get expected merchant_app_subscription_history data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_merchant_app_subscription_history.json"
@@ -28,4 +28,4 @@ class MerchantAppSubscriptionHistoryNaProd(Emplacement[MerchantAppSubscriptionHi
 
         with open(file_path) as f:
             data = json.load(f)
-        return MerchantAppSubscriptionHistory.model_validate(data)
+        return MerchantAppSubscriptionHistoryV1.model_validate(data)

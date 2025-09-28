@@ -25,8 +25,6 @@ class DataMismatchError(AssertionError):
 class RhizomeModel(SQLModel, ABC):
     """Abstract base class for models that support sanitization."""
 
-    id: int | None = None
-
     @abstractmethod
     def sanitize(self: T) -> T:
         """Return a sanitized copy of this model instance."""

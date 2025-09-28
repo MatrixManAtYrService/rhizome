@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.device_type import DeviceType
+from rhizome.models.meta.device_type_v1 import DeviceTypeV1
 
 
-class DeviceTypeNaProd(Emplacement[DeviceType]):
+class DeviceTypeNaProd(Emplacement[DeviceTypeV1]):
     """Expected data for DeviceType in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> DeviceType:
+    def get_expected(cls) -> DeviceTypeV1:
         """Get expected device_type data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_device_type.json"
@@ -28,4 +28,4 @@ class DeviceTypeNaProd(Emplacement[DeviceType]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return DeviceType.model_validate(data)
+        return DeviceTypeV1.model_validate(data)

@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="DeveloperApp")
 
 
-class DeveloperApp(RhizomeModel, table=True):
+class DeveloperApp(RhizomeModel, table=False):
     """
-    SQLModel for the `developer_app` table.
+    Base DeveloperApp model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     approval_status: str = Field(max_length=9)
     default_response_type: str | None = Field(default='code', max_length=5)

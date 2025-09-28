@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.app_subscription_country import AppSubscriptionCountry
+from rhizome.models.meta.app_subscription_country_v1 import AppSubscriptionCountryV1
 
 
-class AppSubscriptionCountryNaProd(Emplacement[AppSubscriptionCountry]):
+class AppSubscriptionCountryNaProd(Emplacement[AppSubscriptionCountryV1]):
     """Expected data for AppSubscriptionCountry in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> AppSubscriptionCountry:
+    def get_expected(cls) -> AppSubscriptionCountryV1:
         """Get expected app_subscription_country data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_app_subscription_country.json"
@@ -28,4 +28,4 @@ class AppSubscriptionCountryNaProd(Emplacement[AppSubscriptionCountry]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return AppSubscriptionCountry.model_validate(data)
+        return AppSubscriptionCountryV1.model_validate(data)

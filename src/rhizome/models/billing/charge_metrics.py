@@ -29,6 +29,7 @@ class ChargeMetrics(RhizomeModel, table=False):
     SQLModel for the `charge_metrics` table.
 
     This model represents charge_metrics records in the billing system.
+    Special case: table with composite primary key (no standard id field).
     """
 
     stmt_month: datetime.date = Field(primary_key=True, description="Statement month")

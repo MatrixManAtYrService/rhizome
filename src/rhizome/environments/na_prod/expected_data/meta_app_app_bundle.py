@@ -8,14 +8,14 @@ import json
 from pathlib import Path
 
 from rhizome.models.base import Emplacement
-from rhizome.models.meta.app_app_bundle import AppAppBundle
+from rhizome.models.meta.app_app_bundle_v1 import AppAppBundleV1
 
 
-class AppAppBundleNaProd(Emplacement[AppAppBundle]):
+class AppAppBundleNaProd(Emplacement[AppAppBundleV1]):
     """Expected data for AppAppBundle in na_prod environment."""
 
     @classmethod
-    def get_expected(cls) -> AppAppBundle:
+    def get_expected(cls) -> AppAppBundleV1:
         """Get expected app_app_bundle data for na_prod environment."""
         module_path = Path(__file__).parent
         file_path = module_path / "meta_app_app_bundle.json"
@@ -28,4 +28,4 @@ class AppAppBundleNaProd(Emplacement[AppAppBundle]):
 
         with open(file_path) as f:
             data = json.load(f)
-        return AppAppBundle.model_validate(data)
+        return AppAppBundleV1.model_validate(data)

@@ -14,12 +14,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="DeviceProvision")
 
 
-class DeviceProvision(RhizomeModel, table=True):
+class DeviceProvision(RhizomeModel, table=False):
     """
-    SQLModel for the `device_provision` table.
+    Base DeviceProvision model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     serial_number: str = Field(max_length=16, unique=True)
     chip_uid: str | None = Field(default=None, max_length=32)
     imei: str | None = Field(default=None, max_length=15)

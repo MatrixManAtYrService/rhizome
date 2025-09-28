@@ -13,12 +13,12 @@ from ...models.base import RhizomeModel
 T = TypeVar("T", bound="AppAppBundle")
 
 
-class AppAppBundle(RhizomeModel, table=True):
+class AppAppBundle(RhizomeModel, table=False):
     """
-    SQLModel for the `app_app_bundle` table.
+    Base AppAppBundle model - defines common fields across all versions.
     """
 
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     app_bundle_id: int = Field(foreign_key="app_bundle.id")
     developer_app_id: int = Field(foreign_key="developer_app.id")
     allow_uninstall: bool | None = Field(default=False)
