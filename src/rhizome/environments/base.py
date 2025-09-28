@@ -203,12 +203,18 @@ class Environment(ABC):
             raise ValueError(f"Unsupported secret manager: {secret_manager}")
 
     async def get_database_config_from_credentials(
-        self, secret_reference: str, secret_manager: SecretManager, database_name: str
+        self,
+        secret_reference: str,
+        secret_manager: SecretManager,
+        database_name: str,
+        pattern: str | None = None,
     ) -> DatabaseConfig:
         """Helper method to get database config for direct credential access (pybritive)."""
         if secret_manager == SecretManager.PYBRITIVE:
             # For pybritive, we get all connection details from the checkout
-            britive_info = await self.client.tools.pybritive.checkout(secret_reference)
+            britive_info = await self.client.tools.pybritive.checkout(
+                resource_path=secret_reference, pattern=pattern
+            )
             return DatabaseConfig(
                 host=britive_info.host,
                 port=britive_info.port,

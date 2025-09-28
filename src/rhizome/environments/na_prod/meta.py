@@ -1,7 +1,7 @@
 """
-North America Production Billing environment configuration.
+North America Production Meta environment configuration.
 
-This module provides access to the North America production billing database
+This module provides access to the North America production meta database
 through direct connection using pybritive for temporary credentials.
 """
 
@@ -11,45 +11,41 @@ from enum import StrEnum
 from typing import Any
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
-from rhizome.environments.na_prod.expected_data.billing_stage_charge import StageChargeNaProd
 from rhizome.models.base import Emplacement, RhizomeModel
-from rhizome.models.billing.stage_charge_v1 import StageChargeV1
-from rhizome.models.table_list import BillingTable
+from rhizome.models.table_list import MetaTable
 
-models: dict[BillingTable, tuple[type[RhizomeModel], type[Emplacement[Any]]]] = {
-    BillingTable.stage_charge: (StageChargeV1, StageChargeNaProd),
+models: dict[MetaTable, tuple[type[RhizomeModel], type[Emplacement[Any]]]] = {
+    # This will be populated after running rhizome sync schema and creating models.
 }
 
 
-class NorthAmericaBilling(Environment):
-    """North America production billing environment using direct database connection."""
+class NorthAmericaMeta(Environment):
+    """North America production meta environment using direct database connection."""
 
     def tables(self) -> list[StrEnum]:
-        return list(BillingTable)
+        return list(MetaTable)
 
     def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement[Any]]]:
-        if not isinstance(table_name, BillingTable):
-            raise ValueError(f"Expected BillingTable, got {type(table_name)}")
+        if not isinstance(table_name, MetaTable):
+            raise ValueError(f"Expected MetaTable, got {type(table_name)}")
         return models[table_name]
 
     def get_database_config(self) -> DatabaseConfig:
         """Get database configuration using pybritive temporary credentials."""
         import asyncio
 
-        # This pattern is now the default in the tool, but we pass it for clarity.
-        billing_pattern = r"""
+        meta_pattern = r"""
             Temp\sMySQL\susername:\s*(?P<username>\S+).*
             Temp\spassword:\s*(?P<password>\S+).*
-            For\sbilling\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^:]+):(?P<port>\d+)
+            For\sorders\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^:]+):(?P<port>\d+)
         """
 
-        # Use the new generic credential system
         return asyncio.run(
             self.get_database_config_from_credentials(
                 secret_reference="Resources/COS-RO-USProd/COS-RO-USProd-profile",
                 secret_manager=SecretManager.PYBRITIVE,
-                database_name="billing",
-                pattern=billing_pattern,
+                database_name="meta",
+                pattern=meta_pattern,
             )
         )
 
@@ -60,7 +56,7 @@ class NorthAmericaBilling(Environment):
     @property
     def name(self) -> str:
         """Environment name for display purposes in logs and debugging, not used for connections."""
-        return "NorthAmericaBilling"
+        return "NorthAmericaMeta"
 
     def get_connection_string(self) -> str:
         """Build the connection string for this environment."""

@@ -122,7 +122,7 @@ class PybritiveTool(ABC):
     """Abstract pybritive tool for temporary database credentials."""
 
     @abstractmethod
-    async def checkout(self, resource_path: str) -> BritiveInfo:
+    async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
 
 
@@ -287,8 +287,15 @@ class ExternalLsofTool(LsofTool):
 class ExternalPybritiveTool(PybritiveTool):
     """External pybritive tool using subprocess."""
 
-    async def checkout(self, resource_path: str) -> BritiveInfo:
+    DEFAULT_PATTERN = r"""
+        Temp\sMySQL\susername:\s*(?P<username>\S+).*
+        Temp\spassword:\s*(?P<password>\S+).*
+        For\sbilling\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^:]+):(?P<port>\d+)
+    """
+
+    async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
+        import re
         import structlog
 
         log = structlog.get_logger()
@@ -298,34 +305,25 @@ class ExternalPybritiveTool(PybritiveTool):
             log.error("Pybritive checkout failed", stderr=result.stderr, stdout=result.stdout)
             raise RuntimeError(f"Pybritive checkout failed: {result.stderr}")
 
-        lines = [line.strip() for line in result.stdout.splitlines()]
-        log.debug("Pybritive raw output", lines=lines)
+        log.debug("Pybritive raw output", output=result.stdout)
 
-        # Parse the pybritive output
-        # Expected format:
-        # Temp MySQL username: {username}
-        # Temp password: {password}
-        # For billing in usprod connect to server: {host}:{port}
+        # Use the provided pattern or the default
+        checkout_pattern = pattern or self.DEFAULT_PATTERN
+        match = re.search(checkout_pattern, result.stdout, re.DOTALL | re.VERBOSE)
 
-        username = ""
-        password = ""
-        host = ""
-        port = 0
+        if not match:
+            log.error(
+                "Failed to parse pybritive output with regex",
+                pattern=checkout_pattern,
+                output=result.stdout,
+            )
+            raise RuntimeError(f"Failed to parse pybritive output: {result.stdout}")
 
-        for line in lines:
-            if line.startswith("Temp MySQL username:"):
-                username = line.split(":", 1)[1].strip()
-            elif line.startswith("Temp password:"):
-                password = line.split(":", 1)[1].strip()
-            elif line.startswith("For billing in usprod connect to server:"):
-                # Parse "For billing in usprod connect to server: host:port"
-                server_part = line.split("connect to server:", 1)[1].strip()
-                if ":" in server_part:
-                    host, port_str = server_part.rsplit(":", 1)
-                    port = int(port_str)
-                else:
-                    host = server_part
-                    port = 3326  # Default MySQL port
+        credentials = match.groupdict()
+        username = credentials.get("username", "")
+        password = credentials.get("password", "")
+        host = credentials.get("host", "")
+        port = int(credentials.get("port", 0))
 
         # Log parsed credentials (redacting password)
         log.info(
@@ -339,7 +337,7 @@ class ExternalPybritiveTool(PybritiveTool):
 
         if not all([username, password, host, port]):
             log.error(
-                "Failed to parse pybritive output",
+                "Failed to extract all credentials from pybritive output",
                 missing_fields={
                     "username": bool(username),
                     "password": bool(password),
@@ -347,7 +345,7 @@ class ExternalPybritiveTool(PybritiveTool):
                     "port": bool(port),
                 },
             )
-            raise RuntimeError(f"Failed to parse pybritive output: {result.stdout}")
+            raise RuntimeError(f"Failed to extract all credentials from pybritive output: {result.stdout}")
 
         return BritiveInfo(username=username, password=password, host=host, port=port)
 
