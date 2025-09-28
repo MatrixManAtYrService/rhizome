@@ -57,6 +57,37 @@ from rhizome.models.meta.terminal_config_merchant_props import (
 from rhizome.models.meta.timezones import Timezones
 from rhizome.models.table_list import MetaTable
 
+from rhizome.environments.na_prod.expected_data.meta_locale import LocaleNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant import MerchantNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_address import MerchantAddressNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_app import MerchantAppNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_app_subscription_history import (
+    MerchantAppSubscriptionHistoryNaProd,
+)
+from rhizome.environments.na_prod.expected_data.meta_merchant_boarding import MerchantBoardingNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_creation_details import (
+    MerchantCreationDetailsNaProd,
+)
+from rhizome.environments.na_prod.expected_data.meta_merchant_gateway import MerchantGatewayNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_merchant_plan_history import (
+    MerchantMerchantPlanHistoryNaProd,
+)
+from rhizome.environments.na_prod.expected_data.meta_merchant_plan import MerchantPlanNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_plan_group import MerchantPlanGroupNaProd
+from rhizome.environments.na_prod.expected_data.meta_merchant_plan_merchant_plan_group import (
+    MerchantPlanMerchantPlanGroupNaProd,
+)
+from rhizome.environments.na_prod.expected_data.meta_merchant_role import MerchantRoleNaProd
+from rhizome.environments.na_prod.expected_data.meta_payment_processor import PaymentProcessorNaProd
+from rhizome.environments.na_prod.expected_data.meta_processor_key import ProcessorKeyNaProd
+from rhizome.environments.na_prod.expected_data.meta_reseller import ResellerNaProd
+from rhizome.environments.na_prod.expected_data.meta_reseller_plan_trial import ResellerPlanTrialNaProd
+from rhizome.environments.na_prod.expected_data.meta_server_feature import ServerFeatureNaProd
+from rhizome.environments.na_prod.expected_data.meta_terminal_config_merchant_props import (
+    TerminalConfigMerchantPropsNaProd,
+)
+from rhizome.environments.na_prod.expected_data.meta_timezones import TimezonesNaProd
+
 models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]] = {
     MetaTable.account: (Account, None),
     MetaTable.app_app_bundle: (AppAppBundle, None),
@@ -73,26 +104,26 @@ models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] 
     MetaTable.device_events: (DeviceEvents, None),
     MetaTable.device_provision: (DeviceProvision, None),
     MetaTable.device_type: (DeviceType, None),
-    MetaTable.locale: (Locale, None),
-    MetaTable.merchant: (Merchant, None),
-    MetaTable.merchant_address: (MerchantAddress, None),
-    MetaTable.merchant_app: (MerchantApp, None),
-    MetaTable.merchant_app_subscription_history: (MerchantAppSubscriptionHistory, None),
-    MetaTable.merchant_boarding: (MerchantBoarding, None),
-    MetaTable.merchant_creation_details: (MerchantCreationDetails, None),
-    MetaTable.merchant_gateway: (MerchantGateway, None),
-    MetaTable.merchant_merchant_plan_history: (MerchantMerchantPlanHistory, None),
-    MetaTable.merchant_plan: (MerchantPlan, None),
-    MetaTable.merchant_plan_group: (MerchantPlanGroup, None),
-    MetaTable.merchant_plan_merchant_plan_group: (MerchantPlanMerchantPlanGroup, None),
-    MetaTable.merchant_role: (MerchantRole, None),
-    MetaTable.payment_processor: (PaymentProcessor, None),
-    MetaTable.processor_key: (ProcessorKey, None),
-    MetaTable.reseller: (Reseller, None),
-    MetaTable.reseller_plan_trial: (ResellerPlanTrial, None),
-    MetaTable.server_feature: (ServerFeature, None),
-    MetaTable.terminal_config_merchant_props: (TerminalConfigMerchantProps, None),
-    MetaTable.timezones: (Timezones, None),
+    MetaTable.locale: (Locale, LocaleNaProd),
+    MetaTable.merchant: (Merchant, MerchantNaProd),
+    MetaTable.merchant_address: (MerchantAddress, MerchantAddressNaProd),
+    MetaTable.merchant_app: (MerchantApp, MerchantAppNaProd),
+    MetaTable.merchant_app_subscription_history: (MerchantAppSubscriptionHistory, MerchantAppSubscriptionHistoryNaProd),
+    MetaTable.merchant_boarding: (MerchantBoarding, MerchantBoardingNaProd),
+    MetaTable.merchant_creation_details: (MerchantCreationDetails, MerchantCreationDetailsNaProd),
+    MetaTable.merchant_gateway: (MerchantGateway, MerchantGatewayNaProd),
+    MetaTable.merchant_merchant_plan_history: (MerchantMerchantPlanHistory, MerchantMerchantPlanHistoryNaProd),
+    MetaTable.merchant_plan: (MerchantPlan, MerchantPlanNaProd),
+    MetaTable.merchant_plan_group: (MerchantPlanGroup, MerchantPlanGroupNaProd),
+    MetaTable.merchant_plan_merchant_plan_group: (MerchantPlanMerchantPlanGroup, MerchantPlanMerchantPlanGroupNaProd),
+    MetaTable.merchant_role: (MerchantRole, MerchantRoleNaProd),
+    MetaTable.payment_processor: (PaymentProcessor, PaymentProcessorNaProd),
+    MetaTable.processor_key: (ProcessorKey, ProcessorKeyNaProd),
+    MetaTable.reseller: (Reseller, ResellerNaProd),
+    MetaTable.reseller_plan_trial: (ResellerPlanTrial, ResellerPlanTrialNaProd),
+    MetaTable.server_feature: (ServerFeature, ServerFeatureNaProd),
+    MetaTable.terminal_config_merchant_props: (TerminalConfigMerchantProps, TerminalConfigMerchantPropsNaProd),
+    MetaTable.timezones: (Timezones, TimezonesNaProd),
 }
 
 
