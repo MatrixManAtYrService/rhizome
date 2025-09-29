@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "service_name": "dummy_service",
+  "last_heartbeat": "2024-01-01T00:00:00",
+  "status": "active",
+  "created_time": "2024-01-01T00:00:00",
+  "modified_time": "2024-01-01T00:00:00"
+}

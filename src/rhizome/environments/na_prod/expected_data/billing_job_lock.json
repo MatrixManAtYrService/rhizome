@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "job_name": "dummy_job",
+  "lock_key": "dummy_lock_key",
+  "locked_at": "2024-01-01T00:00:00",
+  "expires_at": "2024-01-02T00:00:00",
+  "created_time": "2024-01-01T00:00:00"
+}

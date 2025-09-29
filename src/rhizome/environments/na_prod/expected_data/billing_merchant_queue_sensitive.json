@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "merchant_id": "dummy_merchant_id",
+  "queue_data": "{}",
+  "status": "pending",
+  "created_time": "2024-01-01T00:00:00",
+  "modified_time": "2024-01-01T00:00:00"
+}
