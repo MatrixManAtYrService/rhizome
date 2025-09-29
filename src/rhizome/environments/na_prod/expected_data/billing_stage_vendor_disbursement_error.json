@@ -1,0 +1,11 @@
+{
+  "id": 2,
+  "charge_uuid": "Hash2SmAdYRBn",
+  "vendor_code": "V20016.0000",
+  "file_instance_id": 9214,
+  "request_uuid": "Hash6rypkC21L",
+  "state": "ATTEMPT",
+  "created_time": "2024-10-16T06:50:18",
+  "promoted_time": "2024-10-16T07:12:46",
+  "promoted_id": 2
+}

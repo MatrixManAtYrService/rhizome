@@ -1,0 +1,13 @@
+{
+  "id": 459094682,
+  "uuid": "Hash9u1VsD33n",
+  "merchant_id": 2641785,
+  "acceptance_id": "Hash78R1jkTMgdPSxBgZdCWj4HmKxi5B4uSN",
+  "acceptance_created": "2020-11-22T16:22:46",
+  "acceptance_modified": "2020-11-22T16:22:46",
+  "acceptance_deleted": null,
+  "created_time": "2025-07-21T08:53:30",
+  "modified_time": "2025-07-21T08:53:30",
+  "agreement_type": "BILLING",
+  "action": "ACCEPTED"
+}
