@@ -1,0 +1,13 @@
+{
+  "id": 5001,
+  "uuid": "HashE4z2TjXpr",
+  "reference_id": 1668629,
+  "reference_type": "MERCHANT",
+  "fee_type": "MONTHLY",
+  "context": "WAIVER",
+  "detail": "BAD-3601",
+  "start_time": "2023-06-01T00:00:00",
+  "finalization_time": null,
+  "created_time": "2023-06-19T12:21:13",
+  "modified_time": "2023-06-19T12:21:13"
+}

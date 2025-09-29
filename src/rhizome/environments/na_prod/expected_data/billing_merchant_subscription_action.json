@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "request_uuid": "HashDXvPpoLqS",
+  "merchant_id": 1058935,
+  "cause": "OFF_BOARDED",
+  "context": "CANDIDATE",
+  "detail": "true",
+  "dry_run": true,
+  "created_time": "2018-08-28T18:26:34",
+  "deleted_time": "2020-05-21T20:40:51"
+}

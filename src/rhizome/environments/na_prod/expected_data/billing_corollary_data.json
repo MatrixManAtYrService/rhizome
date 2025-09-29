@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "request_uuid": "Hash9Qn1jEAtA",
+  "calling_class": "InfoleaseResultsImportJob",
+  "path": "InfoleaseResultsImportJob",
+  "output": "Cannot execute job = InfoleaseResultsImportJob, requestUuid = ZZQYWZ4M4H6CG, this job is paused",
+  "created_time": "2018-02-21T09:15:00"
+}

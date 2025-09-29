@@ -1,0 +1,13 @@
+{
+  "id": 2,
+  "remit_uuid": "HashBh6vjehTbSXzb1cW4MAKhG55K5",
+  "hierarchy_id": 235000005993,
+  "remit_type": "RSA",
+  "hierarchy_name": "bank",
+  "status_owner": "BAD-4354",
+  "entity_name": "Commonwealth of PA",
+  "relm_code": "RAS",
+  "deleted_time": null,
+  "created_time": "2024-01-24T06:33:50",
+  "modified_time": "2025-04-16T10:16:26"
+}

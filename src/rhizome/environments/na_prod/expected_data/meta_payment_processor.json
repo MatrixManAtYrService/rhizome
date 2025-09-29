@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "uuid": "HashHdQxNV7iQ",
+  "name": "Mercury Test/Cert",
+  "payment_gateway_api": "mercury",
+  "production": false,
+  "config": "{\"secondary_url\":\"https://ws1.mercurydev.net/ws/ws.asmx\",\"primary_url\":\"https://w1.mercurydev.net/ws/ws.asmx\"}",
+  "modified_time": "2019-10-24T05:35:05"
+}

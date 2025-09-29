@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash92ph17Sgn",
+  "reference_id": 13357,
+  "plan_billable": false,
+  "app_billable": true,
+  "plan_exportable": false,
+  "app_exportable": true,
+  "context": "NO_CLOVER_APPS",
+  "detail": "BILL-1486 - ShopKeep Pay Display",
+  "start_time": "2019-05-30T22:41:30",
+  "created_time": "2019-05-30T22:41:30",
+  "modified_time": "2019-05-30T22:41:30",
+  "finalization_time": "2019-05-30T22:41:30"
+}

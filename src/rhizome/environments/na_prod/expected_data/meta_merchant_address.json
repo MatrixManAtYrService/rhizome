@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "address_1": "316 Pettis Ave",
+  "address_2": "Ap #2",
+  "address_3": null,
+  "city": "Mountain View",
+  "state": "CA",
+  "zip": "94041",
+  "country": "US",
+  "phone_number": null,
+  "latitude": null,
+  "longitude": null,
+  "created_time": "2012-07-17T01:41:56",
+  "modified_time": "2014-01-14T06:26:01"
+}

@@ -1,0 +1,22 @@
+{
+  "id": 1,
+  "uuid": "HashFoo6EJYSj",
+  "charge_id": 4956577,
+  "type": "P",
+  "vendor_name": "Dolce Software LLC",
+  "payment_type": "99",
+  "payment_description": "CLOVER APP MARKET",
+  "contract_number": "899-9094888-000",
+  "inventory_number": "65323503.2",
+  "inventory_amount": 3500,
+  "inventory_date": "04/06/2018",
+  "due_date": "04/06/2018",
+  "gl_code": "1503",
+  "inventory_status_date": "05/15/2018",
+  "inventory_status_time": "14:23:16",
+  "created_time": "2018-06-27T15:31:46",
+  "modified_time": "2018-06-27T19:16:37",
+  "request_uuid": "Hash5yHoVfPmG",
+  "promoted_time": "2018-06-27T19:16:38",
+  "promoted_id": 4595689
+}

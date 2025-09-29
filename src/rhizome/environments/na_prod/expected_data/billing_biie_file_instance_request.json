@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "biie_file_instance_id": 1,
+  "request_uuid": "HashCESgC8isK",
+  "process_name": "Unknown",
+  "num_attempted": 0,
+  "num_success": 0,
+  "num_errors": 0,
+  "num_warnings": 0,
+  "num_skipped": 0,
+  "reason_code": null,
+  "reason_detail": null,
+  "created_time": "2020-02-27T08:00:40",
+  "modified_time": "2020-02-27T08:00:40"
+}

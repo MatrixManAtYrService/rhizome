@@ -1,0 +1,18 @@
+{
+  "id": 120669,
+  "uuid": "HashE8p5FRBxi",
+  "charge_id": 5621119,
+  "status": "ACH_REJECT",
+  "payment_type": "3.16",
+  "infolease_key": "66656572.00001",
+  "contract_number": "899-9080199-000",
+  "gl_code": "1503",
+  "tax": -35,
+  "post_date": "06/25/2018",
+  "post_time": "09:25:29",
+  "created_time": "2018-06-27T14:20:12",
+  "modified_time": "2018-06-27T18:27:56",
+  "request_uuid": "HashCJFem2rm1",
+  "promoted_time": "2018-06-27T18:27:57",
+  "promoted_id": 5122293
+}

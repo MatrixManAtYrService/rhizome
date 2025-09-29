@@ -1,0 +1,13 @@
+{
+  "id": 2,
+  "banner_uuid": "V52BF3MWGX67G",
+  "banner_lookup_name": "MERCHANT",
+  "banner_lookup_value": "1T3706RPQFR31",
+  "start_date": "2024-03-01T00:00:00",
+  "end_date": "2024-04-30T23:59:59",
+  "contentful_template_id": "peM4E8tOFygBIYWgeDBkr",
+  "active": false,
+  "owner": "BAD-4635",
+  "created_time": "2024-03-29T05:35:15",
+  "modified_time": "2024-05-08T10:08:00"
+}

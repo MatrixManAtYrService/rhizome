@@ -1,0 +1,18 @@
+{
+  "stmt_month": "2014-04-01",
+  "category": "ALL",
+  "net_pending": 0,
+  "net_incurred": 0,
+  "net_in_progress": 0,
+  "net_ach_reject": 0,
+  "net_billed": 150,
+  "net_written_off": 0,
+  "net_waived": 0,
+  "net_canceled": 0,
+  "num_charges": 1,
+  "num_merchants": 1,
+  "num_in_progress_merchants": 0,
+  "num_ach_reject_merchants": 0,
+  "num_incurred_merchants": 0,
+  "orig_num_incurred_merchants": 0
+}

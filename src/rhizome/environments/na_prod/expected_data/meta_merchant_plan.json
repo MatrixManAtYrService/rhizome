@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "uuid": "Hash5HNYVBDB7",
+  "name": "Classic Bundle",
+  "type": "CLASSIC",
+  "plan_code": "CO_CLASSIC",
+  "app_bundle_id": 1,
+  "description": "Credit and debit processing,EMV processing,24/7 phone support,24/7 email support,Menu upload",
+  "reseller_id": null,
+  "merchant_plan_group_id": 5,
+  "activation_time": null,
+  "deactivation_time": "2024-12-16T15:42:17",
+  "bill_to_mid": false,
+  "enforced": false,
+  "created_time": "2017-09-11T04:05:55",
+  "modified_time": "2024-12-16T15:42:20",
+  "default_plan": false,
+  "hidden": false,
+  "tags": null
+}

@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "merchant_id": null,
+  "partner_control_id": null,
+  "reseller_id": null,
+  "country_code": "CA",
+  "plan_group_id": null,
+  "device_name": null,
+  "rules": "{\"enforcePlanAuthorization\": \"ALWAYS\",\"enforceAdditionalAppsAuthorization\": \"INITIAL\", \"enforceBillingAuthorization\": \"ALWAYS\"}"
+}

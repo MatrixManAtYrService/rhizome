@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "Hash8WDv56Qoe",
+  "reseller_id": 3,
+  "plan_uuid": null,
+  "rev_share": 10000,
+  "rev_share_type": "PERCENT",
+  "effective_date": "2018-06-01T00:00:00",
+  "deleted_time": null,
+  "created_time": "2020-11-23T18:12:08",
+  "modified_time": "2020-11-23T18:12:13"
+}

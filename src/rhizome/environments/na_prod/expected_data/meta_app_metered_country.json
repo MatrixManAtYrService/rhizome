@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "uuid": "A88BEF9169B7E",
+  "amount": 100,
+  "country": "US",
+  "action": "head",
+  "app_metered_id": 1,
+  "active": true,
+  "created_time": "2013-09-05T06:48:17",
+  "modified_time": "2015-01-20T06:32:54",
+  "deleted_time": null
+}

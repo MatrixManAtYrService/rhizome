@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "merchant_id": 1,
+  "payment_processor_id": 1,
+  "processor_key_id": null,
+  "rki_processor_id": null,
+  "partner_uuid": null,
+  "stan": 0,
+  "config": "{ \"merchant_id\":\"395347308=E2ETKN\",\"password\":\"123E2ETKN\"}",
+  "closing_time": null,
+  "new_batch_close_enabled": true,
+  "modified_time": "2018-05-17T13:03:37"
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "charge_id": 5621119,
+  "merchant_id": null,
+  "status": "ACH_REJECT",
+  "developer_status": null,
+  "tax": 35,
+  "developer_portion": null,
+  "status_owner": "AppBillingController",
+  "request_uuid": "HashCJFem2rm1",
+  "promoted_time": "2018-06-27T18:27:57"
+}

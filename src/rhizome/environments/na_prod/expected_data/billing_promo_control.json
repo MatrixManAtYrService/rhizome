@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash57ymK8hGs",
+  "code": "CA-Clover-Account",
+  "reseller_id": 1439,
+  "agent": null,
+  "bank": null,
+  "business": null,
+  "chain": null,
+  "corp": null,
+  "marker": null,
+  "created_time": "2020-11-06T19:37:03",
+  "modified_time": "2020-11-06T19:37:03",
+  "deleted_time": null
+}

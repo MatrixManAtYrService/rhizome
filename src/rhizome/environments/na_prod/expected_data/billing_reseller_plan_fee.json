@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "uuid": "HashDthhyiYwy",
+  "reseller_id": 53,
+  "merchant_plan_id": 301,
+  "merchant_plan_type": null,
+  "merchant_plan_group_id": 109,
+  "fee_type": "MONTHLY",
+  "currency": "USD",
+  "amount": 500,
+  "amount_type": "FLAT_RATE",
+  "effective_date": "2023-06-01T00:00:00",
+  "created_time": "2023-06-06T18:10:37",
+  "modified_time": "2023-06-06T18:10:37",
+  "deleted_time": null
+}

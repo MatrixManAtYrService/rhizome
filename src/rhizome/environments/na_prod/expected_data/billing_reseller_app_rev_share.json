@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "HashGxDWo52RX",
+  "reseller_id": 3,
+  "app_uuid": null,
+  "app_type": "SECOND_PARTY",
+  "rev_share": 10000,
+  "rev_share_type": "BOTTOM_LINE_PERCENT",
+  "effective_date": "2018-06-01T00:00:00",
+  "deleted_time": null,
+  "created_time": "2020-11-23T18:12:08",
+  "modified_time": "2020-11-23T18:12:13"
+}

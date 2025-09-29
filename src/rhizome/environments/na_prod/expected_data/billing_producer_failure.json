@@ -1,0 +1,15 @@
+{
+  "id": 2,
+  "uuid": "Hash58CJ6azGs",
+  "environment": "usprod",
+  "reference_id": null,
+  "kafka_event_type": "INTERNAL_AUDIT",
+  "payload": "{\"service\":\"billing\",\"event\":\"CHANGE_CHARGE_STATUS\",\"created\":{\"seconds\":1694425070,\"nanos\":795000000},\"entities\":[{\"id\":\"JZFWCBM9SPF7R\",\"type\":\"InternalAccount\"}],\"data\":{\"payloadStr2Description\":\"New Charge Status\",\"payloadStr1Description\":\"Old Charge Status\",\"payloadStr2\":\"REFUNDED\",\"payloadStr1\":\"REFUND_IN_PROGRESS\",\"X-Clover-Appenv\":\"usprod\",\"payloadInt1\":\"12407355\",\"payloadInt1Description\":\"Charge Id\",\"region\":\"US\"}}",
+  "processed": true,
+  "topic": "auditevent",
+  "offset": null,
+  "cause": "org.apache.kafka.common.errors.UnknownServerException",
+  "failure_message": "The server experienced an unexpected error when processing the request",
+  "created_time": "2023-09-11T09:37:50",
+  "modified_time": "2023-09-11T12:00:00"
+}

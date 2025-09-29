@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "HashW61mRG3Cc",
+  "query_uuid": null,
+  "name": "appUpDown",
+  "status": "SUCCEEDED",
+  "input_class": "com.clover.billing.v1.camel.eip.routes.AppUpDowngradeRoute$Input",
+  "entry_point": "direct-vm:v1.AppUpDowRou_All",
+  "created_time": "2018-02-21T21:14:22",
+  "modified_time": "2018-02-21T21:14:25",
+  "completed_time": "2018-02-21T21:14:25",
+  "server_id": 3
+}

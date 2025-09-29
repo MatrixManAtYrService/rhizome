@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "6ACF2D82B86FC",
+  "amount": 100,
+  "country": "US",
+  "name": "basic",
+  "description": "sweet",
+  "app_subscription_id": 1,
+  "active": true,
+  "created_time": "2013-09-05T06:47:53",
+  "modified_time": "2015-01-20T06:32:53",
+  "deleted_time": null
+}

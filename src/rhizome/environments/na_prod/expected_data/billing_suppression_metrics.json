@@ -1,0 +1,11 @@
+{
+  "supp_month": "2023-08-01",
+  "supp_type": "MERCHANT",
+  "supp_context": "OFFER",
+  "plan_charges": 99875,
+  "app_charges": 22090,
+  "wm_charges": 12500,
+  "total_charges": 134465,
+  "num_suppressions": 26,
+  "num_merchants": 26
+}

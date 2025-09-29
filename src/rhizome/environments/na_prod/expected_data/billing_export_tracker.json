@@ -1,0 +1,9 @@
+{
+  "id": 13,
+  "exported_uuid": "HashBiFJ1jw6Y",
+  "export_type": "VENDOR",
+  "system_type": "ODESSA",
+  "exported_data": "{\"country\":\"US\",\"city\":\"Leominster\",\"address1\":\"40 Spruce Street\",\"postalCode\":\"01453\",\"businessName\":\"Click-a-Waiter Inc.\",\"gst\":\"\",\"encryptedBankAccount\":\"-----BEGIN PGP MESSAGE-----\\nVersion: BCPG v1.51\\n\\nhQIMA0QF6px8cnTyAQ/+PEZIWNApt6RVL7CI5aL/wLI7H6CcF0vBWVyko/3UkiFX\\n/CTr4NLnk3AdSfAwgIGEbteBmxkgvnVM1my5goMW4Y1VVmG/Wjj3IliZmJ0ds7Pr\\nCcb0vD6g/p1RPN32lzkKSSvfhcLe6QeKIegvjlZmtShmN4dV0IWhPqGwKFEWjEHN\\ndQnKVGQt8XmsCTt5ZDyYwbO8wWAYHMCTFSjDAV6idXaqyYg6zqQYMQMT3z2J/ADg\\nSpZrJtiJqgxTmepCR1eSfIs+3EFmVBtI3NAwBKfTXGQcFlX3/Y9PrNYBpVPzyreU\\nXDMzWmhS042FpTxdowfHjjCZ5bAEUklnaPglCLtpAimJcGDs4t8WR1jHTnHpfYQ+\\nK5LAHJgGOmnjLfsmaA/1vg2Ifo91qly7lNQzRUTN07ICdxONoMjKlBSJFgVNUk9u\\nW8+8MIOTe2t3pQUezetldh3SepOY7GDWcVozF26v9N/wRGdvhI7F8LAa9nmZiyRg\\nPpaWLV4TMjUU9O7e74FsM+A+4tWMkAtdD2IAMeAkMyqgNVXyYvwTAJKqDAvWdcap\\nqamK4zUR54tJYwe6hzkwLcVSFaJVP9nNIXD1/fHGRVeOFzvx5GVAwSaRj2hVNvj2\\nyLa7bX6jqKr8tmesjLyYfZTRKuHu+GPdFWgoTD0XodMqNDT9BMrSX2rsIVqETJHS\\negEMTj0y6nnQKwc6k65a0rqkqNQIvVIY0zTVFZnl0TmqKGZKIFPvqjE0uGSmWJTp\\nN0O2hEKY30jiB1hNmw9cH/B1fK1iI09vb3bxPaARclIehzqhzL6rQtOLWsKaIYW9\\naeXb8NHEzMdXG2te1jR95F1zFFq8aKflwlW8\\n\\u003dRXS1\\n-----END PGP MESSAGE-----\",\"vendorCode\":\"V20049.0000\",\"taxResidency\":\"\",\"stateCountyProvince\":\"Ma\",\"email1\":\"joyce@clickawaiter.com\",\"bankRoutingNumber\":\"011302742\",\"tinVat\":\"\"}",
+  "created_time": "2021-03-30T03:50:44",
+  "modified_time": "2025-08-04T05:02:32"
+}

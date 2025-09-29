@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "account_id": 1,
+  "merchant_id": 1,
+  "role": "admin",
+  "pin": "610336",
+  "nickname": "Marcus a",
+  "custom_id": null,
+  "role_id": 1,
+  "created_time": "2012-07-17T01:41:56",
+  "modified_time": "2014-03-18T06:00:26",
+  "deleted_time": null
+}

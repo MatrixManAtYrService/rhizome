@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash4TDFGjN2P",
+  "type": "ACH_REJECT",
+  "payment_type": "3.16",
+  "payload": null,
+  "recipient_id": 875197,
+  "charge_id": 5621119,
+  "done_time": null,
+  "created_time": "2018-06-27T14:20:12",
+  "modified_time": "2018-06-27T18:27:56",
+  "request_uuid": "HashCJFem2rm1",
+  "promoted_time": "2018-06-27T18:27:57",
+  "promoted_id": 5661557
+}

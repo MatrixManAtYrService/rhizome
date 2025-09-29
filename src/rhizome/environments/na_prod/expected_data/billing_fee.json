@@ -1,0 +1,17 @@
+{
+  "id": 2458,
+  "uuid": "HashFEgaMWKjm",
+  "merchant_id": 2962506,
+  "merchant_plan_id": 309,
+  "merchant_plan_type": "PAYMENTS",
+  "merchant_plan_group_id": 111,
+  "fee_type": "MONTHLY",
+  "currency": "USD",
+  "amount": 605,
+  "status": "BILLED",
+  "export_month": "2021-07-01",
+  "request_uuid": "Hash3SNeUtX2f",
+  "created_time": "2021-07-01T01:23:29",
+  "modified_time": "2021-07-01T16:48:19",
+  "reason": null
+}

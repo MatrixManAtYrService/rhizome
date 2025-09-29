@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "request_uuid": "HashDFSJFDb7d",
+  "type": "STAGE",
+  "charge_id": 172871,
+  "merchant_app_charge_Id": null,
+  "merchant_plan_charge_Id": 8041,
+  "error": null,
+  "status": "EXPORTABLE",
+  "mid": 372821920884,
+  "country_code": "",
+  "merchant_id": 1048593,
+  "developer_id": 7115,
+  "promoted_time": null,
+  "biie": null,
+  "dev_export": null,
+  "dev_export_month": null,
+  "post_date": null
+}

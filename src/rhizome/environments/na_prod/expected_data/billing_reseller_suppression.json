@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash2PMXdBD5D",
+  "reference_id": 1515,
+  "plan_billable": true,
+  "app_billable": true,
+  "plan_exportable": false,
+  "app_exportable": true,
+  "context": "OFFER",
+  "detail": "COVID-19: BILL-2557",
+  "start_time": "2020-03-30T00:00:00",
+  "created_time": "2020-03-31T22:20:06",
+  "modified_time": "2020-04-30T14:55:17",
+  "finalization_time": "2020-04-30T23:59:59"
+}

@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "merchant_id": 1048635,
+  "charge_id": 164831,
+  "created_time": "2018-02-23T20:25:12",
+  "modified_time": "2018-02-23T20:25:12",
+  "num_of_devices": 1,
+  "merchant_plan_id": 5,
+  "plan_charge_type": "ADJUSTMENT",
+  "request_uuid": "HashDFSJFDb7d",
+  "promoted_time": null,
+  "promoted_id": null,
+  "device_type_id": null
+}
