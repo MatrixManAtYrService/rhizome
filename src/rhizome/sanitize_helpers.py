@@ -49,12 +49,12 @@ def hash_uuid_to_base58(uuid_str: str, target_length: int) -> str:
     return prefix + hash_portion
 
 
-def sanitize_uuid_field(value: str | None, field_length: int) -> str | None:
+def sanitize_uuid_field(value: str | bytes | None, field_length: int) -> str | None:
     """
-    Sanitize a UUID field, handling None values.
+    Sanitize a UUID field, handling None values and binary data.
 
     Args:
-        value: The value to sanitize (str or None)
+        value: The value to sanitize (str, bytes, or None)
         field_length: The expected length of the field
 
     Returns:
@@ -62,4 +62,10 @@ def sanitize_uuid_field(value: str | None, field_length: int) -> str | None:
     """
     if value is None:
         return None
+
+    # Handle binary data by converting to string representation
+    if isinstance(value, bytes):
+        # Convert bytes to a string representation for hashing
+        value = value.hex()
+
     return hash_uuid_to_base58(str(value), field_length)

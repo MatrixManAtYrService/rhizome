@@ -23,10 +23,10 @@ class VendorDisbursementError(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    charge_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    charge_uuid: str | None = Field(default=None, description="UUID field")
     vendor_code: str = Field(max_length=30, description="vendor_code")
     file_instance_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     state: str | None = Field(default=None, description="state")
     created_time: datetime.datetime = Field(description="created_time")
 

@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "vendor_id": "dummy_vendor_id",
+  "disbursement_id": 1,
+  "vat_amount": 200,
+  "vat_rate": "0.20",
+  "created_time": "2024-01-01T00:00:00",
+  "modified_time": "2024-01-01T00:00:00"
+}
