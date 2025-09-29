@@ -23,7 +23,7 @@ class StageInfoleaseChargeAttempt(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     charge_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     status: str | None = Field(default=None, description="status")
     payment_type: str = Field(max_length=10, description="payment_type")
@@ -35,7 +35,7 @@ class StageInfoleaseChargeAttempt(RhizomeModel, table=False):
     post_time: str | None = Field(default=None, max_length=10, description="post_time")
     created_time: datetime.datetime | None = Field(default=None, description="created_time")
     modified_time: datetime.datetime = Field(description="modified_time")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     promoted_time: datetime.datetime | None = Field(default=None, description="promoted_time")
     promoted_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
 

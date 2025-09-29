@@ -23,7 +23,7 @@ class ExplanationData(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    explanation_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    explanation_uuid: str | None = Field(default=None, description="UUID field")
     json_class: str = Field(max_length=255, description="json_class")
     json_data: str = Field(max_length=2047, description="json_data")
     created_time: datetime.datetime = Field(description="created_time")

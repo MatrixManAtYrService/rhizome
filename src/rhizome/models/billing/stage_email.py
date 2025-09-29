@@ -24,7 +24,7 @@ class StageEmail(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     reference_type: str | None = Field(default=None, description="reference_type")
     reference_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     type: str | None = Field(default=None, description="type")

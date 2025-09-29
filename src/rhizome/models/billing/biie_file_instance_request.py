@@ -24,7 +24,7 @@ class BiieFileInstanceRequest(RhizomeModel, table=False):
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     biie_file_instance_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     process_name: str = Field(max_length=127, description="process_name")
     num_attempted: int = Field(description="num_attempted")
     num_success: int = Field(description="num_success")

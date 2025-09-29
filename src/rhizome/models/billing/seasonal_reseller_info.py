@@ -23,7 +23,7 @@ class SeasonalResellerInfo(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     reseller_uuid_parent: str = Field(max_length=13, description="reseller_uuid_parent")
     reseller_uuid_child: str = Field(max_length=13, description="reseller_uuid_child")
     seasonal_automation_supported: bool | None = Field(default=None, description="seasonal_automation_supported")

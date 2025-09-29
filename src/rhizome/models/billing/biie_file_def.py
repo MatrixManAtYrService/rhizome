@@ -23,15 +23,15 @@ class BiieFileDef(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     file_type: str = Field(max_length=50, description="file_type")
     file_format: str | None = Field(default=None, description="file_format")
-    num_headers: str = Field(description="num_headers")
-    num_footers: str = Field(description="num_footers")
-    key1_field: str = Field(description="key1_field")
-    key2_field: str = Field(description="key2_field")
+    num_headers: int = Field(description="num_headers")
+    num_footers: int = Field(description="num_footers")
+    key1_field: int = Field(description="key1_field")
+    key2_field: int = Field(description="key2_field")
     error_threshold_method: str | None = Field(default=None, description="error_threshold_method")
-    error_threshold: str = Field(description="error_threshold")
+    error_threshold: int = Field(description="error_threshold")
     created_time: datetime.datetime = Field(description="created_time")
     modified_time: datetime.datetime = Field(description="modified_time")
 

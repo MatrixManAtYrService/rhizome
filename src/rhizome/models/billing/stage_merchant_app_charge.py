@@ -31,7 +31,7 @@ class StageMerchantAppCharge(RhizomeModel, table=False):
     merchant_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     developer_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     app_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     promoted_time: datetime.datetime | None = Field(default=None, description="promoted_time")
     promoted_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
 

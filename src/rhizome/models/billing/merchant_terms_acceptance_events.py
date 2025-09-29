@@ -23,11 +23,11 @@ class MerchantTermsAcceptanceEvents(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     merchant_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    acceptance_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    acceptance_id: str | None = Field(default=None, description="UUID field")
     agreement_type: str | None = Field(default=None, max_length=128, description="agreement_type")
-    account_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    account_id: str | None = Field(default=None, description="UUID field")
     acceptance_created: datetime.datetime = Field(description="acceptance_created")
     acceptance_modified: datetime.datetime | None = Field(default=None, description="acceptance_modified")
     acceptance_deleted: datetime.datetime | None = Field(default=None, description="acceptance_deleted")

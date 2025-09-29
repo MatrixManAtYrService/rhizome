@@ -23,8 +23,8 @@ class CombinedDisbursement(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     vendor_code: str | None = Field(default=None, max_length=30, description="vendor_code")
     base_currency: str | None = Field(default=None, max_length=3, description="base_currency")
     base_amount: int | None = Field(default=None, description="base_amount")

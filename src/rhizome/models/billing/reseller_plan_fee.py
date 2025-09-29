@@ -30,7 +30,7 @@ class ResellerPlanFee(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     reseller_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_plan_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_plan_type: str | None = Field(default=None, max_length=20, description="merchant_plan_type")

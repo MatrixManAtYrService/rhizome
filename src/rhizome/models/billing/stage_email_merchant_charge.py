@@ -23,7 +23,7 @@ class StageEmailMerchantCharge(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     type: str | None = Field(default=None, description="type")
     payment_type: str | None = Field(default=None, max_length=10, description="payment_type")
     payload: str | None = Field(default=None, description="payload")
@@ -32,7 +32,7 @@ class StageEmailMerchantCharge(RhizomeModel, table=False):
     done_time: datetime.datetime | None = Field(default=None, description="done_time")
     created_time: datetime.datetime | None = Field(default=None, description="created_time")
     modified_time: datetime.datetime = Field(description="modified_time")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     promoted_time: datetime.datetime | None = Field(default=None, description="promoted_time")
     promoted_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
 

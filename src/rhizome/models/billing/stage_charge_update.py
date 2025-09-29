@@ -30,7 +30,7 @@ class StageChargeUpdate(RhizomeModel, table=False):
     tax: int | None = Field(default=None, description="tax")
     developer_portion: int | None = Field(default=None, description="developer_portion")
     status_owner: str = Field(max_length=30, description="status_owner")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     promoted_time: datetime.datetime | None = Field(default=None, description="promoted_time")
 
     def sanitize(self) -> StageChargeUpdate:

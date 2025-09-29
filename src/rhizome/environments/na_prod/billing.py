@@ -11,6 +11,7 @@ from enum import StrEnum
 from typing import Any
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.environments.na_prod.expected_data.billing_app_suppression import AppSuppressionNaProd
 from rhizome.environments.na_prod.expected_data.billing_auto_debit_no_auth_config import AutoDebitNoAuthConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_bank_routing import BankRoutingNaProd

@@ -23,7 +23,7 @@ class BillingBusinessInitiative(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     name: str = Field(max_length=63, description="name")
     created_time: datetime.datetime = Field(description="created_time")
 

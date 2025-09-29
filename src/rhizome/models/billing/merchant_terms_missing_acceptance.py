@@ -23,9 +23,9 @@ class MerchantTermsMissingAcceptance(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     merchant_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     plan_charge_type: str | None = Field(default=None, description="plan_charge_type")
     created_time: datetime.datetime = Field(description="created_time")
     modified_time: datetime.datetime = Field(description="modified_time")

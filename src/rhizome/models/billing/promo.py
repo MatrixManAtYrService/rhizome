@@ -23,10 +23,10 @@ class Promo(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     code: str = Field(max_length=32, description="code")
     description: str | None = Field(default=None, max_length=511, description="description")
-    plan_trial_days: str | None = Field(default=None, description="plan_trial_days")
+    plan_trial_days: int | None = Field(default=None, description="plan_trial_days")
     plan_type: str | None = Field(default=None, description="plan_type")
     app_trial_days: str | None = Field(default=None, description="app_trial_days")
     developer_app_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")

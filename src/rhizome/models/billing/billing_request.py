@@ -23,7 +23,7 @@ class BillingRequest(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     query_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     name: str = Field(max_length=127, description="name")
     status: str | None = Field(default=None, description="status")

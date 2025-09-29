@@ -23,7 +23,7 @@ class ResellerPlanRevShare(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     reseller_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     plan_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     rev_share: int = Field(description="rev_share")

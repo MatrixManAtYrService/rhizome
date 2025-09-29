@@ -23,10 +23,10 @@ class FlightCheck(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     executor: str = Field(max_length=255, description="executor")
     enabled: bool = Field(description="enabled")
-    cycle_minutes: str = Field(description="cycle_minutes")
+    cycle_minutes: int = Field(description="cycle_minutes")
     created_time: datetime.datetime = Field(description="created_time")
     modified_time: datetime.datetime = Field(description="modified_time")
     deleted_time: datetime.datetime | None = Field(default=None, description="deleted_time")

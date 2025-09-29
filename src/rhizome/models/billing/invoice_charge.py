@@ -23,7 +23,7 @@ class InvoiceCharge(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     type: str | None = Field(default=None, description="type")
     charge_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_app_charge_Id: int | None = Field(default=None, description="merchant_app_charge_Id")

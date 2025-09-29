@@ -23,7 +23,7 @@ class SeasonalMerchantTransAudit(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     merchant_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     bill_cycle: datetime.date = Field(description="bill_cycle")
     seasonal_event: str | None = Field(default=None, description="seasonal_event")

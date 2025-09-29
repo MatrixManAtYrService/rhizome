@@ -22,7 +22,7 @@ class PlanMeta(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     ref_type: str | None = Field(default=None, description="ref_type")
     ref_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     plan_type: str | None = Field(default=None, description="plan_type")

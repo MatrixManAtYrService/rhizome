@@ -23,7 +23,7 @@ class PromoControl(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     code: str = Field(max_length=32, description="code")
     reseller_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     agent: str | None = Field(default=None, max_length=32, description="agent")

@@ -23,7 +23,7 @@ class RemitMerchantDetails(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    remit_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    remit_uuid: str | None = Field(default=None, description="UUID field")
     hierarchy_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     remit_type: str | None = Field(default=None, max_length=30, description="remit_type")
     hierarchy_name: str | None = Field(default=None, description="hierarchy_name")

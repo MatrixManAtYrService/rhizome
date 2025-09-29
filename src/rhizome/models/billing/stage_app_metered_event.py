@@ -25,7 +25,7 @@ class StageAppMeteredEvent(RhizomeModel, table=False):
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     app_metered_event_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     stage_charge_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     merchant_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     promoted_time: datetime.datetime | None = Field(default=None, description="promoted_time")
     created_time: datetime.datetime = Field(description="created_time")

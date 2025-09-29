@@ -23,7 +23,7 @@ class Offboarding(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     merchant_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     step: str | None = Field(default=None, description="step")
     dry_run: bool | None = Field(default=None, description="dry_run")

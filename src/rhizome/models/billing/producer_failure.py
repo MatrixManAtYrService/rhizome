@@ -23,7 +23,7 @@ class ProducerFailure(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     environment: str | None = Field(default=None, max_length=25, description="environment")
     reference_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     kafka_event_type: str | None = Field(default=None, description="kafka_event_type")

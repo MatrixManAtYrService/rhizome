@@ -23,11 +23,11 @@ class EmailAudit(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    uuid: str | None = Field(default=None, description="UUID field")
     email_type: str = Field(max_length=127, description="email_type")
     recipient_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     email_status: str = Field(max_length=127, description="email_status")
-    track_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    track_id: str | None = Field(default=None, description="UUID field")
     done_time: datetime.datetime | None = Field(default=None, description="done_time")
     created_time: datetime.datetime | None = Field(default=None, description="created_time")
     modified_time: datetime.datetime = Field(description="modified_time")

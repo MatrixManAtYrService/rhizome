@@ -23,10 +23,10 @@ class ChargeCaptureError(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    charge_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    charge_uuid: str | None = Field(default=None, description="UUID field")
     mid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     file_instance_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     created_time: datetime.datetime = Field(description="created_time")
 
     def sanitize(self) -> ChargeCaptureError:

@@ -23,7 +23,7 @@ class ExportTracker(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    exported_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    exported_uuid: str | None = Field(default=None, description="UUID field")
     export_type: str | None = Field(default=None, description="export_type")
     system_type: str | None = Field(default=None, description="system_type")
     exported_data: str | None = Field(default=None, description="exported_data")

@@ -23,7 +23,7 @@ class CorollaryData(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     calling_class: str = Field(max_length=127, description="calling_class")
     path: str = Field(max_length=511, description="path")
     output: str | None = Field(default=None, max_length=4095, description="output")

@@ -29,7 +29,7 @@ class StageChargeHistory(RhizomeModel, table=False):
     old_status_owner: str = Field(max_length=30, description="old_status_owner")
     old_modified_time: datetime.datetime | None = Field(default=None, description="old_modified_time")
     created_time: datetime.datetime = Field(description="created_time")
-    request_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    request_uuid: str | None = Field(default=None, description="UUID field")
     promoted_time: datetime.datetime | None = Field(default=None, description="promoted_time")
     promoted_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
 
