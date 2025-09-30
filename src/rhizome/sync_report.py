@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.table import Table
 
 from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
-from rhizome.models.table_list import BillingBookkeeperTable, BillingEventTable, BillingTable, MetaTable
+from rhizome.table_discovery import get_table_list_for_environment
 
 
 class SyncStatus(StrEnum):
@@ -134,20 +134,6 @@ def check_table_sync_status(
     )
 
 
-def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnum] | None:
-    """Get the table enum list for a given environment."""
-    env_map = {
-        RhizomeEnvironment.dev_billing_bookkeeper: BillingBookkeeperTable,
-        RhizomeEnvironment.demo_billing_bookkeeper: BillingBookkeeperTable,
-        RhizomeEnvironment.na_prod_billing_bookkeeper: BillingBookkeeperTable,
-        RhizomeEnvironment.dev_billing_event: BillingEventTable,
-        RhizomeEnvironment.demo_billing_event: BillingEventTable,
-        RhizomeEnvironment.na_prod_billing_event: BillingEventTable,
-        RhizomeEnvironment.na_prod_billing: BillingTable,
-        RhizomeEnvironment.na_prod_meta: MetaTable,
-    }
-    table_enum = env_map.get(env_enum)
-    return list(table_enum) if table_enum else None
 
 
 def collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatus]:
@@ -162,7 +148,7 @@ def collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatu
     for env_enum, _ in environments_to_check:
         try:
             # Get table list without instantiating the environment
-            table_list = _get_table_enum_for_environment(env_enum)
+            table_list = get_table_list_for_environment(env_enum)
             if not table_list:
                 console.print(f"[yellow]Warning: No table enum found for {env_enum}[/yellow]")
                 continue

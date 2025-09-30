@@ -1,6 +1,5 @@
 "Schema synchronization functionality."
 
-from enum import StrEnum
 from pathlib import Path
 from typing import Any, cast
 
@@ -10,7 +9,7 @@ from rhizome.client import RhizomeClient
 from rhizome.environments.base import Environment
 from rhizome.environments.environment_list import RhizomeEnvironment, environment_type
 from rhizome.git_diff import ChangeTracker, SchemaChangeClassifier
-from rhizome.models.table_list import BillingBookkeeperTable, BillingEventTable, BillingTable, MetaTable
+from rhizome.table_discovery import get_table_list_for_environment
 
 
 def get_database_short_name(environment_name: str) -> str:
@@ -24,20 +23,6 @@ def get_database_short_name(environment_name: str) -> str:
     return "".join(result)
 
 
-def _get_table_enum_for_environment(env_enum: RhizomeEnvironment) -> list[StrEnum] | None:
-    """Get the table enum list for a given environment."""
-    env_str = str(env_enum)
-
-    if "billing_bookkeeper" in env_str:
-        return list(BillingBookkeeperTable)
-    elif "billing_event" in env_str:
-        return list(BillingEventTable)
-    elif "meta" in env_str:
-        return list(MetaTable)
-    elif "billing" in env_str and "bookkeeper" not in env_str and "event" not in env_str:
-        return list(BillingTable)
-    else:
-        return None
 
 
 def create_lightweight_environment(env_class: type[Environment], client: RhizomeClient) -> Environment:
@@ -141,7 +126,7 @@ def _sync_environment_schema(
     env_folder = "na_prod" if env_str.startswith("na_prod_") else env_str.split("_")[0]
     db_short_name = get_database_short_name(env_instance.name)
 
-    table_list = _get_table_enum_for_environment(env_enum)
+    table_list = get_table_list_for_environment(env_enum)
     if not table_list:
         typer.echo(f"  Warning: No table enum found for {env_enum}")
         return
