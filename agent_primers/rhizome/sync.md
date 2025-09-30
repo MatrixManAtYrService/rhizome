@@ -142,12 +142,32 @@ Examples:
 
 ### Integration with Table Discovery
 
-The sync commands now work seamlessly with the centralized table enum approach:
+The sync commands use a centralized table discovery system to avoid confusion:
 
-- **Single source of truth**: All tables are defined in `src/rhizome/models/table_list.py`
-- **Automatic discovery**: Sync commands automatically find all tables from enums
+- **Single source of truth**: Table-to-environment mappings are defined in `src/rhizome/table_discovery.py`
+- **Enum-based mapping**: Uses explicit `RhizomeEnvironment` enum values (not substring matching)
+- **Type-safe**: No string manipulation that could break with similar database names (e.g., "billing" vs "billing_bookkeeper")
+- **Consistent**: All sync commands (schema, data, report) use the same discovery logic
 - **Progressive implementation**: You can add tables to enums and explore them with sync commands before implementing models/emplacements
-- **Environment coverage**: Easily see which tables exist in which environments
+
+#### Why Centralized Discovery?
+
+Previously, different sync commands used different methods to determine which tables belonged to an environment:
+
+- `sync_schema` used **substring matching** (fragile, error-prone with "billing" in multiple DB names)
+- `sync_report` used **explicit enum mapping** (correct approach)
+- `sync_data` used **runtime `table_situation`** (works but requires models to be implemented)
+
+The new `table_discovery.py` module provides:
+```python
+from rhizome.table_discovery import get_table_list_for_environment
+
+# Returns list of table enums for any environment
+tables = get_table_list_for_environment(RhizomeEnvironment.dev_billing)
+# [BillingTable.stage_charge, BillingTable.fee, ...]
+```
+
+This ensures all sync commands behave consistently and won't break due to substring ambiguities.
 
 ### Change Detection
 

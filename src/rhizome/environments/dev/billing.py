@@ -130,7 +130,7 @@ class DevBilling(Environment):
         return asyncio.run(
             self.get_database_config_from_credentials(
                 secret_reference="op://Shared/MysqlDevLegacy/password",
-                secret_manager=SecretManager.OP,
+                secret_manager=SecretManager.ONEPASSWORD,
                 database_name="billing",
                 pattern=dev_pattern,
                 host="dev1-db01.dev.pdx10.clover.network",
