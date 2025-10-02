@@ -36,6 +36,8 @@ class Environment(ABC):
         """
         Make an authenticated GET request to the Clover API.
 
+        Automatically retries with a fresh token if a 401 Unauthorized response is received.
+
         Args:
             path: API path (e.g., '/v3/merchants/MSR15REPHS0N5')
             **kwargs: Additional arguments to pass to httpx
@@ -54,12 +56,26 @@ class Environment(ABC):
 
         with httpx.Client() as client:
             response = client.get(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+
+            # If we get a 401, refresh the token and retry once
+            if response.status_code == 401:
+                # Clear the cached handle to force re-authentication
+                self._handle = None
+                self._ensure_authenticated()
+                assert self._handle is not None
+
+                # Retry with the new token
+                headers["Cookie"] = f"internalSession={self._handle.token}"
+                response = client.get(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+
             response.raise_for_status()
             return response.json()
 
     def post(self, path: str, **kwargs: Any) -> Any:
         """
         Make an authenticated POST request to the Clover API.
+
+        Automatically retries with a fresh token if a 401 Unauthorized response is received.
 
         Args:
             path: API path
@@ -79,5 +95,17 @@ class Environment(ABC):
 
         with httpx.Client() as client:
             response = client.post(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+
+            # If we get a 401, refresh the token and retry once
+            if response.status_code == 401:
+                # Clear the cached handle to force re-authentication
+                self._handle = None
+                self._ensure_authenticated()
+                assert self._handle is not None
+
+                # Retry with the new token
+                headers["Cookie"] = f"internalSession={self._handle.token}"
+                response = client.post(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+
             response.raise_for_status()
             return response.json()
