@@ -1,10 +1,10 @@
 """Dev environment HTTP API access."""
 
-from stolon.api import BookkeeperDev, MerchantAPI
+from stolon.api import BillingEventDev, BookkeeperDev, MerchantAPI
 from stolon.environments.base import Environment
 
 
-class DevHttp(Environment, MerchantAPI, BookkeeperDev):
+class DevHttp(Environment, MerchantAPI, BookkeeperDev, BillingEventDev):
     """Dev environment HTTP API access."""
 
     @property

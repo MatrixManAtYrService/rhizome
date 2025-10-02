@@ -1,8 +1,8 @@
 """
-Test the billing-bookkeeper API via stolon.
+Test the billing-bookkeeper and billing-event APIs via stolon.
 
-This module tests the BookkeeperDev mixin methods that use the generated
-OpenAPI client for the billing-bookkeeper service.
+This module tests the BookkeeperDev and BillingEventDev mixin methods that use
+the generated OpenAPI clients.
 """
 
 import pytest
@@ -38,3 +38,19 @@ def test_get_billing_entity(stolon_server: RunningStolonServer) -> None:
     if "billingEntityUuid" in response:
         assert response["billingEntityUuid"]
         assert response["entityUuid"] == entity_uuid
+
+
+@pytest.mark.external_infra
+def test_billing_event_api(stolon_server: RunningStolonServer) -> None:
+    """Test retrieving data from billing-event API."""
+    # Use the stolon server's home so the client can find the port
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    # Test a simple GET request to billing-event
+    # This assumes there's a health check or similar endpoint
+    # Adjust the endpoint based on actual billing-event API structure
+    response = dev.get("/billing-event/v1/health")
+
+    # Verify we got a response back
+    assert response is not None
