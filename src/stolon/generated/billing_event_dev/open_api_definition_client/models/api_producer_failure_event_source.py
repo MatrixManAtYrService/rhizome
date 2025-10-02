@@ -1,0 +1,20 @@
+from enum import Enum
+
+
+class ApiProducerFailureEventSource(str, Enum):
+    AGREEMENT = "AGREEMENT"
+    APP_METER_DAILY = "APP_METER_DAILY"
+    APP_RATES = "APP_RATES"
+    APP_SUB_ADVANCE = "APP_SUB_ADVANCE"
+    APP_SUB_DAILY = "APP_SUB_DAILY"
+    BACKBOOK_APP = "BACKBOOK_APP"
+    BACKBOOK_MERCHANT = "BACKBOOK_MERCHANT"
+    BACKBOOK_MLC = "BACKBOOK_MLC"
+    CELLULAR_ARREARS = "CELLULAR_ARREARS"
+    MISC_PAYMENT = "MISC_PAYMENT"
+    MLC = "MLC"
+    PLAN_ADVANCE = "PLAN_ADVANCE"
+    PLAN_ARREARS = "PLAN_ARREARS"
+
+    def __str__(self) -> str:
+        return str(self.value)
