@@ -1,0 +1,270 @@
+import datetime
+from http import HTTPStatus
+from typing import Any, Optional, Union
+
+import httpx
+
+from ... import errors
+from ...client import AuthenticatedClient, Client
+from ...models.api_cellular_action_fee_code import ApiCellularActionFeeCode
+from ...types import UNSET, Response, Unset
+
+
+def _get_kwargs(
+    *,
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
+
+    json_date = date.isoformat()
+    params["date"] = json_date
+
+    json_plan_uuids: Union[Unset, list[str]] = UNSET
+    if not isinstance(plan_uuids, Unset):
+        json_plan_uuids = plan_uuids
+
+    params["planUuids"] = json_plan_uuids
+
+    params["carrier"] = carrier
+
+    params["feeCategory"] = fee_category
+
+    params["feeCode"] = fee_code
+
+    params["cellularActionType"] = cellular_action_type
+
+    params["pageSize"] = page_size
+
+    params["pageNumber"] = page_number
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
+    _kwargs: dict[str, Any] = {
+        "method": "get",
+        "url": "/v1/cellularactionfeecode",
+        "params": params,
+    }
+
+    return _kwargs
+
+
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[ApiCellularActionFeeCode]:
+    if response.status_code == 200:
+        response_200 = ApiCellularActionFeeCode.from_dict(response.json())
+
+        return response_200
+
+    if client.raise_on_unexpected_status:
+        raise errors.UnexpectedStatus(response.status_code, response.content)
+    else:
+        return None
+
+
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[ApiCellularActionFeeCode]:
+    return Response(
+        status_code=HTTPStatus(response.status_code),
+        content=response.content,
+        headers=response.headers,
+        parsed=_parse_response(client=client, response=response),
+    )
+
+
+def sync_detailed(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiCellularActionFeeCode]:
+    """Get cellular action fee codes
+
+    Args:
+        date (datetime.date):
+        plan_uuids (Union[Unset, list[str]]):
+        carrier (Union[Unset, str]):
+        fee_category (Union[Unset, str]):
+        fee_code (Union[Unset, str]):
+        cellular_action_type (Union[Unset, str]):
+        page_size (Union[Unset, int]):
+        page_number (Union[Unset, int]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiCellularActionFeeCode]
+    """
+
+    kwargs = _get_kwargs(
+        date=date,
+        plan_uuids=plan_uuids,
+        carrier=carrier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        cellular_action_type=cellular_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
+
+    response = client.get_httpx_client().request(
+        **kwargs,
+    )
+
+    return _build_response(client=client, response=response)
+
+
+def sync(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Optional[ApiCellularActionFeeCode]:
+    """Get cellular action fee codes
+
+    Args:
+        date (datetime.date):
+        plan_uuids (Union[Unset, list[str]]):
+        carrier (Union[Unset, str]):
+        fee_category (Union[Unset, str]):
+        fee_code (Union[Unset, str]):
+        cellular_action_type (Union[Unset, str]):
+        page_size (Union[Unset, int]):
+        page_number (Union[Unset, int]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiCellularActionFeeCode
+    """
+
+    return sync_detailed(
+        client=client,
+        date=date,
+        plan_uuids=plan_uuids,
+        carrier=carrier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        cellular_action_type=cellular_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiCellularActionFeeCode]:
+    """Get cellular action fee codes
+
+    Args:
+        date (datetime.date):
+        plan_uuids (Union[Unset, list[str]]):
+        carrier (Union[Unset, str]):
+        fee_category (Union[Unset, str]):
+        fee_code (Union[Unset, str]):
+        cellular_action_type (Union[Unset, str]):
+        page_size (Union[Unset, int]):
+        page_number (Union[Unset, int]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiCellularActionFeeCode]
+    """
+
+    kwargs = _get_kwargs(
+        date=date,
+        plan_uuids=plan_uuids,
+        carrier=carrier,
+        fee_category=fee_category,
+        fee_code=fee_code,
+        cellular_action_type=cellular_action_type,
+        page_size=page_size,
+        page_number=page_number,
+    )
+
+    response = await client.get_async_httpx_client().request(**kwargs)
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    plan_uuids: Union[Unset, list[str]] = UNSET,
+    carrier: Union[Unset, str] = UNSET,
+    fee_category: Union[Unset, str] = UNSET,
+    fee_code: Union[Unset, str] = UNSET,
+    cellular_action_type: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Optional[ApiCellularActionFeeCode]:
+    """Get cellular action fee codes
+
+    Args:
+        date (datetime.date):
+        plan_uuids (Union[Unset, list[str]]):
+        carrier (Union[Unset, str]):
+        fee_category (Union[Unset, str]):
+        fee_code (Union[Unset, str]):
+        cellular_action_type (Union[Unset, str]):
+        page_size (Union[Unset, int]):
+        page_number (Union[Unset, int]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiCellularActionFeeCode
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+            date=date,
+            plan_uuids=plan_uuids,
+            carrier=carrier,
+            fee_category=fee_category,
+            fee_code=fee_code,
+            cellular_action_type=cellular_action_type,
+            page_size=page_size,
+            page_number=page_number,
+        )
+    ).parsed

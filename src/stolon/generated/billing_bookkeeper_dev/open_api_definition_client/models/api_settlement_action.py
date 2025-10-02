@@ -1,0 +1,253 @@
+import datetime
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+from dateutil.parser import isoparse
+
+from ..types import UNSET, Unset
+
+T = TypeVar("T", bound="ApiSettlementAction")
+
+
+@_attrs_define
+class ApiSettlementAction:
+    """
+    Attributes:
+        tlement_uuid (Union[Unset, ApiSettlementAction]):
+        id (Union[Unset, int]): Id of the settlement action
+        uuid (Union[Unset, str]): 26-character UUID of the settlement action
+        settlement_uuid (Union[Unset, str]): 26-character UUID of the settlement request to which this settlement action
+            applies
+        action_date (Union[Unset, datetime.date]): date of the settlement action
+        action (Union[Unset, str]): the settlement action performed against the settlement request
+        currency (Union[Unset, str]): the currency of the settlement action amount Example: USD.
+        total_amount (Union[Unset, float]): the total amount being settled against the settlement request
+        fee_amount (Union[Unset, float]): the portion of the total settled amount that is for fees
+        tax_1_amount (Union[Unset, float]): the portion of the total settled amount that is for tax 1, typically Federal
+            tax, GST, or VAT
+        tax_2_amount (Union[Unset, float]): the portion of the total settled amount that is for tax 2, typically state
+            or province tax
+        tax_3_amount (Union[Unset, float]): the portion of the total settled amount that is for tax 3, typically county
+            tax
+        tax_4_amount (Union[Unset, float]): the portion of the total settled amount that is for tax 4, typically city or
+            local tax
+        message (Union[Unset, str]): any captured processing message resulting from applying the settlement action
+        reject_code (Union[Unset, str]): reason code for REJECT action, typically a financial network reject code
+        ledger_account_transition_uuid (Union[Unset, str]): 26-character UUID of the ledger-account-transition mapping
+            used to apply this settlement action to the ledger
+        credit_ledger_account_uuid (Union[Unset, str]): 26-character UUID of the ledger account where the credit was
+            applied to the ledger
+        debit_ledger_account_uuid (Union[Unset, str]): 26-character UUID of the ledger account where the debit was
+            applied to the ledger
+        created_timestamp (Union[Unset, datetime.datetime]): date and time when the ledger account transition was
+            created Example: 2020-12-31T23:59:59.123456Z.
+    """
+
+    tlement_uuid: Union[Unset, "ApiSettlementAction"] = UNSET
+    id: Union[Unset, int] = UNSET
+    uuid: Union[Unset, str] = UNSET
+    settlement_uuid: Union[Unset, str] = UNSET
+    action_date: Union[Unset, datetime.date] = UNSET
+    action: Union[Unset, str] = UNSET
+    currency: Union[Unset, str] = UNSET
+    total_amount: Union[Unset, float] = UNSET
+    fee_amount: Union[Unset, float] = UNSET
+    tax_1_amount: Union[Unset, float] = UNSET
+    tax_2_amount: Union[Unset, float] = UNSET
+    tax_3_amount: Union[Unset, float] = UNSET
+    tax_4_amount: Union[Unset, float] = UNSET
+    message: Union[Unset, str] = UNSET
+    reject_code: Union[Unset, str] = UNSET
+    ledger_account_transition_uuid: Union[Unset, str] = UNSET
+    credit_ledger_account_uuid: Union[Unset, str] = UNSET
+    debit_ledger_account_uuid: Union[Unset, str] = UNSET
+    created_timestamp: Union[Unset, datetime.datetime] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        tlement_uuid: Union[Unset, dict[str, Any]] = UNSET
+        if not isinstance(self.tlement_uuid, Unset):
+            tlement_uuid = self.tlement_uuid.to_dict()
+
+        id = self.id
+
+        uuid = self.uuid
+
+        settlement_uuid = self.settlement_uuid
+
+        action_date: Union[Unset, str] = UNSET
+        if not isinstance(self.action_date, Unset):
+            action_date = self.action_date.isoformat()
+
+        action = self.action
+
+        currency = self.currency
+
+        total_amount = self.total_amount
+
+        fee_amount = self.fee_amount
+
+        tax_1_amount = self.tax_1_amount
+
+        tax_2_amount = self.tax_2_amount
+
+        tax_3_amount = self.tax_3_amount
+
+        tax_4_amount = self.tax_4_amount
+
+        message = self.message
+
+        reject_code = self.reject_code
+
+        ledger_account_transition_uuid = self.ledger_account_transition_uuid
+
+        credit_ledger_account_uuid = self.credit_ledger_account_uuid
+
+        debit_ledger_account_uuid = self.debit_ledger_account_uuid
+
+        created_timestamp: Union[Unset, str] = UNSET
+        if not isinstance(self.created_timestamp, Unset):
+            created_timestamp = self.created_timestamp.isoformat()
+
+        field_dict: dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if tlement_uuid is not UNSET:
+            field_dict["tlementUuid"] = tlement_uuid
+        if id is not UNSET:
+            field_dict["id"] = id
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if settlement_uuid is not UNSET:
+            field_dict["settlementUuid"] = settlement_uuid
+        if action_date is not UNSET:
+            field_dict["actionDate"] = action_date
+        if action is not UNSET:
+            field_dict["action"] = action
+        if currency is not UNSET:
+            field_dict["currency"] = currency
+        if total_amount is not UNSET:
+            field_dict["totalAmount"] = total_amount
+        if fee_amount is not UNSET:
+            field_dict["feeAmount"] = fee_amount
+        if tax_1_amount is not UNSET:
+            field_dict["tax1Amount"] = tax_1_amount
+        if tax_2_amount is not UNSET:
+            field_dict["tax2Amount"] = tax_2_amount
+        if tax_3_amount is not UNSET:
+            field_dict["tax3Amount"] = tax_3_amount
+        if tax_4_amount is not UNSET:
+            field_dict["tax4Amount"] = tax_4_amount
+        if message is not UNSET:
+            field_dict["message"] = message
+        if reject_code is not UNSET:
+            field_dict["rejectCode"] = reject_code
+        if ledger_account_transition_uuid is not UNSET:
+            field_dict["ledgerAccountTransitionUuid"] = ledger_account_transition_uuid
+        if credit_ledger_account_uuid is not UNSET:
+            field_dict["creditLedgerAccountUuid"] = credit_ledger_account_uuid
+        if debit_ledger_account_uuid is not UNSET:
+            field_dict["debitLedgerAccountUuid"] = debit_ledger_account_uuid
+        if created_timestamp is not UNSET:
+            field_dict["createdTimestamp"] = created_timestamp
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
+        _tlement_uuid = d.pop("tlementUuid", UNSET)
+        tlement_uuid: Union[Unset, ApiSettlementAction]
+        if isinstance(_tlement_uuid, Unset):
+            tlement_uuid = UNSET
+        else:
+            tlement_uuid = ApiSettlementAction.from_dict(_tlement_uuid)
+
+        id = d.pop("id", UNSET)
+
+        uuid = d.pop("uuid", UNSET)
+
+        settlement_uuid = d.pop("settlementUuid", UNSET)
+
+        _action_date = d.pop("actionDate", UNSET)
+        action_date: Union[Unset, datetime.date]
+        if isinstance(_action_date, Unset):
+            action_date = UNSET
+        else:
+            action_date = isoparse(_action_date).date()
+
+        action = d.pop("action", UNSET)
+
+        currency = d.pop("currency", UNSET)
+
+        total_amount = d.pop("totalAmount", UNSET)
+
+        fee_amount = d.pop("feeAmount", UNSET)
+
+        tax_1_amount = d.pop("tax1Amount", UNSET)
+
+        tax_2_amount = d.pop("tax2Amount", UNSET)
+
+        tax_3_amount = d.pop("tax3Amount", UNSET)
+
+        tax_4_amount = d.pop("tax4Amount", UNSET)
+
+        message = d.pop("message", UNSET)
+
+        reject_code = d.pop("rejectCode", UNSET)
+
+        ledger_account_transition_uuid = d.pop("ledgerAccountTransitionUuid", UNSET)
+
+        credit_ledger_account_uuid = d.pop("creditLedgerAccountUuid", UNSET)
+
+        debit_ledger_account_uuid = d.pop("debitLedgerAccountUuid", UNSET)
+
+        _created_timestamp = d.pop("createdTimestamp", UNSET)
+        created_timestamp: Union[Unset, datetime.datetime]
+        if isinstance(_created_timestamp, Unset):
+            created_timestamp = UNSET
+        else:
+            created_timestamp = isoparse(_created_timestamp)
+
+        api_settlement_action = cls(
+            tlement_uuid=tlement_uuid,
+            id=id,
+            uuid=uuid,
+            settlement_uuid=settlement_uuid,
+            action_date=action_date,
+            action=action,
+            currency=currency,
+            total_amount=total_amount,
+            fee_amount=fee_amount,
+            tax_1_amount=tax_1_amount,
+            tax_2_amount=tax_2_amount,
+            tax_3_amount=tax_3_amount,
+            tax_4_amount=tax_4_amount,
+            message=message,
+            reject_code=reject_code,
+            ledger_account_transition_uuid=ledger_account_transition_uuid,
+            credit_ledger_account_uuid=credit_ledger_account_uuid,
+            debit_ledger_account_uuid=debit_ledger_account_uuid,
+            created_timestamp=created_timestamp,
+        )
+
+        api_settlement_action.additional_properties = d
+        return api_settlement_action
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

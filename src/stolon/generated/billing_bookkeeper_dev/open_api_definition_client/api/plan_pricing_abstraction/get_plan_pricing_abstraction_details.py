@@ -1,0 +1,191 @@
+import datetime
+from http import HTTPStatus
+from typing import Any, Optional, Union
+
+import httpx
+
+from ... import errors
+from ...client import AuthenticatedClient, Client
+from ...models.api_plan_pricing_abstraction_details import ApiPlanPricingAbstractionDetails
+from ...types import UNSET, Response, Unset
+
+
+def _get_kwargs(
+    *,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
+
+    json_date = date.isoformat()
+    params["date"] = json_date
+
+    params["currency"] = currency
+
+    params["planUuid"] = plan_uuid
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
+    _kwargs: dict[str, Any] = {
+        "method": "get",
+        "url": "/v1/abstraction/planpricing/details",
+        "params": params,
+    }
+
+    return _kwargs
+
+
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[ApiPlanPricingAbstractionDetails]:
+    if response.status_code == 200:
+        response_200 = ApiPlanPricingAbstractionDetails.from_dict(response.json())
+
+        return response_200
+
+    if client.raise_on_unexpected_status:
+        raise errors.UnexpectedStatus(response.status_code, response.content)
+    else:
+        return None
+
+
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[ApiPlanPricingAbstractionDetails]:
+    return Response(
+        status_code=HTTPStatus(response.status_code),
+        content=response.content,
+        headers=response.headers,
+        parsed=_parse_response(client=client, response=response),
+    )
+
+
+def sync_detailed(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+) -> Response[ApiPlanPricingAbstractionDetails]:
+    """Get details of a plan pricing abstraction
+
+    Args:
+        date (datetime.date):
+        currency (str):
+        plan_uuid (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPlanPricingAbstractionDetails]
+    """
+
+    kwargs = _get_kwargs(
+        date=date,
+        currency=currency,
+        plan_uuid=plan_uuid,
+    )
+
+    response = client.get_httpx_client().request(
+        **kwargs,
+    )
+
+    return _build_response(client=client, response=response)
+
+
+def sync(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+) -> Optional[ApiPlanPricingAbstractionDetails]:
+    """Get details of a plan pricing abstraction
+
+    Args:
+        date (datetime.date):
+        currency (str):
+        plan_uuid (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPlanPricingAbstractionDetails
+    """
+
+    return sync_detailed(
+        client=client,
+        date=date,
+        currency=currency,
+        plan_uuid=plan_uuid,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+) -> Response[ApiPlanPricingAbstractionDetails]:
+    """Get details of a plan pricing abstraction
+
+    Args:
+        date (datetime.date):
+        currency (str):
+        plan_uuid (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPlanPricingAbstractionDetails]
+    """
+
+    kwargs = _get_kwargs(
+        date=date,
+        currency=currency,
+        plan_uuid=plan_uuid,
+    )
+
+    response = await client.get_async_httpx_client().request(**kwargs)
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    *,
+    client: Union[AuthenticatedClient, Client],
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET,
+) -> Optional[ApiPlanPricingAbstractionDetails]:
+    """Get details of a plan pricing abstraction
+
+    Args:
+        date (datetime.date):
+        currency (str):
+        plan_uuid (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPlanPricingAbstractionDetails
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+            date=date,
+            currency=currency,
+            plan_uuid=plan_uuid,
+        )
+    ).parsed

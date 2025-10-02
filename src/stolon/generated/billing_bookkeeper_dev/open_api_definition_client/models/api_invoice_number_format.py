@@ -1,0 +1,71 @@
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union, cast
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
+
+T = TypeVar("T", bound="ApiInvoiceNumberFormat")
+
+
+@_attrs_define
+class ApiInvoiceNumberFormat:
+    """
+    Attributes:
+        invoice_number_format (Union[Unset, str]): invoice number format value
+        valid_hierarchy_types (Union[Unset, list[str]]): billing hierarchy types where the invoice number format is
+            valid
+    """
+
+    invoice_number_format: Union[Unset, str] = UNSET
+    valid_hierarchy_types: Union[Unset, list[str]] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        invoice_number_format = self.invoice_number_format
+
+        valid_hierarchy_types: Union[Unset, list[str]] = UNSET
+        if not isinstance(self.valid_hierarchy_types, Unset):
+            valid_hierarchy_types = self.valid_hierarchy_types
+
+        field_dict: dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if invoice_number_format is not UNSET:
+            field_dict["invoiceNumberFormat"] = invoice_number_format
+        if valid_hierarchy_types is not UNSET:
+            field_dict["validHierarchyTypes"] = valid_hierarchy_types
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
+        invoice_number_format = d.pop("invoiceNumberFormat", UNSET)
+
+        valid_hierarchy_types = cast(list[str], d.pop("validHierarchyTypes", UNSET))
+
+        api_invoice_number_format = cls(
+            invoice_number_format=invoice_number_format,
+            valid_hierarchy_types=valid_hierarchy_types,
+        )
+
+        api_invoice_number_format.additional_properties = d
+        return api_invoice_number_format
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
