@@ -1,0 +1,102 @@
+"""Sync OpenAPI specifications and generate Python clients."""
+
+import subprocess
+from pathlib import Path
+
+import httpx
+import structlog
+import typer
+
+logger = structlog.get_logger()
+
+
+def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
+    """
+    Fetch OpenAPI spec and generate a Python client.
+
+    Args:
+        env: Environment name (e.g., 'dev', 'demo', 'prod')
+        service: Service name (e.g., 'billing-bookkeeper')
+        overwrite: Whether to overwrite existing generated client
+    """
+    # Map environment to domain
+    domain_map = {
+        "dev": "dev1.dev.clover.com",
+        "demo": "demo.clover.com",
+        "prod": "www.clover.com",
+    }
+
+    if env not in domain_map:
+        typer.echo(f"❌ Unknown environment: {env}. Valid options: {', '.join(domain_map.keys())}")
+        raise typer.Exit(1)
+
+    domain = domain_map[env]
+    spec_url = f"https://{domain}/{service}/v3/api-docs"
+
+    typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
+
+    # Fetch the OpenAPI spec
+    try:
+        response = httpx.get(spec_url, follow_redirects=True, timeout=30.0)
+        response.raise_for_status()
+        spec_data = response.json()
+    except httpx.HTTPError as e:
+        typer.echo(f"❌ Failed to fetch spec: {e}")
+        raise typer.Exit(1) from e
+
+    # Determine output path
+    # Store generated clients in src/stolon/generated/{service}_{env}
+    output_path = Path("src/stolon/generated") / f"{service.replace('-', '_')}_{env}"
+
+    if output_path.exists() and not overwrite:
+        typer.echo(f"⚠️  Client already exists at {output_path}")
+        typer.echo("   Use --overwrite to regenerate")
+        raise typer.Exit(1)
+
+    # Save spec to temporary file for openapi-python-client
+    spec_file = output_path.parent / f"{service}_{env}_spec.json"
+    spec_file.parent.mkdir(parents=True, exist_ok=True)
+
+    import json
+
+    spec_file.write_text(json.dumps(spec_data, indent=2))
+
+    typer.echo(f"💾 Saved spec to {spec_file}")
+    typer.echo(f"🔨 Generating Python client at {output_path}")
+
+    # Generate client using openapi-python-client
+    try:
+        cmd = [
+            "openapi-python-client",
+            "generate",
+            "--path",
+            str(spec_file),
+            "--output-path",
+            str(output_path),
+        ]
+
+        if overwrite:
+            cmd.append("--overwrite")
+
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+
+        typer.echo(f"✅ Client generated successfully at {output_path}")
+
+        if result.stdout:
+            typer.echo(result.stdout)
+
+    except subprocess.CalledProcessError as e:
+        typer.echo(f"❌ Failed to generate client: {e}")
+        if e.stderr:
+            typer.echo(e.stderr)
+        raise typer.Exit(1) from e
+    except FileNotFoundError as e:
+        typer.echo("❌ openapi-python-client not found. Please install it:")
+        typer.echo("   pipx install openapi-python-client --include-deps")
+        raise typer.Exit(1) from e
+
+    # Clean up spec file
+    spec_file.unlink()
+
+    typer.echo("")
+    typer.echo(f"🎉 Done! You can now import the client from stolon.generated.{service.replace('-', '_')}_{env}")

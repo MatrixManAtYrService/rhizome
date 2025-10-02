@@ -7,6 +7,8 @@ from stolon.get_internal_token import get_internal_token
 from trifolium.config import Home
 
 app = typer.Typer(help="HTTP API access helper for Clover services")
+sync_app = typer.Typer(help="Synchronize API specifications and generate clients.")
+app.add_typer(sync_app, name="sync")
 
 
 def version_callback(value: bool) -> None:
@@ -65,6 +67,18 @@ def serve(
 def hello() -> None:
     """A dummy command to satisfy typer's multi-command requirement."""
     typer.echo("Hello from stolon! 👋")
+
+
+@sync_app.command()
+def spec(
+    env: Annotated[str, typer.Option(help="Environment to sync (e.g., 'dev', 'demo', 'prod')")],
+    service: Annotated[str, typer.Option(help="Service to sync (e.g., 'billing-bookkeeper')")],
+    overwrite: Annotated[bool, typer.Option(help="Overwrite existing generated client")] = False,
+) -> None:
+    """Generate a Python client from an OpenAPI specification."""
+    from stolon.sync_spec import sync_spec
+
+    sync_spec(env=env, service=service, overwrite=overwrite)
 
 
 def main() -> None:

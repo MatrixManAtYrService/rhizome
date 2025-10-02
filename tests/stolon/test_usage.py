@@ -9,12 +9,15 @@ import pytest
 
 from stolon.client import StolonClient
 from stolon.environments.dev.http import DevHttp
+from tests.conftest import RunningStolonServer
 
 
 @pytest.mark.external_infra
-def test_get_merchant_name_from_dev1() -> None:
+def test_get_merchant_name_from_dev1(stolon_server: RunningStolonServer) -> None:
     """Test retrieving merchant name from dev environment."""
-    dev = DevHttp(StolonClient(data_in_logs=False))
+    # Use the stolon server's home so the client can find the port
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
     name = dev.get_merchant_name("MSR15REPHS0N5")
 
     # Verify we got a name back

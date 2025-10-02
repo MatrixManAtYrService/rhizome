@@ -379,3 +379,40 @@ def real_env_instance_factory(real_rhizome_client: RhizomeClient) -> Callable[[t
         return _cache[env_class]
 
     return get_instance
+
+
+@dataclass
+class RunningStolonServer:
+    """Represents a running stolon server instance for testing."""
+
+    port: int
+    home: Home
+
+
+@pytest.fixture(scope="module")
+def stolon_server() -> Generator[RunningStolonServer, None, None]:
+    """Start a stolon server for testing.
+
+    Returns:
+        RunningStolonServer: Server instance with port and home attributes.
+    """
+    from stolon.server import app as stolon_app
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Create sandboxed home
+        home = Home.sandbox(Path(temp_dir))
+        test_port = get_open_port()
+        home.set_stolon_port(test_port)
+
+        # Setup logging
+        setup_logging()
+
+        # Start server in background thread
+        def run_server() -> None:
+            uvicorn.run(stolon_app, host="0.0.0.0", port=test_port, log_config=None)
+
+        server_thread = threading.Thread(target=run_server, daemon=True)
+        server_thread.start()
+        time.sleep(0.5)  # Give server time to start
+
+        yield RunningStolonServer(port=test_port, home=home)
