@@ -9,7 +9,6 @@ contain actual schema differences (new columns, modified types, etc.).
 
 from __future__ import annotations
 
-from ...sanitize_helpers import sanitize_uuid_field
 from ..metadata_registry import MetaSQLModel
 from .reseller_plan_trial import ResellerPlanTrial
 
@@ -24,7 +23,7 @@ class ResellerPlanTrialV1(ResellerPlanTrial, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "reseller_plan_trial"
+    __tablename__ = "reseller_plan_trial"  # type: ignore
 
     def sanitize(self) -> ResellerPlanTrialV1:
         """Return a sanitized copy of this ResellerPlanTrialV1 instance."""

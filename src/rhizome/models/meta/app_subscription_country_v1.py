@@ -24,7 +24,7 @@ class AppSubscriptionCountryV1(AppSubscriptionCountry, MetaSQLModel, table=True)
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "app_subscription_country"
+    __tablename__ = "app_subscription_country"  # type: ignore
 
     def sanitize(self) -> AppSubscriptionCountryV1:
         """Return a sanitized copy of this AppSubscriptionCountryV1 instance."""

@@ -7,14 +7,16 @@ billing database, along with sanitization functions.
 
 from __future__ import annotations
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
 
 from typing import TypeVar
+
+from ..base import RhizomeModel
 
 T = TypeVar("T", bound="Heartbeat")
 
 
-class Heartbeat(SQLModel, table=False):
+class Heartbeat(RhizomeModel, table=False):
     """
     SQLModel for the `heartbeat` table.
 

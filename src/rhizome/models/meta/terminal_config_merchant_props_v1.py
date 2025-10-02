@@ -24,13 +24,13 @@ class TerminalConfigMerchantPropsV1(TerminalConfigMerchantProps, MetaSQLModel, t
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "terminal_config_merchant_props"
+    __tablename__ = "terminal_config_merchant_props"  # type: ignore
 
     def sanitize(self) -> TerminalConfigMerchantPropsV1:
         """Return a sanitized copy of this TerminalConfigMerchantPropsV1 instance."""
         return TerminalConfigMerchantPropsV1(
             id=self.id,
-            uuid=sanitize_uuid_field(self.uuid, 13),
+            uuid=sanitize_uuid_field(self.uuid, 13),  # type: ignore
             country=self.country,
             currency=self.currency,
         )

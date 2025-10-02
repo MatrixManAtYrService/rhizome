@@ -24,7 +24,7 @@ class MerchantGatewayV1(MerchantGateway, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_gateway"
+    __tablename__ = "merchant_gateway"  # type: ignore
 
     def sanitize(self) -> MerchantGatewayV1:
         """Return a sanitized copy of this MerchantGatewayV1 instance."""

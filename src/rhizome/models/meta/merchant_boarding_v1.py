@@ -23,7 +23,7 @@ class MerchantBoardingV1(MerchantBoarding, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_boarding"
+    __tablename__ = "merchant_boarding"  # type: ignore
 
     def sanitize(self) -> MerchantBoardingV1:
         """Return a sanitized copy of this MerchantBoardingV1 instance."""

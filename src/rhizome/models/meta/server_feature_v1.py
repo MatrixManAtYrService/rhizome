@@ -24,7 +24,7 @@ class ServerFeatureV1(ServerFeature, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "server_feature"
+    __tablename__ = "server_feature"  # type: ignore
 
     def sanitize(self) -> ServerFeatureV1:
         """Return a sanitized copy of this ServerFeatureV1 instance."""

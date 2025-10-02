@@ -24,7 +24,7 @@ class AppMeteredCountryV1(AppMeteredCountry, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "app_metered_country"
+    __tablename__ = "app_metered_country"  # type: ignore
 
     def sanitize(self) -> AppMeteredCountryV1:
         """Return a sanitized copy of this AppMeteredCountryV1 instance."""

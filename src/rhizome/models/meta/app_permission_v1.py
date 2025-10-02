@@ -23,7 +23,7 @@ class AppPermissionV1(AppPermission, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "app_permission"
+    __tablename__ = "app_permission"  # type: ignore
 
     def sanitize(self) -> AppPermissionV1:
         """Return a sanitized copy of this AppPermissionV1 instance."""

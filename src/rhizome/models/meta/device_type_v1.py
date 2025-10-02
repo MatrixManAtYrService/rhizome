@@ -24,7 +24,7 @@ class DeviceTypeV1(DeviceType, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "device_type"
+    __tablename__ = "device_type"  # type: ignore
 
     def sanitize(self) -> DeviceTypeV1:
         """Return a sanitized copy of this DeviceTypeV1 instance."""

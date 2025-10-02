@@ -24,7 +24,7 @@ class ProcessorKeyV1(ProcessorKey, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "processor_key"
+    __tablename__ = "processor_key"  # type: ignore
 
     def sanitize(self) -> ProcessorKeyV1:
         """Return a sanitized copy of this ProcessorKeyV1 instance."""

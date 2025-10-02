@@ -24,7 +24,7 @@ class DeveloperAppV1(DeveloperApp, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "developer_app"
+    __tablename__ = "developer_app"  # type: ignore
 
     def sanitize(self) -> DeveloperAppV1:
         """Return a sanitized copy of this DeveloperAppV1 instance."""

@@ -62,6 +62,17 @@ class Home:
             return int(port_file.read_text().strip())
         return None
 
+    def set_stolon_port(self, port: int) -> None:
+        """Store the stolon server port number."""
+        (self.state / "stolon_port").write_text(str(port))
+
+    def get_stolon_port(self) -> int | None:
+        """Retrieve the stored stolon server port number."""
+        port_file = self.state / "stolon_port"
+        if port_file.exists():
+            return int(port_file.read_text().strip())
+        return None
+
     def load_config(self) -> TrifoliumConfig:
         """Load configuration from trifolium.json, creating default if it doesn't exist."""
         config_file = self.config / "trifolium.json"

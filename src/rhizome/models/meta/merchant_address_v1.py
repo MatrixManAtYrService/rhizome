@@ -23,7 +23,7 @@ class MerchantAddressV1(MerchantAddress, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_address"
+    __tablename__ = "merchant_address"  # type: ignore
 
     def sanitize(self) -> MerchantAddressV1:
         """Return a sanitized copy of this MerchantAddressV1 instance."""

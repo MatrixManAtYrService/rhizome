@@ -23,7 +23,7 @@ class MerchantCreationDetailsV1(MerchantCreationDetails, MetaSQLModel, table=Tru
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_creation_details"
+    __tablename__ = "merchant_creation_details"  # type: ignore
 
     def sanitize(self) -> MerchantCreationDetailsV1:
         """Return a sanitized copy of this MerchantCreationDetailsV1 instance."""

@@ -11,7 +11,9 @@ import datetime
 from enum import Enum
 from typing import TypeVar
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
+
+from ..base import RhizomeModel
 
 T = TypeVar("T", bound="SuppressionMetrics")
 
@@ -46,7 +48,7 @@ class SuppContextEnum(str, Enum):
     ALL = "ALL"
 
 
-class SuppressionMetrics(SQLModel, table=False):
+class SuppressionMetrics(RhizomeModel, table=False):
     """
     SQLModel for the `suppression_metrics` table.
 

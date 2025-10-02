@@ -23,7 +23,7 @@ class MerchantAppSubscriptionHistoryV1(MerchantAppSubscriptionHistory, MetaSQLMo
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_app_subscription_history"
+    __tablename__ = "merchant_app_subscription_history"  # type: ignore
 
     def sanitize(self) -> MerchantAppSubscriptionHistoryV1:
         """Return a sanitized copy of this MerchantAppSubscriptionHistoryV1 instance."""

@@ -24,7 +24,7 @@ class MerchantPlanV1(MerchantPlan, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_plan"
+    __tablename__ = "merchant_plan"  # type: ignore
 
     def sanitize(self) -> MerchantPlanV1:
         """Return a sanitized copy of this MerchantPlanV1 instance."""

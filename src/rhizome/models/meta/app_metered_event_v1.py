@@ -24,7 +24,7 @@ class AppMeteredEventV1(AppMeteredEvent, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "app_metered_event"
+    __tablename__ = "app_metered_event"  # type: ignore
 
     def sanitize(self) -> AppMeteredEventV1:
         """Return a sanitized copy of this AppMeteredEventV1 instance."""

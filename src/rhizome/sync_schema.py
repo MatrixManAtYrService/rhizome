@@ -44,7 +44,7 @@ def create_lightweight_environment(env_class: type[Environment], client: Rhizome
         # Set up port forwarding if needed
         port_forward_config = env_instance.get_port_forward_config()
         if port_forward_config is not None:
-            env_instance._setup_port_forwarding(port_forward_config)
+            env_instance.setup_port_forwarding(port_forward_config)
 
         # Skip table_situation initialization for schema syncing
         env_instance.table_situation = {}

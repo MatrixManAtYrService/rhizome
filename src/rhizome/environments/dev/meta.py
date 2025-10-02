@@ -69,21 +69,16 @@ class DevMeta(Environment):
         """Get database configuration using legacy MySQL credentials."""
         import asyncio
 
-        dev_pattern = r"""
-            MysqlDevLegacy.*
-            password:\s*(?P<password>\S+)
-        """
+        password = asyncio.run(
+            self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD)
+        )
 
-        return asyncio.run(
-            self.get_database_config_from_credentials(
-                secret_reference="op://Shared/MysqlDevLegacy/password",
-                secret_manager=SecretManager.ONEPASSWORD,
-                database_name="meta",
-                pattern=dev_pattern,
-                host="dev1-db01.dev.pdx10.clover.network",
-                port=3306,
-                username="remotereadonly",
-            )
+        return DatabaseConfig(
+            host="dev1-db01.dev.pdx10.clover.network",
+            port=3306,
+            database="meta",
+            username="remotereadonly",
+            password=password,
         )
 
     def get_port_forward_config(self) -> PortForwardConfig | None:

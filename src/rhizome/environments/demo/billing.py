@@ -122,21 +122,16 @@ class DemoBilling(Environment):
         """Get database configuration using legacy MySQL credentials."""
         import asyncio
 
-        demo_pattern = r"""
-            MysqlDevLegacy.*
-            password:\s*(?P<password>\S+)
-        """
+        password = asyncio.run(
+            self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD)
+        )
 
-        return asyncio.run(
-            self.get_database_config_from_credentials(
-                secret_reference="op://Shared/MysqlDevLegacy/password",
-                secret_manager=SecretManager.ONEPASSWORD,
-                database_name="billing",
-                pattern=demo_pattern,
-                host="demo2-db01.dev.pdx10.clover.network",
-                port=3306,
-                username="remotereadonly",
-            )
+        return DatabaseConfig(
+            host="demo2-db01.dev.pdx10.clover.network",
+            port=3306,
+            database="billing",
+            username="remotereadonly",
+            password=password,
         )
 
     def get_port_forward_config(self) -> PortForwardConfig | None:

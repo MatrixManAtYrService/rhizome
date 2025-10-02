@@ -24,7 +24,7 @@ class AppSubscriptionV1(AppSubscription, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "app_subscription"
+    __tablename__ = "app_subscription"  # type: ignore
 
     def sanitize(self) -> AppSubscriptionV1:
         """Return a sanitized copy of this AppSubscriptionV1 instance."""

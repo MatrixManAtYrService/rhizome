@@ -23,7 +23,7 @@ class MerchantRoleV1(MerchantRole, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_role"
+    __tablename__ = "merchant_role"  # type: ignore
 
     def sanitize(self) -> MerchantRoleV1:
         """Return a sanitized copy of this MerchantRoleV1 instance."""

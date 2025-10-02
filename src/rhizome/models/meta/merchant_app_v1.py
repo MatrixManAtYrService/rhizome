@@ -24,7 +24,7 @@ class MerchantAppV1(MerchantApp, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_app"
+    __tablename__ = "merchant_app"  # type: ignore
 
     def sanitize(self) -> MerchantAppV1:
         """Return a sanitized copy of this MerchantAppV1 instance."""

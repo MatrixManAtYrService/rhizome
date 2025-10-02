@@ -117,7 +117,7 @@ def _filter_tables_for_environment(
     tables_for_this_env: list[tuple[StrEnum, type[RhizomeModel], type[Emplacement[RhizomeModel]]]] = []
 
     for table_name, (model_class, emplacement_class) in env_instance.table_situation.items():
-        if not model_class:
+        if not model_class or not emplacement_class:
             continue
 
         # Filter by missing_only if enabled

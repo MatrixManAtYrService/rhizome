@@ -23,7 +23,7 @@ class MerchantPlanMerchantPlanGroupV1(MerchantPlanMerchantPlanGroup, MetaSQLMode
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "merchant_plan_merchant_plan_group"
+    __tablename__ = "merchant_plan_merchant_plan_group"  # type: ignore
 
     def sanitize(self) -> MerchantPlanMerchantPlanGroupV1:
         """Return a sanitized copy of this MerchantPlanMerchantPlanGroupV1 instance."""
@@ -31,4 +31,5 @@ class MerchantPlanMerchantPlanGroupV1(MerchantPlanMerchantPlanGroup, MetaSQLMode
             default_plan=self.default_plan,
             id=self.id,
             merchant_plan_group_id=self.merchant_plan_group_id,
+            merchant_plan_id=self.merchant_plan_id,
         )

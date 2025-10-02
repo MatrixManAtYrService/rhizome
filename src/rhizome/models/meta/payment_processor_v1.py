@@ -24,7 +24,7 @@ class PaymentProcessorV1(PaymentProcessor, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "payment_processor"
+    __tablename__ = "payment_processor"  # type: ignore
 
     def sanitize(self) -> PaymentProcessorV1:
         """Return a sanitized copy of this PaymentProcessorV1 instance."""

@@ -10,12 +10,14 @@ from __future__ import annotations
 import datetime
 from typing import TypeVar
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
+
+from ..base import RhizomeModel
 
 T = TypeVar("T", bound="MerchantDeviceInfo")
 
 
-class MerchantDeviceInfo(SQLModel, table=False):
+class MerchantDeviceInfo(RhizomeModel, table=False):
     """
     SQLModel for the `merchant_device_info` table.
 

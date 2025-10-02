@@ -23,7 +23,7 @@ class AppAppBundleV1(AppAppBundle, MetaSQLModel, table=True):
     actual field modifications, additions, or removals.
     """
 
-    __tablename__ = "app_app_bundle"
+    __tablename__ = "app_app_bundle"  # type: ignore
 
     def sanitize(self) -> AppAppBundleV1:
         """Return a sanitized copy of this AppAppBundleV1 instance."""

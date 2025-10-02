@@ -68,7 +68,7 @@ class PortForwardConfig:
 class Environment(ABC):
     """Abstract base class for rhizome environments."""
 
-    table_situation: dict[StrEnum, tuple[type[RhizomeModel], type[Emplacement[Any]]]]
+    table_situation: dict[StrEnum, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]]
 
     @abstractmethod
     def tables(self) -> list[StrEnum]:
@@ -104,7 +104,7 @@ class Environment(ABC):
         # Set up port forwarding if needed
         port_forward_config = self.get_port_forward_config()
         if port_forward_config is not None:
-            self._setup_port_forwarding(port_forward_config)
+            self.setup_port_forwarding(port_forward_config)
 
         # Initialize table situation
         self.table_situation = {table: self.situate_table(table) for table in self.tables()}
@@ -148,7 +148,7 @@ class Environment(ABC):
 
         return model_class
 
-    def _setup_port_forwarding(self, config: PortForwardConfig) -> None:
+    def setup_port_forwarding(self, config: PortForwardConfig) -> None:
         """Set up port forwarding using the provided configuration."""
         from rhizome.cluster import connect_cluster
         from rhizome.portforward import cloudsql_port_forward
