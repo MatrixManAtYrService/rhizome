@@ -21,7 +21,7 @@ def test_billing_event_api(stolon_server: RunningStolonServer) -> None:
 
     # Test getting merchant acceptances
     # Using a known merchant UUID from dev environment
-    merchant_uuid = "CQ81XSCG2WGW5"
+    merchant_uuid = "MSR15REPHS0N5"
 
     response = dev.get(f"/billing-event/v1/merchant/acceptances?merchantUuid={merchant_uuid}")
 

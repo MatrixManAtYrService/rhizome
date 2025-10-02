@@ -389,9 +389,12 @@ class RunningStolonServer:
     home: Home
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def stolon_server() -> Generator[RunningStolonServer, None, None]:
     """Start a stolon server for testing.
+
+    This fixture is session-scoped so all tests share the same server instance,
+    avoiding multiple authentication prompts.
 
     Returns:
         RunningStolonServer: Server instance with port and home attributes.
