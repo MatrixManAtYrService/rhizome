@@ -7,6 +7,8 @@ import httpx
 import structlog
 import typer
 
+from stolon.get_internal_token import get_internal_token
+
 logger = structlog.get_logger()
 
 
@@ -35,9 +37,18 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
 
     typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
 
-    # Fetch the OpenAPI spec
+    # Get authentication token
+    typer.echo("🔐 Getting authentication token...")
+    token = get_internal_token(domain)
+
+    # Fetch the OpenAPI spec with authentication
     try:
-        response = httpx.get(spec_url, follow_redirects=True, timeout=30.0)
+        headers = {
+            "Cookie": f"internalSession={token}",
+            "Content-Type": "application/json",
+            "X-Clover-Appenv": f"{env}:{domain.split('.')[0]}",
+        }
+        response = httpx.get(spec_url, headers=headers, follow_redirects=True, timeout=30.0)
         response.raise_for_status()
         spec_data = response.json()
     except httpx.HTTPError as e:
