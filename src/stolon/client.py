@@ -1,8 +1,9 @@
 """Stolon client for communicating with the stolon server to manage HTTP API access."""
 
-import structlog
-import httpx
 from dataclasses import dataclass
+
+import httpx
+import structlog
 
 from trifolium.config import Home
 
@@ -45,16 +46,42 @@ class StolonClient:
             self._base_url = f"http://0.0.0.0:{port}"
         return self._base_url
 
-    def request_internal_token(self, domain: str) -> HttpHandle:
+    def invalidate_token(self, domain: str) -> None:
+        """
+        Invalidate a cached token for a domain on the stolon server.
+
+        This should be called when a token is discovered to be expired or invalid.
+
+        Args:
+            domain: Clover domain to invalidate token for
+        """
+        try:
+            with httpx.Client() as client:
+                response = client.delete(f"{self.base_url}/internal_token/{domain}")
+                response.raise_for_status()
+                self.logger.info(f"Invalidated cached token for {domain}")
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 404:
+                # No cached token to invalidate - that's fine
+                pass
+            else:
+                self.logger.warning(f"Failed to invalidate token for {domain}: {e}")
+
+    def request_internal_token(self, domain: str, *, force_refresh: bool = False) -> HttpHandle:
         """
         Request an internal session token from the stolon server.
 
         Args:
             domain: Clover domain to authenticate with (e.g., "dev1.dev.clover.com")
+            force_refresh: If True, force server to get a new token even if cached
 
         Returns:
             HttpHandle: Authentication handle with token and domain info
         """
+        # If forcing refresh, invalidate any cached token first
+        if force_refresh:
+            self.invalidate_token(domain)
+
         # Make request to stolon server to get internal token
         with httpx.Client() as client:
             response = client.post(

@@ -27,10 +27,15 @@ class Environment(ABC):
         self.client = client
         self._handle: HttpHandle | None = None
 
-    def _ensure_authenticated(self) -> None:
-        """Ensure we have a valid authentication token."""
-        if self._handle is None:
-            self._handle = self.client.request_internal_token(self.domain)
+    def _ensure_authenticated(self, *, force_refresh: bool = False) -> None:
+        """
+        Ensure we have a valid authentication token.
+
+        Args:
+            force_refresh: If True, force getting a fresh token even if one is cached
+        """
+        if self._handle is None or force_refresh:
+            self._handle = self.client.request_internal_token(self.domain, force_refresh=force_refresh)
 
     def get(self, path: str, **kwargs: Any) -> Any:
         """
@@ -57,11 +62,11 @@ class Environment(ABC):
         with httpx.Client() as client:
             response = client.get(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
 
-            # If we get a 401, refresh the token and retry once
+            # If we get a 401, the token is expired - invalidate cache and get fresh token
             if response.status_code == 401:
-                # Clear the cached handle to force re-authentication
+                # Clear local handle and force refresh from server (which will invalidate server cache)
                 self._handle = None
-                self._ensure_authenticated()
+                self._ensure_authenticated(force_refresh=True)
                 assert self._handle is not None
 
                 # Retry with the new token
@@ -96,11 +101,11 @@ class Environment(ABC):
         with httpx.Client() as client:
             response = client.post(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
 
-            # If we get a 401, refresh the token and retry once
+            # If we get a 401, the token is expired - invalidate cache and get fresh token
             if response.status_code == 401:
-                # Clear the cached handle to force re-authentication
+                # Clear local handle and force refresh from server (which will invalidate server cache)
                 self._handle = None
-                self._ensure_authenticated()
+                self._ensure_authenticated(force_refresh=True)
                 assert self._handle is not None
 
                 # Retry with the new token

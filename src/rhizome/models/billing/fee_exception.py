@@ -15,6 +15,7 @@ from sqlmodel import Field
 from ...models.base import RhizomeModel
 from ...sanitize_helpers import sanitize_uuid_field
 
+
 class ReferenceTypeType(str, Enum):
     """Enum for reference_type values."""
 

@@ -9,7 +9,6 @@ contain actual schema differences (new columns, modified types, etc.).
 
 from __future__ import annotations
 
-from ...sanitize_helpers import sanitize_uuid_field
 from ..metadata_registry import MetaSQLModel
 from .merchant_plan_group import MerchantPlanGroup
 

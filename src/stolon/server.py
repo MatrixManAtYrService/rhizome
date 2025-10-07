@@ -1,14 +1,15 @@
 """Stolon server for managing HTTP API access and authentication."""
 
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
+
 import structlog
 import uvicorn
-from contextlib import asynccontextmanager
-from collections.abc import AsyncGenerator
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from stolon.get_internal_token import get_internal_token
 from rhizome.logging import setup_logging
+from stolon.get_internal_token import get_internal_token
 from trifolium.config import Home
 
 
@@ -23,12 +24,16 @@ class InternalTokenResponse(BaseModel):
 
     token: str
     domain: str
+    cached: bool = False
 
 
 logger = structlog.get_logger()
 
 # Global variable to store the home instance for cleanup
 _home: Home | None = None
+
+# Token cache: domain -> token mapping
+_token_cache: dict[str, str] = {}
 
 
 @asynccontextmanager
@@ -51,9 +56,73 @@ app = FastAPI(lifespan=lifespan)
 
 @app.post("/internal_token")
 async def internal_token(request: InternalTokenRequest) -> InternalTokenResponse:
-    """Get an internal session token via browser authentication."""
+    """
+    Get an internal session token via browser authentication.
+
+    Checks cache first. If token exists in cache, returns it immediately.
+    Otherwise, initiates browser authentication flow and caches the result.
+    """
+    # Check if we already have a cached token for this domain
+    if request.domain in _token_cache:
+        logger.info(f"Using cached token for {request.domain}")
+        return InternalTokenResponse(
+            token=_token_cache[request.domain],
+            domain=request.domain,
+            cached=True
+        )
+
+    # No cached token, get a new one
+    logger.info(f"No cached token for {request.domain}, initiating authentication")
     token = get_internal_token(request.domain)
-    return InternalTokenResponse(token=token, domain=request.domain)
+
+    # Cache the token for future requests
+    _token_cache[request.domain] = token
+    logger.info(f"Cached new token for {request.domain}")
+
+    return InternalTokenResponse(token=token, domain=request.domain, cached=False)
+
+
+@app.get("/internal_token/{domain}")
+async def get_cached_token(domain: str) -> InternalTokenResponse:
+    """
+    Get a cached token for a specific domain.
+
+    Returns:
+        The cached token if it exists
+
+    Raises:
+        HTTPException: 404 if no token is cached for this domain
+    """
+    if domain not in _token_cache:
+        raise HTTPException(status_code=404, detail=f"No cached token for domain: {domain}")
+
+    return InternalTokenResponse(
+        token=_token_cache[domain],
+        domain=domain,
+        cached=True
+    )
+
+
+@app.delete("/internal_token/{domain}")
+async def delete_cached_token(domain: str) -> dict[str, str]:
+    """
+    Delete a cached token for a specific domain.
+
+    This forces re-authentication on the next request.
+
+    Returns:
+        Success message
+
+    Raises:
+        HTTPException: 404 if no token is cached for this domain
+    """
+    if domain not in _token_cache:
+        raise HTTPException(status_code=404, detail=f"No cached token for domain: {domain}")
+
+    del _token_cache[domain]
+    logger.info(f"Deleted cached token for {domain}")
+
+    return {"message": f"Cached token for {domain} deleted successfully"}
 
 
 def message() -> str:

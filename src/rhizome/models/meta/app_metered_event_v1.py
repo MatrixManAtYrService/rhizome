@@ -10,7 +10,6 @@ contain actual schema differences (new columns, modified types, etc.).
 from __future__ import annotations
 
 from ..metadata_registry import MetaSQLModel
-from ...sanitize_helpers import sanitize_uuid_field
 from .app_metered_event import AppMeteredEvent
 
 

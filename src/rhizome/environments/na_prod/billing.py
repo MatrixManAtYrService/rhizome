@@ -11,25 +11,22 @@ from enum import StrEnum
 from typing import Any
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
-from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.environments.na_prod.expected_data.billing_app_suppression import AppSuppressionNaProd
 from rhizome.environments.na_prod.expected_data.billing_auto_debit_no_auth_config import AutoDebitNoAuthConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_bank_routing import BankRoutingNaProd
-from rhizome.environments.na_prod.expected_data.billing_banner_curb import BannerCurbNaProd
-from rhizome.environments.na_prod.expected_data.billing_banner_data import BannerDataNaProd
-from rhizome.environments.na_prod.expected_data.billing_banner_details import BannerDetailsNaProd
 from rhizome.environments.na_prod.expected_data.billing_bi_context import BiContextNaProd
 from rhizome.environments.na_prod.expected_data.billing_biie_config import BiieConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_biie_file_def import BiieFileDefNaProd
 from rhizome.environments.na_prod.expected_data.billing_biie_file_instance import BiieFileInstanceNaProd
 from rhizome.environments.na_prod.expected_data.billing_biie_file_instance_request import BiieFileInstanceRequestNaProd
 from rhizome.environments.na_prod.expected_data.billing_biie_file_staging_data import BiieFileStagingDataNaProd
-from rhizome.environments.na_prod.expected_data.billing_billing_business_initiative import BillingBusinessInitiativeNaProd
+from rhizome.environments.na_prod.expected_data.billing_billing_business_initiative import (
+    BillingBusinessInitiativeNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_billing_request import BillingRequestNaProd
 from rhizome.environments.na_prod.expected_data.billing_billing_request_state import BillingRequestStateNaProd
 from rhizome.environments.na_prod.expected_data.billing_charge_capture_error import ChargeCaptureErrorNaProd
 from rhizome.environments.na_prod.expected_data.billing_charge_invoice_number import ChargeInvoiceNumberNaProd
-from rhizome.environments.na_prod.expected_data.billing_charge_metrics import ChargeMetricsNaProd
 from rhizome.environments.na_prod.expected_data.billing_charge_post_date import ChargePostDateNaProd
 from rhizome.environments.na_prod.expected_data.billing_charge_state_attempt import ChargeStateAttemptNaProd
 from rhizome.environments.na_prod.expected_data.billing_combined_charge import CombinedChargeNaProd
@@ -38,8 +35,9 @@ from rhizome.environments.na_prod.expected_data.billing_combined_disbursement im
 from rhizome.environments.na_prod.expected_data.billing_combined_disbursement_tree import CombinedDisbursementTreeNaProd
 from rhizome.environments.na_prod.expected_data.billing_corollary_data import CorollaryDataNaProd
 from rhizome.environments.na_prod.expected_data.billing_country_suppression import CountrySuppressionNaProd
-from rhizome.environments.na_prod.expected_data.billing_device_order_tracking import DeviceOrderTrackingNaProd
-from rhizome.environments.na_prod.expected_data.billing_disbursement_invoice_number import DisbursementInvoiceNumberNaProd
+from rhizome.environments.na_prod.expected_data.billing_disbursement_invoice_number import (
+    DisbursementInvoiceNumberNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_email_audit import EmailAuditNaProd
 from rhizome.environments.na_prod.expected_data.billing_email_developer_charge import EmailDeveloperChargeNaProd
 from rhizome.environments.na_prod.expected_data.billing_explanation import ExplanationNaProd
@@ -50,21 +48,31 @@ from rhizome.environments.na_prod.expected_data.billing_fee_exception import Fee
 from rhizome.environments.na_prod.expected_data.billing_flight_check import FlightCheckNaProd
 from rhizome.environments.na_prod.expected_data.billing_flight_check_archive import FlightCheckArchiveNaProd
 from rhizome.environments.na_prod.expected_data.billing_flight_check_execution import FlightCheckExecutionNaProd
-from rhizome.environments.na_prod.expected_data.billing_heartbeat import HeartbeatNaProd
 from rhizome.environments.na_prod.expected_data.billing_invoice_charge import InvoiceChargeNaProd
 from rhizome.environments.na_prod.expected_data.billing_job_lock import JobLockNaProd
 from rhizome.environments.na_prod.expected_data.billing_merchant_device_info import MerchantDeviceInfoNaProd
-from rhizome.environments.na_prod.expected_data.billing_merchant_odessa_mapping import MerchantOdessaMappingNaProd
 from rhizome.environments.na_prod.expected_data.billing_merchant_queue_sensitive import MerchantQueueSensitiveNaProd
-from rhizome.environments.na_prod.expected_data.billing_merchant_subscription_action import MerchantSubscriptionActionNaProd
+from rhizome.environments.na_prod.expected_data.billing_merchant_subscription_action import (
+    MerchantSubscriptionActionNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_merchant_suppression import MerchantSuppressionNaProd
-from rhizome.environments.na_prod.expected_data.billing_merchant_suppression_by_app import MerchantSuppressionByAppNaProd
+from rhizome.environments.na_prod.expected_data.billing_merchant_suppression_by_app import (
+    MerchantSuppressionByAppNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_merchant_terms_acceptance import MerchantTermsAcceptanceNaProd
-from rhizome.environments.na_prod.expected_data.billing_merchant_terms_acceptance_events import MerchantTermsAcceptanceEventsNaProd
-from rhizome.environments.na_prod.expected_data.billing_merchant_terms_acceptance_failed_event_log import MerchantTermsAcceptanceFailedEventLogNaProd
-from rhizome.environments.na_prod.expected_data.billing_merchant_terms_missing_acceptance import MerchantTermsMissingAcceptanceNaProd
+from rhizome.environments.na_prod.expected_data.billing_merchant_terms_acceptance_events import (
+    MerchantTermsAcceptanceEventsNaProd,
+)
+from rhizome.environments.na_prod.expected_data.billing_merchant_terms_acceptance_failed_event_log import (
+    MerchantTermsAcceptanceFailedEventLogNaProd,
+)
+from rhizome.environments.na_prod.expected_data.billing_merchant_terms_missing_acceptance import (
+    MerchantTermsMissingAcceptanceNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_offboarding import OffboardingNaProd
-from rhizome.environments.na_prod.expected_data.billing_plan_authorization_settings import PlanAuthorizationSettingsNaProd
+from rhizome.environments.na_prod.expected_data.billing_plan_authorization_settings import (
+    PlanAuthorizationSettingsNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_plan_meta import PlanMetaNaProd
 from rhizome.environments.na_prod.expected_data.billing_plan_meta_history import PlanMetaHistoryNaProd
 from rhizome.environments.na_prod.expected_data.billing_producer_failure import ProducerFailureNaProd
@@ -78,7 +86,6 @@ from rhizome.environments.na_prod.expected_data.billing_reseller_plan_rev_share 
 from rhizome.environments.na_prod.expected_data.billing_reseller_suppression import ResellerSuppressionNaProd
 from rhizome.environments.na_prod.expected_data.billing_reseller_usage_job_config import ResellerUsageJobConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_rev_share import RevShareNaProd
-from rhizome.environments.na_prod.expected_data.billing_seasonal_merchant_trans_audit import SeasonalMerchantTransAuditNaProd
 from rhizome.environments.na_prod.expected_data.billing_seasonal_reseller_info import SeasonalResellerInfoNaProd
 from rhizome.environments.na_prod.expected_data.billing_server_config import ServerConfigNaProd
 from rhizome.environments.na_prod.expected_data.billing_stage_app_metered_event import StageAppMeteredEventNaProd
@@ -88,76 +95,81 @@ from rhizome.environments.na_prod.expected_data.billing_stage_charge_history imp
 from rhizome.environments.na_prod.expected_data.billing_stage_charge_state_attempt import StageChargeStateAttemptNaProd
 from rhizome.environments.na_prod.expected_data.billing_stage_charge_update import StageChargeUpdateNaProd
 from rhizome.environments.na_prod.expected_data.billing_stage_email import StageEmailNaProd
-from rhizome.environments.na_prod.expected_data.billing_stage_email_merchant_charge import StageEmailMerchantChargeNaProd
-from rhizome.environments.na_prod.expected_data.billing_stage_infolease_charge_attempt import StageInfoleaseChargeAttemptNaProd
-from rhizome.environments.na_prod.expected_data.billing_stage_infolease_disbursement_attempt import StageInfoleaseDisbursementAttemptNaProd
+from rhizome.environments.na_prod.expected_data.billing_stage_email_merchant_charge import (
+    StageEmailMerchantChargeNaProd,
+)
+from rhizome.environments.na_prod.expected_data.billing_stage_infolease_charge_attempt import (
+    StageInfoleaseChargeAttemptNaProd,
+)
+from rhizome.environments.na_prod.expected_data.billing_stage_infolease_disbursement_attempt import (
+    StageInfoleaseDisbursementAttemptNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_stage_merchant_app_charge import StageMerchantAppChargeNaProd
 from rhizome.environments.na_prod.expected_data.billing_stage_merchant_plan_charge import StageMerchantPlanChargeNaProd
-from rhizome.environments.na_prod.expected_data.billing_stage_vendor_disbursement_error import StageVendorDisbursementErrorNaProd
-from rhizome.environments.na_prod.expected_data.billing_stage_vendor_disbursement_state_attempt import StageVendorDisbursementStateAttemptNaProd
-from rhizome.environments.na_prod.expected_data.billing_stop_ach_history import StopAchHistoryNaProd
+from rhizome.environments.na_prod.expected_data.billing_stage_vendor_disbursement_error import (
+    StageVendorDisbursementErrorNaProd,
+)
+from rhizome.environments.na_prod.expected_data.billing_stage_vendor_disbursement_state_attempt import (
+    StageVendorDisbursementStateAttemptNaProd,
+)
 from rhizome.environments.na_prod.expected_data.billing_suppression_metrics import SuppressionMetricsNaProd
 from rhizome.environments.na_prod.expected_data.billing_vat_vendor_disbursement import VatVendorDisbursementNaProd
 from rhizome.environments.na_prod.expected_data.billing_vendor_disbursement_error import VendorDisbursementErrorNaProd
-from rhizome.environments.na_prod.expected_data.billing_vendor_disbursement_state_attempt import VendorDisbursementStateAttemptNaProd
+from rhizome.environments.na_prod.expected_data.billing_vendor_disbursement_state_attempt import (
+    VendorDisbursementStateAttemptNaProd,
+)
+from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.billing.app_suppression_v1 import AppSuppressionV1
 from rhizome.models.billing.auto_debit_no_auth_config_v1 import AutoDebitNoAuthConfigV1
 from rhizome.models.billing.bank_routing_v1 import BankRoutingV1
-from rhizome.models.billing.banner_curb_v1 import BannerCurbV1
-from rhizome.models.billing.banner_data_v1 import BannerDataV1
-from rhizome.models.billing.banner_details_v1 import BannerDetailsV1
 from rhizome.models.billing.bi_context_v1 import BiContextV1
 from rhizome.models.billing.biie_config_v1 import BiieConfigV1
 from rhizome.models.billing.biie_file_def_v1 import BiieFileDefV1
-from rhizome.models.billing.biie_file_instance_v1 import BiieFileInstanceV1
 from rhizome.models.billing.biie_file_instance_request_v1 import BiieFileInstanceRequestV1
+from rhizome.models.billing.biie_file_instance_v1 import BiieFileInstanceV1
 from rhizome.models.billing.biie_file_staging_data_v1 import BiieFileStagingDataV1
 from rhizome.models.billing.billing_business_initiative_v1 import BillingBusinessInitiativeV1
-from rhizome.models.billing.billing_request_v1 import BillingRequestV1
 from rhizome.models.billing.billing_request_state_v1 import BillingRequestStateV1
+from rhizome.models.billing.billing_request_v1 import BillingRequestV1
 from rhizome.models.billing.charge_capture_error_v1 import ChargeCaptureErrorV1
 from rhizome.models.billing.charge_invoice_number_v1 import ChargeInvoiceNumberV1
-from rhizome.models.billing.charge_metrics_v1 import ChargeMetricsV1
 from rhizome.models.billing.charge_post_date_v1 import ChargePostDateV1
 from rhizome.models.billing.charge_state_attempt_v1 import ChargeStateAttemptV1
-from rhizome.models.billing.combined_charge_v1 import CombinedChargeV1
 from rhizome.models.billing.combined_charge_tree_v1 import CombinedChargeTreeV1
-from rhizome.models.billing.combined_disbursement_v1 import CombinedDisbursementV1
+from rhizome.models.billing.combined_charge_v1 import CombinedChargeV1
 from rhizome.models.billing.combined_disbursement_tree_v1 import CombinedDisbursementTreeV1
+from rhizome.models.billing.combined_disbursement_v1 import CombinedDisbursementV1
 from rhizome.models.billing.corollary_data_v1 import CorollaryDataV1
 from rhizome.models.billing.country_suppression_v1 import CountrySuppressionV1
-from rhizome.models.billing.device_order_tracking_v1 import DeviceOrderTrackingV1
 from rhizome.models.billing.disbursement_invoice_number_v1 import DisbursementInvoiceNumberV1
 from rhizome.models.billing.email_audit_v1 import EmailAuditV1
 from rhizome.models.billing.email_developer_charge_v1 import EmailDeveloperChargeV1
-from rhizome.models.billing.explanation_v1 import ExplanationV1
 from rhizome.models.billing.explanation_data_v1 import ExplanationDataV1
+from rhizome.models.billing.explanation_v1 import ExplanationV1
 from rhizome.models.billing.export_tracker_v1 import ExportTrackerV1
-from rhizome.models.billing.fee_v1 import FeeV1
 from rhizome.models.billing.fee_exception_v1 import FeeExceptionV1
-from rhizome.models.billing.flight_check_v1 import FlightCheckV1
+from rhizome.models.billing.fee_v1 import FeeV1
 from rhizome.models.billing.flight_check_archive_v1 import FlightCheckArchiveV1
 from rhizome.models.billing.flight_check_execution_v1 import FlightCheckExecutionV1
-from rhizome.models.billing.heartbeat_v1 import HeartbeatV1
+from rhizome.models.billing.flight_check_v1 import FlightCheckV1
 from rhizome.models.billing.invoice_charge_v1 import InvoiceChargeV1
 from rhizome.models.billing.job_lock_v1 import JobLockV1
 from rhizome.models.billing.merchant_device_info_v1 import MerchantDeviceInfoV1
-from rhizome.models.billing.merchant_odessa_mapping_v1 import MerchantOdessaMappingV1
 from rhizome.models.billing.merchant_queue_sensitive_v1 import MerchantQueueSensitiveV1
 from rhizome.models.billing.merchant_subscription_action_v1 import MerchantSubscriptionActionV1
-from rhizome.models.billing.merchant_suppression_v1 import MerchantSuppressionV1
 from rhizome.models.billing.merchant_suppression_by_app_v1 import MerchantSuppressionByAppV1
-from rhizome.models.billing.merchant_terms_acceptance_v1 import MerchantTermsAcceptanceV1
+from rhizome.models.billing.merchant_suppression_v1 import MerchantSuppressionV1
 from rhizome.models.billing.merchant_terms_acceptance_events_v1 import MerchantTermsAcceptanceEventsV1
 from rhizome.models.billing.merchant_terms_acceptance_failed_event_log_v1 import MerchantTermsAcceptanceFailedEventLogV1
+from rhizome.models.billing.merchant_terms_acceptance_v1 import MerchantTermsAcceptanceV1
 from rhizome.models.billing.merchant_terms_missing_acceptance_v1 import MerchantTermsMissingAcceptanceV1
 from rhizome.models.billing.offboarding_v1 import OffboardingV1
 from rhizome.models.billing.plan_authorization_settings_v1 import PlanAuthorizationSettingsV1
-from rhizome.models.billing.plan_meta_v1 import PlanMetaV1
 from rhizome.models.billing.plan_meta_history_v1 import PlanMetaHistoryV1
+from rhizome.models.billing.plan_meta_v1 import PlanMetaV1
 from rhizome.models.billing.producer_failure_v1 import ProducerFailureV1
-from rhizome.models.billing.promo_v1 import PromoV1
 from rhizome.models.billing.promo_control_v1 import PromoControlV1
+from rhizome.models.billing.promo_v1 import PromoV1
 from rhizome.models.billing.remit_merchant_details_v1 import RemitMerchantDetailsV1
 from rhizome.models.billing.reseller_app_rev_share_v1 import ResellerAppRevShareV1
 from rhizome.models.billing.reseller_invoice_alliance_v1 import ResellerInvoiceAllianceV1
@@ -166,24 +178,22 @@ from rhizome.models.billing.reseller_plan_rev_share_v1 import ResellerPlanRevSha
 from rhizome.models.billing.reseller_suppression_v1 import ResellerSuppressionV1
 from rhizome.models.billing.reseller_usage_job_config_v1 import ResellerUsageJobConfigV1
 from rhizome.models.billing.rev_share_v1 import RevShareV1
-from rhizome.models.billing.seasonal_merchant_trans_audit_v1 import SeasonalMerchantTransAuditV1
 from rhizome.models.billing.seasonal_reseller_info_v1 import SeasonalResellerInfoV1
 from rhizome.models.billing.server_config_v1 import ServerConfigV1
 from rhizome.models.billing.stage_app_metered_event_v1 import StageAppMeteredEventV1
-from rhizome.models.billing.stage_charge_v1 import StageChargeV1
 from rhizome.models.billing.stage_charge_capture_error_v1 import StageChargeCaptureErrorV1
 from rhizome.models.billing.stage_charge_history_v1 import StageChargeHistoryV1
 from rhizome.models.billing.stage_charge_state_attempt_v1 import StageChargeStateAttemptV1
 from rhizome.models.billing.stage_charge_update_v1 import StageChargeUpdateV1
-from rhizome.models.billing.stage_email_v1 import StageEmailV1
+from rhizome.models.billing.stage_charge_v1 import StageChargeV1
 from rhizome.models.billing.stage_email_merchant_charge_v1 import StageEmailMerchantChargeV1
+from rhizome.models.billing.stage_email_v1 import StageEmailV1
 from rhizome.models.billing.stage_infolease_charge_attempt_v1 import StageInfoleaseChargeAttemptV1
 from rhizome.models.billing.stage_infolease_disbursement_attempt_v1 import StageInfoleaseDisbursementAttemptV1
 from rhizome.models.billing.stage_merchant_app_charge_v1 import StageMerchantAppChargeV1
 from rhizome.models.billing.stage_merchant_plan_charge_v1 import StageMerchantPlanChargeV1
 from rhizome.models.billing.stage_vendor_disbursement_error_v1 import StageVendorDisbursementErrorV1
 from rhizome.models.billing.stage_vendor_disbursement_state_attempt_v1 import StageVendorDisbursementStateAttemptV1
-from rhizome.models.billing.stop_ach_history_v1 import StopAchHistoryV1
 from rhizome.models.billing.suppression_metrics_v1 import SuppressionMetricsV1
 from rhizome.models.billing.vat_vendor_disbursement_v1 import VatVendorDisbursementV1
 from rhizome.models.billing.vendor_disbursement_error_v1 import VendorDisbursementErrorV1
@@ -194,9 +204,6 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.app_suppression: (AppSuppressionV1, AppSuppressionNaProd),
     BillingTable.auto_debit_no_auth_config: (AutoDebitNoAuthConfigV1, AutoDebitNoAuthConfigNaProd),
     BillingTable.bank_routing: (BankRoutingV1, BankRoutingNaProd),
-    BillingTable.banner_curb: (BannerCurbV1, BannerCurbNaProd),
-    BillingTable.banner_data: (BannerDataV1, BannerDataNaProd),
-    BillingTable.banner_details: (BannerDetailsV1, BannerDetailsNaProd),
     BillingTable.bi_context: (BiContextV1, BiContextNaProd),
     BillingTable.biie_config: (BiieConfigV1, BiieConfigNaProd),
     BillingTable.biie_file_def: (BiieFileDefV1, BiieFileDefNaProd),
@@ -208,7 +215,6 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.billing_request_state: (BillingRequestStateV1, BillingRequestStateNaProd),
     BillingTable.charge_capture_error: (ChargeCaptureErrorV1, ChargeCaptureErrorNaProd),
     BillingTable.charge_invoice_number: (ChargeInvoiceNumberV1, ChargeInvoiceNumberNaProd),
-    BillingTable.charge_metrics: (ChargeMetricsV1, ChargeMetricsNaProd),
     BillingTable.charge_post_date: (ChargePostDateV1, ChargePostDateNaProd),
     BillingTable.charge_state_attempt: (ChargeStateAttemptV1, ChargeStateAttemptNaProd),
     BillingTable.combined_charge: (CombinedChargeV1, CombinedChargeNaProd),
@@ -217,7 +223,6 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.combined_disbursement_tree: (CombinedDisbursementTreeV1, CombinedDisbursementTreeNaProd),
     BillingTable.corollary_data: (CorollaryDataV1, CorollaryDataNaProd),
     BillingTable.country_suppression: (CountrySuppressionV1, CountrySuppressionNaProd),
-    BillingTable.device_order_tracking: (DeviceOrderTrackingV1, DeviceOrderTrackingNaProd),
     BillingTable.disbursement_invoice_number: (DisbursementInvoiceNumberV1, DisbursementInvoiceNumberNaProd),
     BillingTable.email_audit: (EmailAuditV1, EmailAuditNaProd),
     BillingTable.email_developer_charge: (EmailDeveloperChargeV1, EmailDeveloperChargeNaProd),
@@ -229,11 +234,9 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.flight_check: (FlightCheckV1, FlightCheckNaProd),
     BillingTable.flight_check_archive: (FlightCheckArchiveV1, FlightCheckArchiveNaProd),
     BillingTable.flight_check_execution: (FlightCheckExecutionV1, FlightCheckExecutionNaProd),
-    BillingTable.heartbeat: (HeartbeatV1, HeartbeatNaProd),
     BillingTable.invoice_charge: (InvoiceChargeV1, InvoiceChargeNaProd),
     BillingTable.job_lock: (JobLockV1, JobLockNaProd),
     BillingTable.merchant_device_info: (MerchantDeviceInfoV1, MerchantDeviceInfoNaProd),
-    BillingTable.merchant_odessa_mapping: (MerchantOdessaMappingV1, MerchantOdessaMappingNaProd),
     BillingTable.merchant_queue_sensitive: (MerchantQueueSensitiveV1, MerchantQueueSensitiveNaProd),
     BillingTable.merchant_subscription_action: (MerchantSubscriptionActionV1, MerchantSubscriptionActionNaProd),
     BillingTable.merchant_suppression: (MerchantSuppressionV1, MerchantSuppressionNaProd),
@@ -257,7 +260,6 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.reseller_suppression: (ResellerSuppressionV1, ResellerSuppressionNaProd),
     BillingTable.reseller_usage_job_config: (ResellerUsageJobConfigV1, ResellerUsageJobConfigNaProd),
     BillingTable.rev_share: (RevShareV1, RevShareNaProd),
-    BillingTable.seasonal_merchant_trans_audit: (SeasonalMerchantTransAuditV1, SeasonalMerchantTransAuditNaProd),
     BillingTable.seasonal_reseller_info: (SeasonalResellerInfoV1, SeasonalResellerInfoNaProd),
     BillingTable.server_config: (ServerConfigV1, ServerConfigNaProd),
     BillingTable.stage_app_metered_event: (StageAppMeteredEventV1, StageAppMeteredEventNaProd),
@@ -274,7 +276,6 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.stage_merchant_plan_charge: (StageMerchantPlanChargeV1, StageMerchantPlanChargeNaProd),
     BillingTable.stage_vendor_disbursement_error: (StageVendorDisbursementErrorV1, StageVendorDisbursementErrorNaProd),
     BillingTable.stage_vendor_disbursement_state_attempt: (StageVendorDisbursementStateAttemptV1, StageVendorDisbursementStateAttemptNaProd),
-    BillingTable.stop_ach_history: (StopAchHistoryV1, StopAchHistoryNaProd),
     BillingTable.suppression_metrics: (SuppressionMetricsV1, SuppressionMetricsNaProd),
     BillingTable.vat_vendor_disbursement: (VatVendorDisbursementV1, VatVendorDisbursementNaProd),
     BillingTable.vendor_disbursement_error: (VendorDisbursementErrorV1, VendorDisbursementErrorNaProd),
@@ -295,6 +296,8 @@ class NorthAmericaBilling(Environment):
         model_class, emplacement_class = models[table_name]
         if model_class is None:
             raise NotImplementedError(f"Model class for {table_name} not yet implemented")
+        if emplacement_class is None:
+            raise NotImplementedError(f"Emplacement class for {table_name} not yet implemented")
         return model_class, emplacement_class
 
     def get_database_config(self) -> DatabaseConfig:

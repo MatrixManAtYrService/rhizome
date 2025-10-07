@@ -9,11 +9,7 @@ from __future__ import annotations
 
 from sqlmodel import Field
 
-from typing import TypeVar
-
 from ..base import RhizomeModel
-
-T = TypeVar("T", bound="Heartbeat")
 
 
 class Heartbeat(RhizomeModel, table=False):
@@ -31,7 +27,7 @@ class Heartbeat(RhizomeModel, table=False):
     relay_master_log_file: str | None = Field(default=None, max_length=255, description="Master log file name")
     exec_master_log_pos: int | None = Field(default=None, description="Execution position in master log")
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> Heartbeat:
         """Return a sanitized copy of this Heartbeat instance."""
         return Heartbeat(
             ts=self.ts,

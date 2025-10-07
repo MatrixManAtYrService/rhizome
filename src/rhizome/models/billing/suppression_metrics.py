@@ -9,13 +9,10 @@ from __future__ import annotations
 
 import datetime
 from enum import Enum
-from typing import TypeVar
 
 from sqlmodel import Field
 
 from ..base import RhizomeModel
-
-T = TypeVar("T", bound="SuppressionMetrics")
 
 
 class SuppTypeEnum(str, Enum):
@@ -66,7 +63,7 @@ class SuppressionMetrics(RhizomeModel, table=False):
     num_suppressions: int = Field(description="Number of suppressions")
     num_merchants: int = Field(description="Number of merchants")
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> SuppressionMetrics:
         """Return a sanitized copy of this SuppressionMetrics instance."""
         return SuppressionMetrics(
             supp_month=self.supp_month,

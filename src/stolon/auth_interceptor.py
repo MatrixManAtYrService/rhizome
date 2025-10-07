@@ -17,6 +17,10 @@ router = APIRouter()
 # Global state for the current auth session
 _current_auth_session: Optional["AuthServer"] = None
 
+# Track if server is running to prevent multiple instances
+_server_running: bool = False
+_server_lock = threading.Lock()
+
 
 class AuthServer:
     """Authentication server for capturing tokens."""
@@ -237,16 +241,26 @@ async def stolon_status() -> JSONResponse:
 
 def start_auth_server(clover_domain: str) -> tuple[AuthServer, int]:
     """Start the authentication server and return server instance and port."""
+    global _server_running
+
     server = AuthServer(clover_domain)
 
-    # Run the server in a background thread
-    def run_server() -> None:
-        uvicorn.run(server.app, host="localhost", port=STOLON_AUTH_PORT, log_level="error")
+    # Only start a new server if one isn't already running
+    with _server_lock:
+        if not _server_running:
+            # Run the server in a background thread
+            def run_server() -> None:
+                global _server_running
+                try:
+                    uvicorn.run(server.app, host="localhost", port=STOLON_AUTH_PORT, log_level="error")
+                finally:
+                    _server_running = False
 
-    thread = threading.Thread(target=run_server, daemon=True)
-    thread.start()
+            thread = threading.Thread(target=run_server, daemon=True)
+            thread.start()
+            _server_running = True
 
-    # Give the server a moment to start
-    time.sleep(0.5)
+            # Give the server a moment to start
+            time.sleep(0.5)
 
     return server, STOLON_AUTH_PORT

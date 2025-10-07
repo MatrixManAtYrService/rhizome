@@ -8,13 +8,10 @@ billing database, along with sanitization functions.
 from __future__ import annotations
 
 import datetime
-from typing import TypeVar
 
 from sqlmodel import Field
 
 from ..base import RhizomeModel
-
-T = TypeVar("T", bound="MerchantDeviceInfo")
 
 
 class MerchantDeviceInfo(RhizomeModel, table=False):
@@ -30,7 +27,7 @@ class MerchantDeviceInfo(RhizomeModel, table=False):
     terminal_id: str = Field(primary_key=True, max_length=16, description="terminal_id")
     modified_time: datetime.datetime = Field(description="modified_time")
 
-    def sanitize(self: T) -> T:
+    def sanitize(self) -> MerchantDeviceInfo:
         """Return a sanitized copy of this MerchantDeviceInfo instance."""
         return MerchantDeviceInfo(
             merchant_id=self.merchant_id,

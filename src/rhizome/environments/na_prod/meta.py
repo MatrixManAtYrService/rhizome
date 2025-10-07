@@ -11,52 +11,21 @@ from enum import StrEnum
 from typing import Any
 
 from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
-from rhizome.models.base import Emplacement, RhizomeModel
-from rhizome.models.meta.account import Account
-from rhizome.models.meta.app_app_bundle_v1 import AppAppBundleV1
-from rhizome.models.meta.app_bundle_v1 import AppBundleV1
-from rhizome.models.meta.app_metered_v1 import AppMeteredV1
-from rhizome.models.meta.app_metered_country_v1 import AppMeteredCountryV1
-from rhizome.models.meta.app_metered_event_v1 import AppMeteredEventV1
-from rhizome.models.meta.app_permission_v1 import AppPermissionV1
-from rhizome.models.meta.app_subscription_v1 import AppSubscriptionV1
-from rhizome.models.meta.app_subscription_country_v1 import AppSubscriptionCountryV1
-from rhizome.models.meta.country import Country
-from rhizome.models.meta.developer import Developer
-from rhizome.models.meta.developer_app_v1 import DeveloperAppV1
-from rhizome.models.meta.device_events_v1 import DeviceEventsV1
-from rhizome.models.meta.device_provision_v1 import DeviceProvisionV1
-from rhizome.models.meta.device_type_v1 import DeviceTypeV1
-from rhizome.models.meta.locale import Locale
-from rhizome.models.meta.merchant import Merchant
-from rhizome.models.meta.merchant_address_v1 import MerchantAddressV1
-from rhizome.models.meta.merchant_app_v1 import MerchantAppV1
-from rhizome.models.meta.merchant_app_subscription_history_v1 import (
-    MerchantAppSubscriptionHistoryV1,
-)
-from rhizome.models.meta.merchant_boarding_v1 import MerchantBoardingV1
-from rhizome.models.meta.merchant_creation_details_v1 import MerchantCreationDetailsV1
-from rhizome.models.meta.merchant_gateway_v1 import MerchantGatewayV1
-from rhizome.models.meta.merchant_merchant_plan_history_v1 import (
-    MerchantMerchantPlanHistoryV1,
-)
-from rhizome.models.meta.merchant_plan_v1 import MerchantPlanV1
-from rhizome.models.meta.merchant_plan_group_v1 import MerchantPlanGroupV1
-from rhizome.models.meta.merchant_plan_merchant_plan_group_v1 import (
-    MerchantPlanMerchantPlanGroupV1,
-)
-from rhizome.models.meta.merchant_role_v1 import MerchantRoleV1
-from rhizome.models.meta.payment_processor_v1 import PaymentProcessorV1
-from rhizome.models.meta.processor_key_v1 import ProcessorKeyV1
-from rhizome.models.meta.reseller import Reseller
-from rhizome.models.meta.reseller_plan_trial_v1 import ResellerPlanTrialV1
-from rhizome.models.meta.server_feature_v1 import ServerFeatureV1
-from rhizome.models.meta.terminal_config_merchant_props_v1 import (
-    TerminalConfigMerchantPropsV1,
-)
-from rhizome.models.meta.timezones import Timezones
-from rhizome.models.table_list import MetaTable
-
+from rhizome.environments.na_prod.expected_data.meta_account import AccountNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_app_bundle import AppAppBundleNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_bundle import AppBundleNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_metered import AppMeteredNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_metered_country import AppMeteredCountryNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_metered_event import AppMeteredEventNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_permission import AppPermissionNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_subscription import AppSubscriptionNaProd
+from rhizome.environments.na_prod.expected_data.meta_app_subscription_country import AppSubscriptionCountryNaProd
+from rhizome.environments.na_prod.expected_data.meta_country import CountryNaProd
+from rhizome.environments.na_prod.expected_data.meta_developer import DeveloperNaProd
+from rhizome.environments.na_prod.expected_data.meta_developer_app import DeveloperAppNaProd
+from rhizome.environments.na_prod.expected_data.meta_device_events import DeviceEventsNaProd
+from rhizome.environments.na_prod.expected_data.meta_device_provision import DeviceProvisionNaProd
+from rhizome.environments.na_prod.expected_data.meta_device_type import DeviceTypeNaProd
 from rhizome.environments.na_prod.expected_data.meta_locale import LocaleNaProd
 from rhizome.environments.na_prod.expected_data.meta_merchant import MerchantNaProd
 from rhizome.environments.na_prod.expected_data.meta_merchant_address import MerchantAddressNaProd
@@ -87,21 +56,51 @@ from rhizome.environments.na_prod.expected_data.meta_terminal_config_merchant_pr
     TerminalConfigMerchantPropsNaProd,
 )
 from rhizome.environments.na_prod.expected_data.meta_timezones import TimezonesNaProd
-from rhizome.environments.na_prod.expected_data.meta_account import AccountNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_app_bundle import AppAppBundleNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_bundle import AppBundleNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_metered import AppMeteredNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_metered_country import AppMeteredCountryNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_metered_event import AppMeteredEventNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_permission import AppPermissionNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_subscription import AppSubscriptionNaProd
-from rhizome.environments.na_prod.expected_data.meta_app_subscription_country import AppSubscriptionCountryNaProd
-from rhizome.environments.na_prod.expected_data.meta_country import CountryNaProd
-from rhizome.environments.na_prod.expected_data.meta_developer import DeveloperNaProd
-from rhizome.environments.na_prod.expected_data.meta_developer_app import DeveloperAppNaProd
-from rhizome.environments.na_prod.expected_data.meta_device_events import DeviceEventsNaProd
-from rhizome.environments.na_prod.expected_data.meta_device_provision import DeviceProvisionNaProd
-from rhizome.environments.na_prod.expected_data.meta_device_type import DeviceTypeNaProd
+from rhizome.models.base import Emplacement, RhizomeModel
+from rhizome.models.meta.account import Account
+from rhizome.models.meta.app_app_bundle_v1 import AppAppBundleV1
+from rhizome.models.meta.app_bundle_v1 import AppBundleV1
+from rhizome.models.meta.app_metered_country_v1 import AppMeteredCountryV1
+from rhizome.models.meta.app_metered_event_v1 import AppMeteredEventV1
+from rhizome.models.meta.app_metered_v1 import AppMeteredV1
+from rhizome.models.meta.app_permission_v1 import AppPermissionV1
+from rhizome.models.meta.app_subscription_country_v1 import AppSubscriptionCountryV1
+from rhizome.models.meta.app_subscription_v1 import AppSubscriptionV1
+from rhizome.models.meta.country import Country
+from rhizome.models.meta.developer import Developer
+from rhizome.models.meta.developer_app_v1 import DeveloperAppV1
+from rhizome.models.meta.device_events_v1 import DeviceEventsV1
+from rhizome.models.meta.device_provision_v1 import DeviceProvisionV1
+from rhizome.models.meta.device_type_v1 import DeviceTypeV1
+from rhizome.models.meta.locale import Locale
+from rhizome.models.meta.merchant import Merchant
+from rhizome.models.meta.merchant_address_v1 import MerchantAddressV1
+from rhizome.models.meta.merchant_app_subscription_history_v1 import (
+    MerchantAppSubscriptionHistoryV1,
+)
+from rhizome.models.meta.merchant_app_v1 import MerchantAppV1
+from rhizome.models.meta.merchant_boarding_v1 import MerchantBoardingV1
+from rhizome.models.meta.merchant_creation_details_v1 import MerchantCreationDetailsV1
+from rhizome.models.meta.merchant_gateway_v1 import MerchantGatewayV1
+from rhizome.models.meta.merchant_merchant_plan_history_v1 import (
+    MerchantMerchantPlanHistoryV1,
+)
+from rhizome.models.meta.merchant_plan_group_v1 import MerchantPlanGroupV1
+from rhizome.models.meta.merchant_plan_merchant_plan_group_v1 import (
+    MerchantPlanMerchantPlanGroupV1,
+)
+from rhizome.models.meta.merchant_plan_v1 import MerchantPlanV1
+from rhizome.models.meta.merchant_role_v1 import MerchantRoleV1
+from rhizome.models.meta.payment_processor_v1 import PaymentProcessorV1
+from rhizome.models.meta.processor_key_v1 import ProcessorKeyV1
+from rhizome.models.meta.reseller import Reseller
+from rhizome.models.meta.reseller_plan_trial_v1 import ResellerPlanTrialV1
+from rhizome.models.meta.server_feature_v1 import ServerFeatureV1
+from rhizome.models.meta.terminal_config_merchant_props_v1 import (
+    TerminalConfigMerchantPropsV1,
+)
+from rhizome.models.meta.timezones import Timezones
+from rhizome.models.table_list import MetaTable
 
 models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]] = {
     MetaTable.account: (Account, AccountNaProd),

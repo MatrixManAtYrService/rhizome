@@ -6,6 +6,7 @@ sensitive information with deterministic hashes.
 """
 
 import hashlib
+from typing import overload
 
 import base58
 
@@ -47,6 +48,14 @@ def hash_uuid_to_base58(uuid_str: str, target_length: int) -> str:
         hash_portion = base58_hash + padding
 
     return prefix + hash_portion
+
+
+@overload
+def sanitize_uuid_field(value: None, field_length: int) -> None: ...
+
+
+@overload
+def sanitize_uuid_field(value: str | bytes, field_length: int) -> str: ...
 
 
 def sanitize_uuid_field(value: str | bytes | None, field_length: int) -> str | None:

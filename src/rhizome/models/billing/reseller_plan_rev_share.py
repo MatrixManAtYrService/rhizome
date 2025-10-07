@@ -25,7 +25,7 @@ class ResellerPlanRevShare(RhizomeModel, table=False):
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str | None = Field(default=None, description="UUID field")
     reseller_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    plan_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    plan_uuid: str | None = Field(default=None, max_length=13, description="plan_uuid")
     rev_share: int = Field(description="rev_share")
     rev_share_type: str | None = Field(default=None, description="rev_share_type")
     effective_date: datetime.datetime = Field(description="effective_date")

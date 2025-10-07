@@ -15,6 +15,7 @@ from sqlmodel import Field
 from ...models.base import RhizomeModel
 from ...sanitize_helpers import sanitize_uuid_field
 
+
 class AmountTypeType(str, Enum):
     """Enum for amount_type values."""
 

@@ -7,7 +7,6 @@ billing database, along with sanitization functions.
 
 from __future__ import annotations
 
-
 from sqlmodel import Field
 
 from ...models.base import RhizomeModel
@@ -26,7 +25,7 @@ class PlanMeta(RhizomeModel, table=False):
     ref_type: str | None = Field(default=None, description="ref_type")
     ref_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     plan_type: str | None = Field(default=None, description="plan_type")
-    plan_uuid: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    plan_uuid: str | None = Field(default=None, max_length=13, description="plan_uuid")
     prop_name: str = Field(max_length=255, description="prop_name")
     prop_value: str | None = Field(default=None, max_length=2048, description="prop_value")
 

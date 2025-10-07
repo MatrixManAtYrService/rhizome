@@ -39,7 +39,7 @@ class BillingRequest(RhizomeModel, table=False):
         return BillingRequest(
             id=self.id,
             uuid=sanitize_uuid_field(self.uuid, 13),
-            query_uuid=sanitize_uuid_field(self.query_uuid, 13),
+            query_uuid=self.query_uuid,  # This is an int, not a UUID, so don't sanitize
             name=self.name,
             status=self.status,
             input_class=self.input_class,
