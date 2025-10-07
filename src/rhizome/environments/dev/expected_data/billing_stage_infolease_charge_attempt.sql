@@ -1,0 +1,22 @@
+CREATE TABLE `stage_infolease_charge_attempt` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(13) CHARACTER SET latin1 NOT NULL,
+  `charge_id` bigint unsigned NOT NULL,
+  `status` enum('BILLED','ACH_REJECT','REFUNDED','WAIVED') NOT NULL,
+  `payment_type` varchar(10) NOT NULL,
+  `infolease_key` varchar(20) DEFAULT NULL,
+  `contract_number` varchar(30) DEFAULT NULL,
+  `gl_code` varchar(10) DEFAULT NULL,
+  `tax` bigint NOT NULL,
+  `post_date` varchar(10) DEFAULT NULL,
+  `post_time` varchar(10) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `request_uuid` char(13) NOT NULL,
+  `promoted_time` timestamp NULL DEFAULT NULL,
+  `promoted_id` bigint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `request_and_uuid` (`request_uuid`,`uuid`,`id`),
+  UNIQUE KEY `sica_idx1` (`charge_id`,`promoted_time`,`id`),
+  KEY `charge_id` (`charge_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb3

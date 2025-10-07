@@ -1,14 +1,14 @@
 {
-  "id": 65,
-  "uuid": "Hash9Zs6KrVWk76e6zZg8qBjcj",
+  "id": 94,
+  "uuid": "Hash8Zm6aAkYRsEozSmNR3UZY4",
   "merchant_uuid": "HashHS9ZF6i1S",
   "environment": "usprod",
   "billing_entity_uuid": "Hash2hiiC522MgbK22LF5cwk5m",
-  "payment_date": "2025-03-31",
+  "payment_date": "2025-04-10",
   "currency": "USD",
-  "total_amount": "60.000",
-  "num_payments": 3,
-  "billing_event_uuid": "HashAbRorLtUE3sxaF9N8DTDUs",
-  "request_uuid": "Hash4W1FT6VnAHc1mRSKNpR9in",
-  "created_timestamp": "2025-04-01T14:36:14.419557"
+  "total_amount": "20.000",
+  "num_payments": 1,
+  "billing_event_uuid": "Hash9utZrEy2yYaFksFqjABqko",
+  "request_uuid": "HashDi7CqnVrcPzweiBLE8YDny",
+  "created_timestamp": "2025-04-11T12:01:58.106457"
 }

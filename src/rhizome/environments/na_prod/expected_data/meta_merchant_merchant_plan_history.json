@@ -1,5 +1,6 @@
 {
   "id": 1,
+  "merchant_id": 102415,
   "old_merchant_plan_id": 1,
   "new_merchant_plan_id": 3,
   "changed_timestamp": "2015-03-24T02:16:41"

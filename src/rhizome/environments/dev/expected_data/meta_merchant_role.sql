@@ -1,0 +1,20 @@
+CREATE TABLE `merchant_role` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `account_id` int unsigned NOT NULL,
+  `merchant_id` int unsigned NOT NULL,
+  `role` enum('admin','manager','employee') NOT NULL,
+  `pin` char(8) CHARACTER SET latin1 DEFAULT NULL,
+  `nickname` varchar(127) DEFAULT NULL,
+  `custom_id` varchar(127) DEFAULT NULL,
+  `role_id` bigint unsigned NOT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `account_id` (`account_id`,`merchant_id`),
+  UNIQUE KEY `pin` (`pin`,`merchant_id`),
+  KEY `merchant_id` (`merchant_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `merchant_role_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `merchant_role_ibfk_2` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=1051581 DEFAULT CHARSET=utf8mb3

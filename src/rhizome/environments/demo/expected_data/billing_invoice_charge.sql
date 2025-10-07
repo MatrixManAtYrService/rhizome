@@ -1,0 +1,22 @@
+CREATE TABLE `invoice_charge` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `request_uuid` char(13) NOT NULL,
+  `type` enum('STAGE','PROMOTED') NOT NULL DEFAULT 'STAGE',
+  `charge_id` bigint unsigned DEFAULT NULL,
+  `merchant_app_charge_Id` bigint unsigned DEFAULT NULL,
+  `merchant_plan_charge_Id` bigint unsigned DEFAULT NULL,
+  `error` varchar(1023) DEFAULT NULL,
+  `status` enum('EXPORTABLE','NOT_EXPORTABLE') NOT NULL DEFAULT 'EXPORTABLE',
+  `mid` varchar(32) NOT NULL,
+  `country_code` varchar(32) NOT NULL,
+  `merchant_id` int unsigned NOT NULL,
+  `developer_id` bigint unsigned NOT NULL,
+  `promoted_time` timestamp NULL DEFAULT NULL,
+  `biie` enum('infoleaseEu','goleoEuJustBe','infoleaseUs','infoleaseUsCa','fileUsCaDMV','telecashEu','odessaEu') DEFAULT NULL,
+  `dev_export` enum('NA','DONE','OVERRIDE') DEFAULT NULL,
+  `dev_export_month` date DEFAULT NULL,
+  `post_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `request_uuid` (`request_uuid`),
+  KEY `biie_dev_export_idx` (`biie`,`dev_export`)
+) ENGINE=InnoDB AUTO_INCREMENT=60891 DEFAULT CHARSET=utf8mb3

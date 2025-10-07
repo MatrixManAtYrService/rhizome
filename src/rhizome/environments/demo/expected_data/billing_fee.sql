@@ -1,0 +1,20 @@
+CREATE TABLE `fee` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(13) NOT NULL,
+  `merchant_id` bigint unsigned NOT NULL,
+  `merchant_plan_id` bigint unsigned NOT NULL,
+  `merchant_plan_type` varchar(20) DEFAULT NULL,
+  `merchant_plan_group_id` bigint unsigned DEFAULT NULL,
+  `fee_type` enum('SETUP','MONTHLY') NOT NULL,
+  `currency` char(3) NOT NULL,
+  `amount` bigint NOT NULL,
+  `status` enum('PENDING','PENDING_EXCEPT','IN_PROGRESS','BILLED','CANCELED','EXCEPTED','WAIVED') NOT NULL,
+  `export_month` date DEFAULT NULL,
+  `request_uuid` char(13) NOT NULL,
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fee_uuid` (`uuid`),
+  UNIQUE KEY `fee_merchant` (`merchant_id`,`fee_type`,`created_time`,`id`),
+  UNIQUE KEY `fee_request` (`request_uuid`,`status`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3

@@ -1,5 +1,6 @@
 {
   "id": 1,
+  "merchant_plan_id": 1,
   "merchant_plan_group_id": 5,
   "default_plan": false
 }

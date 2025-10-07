@@ -1,0 +1,21 @@
+CREATE TABLE `merchant_gateway` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `merchant_id` bigint unsigned DEFAULT NULL,
+  `payment_processor_id` bigint unsigned NOT NULL,
+  `processor_key_id` bigint unsigned DEFAULT NULL,
+  `rki_processor_id` bigint unsigned DEFAULT NULL,
+  `partner_uuid` varchar(64) CHARACTER SET latin1 DEFAULT NULL,
+  `stan` bigint unsigned NOT NULL DEFAULT '0',
+  `config` text,
+  `closing_time` varchar(5) CHARACTER SET latin1 DEFAULT NULL,
+  `new_batch_close_enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `modified_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `processor_key_id` (`processor_key_id`),
+  KEY `merchant_id` (`merchant_id`),
+  KEY `partner_uuid` (`partner_uuid`),
+  KEY `modified_time` (`modified_time`),
+  KEY `payment_processor_id` (`payment_processor_id`),
+  KEY `idx_mg_batch_close_time_merchant` (`new_batch_close_enabled`,`closing_time`,`merchant_id`),
+  CONSTRAINT `merchant_gateway_ibfk_1` FOREIGN KEY (`processor_key_id`) REFERENCES `processor_key` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=1444549 DEFAULT CHARSET=utf8mb3
