@@ -156,18 +156,12 @@ class NorthAmericaMeta(Environment):
         """Get database configuration using pybritive temporary credentials."""
         import asyncio
 
-        meta_pattern = r"""
-            Temp\sMySQL\susername:\s*(?P<username>\S+).*
-            Temp\spassword:\s*(?P<password>\S+).*
-            For\sorders\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^:]+):(?P<port>\d+)
-        """
-
+        # Use the default pattern which handles billing/log/orders variants
         return asyncio.run(
             self.get_database_config_from_credentials(
                 secret_reference="Resources/COS-RO-USProd/COS-RO-USProd-profile",
                 secret_manager=SecretManager.PYBRITIVE,
                 database_name="meta",
-                pattern=meta_pattern,
             )
         )
 

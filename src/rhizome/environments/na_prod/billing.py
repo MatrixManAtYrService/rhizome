@@ -304,20 +304,12 @@ class NorthAmericaBilling(Environment):
         """Get database configuration using pybritive temporary credentials."""
         import asyncio
 
-        # This pattern is now the default in the tool, but we pass it for clarity.
-        billing_pattern = r"""
-            Temp\sMySQL\susername:\s*(?P<username>\S+).*
-            Temp\spassword:\s*(?P<password>\S+).*
-            For\sbilling\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^:]+):(?P<port>\d+)
-        """
-
-        # Use the new generic credential system
+        # Use the new generic credential system with default pattern
         return asyncio.run(
             self.get_database_config_from_credentials(
                 secret_reference="Resources/COS-RO-USProd/COS-RO-USProd-profile",
                 secret_manager=SecretManager.PYBRITIVE,
                 database_name="billing",
-                pattern=billing_pattern,
             )
         )
 

@@ -214,12 +214,16 @@ def test_mocked_environment_database_access(
     monkeypatch.setattr("rhizome.client.create_engine", mock_create_engine)
     monkeypatch.setattr("rhizome.client.Session", mock_session_context_factory)
 
-    # Query the table using the model class
-    result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))  # type: ignore
-
-    # Verify the mocked data is returned and matches expected structure
-    assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"  # type: ignore
-    assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"  # type: ignore
+    # Build query - handle models with composite primary keys vs single id field
+    if hasattr(model_class, "id"):
+        # Standard single primary key
+        result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))  # type: ignore
+        assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"  # type: ignore
+        assert result.id == expected_data.id, f"ID should match for {table_name} in {env_instance.name}"  # type: ignore
+    else:
+        # Composite primary key - query without filters, just verify we can query
+        result = env_instance.select_first(select(model_class))  # type: ignore
+        assert result is not None, f"Query should return data for {table_name} in {env_instance.name}"  # type: ignore
 
 
 @pytest.mark.external_infra
@@ -242,8 +246,13 @@ def test_real_environment_database_access(
         # Skip tables where expected data is not yet implemented
         pytest.skip(f"Test data not yet implemented for {environment_class.__name__}/{table_name}")
 
-    # Query the table using the model class and expected ID
-    result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
+    # Build query - handle models with composite primary keys vs single id field
+    if hasattr(model_class, "id"):
+        # Standard single primary key
+        result = env_instance.select_first(select(model_class).where(model_class.id == expected_data.id))
+    else:
+        # Composite primary key - query without filters, just verify we can query
+        result = env_instance.select_first(select(model_class))
 
     # If no data is found in the real environment, warn and skip.
     # This makes the test tolerant of empty tables in real environments.
