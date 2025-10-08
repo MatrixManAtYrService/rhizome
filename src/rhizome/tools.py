@@ -290,7 +290,7 @@ class ExternalPybritiveTool(PybritiveTool):
     DEFAULT_PATTERN = r"""
         Temp\sMySQL\susername:\s*(?P<username>\S+).*
         Temp\spassword:\s*(?P<password>\S+).*
-        For\sbilling\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^:]+):(?P<port>\d+)
+        For\sbilling\sin\susprod\sconnect\sto\sserver:\s*(?P<host>[^\s]+)\s+port:(?P<port>\d+)
     """
 
     async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
