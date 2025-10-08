@@ -25,4 +25,4 @@ CREATE TABLE `settlement` (
   UNIQUE KEY `settlement_key2` (`billing_entity_uuid`,`settlement_date` DESC,`id`),
   UNIQUE KEY `settlement_key3` (`entity_uuid`,`settlement_date` DESC,`id`),
   UNIQUE KEY `settlement_key4` (`request_uuid`,`billing_entity_uuid`,`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5265 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=5609 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

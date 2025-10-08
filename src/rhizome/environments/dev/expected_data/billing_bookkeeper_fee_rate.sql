@@ -15,4 +15,4 @@ CREATE TABLE `fee_rate` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `fee_rate_key1` (`uuid`),
   UNIQUE KEY `fee_rate_key2` (`billing_entity_uuid`,`fee_category`,`fee_code`,`currency`,`effective_date`)
-) ENGINE=InnoDB AUTO_INCREMENT=270007 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=312964 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

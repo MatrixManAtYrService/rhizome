@@ -9,4 +9,4 @@ CREATE TABLE `billing_entity` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `billing_entity_key1` (`uuid`),
   UNIQUE KEY `billing_entity_key2` (`entity_uuid`,`entity_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=29930 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=30389 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

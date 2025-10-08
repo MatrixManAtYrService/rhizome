@@ -25,4 +25,4 @@ CREATE TABLE `fee_summary` (
   UNIQUE KEY `fee_summary_key2` (`billing_entity_uuid`,`billing_date`,`fee_category`,`fee_code`,`currency`),
   UNIQUE KEY `fee_summary_key4` (`request_uuid`,`billing_entity_uuid`,`id`),
   UNIQUE KEY `fee_summary_key3` (`invoice_info_uuid`,`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83696 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=83738 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
