@@ -42,6 +42,8 @@ class DemoBillingBookkeeper(Environment):
     def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel], type[Emplacement[Any]]]:
         if not isinstance(table_name, BillingBookkeeperTable):
             raise ValueError(f"Expected BillingBookkeeperTable, got {type(table_name)}")
+        if table_name not in models:
+            raise NotImplementedError(f"Table {table_name} not yet implemented in models dictionary")
         model_class, emplacement_class = models[table_name]
         if model_class is None:
             raise NotImplementedError(f"Model class for {table_name} not yet implemented")
