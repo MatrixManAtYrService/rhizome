@@ -22,7 +22,7 @@ from typing import Generator
 
 import pytest
 
-from tests.conftest import RunningRhizomeServer, RunningStolonServer
+from tests.conftest import RunningServer, RunningStolonServer
 
 
 # Fixed test resource identifiers - reused across test runs to avoid accumulation
@@ -60,7 +60,7 @@ class TestBillingResources:
 
 @pytest.fixture(scope="session")
 def test_billing_resources(
-    stolon_server: RunningStolonServer, rhizome_server: RunningRhizomeServer
+    stolon_server: RunningStolonServer, rhizome_server: RunningServer
 ) -> Generator[TestBillingResources, None, None]:
     """
     Create or reuse test billing resources.
@@ -73,7 +73,12 @@ def test_billing_resources(
     """
     from rhizome.client import RhizomeClient
     from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
-    from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
+    from rhizome.models.billing_bookkeeper.billing_entity_v1 import BillingEntityV1
+    from rhizome.models.billing_bookkeeper.billing_schedule_v1 import BillingScheduleV1
+    from rhizome.models.billing_bookkeeper.fee_rate_v1 import FeeRateV1
+    from rhizome.models.billing_bookkeeper.invoice_alliance_code_v1 import InvoiceAllianceCodeV1
+    from rhizome.models.billing_bookkeeper.processing_group_dates_v1 import ProcessingGroupDatesV1
+    from rhizome.models.billing_bookkeeper.revenue_share_group_v1 import RevenueShareGroupV1
     from sqlmodel import select
     from stolon.client import StolonClient
     from stolon.environments.dev.http import DevHttp
@@ -85,13 +90,13 @@ def test_billing_resources(
     rhizome_client = RhizomeClient(home=rhizome_server.home, data_in_logs=False)
     dev_db = DevBillingBookkeeper(rhizome_client)
 
-    # Get models
-    BillingEntity = dev_db.get_model(BillingBookkeeperTable.billing_entity)
-    RevenueShareGroup = dev_db.get_model(BillingBookkeeperTable.revenue_share_group)
-    AllianceCode = dev_db.get_model(BillingBookkeeperTable.invoice_alliance_code)
-    BillingSchedule = dev_db.get_model(BillingBookkeeperTable.billing_schedule)
-    FeeRate = dev_db.get_model(BillingBookkeeperTable.fee_rate)
-    ProcessingGroupDates = dev_db.get_model(BillingBookkeeperTable.processing_group_dates)
+    # Use specific V1 models for dev environment
+    BillingEntity = BillingEntityV1
+    RevenueShareGroup = RevenueShareGroupV1
+    AllianceCode = InvoiceAllianceCodeV1
+    BillingSchedule = BillingScheduleV1
+    FeeRate = FeeRateV1
+    ProcessingGroupDates = ProcessingGroupDatesV1
 
     print("\n=== Checking for existing test resources ===")
 
