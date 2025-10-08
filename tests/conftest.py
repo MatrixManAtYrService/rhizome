@@ -419,3 +419,292 @@ def stolon_server() -> Generator[RunningStolonServer, None, None]:
         time.sleep(0.5)  # Give server time to start
 
         yield RunningStolonServer(port=test_port, home=home)
+
+
+# --- Stolon Test Fixtures for Billing Objects --- #
+
+
+def _print_curl(method: str, url: str, json_data: dict | None = None, token: str = "YOUR-INTERNAL-SESSION") -> None:
+    """Print a curl command for manual recreation."""
+    import json as json_module
+
+    curl_parts = [
+        "curl",
+        "-X",
+        f"'{method.upper()}'",
+        f"'{url}'",
+        "--header 'x-clover-appenv: dev1'",
+        f"--header 'Cookie: internalSession={token}'",
+        "--header 'Content-Type: application/json'",
+    ]
+
+    if json_data:
+        json_str = json_module.dumps(json_data, indent=2)
+        curl_parts.append(f"--data '{json_str}'")
+
+    print("\n" + " \\\n".join(curl_parts) + "\n")
+
+
+@pytest.fixture
+def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup a revenue share group for testing."""
+    import uuid
+
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    # Create revenue share group with MFF prefix
+    group_name = f"MFF_Test_{uuid.uuid4().hex[:4]}"
+    short_desc = f"MFF-{group_name}"
+    description = f"The FirstData/Fiserv reseller in EMEA for {group_name}"
+
+    json_data = {"revenueShareGroup": group_name, "shortDesc": short_desc, "description": description}
+
+    print("\n=== Creating Revenue Share Group ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/revsharegroup", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/revsharegroup", json=json_data)
+
+    yield {"name": group_name, "create_response": create_response}
+
+    # Cleanup: Find and delete the revenue share group
+    try:
+        groups = dev.get("/billing-bookkeeper/v1/revsharegroup")
+        for group in groups.get("elements", []):
+            if group.get("revenueShareGroup") == group_name:
+                group_uuid = group.get("uuid")
+                if group_uuid:
+                    # Note: API might not support deletion - TBD
+                    pass
+    except Exception:
+        pass  # Best effort cleanup
+
+
+@pytest.fixture
+def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup a billing entity for testing."""
+    import uuid
+
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    # Generate unique 13-char entity UUID
+    entity_uuid = f"MFF{uuid.uuid4().hex[:10].upper()}"
+    entity_name = f"MFF Test Reseller {entity_uuid[-4:]}"
+
+    json_data = {"entityUuid": entity_uuid, "entityType": "RESELLER", "name": entity_name}
+
+    print("\n=== Creating Billing Entity ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/entity", json_data)
+
+    # Create billing entity
+    create_response = dev.post("/billing-bookkeeper/v1/entity", json=json_data)
+
+    # Extract server-generated billing entity UUID from response
+    billing_entity_uuid = create_response.get("uuid")
+
+    if not billing_entity_uuid:
+        # Fallback: try to get it via GET (though this seems to 404 in dev1)
+        print(f"\n⚠️  Response did not contain uuid field. Response: {create_response}")
+        print(f"\n=== Trying to GET Billing Entity by entity UUID ===")
+        _print_curl("GET", f"https://dev1.dev.clover.com/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
+        entity_get = dev.get(f"/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
+        billing_entity_uuid = entity_get.get("uuid")
+
+    print(f"\n✓ Server-generated billing_entity_uuid: {billing_entity_uuid}")
+
+    yield {
+        "entity_uuid": entity_uuid,
+        "billing_entity_uuid": billing_entity_uuid,
+        "name": entity_name,
+        "create_response": create_response,
+    }
+
+    # Cleanup TBD
+    pass
+
+
+@pytest.fixture
+def alliance_code(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup an alliance code for testing."""
+    import uuid
+
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+    alliance_code_value = f"9{uuid.uuid4().hex[:2].upper()}"
+
+    json_data = {"billingEntityUuid": billing_entity_uuid, "allianceCode": alliance_code_value, "invoiceCount": 1}
+
+    print("\n=== Creating Alliance Code ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/alliancecode", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/alliancecode", json=json_data)
+
+    yield {"alliance_code": alliance_code_value, "billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
+
+    # Cleanup TBD
+    pass
+
+
+@pytest.fixture
+def billing_schedule(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup a billing schedule for testing."""
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+
+    json_data = {
+        "billingEntityUuid": billing_entity_uuid,
+        "effectiveDate": "2025-08-01",
+        "frequency": "MONTHLY",
+        "billingDay": 1,
+        "nextBillingDate": "2025-09-01",
+        "unitsInNextPeriod": 31,
+        "defaultCurrency": "EUR",
+    }
+
+    print("\n=== Creating Billing Schedule ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/schedule", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/schedule", json=json_data)
+
+    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
+
+    # Cleanup TBD
+    pass
+
+
+@pytest.fixture
+def fee_rate(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup a fee rate for testing."""
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+
+    json_data = {
+        "billingEntityUuid": billing_entity_uuid,
+        "feeCategory": "PLAN_RETAIL",
+        "feeCode": "PaymentsPDVT",
+        "currency": "EUR",
+        "effectiveDate": "2025-08-01",
+        "applyType": "DEFAULT",
+        "perItemAmount": 0.0,
+    }
+
+    print("\n=== Creating Fee Rate ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/rate", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/rate", json=json_data)
+
+    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
+
+    # Cleanup TBD
+    pass
+
+
+@pytest.fixture
+def processing_group_dates(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup processing group dates for testing."""
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+
+    json_data = {
+        "billingEntityUuid": billing_entity_uuid,
+        "hierarchyType": "MERCHANT_SCHEDULE",
+        "cycleDate": "2025-08-01",
+        "postingDate": "2025-08-01",
+        "billingDate": "2025-08-01",
+        "settlementDate": "2025-08-01",
+    }
+
+    print("\n=== Creating Processing Group Dates ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/processgroupdates", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/processgroupdates", json=json_data)
+
+    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
+
+    # Cleanup TBD
+    pass
+
+
+@pytest.fixture
+def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup a plan action fee code for testing."""
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    test_plan_uuid = "YEQMV17H09HHW"
+
+    json_data = {
+        "merchantPlanUuid": test_plan_uuid,
+        "planActionType": "PLAN_ASSIGN",
+        "effectiveDate": "2025-08-01",
+        "feeCategory": "PLAN_RETAIL",
+        "feeCode": "PaymentsPDVT.PRC",
+    }
+
+    print("\n=== Creating Plan Action Fee Code ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/planactionfeecode", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/planactionfeecode", json=json_data)
+
+    yield {"merchant_plan_uuid": test_plan_uuid, "create_response": create_response}
+
+    # Cleanup TBD
+    pass
+
+
+@pytest.fixture
+def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
+    """Create and cleanup a cellular action fee code for testing."""
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    json_data = {
+        "carrier": "AT&T",
+        "cellularActionType": "CELLULAR_ARREARS",
+        "effectiveDate": "2025-08-01",
+        "feeCategory": "CELLULAR_RETAIL",
+        "feeCode": "CellularArr.ATT",
+    }
+
+    print("\n=== Creating Cellular Action Fee Code ===")
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/cellularactionfeecode", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/cellularactionfeecode", json=json_data)
+
+    yield {"carrier": "AT&T", "create_response": create_response}
+
+    # Cleanup TBD
+    pass
