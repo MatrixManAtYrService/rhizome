@@ -37,6 +37,46 @@ class Environment(ABC):
         if self._handle is None or force_refresh:
             self._handle = self.client.request_internal_token(self.domain, force_refresh=force_refresh)
 
+    def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+        """
+        Make an authenticated HTTP request with automatic 401 retry.
+
+        Args:
+            method: HTTP method (GET, POST, DELETE, etc.)
+            path: API path
+            **kwargs: Additional arguments to pass to httpx
+
+        Returns:
+            Response data (JSON if available, None otherwise)
+        """
+        self._ensure_authenticated()
+        assert self._handle is not None  # For type checker
+        import httpx
+
+        headers = kwargs.pop("headers", {})
+        headers["Cookie"] = f"internalSession={self._handle.token}"
+        headers["Content-Type"] = "application/json"
+        headers["X-Clover-Appenv"] = f"{self.name}:{self.domain.split('.')[0]}"
+
+        with httpx.Client() as client:
+            response = client.request(method, f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+
+            # If we get a 401, the token is expired - invalidate cache and get fresh token
+            if response.status_code == 401:
+                self._handle = None
+                self._ensure_authenticated(force_refresh=True)
+                assert self._handle is not None
+
+                # Retry with the new token
+                headers["Cookie"] = f"internalSession={self._handle.token}"
+                response = client.request(method, f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+
+            response.raise_for_status()
+            # Return JSON if available, None otherwise
+            if response.text:
+                return response.json()
+            return None
+
     def get(self, path: str, **kwargs: Any) -> Any:
         """
         Make an authenticated GET request to the Clover API.
@@ -50,31 +90,7 @@ class Environment(ABC):
         Returns:
             Response data
         """
-        self._ensure_authenticated()
-        assert self._handle is not None  # For type checker - ensured by _ensure_authenticated
-        import httpx
-
-        headers = kwargs.pop("headers", {})
-        headers["Cookie"] = f"internalSession={self._handle.token}"
-        headers["Content-Type"] = "application/json"
-        headers["X-Clover-Appenv"] = f"{self.name}:{self.domain.split('.')[0]}"
-
-        with httpx.Client() as client:
-            response = client.get(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
-
-            # If we get a 401, the token is expired - invalidate cache and get fresh token
-            if response.status_code == 401:
-                # Clear local handle and force refresh from server (which will invalidate server cache)
-                self._handle = None
-                self._ensure_authenticated(force_refresh=True)
-                assert self._handle is not None
-
-                # Retry with the new token
-                headers["Cookie"] = f"internalSession={self._handle.token}"
-                response = client.get(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
-
-            response.raise_for_status()
-            return response.json()
+        return self._request("GET", path, **kwargs)
 
     def post(self, path: str, **kwargs: Any) -> Any:
         """
@@ -89,28 +105,19 @@ class Environment(ABC):
         Returns:
             Response data
         """
-        self._ensure_authenticated()
-        assert self._handle is not None  # For type checker - ensured by _ensure_authenticated
-        import httpx
+        return self._request("POST", path, **kwargs)
 
-        headers = kwargs.pop("headers", {})
-        headers["Cookie"] = f"internalSession={self._handle.token}"
-        headers["Content-Type"] = "application/json"
-        headers["X-Clover-Appenv"] = f"{self.name}:{self.domain.split('.')[0]}"
+    def delete(self, path: str, **kwargs: Any) -> Any:
+        """
+        Make an authenticated DELETE request to the Clover API.
 
-        with httpx.Client() as client:
-            response = client.post(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+        Automatically retries with a fresh token if a 401 Unauthorized response is received.
 
-            # If we get a 401, the token is expired - invalidate cache and get fresh token
-            if response.status_code == 401:
-                # Clear local handle and force refresh from server (which will invalidate server cache)
-                self._handle = None
-                self._ensure_authenticated(force_refresh=True)
-                assert self._handle is not None
+        Args:
+            path: API path
+            **kwargs: Additional arguments to pass to httpx
 
-                # Retry with the new token
-                headers["Cookie"] = f"internalSession={self._handle.token}"
-                response = client.post(f"{self._handle.base_url}{path}", headers=headers, **kwargs)
-
-            response.raise_for_status()
-            return response.json()
+        Returns:
+            Response data (if any)
+        """
+        return self._request("DELETE", path, **kwargs)

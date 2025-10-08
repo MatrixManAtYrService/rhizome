@@ -467,20 +467,18 @@ def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict, N
     _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/revsharegroup", json_data)
 
     create_response = dev.post("/billing-bookkeeper/v1/revsharegroup", json=json_data)
+    group_uuid = create_response.get("uuid")
 
-    yield {"name": group_name, "create_response": create_response}
+    yield {"name": group_name, "uuid": group_uuid, "create_response": create_response}
 
-    # Cleanup: Find and delete the revenue share group
-    try:
-        groups = dev.get("/billing-bookkeeper/v1/revsharegroup")
-        for group in groups.get("elements", []):
-            if group.get("revenueShareGroup") == group_name:
-                group_uuid = group.get("uuid")
-                if group_uuid:
-                    # Note: API might not support deletion - TBD
-                    pass
-    except Exception:
-        pass  # Best effort cleanup
+    # Cleanup: Delete the revenue share group
+    if group_uuid:
+        try:
+            print(f"\n🗑️  Deleting revenue share group {group_uuid}")
+            dev.delete(f"/billing-bookkeeper/v1/revsharegroup/{group_uuid}")
+            print("✅ Cleanup successful")
+        except Exception as e:
+            print(f"⚠️  Cleanup failed: {e}")
 
 
 @pytest.fixture
@@ -526,8 +524,8 @@ def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict, None, 
         "create_response": create_response,
     }
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print(f"\n⚠️  Note: Billing entity {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture
@@ -553,8 +551,8 @@ def alliance_code(billing_entity: dict, stolon_server: RunningStolonServer) -> G
 
     yield {"alliance_code": alliance_code_value, "billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print(f"\n⚠️  Note: Alliance code {alliance_code_value} cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture
@@ -585,8 +583,8 @@ def billing_schedule(billing_entity: dict, stolon_server: RunningStolonServer) -
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print(f"\n⚠️  Note: Billing schedule for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture
@@ -617,8 +615,8 @@ def fee_rate(billing_entity: dict, stolon_server: RunningStolonServer) -> Genera
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print(f"\n⚠️  Note: Fee rate for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture
@@ -648,13 +646,15 @@ def processing_group_dates(billing_entity: dict, stolon_server: RunningStolonSer
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print(f"\n⚠️  Note: Processing group dates for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture
 def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
     """Create and cleanup a plan action fee code for testing."""
+    import httpx
+
     from stolon.client import StolonClient
     from stolon.environments.dev.http import DevHttp
 
@@ -674,17 +674,24 @@ def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, 
     print("\n=== Creating Plan Action Fee Code ===")
     _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/planactionfeecode", json_data)
 
-    create_response = dev.post("/billing-bookkeeper/v1/planactionfeecode", json=json_data)
+    try:
+        create_response = dev.post("/billing-bookkeeper/v1/planactionfeecode", json=json_data)
+    except httpx.HTTPStatusError as e:
+        print(f"\n⚠️  API Error Response: {e.response.text}")
+        print(f"⚠️  Status Code: {e.response.status_code}")
+        raise
 
     yield {"merchant_plan_uuid": test_plan_uuid, "create_response": create_response}
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print("\n⚠️  Note: Plan action fee codes are global configurations and cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture
 def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
     """Create and cleanup a cellular action fee code for testing."""
+    import httpx
+
     from stolon.client import StolonClient
     from stolon.environments.dev.http import DevHttp
 
@@ -702,9 +709,14 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[di
     print("\n=== Creating Cellular Action Fee Code ===")
     _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/cellularactionfeecode", json_data)
 
-    create_response = dev.post("/billing-bookkeeper/v1/cellularactionfeecode", json=json_data)
+    try:
+        create_response = dev.post("/billing-bookkeeper/v1/cellularactionfeecode", json=json_data)
+    except httpx.HTTPStatusError as e:
+        print(f"\n⚠️  API Error Response: {e.response.text}")
+        print(f"⚠️  Status Code: {e.response.status_code}")
+        raise
 
     yield {"carrier": "AT&T", "create_response": create_response}
 
-    # Cleanup TBD
-    pass
+    # Cleanup not supported - DELETE method returns 405
+    print("\n⚠️  Note: Cellular action fee codes are global configurations and cannot be automatically deleted (API does not support DELETE)")
