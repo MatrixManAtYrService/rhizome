@@ -83,7 +83,8 @@ class StolonClient:
             self.invalidate_token(domain)
 
         # Make request to stolon server to get internal token
-        with httpx.Client() as client:
+        # Use a long timeout (5 minutes) to give user time to log in and paste token
+        with httpx.Client(timeout=300.0) as client:
             response = client.post(
                 f"{self.base_url}/internal_token",
                 json={"domain": domain},
