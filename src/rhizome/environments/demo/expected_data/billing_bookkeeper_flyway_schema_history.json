@@ -1,0 +1,12 @@
+{
+  "installed_rank": 1,
+  "version": "1.0",
+  "description": "dynamicconfig",
+  "type": "SQL",
+  "script": "V1.0__dynamicconfig.sql",
+  "checksum": 869946802,
+  "installed_by": "billing-bookkeeper",
+  "installed_on": "2023-11-02T20:36:24",
+  "execution_time": 53,
+  "success": true
+}

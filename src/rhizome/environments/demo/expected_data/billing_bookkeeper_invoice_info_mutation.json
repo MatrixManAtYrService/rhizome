@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "mutation_action": "DELETE",
+  "mutation_timestamp": "2025-07-02T09:27:52.968551",
+  "invoice_info_id": 33148,
+  "uuid": "Hash22eWTkmWukHVJrrfw1nEQD",
+  "billing_entity_uuid": "HashEefBL7wxN32oybsUtKiH8N",
+  "entity_uuid": "Hashy9ftHiySP",
+  "alternate_id": null,
+  "billing_date": "2025-08-01",
+  "invoice_num": "400/202508/IN0000010",
+  "currency": "GBP",
+  "total_amount": "190.180",
+  "document_uuid": "Hash3KjE4hjjN1xUiA2NJXU4pm",
+  "request_uuid": "Hash3rdcRou2Z81vrus3uCTCPK",
+  "created_timestamp": "2025-07-01T14:07:55.415805"
+}

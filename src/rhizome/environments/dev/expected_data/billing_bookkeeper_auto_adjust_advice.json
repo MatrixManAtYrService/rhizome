@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "uuid": "Hash41tgJzNBLx4ANfdbPwygZW",
+  "billing_entity_uuid": "Hash41tgJzNBLx4ANfdbPwygZW",
+  "auto_adjust_rule_uuid": "Hash7bCS8vvpmn6YU8jU7YLwK4",
+  "start_date": "2024-09-03",
+  "deleted_date": null,
+  "total_periods": 20,
+  "evaluated_periods": 0,
+  "applied_periods": 0,
+  "max_units": "5.0000",
+  "max_amount": "2.000",
+  "currency": "USD",
+  "reference": "string",
+  "request_uuid": "Hash41tgJzNBLx4ANfdbPwygZW",
+  "created_timestamp": "2024-09-02T09:40:21.145000",
+  "modified_timestamp": "2024-09-02T09:40:21.145000",
+  "audit_id": "HashHNVGtDrTgSrBEtaX2TkRPt"
+}

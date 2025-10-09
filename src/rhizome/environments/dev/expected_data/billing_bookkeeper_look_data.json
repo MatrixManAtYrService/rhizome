@@ -1,0 +1,6 @@
+{
+  "id": 52306,
+  "look_uuid": "HashCimupoqgRBBiCrokJuCaTTn8ALye",
+  "payload": "{\"environment\":\"dev::dev1\",\"eventTimestamp\":\"2024-10-30T21:24:14.632340976Z\",\"eventUuid\":\"4HXNK4NRV8MHT1JZD8WVA9NYDK\",\"merchantEvents\":null,\"planEvents\":[{\"code\":\"PlanAdvance\",\"effectiveDateTime\":\"2024-11-01T00:00:00Z\",\"merchUuid\":\"5SA4AVKKYV405\",\"merchPlanUuid\":\"XV4KDM12SRMPA\",\"planMods\":null,\"devices\":[]}],\"appRatesEvents\":null,\"appSubEvents\":null,\"appMeterEvents\":null,\"cellularEvents\":null,\"miscEvents\":null,\"revenueEvents\":null,\"memoEvents\":[{\"heading\":\"MerchantAggregationMemo\",\"moment\":\"2024-11-01\",\"properties\":{\"PROP_MERCHANT_UUID\":\"5SA4AVKKYV405\",\"PROP_AGGREGATION_UUID\":\"T970ENZN06B1C4506J6KQ1J1HM\"}}]}",
+  "created_timestamp": "2024-10-30T21:24:29.945097"
+}

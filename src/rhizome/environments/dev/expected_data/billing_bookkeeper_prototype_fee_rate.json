@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashCiV7cTAW1MsoMoKrEHWns1",
+  "prototype_fee_set_id": 1,
+  "billing_entity_uuid": "HashHwtBRAMykj96zncbtH6sqR",
+  "fee_category": "CELLULAR_RETAIL",
+  "fee_code": "CellularArr.ATT",
+  "currency": "GBP",
+  "apply_type": "NONE",
+  "per_item_amount": "0.000",
+  "percentage": "0.00",
+  "created_timestamp": "2023-10-18T10:34:56.262694",
+  "modified_timestamp": "2023-10-18T10:34:56.262694",
+  "audit_id": "HashBHyQxqUrkt76JnvX8yyxWx"
+}

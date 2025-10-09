@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashBXys9s2TQGD4scq2cQJ8hL",
+  "app_sub_action_uuid": "Hash69dkdVBD8B5xXnfPUtjeBW",
+  "request_uuid": "HashBickcX3tXLC5FVNJxUrxaQ",
+  "posting_date": "2024-04-09",
+  "original_request_uuid": "HashFr3QYNw8RxHiKX1C6Vxbqw",
+  "original_posting_date": "2024-04-09",
+  "posting_attempts": 3,
+  "error_code": "120",
+  "error_details": "Cannot resolve fee rate for AppSubAction 14AXVTM55GR9ZDV2TNAC83FJDJ; BillingEntityUuid=WVB82V51P19HMS07G146NJ797V FeeCategory=APP_SUB_3P_RETAIL, FeeCode=BCXQYZ12CW2S0.S.PRC, Currency=EUR. (FeeRateNotFoundException: Fee rate not found for specified hierarchy type, billing entity, fee category, fee code, currency, and as-of date; Keys=[MERCHANT_FEE_RATE,WVB82V51P19HMS07G146NJ797V,APP_SUB_3P_RETAIL,BCXQYZ12CW2S0.S.PRC,EUR,2024-04-09])",
+  "resolved": 1,
+  "created_timestamp": "2024-04-09T13:47:11.857846",
+  "modified_timestamp": "2024-04-09T19:45:44.474626"
+}

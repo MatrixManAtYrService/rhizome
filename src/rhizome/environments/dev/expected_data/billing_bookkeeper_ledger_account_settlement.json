@@ -1,0 +1,18 @@
+{
+  "id": 1,
+  "uuid": "Hash9p8uxPxbhHtF5iTN9frnHf",
+  "ledger_account_key": "Incur.Plan",
+  "effective_date": "2024-01-01",
+  "settlement_item_code": "FX8601GEM21BW",
+  "settlement_desc": null,
+  "fee_category_group": "PLAN",
+  "revenue_group": null,
+  "merchant_plan_uuid": null,
+  "developer_uuid": null,
+  "developer_app_uuid": null,
+  "app_subscription_uuid": null,
+  "app_metered_uuid": null,
+  "created_timestamp": "2023-10-11T17:21:21.632751",
+  "modified_timestamp": "2024-12-11T10:10:00.720099",
+  "audit_id": null
+}

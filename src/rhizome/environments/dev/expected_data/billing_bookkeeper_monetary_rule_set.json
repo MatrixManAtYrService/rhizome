@@ -1,0 +1,10 @@
+{
+  "id": 7,
+  "uuid": "HashAaqnwDFzUkdX2ARd6wkGsD",
+  "rule_status": "ACTIVE",
+  "short_desc": "Seasonal Merchant Offsets",
+  "full_desc": "Rule set to apply auto-adjustment offsets for seasonal merchant during their out-of-season period.",
+  "created_timestamp": "2024-09-03T18:07:37.146226",
+  "modified_timestamp": "2024-09-03T18:07:37.146226",
+  "audit_id": "Hash6MDCboCZ1xyskqfEVjCtFv"
+}

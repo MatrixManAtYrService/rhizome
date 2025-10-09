@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash4KKaB8uCBBU9Q7jea9PwY8",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": null,
+  "effective_date": "2023-01-01",
+  "credit_ledger_account_key": "Rev.Plan",
+  "credit_billing_entity_uuid_source": "TRANSACTION",
+  "debit_ledger_account_key": "Incur.Plan",
+  "debit_billing_entity_uuid_source": "TRANSACTION",
+  "deleted_date": null,
+  "created_timestamp": "2023-10-11T17:21:21.700387",
+  "modified_timestamp": "2023-10-11T17:21:21.700387",
+  "audit_id": null
+}

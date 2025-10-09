@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "Hash7V4FuXyc2gGtjAP2pMhp9A",
+  "auto_adjust_rule_uuid": "Hash864a8q1qLVuDpmMnonR9h4",
+  "fee_category": "CELLULAR_RETAIL",
+  "fee_code": "CellularArr.ATT",
+  "negate_fee_summary": 0,
+  "disqualify": 0,
+  "created_timestamp": "2024-07-11T09:45:48.077465",
+  "audit_id": "Hash6jNFTWdLrokp2YkQJUmD5R"
+}

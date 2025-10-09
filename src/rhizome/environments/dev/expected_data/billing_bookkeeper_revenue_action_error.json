@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "Hash7fRXGKF8ed4mnteS5tiaVx",
+  "revenue_action_uuid": "Hash59VSSTSo8SUmfQ3fvxwf9x",
+  "request_uuid": "HashAJJTBfLXrubyufbhp4NToQ",
+  "posting_date": "2024-05-13",
+  "original_request_uuid": "HashAJJTBfLXrubyufbhp4NToQ",
+  "original_posting_date": "2024-05-13",
+  "posting_attempts": 1,
+  "error_code": "120",
+  "error_details": "Cannot resolve fee rate for RevenueAction AF8809J43H9H7ZGFVW5TA2EJD9; BillingEntityUuid=H4VZPTQXJ5YCCRESNVJM3TQQ9F FeeCategory=REV_SHR_RESELLER_PLAN, FeeCode=Plan.RevShr01, Currency=GBP. (FeeRateNotFoundException: Fee rate not found for specified hierarchy type, billing entity, fee category, fee code, currency, and as-of date; Keys=[RESELLER_FEE_RATE,H4VZPTQXJ5YCCRESNVJM3TQQ9F,REV_SHR_RESELLER_PLAN,Plan.RevShr01,GBP,2024-05-13])",
+  "resolved": 1,
+  "created_timestamp": "2024-04-18T12:19:33.718391",
+  "modified_timestamp": "2024-04-18T14:24:47.301436"
+}

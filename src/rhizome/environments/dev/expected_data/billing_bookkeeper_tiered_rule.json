@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "HashFqJ83xd9gVFQRTbTFEFU3A",
+  "rule_status": "DELETED",
+  "rule_alias": "tieredSupression",
+  "tiered_basis": "BOTH",
+  "tiered_model": "APPLY_TO_TIER",
+  "target_entity_type": "MERCHANT",
+  "short_desc": "string",
+  "full_desc": "string",
+  "created_timestamp": "2025-03-18T12:28:08.160409",
+  "modified_timestamp": "2025-04-04T07:13:50.394180",
+  "audit_id": "Hash9a1ZNhn96hDrEfCsupNwJR"
+}

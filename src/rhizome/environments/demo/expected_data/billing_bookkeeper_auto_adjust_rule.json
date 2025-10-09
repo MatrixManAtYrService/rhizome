@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "Hash864a8q1qLVuDpmMnonR9h4",
+  "rule_status": "DELETED",
+  "rule_alias": null,
+  "rate_fee_category": "CELLULAR_RETAIL_ADJ",
+  "rate_fee_code": "AdjustWaive",
+  "target_entity_type": "MERCHANT",
+  "short_desc": "Waive Cellular Fee3",
+  "full_desc": "Waive Cellular Fee",
+  "created_timestamp": "2024-07-11T09:45:48.077465",
+  "modified_timestamp": "2024-10-29T08:36:05.964887",
+  "audit_id": "Hash81FcpnjmJygwUV9kU4PtTz"
+}

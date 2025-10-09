@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashBozrayKHXPGoSFpTLQ5MuL",
+  "billing_entity_uuid": "Hash2nygmEPkuYdpjBKvmbqTCq",
+  "hierarchy_type": "MERCHANT_SCHEDULE",
+  "effective_date": "2024-11-19",
+  "post_method": null,
+  "plan_billing_method": "Arrears",
+  "invoice_method": null,
+  "settlement_method": null,
+  "seasonal_rule_set_uuid": null,
+  "created_timestamp": "2024-12-10T18:36:57.676885",
+  "modified_timestamp": "2024-12-10T18:36:57.676885",
+  "audit_id": "HashkoRcCJFhsc946ZrBCG42uc"
+}

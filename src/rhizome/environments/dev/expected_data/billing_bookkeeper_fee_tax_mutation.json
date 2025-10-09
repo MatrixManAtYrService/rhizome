@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "mutation_action": "DELETE",
+  "mutation_timestamp": "2024-08-15T21:00:54.147984",
+  "fee_tax_id": 37,
+  "uuid": "Hash5yGWu46bYdy9FFgjCa9Cw3",
+  "fee_summary_uuid": "HashA5vYSKGpJGJSgyHVgqAVET",
+  "tax1_amount": "0.321",
+  "tax2_amount": "0.000",
+  "tax3_amount": "0.000",
+  "tax4_amount": "0.000",
+  "tax1_rate": "10.0000",
+  "tax2_rate": "0.0000",
+  "tax3_rate": "0.0000",
+  "tax4_rate": "0.0000",
+  "created_timestamp": "2024-08-15T19:27:32.637096"
+}

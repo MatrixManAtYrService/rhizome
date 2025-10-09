@@ -1,0 +1,14 @@
+{
+  "id": 13,
+  "uuid": "HashHgipfFUqrKpFwqw7Ynw4bQ",
+  "rule_status": "ACTIVE",
+  "rule_alias": null,
+  "rate_fee_category": "PLAN_RETAIL_MOD",
+  "rate_fee_code": "SeasonalOutOfSeason",
+  "target_entity_type": "MERCHANT",
+  "short_desc": "Plan Fee Offset for Out-of-Season",
+  "full_desc": "Plan fee offset for seasonal merchant during out-of-season period",
+  "created_timestamp": "2024-09-03T18:07:36.934628",
+  "modified_timestamp": "2025-01-20T08:54:45.314813",
+  "audit_id": "HashHNVGtDrTgSrBEtaX2TkRPt"
+}

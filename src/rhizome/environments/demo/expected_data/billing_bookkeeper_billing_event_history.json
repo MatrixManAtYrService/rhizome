@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "environment": "dev::demo2",
+  "entity_uuid": "Hash9SsLtEgWx",
+  "entity_type": "MERCHANT",
+  "event_uuid": "HashGGR8JCZJRxDMK5mQwurbSM",
+  "input": "{\n  \"environment\" : \"dev::demo2\",\n  \"eventTime\" : 1699015204157269,\n  \"eventUuid\" : \"RZJ2VGDG2D8TC1JW9K26EVSN6V\",\n  \"payloads\" : [ {\n    \"type\" : \"PLAN\",\n    \"payload\" : {\n      \"com.clover.billing.event.messaging.PlanPayload\" : {\n        \"planEvents\" : [ {\n          \"code\" : \"PlanUnassign\",\n          \"effectiveDateTime\" : 1699015204157218,\n          \"merchUuid\" : \"BQMDV5DDTKAC1\",\n          \"merchPlanUuid\" : \"YKT5TCZAF9SXR\",\n          \"planMods\" : null,\n          \"devices\" : {\n            \"array\" : [ ]\n          }\n        }, {\n          \"code\" : \"PlanAssign\",\n          \"effectiveDateTime\" : 1699015204157238,\n          \"merchUuid\" : \"BQMDV5DDTKAC1\",\n          \"merchPlanUuid\" : \"6WVTD7FXG5GWM\",\n          \"planMods\" : null,\n          \"devices\" : {\n            \"array\" : [ ]\n          }\n        } ]\n      }\n    }\n  } ]\n}",
+  "message": null,
+  "created_timestamp": "2023-11-03T12:40:05.626063"
+}

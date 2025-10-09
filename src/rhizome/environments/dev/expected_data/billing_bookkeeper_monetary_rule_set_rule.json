@@ -1,0 +1,12 @@
+{
+  "id": 13,
+  "uuid": "Hash5uKkMKxThxF4v597Y4RfVr",
+  "monetary_rule_set_uuid": "HashAaqnwDFzUkdX2ARd6wkGsD",
+  "rule_uuid": "HashHgipfFUqrKpFwqw7Ynw4bQ",
+  "rule_type": "AUTO_ADJUST",
+  "effective_date": "2024-09-01",
+  "deleted_date": null,
+  "created_timestamp": "2024-09-03T18:07:37.194213",
+  "modified_timestamp": "2024-09-03T18:07:37.194213",
+  "audit_id": "Hash6MDCboCZ1xyskqfEVjCtFv"
+}

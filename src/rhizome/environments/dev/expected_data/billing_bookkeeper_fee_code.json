@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "HashAfzuP4wdpipUmEFnUKYwM9",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "PaymentsPDVT",
+  "short_desc": "Payments Charges",
+  "full_desc": "Payments PDVT Plan - Full Fee (advance)",
+  "sort_order": 1000000,
+  "created_timestamp": "2023-10-11T17:21:20.329007",
+  "modified_timestamp": "2023-10-11T17:21:20.329007"
+}

@@ -1,0 +1,22 @@
+{
+  "id": 24,
+  "uuid": "Hash4tRPpbELve6582BGNXM5H9",
+  "task_id": "GenerateMerchantInvoicesJob",
+  "task_type": "PRODUCER",
+  "validation_group": "Invoice",
+  "billing_entity_uuid": "HashDicKcDN7Zv9gntG5XzP2WW",
+  "hierarchy_type": "MERCHANT_SCHEDULE",
+  "cycle_date": "2023-11-30",
+  "currency": "GBP",
+  "status": "PENDING",
+  "bypass_count": "0.0000",
+  "bypass_amount": "0.000",
+  "accepted_count": "1.0000",
+  "accepted_amount": "50.970",
+  "total_count": "1.0000",
+  "total_amount": "50.970",
+  "request_uuid": "HashCAetfghoheLB6bLGGrabJo",
+  "validation_request_uuid": null,
+  "created_timestamp": "2023-11-06T12:20:32.701218",
+  "modified_timestamp": "2024-10-10T11:28:13.536997"
+}

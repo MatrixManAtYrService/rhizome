@@ -1,0 +1,12 @@
+{
+  "id": 7,
+  "uuid": "Hash5j5Xbd7uzV2d9f1aM26LWB",
+  "billing_entity_uuid": "Hash3UfifoKz7C6CB37AVtjdEk",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "CsrPDVT",
+  "currency": "AUD",
+  "apply_type": null,
+  "resolved_status": 0,
+  "created_timestamp": "2024-05-16T09:57:51.627548",
+  "modified_timestamp": "2024-05-16T09:57:51.627548"
+}

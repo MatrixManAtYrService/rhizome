@@ -1,0 +1,12 @@
+{
+  "id": 3212,
+  "uuid": "Hash241cstW2xbqkg17R4HrSkrZhv7VWLogs",
+  "environment": "dev::demo2",
+  "reference_id": "HashDMJoPtkvJ",
+  "payload": "{\"environment\":\"dev::demo2\",\"eventTimestamp\":\"2024-09-30T15:00:36.82931804Z\",\"eventUuid\":\"5DH5JSXZ666E5XD2ZY93VAYHKG\",\"merchantEvents\":null,\"planEvents\":[{\"code\":\"DeviceAdd\",\"effectiveDateTime\":\"2024-09-30T15:00:35.213Z\",\"merchUuid\":\"0Q6MRH17B6AH1\",\"merchPlanUuid\":\"6WVTD7FXG5GWM\",\"planMods\":null,\"devices\":[{\"serialNum\":\"C035ET20730033\",\"deviceMods\":[{\"modType\":\"IncludeFirst\",\"ref\":null,\"numUnits\":null,\"basisUnits\":null,\"basisAmt\":null,\"basisCurrency\":null}]}]}],\"appRatesEvents\":null,\"appSubEvents\":null,\"appMeterEvents\":null,\"cellularEvents\":null,\"miscEvents\":null,\"revenueEvents\":null,\"memoEvents\":null}",
+  "channel": "demo2-bookkeeper-billing-event-subscription",
+  "topic": "demo2-billing-event-topic",
+  "cause": "com.clover.bookkeeper.exception.NotFoundBookkeeperException",
+  "message": "Billing entity not found by entity UUID and type. Keys=[0Q6MRH17B6AH1,MERCHANT]",
+  "created_timestamp": "2024-09-30T15:00:37.629117"
+}

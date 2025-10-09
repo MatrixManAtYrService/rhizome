@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "uuid": "Hash7SgUjBEAQeAxtY3eCrpnxs",
+  "hierarchy_type": "MERCHANT_FEE_RATE",
+  "description": "Hierarchy used for assigning fee rates for merchants",
+  "created_timestamp": "2023-10-11T17:21:20.433381",
+  "modified_timestamp": "2023-10-11T17:21:20.433381"
+}

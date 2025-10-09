@@ -1,0 +1,14 @@
+{
+  "id": 7,
+  "uuid": "HashEo9XsX94h6xKeHy5xtNsQd",
+  "merchant_plan_uuid": "Hash5EmM7oawG",
+  "device_type": null,
+  "plan_action_type": "PLAN_ASSIGN",
+  "effective_date": "2023-10-01",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "EssentialsPDVT.PRC",
+  "deleted_date": null,
+  "created_timestamp": "2023-10-12T10:09:05.481817",
+  "modified_timestamp": "2023-10-12T10:09:05.481817",
+  "audit_id": null
+}

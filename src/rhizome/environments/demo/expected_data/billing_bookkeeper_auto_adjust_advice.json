@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "uuid": "HashH8RBhK3D1aArJUtwUegDv7",
+  "billing_entity_uuid": "Hash3wknnfWNNX15uh9oj2SJxi",
+  "auto_adjust_rule_uuid": "Hash6N6j4dBRkxXDiXqbMZQz7n",
+  "start_date": "2024-07-12",
+  "deleted_date": "2024-09-02",
+  "total_periods": 1,
+  "evaluated_periods": 1,
+  "applied_periods": 1,
+  "max_units": "1.0000",
+  "max_amount": "6.990",
+  "currency": "GBP",
+  "reference": "1 Month Free Essentials Credit",
+  "request_uuid": "HashBv9Q3dXc28GhXF88hKUZb3",
+  "created_timestamp": "2024-07-11T16:38:11.987962",
+  "modified_timestamp": "2024-08-07T09:31:37.616784",
+  "audit_id": "Hash96QUDmPdPjP6DNa8wjvbXo"
+}

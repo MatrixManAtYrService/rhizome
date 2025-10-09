@@ -1,0 +1,14 @@
+{
+  "id": 19,
+  "uuid": "Hash6hhc3wEoENvuZiSWd1EYUk",
+  "billing_entity_uuid": "HashHvx2teX4epSXNfDrrx956N",
+  "year": 2024,
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "PaymentsPDVT",
+  "currency": "GBP",
+  "total_period_units": "3.0000",
+  "total_basis_amount": "0.000",
+  "total_fee_amount": "0.000",
+  "created_timestamp": "2023-10-18T11:23:57.966619",
+  "modified_timestamp": "2023-10-18T11:23:57.966619"
+}

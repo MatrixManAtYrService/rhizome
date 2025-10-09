@@ -1,0 +1,12 @@
+{
+  "id": 4236,
+  "uuid": "Hash2BJXK69YKZBqnFMjVUCtH2LKs9D6Y5kL",
+  "environment": "dev::dev1",
+  "reference_id": "Hash4STkpjzLJ",
+  "payload": "{\"environment\":\"dev::dev1\",\"eventTimestamp\":\"2024-10-08T16:07:31.76118847Z\",\"eventUuid\":\"07HET1CDTR8PD53J4TNQMRZSZB\",\"merchantEvents\":null,\"planEvents\":null,\"appRatesEvents\":[{\"code\":\"AppRatesChanged\",\"effectiveDateTime\":\"2023-09-19T20:29:28Z\",\"developerUuid\":\"AZ78KNXX440KJ\",\"developerName\":\"Dhaivat Test\",\"vendorCode\":\"V20212.0000\",\"devAppUuid\":\"20NW2409VAR8P\",\"appName\":\"TESTDEVRECAP\",\"party\":\"THIRD\",\"subscriptionRates\":[{\"appSubUuid\":\"F69XWARBQRK2C\",\"appSubName\":\"FREE\",\"hasTrial\":true,\"rates\":[{\"currency\":\"USD\",\"cost\":0.0}]}],\"meteredRates\":null}],\"appSubEvents\":null,\"appMeterEvents\":null,\"cellularEvents\":null,\"miscEvents\":null,\"revenueEvents\":null,\"memoEvents\":[{\"heading\":\"AppRatesMemo\",\"moment\":\"2024-10-08\",\"properties\":{\"PROP_AGGREGATION_UUID\":\"TP2WTZGBZTYFJEKA4J7QJFXD7Z\"}}]}",
+  "channel": "dev-bookkeeper-billing-event-subscription",
+  "topic": "dev-billing-event-topic",
+  "cause": "java.lang.IllegalArgumentException",
+  "message": "Effective date must be after any existing effective or deleted dates for the fee-code-to-ledger-account mapping.",
+  "created_timestamp": "2024-10-08T16:09:26.990437"
+}

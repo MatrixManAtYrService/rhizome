@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashCvhd2d3HugAbaWh4h3VRD2",
+  "developer_uuid": null,
+  "developer_app_uuid": null,
+  "adjust_reason": "DISPUTE",
+  "adjust_action_type": "PLAN_REFUND",
+  "effective_date": "2023-01-01",
+  "fee_category": "PLAN_RETAIL_ADJ",
+  "fee_code": "AdjustDispute",
+  "deleted_date": null,
+  "created_timestamp": "2024-02-01T17:14:25.385343",
+  "modified_timestamp": "2024-02-01T17:14:25.385343",
+  "audit_id": null
+}

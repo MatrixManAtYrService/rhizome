@@ -1,0 +1,15 @@
+{
+  "id": 91,
+  "uuid": "HashoA1SQAWx8eQMH2ZqbNwvn7",
+  "developer_app_uuid": "HashZBowf3nTj",
+  "app_subscription_uuid": "Hash6THun7Gbm",
+  "merchant_plan_uuid": null,
+  "app_sub_action_type": "APP_LEVEL_SUBSCRIBE",
+  "effective_date": "2024-03-05",
+  "fee_category": "APP_SUB_3P_RETAIL",
+  "fee_code": "BEAD70KPRMC0E.S.PRC",
+  "deleted_date": null,
+  "created_timestamp": "2024-03-06T21:01:53.195201",
+  "modified_timestamp": "2024-03-06T21:01:53.195201",
+  "audit_id": null
+}

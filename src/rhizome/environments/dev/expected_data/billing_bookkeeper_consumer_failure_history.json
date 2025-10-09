@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "uuid": "HashFrL8Xp19z7TNjAXe1WApqhVK1hKcd7SC",
+  "environment": "dev::demo2",
+  "reference_id": "Hash7Vdzxitw1",
+  "payload": "{\"environment\":\"dev::demo2\",\"eventTime\":1699014221555737,\"eventUuid\":\"0BCE288AKKPZ1E95K5VZGS05YE\",\"payloads\":[{\"type\":\"PLAN\",\"payload\":{\"com.clover.billing.event.messaging.PlanPayload\":{\"planEvents\":[{\"code\":\"DeviceRemove\",\"effectiveDateTime\":1699014221555594,\"merchUuid\":\"4HR6NJT561841\",\"merchPlanUuid\":\"6WVTD7FXG5GWM\",\"planMods\":null,\"devices\":{\"array\":[{\"serialNum\":\"C035ET20750006\",\"deviceMods\":null}]}}]}}}]}",
+  "channel": "dev-bookkeeper-billing-event-subscription",
+  "topic": "dev-billing-event-topic",
+  "cause": "com.clover.bookkeeper.exception.NotFoundBookkeeperException",
+  "message": "Billing entity not found by entity UUID and type. Keys=[4HR6NJT561841,MERCHANT]",
+  "comment": null,
+  "created_timestamp": "2023-11-03T12:23:44.321461"
+}

@@ -1,0 +1,15 @@
+{
+  "id": 3,
+  "uuid": "HashEeFgwLiG273w2YiNFAyddh",
+  "developer_app_uuid": "Hash13MfuymMK",
+  "app_metered_uuid": "HashDKmUTV5oo",
+  "merchant_plan_uuid": null,
+  "app_meter_action_type": "APP_METER_EVENT",
+  "effective_date": "2019-05-30",
+  "fee_category": "APP_METER_3P_RETAIL",
+  "fee_code": "1Z6N6TR0KAZXA.M",
+  "deleted_date": null,
+  "created_timestamp": "2024-04-05T22:07:11.473817",
+  "modified_timestamp": "2024-04-05T22:07:11.473817",
+  "audit_id": null
+}

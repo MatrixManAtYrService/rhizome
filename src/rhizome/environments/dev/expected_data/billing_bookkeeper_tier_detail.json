@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "Hash7Zzkd8EibBGoqGxysDd6PM",
+  "tiered_rule_uuid": "HashFqJ83xd9gVFQRTbTFEFU3A",
+  "min_units": "1.0000",
+  "min_amount": "10.000",
+  "currency": "USD",
+  "rate_fee_category": "PLAN_RETAIL",
+  "rate_fee_code": "CsrPDVT",
+  "short_desc": "string",
+  "created_timestamp": "2025-03-18T12:28:08.160409",
+  "modified_timestamp": "2025-03-18T12:28:08.165651",
+  "audit_id": "Hash9a1ZNhn96hDrEfCsupNwJR"
+}

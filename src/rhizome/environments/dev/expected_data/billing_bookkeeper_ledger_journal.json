@@ -1,0 +1,12 @@
+{
+  "id": 81,
+  "uuid": "HashGRAkAuTozXvmLwBXPbjUm5",
+  "ledger_account_uuid": "HashAnireK7oziFiCkXACD4huH",
+  "journal_date": "2024-01-01",
+  "ref_uuid_type": "FEE_SUMMARY",
+  "ref_uuid": "Hash3Jc1e1TwkLjWQWgdmpyihJ",
+  "cr_db": "CREDIT",
+  "currency": "GBP",
+  "amount": "29.850",
+  "created_timestamp": "2023-10-18T11:24:14.792711"
+}

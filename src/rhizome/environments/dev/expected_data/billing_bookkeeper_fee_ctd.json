@@ -1,0 +1,15 @@
+{
+  "id": 14,
+  "uuid": "HashCDuxmBmpqdkni7EPx4u1yu",
+  "billing_entity_uuid": "HashHvx2teX4epSXNfDrrx956N",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "PaymentsPDVT",
+  "currency": "GBP",
+  "ctd_num_units": "0.0000",
+  "abs_num_units": "0.0000",
+  "ctd_basis_amount": "0.000",
+  "abs_basis_amount": "0.000",
+  "num_actions": 0,
+  "created_timestamp": "2023-10-18T11:23:12.949702",
+  "modified_timestamp": "2025-04-16T13:06:38.785184"
+}

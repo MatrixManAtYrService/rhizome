@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashDCgnSNqWXNNn2cnGZ4MzQQ",
+  "action": "BILLED",
+  "effective_date": "2023-01-01",
+  "lookup_ledger_account_key": "Incur.Plan",
+  "credit_ledger_account_key": "Incur.Plan",
+  "credit_billing_entity_uuid_source": "TRANSACTION",
+  "debit_ledger_account_key": "AR.Plan",
+  "debit_billing_entity_uuid_source": "TRANSACTION",
+  "deleted_date": null,
+  "created_timestamp": "2023-10-11T17:21:21.558530",
+  "modified_timestamp": "2023-10-11T17:21:21.558530",
+  "audit_id": null
+}

@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "Hash27qA5po7PTwK7RQFZm1dES",
+  "hierarchy_type": "MERCHANT_SCHEDULE",
+  "billing_entity_uuid": "Hash88eq6Yqd5vGocssFABWTSU",
+  "effective_date": "2023-10-01",
+  "deleted_date": null,
+  "parent_billing_hierarchy_uuid": null,
+  "created_timestamp": "2023-10-12T09:55:00.590637",
+  "modified_timestamp": "2023-10-12T09:55:00.590637"
+}

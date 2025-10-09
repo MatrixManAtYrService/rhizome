@@ -1,0 +1,17 @@
+{
+  "id": 5,
+  "uuid": "HashCz7DmQV1gGegg9b1X1JPPX",
+  "billing_entity_uuid": "Hash9tgiz95RstKGnPvK77ELz3",
+  "hierarchy_type": "MERCHANT_SCHEDULE",
+  "effective_date": "2023-10-01",
+  "revenue_share_group": null,
+  "post_method": null,
+  "plan_billing_method": null,
+  "invoice_method": "MerchantDetail",
+  "invoice_number_format": null,
+  "settlement_method": "Goleo",
+  "seasonal_rule_set_uuid": null,
+  "created_timestamp": "2023-10-12T15:20:19.899010",
+  "modified_timestamp": "2024-04-10T15:01:06.323685",
+  "audit_id": null
+}

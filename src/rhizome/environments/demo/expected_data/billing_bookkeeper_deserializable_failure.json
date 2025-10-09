@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "uuid": "Hash2U2dPJfiqc4UGysU1guWykr5BSbA1Dsr",
+  "topic": "dev-billing-event-topic",
+  "channel": "dev-bookkeeper-deadletter-billing-event-subscription",
+  "b64": "FGRldjo6ZGVtbzLcqbDjtOuFBjRZVjFCQzBQQkpYOTkwMlpWME5NSFBaSzU0NgQAAAIeTWVyY2hhbnRDcmVhdGVk1PWq47TrhQYaRjJZSkI1WjZBU1NNMQ5PVCBUZXN0Gjg3MkhTS05ZOEM2ODAAAAAAAgICFFBsYW5Bc3NpZ26mobDjtOuFBhpGMllKQjVaNkFTU00xGjZXVlREN0ZYRzVHV00AAAAA",
+  "created_timestamp": "2023-12-04T11:45:15.720844"
+}

@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "Hash4MqtK9UwwYzwzqpizx2JdL",
+  "ledger_account_key": "Rev.Plan",
+  "ledger_account_type": "REVENUE",
+  "default_gl_code": null,
+  "short_desc": "Plan SaaS revenue from merchant",
+  "full_desc": "Plan SaaS fee revenue earned from a merchant",
+  "created_timestamp": "2023-10-11T17:21:21.286275",
+  "modified_timestamp": "2023-10-11T17:21:21.286275"
+}

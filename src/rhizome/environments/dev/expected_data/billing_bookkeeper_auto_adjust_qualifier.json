@@ -1,0 +1,11 @@
+{
+  "id": 979,
+  "uuid": "Hash6k1NajaRrJtzuSkYUfqvCs",
+  "auto_adjust_rule_uuid": "HashHgipfFUqrKpFwqw7Ynw4bQ",
+  "fee_category": "MISC_RETAIL",
+  "fee_code": "PaymentTransactionVolume",
+  "negate_fee_summary": 0,
+  "disqualify": 1,
+  "created_timestamp": "2024-09-03T18:07:36.982420",
+  "audit_id": "Hash6MDCboCZ1xyskqfEVjCtFv"
+}

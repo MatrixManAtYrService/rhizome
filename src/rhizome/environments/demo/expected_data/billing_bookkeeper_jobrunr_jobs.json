@@ -1,0 +1,11 @@
+{
+  "id": "01b3f3f3-fd56-444b-a8ad-66b039945a0b",
+  "version": 4,
+  "jobAsJson": "{\"version\":4,\"jobSignature\":\"com.clover.bookkeeper.job.handler.PostCellularActionsJobRequestHandler.run(com.clover.bookkeeper.job.request.PostCellularActionsJobRequest)\",\"jobName\":\"Post-Cellular-Actions Job\",\"jobDetails\":{\"className\":\"com.clover.bookkeeper.job.handler.PostCellularActionsJobRequestHandler\",\"staticFieldName\":null,\"methodName\":\"run\",\"jobParameters\":[{\"className\":\"com.clover.bookkeeper.job.request.PostCellularActionsJobRequest\",\"actualClassName\":\"com.clover.bookkeeper.job.request.PostCellularActionsJobRequest\",\"object\":{\"requestUuid\":\"2QWW2MGFV4K9885CT632VPRRSK\",\"jobUuid\":\"01b3f3f3-fd56-444b-a8ad-66b039945a0b\",\"parameters\":{\"referenceUuid\":\"FDMSZ5VR7TG2TW0D226SBE5FWZ\",\"hierarchyType\":\"MERCHANT_SCHEDULE\",\"environment\":\"dev::demo2\",\"billingEntityUuids\":null},\"hierarchyType\":\"MERCHANT_SCHEDULE\"}}],\"cacheable\":true},\"id\":\"01b3f3f3-fd56-444b-a8ad-66b039945a0b\",\"jobHistory\":[{\"@class\":\"org.jobrunr.jobs.states.EnqueuedState\",\"state\":\"ENQUEUED\",\"createdAt\":\"2025-10-07T15:05:42.079405263Z\"},{\"@class\":\"org.jobrunr.jobs.states.ProcessingState\",\"state\":\"PROCESSING\",\"createdAt\":\"2025-10-07T15:05:55.386779827Z\",\"serverId\":\"43a2a33a-4036-44e2-9323-93990ab1a17a\",\"updatedAt\":\"2025-10-07T15:05:55.386779827Z\"},{\"@class\":\"org.jobrunr.jobs.states.SucceededState\",\"state\":\"SUCCEEDED\",\"createdAt\":\"2025-10-07T15:05:56.692916997Z\",\"latencyDuration\":13.307374564,\"processDuration\":1.306136013},{\"@class\":\"org.jobrunr.jobs.states.DeletedState\",\"state\":\"DELETED\",\"createdAt\":\"2025-10-09T03:06:03.238721936Z\",\"reason\":\"JobRunr maintenance - deleting succeeded job\"}],\"metadata\":{\"@class\":\"java.util.concurrent.ConcurrentHashMap\",\"jobRunrDashboardLog-2\":{\"@class\":\"org.jobrunr.jobs.context.JobDashboardLogger$JobDashboardLogLines\",\"logLines\":[]}},\"recurringJobId\":null}",
+  "jobSignature": "com.clover.bookkeeper.job.handler.PostCellularActionsJobRequestHandler.run(com.clover.bookkeeper.job.request.PostCellularActionsJobRequest)",
+  "state": "DELETED",
+  "createdAt": "2025-10-07T15:05:42.079405",
+  "updatedAt": "2025-10-09T03:06:03.238722",
+  "scheduledAt": null,
+  "recurringJobId": null
+}

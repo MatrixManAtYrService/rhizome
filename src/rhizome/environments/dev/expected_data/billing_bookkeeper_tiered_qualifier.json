@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "HashADFP7XbuGbmbKqUL9dEVYX",
+  "tiered_rule_uuid": "HashFqJ83xd9gVFQRTbTFEFU3A",
+  "fee_category": "PLAN_RETAIL",
+  "fee_code": "CsrPDVT",
+  "negate_fee_summary": 1,
+  "disqualify": 1,
+  "created_timestamp": "2025-03-18T12:28:08.160409",
+  "audit_id": "Hash9a1ZNhn96hDrEfCsupNwJR"
+}
