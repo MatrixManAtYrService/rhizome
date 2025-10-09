@@ -15,13 +15,20 @@ billing-bookkeeper endpoints), so we reuse existing MFF test resources.
 
 from collections.abc import Generator
 from datetime import datetime, timedelta
-from typing import Any
+from typing import Any, cast
 
 import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from rhizome.models.billing_bookkeeper.billing_entity import BillingEntity
+from rhizome.models.billing_bookkeeper.billing_schedule import BillingSchedule
+from rhizome.models.billing_bookkeeper.cellular_action_fee_code import CellularActionFeeCode
+from rhizome.models.billing_bookkeeper.fee_rate import FeeRate
+from rhizome.models.billing_bookkeeper.invoice_alliance_code import InvoiceAllianceCode
+from rhizome.models.billing_bookkeeper.plan_action_fee_code import PlanActionFeeCode
+from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingGroupDates
 from rhizome.models.table_list import BillingBookkeeperTable
 from tests.conftest import RunningStolonServer
 
@@ -114,14 +121,14 @@ def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict[str, An
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    BillingEntity = dev_bb.get_model(BillingBookkeeperTable.billing_entity)
+    BillingEntityModel = cast(type[BillingEntity], dev_bb.get_model(BillingBookkeeperTable.billing_entity))
 
     # Query for any MFF reseller (sanitize=False to get real UUIDs for API calls)
     existing_entity = dev_bb.select_first(
-        select(BillingEntity)
-        .where(BillingEntity.entity_type == "RESELLER")
-        .where(BillingEntity.entity_uuid.like("MFF%"))
-        .order_by(BillingEntity.created_timestamp.desc()),
+        select(BillingEntityModel)
+        .where(BillingEntityModel.entity_type == "RESELLER")
+        .where(BillingEntityModel.entity_uuid.like("MFF%"))  # type: ignore[attr-defined]  # SQLModel columns have .like()
+        .order_by(BillingEntityModel.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
         sanitize=False,
     )
 
@@ -201,10 +208,12 @@ def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonSe
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    InvoiceAllianceCode = dev_bb.get_model(BillingBookkeeperTable.invoice_alliance_code)
+    InvoiceAllianceCodeModel = cast(
+        type[InvoiceAllianceCode], dev_bb.get_model(BillingBookkeeperTable.invoice_alliance_code)
+    )
 
     existing_alliance_code = dev_bb.select_first(
-        select(InvoiceAllianceCode).where(InvoiceAllianceCode.billing_entity_uuid == billing_entity_uuid),
+        select(InvoiceAllianceCodeModel).where(InvoiceAllianceCodeModel.billing_entity_uuid == billing_entity_uuid),
         sanitize=False,
     )
 
@@ -263,10 +272,11 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    BillingSchedule = dev_bb.get_model(BillingBookkeeperTable.billing_schedule)
+    BillingScheduleModel = cast(type[BillingSchedule], dev_bb.get_model(BillingBookkeeperTable.billing_schedule))
 
     existing_schedule = dev_bb.select_first(
-        select(BillingSchedule).where(BillingSchedule.billing_entity_uuid == billing_entity_uuid), sanitize=False
+        select(BillingScheduleModel).where(BillingScheduleModel.billing_entity_uuid == billing_entity_uuid),
+        sanitize=False,
     )
 
     if existing_schedule:
@@ -328,10 +338,12 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer)
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    FeeRate = dev_bb.get_model(BillingBookkeeperTable.fee_rate)
+    FeeRateModel = cast(type[FeeRate], dev_bb.get_model(BillingBookkeeperTable.fee_rate))
 
     existing_fee_rate = dev_bb.select_first(
-        select(FeeRate).where(FeeRate.billing_entity_uuid == billing_entity_uuid).order_by(FeeRate.created_timestamp.desc()),
+        select(FeeRateModel)
+        .where(FeeRateModel.billing_entity_uuid == billing_entity_uuid)
+        .order_by(FeeRateModel.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
         sanitize=False,
     )
 
@@ -393,10 +405,12 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    ProcessingGroupDates = dev_bb.get_model(BillingBookkeeperTable.processing_group_dates)
+    ProcessingGroupDatesModel = cast(
+        type[ProcessingGroupDates], dev_bb.get_model(BillingBookkeeperTable.processing_group_dates)
+    )
 
     existing_pgd = dev_bb.select_first(
-        select(ProcessingGroupDates).where(ProcessingGroupDates.billing_entity_uuid == billing_entity_uuid),
+        select(ProcessingGroupDatesModel).where(ProcessingGroupDatesModel.billing_entity_uuid == billing_entity_uuid),
         sanitize=False,
     )
 
@@ -459,14 +473,16 @@ def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[s
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    PlanActionFeeCode = dev_bb.get_model(BillingBookkeeperTable.plan_action_fee_code)
+    PlanActionFeeCodeModel = cast(
+        type[PlanActionFeeCode], dev_bb.get_model(BillingBookkeeperTable.plan_action_fee_code)
+    )
 
     existing_plan_action_fee_code = dev_bb.select_first(
-        select(PlanActionFeeCode)
-        .where(PlanActionFeeCode.merchant_plan_uuid == test_plan_uuid)
-        .where(PlanActionFeeCode.plan_action_type == "PLAN_ASSIGN")
-        .where(PlanActionFeeCode.fee_category == "PLAN_RETAIL")
-        .where(PlanActionFeeCode.fee_code == "PaymentsPDVT.PRC"),
+        select(PlanActionFeeCodeModel)
+        .where(PlanActionFeeCodeModel.merchant_plan_uuid == test_plan_uuid)
+        .where(PlanActionFeeCodeModel.plan_action_type == "PLAN_ASSIGN")
+        .where(PlanActionFeeCodeModel.fee_category == "PLAN_RETAIL")
+        .where(PlanActionFeeCodeModel.fee_code == "PaymentsPDVT.PRC"),
         sanitize=False,
     )
 
@@ -537,14 +553,16 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[di
     rhizome_client = RhizomeClient(data_in_logs=False)
     dev_bb = DevBillingBookkeeper(rhizome_client)
 
-    CellularActionFeeCode = dev_bb.get_model(BillingBookkeeperTable.cellular_action_fee_code)
+    CellularActionFeeCodeModel = cast(
+        type[CellularActionFeeCode], dev_bb.get_model(BillingBookkeeperTable.cellular_action_fee_code)
+    )
 
     existing_cellular_action_fee_code = dev_bb.select_first(
-        select(CellularActionFeeCode)
-        .where(CellularActionFeeCode.carrier == carrier)
-        .where(CellularActionFeeCode.cellular_action_type == cellular_action_type)
-        .where(CellularActionFeeCode.fee_category == "CELLULAR_RETAIL")
-        .where(CellularActionFeeCode.fee_code == "CellularArr.ATT"),
+        select(CellularActionFeeCodeModel)
+        .where(CellularActionFeeCodeModel.carrier == carrier)
+        .where(CellularActionFeeCodeModel.cellular_action_type == cellular_action_type)
+        .where(CellularActionFeeCodeModel.fee_category == "CELLULAR_RETAIL")
+        .where(CellularActionFeeCodeModel.fee_code == "CellularArr.ATT"),
         sanitize=False,
     )
 
