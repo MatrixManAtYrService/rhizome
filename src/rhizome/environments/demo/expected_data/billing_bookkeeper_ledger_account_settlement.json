@@ -1,0 +1,18 @@
+{
+  "id": 1,
+  "uuid": "Hash9p8uxPxbhHtF5iTN9frnHf",
+  "ledger_account_key": "Incur.Plan",
+  "effective_date": "2024-02-16",
+  "settlement_item_code": "V20071.0000",
+  "settlement_desc": null,
+  "fee_category_group": "PLAN",
+  "revenue_group": null,
+  "merchant_plan_uuid": null,
+  "developer_uuid": null,
+  "developer_app_uuid": null,
+  "app_subscription_uuid": null,
+  "app_metered_uuid": null,
+  "created_timestamp": "2023-10-11T17:21:21.632751",
+  "modified_timestamp": "2024-04-03T06:22:02.558270",
+  "audit_id": null
+}

@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "mutation_action": "DELETE",
+  "mutation_timestamp": "2025-07-02T09:16:52.166939",
+  "ledger_journal_id": 32793,
+  "uuid": "Hash3c91jkmtTTdH4Qjchr9duJ",
+  "ledger_account_uuid": "HashFiSVE6LC7sv53GorHmu8L7",
+  "journal_date": "2025-08-01",
+  "ref_uuid_type": "SETTLE_EXPORT",
+  "ref_uuid": "HashHuGoqbAotxCMoStGTzJDjz",
+  "cr_db": "CREDIT",
+  "currency": "GBP",
+  "amount": "190.180",
+  "created_timestamp": "2025-07-01T14:08:40.359542"
+}

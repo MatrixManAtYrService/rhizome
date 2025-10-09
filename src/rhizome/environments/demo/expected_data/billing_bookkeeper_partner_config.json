@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "uuid": "HashHAXnG518BSK5TwFKBDfi1W",
+  "billing_entity_uuid": "Hash88eq6Yqd5vGocssFABWTSU",
+  "hierarchy_type": "MERCHANT_SCHEDULE",
+  "effective_date": "2023-10-01",
+  "revenue_share_group": "Default",
+  "post_method": "PerCycle",
+  "plan_billing_method": "Advance",
+  "invoice_method": "MerchantDetail",
+  "invoice_number_format": "AllianceCode",
+  "settlement_method": "None",
+  "seasonal_rule_set_uuid": null,
+  "created_timestamp": "2023-10-12T09:56:10.723821",
+  "modified_timestamp": "2024-08-27T09:11:52.575858",
+  "audit_id": null
+}

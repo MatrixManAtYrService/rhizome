@@ -1,0 +1,9 @@
+{
+  "id": 170413,
+  "uuid": "HashES42JACracGZDyXCCZ6YYXkGa4Rg",
+  "hash": "23e682b15e531aac221e844526b02ff873a49a95ea2928f1194202cfc2327b7a",
+  "namespace": "billingEvent",
+  "meta_data": "{\n\"project\": \"clover-dev-managed\",\n\"subscription\": \"demo2-bookkeeper-billing-event-subscription\",\n\"messageId\": \"16525103110209589\"\n}",
+  "processed_timestamp": "2025-10-08T05:50:16.381406",
+  "created_timestamp": "2025-10-08T05:50:16.092791"
+}

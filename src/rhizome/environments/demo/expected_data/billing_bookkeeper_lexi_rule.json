@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "uuid": "HashAXFymYciye7ihDSESjMzvyAYgc1EgPzc",
+  "parent_uuid": null,
+  "lexicon": "fee_code.invoice",
+  "rule_name": "Plans PDVT",
+  "description": null,
+  "rule_condition": null,
+  "target_attributes": null,
+  "priority": 1,
+  "rule_type": "CONDITIONAL",
+  "created_timestamp": "2025-04-08T08:44:57.594000",
+  "deleted_timestamp": null
+}

@@ -1,0 +1,12 @@
+{
+  "id": 5,
+  "uuid": "HashBZTVRWh29XLsPkXfBs57pm",
+  "billing_entity_uuid": "Hash3wknnfWNNX15uh9oj2SJxi",
+  "adjust_fee_summary_uuid": "HashAcp8caD5t57Liwz13HgndM",
+  "qualified_fee_summary_uuid": "HashBNyF9BZJVyNRjUhvXcdojX",
+  "rule_uuid": "Hash6N6j4dBRkxXDiXqbMZQz7n",
+  "rule_criteria_uuid": "HashH8RBhK3D1aArJUtwUegDv7",
+  "rule_type": "AUTO_ADJUST",
+  "request_uuid": "HashBv9Q3dXc28GhXF88hKUZb3",
+  "created_timestamp": "2024-08-07T09:31:37.607042"
+}

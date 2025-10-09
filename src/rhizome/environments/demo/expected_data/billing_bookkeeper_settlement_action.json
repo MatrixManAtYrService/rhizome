@@ -1,0 +1,20 @@
+{
+  "id": 10,
+  "uuid": "HashCU5xi7srKin4wcuz1MbMaz",
+  "settlement_uuid": "HashDWYwZAMiLnV7gBvNihwSQz",
+  "action_date": "2023-11-01",
+  "action": "ATTEMPT",
+  "currency": "GBP",
+  "total_amount": "13.300",
+  "fee_amount": "13.300",
+  "tax1_amount": "0.000",
+  "tax2_amount": "0.000",
+  "tax3_amount": "0.000",
+  "tax4_amount": "0.000",
+  "reject_code": null,
+  "message": "ATTEMPT action amount 13.300 GBP resulted in negative credit ledger account balance of -13.300 GBP [Debt.Plan]",
+  "ledger_account_transition_uuid": null,
+  "credit_ledger_account_uuid": null,
+  "debit_ledger_account_uuid": null,
+  "created_timestamp": "2023-11-09T15:09:35.040858"
+}

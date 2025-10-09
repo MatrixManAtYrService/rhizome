@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "uuid": "HashF29SKm9T42rdLsm3Vz2upp",
+  "plan_action_uuid": "Hash6dXwMipZAYNxc5Umu6Pver",
+  "request_uuid": "Hash28TGuME6J8ZxcND8nYt92e",
+  "posting_date": "2024-03-01",
+  "original_request_uuid": "Hash7KDooADcbAQ984N5K5kjFz",
+  "original_posting_date": "2024-03-01",
+  "posting_attempts": 2,
+  "error_code": "120",
+  "error_details": "Cannot resolve fee rate for PlanAction M2SBEQSKSBT8SZP0D1JYMYZBQD; BillingEntityUuid=856YNJA194SX234KDWBSBQGYY6 FeeCategory=DEVICE_RETAIL, FeeCode=EssentialsPDVT.PRC, Currency=GBP. (FeeRateNotFoundException: Fee rate not resolved for specified billing entity, fee category, fee code, currency, and as-of date; Keys=[856YNJA194SX234KDWBSBQGYY6,DEVICE_RETAIL,EssentialsPDVT.PRC,GBP,2024-03-01])",
+  "resolved": 1,
+  "created_timestamp": "2024-02-27T17:22:59.089692",
+  "modified_timestamp": "2024-02-28T16:18:46.657489"
+}

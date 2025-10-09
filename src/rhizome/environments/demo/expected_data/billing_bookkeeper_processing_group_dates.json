@@ -1,0 +1,16 @@
+{
+  "id": 2,
+  "uuid": "Hashb1RQuDnqMECEhjBrBZ3RAV",
+  "billing_entity_uuid": "Hash9tgiz95RstKGnPvK77ELz3",
+  "hierarchy_type": "MERCHANT_SCHEDULE",
+  "cycle_date": "2025-10-01",
+  "last_cycle_date": "2025-09-30",
+  "posting_date": "2025-10-01",
+  "last_posting_date": "2025-09-30",
+  "billing_date": "2025-10-01",
+  "last_billing_date": "2025-09-30",
+  "settlement_date": "2025-10-01",
+  "last_settlement_date": "2025-09-30",
+  "created_timestamp": "2023-10-12T15:18:20.212960",
+  "modified_timestamp": "2025-09-04T14:46:06.536147"
+}

@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "uuid": "HashFMZjeJFKBvcbatpkQxSj1Z",
+  "fee_category_group": "PLAN",
+  "revenue_group": null,
+  "revenue_share_group": "Default",
+  "developer_uuid": null,
+  "developer_app_uuid": null,
+  "app_subscription_uuid": null,
+  "app_metered_uuid": null,
+  "merchant_plan_uuid": null,
+  "revenue_action_type": "REV_SHARE_RESELLER",
+  "effective_date": "2023-01-01",
+  "fee_category": "REV_SHR_RESELLER_PLAN",
+  "fee_code": "Plan.Default",
+  "deleted_date": null,
+  "created_timestamp": "2023-10-11T17:21:21.005755",
+  "modified_timestamp": "2023-10-11T17:21:21.005755",
+  "audit_id": null
+}

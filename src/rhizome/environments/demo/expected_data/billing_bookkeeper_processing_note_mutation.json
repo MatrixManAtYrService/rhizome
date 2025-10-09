@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "mutation_action": "DELETE",
+  "mutation_timestamp": "2025-04-14T15:32:54.649601",
+  "processing_note_id": 26684,
+  "uuid": "Hash2p2vb8VAc68b5NfHCCCXmN",
+  "billing_entity_uuid": "HashHprfSigBRDd86awGe9vcy8",
+  "process_date": "2025-05-02",
+  "note_code": "BillingTermsNotAccepted",
+  "notes": "NQFJ8WSVKJV31: 60.00 GBP",
+  "request_uuid": "Hash5LezBhXH3srAuUnVJBJkb2",
+  "created_timestamp": "2025-03-28T14:49:54.474325"
+}
