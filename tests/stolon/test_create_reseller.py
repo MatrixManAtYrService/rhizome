@@ -67,6 +67,20 @@ def _print_curl(method: str, url: str, json_data: dict[str, Any] | None = None, 
     print("\n" + " \\\n".join(curl_parts) + "\n")
 
 
+@pytest.fixture(scope="module")
+def dev_bb() -> DevBillingBookkeeper:
+    """Shared DevBillingBookkeeper instance for all tests in this module.
+
+    This fixture creates a single rhizome client and billing bookkeeper environment
+    that is reused across all tests, avoiding the overhead of setting up multiple
+    port-forwards.
+
+    Scope: module - one instance shared across all tests in this file.
+    """
+    rhizome_client = RhizomeClient(data_in_logs=False)
+    return DevBillingBookkeeper(rhizome_client)
+
+
 @pytest.fixture
 def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
     """Create and cleanup a revenue share group for testing."""
@@ -104,7 +118,7 @@ def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict[st
 
 
 @pytest.fixture(scope="module")
-def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def billing_entity(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
     Uses rhizome to check if an MFF test reseller already exists.
@@ -118,9 +132,6 @@ def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict[str, An
     from stolon.environments.dev.http import DevHttp
 
     # First, check if an MFF reseller already exists using rhizome
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     BillingEntityModel = cast(type[BillingEntity], dev_bb.get_model(BillingBookkeeperTable.billing_entity))
 
     # Query for any MFF reseller (sanitize=False to get real UUIDs for API calls)
@@ -189,7 +200,7 @@ def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict[str, An
 
 
 @pytest.fixture(scope="module")
-def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create an alliance code for testing.
 
     Checks if the billing entity already has an alliance code.
@@ -205,9 +216,6 @@ def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonSe
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if alliance code already exists for this billing entity
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     InvoiceAllianceCodeModel = cast(
         type[InvoiceAllianceCode], dev_bb.get_model(BillingBookkeeperTable.invoice_alliance_code)
     )
@@ -255,7 +263,7 @@ def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonSe
 
 
 @pytest.fixture(scope="module")
-def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing schedule for testing.
 
     Checks if the billing entity already has a billing schedule.
@@ -269,9 +277,6 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if billing schedule already exists for this billing entity
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     BillingScheduleModel = cast(type[BillingSchedule], dev_bb.get_model(BillingBookkeeperTable.billing_schedule))
 
     existing_schedule = dev_bb.select_first(
@@ -321,7 +326,7 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
 
 
 @pytest.fixture(scope="module")
-def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create a fee rate for testing.
 
     Checks if the billing entity already has a fee rate.
@@ -335,9 +340,6 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer)
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if fee rate already exists for this billing entity
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     FeeRateModel = cast(type[FeeRate], dev_bb.get_model(BillingBookkeeperTable.fee_rate))
 
     existing_fee_rate = dev_bb.select_first(
@@ -388,7 +390,7 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer)
 
 
 @pytest.fixture(scope="module")
-def processing_group_dates(billing_entity: dict[str, Any], stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def processing_group_dates(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create processing group dates for testing.
 
     Checks if the billing entity already has processing group dates.
@@ -402,9 +404,6 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if processing group dates already exist for this billing entity
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     ProcessingGroupDatesModel = cast(
         type[ProcessingGroupDates], dev_bb.get_model(BillingBookkeeperTable.processing_group_dates)
     )
@@ -454,7 +453,7 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
 
 
 @pytest.fixture(scope="module")
-def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def plan_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create a plan action fee code for testing.
 
     Plan action fee codes are GLOBAL resources (not tied to billing entity).
@@ -470,9 +469,6 @@ def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[s
     test_plan_uuid = "YEQMV17H09HHW"
 
     # Check if plan action fee code already exists (global resource)
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     PlanActionFeeCodeModel = cast(
         type[PlanActionFeeCode], dev_bb.get_model(BillingBookkeeperTable.plan_action_fee_code)
     )
@@ -530,7 +526,7 @@ def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[s
 
 
 @pytest.fixture(scope="module")
-def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
+def cellular_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
     """Get or create a cellular action fee code for testing.
 
     Cellular action fee codes are GLOBAL resources (not tied to billing entity).
@@ -550,9 +546,6 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[di
     cellular_action_type = "CELLULAR_ARREARS"
 
     # Check if cellular action fee code already exists (global resource)
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    dev_bb = DevBillingBookkeeper(rhizome_client)
-
     CellularActionFeeCodeModel = cast(
         type[CellularActionFeeCode], dev_bb.get_model(BillingBookkeeperTable.cellular_action_fee_code)
     )
