@@ -329,7 +329,7 @@ def local_mysql(local_cluster: None) -> None:
         raise Exception("kubectl not found. Please install kubectl.") from e
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def rhizome_server(local_mysql: None) -> Generator[RunningServer, None, None]:
     """Start a rhizome server for testing.
 
@@ -359,7 +359,7 @@ def rhizome_server(local_mysql: None) -> Generator[RunningServer, None, None]:
         yield RunningServer(port=test_port, home=home)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def real_rhizome_client() -> Generator[RhizomeClient, None, None]:
     """Create a single RhizomeClient for use with real infrastructure tests."""
     with tempfile.TemporaryDirectory() as temp_dir:

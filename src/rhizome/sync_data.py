@@ -170,6 +170,32 @@ def sync_data(
         environments_to_sync = [(env, environment_type[env])]
 
     for env_enum, env_class in environments_to_sync:
+        if table_names:
+            env_instance = create_partial_environment(env_class, client, table_names)
+        else:
+            env_instance = env_class(client)
+
+        tables_for_this_env = _filter_tables_for_environment(
+            env_instance, env_enum, tables_to_sync_map, table_names
+        )
+
+        if tables_for_this_env:
+            _sync_environment_tables(env_instance, tables_for_this_env, change_tracker, verbose)
+
+    # Analyze tracked files and print summary
+    change_tracker.analyze_tracked_files()
+    change_tracker.print_summary()
+ap is None:
+            return
+
+    client = RhizomeClient(data_in_logs=True)
+    change_tracker = ChangeTracker(DataChangeClassifier())
+
+    environments_to_sync = environment_type.items()
+    if env:
+        environments_to_sync = [(env, environment_type[env])]
+
+    for env_enum, env_class in environments_to_sync:
         env_instance = env_class(client)
 
         tables_for_this_env = _filter_tables_for_environment(env_instance, env_enum, tables_to_sync_map, table_names)
