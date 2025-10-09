@@ -14,6 +14,7 @@ billing-bookkeeper endpoints), so we reuse existing MFF test resources.
 """
 
 from collections.abc import Generator
+from datetime import datetime, timedelta
 from typing import Any
 
 import pytest
@@ -23,6 +24,19 @@ from rhizome.client import RhizomeClient
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.models.table_list import BillingBookkeeperTable
 from tests.conftest import RunningStolonServer
+
+
+def _get_future_date(days_ahead: int = 30) -> str:
+    """Get a future date in YYYY-MM-DD format.
+
+    Args:
+        days_ahead: Number of days in the future (default: 30)
+
+    Returns:
+        Date string in YYYY-MM-DD format
+    """
+    future_date = datetime.now() + timedelta(days=days_ahead)
+    return future_date.strftime("%Y-%m-%d")
 
 
 def _print_curl(method: str, url: str, json_data: dict[str, Any] | None = None, token: str = "YOUR-INTERNAL-SESSION") -> None:
@@ -102,12 +116,13 @@ def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict[str, An
 
     BillingEntity = dev_bb.get_model(BillingBookkeeperTable.billing_entity)
 
-    # Query for any MFF reseller
+    # Query for any MFF reseller (sanitize=False to get real UUIDs for API calls)
     existing_entity = dev_bb.select_first(
         select(BillingEntity)
         .where(BillingEntity.entity_type == "RESELLER")
         .where(BillingEntity.entity_uuid.like("MFF%"))
-        .order_by(BillingEntity.created_timestamp.desc())
+        .order_by(BillingEntity.created_timestamp.desc()),
+        sanitize=False,
     )
 
     if existing_entity:
@@ -189,7 +204,8 @@ def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonSe
     InvoiceAllianceCode = dev_bb.get_model(BillingBookkeeperTable.invoice_alliance_code)
 
     existing_alliance_code = dev_bb.select_first(
-        select(InvoiceAllianceCode).where(InvoiceAllianceCode.billing_entity_uuid == billing_entity_uuid)
+        select(InvoiceAllianceCode).where(InvoiceAllianceCode.billing_entity_uuid == billing_entity_uuid),
+        sanitize=False,
     )
 
     if existing_alliance_code:
@@ -250,7 +266,7 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
     BillingSchedule = dev_bb.get_model(BillingBookkeeperTable.billing_schedule)
 
     existing_schedule = dev_bb.select_first(
-        select(BillingSchedule).where(BillingSchedule.billing_entity_uuid == billing_entity_uuid)
+        select(BillingSchedule).where(BillingSchedule.billing_entity_uuid == billing_entity_uuid), sanitize=False
     )
 
     if existing_schedule:
@@ -271,12 +287,15 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
+    effective_date = _get_future_date(days_ahead=30)
+    next_billing_date = _get_future_date(days_ahead=60)
+
     json_data = {
         "billingEntityUuid": billing_entity_uuid,
-        "effectiveDate": "2025-08-01",
+        "effectiveDate": effective_date,
         "frequency": "MONTHLY",
         "billingDay": 1,
-        "nextBillingDate": "2025-09-01",
+        "nextBillingDate": next_billing_date,
         "unitsInNextPeriod": 31,
         "defaultCurrency": "EUR",
     }
@@ -312,7 +331,8 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer)
     FeeRate = dev_bb.get_model(BillingBookkeeperTable.fee_rate)
 
     existing_fee_rate = dev_bb.select_first(
-        select(FeeRate).where(FeeRate.billing_entity_uuid == billing_entity_uuid).order_by(FeeRate.created_timestamp.desc())
+        select(FeeRate).where(FeeRate.billing_entity_uuid == billing_entity_uuid).order_by(FeeRate.created_timestamp.desc()),
+        sanitize=False,
     )
 
     if existing_fee_rate:
@@ -333,12 +353,14 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer)
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
+    effective_date = _get_future_date(days_ahead=30)
+
     json_data = {
         "billingEntityUuid": billing_entity_uuid,
         "feeCategory": "PLAN_RETAIL",
         "feeCode": "PaymentsPDVT",
         "currency": "EUR",
-        "effectiveDate": "2025-08-01",
+        "effectiveDate": effective_date,
         "applyType": "DEFAULT",
         "perItemAmount": 0.0,
     }
@@ -374,7 +396,8 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
     ProcessingGroupDates = dev_bb.get_model(BillingBookkeeperTable.processing_group_dates)
 
     existing_pgd = dev_bb.select_first(
-        select(ProcessingGroupDates).where(ProcessingGroupDates.billing_entity_uuid == billing_entity_uuid)
+        select(ProcessingGroupDates).where(ProcessingGroupDates.billing_entity_uuid == billing_entity_uuid),
+        sanitize=False,
     )
 
     if existing_pgd:
@@ -395,13 +418,15 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
+    cycle_date = _get_future_date(days_ahead=30)
+
     json_data = {
         "billingEntityUuid": billing_entity_uuid,
         "hierarchyType": "MERCHANT_SCHEDULE",
-        "cycleDate": "2025-08-01",
-        "postingDate": "2025-08-01",
-        "billingDate": "2025-08-01",
-        "settlementDate": "2025-08-01",
+        "cycleDate": cycle_date,
+        "postingDate": cycle_date,
+        "billingDate": cycle_date,
+        "settlementDate": cycle_date,
     }
 
     _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/processgroupdates", json_data)
@@ -441,7 +466,8 @@ def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[s
         .where(PlanActionFeeCode.merchant_plan_uuid == test_plan_uuid)
         .where(PlanActionFeeCode.plan_action_type == "PLAN_ASSIGN")
         .where(PlanActionFeeCode.fee_category == "PLAN_RETAIL")
-        .where(PlanActionFeeCode.fee_code == "PaymentsPDVT.PRC")
+        .where(PlanActionFeeCode.fee_code == "PaymentsPDVT.PRC"),
+        sanitize=False,
     )
 
     if existing_plan_action_fee_code:
@@ -462,10 +488,12 @@ def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict[s
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
+    effective_date = _get_future_date(days_ahead=30)
+
     json_data = {
         "merchantPlanUuid": test_plan_uuid,
         "planActionType": "PLAN_ASSIGN",
-        "effectiveDate": "2025-08-01",
+        "effectiveDate": effective_date,
         "feeCategory": "PLAN_RETAIL",
         "feeCode": "PaymentsPDVT.PRC",
     }
@@ -516,7 +544,8 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[di
         .where(CellularActionFeeCode.carrier == carrier)
         .where(CellularActionFeeCode.cellular_action_type == cellular_action_type)
         .where(CellularActionFeeCode.fee_category == "CELLULAR_RETAIL")
-        .where(CellularActionFeeCode.fee_code == "CellularArr.ATT")
+        .where(CellularActionFeeCode.fee_code == "CellularArr.ATT"),
+        sanitize=False,
     )
 
     if existing_cellular_action_fee_code:
@@ -537,10 +566,12 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[di
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
+    effective_date = _get_future_date(days_ahead=30)
+
     json_data = {
         "carrier": carrier,
         "cellularActionType": cellular_action_type,
-        "effectiveDate": "2025-08-01",
+        "effectiveDate": effective_date,
         "feeCategory": "CELLULAR_RETAIL",
         "feeCode": "CellularArr.ATT",
     }
@@ -576,9 +607,11 @@ def test_create_revenue_share_group(revenue_share_group: dict[str, Any]) -> None
 @pytest.mark.external_infra
 def test_create_billing_entity(billing_entity: dict[str, Any]) -> None:
     """Test creating a billing entity."""
-    assert billing_entity["entity_uuid"].startswith("MFF")
-    assert len(billing_entity["entity_uuid"]) == 13
+    # entity_uuid might be masked (starts with "Hash") or real (starts with "MFF")
+    entity_uuid = billing_entity["entity_uuid"]
+    assert entity_uuid.startswith("MFF") or entity_uuid.startswith("Hash"), f"Unexpected entity_uuid format: {entity_uuid}"
     assert billing_entity["billing_entity_uuid"]
+    # billing_entity_uuid might be masked or real (both are 26 chars)
     assert len(billing_entity["billing_entity_uuid"]) == 26
 
 

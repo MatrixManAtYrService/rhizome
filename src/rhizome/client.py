@@ -248,16 +248,17 @@ class RhizomeClient:
         except Exception:
             return {"error": "Could not extract model fields"}
 
-    def select_first(self, connection_string: str, query: SelectOfScalar[TFirst]) -> TFirst | None:
+    def select_first(self, connection_string: str, query: SelectOfScalar[TFirst], sanitize: bool = True) -> TFirst | None:
         """
-        Execute a query and return the first sanitized result or None.
+        Execute a query and return the first result or None.
 
         Args:
             connection_string: Database connection string
             query: SQLModel query to execute
+            sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
         Returns:
-            First sanitized model instance or None
+            First model instance (sanitized or raw) or None
         """
         engine = create_engine(connection_string)
         with Session(engine) as session:
@@ -268,6 +269,10 @@ class RhizomeClient:
 
             if result is None:
                 return None
+
+            if not sanitize:
+                return result
+
             if not hasattr(result, "sanitize"):
                 raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
             sanitized_result = result.sanitize()
@@ -277,16 +282,17 @@ class RhizomeClient:
 
             return sanitized_result
 
-    def select_all(self, connection_string: str, query: SelectOfScalar[TAll]) -> list[TAll]:
+    def select_all(self, connection_string: str, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
         """
-        Execute a query and return all sanitized results.
+        Execute a query and return all results.
 
         Args:
             connection_string: Database connection string
             query: SQLModel query to execute
+            sanitize: If True, return sanitized results. If False, return raw results. Default: True
 
         Returns:
-            List of sanitized model instances
+            List of model instances (sanitized or raw)
         """
         engine = create_engine(connection_string)
         with Session(engine) as session:
@@ -294,6 +300,9 @@ class RhizomeClient:
 
             # Log the raw results before sanitization for debugging
             self._log_query_result(query, results, "select_all")
+
+            if not sanitize:
+                return results
 
             sanitized_results: list[TAll] = []
             for result in results:
@@ -306,16 +315,17 @@ class RhizomeClient:
 
             return sanitized_results
 
-    def select_one(self, connection_string: str, query: SelectOfScalar[TOne]) -> TOne:
+    def select_one(self, connection_string: str, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
         """
-        Execute a query and return exactly one sanitized result.
+        Execute a query and return exactly one result.
 
         Args:
             connection_string: Database connection string
             query: SQLModel query to execute
+            sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
         Returns:
-            Single sanitized model instance
+            Single model instance (sanitized or raw)
 
         Raises:
             Exception: If zero or more than one results found
@@ -326,6 +336,9 @@ class RhizomeClient:
 
             # Log the raw result before sanitization for debugging
             self._log_query_result(query, result, "select_one")
+
+            if not sanitize:
+                return result
 
             if not hasattr(result, "sanitize"):
                 raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")

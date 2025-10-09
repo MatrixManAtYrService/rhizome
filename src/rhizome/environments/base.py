@@ -245,14 +245,38 @@ class Environment(ABC):
         encoded_password = quote_plus(db_config.password)
         return f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}"
 
-    def select_first(self, query: SelectOfScalar[TFirst]) -> TFirst | None:
-        """Execute a query and return the first sanitized result or None."""
-        return self.client.select_first(self.get_connection_string(), query)
+    def select_first(self, query: SelectOfScalar[TFirst], sanitize: bool = True) -> TFirst | None:
+        """Execute a query and return the first result or None.
 
-    def select_all(self, query: SelectOfScalar[TAll]) -> list[TAll]:
-        """Execute a query and return all sanitized results."""
-        return self.client.select_all(self.get_connection_string(), query)
+        Args:
+            query: SQLModel query to execute
+            sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
-    def select_one(self, query: SelectOfScalar[TOne]) -> TOne:
-        """Execute a query and return exactly one sanitized result."""
-        return self.client.select_one(self.get_connection_string(), query)
+        Returns:
+            First model instance (sanitized or raw) or None
+        """
+        return self.client.select_first(self.get_connection_string(), query, sanitize=sanitize)
+
+    def select_all(self, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
+        """Execute a query and return all results.
+
+        Args:
+            query: SQLModel query to execute
+            sanitize: If True, return sanitized results. If False, return raw results. Default: True
+
+        Returns:
+            List of model instances (sanitized or raw)
+        """
+        return self.client.select_all(self.get_connection_string(), query, sanitize=sanitize)
+
+    def select_one(self, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
+        """Execute a query and return exactly one result.
+
+        Args:
+            query: SQLModel query to execute
+            sanitize: If True, return sanitized result. If False, return raw result. Default: True
+
+        Returns:
+            Single model instance (sanitized or raw)
+        """
+        return self.client.select_one(self.get_connection_string(), query, sanitize=sanitize)
