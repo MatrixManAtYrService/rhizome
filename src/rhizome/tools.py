@@ -122,7 +122,7 @@ class PybritiveTool(ABC):
     """Abstract pybritive tool for temporary database credentials."""
 
     @abstractmethod
-    async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
+    async def checkout(self, resource_path: str, pattern: str | None = None, database_name: str | None = None) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
 
 
@@ -293,7 +293,7 @@ class ExternalPybritiveTool(PybritiveTool):
         For\s+(?:billing|log|orders)\s+in\s+usprod\s+connect\s+to\s+server:\s*(?P<host>[^\s]+)\s+port:(?P<port>\d+)
     """
 
-    async def checkout(self, resource_path: str, pattern: str | None = None) -> BritiveInfo:
+    async def checkout(self, resource_path: str, pattern: str | None = None, database_name: str | None = None) -> BritiveInfo:
         """Checkout temporary credentials from Britive."""
         import re
 
@@ -308,8 +308,17 @@ class ExternalPybritiveTool(PybritiveTool):
 
         log.debug("Pybritive raw output", output=result.stdout)
 
-        # Use the provided pattern or the default
-        checkout_pattern = pattern or self.DEFAULT_PATTERN
+        # Build database-specific pattern if database_name is provided
+        if database_name and not pattern:
+            checkout_pattern = rf"""
+                Temp\sMySQL\susername:\s*(?P<username>\S+).*
+                Temp\spassword:\s*(?P<password>\S+).*
+                For\s+{re.escape(database_name)}\s+in\s+usprod\s+connect\s+to\s+server:\s*(?P<host>[^\s]+)\s+port:(?P<port>\d+)
+            """
+        else:
+            # Use the provided pattern or the default
+            checkout_pattern = pattern or self.DEFAULT_PATTERN
+
         match = re.search(checkout_pattern, result.stdout, re.DOTALL | re.VERBOSE)
 
         if not match:

@@ -8,12 +8,14 @@ from collections import defaultdict
 from collections.abc import Callable, Generator
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import pytest
 import uvicorn
 from _pytest.config import Config
 from _pytest.config.argparsing import Parser
 from _pytest.nodes import Item
+from _pytest.reports import TestReport
 from _pytest.runner import CallInfo
 from _pytest.terminal import TerminalReporter
 
@@ -30,7 +32,7 @@ from trifolium.config import Home
 SYNC_FAILURES: list[dict[str, str]] = []
 
 # Global dictionary to store all assertion errors for aggregation
-ALL_FAILURES: dict[str, dict] = {}
+ALL_FAILURES: dict[str, dict[str, Any]] = {}
 
 # Reverse map from Environment Class Name -> a.b.c.EnumName
 CLASS_TO_ENUM_MAP = {v.__name__: k for k, v in environment_type.items()}
@@ -55,8 +57,11 @@ def _parse_test_parameters(nodeid: str) -> dict[str, str]:
     return test_params
 
 
-def _handle_assertion_error(report: object, call: CallInfo, test_params: dict[str, str]) -> None:
+def _handle_assertion_error(report: TestReport, call: CallInfo[None], test_params: dict[str, str]) -> None:
     """Handle aggregation of AssertionError failures."""
+    if not call.excinfo:
+        return
+
     # Generate a signature for this error type
     error_msg = str(call.excinfo.value)
 
@@ -90,10 +95,10 @@ def _handle_assertion_error(report: object, call: CallInfo, test_params: dict[st
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item: Item, call: CallInfo) -> None:
+def pytest_runtest_makereport(item: Item, call: CallInfo[None]) -> Generator[None, None, None]:
     """Hook to intercept test reports, catch errors, and aggregate them."""
     outcome = yield
-    report = outcome.get_result()
+    report: TestReport = outcome.get_result()
 
     if report.when == "call" and report.failed:
         # Extract test parameters if they exist
@@ -419,304 +424,3 @@ def stolon_server() -> Generator[RunningStolonServer, None, None]:
         time.sleep(0.5)  # Give server time to start
 
         yield RunningStolonServer(port=test_port, home=home)
-
-
-# --- Stolon Test Fixtures for Billing Objects --- #
-
-
-def _print_curl(method: str, url: str, json_data: dict | None = None, token: str = "YOUR-INTERNAL-SESSION") -> None:
-    """Print a curl command for manual recreation."""
-    import json as json_module
-
-    curl_parts = [
-        "curl",
-        "-X",
-        f"'{method.upper()}'",
-        f"'{url}'",
-        "--header 'x-clover-appenv: dev1'",
-        f"--header 'Cookie: internalSession={token}'",
-        "--header 'Content-Type: application/json'",
-    ]
-
-    if json_data:
-        json_str = json_module.dumps(json_data, indent=2)
-        curl_parts.append(f"--data '{json_str}'")
-
-    print("\n" + " \\\n".join(curl_parts) + "\n")
-
-
-@pytest.fixture
-def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup a revenue share group for testing."""
-    import uuid
-
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    # Create revenue share group with MFF prefix
-    group_name = f"MFF_Test_{uuid.uuid4().hex[:4]}"
-    short_desc = f"MFF-{group_name}"
-    description = f"The FirstData/Fiserv reseller in EMEA for {group_name}"
-
-    json_data = {"revenueShareGroup": group_name, "shortDesc": short_desc, "description": description}
-
-    print("\n=== Creating Revenue Share Group ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/revsharegroup", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/revsharegroup", json=json_data)
-    group_uuid = create_response.get("uuid")
-
-    yield {"name": group_name, "uuid": group_uuid, "create_response": create_response}
-
-    # Cleanup: Delete the revenue share group
-    if group_uuid:
-        try:
-            print(f"\n🗑️  Deleting revenue share group {group_uuid}")
-            dev.delete(f"/billing-bookkeeper/v1/revsharegroup/{group_uuid}")
-            print("✅ Cleanup successful")
-        except Exception as e:
-            print(f"⚠️  Cleanup failed: {e}")
-
-
-@pytest.fixture
-def billing_entity(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup a billing entity for testing."""
-    import uuid
-
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    # Generate unique 13-char entity UUID
-    entity_uuid = f"MFF{uuid.uuid4().hex[:10].upper()}"
-    entity_name = f"MFF Test Reseller {entity_uuid[-4:]}"
-
-    json_data = {"entityUuid": entity_uuid, "entityType": "RESELLER", "name": entity_name}
-
-    print("\n=== Creating Billing Entity ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/entity", json_data)
-
-    # Create billing entity
-    create_response = dev.post("/billing-bookkeeper/v1/entity", json=json_data)
-
-    # Extract server-generated billing entity UUID from response
-    billing_entity_uuid = create_response.get("uuid")
-
-    if not billing_entity_uuid:
-        # Fallback: try to get it via GET (though this seems to 404 in dev1)
-        print(f"\n⚠️  Response did not contain uuid field. Response: {create_response}")
-        print(f"\n=== Trying to GET Billing Entity by entity UUID ===")
-        _print_curl("GET", f"https://dev1.dev.clover.com/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
-        entity_get = dev.get(f"/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
-        billing_entity_uuid = entity_get.get("uuid")
-
-    print(f"\n✓ Server-generated billing_entity_uuid: {billing_entity_uuid}")
-
-    yield {
-        "entity_uuid": entity_uuid,
-        "billing_entity_uuid": billing_entity_uuid,
-        "name": entity_name,
-        "create_response": create_response,
-    }
-
-    # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Billing entity {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
-
-
-@pytest.fixture
-def alliance_code(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup an alliance code for testing."""
-    import uuid
-
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    billing_entity_uuid = billing_entity["billing_entity_uuid"]
-    alliance_code_value = f"9{uuid.uuid4().hex[:2].upper()}"
-
-    json_data = {"billingEntityUuid": billing_entity_uuid, "allianceCode": alliance_code_value, "invoiceCount": 1}
-
-    print("\n=== Creating Alliance Code ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/alliancecode", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/alliancecode", json=json_data)
-
-    yield {"alliance_code": alliance_code_value, "billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
-
-    # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Alliance code {alliance_code_value} cannot be automatically deleted (API does not support DELETE)")
-
-
-@pytest.fixture
-def billing_schedule(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup a billing schedule for testing."""
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    billing_entity_uuid = billing_entity["billing_entity_uuid"]
-
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "effectiveDate": "2025-08-01",
-        "frequency": "MONTHLY",
-        "billingDay": 1,
-        "nextBillingDate": "2025-09-01",
-        "unitsInNextPeriod": 31,
-        "defaultCurrency": "EUR",
-    }
-
-    print("\n=== Creating Billing Schedule ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/schedule", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/schedule", json=json_data)
-
-    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
-
-    # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Billing schedule for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
-
-
-@pytest.fixture
-def fee_rate(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup a fee rate for testing."""
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    billing_entity_uuid = billing_entity["billing_entity_uuid"]
-
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "feeCategory": "PLAN_RETAIL",
-        "feeCode": "PaymentsPDVT",
-        "currency": "EUR",
-        "effectiveDate": "2025-08-01",
-        "applyType": "DEFAULT",
-        "perItemAmount": 0.0,
-    }
-
-    print("\n=== Creating Fee Rate ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/rate", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/rate", json=json_data)
-
-    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
-
-    # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Fee rate for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
-
-
-@pytest.fixture
-def processing_group_dates(billing_entity: dict, stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup processing group dates for testing."""
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    billing_entity_uuid = billing_entity["billing_entity_uuid"]
-
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "hierarchyType": "MERCHANT_SCHEDULE",
-        "cycleDate": "2025-08-01",
-        "postingDate": "2025-08-01",
-        "billingDate": "2025-08-01",
-        "settlementDate": "2025-08-01",
-    }
-
-    print("\n=== Creating Processing Group Dates ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/processgroupdates", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/processgroupdates", json=json_data)
-
-    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response}
-
-    # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Processing group dates for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
-
-
-@pytest.fixture
-def plan_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup a plan action fee code for testing."""
-    import httpx
-
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    test_plan_uuid = "YEQMV17H09HHW"
-
-    json_data = {
-        "merchantPlanUuid": test_plan_uuid,
-        "planActionType": "PLAN_ASSIGN",
-        "effectiveDate": "2025-08-01",
-        "feeCategory": "PLAN_RETAIL",
-        "feeCode": "PaymentsPDVT.PRC",
-    }
-
-    print("\n=== Creating Plan Action Fee Code ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/planactionfeecode", json_data)
-
-    try:
-        create_response = dev.post("/billing-bookkeeper/v1/planactionfeecode", json=json_data)
-    except httpx.HTTPStatusError as e:
-        print(f"\n⚠️  API Error Response: {e.response.text}")
-        print(f"⚠️  Status Code: {e.response.status_code}")
-        raise
-
-    yield {"merchant_plan_uuid": test_plan_uuid, "create_response": create_response}
-
-    # Cleanup not supported - DELETE method returns 405
-    print("\n⚠️  Note: Plan action fee codes are global configurations and cannot be automatically deleted (API does not support DELETE)")
-
-
-@pytest.fixture
-def cellular_action_fee_code(stolon_server: RunningStolonServer) -> Generator[dict, None, None]:
-    """Create and cleanup a cellular action fee code for testing."""
-    import httpx
-
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
-    json_data = {
-        "carrier": "AT&T",
-        "cellularActionType": "CELLULAR_ARREARS",
-        "effectiveDate": "2025-08-01",
-        "feeCategory": "CELLULAR_RETAIL",
-        "feeCode": "CellularArr.ATT",
-    }
-
-    print("\n=== Creating Cellular Action Fee Code ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/cellularactionfeecode", json_data)
-
-    try:
-        create_response = dev.post("/billing-bookkeeper/v1/cellularactionfeecode", json=json_data)
-    except httpx.HTTPStatusError as e:
-        print(f"\n⚠️  API Error Response: {e.response.text}")
-        print(f"⚠️  Status Code: {e.response.status_code}")
-        raise
-
-    yield {"carrier": "AT&T", "create_response": create_response}
-
-    # Cleanup not supported - DELETE method returns 405
-    print("\n⚠️  Note: Cellular action fee codes are global configurations and cannot be automatically deleted (API does not support DELETE)")

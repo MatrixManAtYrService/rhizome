@@ -31,7 +31,7 @@ class BillingSchedule(RhizomeModel, table=False):
     next_billing_date: datetime.date = Field(description="Next Billing Date")
     last_billing_date: datetime.date | None = Field(default=None, description="Last Billing Date")
     units_in_next_period: int = Field(description="Units In Next Period")
-    units_in_last_period: int = Field(default=None, description="Units In Last Period")
+    units_in_last_period: int | None = Field(default=None, description="Units In Last Period")
     default_currency: str = Field(max_length=3, description="Default Currency")
     close_date: datetime.date | None = Field(default=None, description="Close Date")
     effective_close_date: datetime.date | None = Field(default=None, description="Effective Close Date")
