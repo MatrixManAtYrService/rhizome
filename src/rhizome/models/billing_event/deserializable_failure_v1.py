@@ -24,3 +24,4 @@ class DeserializableFailureV1(DeserializableFailure, table=True):
     """
 
     __tablename__ = "deserializable_failure"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

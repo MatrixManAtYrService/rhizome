@@ -23,3 +23,4 @@ class JobAssassinationContractV1(JobAssassinationContract, table=True):
     """
 
     __tablename__ = "job_assassination_contract"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

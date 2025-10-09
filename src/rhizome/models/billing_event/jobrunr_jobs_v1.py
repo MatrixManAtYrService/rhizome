@@ -23,3 +23,4 @@ class JobrunrJobsV1(JobrunrJobs, table=True):
     """
 
     __tablename__ = "jobrunr_jobs"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

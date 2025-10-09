@@ -23,3 +23,4 @@ class BillingEventHistoryV1(BillingEventHistory, table=True):
     """
 
     __tablename__ = "billing_event_history"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

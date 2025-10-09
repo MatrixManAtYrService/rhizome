@@ -23,3 +23,4 @@ class JobrunrMigrationsV1(JobrunrMigrations, table=True):
     """
 
     __tablename__ = "jobrunr_migrations"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

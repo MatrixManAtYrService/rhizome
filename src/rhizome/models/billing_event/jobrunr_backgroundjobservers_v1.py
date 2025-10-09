@@ -24,3 +24,4 @@ class JobrunrBackgroundjobserversV1(JobrunrBackgroundjobservers, table=True):
     """
 
     __tablename__ = "jobrunr_backgroundjobservers"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

@@ -23,3 +23,4 @@ class LookV1(Look, table=True):
     """
 
     __tablename__ = "look"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

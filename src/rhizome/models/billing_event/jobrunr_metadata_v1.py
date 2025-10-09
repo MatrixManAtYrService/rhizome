@@ -23,3 +23,4 @@ class JobrunrMetadataV1(JobrunrMetadata, table=True):
     """
 
     __tablename__ = "jobrunr_metadata"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

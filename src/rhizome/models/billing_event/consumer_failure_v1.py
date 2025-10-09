@@ -23,3 +23,4 @@ class ConsumerFailureV1(ConsumerFailure, table=True):
     """
 
     __tablename__ = "consumer_failure"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

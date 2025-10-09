@@ -23,3 +23,4 @@ class ServerConfigV1(ServerConfig, table=True):
     """
 
     __tablename__ = "server_config"  # type: ignore
+    __table_args__ = {"extend_existing": True}  # type: ignore

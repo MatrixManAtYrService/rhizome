@@ -153,7 +153,6 @@ class BillingBookkeeperTable(StrEnum):
     job_assassination_contract = auto()
     jobrunr_backgroundjobservers = auto()
     jobrunr_jobs = auto()
-    jobrunr_jobs_stats = auto()
     jobrunr_metadata = auto()
     jobrunr_migrations = auto()
     jobrunr_recurring_jobs = auto()
