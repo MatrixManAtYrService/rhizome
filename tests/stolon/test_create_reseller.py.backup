@@ -1,14 +1,5 @@
 """
-Test complete reseller creation with proper meta.reseller → billing_bookkeeper linking.
-
-CORRECT CREATION ORDER (discovered via exploration):
-1. Create meta.reseller first (via POST /v3/resellers) → get reseller_uuid
-2. Create billing_bookkeeper.billing_entity with entity_uuid=reseller_uuid
-3. Create all billing configuration components linked via billing_entity.uuid
-
-KEY INSIGHT: The billing_entity does NOT create the reseller - it provides the
-billing configuration for an existing meta.reseller. The link is established by
-setting billing_entity.entity_uuid = meta.reseller.uuid.
+Test reseller creation using individual fixture-based approach.
 
 Strategy: Check if test resources already exist and reuse them to avoid
 accumulating test data. Only revenue_share_group supports DELETE, so all
@@ -127,137 +118,56 @@ def revenue_share_group(environment: dev.Dev) -> Generator[dict[str, Any], None,
 
 
 @pytest.fixture(scope="module")
-def meta_reseller(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
-    """Get or create a meta.reseller for testing.
-
-    This must be created FIRST before any billing_bookkeeper entities.
-    The reseller's UUID will be used as the entity_uuid in billing_entity.
-
-    Checks if a test reseller with RESELLER_PREFIX already exists in meta.reseller.
-    If found, reuses it. Otherwise, creates a new one.
-
-    Scope: module - reuse across all tests in this module.
-    """
-    # Check if a meta reseller with our prefix name already exists
-    # We need to use rhizome to query the meta database
-    from rhizome.environments.dev.meta import DevMeta
-
-    meta_db = DevMeta(environment._rhizome_client)
-    MetaResellerModel = meta_db.get_model("reseller")
-
-    # Query for any reseller with our prefix name
-    existing_reseller = meta_db.select_first(
-        select(MetaResellerModel)
-        .where(MetaResellerModel.name.like(f"{RESELLER_PREFIX} Test Reseller%"))  # type: ignore[attr-defined]
-        .order_by(MetaResellerModel.id.desc()),  # type: ignore[attr-defined]
-        sanitize=False,
-    )
-
-    if existing_reseller:
-        print(f"\n♻️  Reusing existing {RESELLER_PREFIX} meta.reseller: {existing_reseller.name}")
-        print(f"    reseller_uuid: {existing_reseller.uuid}")
-        print(f"    reseller_id: {existing_reseller.id}")
-
-        yield {
-            "reseller_uuid": existing_reseller.uuid,
-            "reseller_id": existing_reseller.id,
-            "name": existing_reseller.name,
-            "was_reused": True,
-        }
-        return
-
-    # No existing reseller found, create a new one
-    print("\n=== Creating New Meta Reseller ===")
-
-    # Generate unique name using prefix
-    reseller_name = f"{RESELLER_PREFIX} Test Reseller {uuid_module.uuid4().hex[:4].upper()}"
-
-    # Get parent reseller ID and merchant plan group ID from the Demo reseller
-    demo_reseller = meta_db.select_first(
-        select(MetaResellerModel).where(MetaResellerModel.name == "Demo"),
-        sanitize=False,
-    )
-
-    if not demo_reseller:
-        raise Exception("Could not find Demo reseller to use as parent")
-
-    # Create meta.reseller using the API
-    created_reseller = environment.api.resellers.create_reseller(
-        name=reseller_name,
-        owner_email=f"test-{uuid_module.uuid4().hex[:8]}@clover.com",
-        parent_reseller_id=demo_reseller.uuid,
-        # Use Demo's plan group if it has one, otherwise use a known good one
-        merchant_plan_group_id=demo_reseller.plan_group_id if demo_reseller.plan_group_id else "B1DTBWV564MNE",
-        support_email="test@clover.com",
-        support_phone="555-0100",
-    )
-
-    reseller_uuid = created_reseller.get("id")
-    if not reseller_uuid:
-        raise Exception(f"Response did not contain id field. Response: {created_reseller}")
-
-    print(f"\n✓ Created meta.reseller: {reseller_name}")
-    print(f"    reseller_uuid: {reseller_uuid}")
-
-    yield {
-        "reseller_uuid": reseller_uuid,
-        "reseller_id": reseller_uuid,  # The API returns the UUID in the "id" field
-        "name": reseller_name,
-        "was_reused": False,
-    }
-
-    # Cleanup not supported for meta.reseller
-    print(f"\n⚠️  Note: Meta reseller {reseller_uuid} cannot be automatically deleted")
-
-
-@pytest.fixture(scope="module")
-def billing_entity(meta_reseller: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
+def billing_entity(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
-    This links to the meta.reseller via entity_uuid = reseller_uuid.
-    Creates the billing configuration side of the reseller.
+    Uses rhizome to check if a test reseller with RESELLER_PREFIX already exists.
+    If found, reuses it. Otherwise, creates a new one using the generated API client.
 
     Scope: module - reuse across all tests in this module.
     """
-    reseller_uuid = meta_reseller["reseller_uuid"]
-    reseller_name = meta_reseller["name"]
-
-    # Check if billing entity already exists for this reseller UUID
+    # First, check if a reseller with our prefix already exists using rhizome
     BillingEntityModel = cast(
         type[BillingEntity], environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.billing_entity)
     )
 
+    # Query for any reseller with our prefix (sanitize=False to get real UUIDs for API calls)
     existing_entity = environment.db.billing_bookkeeper.select_first(
         select(BillingEntityModel)
         .where(BillingEntityModel.entity_type == "RESELLER")
-        .where(BillingEntityModel.entity_uuid == reseller_uuid),
+        .where(BillingEntityModel.entity_uuid.like(f"{RESELLER_PREFIX}%"))  # type: ignore[attr-defined]  # SQLModel columns have .like()
+        .order_by(BillingEntityModel.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
         sanitize=False,
     )
 
     if existing_entity:
-        print(f"\n♻️  Reusing existing billing_entity for reseller: {reseller_name}")
+        print(f"\n♻️  Reusing existing {RESELLER_PREFIX} reseller: {existing_entity.name}")
         print(f"    billing_entity_uuid: {existing_entity.uuid}")
-        print(f"    entity_uuid (reseller_uuid): {existing_entity.entity_uuid}")
+        print(f"    entity_uuid: {existing_entity.entity_uuid}")
 
         yield {
             "entity_uuid": existing_entity.entity_uuid,
             "billing_entity_uuid": existing_entity.uuid,
             "name": existing_entity.name,
-            "reseller_uuid": reseller_uuid,
-            "create_response": {"uuid": existing_entity.uuid},
+            "create_response": {"uuid": existing_entity.uuid},  # Fake response for compatibility
             "was_reused": True,
         }
         return
 
-    # No existing billing entity found, create a new one
+    # No existing entity found, create a new one
     print("\n=== Creating New Billing Entity ===")
-    print(f"    Linking to meta.reseller UUID: {reseller_uuid}")
 
-    # Create billing entity with entity_uuid = reseller_uuid
+    # Generate unique 13-char entity UUID using prefix
+    # UUID format: PREFIX + random hex (total 13 chars)
+    remaining_chars = 13 - len(RESELLER_PREFIX)
+    entity_uuid = f"{RESELLER_PREFIX}{uuid_module.uuid4().hex[:remaining_chars].upper()}"
+    entity_name = f"{RESELLER_PREFIX} Test Reseller {entity_uuid[-4:]}"
+
+    # Create using wrapped API
     created_entity = environment.api.billing_bookkeeper.create_entity(
-        entity_uuid=reseller_uuid,
+        entity_uuid=entity_uuid,
         entity_type="RESELLER",
-        name=reseller_name,
+        name=entity_name,
     )
 
     billing_entity_uuid = created_entity.get("uuid")
@@ -265,13 +175,11 @@ def billing_entity(meta_reseller: dict[str, Any], environment: dev.Dev) -> Gener
         raise Exception(f"Response did not contain uuid field. Response: {created_entity}")
 
     print(f"\n✓ Server-generated billing_entity_uuid: {billing_entity_uuid}")
-    print(f"    Linked to reseller via entity_uuid: {reseller_uuid}")
 
     yield {
-        "entity_uuid": reseller_uuid,
+        "entity_uuid": entity_uuid,
         "billing_entity_uuid": billing_entity_uuid,
-        "name": reseller_name,
-        "reseller_uuid": reseller_uuid,
+        "name": entity_name,
         "create_response": created_entity,
         "was_reused": False,
     }
@@ -881,7 +789,6 @@ def cellular_action_fee_code(environment: dev.Dev) -> Generator[dict[str, Any], 
 
 @pytest.mark.external_infra
 def test_create_complete_reseller(
-    meta_reseller: dict[str, Any],
     billing_entity: dict[str, Any],
     alliance_code: dict[str, Any],
     billing_schedule: dict[str, Any],
@@ -894,14 +801,8 @@ def test_create_complete_reseller(
 ) -> None:
     """Test creating a complete reseller with all required components.
 
-    This test follows the correct creation order discovered via exploration:
-    1. meta.reseller (core reseller entity via /v3/resellers)
-    2. billing_bookkeeper.billing_entity (billing config, links via entity_uuid=reseller.uuid)
-    3. All billing configuration components (link via billing_entity_uuid)
-
-    Components tested:
-    - Meta reseller (the core reseller record in meta.reseller table)
-    - Billing entity (billing configuration, entity_uuid = reseller UUID)
+    This test exercises all fixtures to ensure a complete reseller setup:
+    - Billing entity (the reseller)
     - Alliance code (for invoicing)
     - Billing schedule (monthly billing cycle)
     - Fee rates (pricing configuration)
@@ -914,22 +815,10 @@ def test_create_complete_reseller(
     All fixtures use a check-and-reuse strategy, so this test can be run
     repeatedly without accumulating test data in dev1.
     """
-    # Validate meta reseller
-    reseller_uuid = meta_reseller["reseller_uuid"]
-    assert reseller_uuid, "Reseller UUID must exist"
-    assert len(reseller_uuid) == 13, "Reseller UUID should be 13 chars"
-
-    # Validate billing entity links to meta reseller
+    # Validate billing entity
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
     assert billing_entity_uuid, "Billing entity UUID must exist"
     assert len(billing_entity_uuid) == 26, "Billing entity UUID should be 26 chars"
-
-    # CRITICAL: Validate the link between meta.reseller and billing_bookkeeper.billing_entity
-    assert billing_entity["entity_uuid"] == reseller_uuid, (
-        f"Billing entity entity_uuid ({billing_entity['entity_uuid']}) must match "
-        f"reseller UUID ({reseller_uuid})"
-    )
-    assert billing_entity["reseller_uuid"] == reseller_uuid
 
     # Validate all components reference the same billing entity
     assert alliance_code["billing_entity_uuid"] == billing_entity_uuid
@@ -961,24 +850,7 @@ def test_create_complete_reseller(
     assert plan_action_fee_code["create_response"]
     assert cellular_action_fee_code["create_response"]
 
-    print("\n" + "=" * 80)
-    print("✅ COMPLETE RESELLER SETUP VALIDATED")
-    print("=" * 80)
-    print(f"\n📋 Meta Reseller:")
-    print(f"   Name: {meta_reseller['name']}")
-    print(f"   UUID: {reseller_uuid}")
-    print(f"   Was Reused: {meta_reseller.get('was_reused', False)}")
-    print(f"\n💰 Billing Entity:")
-    print(f"   Billing Entity UUID: {billing_entity_uuid}")
-    print(f"   Entity UUID (links to reseller): {billing_entity['entity_uuid']}")
-    print(f"   Was Reused: {billing_entity.get('was_reused', False)}")
-    print(f"\n🔗 Link Verified:")
-    print(f"   meta.reseller.uuid == billing_entity.entity_uuid: ✓")
-    print(f"\n📇 Billing Configuration:")
+    print(f"\n✅ Complete reseller setup validated for {billing_entity['name']}")
+    print(f"   Billing entity UUID: {billing_entity_uuid}")
     print(f"   Alliance code: {alliance_code['alliance_code']}")
-    print(f"   Billing schedule: Created")
-    print(f"   Fee rates: Created")
-    print(f"   Processing group dates: Created")
-    print(f"   Billing hierarchies: {len([billing_hierarchy['merchant_schedule_uuid'], billing_hierarchy['merchant_fee_rate_uuid']])} types")
-    print(f"   Partner config: Created")
-    print("\n🎉 Reseller is ready for merchant onboarding!")
+    print(f"   Reused existing: {billing_entity.get('was_reused', False)}")
