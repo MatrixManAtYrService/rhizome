@@ -196,14 +196,14 @@ class ApiBillingSchedule:
 
         _close_date = d.pop("closeDate", UNSET)
         close_date: Union[Unset, datetime.date]
-        if isinstance(_close_date, Unset):
+        if isinstance(_close_date, Unset) or _close_date is None:
             close_date = UNSET
         else:
             close_date = isoparse(_close_date).date()
 
         _effective_close_date = d.pop("effectiveCloseDate", UNSET)
         effective_close_date: Union[Unset, datetime.date]
-        if isinstance(_effective_close_date, Unset):
+        if isinstance(_effective_close_date, Unset) or _effective_close_date is None:
             effective_close_date = UNSET
         else:
             effective_close_date = isoparse(_effective_close_date).date()
