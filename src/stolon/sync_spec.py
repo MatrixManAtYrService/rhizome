@@ -75,7 +75,11 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
     typer.echo(f"💾 Saved spec to {spec_file}")
     typer.echo(f"🔨 Generating Python client at {output_path}")
 
-    # Generate client using openapi-python-client
+    # Generate client using openapi-python-client with custom templates
+    # Custom templates fix nullable date/datetime fields bug:
+    # https://github.com/openapi-generators/openapi-python-client/issues/997
+    custom_template_path = Path(__file__).parent / "custom_templates"
+
     try:
         cmd = [
             "openapi-python-client",
@@ -84,6 +88,8 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
             str(spec_file),
             "--output-path",
             str(output_path),
+            "--custom-template-path",
+            str(custom_template_path),
         ]
 
         if overwrite:
