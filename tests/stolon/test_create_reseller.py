@@ -7,8 +7,13 @@ other resources are reused when found.
 
 Note: Resources cannot be cleaned up (DELETE not supported for most
 billing-bookkeeper endpoints), so we reuse existing MFF test resources.
+
+This test uses the generated OpenAPI client for type-safe API calls.
+Enable httpx debug logging with: pytest --log-cli-level=DEBUG
 """
 
+import logging
+import uuid as uuid_module
 from collections.abc import Generator
 from datetime import datetime, timedelta
 from typing import Any, cast
@@ -28,7 +33,74 @@ from rhizome.models.billing_bookkeeper.partner_config import PartnerConfig
 from rhizome.models.billing_bookkeeper.plan_action_fee_code import PlanActionFeeCode
 from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingGroupDates
 from rhizome.models.table_list import BillingBookkeeperTable
+from stolon.client import StolonClient
+from stolon.environments.dev.billing_bookkeeper import DevBillingBookkeeper as StolonDevBillingBookkeeper
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
+    create_invoice_alliance_code,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import (
+    create_billing_entity,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import (
+    create_billing_hierarchy,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import (
+    create_billing_schedule,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import (
+    create_cellular_action_fee_code,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_rate import create_fee_rate
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import (
+    create_partner_config,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_action_fee_code import (
+    create_plan_action_fee_code,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
+    create_processing_group_dates,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import (
+    create_revenue_share_group,
+    delete_revenue_share_group_by_uuid,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity import (
+    ApiBillingEntity,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity_entity_type import (
+    ApiBillingEntityEntityType,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy import (
+    ApiBillingHierarchy,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_schedule import (
+    ApiBillingSchedule,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action_fee_code import (
+    ApiCellularActionFeeCode,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_rate import ApiFeeRate
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_alliance_code import (
+    ApiInvoiceAllianceCode,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_partner_config import (
+    ApiPartnerConfig,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_action_fee_code import (
+    ApiPlanActionFeeCode,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_processing_group_dates import (
+    ApiProcessingGroupDates,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_share_group import (
+    ApiRevenueShareGroup,
+)
 from tests.conftest import RunningStolonServer
+
+# Enable httpx debug logging to see all HTTP requests
+logging.basicConfig(level=logging.INFO)
+logging.getLogger("httpx").setLevel(logging.DEBUG)
 
 # Framework identification prefix for all created resources
 # ⚠️  CHANGING THIS PREFIX WILL CREATE NEW RESOURCES:
@@ -46,7 +118,7 @@ from tests.conftest import RunningStolonServer
 #   * billing_entity.entity_uuid
 #   * invoice_alliance_code.alliance_code
 #   * revenue_share_group.revenue_share_group
-RESELLER_PREFIX = "MFF-test"
+RESELLER_PREFIX = "MFF"
 
 
 def _get_future_date(days_ahead: int = 30) -> str:
@@ -62,27 +134,31 @@ def _get_future_date(days_ahead: int = 30) -> str:
     return future_date.strftime("%Y-%m-%d")
 
 
-def _print_curl(
-    method: str, url: str, json_data: dict[str, Any] | None = None, token: str = "YOUR-INTERNAL-SESSION"
-) -> None:
-    """Print a curl command for manual recreation."""
-    import json as json_module
+def _get_authenticated_client(bb_http: StolonDevBillingBookkeeper) -> AuthenticatedClient:
+    """Get an authenticated client for the generated API.
 
-    curl_parts = [
-        "curl",
-        "-X",
-        f"'{method.upper()}'",
-        f"'{url}'",
-        "--header 'x-clover-appenv: dev1'",
-        f"--header 'Cookie: internalSession={token}'",
-        "--header 'Content-Type: application/json'",
-    ]
+    Args:
+        bb_http: StolonDevBillingBookkeeper instance with authentication
 
-    if json_data:
-        json_str = json_module.dumps(json_data, indent=2)
-        curl_parts.append(f"--data '{json_str}'")
+    Returns:
+        Authenticated client for generated API functions
+    """
+    # Ensure we have authentication
+    bb_http._ensure_authenticated()
+    assert bb_http._handle is not None
 
-    print("\n" + " \\\n".join(curl_parts) + "\n")
+    # Create authenticated client with the same base URL and token
+    return AuthenticatedClient(
+        base_url=bb_http._handle.base_url,
+        token=bb_http._handle.token,
+        prefix="",  # Token goes in Cookie header, not Authorization
+        headers={
+            "X-Clover-Appenv": f"{bb_http.name}:{bb_http.domain.split('.')[0]}",
+        },
+        cookies={
+            "internalSession": bb_http._handle.token,
+        },
+    )
 
 
 @pytest.fixture(scope="module")
@@ -99,37 +175,57 @@ def dev_bb() -> DevBillingBookkeeper:
     return DevBillingBookkeeper(rhizome_client)
 
 
-@pytest.fixture
-def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict[str, Any], None, None]:
-    """Create and cleanup a revenue share group for testing."""
-    import uuid
+@pytest.fixture(scope="module")
+def bb_http(stolon_server: RunningStolonServer) -> StolonDevBillingBookkeeper:
+    """Shared Stolon BillingBookkeeper instance for API calls.
 
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
+    This fixture creates a single stolon client for making API calls
+    to billing-bookkeeper endpoints using the generated OpenAPI client.
 
+    Scope: module - one instance shared across all tests in this file.
+    """
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
+    return StolonDevBillingBookkeeper(client)
+
+
+@pytest.fixture
+def revenue_share_group(bb_http: StolonDevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+    """Create and cleanup a revenue share group for testing."""
+    # Get authenticated client
+    api_client = _get_authenticated_client(bb_http)
 
     # Create revenue share group with reseller prefix
-    group_name = f"{RESELLER_PREFIX}_Test_{uuid.uuid4().hex[:4]}"
+    group_name = f"{RESELLER_PREFIX}_Test_{uuid_module.uuid4().hex[:4]}"
     short_desc = f"{RESELLER_PREFIX}-{group_name}"
     description = f"The FirstData/Fiserv reseller in EMEA for {group_name}"
 
-    json_data = {"revenueShareGroup": group_name, "shortDesc": short_desc, "description": description}
+    # Use generated API model
+    revenue_share_group_model = ApiRevenueShareGroup(
+        revenue_share_group=group_name,
+        short_desc=short_desc,
+        description=description,
+    )
 
     print("\n=== Creating Revenue Share Group ===")
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/revsharegroup", json_data)
+    response = create_revenue_share_group.sync_detailed(
+        client=api_client,
+        body=revenue_share_group_model,
+    )
 
-    create_response = dev.post("/billing-bookkeeper/v1/revsharegroup", json=json_data)
-    group_uuid = create_response.get("uuid")
+    if response.status_code != 200:
+        raise Exception(f"Failed to create revenue share group: {response.status_code} - {response.content}")
 
-    yield {"name": group_name, "uuid": group_uuid, "create_response": create_response}
+    # Parse response
+    created_group = response.parsed
+    group_uuid = created_group.uuid if created_group else None
+
+    yield {"name": group_name, "uuid": group_uuid, "create_response": created_group}
 
     # Cleanup: Delete the revenue share group
     if group_uuid:
         try:
             print(f"\n🗑️  Deleting revenue share group {group_uuid}")
-            dev.delete(f"/billing-bookkeeper/v1/revsharegroup/{group_uuid}")
+            delete_revenue_share_group_by_uuid.sync(client=api_client, uuid=group_uuid)
             print("✅ Cleanup successful")
         except Exception as e:
             print(f"⚠️  Cleanup failed: {e}")
@@ -137,20 +233,15 @@ def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict[st
 
 @pytest.fixture(scope="module")
 def billing_entity(
-    stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+    bb_http: StolonDevBillingBookkeeper, dev_bb: DevBillingBookkeeper
 ) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
     Uses rhizome to check if a test reseller with RESELLER_PREFIX already exists.
-    If found, reuses it. Otherwise, creates a new one.
+    If found, reuses it. Otherwise, creates a new one using the generated API client.
 
     Scope: module - reuse across all tests in this module.
     """
-    import uuid
-
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     # First, check if a reseller with our prefix already exists using rhizome
     BillingEntityModel = cast(type[BillingEntity], dev_bb.get_model(BillingBookkeeperTable.billing_entity))
 
@@ -180,32 +271,37 @@ def billing_entity(
     # No existing entity found, create a new one
     print("\n=== Creating New Billing Entity ===")
 
-    stolon_client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(stolon_client)
+    # Get authenticated client
+    api_client = _get_authenticated_client(bb_http)
 
     # Generate unique 13-char entity UUID using prefix
     # UUID format: PREFIX + random hex (total 13 chars)
     remaining_chars = 13 - len(RESELLER_PREFIX)
-    entity_uuid = f"{RESELLER_PREFIX}{uuid.uuid4().hex[:remaining_chars].upper()}"
+    entity_uuid = f"{RESELLER_PREFIX}{uuid_module.uuid4().hex[:remaining_chars].upper()}"
     entity_name = f"{RESELLER_PREFIX} Test Reseller {entity_uuid[-4:]}"
 
-    json_data = {"entityUuid": entity_uuid, "entityType": "RESELLER", "name": entity_name}
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/entity", json_data)
+    # Create using generated API model
+    billing_entity_model = ApiBillingEntity(
+        entity_uuid=entity_uuid,
+        entity_type=ApiBillingEntityEntityType.RESELLER,
+        name=entity_name,
+    )
 
     # Create billing entity
-    create_response = dev.post("/billing-bookkeeper/v1/entity", json=json_data)
+    response = create_billing_entity.sync_detailed(
+        client=api_client,
+        body=billing_entity_model,
+    )
+
+    if response.status_code != 200:
+        raise Exception(f"Failed to create billing entity: {response.status_code} - {response.content}")
 
     # Extract server-generated billing entity UUID from response
-    billing_entity_uuid = create_response.get("uuid")
+    created_entity = response.parsed
+    billing_entity_uuid = created_entity.uuid if created_entity else None
 
     if not billing_entity_uuid:
-        # Fallback: try to get it via GET (though this seems to 404 in dev1)
-        print(f"\n⚠️  Response did not contain uuid field. Response: {create_response}")
-        print("\n=== Trying to GET Billing Entity by entity UUID ===")
-        _print_curl("GET", f"https://dev1.dev.clover.com/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
-        entity_get = dev.get(f"/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
-        billing_entity_uuid = entity_get.get("uuid")
+        raise Exception(f"Response did not contain uuid field. Response: {created_entity}")
 
     print(f"\n✓ Server-generated billing_entity_uuid: {billing_entity_uuid}")
 
@@ -213,7 +309,7 @@ def billing_entity(
         "entity_uuid": entity_uuid,
         "billing_entity_uuid": billing_entity_uuid,
         "name": entity_name,
-        "create_response": create_response,
+        "create_response": created_entity,
         "was_reused": False,
     }
 
