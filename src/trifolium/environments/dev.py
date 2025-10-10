@@ -211,17 +211,23 @@ class DevBillingBookkeeperAPI:
                 logger.info("Generated client making HTTP request", **log_data)
 
             def log_response(response: httpx.Response) -> None:
+                # Get content length from header if available
+                content_length_header = response.headers.get("content-length")
+                content_length = int(content_length_header) if content_length_header else None
+
                 log_data = {
                     "method": response.request.method,
                     "url": str(response.request.url),
                     "status_code": response.status_code,
-                    "content_length": len(response.content) if response.content else 0,
                 }
 
+                if content_length is not None:
+                    log_data["content_length"] = content_length
+
                 # Log error details for non-2xx responses
+                # Note: We can't access response.text or response.content here in the hook
+                # as the response hasn't been read yet
                 if response.status_code >= 400:
-                    if response.text:
-                        log_data["response_text"] = response.text[:500]
                     logger.error("Generated client HTTP request failed", **log_data)
                 else:
                     logger.info("Generated client received HTTP response", **log_data)
