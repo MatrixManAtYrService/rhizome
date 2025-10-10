@@ -140,6 +140,7 @@ class DevAPI:
         """
         self._client = client
         self._billing_bookkeeper: DevBillingBookkeeperAPI | None = None
+        self._resellers: DevResellersAPI | None = None
 
     @property
     def billing_bookkeeper(self) -> DevBillingBookkeeperAPI:
@@ -147,6 +148,13 @@ class DevAPI:
         if self._billing_bookkeeper is None:
             self._billing_bookkeeper = DevBillingBookkeeperAPI(self._client)
         return self._billing_bookkeeper
+
+    @property
+    def resellers(self) -> "DevResellersAPI":
+        """Resellers API access (meta.reseller table)."""
+        if self._resellers is None:
+            self._resellers = DevResellersAPI(self._client)
+        return self._resellers
 
 
 class DevBillingBookkeeperAPI:
@@ -666,3 +674,111 @@ class DevBillingBookkeeperAPI:
         if response.parsed:
             return response.parsed.to_dict()
         raise Exception("No response data returned")
+
+
+class DevResellersAPI:
+    """
+    Resellers API wrapper for /v3/resellers endpoint.
+    
+    This API creates records in the meta.reseller table, which is separate
+    from billing_bookkeeper.billing_entity. Both are needed for a complete reseller:
+    - meta.reseller: The core reseller entity (visible in admin UI)
+    - billing_bookkeeper.billing_entity: The billing configuration
+    """
+
+    def __init__(self, client: StolonClient) -> None:
+        """Initialize Resellers API.
+
+        Args:
+            client: Stolon client for HTTP requests
+        """
+        self._client = client
+        self._domain = "dev1.dev.clover.com"
+        self._env_name = "dev"
+
+    def create_reseller(
+        self,
+        name: str,
+        owner_email: str,
+        parent_reseller_id: str,
+        merchant_plan_group_id: str,
+        support_phone: str = "",
+        support_email: str = "",
+        locale: str = "en-US",
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        """Create a reseller in meta.reseller table.
+
+        Args:
+            name: Reseller name
+            owner_email: Email for the reseller owner account
+            parent_reseller_id: ID of the parent reseller (e.g., "Y7TC6PNQMENF0")
+            merchant_plan_group_id: ID of the merchant plan group (e.g., "B1DTBWV564MNE")
+            support_phone: Support phone number
+            support_email: Support email address
+            locale: Locale (default: "en-US")
+            **kwargs: Additional fields to include in the request
+
+        Returns:
+            Created reseller data including the UUID
+
+        Raises:
+            Exception: If creation fails
+        """
+        import httpx
+
+        # Get authentication token
+        handle = self._client.request_internal_token(self._domain)
+
+        # Build the request payload with minimal required fields
+        payload = {
+            "name": name,
+            "owner": {"email": owner_email},
+            "parentReseller": {"id": parent_reseller_id},
+            "merchantPlanGroup": {"id": merchant_plan_group_id},
+            "locale": locale,
+            "supportPhone": support_phone,
+            "supportEmail": support_email,
+            # Common defaults from the curl example
+            "allowBlackhole": False,
+            "alternateName": "",
+            "code": None,
+            "defaultPaymentProcessor": {"id": ""},
+            "defaultProcessorKey": {"id": ""},
+            "fdClientId": None,
+            "filterApps": False,
+            "forcePhone": False,
+            "isBulkPurchaser": False,
+            "isCodelessActivation": False,
+            "isIntercomEnabled": True,
+            "isNewBilling": True,
+            "isRapidDepositEnabled": False,
+            "isRkiIdentifier": False,
+            "isSelfBoarding": False,
+            "partnerSupportEmail": "",
+            "rapidDepositServiceEntitlementNumber": "",
+            "stationsOnClassic": True,
+            "supportsNakedCredit": True,
+            "supportsOutboundBoarding": False,
+            "tasqCustomerNumber": "",
+            "type": "UNKNOWN",
+        }
+
+        # Override with any additional kwargs
+        payload.update(kwargs)
+
+        # Make the HTTP request
+        url = f"https://{self._domain}/v3/resellers"
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "X-Clover-Appenv": f"{self._env_name}:{self._domain.split('.')[0]}",
+        }
+        cookies = {"internalSession": handle.token}
+
+        response = httpx.post(url, json=payload, headers=headers, cookies=cookies, timeout=30.0)
+
+        if response.status_code not in (200, 201):
+            raise Exception(f"Failed to create reseller: {response.status_code} - {response.text}")
+
+        return response.json()
