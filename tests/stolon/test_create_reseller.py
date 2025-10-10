@@ -1,10 +1,6 @@
 """
 Test reseller creation using individual fixture-based approach.
 
-This module demonstrates creating individual billing components using
-separate pytest fixtures, following the curl command examples from
-create_reseller.md documentation.
-
 Strategy: Check if test resources already exist and reuse them to avoid
 accumulating test data. Only revenue_share_group supports DELETE, so all
 other resources are reused when found.
@@ -50,7 +46,7 @@ from tests.conftest import RunningStolonServer
 #   * billing_entity.entity_uuid
 #   * invoice_alliance_code.alliance_code
 #   * revenue_share_group.revenue_share_group
-RESELLER_PREFIX = "MFF"
+RESELLER_PREFIX = "MFF-test"
 
 
 def _get_future_date(days_ahead: int = 30) -> str:
