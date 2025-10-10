@@ -91,8 +91,6 @@ class Merchant(RhizomeModel, table=True):
     infolease_suppress_plan_billing: bool = Field(default=False)
     send_closeout_email: bool | None = Field(default=False)
     modified_time: datetime.datetime
-    customer_service_email: str | None = Field(default=None, max_length=127)
-    customer_contact_email: str | None = Field(default=None, max_length=127)
 
     def sanitize(self) -> Merchant:
         """Return a sanitized copy of this Merchant instance."""
@@ -171,6 +169,4 @@ class Merchant(RhizomeModel, table=True):
             infolease_suppress_plan_billing=self.infolease_suppress_plan_billing,
             send_closeout_email=self.send_closeout_email,
             modified_time=self.modified_time,
-            customer_service_email=self.customer_service_email,
-            customer_contact_email=self.customer_contact_email,
         )
