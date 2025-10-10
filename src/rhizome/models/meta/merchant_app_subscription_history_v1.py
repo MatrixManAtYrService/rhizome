@@ -2,9 +2,10 @@
 SQLModel definition for the merchant_app_subscription_history table, version 1.
 
 This module provides the V1 implementation of the MerchantAppSubscriptionHistory model.
-Currently, MerchantAppSubscriptionHistoryV1 is identical to the base MerchantAppSubscriptionHistory class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, MerchantAppSubscriptionHistoryV1 is identical to the base
+MerchantAppSubscriptionHistory class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual
+schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

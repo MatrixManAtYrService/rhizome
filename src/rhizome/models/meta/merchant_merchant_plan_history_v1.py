@@ -2,9 +2,10 @@
 SQLModel definition for the merchant_merchant_plan_history table, version 1.
 
 This module provides the V1 implementation of the MerchantMerchantPlanHistory model.
-Currently, MerchantMerchantPlanHistoryV1 is identical to the base MerchantMerchantPlanHistory class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, MerchantMerchantPlanHistoryV1 is identical to the base
+MerchantMerchantPlanHistory class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual
+schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

@@ -2,9 +2,10 @@
 SQLModel definition for the stage_vendor_disbursement_error table, version 1.
 
 This module provides the V1 implementation of the StageVendorDisbursementError model.
-Currently, StageVendorDisbursementErrorV1 is identical to the base StageVendorDisbursementError class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, StageVendorDisbursementErrorV1 is identical to the base
+StageVendorDisbursementError class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual
+schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

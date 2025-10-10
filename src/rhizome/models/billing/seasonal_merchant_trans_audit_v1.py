@@ -2,9 +2,10 @@
 SQLModel definition for the seasonal_merchant_trans_audit table, version 1.
 
 This module provides the V1 implementation of the SeasonalMerchantTransAudit model.
-Currently, SeasonalMerchantTransAuditV1 is identical to the base SeasonalMerchantTransAudit class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, SeasonalMerchantTransAuditV1 is identical to the base
+SeasonalMerchantTransAudit class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual
+schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

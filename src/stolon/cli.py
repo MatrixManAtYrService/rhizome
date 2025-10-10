@@ -74,7 +74,10 @@ def clear_cache(
     domain: Annotated[
         str | None,
         typer.Argument(
-            help="Clover domain to clear cache for (e.g., dev1.dev.clover.com). If not provided, clears all cached tokens."
+            help=(
+                "Clover domain to clear cache for (e.g., dev1.dev.clover.com). "
+                "If not provided, clears all cached tokens."
+            )
         ),
     ] = None,
 ) -> None:

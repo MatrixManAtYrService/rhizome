@@ -1,9 +1,10 @@
 """Billing Event API methods for Dev environment."""
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Unpack
 
 if TYPE_CHECKING:
     from stolon.client import StolonClient
+    from stolon.environments.base import HttpxKwargs
 
 
 class BillingEventDev:
@@ -17,11 +18,11 @@ class BillingEventDev:
 
     client: "StolonClient"
 
-    def get(self, path: str, **kwargs: Any) -> Any:
+    def get(self, path: str, **kwargs: Unpack["HttpxKwargs"]) -> dict[str, Any] | list[Any] | None:
         """Abstract method - must be implemented by the environment class."""
         raise NotImplementedError("Environment must implement get() method")
 
-    def post(self, path: str, **kwargs: Any) -> Any:
+    def post(self, path: str, **kwargs: Unpack["HttpxKwargs"]) -> dict[str, Any] | list[Any] | None:
         """Abstract method - must be implemented by the environment class."""
         raise NotImplementedError("Environment must implement post() method")
 

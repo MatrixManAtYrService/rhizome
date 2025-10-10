@@ -3,10 +3,21 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, TypedDict, Unpack
 
 if TYPE_CHECKING:
     from stolon.client import HttpHandle, StolonClient
+
+
+class HttpxKwargs(TypedDict, total=False):
+    """Type definition for httpx request kwargs."""
+
+    json: Any
+    data: Any
+    params: dict[str, Any] | None
+    headers: dict[str, str] | None
+    cookies: dict[str, str] | None
+    timeout: float | None
 
 
 class Environment(ABC):
@@ -37,7 +48,7 @@ class Environment(ABC):
         if self._handle is None or force_refresh:
             self._handle = self.client.request_internal_token(self.domain, force_refresh=force_refresh)
 
-    def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+    def _request(self, method: str, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
         Make an authenticated HTTP request with automatic 401 retry.
 
@@ -53,13 +64,28 @@ class Environment(ABC):
         assert self._handle is not None  # For type checker
         import httpx
 
-        headers = kwargs.pop("headers", {})
+        # Build headers dict, merging any provided headers with our auth headers
+        # Extract headers from kwargs to avoid conflict when passing **kwargs
+        provided_headers = kwargs.pop("headers", None)  # type: ignore[misc]
+        headers: dict[str, str] = provided_headers.copy() if provided_headers else {}
         headers["Cookie"] = f"internalSession={self._handle.token}"
         headers["Content-Type"] = "application/json"
         headers["X-Clover-Appenv"] = f"{self.name}:{self.domain.split('.')[0]}"
 
+        # Extract other common kwargs
+        json_data = kwargs.pop("json", None)  # type: ignore[misc]
+        params = kwargs.pop("params", None)  # type: ignore[misc]
+        timeout_val = kwargs.pop("timeout", None)  # type: ignore[misc]
+
         with httpx.Client() as client:
-            response = client.request(method, f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+            response: httpx.Response = client.request(
+                method,
+                f"{self._handle.base_url}{path}",
+                headers=headers,
+                json=json_data,
+                params=params,
+                timeout=timeout_val,
+            )
 
             # If we get a 401, the token is expired - invalidate cache and get fresh token
             if response.status_code == 401:
@@ -69,15 +95,23 @@ class Environment(ABC):
 
                 # Retry with the new token
                 headers["Cookie"] = f"internalSession={self._handle.token}"
-                response = client.request(method, f"{self._handle.base_url}{path}", headers=headers, **kwargs)
+                response = client.request(
+                    method,
+                    f"{self._handle.base_url}{path}",
+                    headers=headers,
+                    json=json_data,
+                    params=params,
+                    timeout=timeout_val,
+                )
 
             response.raise_for_status()
             # Return JSON if available, None otherwise
             if response.text:
-                return response.json()
+                json_data: dict[str, Any] | list[Any] = response.json()
+                return json_data
             return None
 
-    def get(self, path: str, **kwargs: Any) -> Any:
+    def get(self, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
         Make an authenticated GET request to the Clover API.
 
@@ -92,7 +126,7 @@ class Environment(ABC):
         """
         return self._request("GET", path, **kwargs)
 
-    def post(self, path: str, **kwargs: Any) -> Any:
+    def post(self, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
         Make an authenticated POST request to the Clover API.
 
@@ -107,7 +141,7 @@ class Environment(ABC):
         """
         return self._request("POST", path, **kwargs)
 
-    def delete(self, path: str, **kwargs: Any) -> Any:
+    def delete(self, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
         Make an authenticated DELETE request to the Clover API.
 

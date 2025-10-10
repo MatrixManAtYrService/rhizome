@@ -13,9 +13,11 @@ dependencies = [
     "httpx>=0.28.1",
     "httpx-sse>=0.4.1",
     "jsondiff>=2.2.1",
+    "openapi-python-client>=0.26.1",
     "pybritive>=2.2.3",
     "pydantic>=2.0.0",
     "pymysql>=1.1.1",
+    "python-multipart>=0.0.20",
     "sqlmodel>=0.0.24",
     "structlog>=25.4.0",
     "typer>=0.16.0",
@@ -94,8 +96,13 @@ exclude = [
     "**/target",
     "**/dist",
     "**/build",
-    # Exclude tests from strict type checking - they use mocks and dynamic objects
-    "tests/**",
+    # Exclude only tests that use heavy mocking/dynamic behavior
+    "tests/test_git_diff.py",
+    "tests/mocked_subprocesses.py",
+    "tests/test_environment_access.py",
+    "tests/test_port.py",
+    # Exclude generated code from type checking
+    "src/stolon/generated/**",
 ]
 
 # Strict type checking for source code only

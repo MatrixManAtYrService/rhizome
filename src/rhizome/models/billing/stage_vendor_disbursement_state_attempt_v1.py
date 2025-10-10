@@ -1,10 +1,11 @@
 """
 SQLModel definition for the stage_vendor_disbursement_state_attempt table, version 1.
 
-This module provides the V1 implementation of the StageVendorDisbursementStateAttempt model.
-Currently, StageVendorDisbursementStateAttemptV1 is identical to the base StageVendorDisbursementStateAttempt class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+This module provides the V1 implementation of the StageVendorDisbursementStateAttempt
+model. Currently, StageVendorDisbursementStateAttemptV1 is identical to the base
+StageVendorDisbursementStateAttempt class (name-only inheritance), but as the table
+schema evolves across environments, future versions (V2, V3, etc.) will contain
+actual schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

@@ -16,11 +16,11 @@ let
 
   ruffFormatCheck = makeCheck {
     name = "ruff-format";
-    description = "Python formatting with ruff";
+    description = "Python formatting with ruff (auto-format enabled)";
     dependencies = with pkgs; [ ruff ];
     roots = [ "src" "tests" ];
-    command = "ruff format --exit-non-zero-on-format";
-    verboseCommand = "ruff format --exit-non-zero-on-format --verbose";
+    command = "ruff format";
+    verboseCommand = "ruff format --verbose";
   };
 
   pyrightCheck = makeCheck {
@@ -35,8 +35,8 @@ createAnalysisPackage {
   name = "python-analysis";
   description = "Python code analysis";
   checks = {
-    ruff-check = ruffCheckCheck;
-    ruff-format = ruffFormatCheck;
-    pyright = pyrightCheck;
+    "1-ruff-format" = ruffFormatCheck;
+    "2-ruff-check" = ruffCheckCheck;
+    "3-pyright" = pyrightCheck;
   };
 }

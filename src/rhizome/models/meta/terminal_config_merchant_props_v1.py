@@ -2,9 +2,10 @@
 SQLModel definition for the terminal_config_merchant_props table, version 1.
 
 This module provides the V1 implementation of the TerminalConfigMerchantProps model.
-Currently, TerminalConfigMerchantPropsV1 is identical to the base TerminalConfigMerchantProps class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, TerminalConfigMerchantPropsV1 is identical to the base
+TerminalConfigMerchantProps class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual
+schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

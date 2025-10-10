@@ -2,9 +2,10 @@
 SQLModel definition for the merchant_plan_merchant_plan_group table, version 1.
 
 This module provides the V1 implementation of the MerchantPlanMerchantPlanGroup model.
-Currently, MerchantPlanMerchantPlanGroupV1 is identical to the base MerchantPlanMerchantPlanGroup class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, MerchantPlanMerchantPlanGroupV1 is identical to the base
+MerchantPlanMerchantPlanGroup class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual
+schema differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations
