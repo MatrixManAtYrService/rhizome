@@ -233,8 +233,11 @@ class DevBillingBookkeeperAPI:
                     logger.info("Generated client received HTTP response", **log_data)
 
             # Create authenticated client with logging hooks
+            # Add /billing-bookkeeper path prefix to base URL
+            billing_bookkeeper_base_url = f"{handle.base_url}/billing-bookkeeper"
+
             self._authenticated_client = AuthenticatedClient(
-                base_url=handle.base_url,
+                base_url=billing_bookkeeper_base_url,
                 token=handle.token,
                 prefix="",  # Token goes in Cookie header
                 headers={
