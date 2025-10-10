@@ -122,7 +122,10 @@ models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] 
     MetaTable.merchant: (Merchant, MerchantNaProd),
     MetaTable.merchant_address: (MerchantAddressV1, MerchantAddressNaProd),
     MetaTable.merchant_app: (MerchantAppV1, MerchantAppNaProd),
-    MetaTable.merchant_app_subscription_history: (MerchantAppSubscriptionHistoryV1, MerchantAppSubscriptionHistoryNaProd),
+    MetaTable.merchant_app_subscription_history: (
+        MerchantAppSubscriptionHistoryV1,
+        MerchantAppSubscriptionHistoryNaProd,
+    ),
     MetaTable.merchant_boarding: (MerchantBoardingV1, MerchantBoardingNaProd),
     MetaTable.merchant_creation_details: (MerchantCreationDetailsV1, MerchantCreationDetailsNaProd),
     MetaTable.merchant_gateway: (MerchantGatewayV1, MerchantGatewayNaProd),

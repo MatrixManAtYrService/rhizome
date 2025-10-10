@@ -18,6 +18,7 @@ class MerchantPlan(RhizomeModel, table=False):
     """
     Base MerchantPlan model - defines common fields across all versions.
     """
+
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     name: str = Field(max_length=31)

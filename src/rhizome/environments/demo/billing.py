@@ -113,9 +113,7 @@ class DemoBilling(Environment):
         """Get database configuration using legacy MySQL credentials."""
         import asyncio
 
-        password = asyncio.run(
-            self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD)
-        )
+        password = asyncio.run(self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
 
         return DatabaseConfig(
             host="demo2-db01.dev.pdx10.clover.network",

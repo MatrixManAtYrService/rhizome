@@ -22,7 +22,9 @@ class CombinedDisbursementTree(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    combined_disbursement_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    combined_disbursement_id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing"
+    )
     charge_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     created_time: datetime.datetime = Field(description="created_time")
 

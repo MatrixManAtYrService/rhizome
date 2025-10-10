@@ -22,7 +22,9 @@ class StopAchHistory(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    merchant_odessa_mapping_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    merchant_odessa_mapping_id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing"
+    )
     old_stop_ach: bool = Field(description="old_stop_ach")
     old_modified_time: datetime.datetime | None = Field(default=None, description="old_modified_time")
     created_time: datetime.datetime = Field(description="created_time")

@@ -23,8 +23,6 @@ def get_database_short_name(environment_name: str) -> str:
     return "".join(result)
 
 
-
-
 def create_lightweight_environment(env_class: type[Environment], client: RhizomeClient) -> Environment:
     """Create a lightweight environment instance that skips expensive table_situation setup."""
 

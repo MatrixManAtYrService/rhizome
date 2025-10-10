@@ -22,7 +22,6 @@ class ReferenceTypeType(str, Enum):
     MERCHANT = "MERCHANT"
 
 
-
 class FeeException(RhizomeModel, table=False):
     """
     SQLModel for the `fee_exception` table.

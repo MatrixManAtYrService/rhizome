@@ -27,7 +27,7 @@ class Account(RhizomeModel, table=True):
     primary_developer_role_id: int | None = Field(default=None, foreign_key="developer_role.id")
     primary_reseller_role_id: int | None = Field(default=None, foreign_key="reseller_role.id")
     password_hash: str | None = Field(default=None, max_length=60)
-    oauth_provider: str | None = Field(default=None) # Could be an Enum
+    oauth_provider: str | None = Field(default=None)  # Could be an Enum
     claim_code: str | None = Field(default=None, max_length=255)
     locked_out: bool | None = Field(default=False)
     password_updated_time: datetime.datetime | None = Field(default=None)

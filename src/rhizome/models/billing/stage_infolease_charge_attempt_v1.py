@@ -2,9 +2,10 @@
 SQLModel definition for the stage_infolease_charge_attempt table, version 1.
 
 This module provides the V1 implementation of the StageInfoleaseChargeAttempt model.
-Currently, StageInfoleaseChargeAttemptV1 is identical to the base StageInfoleaseChargeAttempt class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, StageInfoleaseChargeAttemptV1 is identical to the base
+StageInfoleaseChargeAttempt class (name-only inheritance), but as the table schema evolves
+across environments, future versions (V2, V3, etc.) will contain actual schema differences
+(new columns, modified types, etc.).
 """
 
 from __future__ import annotations

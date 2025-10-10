@@ -22,7 +22,6 @@ class AmountTypeType(str, Enum):
     FLAT_RATE = "FLAT_RATE"
 
 
-
 class ResellerPlanFee(RhizomeModel, table=False):
     """
     SQLModel for the `reseller_plan_fee` table.
@@ -35,7 +34,9 @@ class ResellerPlanFee(RhizomeModel, table=False):
     reseller_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_plan_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     merchant_plan_type: str | None = Field(default=None, max_length=20, description="merchant_plan_type")
-    merchant_plan_group_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    merchant_plan_group_id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing"
+    )
     fee_type: str | None = Field(default=None, description="fee_type")
     currency: str = Field(max_length=3, description="currency")
     amount: int = Field(description="amount")

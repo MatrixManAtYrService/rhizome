@@ -242,9 +242,18 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.merchant_suppression: (MerchantSuppressionV1, MerchantSuppressionNaProd),
     BillingTable.merchant_suppression_by_app: (MerchantSuppressionByAppV1, MerchantSuppressionByAppNaProd),
     BillingTable.merchant_terms_acceptance: (MerchantTermsAcceptanceV1, MerchantTermsAcceptanceNaProd),
-    BillingTable.merchant_terms_acceptance_events: (MerchantTermsAcceptanceEventsV1, MerchantTermsAcceptanceEventsNaProd),
-    BillingTable.merchant_terms_acceptance_failed_event_log: (MerchantTermsAcceptanceFailedEventLogV1, MerchantTermsAcceptanceFailedEventLogNaProd),
-    BillingTable.merchant_terms_missing_acceptance: (MerchantTermsMissingAcceptanceV1, MerchantTermsMissingAcceptanceNaProd),
+    BillingTable.merchant_terms_acceptance_events: (
+        MerchantTermsAcceptanceEventsV1,
+        MerchantTermsAcceptanceEventsNaProd,
+    ),
+    BillingTable.merchant_terms_acceptance_failed_event_log: (
+        MerchantTermsAcceptanceFailedEventLogV1,
+        MerchantTermsAcceptanceFailedEventLogNaProd,
+    ),
+    BillingTable.merchant_terms_missing_acceptance: (
+        MerchantTermsMissingAcceptanceV1,
+        MerchantTermsMissingAcceptanceNaProd,
+    ),
     BillingTable.offboarding: (OffboardingV1, OffboardingNaProd),
     BillingTable.plan_authorization_settings: (PlanAuthorizationSettingsV1, PlanAuthorizationSettingsNaProd),
     BillingTable.plan_meta: (PlanMetaV1, PlanMetaNaProd),
@@ -271,17 +280,25 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
     BillingTable.stage_email: (StageEmailV1, StageEmailNaProd),
     BillingTable.stage_email_merchant_charge: (StageEmailMerchantChargeV1, StageEmailMerchantChargeNaProd),
     BillingTable.stage_infolease_charge_attempt: (StageInfoleaseChargeAttemptV1, StageInfoleaseChargeAttemptNaProd),
-    BillingTable.stage_infolease_disbursement_attempt: (StageInfoleaseDisbursementAttemptV1, StageInfoleaseDisbursementAttemptNaProd),
+    BillingTable.stage_infolease_disbursement_attempt: (
+        StageInfoleaseDisbursementAttemptV1,
+        StageInfoleaseDisbursementAttemptNaProd,
+    ),
     BillingTable.stage_merchant_app_charge: (StageMerchantAppChargeV1, StageMerchantAppChargeNaProd),
     BillingTable.stage_merchant_plan_charge: (StageMerchantPlanChargeV1, StageMerchantPlanChargeNaProd),
     BillingTable.stage_vendor_disbursement_error: (StageVendorDisbursementErrorV1, StageVendorDisbursementErrorNaProd),
-    BillingTable.stage_vendor_disbursement_state_attempt: (StageVendorDisbursementStateAttemptV1, StageVendorDisbursementStateAttemptNaProd),
+    BillingTable.stage_vendor_disbursement_state_attempt: (
+        StageVendorDisbursementStateAttemptV1,
+        StageVendorDisbursementStateAttemptNaProd,
+    ),
     BillingTable.suppression_metrics: (SuppressionMetricsV1, SuppressionMetricsNaProd),
     BillingTable.vat_vendor_disbursement: (VatVendorDisbursementV1, VatVendorDisbursementNaProd),
     BillingTable.vendor_disbursement_error: (VendorDisbursementErrorV1, VendorDisbursementErrorNaProd),
-    BillingTable.vendor_disbursement_state_attempt: (VendorDisbursementStateAttemptV1, VendorDisbursementStateAttemptNaProd),
+    BillingTable.vendor_disbursement_state_attempt: (
+        VendorDisbursementStateAttemptV1,
+        VendorDisbursementStateAttemptNaProd,
+    ),
 }
-
 
 
 class NorthAmericaBilling(Environment):

@@ -22,7 +22,7 @@ class DeveloperApp(RhizomeModel, table=False):
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, unique=True)
     approval_status: str = Field(max_length=9)
-    default_response_type: str | None = Field(default='code', max_length=5)
+    default_response_type: str | None = Field(default="code", max_length=5)
     approval_status_modified_time: datetime.datetime
     deleted_time: datetime.datetime | None = Field(default=None)
     approval_android_version_id: int | None = Field(default=None, foreign_key="android_version.id")

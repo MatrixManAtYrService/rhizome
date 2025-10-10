@@ -248,7 +248,9 @@ class RhizomeClient:
         except Exception:
             return {"error": "Could not extract model fields"}
 
-    def select_first(self, connection_string: str, query: SelectOfScalar[TFirst], sanitize: bool = True) -> TFirst | None:
+    def select_first(
+        self, connection_string: str, query: SelectOfScalar[TFirst], sanitize: bool = True
+    ) -> TFirst | None:
         """
         Execute a query and return the first result or None.
 

@@ -58,7 +58,9 @@ class AppSuppression(RhizomeModel, table=False):
     start_time: datetime.datetime = Field(description="Start time of the suppression")
     created_time: datetime.datetime = Field(description="Timestamp when the record was created")
     modified_time: datetime.datetime = Field(description="Timestamp when the record was last modified")
-    finalization_time: datetime.datetime | None = Field(default=None, description="Time when the suppression was finalized")
+    finalization_time: datetime.datetime | None = Field(
+        default=None, description="Time when the suppression was finalized"
+    )
 
     def sanitize(self) -> AppSuppression:
         """Return a sanitized copy of this AppSuppression instance."""

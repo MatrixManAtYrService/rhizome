@@ -17,6 +17,7 @@ from ..base import RhizomeModel
 
 class SuppTypeEnum(str, Enum):
     """Enum for supp_type values."""
+
     MERCHANT = "MERCHANT"
     APP = "APP"
     RESELLER = "RESELLER"
@@ -26,6 +27,7 @@ class SuppTypeEnum(str, Enum):
 
 class SuppContextEnum(str, Enum):
     """Enum for supp_context values."""
+
     SYSTEM = "SYSTEM"
     SUNSET = "SUNSET"
     PROMO = "PROMO"

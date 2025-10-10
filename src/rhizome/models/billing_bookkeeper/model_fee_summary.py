@@ -36,8 +36,12 @@ class ModelFeeSummary(RhizomeModel, table=False):
     fee_rate_uuid: str = Field(max_length=26, description="Fee Rate Uuid")
     request_uuid: str = Field(max_length=26, description="Request Uuid")
     invoice_info_uuid: str | None = Field(default=None, max_length=26, description="Invoice Info Uuid")
-    fee_code_ledger_account_uuid: str | None = Field(default=None, max_length=26, description="Fee Code Ledger Account Uuid")
-    credit_ledger_account_uuid: str | None = Field(default=None, max_length=26, description="Credit Ledger Account Uuid")
+    fee_code_ledger_account_uuid: str | None = Field(
+        default=None, max_length=26, description="Fee Code Ledger Account Uuid"
+    )
+    credit_ledger_account_uuid: str | None = Field(
+        default=None, max_length=26, description="Credit Ledger Account Uuid"
+    )
     debit_ledger_account_uuid: str | None = Field(default=None, max_length=26, description="Debit Ledger Account Uuid")
     created_timestamp: datetime.datetime = Field(description="Created Timestamp")
     modified_timestamp: datetime.datetime = Field(description="Modified Timestamp")

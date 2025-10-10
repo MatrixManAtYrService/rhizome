@@ -38,7 +38,9 @@ class CellularAction(RhizomeModel, table=False):
     basis_amount: Decimal | None = Field(default=None, max_digits=12, decimal_places=3, description="Basis Amount")
     basis_currency: str | None = Field(default=None, max_length=3, description="Basis Currency")
     reference: str | None = Field(default=None, max_length=50, description="Reference")
-    cellular_action_fee_code_uuid: str | None = Field(default=None, max_length=26, description="Cellular Action Fee Code Uuid")
+    cellular_action_fee_code_uuid: str | None = Field(
+        default=None, max_length=26, description="Cellular Action Fee Code Uuid"
+    )
     fee_uuid: str | None = Field(default=None, max_length=26, description="Fee Uuid")
     event_uuid: str | None = Field(default=None, max_length=26, description="Event Uuid")
     request_uuid: str | None = Field(default=None, max_length=26, description="Request Uuid")

@@ -28,14 +28,9 @@ class StageEmail(RhizomeModel, table=False):
     reference_type: str | None = Field(default=None, description="reference_type")
     reference_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     type: str | None = Field(default=None, description="type")
-    to_email: str = Field(
-        sa_column=Column("to", String(127)),
-        description="Email to address"
-    )
+    to_email: str = Field(sa_column=Column("to", String(127)), description="Email to address")
     from_email: str | None = Field(
-        default=None,
-        sa_column=Column("from", String(127)),
-        description="Email from address"
+        default=None, sa_column=Column("from", String(127)), description="Email from address"
     )
     from_name: str | None = Field(default=None, max_length=127, description="from_name")
     replyTo: str | None = Field(default=None, max_length=127, description="replyTo")

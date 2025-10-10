@@ -46,7 +46,7 @@ class Merchant(RhizomeModel, table=True):
     on_paper_tip_signatures: bool | None = Field(default=None)
     force_signature_verify: bool | None = Field(default=None)
     auto_logout: bool = Field(default=False)
-    order_title: str | None = Field(default='none', max_length=9)
+    order_title: str | None = Field(default="none", max_length=9)
     order_title_max: int | None = Field(default=99)
     reset_on_reporting_time: bool = Field(default=False)
     notes_on_orders: bool = Field(default=False)

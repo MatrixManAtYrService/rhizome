@@ -22,7 +22,9 @@ class BiieFileStagingData(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    biie_file_instance_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    biie_file_instance_id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing"
+    )
     record_num: int = Field(description="record_num")
     record_status: str | None = Field(default=None, description="record_status")
     reason_code: str | None = Field(default=None, description="reason_code")

@@ -58,7 +58,7 @@ class Reseller(RhizomeModel, table=True):
     is_new_billing: int = Field(default=1)
     plan_group_id: int | None = Field(default=None, foreign_key="merchant_plan_group.id")
     type: str | None = Field(default=None, max_length=18)
-    source: str = Field(default='INTERNAL', max_length=8)
+    source: str = Field(default="INTERNAL", max_length=8)
 
     def sanitize(self) -> Reseller:
         """Return a sanitized copy of this Reseller instance."""

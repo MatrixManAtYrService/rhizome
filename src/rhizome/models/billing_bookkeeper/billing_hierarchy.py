@@ -28,7 +28,9 @@ class BillingHierarchy(RhizomeModel, table=False):
     billing_entity_uuid: str = Field(max_length=26, description="Billing Entity Uuid")
     effective_date: datetime.date = Field(description="Effective Date")
     deleted_date: datetime.date | None = Field(default=None, description="Deleted Date")
-    parent_billing_hierarchy_uuid: str | None = Field(default=None, max_length=26, description="Parent Billing Hierarchy Uuid")
+    parent_billing_hierarchy_uuid: str | None = Field(
+        default=None, max_length=26, description="Parent Billing Hierarchy Uuid"
+    )
     created_timestamp: datetime.datetime = Field(description="Created Timestamp")
     modified_timestamp: datetime.datetime = Field(description="Modified Timestamp")
 

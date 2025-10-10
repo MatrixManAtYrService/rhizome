@@ -134,8 +134,6 @@ def check_table_sync_status(
     )
 
 
-
-
 def collect_sync_statuses(env: RhizomeEnvironment | None) -> list[TableSyncStatus]:
     """Collect sync statuses for all environment/table pairs."""
     console = Console()

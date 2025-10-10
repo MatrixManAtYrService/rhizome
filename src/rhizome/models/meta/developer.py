@@ -69,7 +69,7 @@ class Developer(RhizomeModel, table=True):
     referral_submission_time: datetime.datetime | None = Field(default=None)
     billing_contract_number: str | None = Field(default=None, max_length=128)
     emergency_email: str | None = Field(default=None, max_length=127)
-    developer_type: str | None = Field(default='EXTERNAL', max_length=16)
+    developer_type: str | None = Field(default="EXTERNAL", max_length=16)
     approval_status_modified_time: datetime.datetime | None = Field(default=None)
 
     def sanitize(self) -> Developer:

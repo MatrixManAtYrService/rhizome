@@ -37,8 +37,12 @@ class SettlementAction(RhizomeModel, table=False):
     tax4_amount: Decimal = Field(max_digits=12, decimal_places=3, description="Tax4 Amount")
     reject_code: str | None = Field(default=None, max_length=10, description="Reject Code")
     message: str | None = Field(default=None, max_length=1024, description="Message")
-    ledger_account_transition_uuid: str | None = Field(default=None, max_length=26, description="Ledger Account Transition Uuid")
-    credit_ledger_account_uuid: str | None = Field(default=None, max_length=26, description="Credit Ledger Account Uuid")
+    ledger_account_transition_uuid: str | None = Field(
+        default=None, max_length=26, description="Ledger Account Transition Uuid"
+    )
+    credit_ledger_account_uuid: str | None = Field(
+        default=None, max_length=26, description="Credit Ledger Account Uuid"
+    )
     debit_ledger_account_uuid: str | None = Field(default=None, max_length=26, description="Debit Ledger Account Uuid")
     created_timestamp: datetime.datetime = Field(description="Created Timestamp")
 

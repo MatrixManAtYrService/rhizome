@@ -22,7 +22,9 @@ class DisbursementInvoiceNumber(RhizomeModel, table=False):
     """
 
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
-    combined_disbursement_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    combined_disbursement_id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing"
+    )
     invoice_number: str = Field(max_length=30, description="invoice_number")
     created_time: datetime.datetime = Field(description="created_time")
 

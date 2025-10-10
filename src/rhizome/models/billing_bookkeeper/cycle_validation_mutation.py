@@ -39,7 +39,9 @@ class CycleValidationMutation(RhizomeModel, table=False):
     bypass_count: Decimal | None = Field(default=None, max_digits=12, decimal_places=4, description="Bypass Count")
     bypass_amount: Decimal | None = Field(default=None, max_digits=12, decimal_places=3, description="Bypass Amount")
     accepted_count: Decimal | None = Field(default=None, max_digits=12, decimal_places=4, description="Accepted Count")
-    accepted_amount: Decimal | None = Field(default=None, max_digits=12, decimal_places=3, description="Accepted Amount")
+    accepted_amount: Decimal | None = Field(
+        default=None, max_digits=12, decimal_places=3, description="Accepted Amount"
+    )
     total_count: Decimal | None = Field(default=None, max_digits=12, decimal_places=4, description="Total Count")
     total_amount: Decimal | None = Field(default=None, max_digits=12, decimal_places=3, description="Total Amount")
     request_uuid: str | None = Field(default=None, max_length=26, description="Request Uuid")

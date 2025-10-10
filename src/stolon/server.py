@@ -65,11 +65,7 @@ async def internal_token(request: InternalTokenRequest) -> InternalTokenResponse
     # Check if we already have a cached token for this domain
     if request.domain in _token_cache:
         logger.info(f"Using cached token for {request.domain}")
-        return InternalTokenResponse(
-            token=_token_cache[request.domain],
-            domain=request.domain,
-            cached=True
-        )
+        return InternalTokenResponse(token=_token_cache[request.domain], domain=request.domain, cached=True)
 
     # No cached token, get a new one
     logger.info(f"No cached token for {request.domain}, initiating authentication")
@@ -96,11 +92,7 @@ async def get_cached_token(domain: str) -> InternalTokenResponse:
     if domain not in _token_cache:
         raise HTTPException(status_code=404, detail=f"No cached token for domain: {domain}")
 
-    return InternalTokenResponse(
-        token=_token_cache[domain],
-        domain=domain,
-        cached=True
-    )
+    return InternalTokenResponse(token=_token_cache[domain], domain=domain, cached=True)
 
 
 @app.delete("/internal_token/{domain}")

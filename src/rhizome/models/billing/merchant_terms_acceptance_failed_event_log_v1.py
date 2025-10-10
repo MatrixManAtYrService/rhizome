@@ -1,10 +1,11 @@
 """
 SQLModel definition for the merchant_terms_acceptance_failed_event_log table, version 1.
 
-This module provides the V1 implementation of the MerchantTermsAcceptanceFailedEventLog model.
-Currently, MerchantTermsAcceptanceFailedEventLogV1 is identical to the base MerchantTermsAcceptanceFailedEventLog class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+This module provides the V1 implementation of the MerchantTermsAcceptanceFailedEventLog
+model. Currently, MerchantTermsAcceptanceFailedEventLogV1 is identical to the base
+MerchantTermsAcceptanceFailedEventLog class (name-only inheritance), but as the table schema
+evolves across environments, future versions (V2, V3, etc.) will contain actual schema
+differences (new columns, modified types, etc.).
 """
 
 from __future__ import annotations

@@ -2,9 +2,10 @@
 SQLModel definition for the merchant_subscription_action table, version 1.
 
 This module provides the V1 implementation of the MerchantSubscriptionAction model.
-Currently, MerchantSubscriptionActionV1 is identical to the base MerchantSubscriptionAction class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, MerchantSubscriptionActionV1 is identical to the base MerchantSubscriptionAction
+class (name-only inheritance), but as the table schema evolves across environments, future
+versions (V2, V3, etc.) will contain actual schema differences (new columns, modified types,
+etc.).
 """
 
 from __future__ import annotations

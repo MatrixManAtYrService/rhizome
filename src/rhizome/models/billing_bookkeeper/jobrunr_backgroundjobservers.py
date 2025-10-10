@@ -36,7 +36,9 @@ class JobrunrBackgroundjobservers(RhizomeModel, table=False):
     processAllocatedMemory: int = Field(description="Processallocatedmemory")
     processCpuLoad: Decimal = Field(max_digits=3, decimal_places=2, description="Processcpuload")
     deleteSucceededJobsAfter: str | None = Field(default=None, max_length=32, description="Deletesucceededjobsafter")
-    permanentlyDeleteJobsAfter: str | None = Field(default=None, max_length=32, description="Permanentlydeletejobsafter")
+    permanentlyDeleteJobsAfter: str | None = Field(
+        default=None, max_length=32, description="Permanentlydeletejobsafter"
+    )
 
     def sanitize(self) -> JobrunrBackgroundjobservers:
         """Return a sanitized copy of this JobrunrBackgroundjobservers instance."""

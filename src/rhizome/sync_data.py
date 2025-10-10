@@ -172,9 +172,7 @@ def sync_data(
     for env_enum, env_class in environments_to_sync:
         env_instance = env_class(client)
 
-        tables_for_this_env = _filter_tables_for_environment(
-            env_instance, env_enum, tables_to_sync_map, table_names
-        )
+        tables_for_this_env = _filter_tables_for_environment(env_instance, env_enum, tables_to_sync_map, table_names)
 
         if tables_for_this_env:
             _sync_environment_tables(env_instance, tables_for_this_env, change_tracker, verbose)

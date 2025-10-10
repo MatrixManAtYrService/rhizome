@@ -2,9 +2,10 @@
 SQLModel definition for the merchant_terms_missing_acceptance table, version 1.
 
 This module provides the V1 implementation of the MerchantTermsMissingAcceptance model.
-Currently, MerchantTermsMissingAcceptanceV1 is identical to the base MerchantTermsMissingAcceptance class (name-only inheritance),
-but as the table schema evolves across environments, future versions (V2, V3, etc.) will
-contain actual schema differences (new columns, modified types, etc.).
+Currently, MerchantTermsMissingAcceptanceV1 is identical to the base
+MerchantTermsMissingAcceptance class (name-only inheritance), but as the table schema evolves
+across environments, future versions (V2, V3, etc.) will contain actual schema differences
+(new columns, modified types, etc.).
 """
 
 from __future__ import annotations

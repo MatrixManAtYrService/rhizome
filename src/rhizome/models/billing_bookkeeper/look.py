@@ -27,11 +27,7 @@ class Look(RhizomeModel, table=False):
     uuid: str = Field(max_length=32, unique=True, description="Uuid")
     hash: str = Field(max_length=64, description="Hash")
     namespace: str = Field(max_length=32, description="Namespace")
-    meta_data: str | None = Field(
-        default=None,
-        sa_column=Column("metadata", String(1024)),
-        description="Metadata"
-    )
+    meta_data: str | None = Field(default=None, sa_column=Column("metadata", String(1024)), description="Metadata")
     processed_timestamp: datetime.datetime | None = Field(default=None, description="Processed Timestamp")
     created_timestamp: datetime.datetime = Field(description="Created Timestamp")
 

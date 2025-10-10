@@ -25,7 +25,9 @@ class VatVendorDisbursement(RhizomeModel, table=False):
     id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
     uuid: str = Field(max_length=13, description="UUID field")
     request_uuid: str = Field(max_length=13, description="request_uuid")
-    combined_disbursement_id: int | None = Field(default=None, primary_key=True, description="Primary key, auto-incrementing")
+    combined_disbursement_id: int | None = Field(
+        default=None, primary_key=True, description="Primary key, auto-incrementing"
+    )
     vat_base_currency: str | None = Field(default=None, max_length=3, description="vat_base_currency")
     vat_base_amount: int | None = Field(default=None, description="vat_base_amount")
     state_date: datetime.date | None = Field(default=None, description="state_date")

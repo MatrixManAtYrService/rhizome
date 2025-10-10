@@ -22,7 +22,6 @@ import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
-from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.models.billing_bookkeeper.billing_entity import BillingEntity
 from rhizome.models.billing_bookkeeper.billing_hierarchy import BillingHierarchy
 from rhizome.models.billing_bookkeeper.billing_schedule import BillingSchedule
@@ -34,69 +33,8 @@ from rhizome.models.billing_bookkeeper.plan_action_fee_code import PlanActionFee
 from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingGroupDates
 from rhizome.models.table_list import BillingBookkeeperTable
 from stolon.client import StolonClient
-from stolon.environments.dev.billing_bookkeeper import DevBillingBookkeeper as StolonDevBillingBookkeeper
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
-    create_invoice_alliance_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import (
-    create_billing_entity,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import (
-    create_billing_hierarchy,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import (
-    create_billing_schedule,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import (
-    create_cellular_action_fee_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_rate import create_fee_rate
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import (
-    create_partner_config,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_action_fee_code import (
-    create_plan_action_fee_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
-    create_processing_group_dates,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import (
-    create_revenue_share_group,
-    delete_revenue_share_group_by_uuid,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity import (
-    ApiBillingEntity,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity_entity_type import (
-    ApiBillingEntityEntityType,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy import (
-    ApiBillingHierarchy,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_schedule import (
-    ApiBillingSchedule,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action_fee_code import (
-    ApiCellularActionFeeCode,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_rate import ApiFeeRate
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_alliance_code import (
-    ApiInvoiceAllianceCode,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_partner_config import (
-    ApiPartnerConfig,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_action_fee_code import (
-    ApiPlanActionFeeCode,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_processing_group_dates import (
-    ApiProcessingGroupDates,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_share_group import (
-    ApiRevenueShareGroup,
-)
 from tests.conftest import RunningStolonServer
+from trifolium.environments import dev
 
 # Enable httpx debug logging to see all HTTP requests
 logging.basicConfig(level=logging.INFO)
@@ -134,90 +72,37 @@ def _get_future_date(days_ahead: int = 30) -> str:
     return future_date.strftime("%Y-%m-%d")
 
 
-def _get_authenticated_client(bb_http: StolonDevBillingBookkeeper) -> AuthenticatedClient:
-    """Get an authenticated client for the generated API.
-
-    Args:
-        bb_http: StolonDevBillingBookkeeper instance with authentication
-
-    Returns:
-        Authenticated client for generated API functions
-    """
-    # Ensure we have authentication
-    bb_http._ensure_authenticated()
-    assert bb_http._handle is not None
-
-    # Create authenticated client with the same base URL and token
-    return AuthenticatedClient(
-        base_url=bb_http._handle.base_url,
-        token=bb_http._handle.token,
-        prefix="",  # Token goes in Cookie header, not Authorization
-        headers={
-            "X-Clover-Appenv": f"{bb_http.name}:{bb_http.domain.split('.')[0]}",
-        },
-        cookies={
-            "internalSession": bb_http._handle.token,
-        },
-    )
-
-
 @pytest.fixture(scope="module")
-def dev_bb() -> DevBillingBookkeeper:
-    """Shared DevBillingBookkeeper instance for all tests in this module.
+def environment(stolon_server: RunningStolonServer) -> dev.Dev:
+    """Unified dev environment with both database and HTTP access.
 
-    This fixture creates a single rhizome client and billing bookkeeper environment
-    that is reused across all tests, avoiding the overhead of setting up multiple
-    port-forwards.
+    This fixture creates a single Dev instance that provides:
+    - environment.db.billing_bookkeeper: Database queries via Rhizome
+    - environment.api.billing_bookkeeper: HTTP API calls via Stolon (wrapped generated client)
 
     Scope: module - one instance shared across all tests in this file.
     """
     rhizome_client = RhizomeClient(data_in_logs=False)
-    return DevBillingBookkeeper(rhizome_client)
-
-
-@pytest.fixture(scope="module")
-def bb_http(stolon_server: RunningStolonServer) -> StolonDevBillingBookkeeper:
-    """Shared Stolon BillingBookkeeper instance for API calls.
-
-    This fixture creates a single stolon client for making API calls
-    to billing-bookkeeper endpoints using the generated OpenAPI client.
-
-    Scope: module - one instance shared across all tests in this file.
-    """
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    return StolonDevBillingBookkeeper(client)
+    stolon_client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    return dev.Dev(rhizome_client=rhizome_client, stolon_client=stolon_client)
 
 
 @pytest.fixture
-def revenue_share_group(bb_http: StolonDevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def revenue_share_group(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Create and cleanup a revenue share group for testing."""
-    # Get authenticated client
-    api_client = _get_authenticated_client(bb_http)
-
     # Create revenue share group with reseller prefix
     group_name = f"{RESELLER_PREFIX}_Test_{uuid_module.uuid4().hex[:4]}"
     short_desc = f"{RESELLER_PREFIX}-{group_name}"
     description = f"The FirstData/Fiserv reseller in EMEA for {group_name}"
 
-    # Use generated API model
-    revenue_share_group_model = ApiRevenueShareGroup(
-        revenue_share_group=group_name,
+    print("\n=== Creating Revenue Share Group ===")
+    created_group = environment.api.billing_bookkeeper.create_revenue_share_group(
+        revenue_share_group_name=group_name,
         short_desc=short_desc,
         description=description,
     )
 
-    print("\n=== Creating Revenue Share Group ===")
-    response = create_revenue_share_group.sync_detailed(
-        client=api_client,
-        body=revenue_share_group_model,
-    )
-
-    if response.status_code != 200:
-        raise Exception(f"Failed to create revenue share group: {response.status_code} - {response.content}")
-
-    # Parse response
-    created_group = response.parsed
-    group_uuid = created_group.uuid if created_group else None
+    group_uuid = created_group.get("uuid")
 
     yield {"name": group_name, "uuid": group_uuid, "create_response": created_group}
 
@@ -225,16 +110,14 @@ def revenue_share_group(bb_http: StolonDevBillingBookkeeper) -> Generator[dict[s
     if group_uuid:
         try:
             print(f"\n🗑️  Deleting revenue share group {group_uuid}")
-            delete_revenue_share_group_by_uuid.sync(client=api_client, uuid=group_uuid)
+            environment.api.billing_bookkeeper.delete_revenue_share_group(uuid=group_uuid)
             print("✅ Cleanup successful")
         except Exception as e:
             print(f"⚠️  Cleanup failed: {e}")
 
 
 @pytest.fixture(scope="module")
-def billing_entity(
-    bb_http: StolonDevBillingBookkeeper, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def billing_entity(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
     Uses rhizome to check if a test reseller with RESELLER_PREFIX already exists.
@@ -243,10 +126,12 @@ def billing_entity(
     Scope: module - reuse across all tests in this module.
     """
     # First, check if a reseller with our prefix already exists using rhizome
-    BillingEntityModel = cast(type[BillingEntity], dev_bb.get_model(BillingBookkeeperTable.billing_entity))
+    BillingEntityModel = cast(
+        type[BillingEntity], environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.billing_entity)
+    )
 
     # Query for any reseller with our prefix (sanitize=False to get real UUIDs for API calls)
-    existing_entity = dev_bb.select_first(
+    existing_entity = environment.db.billing_bookkeeper.select_first(
         select(BillingEntityModel)
         .where(BillingEntityModel.entity_type == "RESELLER")
         .where(BillingEntityModel.entity_uuid.like(f"{RESELLER_PREFIX}%"))  # type: ignore[attr-defined]  # SQLModel columns have .like()
@@ -271,35 +156,20 @@ def billing_entity(
     # No existing entity found, create a new one
     print("\n=== Creating New Billing Entity ===")
 
-    # Get authenticated client
-    api_client = _get_authenticated_client(bb_http)
-
     # Generate unique 13-char entity UUID using prefix
     # UUID format: PREFIX + random hex (total 13 chars)
     remaining_chars = 13 - len(RESELLER_PREFIX)
     entity_uuid = f"{RESELLER_PREFIX}{uuid_module.uuid4().hex[:remaining_chars].upper()}"
     entity_name = f"{RESELLER_PREFIX} Test Reseller {entity_uuid[-4:]}"
 
-    # Create using generated API model
-    billing_entity_model = ApiBillingEntity(
+    # Create using wrapped API
+    created_entity = environment.api.billing_bookkeeper.create_entity(
         entity_uuid=entity_uuid,
-        entity_type=ApiBillingEntityEntityType.RESELLER,
+        entity_type="RESELLER",
         name=entity_name,
     )
 
-    # Create billing entity
-    response = create_billing_entity.sync_detailed(
-        client=api_client,
-        body=billing_entity_model,
-    )
-
-    if response.status_code != 200:
-        raise Exception(f"Failed to create billing entity: {response.status_code} - {response.content}")
-
-    # Extract server-generated billing entity UUID from response
-    created_entity = response.parsed
-    billing_entity_uuid = created_entity.uuid if created_entity else None
-
+    billing_entity_uuid = created_entity.get("uuid")
     if not billing_entity_uuid:
         raise Exception(f"Response did not contain uuid field. Response: {created_entity}")
 
@@ -315,15 +185,12 @@ def billing_entity(
 
     # Cleanup not supported - DELETE method returns 405
     print(
-        f"\n⚠️  Note: Billing entity {billing_entity_uuid} cannot be automatically deleted "
-        "(API does not support DELETE)"
+        f"\n⚠️  Note: Billing entity {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)"
     )
 
 
 @pytest.fixture(scope="module")
-def alliance_code(
-    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def alliance_code(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create an alliance code for testing.
 
     Checks if the billing entity already has an alliance code.
@@ -333,17 +200,15 @@ def alliance_code(
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if alliance code already exists for this billing entity
     InvoiceAllianceCodeModel = cast(
-        type[InvoiceAllianceCode], dev_bb.get_model(BillingBookkeeperTable.invoice_alliance_code)
+        type[InvoiceAllianceCode],
+        environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.invoice_alliance_code),
     )
 
-    existing_alliance_code = dev_bb.select_first(
+    existing_alliance_code = environment.db.billing_bookkeeper.select_first(
         select(InvoiceAllianceCodeModel).where(InvoiceAllianceCodeModel.billing_entity_uuid == billing_entity_uuid),
         sanitize=False,
     )
@@ -363,14 +228,11 @@ def alliance_code(
     # No existing alliance code found, create a new one
     print("\n=== Creating New Alliance Code ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     # Query for existing alliance codes with our prefix to find next available number
     # Alliance codes are 3 chars, so format: PREFIX + 4-digit padded number (e.g., "MFF0001")
     # We'll use the format that fits: if prefix is "MFF", result is "MFF0001" (7 chars total)
-    existing_codes = dev_bb.select_all(
-        select(InvoiceAllianceCodeModel.alliance_code)
+    existing_codes = environment.db.billing_bookkeeper.select_all(
+        select(InvoiceAllianceCodeModel)
         .where(InvoiceAllianceCodeModel.alliance_code.like(f"{RESELLER_PREFIX}%"))  # type: ignore[attr-defined]
         .order_by(InvoiceAllianceCodeModel.alliance_code.desc()),  # type: ignore[attr-defined]
         sanitize=False,
@@ -379,7 +241,7 @@ def alliance_code(
     # Find the highest number used
     max_num = 0
     for code_obj in existing_codes:
-        code = code_obj if isinstance(code_obj, str) else code_obj.alliance_code
+        code = code_obj.alliance_code
         # Extract numeric suffix after prefix
         numeric_part = code[len(RESELLER_PREFIX) :]
         if numeric_part.isdigit():
@@ -393,11 +255,11 @@ def alliance_code(
 
     print(f"    Using alliance code: {alliance_code_value} (next after {max_num:04d})")
 
-    json_data = {"billingEntityUuid": billing_entity_uuid, "allianceCode": alliance_code_value, "invoiceCount": 1}
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/alliancecode", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/alliancecode", json=json_data)
+    create_response = environment.api.billing_bookkeeper.create_alliance_code(
+        billing_entity_uuid=billing_entity_uuid,
+        alliance_code_value=alliance_code_value,
+        invoice_count=1,
+    )
 
     yield {
         "alliance_code": alliance_code_value,
@@ -408,15 +270,12 @@ def alliance_code(
 
     # Cleanup not supported - DELETE method returns 405
     print(
-        f"\n⚠️  Note: Alliance code {alliance_code_value} cannot be automatically deleted "
-        "(API does not support DELETE)"
+        f"\n⚠️  Note: Alliance code {alliance_code_value} cannot be automatically deleted (API does not support DELETE)"
     )
 
 
 @pytest.fixture(scope="module")
-def billing_schedule(
-    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def billing_schedule(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing schedule for testing.
 
     Checks if the billing entity already has a billing schedule.
@@ -424,15 +283,14 @@ def billing_schedule(
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if billing schedule already exists for this billing entity
-    BillingScheduleModel = cast(type[BillingSchedule], dev_bb.get_model(BillingBookkeeperTable.billing_schedule))
+    BillingScheduleModel = cast(
+        type[BillingSchedule], environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.billing_schedule)
+    )
 
-    existing_schedule = dev_bb.select_first(
+    existing_schedule = environment.db.billing_bookkeeper.select_first(
         select(BillingScheduleModel).where(BillingScheduleModel.billing_entity_uuid == billing_entity_uuid),
         sanitize=False,
     )
@@ -452,25 +310,18 @@ def billing_schedule(
     # No existing billing schedule found, create a new one
     print("\n=== Creating New Billing Schedule ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     effective_date = _get_future_date(days_ahead=30)
     next_billing_date = _get_future_date(days_ahead=60)
 
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "effectiveDate": effective_date,
-        "frequency": "MONTHLY",
-        "billingDay": 1,
-        "nextBillingDate": next_billing_date,
-        "unitsInNextPeriod": 31,
-        "defaultCurrency": "EUR",
-    }
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/schedule", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/schedule", json=json_data)
+    create_response = environment.api.billing_bookkeeper.create_billing_schedule(
+        billing_entity_uuid=billing_entity_uuid,
+        effective_date=effective_date,
+        frequency="MONTHLY",
+        billing_day=1,
+        next_billing_date=next_billing_date,
+        units_in_next_period=31,
+        default_currency="EUR",
+    )
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
@@ -482,9 +333,7 @@ def billing_schedule(
 
 
 @pytest.fixture(scope="module")
-def fee_rate(
-    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def fee_rate(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a fee rate for testing.
 
     Checks if the billing entity already has a fee rate.
@@ -492,15 +341,12 @@ def fee_rate(
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if fee rate already exists for this billing entity
-    FeeRateModel = cast(type[FeeRate], dev_bb.get_model(BillingBookkeeperTable.fee_rate))
+    FeeRateModel = cast(type[FeeRate], environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.fee_rate))
 
-    existing_fee_rate = dev_bb.select_first(
+    existing_fee_rate = environment.db.billing_bookkeeper.select_first(
         select(FeeRateModel)
         .where(FeeRateModel.billing_entity_uuid == billing_entity_uuid)
         .order_by(FeeRateModel.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
@@ -522,37 +368,29 @@ def fee_rate(
     # No existing fee rate found, create a new one
     print("\n=== Creating New Fee Rate ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     effective_date = _get_future_date(days_ahead=30)
 
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "feeCategory": "PLAN_RETAIL",
-        "feeCode": "PaymentsPDVT",
-        "currency": "EUR",
-        "effectiveDate": effective_date,
-        "applyType": "DEFAULT",
-        "perItemAmount": 0.0,
-    }
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/rate", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/rate", json=json_data)
+    create_response = environment.api.billing_bookkeeper.create_fee_rate(
+        billing_entity_uuid=billing_entity_uuid,
+        fee_category="PLAN_RETAIL",
+        fee_code="PaymentsPDVT",
+        currency="EUR",
+        effective_date=effective_date,
+        apply_type="DEFAULT",
+        per_item_amount=0.0,
+    )
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
     # Cleanup not supported - DELETE method returns 405
     print(
-        f"\n⚠️  Note: Fee rate for {billing_entity_uuid} cannot be automatically deleted "
-        "(API does not support DELETE)"
+        f"\n⚠️  Note: Fee rate for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)"
     )
 
 
 @pytest.fixture(scope="module")
 def processing_group_dates(
-    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+    billing_entity: dict[str, Any], environment: dev.Dev
 ) -> Generator[dict[str, Any], None, None]:
     """Get or create processing group dates for testing.
 
@@ -561,17 +399,15 @@ def processing_group_dates(
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if processing group dates already exist for this billing entity
     ProcessingGroupDatesModel = cast(
-        type[ProcessingGroupDates], dev_bb.get_model(BillingBookkeeperTable.processing_group_dates)
+        type[ProcessingGroupDates],
+        environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.processing_group_dates),
     )
 
-    existing_pgd = dev_bb.select_first(
+    existing_pgd = environment.db.billing_bookkeeper.select_first(
         select(ProcessingGroupDatesModel).where(ProcessingGroupDatesModel.billing_entity_uuid == billing_entity_uuid),
         sanitize=False,
     )
@@ -591,23 +427,16 @@ def processing_group_dates(
     # No existing processing group dates found, create new ones
     print("\n=== Creating New Processing Group Dates ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     cycle_date = _get_future_date(days_ahead=30)
 
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "hierarchyType": "MERCHANT_SCHEDULE",
-        "cycleDate": cycle_date,
-        "postingDate": cycle_date,
-        "billingDate": cycle_date,
-        "settlementDate": cycle_date,
-    }
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/processgroupdates", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/processgroupdates", json=json_data)
+    create_response = environment.api.billing_bookkeeper.create_processing_group_dates(
+        billing_entity_uuid=billing_entity_uuid,
+        hierarchy_type="MERCHANT_SCHEDULE",
+        cycle_date=cycle_date,
+        posting_date=cycle_date,
+        billing_date=cycle_date,
+        settlement_date=cycle_date,
+    )
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
@@ -619,9 +448,7 @@ def processing_group_dates(
 
 
 @pytest.fixture(scope="module")
-def billing_hierarchy(
-    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def billing_hierarchy(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create billing hierarchy entries for testing.
 
     Creates two hierarchy entries:
@@ -633,17 +460,16 @@ def billing_hierarchy(
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Get the model first so we can use it in queries
-    BillingHierarchyModel = cast(type[BillingHierarchy], dev_bb.get_model(BillingBookkeeperTable.billing_hierarchy))
+    BillingHierarchyModel = cast(
+        type[BillingHierarchy], environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.billing_hierarchy)
+    )
 
     # Query for common parent hierarchies in dev1
     # Find the most commonly used parent hierarchies for each type
-    merchant_schedule_parent = dev_bb.select_first(
+    merchant_schedule_parent = environment.db.billing_bookkeeper.select_first(
         select(BillingHierarchyModel.parent_billing_hierarchy_uuid)
         .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_SCHEDULE")
         .where(BillingHierarchyModel.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
@@ -651,7 +477,7 @@ def billing_hierarchy(
         sanitize=False,
     )
 
-    merchant_fee_rate_parent = dev_bb.select_first(
+    merchant_fee_rate_parent = environment.db.billing_bookkeeper.select_first(
         select(BillingHierarchyModel.parent_billing_hierarchy_uuid)
         .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_FEE_RATE")
         .where(BillingHierarchyModel.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
@@ -673,14 +499,14 @@ def billing_hierarchy(
     print(f"    MERCHANT_FEE_RATE parent: {MERCHANT_FEE_RATE_PARENT}")
 
     # Check if billing hierarchy entries already exist for this billing entity
-    existing_schedule_hierarchy = dev_bb.select_first(
+    existing_schedule_hierarchy = environment.db.billing_bookkeeper.select_first(
         select(BillingHierarchyModel)
         .where(BillingHierarchyModel.billing_entity_uuid == billing_entity_uuid)
         .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_SCHEDULE"),
         sanitize=False,
     )
 
-    existing_fee_rate_hierarchy = dev_bb.select_first(
+    existing_fee_rate_hierarchy = environment.db.billing_bookkeeper.select_first(
         select(BillingHierarchyModel)
         .where(BillingHierarchyModel.billing_entity_uuid == billing_entity_uuid)
         .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_FEE_RATE"),
@@ -702,8 +528,6 @@ def billing_hierarchy(
         return
 
     # Need to create one or both hierarchy entries
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
     effective_date = _get_future_date(days_ahead=30)
 
     created_schedule_uuid = None
@@ -712,16 +536,12 @@ def billing_hierarchy(
     if not existing_schedule_hierarchy:
         print("\n=== Creating New MERCHANT_SCHEDULE Billing Hierarchy ===")
 
-        json_data = {
-            "billingEntityUuid": billing_entity_uuid,
-            "hierarchyType": "MERCHANT_SCHEDULE",
-            "effectiveDate": effective_date,
-            "parentBillingHierarchyUuid": MERCHANT_SCHEDULE_PARENT,
-        }
-
-        _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/hierarchy", json_data)
-
-        schedule_response = dev.post("/billing-bookkeeper/v1/hierarchy", json=json_data)
+        schedule_response = environment.api.billing_bookkeeper.create_billing_hierarchy(
+            billing_entity_uuid=billing_entity_uuid,
+            hierarchy_type="MERCHANT_SCHEDULE",
+            effective_date=effective_date,
+            parent_billing_hierarchy_uuid=MERCHANT_SCHEDULE_PARENT,
+        )
         created_schedule_uuid = schedule_response.get("uuid")
         print(f"✓ Created MERCHANT_SCHEDULE hierarchy: {created_schedule_uuid}")
     else:
@@ -731,16 +551,12 @@ def billing_hierarchy(
     if not existing_fee_rate_hierarchy:
         print("\n=== Creating New MERCHANT_FEE_RATE Billing Hierarchy ===")
 
-        json_data = {
-            "billingEntityUuid": billing_entity_uuid,
-            "hierarchyType": "MERCHANT_FEE_RATE",
-            "effectiveDate": effective_date,
-            "parentBillingHierarchyUuid": MERCHANT_FEE_RATE_PARENT,
-        }
-
-        _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/hierarchy", json_data)
-
-        fee_rate_response = dev.post("/billing-bookkeeper/v1/hierarchy", json=json_data)
+        fee_rate_response = environment.api.billing_bookkeeper.create_billing_hierarchy(
+            billing_entity_uuid=billing_entity_uuid,
+            hierarchy_type="MERCHANT_FEE_RATE",
+            effective_date=effective_date,
+            parent_billing_hierarchy_uuid=MERCHANT_FEE_RATE_PARENT,
+        )
         created_fee_rate_uuid = fee_rate_response.get("uuid")
         print(f"✓ Created MERCHANT_FEE_RATE hierarchy: {created_fee_rate_uuid}")
     else:
@@ -762,9 +578,7 @@ def billing_hierarchy(
 
 
 @pytest.fixture(scope="module")
-def partner_config(
-    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def partner_config(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a partner config for testing.
 
     Checks if the billing entity already has a partner config for MERCHANT_SCHEDULE.
@@ -774,15 +588,14 @@ def partner_config(
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if partner config already exists for this billing entity
-    PartnerConfigModel = cast(type[PartnerConfig], dev_bb.get_model(BillingBookkeeperTable.partner_config))
+    PartnerConfigModel = cast(
+        type[PartnerConfig], environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.partner_config)
+    )
 
-    existing_partner_config = dev_bb.select_first(
+    existing_partner_config = environment.db.billing_bookkeeper.select_first(
         select(PartnerConfigModel)
         .where(PartnerConfigModel.billing_entity_uuid == billing_entity_uuid)
         .where(PartnerConfigModel.hierarchy_type == "MERCHANT_SCHEDULE"),
@@ -805,24 +618,17 @@ def partner_config(
     # No existing partner config found, create a new one
     print("\n=== Creating New Partner Config ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     effective_date = _get_future_date(days_ahead=30)
 
     # Use minimal config pattern based on Surega's MERCHANT_SCHEDULE configs in demo
     # Most MERCHANT_SCHEDULE configs only set settlementMethod and invoiceMethod
-    json_data = {
-        "billingEntityUuid": billing_entity_uuid,
-        "effectiveDate": effective_date,
-        "hierarchyType": "MERCHANT_SCHEDULE",
-        "settlementMethod": "Goleo",
-        "invoiceMethod": "MerchantDetail",
-    }
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/partnerconfig", json_data)
-
-    create_response = dev.post("/billing-bookkeeper/v1/partnerconfig", json=json_data)
+    create_response = environment.api.billing_bookkeeper.create_partner_config(
+        billing_entity_uuid=billing_entity_uuid,
+        effective_date=effective_date,
+        hierarchy_type="MERCHANT_SCHEDULE",
+        settlement_method="Goleo",
+        invoice_method="MerchantDetail",
+    )
 
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
@@ -834,9 +640,7 @@ def partner_config(
 
 
 @pytest.fixture(scope="module")
-def plan_action_fee_code(
-    stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def plan_action_fee_code(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a plan action fee code for testing.
 
     Plan action fee codes are GLOBAL resources (not tied to billing entity).
@@ -846,17 +650,15 @@ def plan_action_fee_code(
     """
     import httpx
 
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     test_plan_uuid = "YEQMV17H09HHW"
 
     # Check if plan action fee code already exists (global resource)
     PlanActionFeeCodeModel = cast(
-        type[PlanActionFeeCode], dev_bb.get_model(BillingBookkeeperTable.plan_action_fee_code)
+        type[PlanActionFeeCode],
+        environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.plan_action_fee_code),
     )
 
-    existing_plan_action_fee_code = dev_bb.select_first(
+    existing_plan_action_fee_code = environment.db.billing_bookkeeper.select_first(
         select(PlanActionFeeCodeModel)
         .where(PlanActionFeeCodeModel.merchant_plan_uuid == test_plan_uuid)
         .where(PlanActionFeeCodeModel.plan_action_type == "PLAN_ASSIGN")
@@ -880,23 +682,16 @@ def plan_action_fee_code(
     # No existing plan action fee code found, create a new one
     print("\n=== Creating New Plan Action Fee Code (GLOBAL) ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     effective_date = _get_future_date(days_ahead=30)
 
-    json_data = {
-        "merchantPlanUuid": test_plan_uuid,
-        "planActionType": "PLAN_ASSIGN",
-        "effectiveDate": effective_date,
-        "feeCategory": "PLAN_RETAIL",
-        "feeCode": "PaymentsPDVT.PRC",
-    }
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/planactionfeecode", json_data)
-
     try:
-        create_response = dev.post("/billing-bookkeeper/v1/planactionfeecode", json=json_data)
+        create_response = environment.api.billing_bookkeeper.create_plan_action_fee_code(
+            merchant_plan_uuid=test_plan_uuid,
+            plan_action_type="PLAN_ASSIGN",
+            effective_date=effective_date,
+            fee_category="PLAN_RETAIL",
+            fee_code="PaymentsPDVT.PRC",
+        )
     except httpx.HTTPStatusError as e:
         print(f"\n⚠️  API Error Response: {e.response.text}")
         print(f"⚠️  Status Code: {e.response.status_code}")
@@ -912,9 +707,7 @@ def plan_action_fee_code(
 
 
 @pytest.fixture(scope="module")
-def cellular_action_fee_code(
-    stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
-) -> Generator[dict[str, Any], None, None]:
+def cellular_action_fee_code(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a cellular action fee code for testing.
 
     Cellular action fee codes are GLOBAL resources (not tied to billing entity).
@@ -927,18 +720,16 @@ def cellular_action_fee_code(
     """
     import httpx
 
-    from stolon.client import StolonClient
-    from stolon.environments.dev.http import DevHttp
-
     carrier = "AT&T"
     cellular_action_type = "CELLULAR_ARREARS"
 
     # Check if cellular action fee code already exists (global resource)
     CellularActionFeeCodeModel = cast(
-        type[CellularActionFeeCode], dev_bb.get_model(BillingBookkeeperTable.cellular_action_fee_code)
+        type[CellularActionFeeCode],
+        environment.db.billing_bookkeeper.get_model(BillingBookkeeperTable.cellular_action_fee_code),
     )
 
-    existing_cellular_action_fee_code = dev_bb.select_first(
+    existing_cellular_action_fee_code = environment.db.billing_bookkeeper.select_first(
         select(CellularActionFeeCodeModel)
         .where(CellularActionFeeCodeModel.carrier == carrier)
         .where(CellularActionFeeCodeModel.cellular_action_type == cellular_action_type)
@@ -950,8 +741,7 @@ def cellular_action_fee_code(
     if existing_cellular_action_fee_code:
         print("\n♻️  Reusing existing cellular action fee code (GLOBAL)")
         print(
-            f"    {existing_cellular_action_fee_code.carrier}/"
-            f"{existing_cellular_action_fee_code.cellular_action_type}"
+            f"    {existing_cellular_action_fee_code.carrier}/{existing_cellular_action_fee_code.cellular_action_type}"
         )
         print(f"    {existing_cellular_action_fee_code.fee_category}/{existing_cellular_action_fee_code.fee_code}")
 
@@ -965,23 +755,16 @@ def cellular_action_fee_code(
     # No existing cellular action fee code found, create a new one
     print("\n=== Creating New Cellular Action Fee Code (GLOBAL) ===")
 
-    client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    dev = DevHttp(client)
-
     effective_date = _get_future_date(days_ahead=30)
 
-    json_data = {
-        "carrier": carrier,
-        "cellularActionType": cellular_action_type,
-        "effectiveDate": effective_date,
-        "feeCategory": "CELLULAR_RETAIL",
-        "feeCode": "CellularArr.ATT",
-    }
-
-    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/cellularactionfeecode", json_data)
-
     try:
-        create_response = dev.post("/billing-bookkeeper/v1/cellularactionfeecode", json=json_data)
+        create_response = environment.api.billing_bookkeeper.create_cellular_action_fee_code(
+            carrier=carrier,
+            cellular_action_type=cellular_action_type,
+            effective_date=effective_date,
+            fee_category="CELLULAR_RETAIL",
+            fee_code="CellularArr.ATT",
+        )
     except httpx.HTTPStatusError as e:
         print(f"\n⚠️  API Error Response: {e.response.text}")
         print(f"⚠️  Status Code: {e.response.status_code}")

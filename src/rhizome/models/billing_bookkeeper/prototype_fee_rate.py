@@ -31,7 +31,9 @@ class PrototypeFeeRate(RhizomeModel, table=False):
     fee_code: str = Field(max_length=25, description="Fee Code")
     currency: str = Field(max_length=3, description="Currency")
     apply_type: str = Field(description="Apply Type")
-    per_item_amount: Decimal | None = Field(default=None, max_digits=12, decimal_places=3, description="Per Item Amount")
+    per_item_amount: Decimal | None = Field(
+        default=None, max_digits=12, decimal_places=3, description="Per Item Amount"
+    )
     percentage: Decimal | None = Field(default=None, max_digits=5, decimal_places=2, description="Percentage")
     created_timestamp: datetime.datetime = Field(description="Created Timestamp")
     modified_timestamp: datetime.datetime = Field(description="Modified Timestamp")
