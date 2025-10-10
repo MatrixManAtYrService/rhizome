@@ -34,6 +34,24 @@ from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingG
 from rhizome.models.table_list import BillingBookkeeperTable
 from tests.conftest import RunningStolonServer
 
+# Framework identification prefix for all created resources
+# ⚠️  CHANGING THIS PREFIX WILL CREATE NEW RESOURCES:
+# - This prefix is applied to ALL resources created by this test framework:
+#   * Billing entity entity_uuid: "{PREFIX}{index}" (e.g., "MFF9535862249")
+#   * Alliance codes: "{PREFIX}{0001}" (e.g., "MFF0001", "MFF0002")
+#   * Revenue share groups: "{PREFIX}_Test_{uuid}" (e.g., "MFF_Test_a1b2")
+# - Changing this value (e.g., "MFF" -> "TEST") will cause the fixtures to create
+#   NEW billing entities and supporting resources instead of reusing existing ones
+# - This allows testing the full creation process from scratch
+# - Resources CANNOT be deleted (API does not support DELETE), so they will accumulate in dev1
+# - Use different prefixes to create separate test resellers (e.g., "TEST1", "TEST2")
+# - Keep as "MFF" to reuse the existing shared test reseller
+# - To find all framework-created resources, search for this prefix in:
+#   * billing_entity.entity_uuid
+#   * invoice_alliance_code.alliance_code
+#   * revenue_share_group.revenue_share_group
+RESELLER_PREFIX = "MFF"
+
 
 def _get_future_date(days_ahead: int = 30) -> str:
     """Get a future date in YYYY-MM-DD format.
@@ -96,9 +114,9 @@ def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict[st
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
-    # Create revenue share group with MFF prefix
-    group_name = f"MFF_Test_{uuid.uuid4().hex[:4]}"
-    short_desc = f"MFF-{group_name}"
+    # Create revenue share group with reseller prefix
+    group_name = f"{RESELLER_PREFIX}_Test_{uuid.uuid4().hex[:4]}"
+    short_desc = f"{RESELLER_PREFIX}-{group_name}"
     description = f"The FirstData/Fiserv reseller in EMEA for {group_name}"
 
     json_data = {"revenueShareGroup": group_name, "shortDesc": short_desc, "description": description}
@@ -127,7 +145,7 @@ def billing_entity(
 ) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
-    Uses rhizome to check if an MFF test reseller already exists.
+    Uses rhizome to check if a test reseller with RESELLER_PREFIX already exists.
     If found, reuses it. Otherwise, creates a new one.
 
     Scope: module - reuse across all tests in this module.
@@ -137,20 +155,20 @@ def billing_entity(
     from stolon.client import StolonClient
     from stolon.environments.dev.http import DevHttp
 
-    # First, check if an MFF reseller already exists using rhizome
+    # First, check if a reseller with our prefix already exists using rhizome
     BillingEntityModel = cast(type[BillingEntity], dev_bb.get_model(BillingBookkeeperTable.billing_entity))
 
-    # Query for any MFF reseller (sanitize=False to get real UUIDs for API calls)
+    # Query for any reseller with our prefix (sanitize=False to get real UUIDs for API calls)
     existing_entity = dev_bb.select_first(
         select(BillingEntityModel)
         .where(BillingEntityModel.entity_type == "RESELLER")
-        .where(BillingEntityModel.entity_uuid.like("MFF%"))  # type: ignore[attr-defined]  # SQLModel columns have .like()
+        .where(BillingEntityModel.entity_uuid.like(f"{RESELLER_PREFIX}%"))  # type: ignore[attr-defined]  # SQLModel columns have .like()
         .order_by(BillingEntityModel.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
         sanitize=False,
     )
 
     if existing_entity:
-        print(f"\n♻️  Reusing existing MFF reseller: {existing_entity.name}")
+        print(f"\n♻️  Reusing existing {RESELLER_PREFIX} reseller: {existing_entity.name}")
         print(f"    billing_entity_uuid: {existing_entity.uuid}")
         print(f"    entity_uuid: {existing_entity.entity_uuid}")
 
@@ -169,9 +187,11 @@ def billing_entity(
     stolon_client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(stolon_client)
 
-    # Generate unique 13-char entity UUID
-    entity_uuid = f"MFF{uuid.uuid4().hex[:10].upper()}"
-    entity_name = f"MFF Test Reseller {entity_uuid[-4:]}"
+    # Generate unique 13-char entity UUID using prefix
+    # UUID format: PREFIX + random hex (total 13 chars)
+    remaining_chars = 13 - len(RESELLER_PREFIX)
+    entity_uuid = f"{RESELLER_PREFIX}{uuid.uuid4().hex[:remaining_chars].upper()}"
+    entity_name = f"{RESELLER_PREFIX} Test Reseller {entity_uuid[-4:]}"
 
     json_data = {"entityUuid": entity_uuid, "entityType": "RESELLER", "name": entity_name}
 
@@ -215,12 +235,12 @@ def alliance_code(
     """Get or create an alliance code for testing.
 
     Checks if the billing entity already has an alliance code.
-    If found, reuses it. Otherwise, creates a new one.
+    If found, reuses it. Otherwise, creates a new one with framework prefix + incremented number.
+
+    Alliance codes use format: {RESELLER_PREFIX}{0000} (e.g., "MFF0001", "MFF0002")
 
     Scope: module - reuse across all tests in this module.
     """
-    import uuid
-
     from stolon.client import StolonClient
     from stolon.environments.dev.http import DevHttp
 
@@ -254,7 +274,32 @@ def alliance_code(
     client = StolonClient(home=stolon_server.home, data_in_logs=False)
     dev = DevHttp(client)
 
-    alliance_code_value = f"9{uuid.uuid4().hex[:2].upper()}"
+    # Query for existing alliance codes with our prefix to find next available number
+    # Alliance codes are 3 chars, so format: PREFIX + 4-digit padded number (e.g., "MFF0001")
+    # We'll use the format that fits: if prefix is "MFF", result is "MFF0001" (7 chars total)
+    existing_codes = dev_bb.select_all(
+        select(InvoiceAllianceCodeModel.alliance_code)
+        .where(InvoiceAllianceCodeModel.alliance_code.like(f"{RESELLER_PREFIX}%"))  # type: ignore[attr-defined]
+        .order_by(InvoiceAllianceCodeModel.alliance_code.desc()),  # type: ignore[attr-defined]
+        sanitize=False,
+    )
+
+    # Find the highest number used
+    max_num = 0
+    for code_obj in existing_codes:
+        code = code_obj if isinstance(code_obj, str) else code_obj.alliance_code
+        # Extract numeric suffix after prefix
+        numeric_part = code[len(RESELLER_PREFIX) :]
+        if numeric_part.isdigit():
+            max_num = max(max_num, int(numeric_part))
+
+    # Increment to get next number
+    next_num = max_num + 1
+
+    # Format with 4 digits of padding (0001, 0002, ..., 9999)
+    alliance_code_value = f"{RESELLER_PREFIX}{next_num:04d}"
+
+    print(f"    Using alliance code: {alliance_code_value} (next after {max_num:04d})")
 
     json_data = {"billingEntityUuid": billing_entity_uuid, "allianceCode": alliance_code_value, "invoiceCount": 1}
 
@@ -531,7 +576,7 @@ def billing_hierarchy(
     MERCHANT_SCHEDULE_PARENT = merchant_schedule_parent
     MERCHANT_FEE_RATE_PARENT = merchant_fee_rate_parent
 
-    print(f"\n📋 Using parent hierarchies from dev1:")
+    print("\n📋 Using parent hierarchies from dev1:")
     print(f"    MERCHANT_SCHEDULE parent: {MERCHANT_SCHEDULE_PARENT}")
     print(f"    MERCHANT_FEE_RATE parent: {MERCHANT_FEE_RATE_PARENT}")
 
@@ -673,15 +718,14 @@ def partner_config(
 
     effective_date = _get_future_date(days_ahead=30)
 
+    # Use minimal config pattern based on Surega's MERCHANT_SCHEDULE configs in demo
+    # Most MERCHANT_SCHEDULE configs only set settlementMethod and invoiceMethod
     json_data = {
         "billingEntityUuid": billing_entity_uuid,
         "effectiveDate": effective_date,
         "hierarchyType": "MERCHANT_SCHEDULE",
         "settlementMethod": "Goleo",
-        "revenueShareGroup": "Default",
-        "postMethod": "PerCycle",
-        "invoiceMethod": "ResellerDetail",
-        "invoiceNumberFormat": "AllianceCode",
+        "invoiceMethod": "MerchantDetail",
     }
 
     _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/partnerconfig", json_data)
@@ -868,7 +912,7 @@ def cellular_action_fee_code(
 @pytest.mark.external_infra
 def test_create_revenue_share_group(revenue_share_group: dict[str, Any]) -> None:
     """Test creating a revenue share group."""
-    assert revenue_share_group["name"].startswith("MFF_Test_")
+    assert revenue_share_group["name"].startswith(f"{RESELLER_PREFIX}_Test_")
     assert revenue_share_group["uuid"]
     assert len(revenue_share_group["uuid"]) == 26
 
@@ -876,9 +920,9 @@ def test_create_revenue_share_group(revenue_share_group: dict[str, Any]) -> None
 @pytest.mark.external_infra
 def test_create_billing_entity(billing_entity: dict[str, Any]) -> None:
     """Test creating a billing entity."""
-    # entity_uuid might be masked (starts with "Hash") or real (starts with "MFF")
+    # entity_uuid might be masked (starts with "Hash") or real (starts with RESELLER_PREFIX)
     entity_uuid = billing_entity["entity_uuid"]
-    assert entity_uuid.startswith("MFF") or entity_uuid.startswith(
+    assert entity_uuid.startswith(RESELLER_PREFIX) or entity_uuid.startswith(
         "Hash"
     ), f"Unexpected entity_uuid format: {entity_uuid}"
     assert billing_entity["billing_entity_uuid"]
@@ -889,8 +933,7 @@ def test_create_billing_entity(billing_entity: dict[str, Any]) -> None:
 @pytest.mark.external_infra
 def test_create_alliance_code(alliance_code: dict[str, Any]) -> None:
     """Test creating an alliance code (depends on billing_entity)."""
-    assert alliance_code["alliance_code"].startswith("9")
-    assert len(alliance_code["alliance_code"]) == 3
+    assert alliance_code["alliance_code"].startswith(RESELLER_PREFIX)
     assert alliance_code["billing_entity_uuid"]
 
 
