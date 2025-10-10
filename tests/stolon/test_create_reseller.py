@@ -42,19 +42,20 @@ logging.getLogger("httpx").setLevel(logging.DEBUG)
 
 # Framework identification prefix for all created resources
 # ⚠️  CHANGING THIS PREFIX WILL CREATE NEW RESOURCES:
-# - This prefix is applied to ALL resources created by this test framework:
-#   * Billing entity entity_uuid: "{PREFIX}{index}" (e.g., "MFF9535862249")
-#   * Alliance codes: "{PREFIX}{0001}" (e.g., "MFF0001", "MFF0002")
+# - This prefix is applied to resources created by this test framework:
+#   * Billing entity entity_uuid: "{PREFIX}{hex}" (e.g., "MFF9535862249")
 #   * Revenue share groups: "{PREFIX}_Test_{uuid}" (e.g., "MFF_Test_a1b2")
+# - Alliance codes are NOT prefixed (API requires exactly 3 chars: ^[A-Z0-9]{3}$)
+#   They use sequential 3-digit numbers (001, 002, etc.) and are tied to the reseller
+#   via billing_entity_uuid foreign key
 # - Changing this value (e.g., "MFF" -> "TEST") will cause the fixtures to create
 #   NEW billing entities and supporting resources instead of reusing existing ones
 # - This allows testing the full creation process from scratch
 # - Resources CANNOT be deleted (API does not support DELETE), so they will accumulate in dev1
-# - Use different prefixes to create separate test resellers (e.g., "TEST1", "TEST2")
+# - Use different prefixes to create separate test resellers (e.g., "TEST", "TST", "DEV")
 # - Keep as "MFF" to reuse the existing shared test reseller
 # - To find all framework-created resources, search for this prefix in:
 #   * billing_entity.entity_uuid
-#   * invoice_alliance_code.alliance_code
 #   * revenue_share_group.revenue_share_group
 RESELLER_PREFIX = "MFF"
 
@@ -194,9 +195,11 @@ def alliance_code(billing_entity: dict[str, Any], environment: dev.Dev) -> Gener
     """Get or create an alliance code for testing.
 
     Checks if the billing entity already has an alliance code.
-    If found, reuses it. Otherwise, creates a new one with framework prefix + incremented number.
+    If found, reuses it. Otherwise, creates a new one with sequential 3-digit number.
 
-    Alliance codes use format: {RESELLER_PREFIX}{0000} (e.g., "MFF0001", "MFF0002")
+    Alliance codes must be exactly 3 characters (API validation: ^[A-Z0-9]{3}$).
+    Uses format: 3-digit numbers (001, 002, ..., 999).
+    The alliance code is tied to the reseller via the billing_entity_uuid foreign key.
 
     Scope: module - reuse across all tests in this module.
     """
@@ -228,32 +231,32 @@ def alliance_code(billing_entity: dict[str, Any], environment: dev.Dev) -> Gener
     # No existing alliance code found, create a new one
     print("\n=== Creating New Alliance Code ===")
 
-    # Query for existing alliance codes with our prefix to find next available number
-    # Alliance codes are 3 chars, so format: PREFIX + 4-digit padded number (e.g., "MFF0001")
-    # We'll use the format that fits: if prefix is "MFF", result is "MFF0001" (7 chars total)
+    # Alliance codes must be exactly 3 characters (API validation: ^[A-Z0-9]{3}$)
+    # Since we can't include the reseller prefix, we use simple sequential 3-char codes
+    # The billing_entity_uuid foreign key ties it to the reseller
+    # Format: 3-digit number (001, 002, ..., 999)
     existing_codes = environment.db.billing_bookkeeper.select_all(
         select(InvoiceAllianceCodeModel)
-        .where(InvoiceAllianceCodeModel.alliance_code.like(f"{RESELLER_PREFIX}%"))  # type: ignore[attr-defined]
+        .where(InvoiceAllianceCodeModel.alliance_code.regexp_match(r"^\d{3}$"))  # type: ignore[attr-defined]
         .order_by(InvoiceAllianceCodeModel.alliance_code.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
 
-    # Find the highest number used
+    # Find the highest numeric code used
     max_num = 0
     for code_obj in existing_codes:
         code = code_obj.alliance_code
-        # Extract numeric suffix after prefix
-        numeric_part = code[len(RESELLER_PREFIX) :]
-        if numeric_part.isdigit():
-            max_num = max(max_num, int(numeric_part))
+        if code.isdigit():
+            max_num = max(max_num, int(code))
 
     # Increment to get next number
     next_num = max_num + 1
 
-    # Format with 4 digits of padding (0001, 0002, ..., 9999)
-    alliance_code_value = f"{RESELLER_PREFIX}{next_num:04d}"
+    # Format as 3-digit code (001, 002, ..., 999)
+    alliance_code_value = f"{next_num:03d}"
 
-    print(f"    Using alliance code: {alliance_code_value} (next after {max_num:04d})")
+    print(f"    Using alliance code: {alliance_code_value} (next after {max_num:03d})")
+    print(f"    Note: Alliance codes are tied to reseller via billing_entity_uuid: {billing_entity_uuid}")
 
     create_response = environment.api.billing_bookkeeper.create_alliance_code(
         billing_entity_uuid=billing_entity_uuid,
@@ -825,9 +828,8 @@ def test_create_complete_reseller(
     assert billing_hierarchy["billing_entity_uuid"] == billing_entity_uuid
     assert partner_config["billing_entity_uuid"] == billing_entity_uuid
 
-    # Validate alliance code format (only for newly created codes)
-    if not alliance_code.get("was_reused"):
-        assert alliance_code["alliance_code"].startswith(RESELLER_PREFIX)
+    # Validate alliance code format (must be exactly 3 characters)
+    assert len(alliance_code["alliance_code"]) == 3, "Alliance code must be exactly 3 characters"
 
     # Validate billing hierarchy has both required hierarchy types
     assert billing_hierarchy["merchant_schedule_uuid"]
