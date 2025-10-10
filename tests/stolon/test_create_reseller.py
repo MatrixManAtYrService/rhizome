@@ -501,6 +501,9 @@ def billing_hierarchy(
 
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
+    # Get the model first so we can use it in queries
+    BillingHierarchyModel = cast(type[BillingHierarchy], dev_bb.get_model(BillingBookkeeperTable.billing_hierarchy))
+
     # Query for common parent hierarchies in dev1
     # Find the most commonly used parent hierarchies for each type
     merchant_schedule_parent = dev_bb.select_first(
@@ -533,8 +536,6 @@ def billing_hierarchy(
     print(f"    MERCHANT_FEE_RATE parent: {MERCHANT_FEE_RATE_PARENT}")
 
     # Check if billing hierarchy entries already exist for this billing entity
-    BillingHierarchyModel = cast(type[BillingHierarchy], dev_bb.get_model(BillingBookkeeperTable.billing_hierarchy))
-
     existing_schedule_hierarchy = dev_bb.select_first(
         select(BillingHierarchyModel)
         .where(BillingHierarchyModel.billing_entity_uuid == billing_entity_uuid)
