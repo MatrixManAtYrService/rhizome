@@ -825,8 +825,9 @@ def test_create_complete_reseller(
     assert billing_hierarchy["billing_entity_uuid"] == billing_entity_uuid
     assert partner_config["billing_entity_uuid"] == billing_entity_uuid
 
-    # Validate alliance code format
-    assert alliance_code["alliance_code"].startswith(RESELLER_PREFIX)
+    # Validate alliance code format (only for newly created codes)
+    if not alliance_code.get("was_reused"):
+        assert alliance_code["alliance_code"].startswith(RESELLER_PREFIX)
 
     # Validate billing hierarchy has both required hierarchy types
     assert billing_hierarchy["merchant_schedule_uuid"]
