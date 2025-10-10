@@ -6,7 +6,6 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_ledger_account_key import ApiLedgerAccountKey
-from ...models.response_error import ResponseError
 from ...types import UNSET, Response
 
 
@@ -31,9 +30,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiLedgerAccountKey, ResponseError]]:
+) -> Optional[ApiLedgerAccountKey]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiLedgerAccountKey.from_dict(response.json())
 
         return response_200
 
@@ -55,7 +54,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiLedgerAccountKey, ResponseError]]:
+) -> Response[ApiLedgerAccountKey]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -68,7 +67,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     ledger_account_key: str,
-) -> Response[Union[ApiLedgerAccountKey, ResponseError]]:
+) -> Response[ApiLedgerAccountKey]:
     """Get ledger account key using the key value
 
     Args:
@@ -79,7 +78,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiLedgerAccountKey, ResponseError]]
+        Response[ApiLedgerAccountKey]
     """
 
     kwargs = _get_kwargs(
@@ -97,7 +96,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     ledger_account_key: str,
-) -> Optional[Union[ApiLedgerAccountKey, ResponseError]]:
+) -> Optional[ApiLedgerAccountKey]:
     """Get ledger account key using the key value
 
     Args:
@@ -108,7 +107,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiLedgerAccountKey, ResponseError]
+        ApiLedgerAccountKey
     """
 
     return sync_detailed(
@@ -121,7 +120,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     ledger_account_key: str,
-) -> Response[Union[ApiLedgerAccountKey, ResponseError]]:
+) -> Response[ApiLedgerAccountKey]:
     """Get ledger account key using the key value
 
     Args:
@@ -132,7 +131,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiLedgerAccountKey, ResponseError]]
+        Response[ApiLedgerAccountKey]
     """
 
     kwargs = _get_kwargs(
@@ -148,7 +147,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     ledger_account_key: str,
-) -> Optional[Union[ApiLedgerAccountKey, ResponseError]]:
+) -> Optional[ApiLedgerAccountKey]:
     """Get ledger account key using the key value
 
     Args:
@@ -159,7 +158,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiLedgerAccountKey, ResponseError]
+        ApiLedgerAccountKey
     """
 
     return (

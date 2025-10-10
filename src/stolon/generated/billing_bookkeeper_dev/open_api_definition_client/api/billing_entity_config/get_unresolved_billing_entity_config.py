@@ -7,6 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_billing_entity_config import ApiBillingEntityConfig
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -46,9 +47,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiBillingEntityConfig, list["ApiBillingEntityConfig"]]]:
+) -> Optional[Union[ResponseError, list["ApiBillingEntityConfig"]]]:
     if response.status_code == 200:
-        response_200 = ApiBillingEntityConfig.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -80,7 +81,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiBillingEntityConfig, list["ApiBillingEntityConfig"]]]:
+) -> Response[Union[ResponseError, list["ApiBillingEntityConfig"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -97,7 +98,7 @@ def sync_detailed(
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiBillingEntityConfig, list["ApiBillingEntityConfig"]]]:
+) -> Response[Union[ResponseError, list["ApiBillingEntityConfig"]]]:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -112,7 +113,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]]
+        Response[Union[ResponseError, list['ApiBillingEntityConfig']]]
     """
 
     kwargs = _get_kwargs(
@@ -138,7 +139,7 @@ def sync(
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiBillingEntityConfig, list["ApiBillingEntityConfig"]]]:
+) -> Optional[Union[ResponseError, list["ApiBillingEntityConfig"]]]:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -153,7 +154,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]
+        Union[ResponseError, list['ApiBillingEntityConfig']]
     """
 
     return sync_detailed(
@@ -174,7 +175,7 @@ async def asyncio_detailed(
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiBillingEntityConfig, list["ApiBillingEntityConfig"]]]:
+) -> Response[Union[ResponseError, list["ApiBillingEntityConfig"]]]:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -189,7 +190,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]]
+        Response[Union[ResponseError, list['ApiBillingEntityConfig']]]
     """
 
     kwargs = _get_kwargs(
@@ -213,7 +214,7 @@ async def asyncio(
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiBillingEntityConfig, list["ApiBillingEntityConfig"]]]:
+) -> Optional[Union[ResponseError, list["ApiBillingEntityConfig"]]]:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -228,7 +229,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]
+        Union[ResponseError, list['ApiBillingEntityConfig']]
     """
 
     return (

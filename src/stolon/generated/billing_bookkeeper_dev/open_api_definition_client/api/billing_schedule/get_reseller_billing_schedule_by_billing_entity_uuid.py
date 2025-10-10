@@ -7,14 +7,15 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_billing_schedule import ApiBillingSchedule
-from ...types import UNSET, Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     r_id: str,
     *,
-    billing_entity_uuid: str,
     date: datetime.date,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
     x_clover_appenv: str,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -22,10 +23,12 @@ def _get_kwargs(
 
     params: dict[str, Any] = {}
 
-    params["billingEntityUuid"] = billing_entity_uuid
-
     json_date = date.isoformat()
     params["date"] = json_date
+
+    params["billingEntityUuid"] = billing_entity_uuid
+
+    params["entityUuid"] = entity_uuid
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -78,16 +81,18 @@ def sync_detailed(
     r_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
-    billing_entity_uuid: str,
     date: datetime.date,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
     x_clover_appenv: str,
 ) -> Response[ApiBillingSchedule]:
-    """Get a billing schedule for a billing entity by billing entity UUID
+    """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
         r_id (str):
-        billing_entity_uuid (str):
         date (datetime.date):
+        billing_entity_uuid (Union[Unset, str]):
+        entity_uuid (Union[Unset, str]):
         x_clover_appenv (str):
 
     Raises:
@@ -100,8 +105,9 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         r_id=r_id,
-        billing_entity_uuid=billing_entity_uuid,
         date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
         x_clover_appenv=x_clover_appenv,
     )
 
@@ -116,16 +122,18 @@ def sync(
     r_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
-    billing_entity_uuid: str,
     date: datetime.date,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
     x_clover_appenv: str,
 ) -> Optional[ApiBillingSchedule]:
-    """Get a billing schedule for a billing entity by billing entity UUID
+    """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
         r_id (str):
-        billing_entity_uuid (str):
         date (datetime.date):
+        billing_entity_uuid (Union[Unset, str]):
+        entity_uuid (Union[Unset, str]):
         x_clover_appenv (str):
 
     Raises:
@@ -139,8 +147,9 @@ def sync(
     return sync_detailed(
         r_id=r_id,
         client=client,
-        billing_entity_uuid=billing_entity_uuid,
         date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
         x_clover_appenv=x_clover_appenv,
     ).parsed
 
@@ -149,16 +158,18 @@ async def asyncio_detailed(
     r_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
-    billing_entity_uuid: str,
     date: datetime.date,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
     x_clover_appenv: str,
 ) -> Response[ApiBillingSchedule]:
-    """Get a billing schedule for a billing entity by billing entity UUID
+    """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
         r_id (str):
-        billing_entity_uuid (str):
         date (datetime.date):
+        billing_entity_uuid (Union[Unset, str]):
+        entity_uuid (Union[Unset, str]):
         x_clover_appenv (str):
 
     Raises:
@@ -171,8 +182,9 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         r_id=r_id,
-        billing_entity_uuid=billing_entity_uuid,
         date=date,
+        billing_entity_uuid=billing_entity_uuid,
+        entity_uuid=entity_uuid,
         x_clover_appenv=x_clover_appenv,
     )
 
@@ -185,16 +197,18 @@ async def asyncio(
     r_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
-    billing_entity_uuid: str,
     date: datetime.date,
+    billing_entity_uuid: Union[Unset, str] = UNSET,
+    entity_uuid: Union[Unset, str] = UNSET,
     x_clover_appenv: str,
 ) -> Optional[ApiBillingSchedule]:
-    """Get a billing schedule for a billing entity by billing entity UUID
+    """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
         r_id (str):
-        billing_entity_uuid (str):
         date (datetime.date):
+        billing_entity_uuid (Union[Unset, str]):
+        entity_uuid (Union[Unset, str]):
         x_clover_appenv (str):
 
     Raises:
@@ -209,8 +223,9 @@ async def asyncio(
         await asyncio_detailed(
             r_id=r_id,
             client=client,
-            billing_entity_uuid=billing_entity_uuid,
             date=date,
+            billing_entity_uuid=billing_entity_uuid,
+            entity_uuid=entity_uuid,
             x_clover_appenv=x_clover_appenv,
         )
     ).parsed

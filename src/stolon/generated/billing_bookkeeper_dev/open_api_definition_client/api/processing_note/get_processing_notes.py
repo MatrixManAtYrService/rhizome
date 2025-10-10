@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_processing_note import ApiProcessingNote
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -40,11 +40,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiProcessingNote]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiProcessingNote.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -54,9 +52,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiProcessingNote]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -73,7 +69,7 @@ def sync_detailed(
     note_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiProcessingNote]:
+) -> Response[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -88,7 +84,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingNote]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -114,7 +110,7 @@ def sync(
     note_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiProcessingNote]:
+) -> Optional[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -129,7 +125,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingNote
+        ResponseError
     """
 
     return sync_detailed(
@@ -150,7 +146,7 @@ async def asyncio_detailed(
     note_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiProcessingNote]:
+) -> Response[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -165,7 +161,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingNote]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -189,7 +185,7 @@ async def asyncio(
     note_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiProcessingNote]:
+) -> Optional[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -204,7 +200,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingNote
+        ResponseError
     """
 
     return (

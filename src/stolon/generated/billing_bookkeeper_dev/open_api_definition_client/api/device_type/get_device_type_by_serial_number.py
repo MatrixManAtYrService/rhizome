@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_device_type import ApiDeviceType
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -20,9 +21,11 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ApiDeviceType]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[Union[ApiDeviceType, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiDeviceType.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -42,7 +45,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ApiDeviceType]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[Union[ApiDeviceType, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -55,7 +60,7 @@ def sync_detailed(
     serial_number: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[ApiDeviceType]:
+) -> Response[Union[ApiDeviceType, ResponseError]]:
     """Get device type for the specified serial number
 
     Args:
@@ -66,7 +71,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiDeviceType]
+        Response[Union[ApiDeviceType, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -84,7 +89,7 @@ def sync(
     serial_number: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[ApiDeviceType]:
+) -> Optional[Union[ApiDeviceType, ResponseError]]:
     """Get device type for the specified serial number
 
     Args:
@@ -95,7 +100,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiDeviceType
+        Union[ApiDeviceType, ResponseError]
     """
 
     return sync_detailed(
@@ -108,7 +113,7 @@ async def asyncio_detailed(
     serial_number: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[ApiDeviceType]:
+) -> Response[Union[ApiDeviceType, ResponseError]]:
     """Get device type for the specified serial number
 
     Args:
@@ -119,7 +124,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiDeviceType]
+        Response[Union[ApiDeviceType, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -135,7 +140,7 @@ async def asyncio(
     serial_number: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[ApiDeviceType]:
+) -> Optional[Union[ApiDeviceType, ResponseError]]:
     """Get device type for the specified serial number
 
     Args:
@@ -146,7 +151,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiDeviceType
+        Union[ApiDeviceType, ResponseError]
     """
 
     return (

@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_device_type import ApiDeviceType
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -28,9 +28,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ApiDeviceType]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiDeviceType.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -40,7 +40,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ApiDeviceType]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -53,7 +53,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     is_group: Union[Unset, bool] = UNSET,
-) -> Response[ApiDeviceType]:
+) -> Response[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -64,7 +64,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiDeviceType]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -82,7 +82,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     is_group: Union[Unset, bool] = UNSET,
-) -> Optional[ApiDeviceType]:
+) -> Optional[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -93,7 +93,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiDeviceType
+        ResponseError
     """
 
     return sync_detailed(
@@ -106,7 +106,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     is_group: Union[Unset, bool] = UNSET,
-) -> Response[ApiDeviceType]:
+) -> Response[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -117,7 +117,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiDeviceType]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -133,7 +133,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     is_group: Union[Unset, bool] = UNSET,
-) -> Optional[ApiDeviceType]:
+) -> Optional[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -144,7 +144,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiDeviceType
+        ResponseError
     """
 
     return (

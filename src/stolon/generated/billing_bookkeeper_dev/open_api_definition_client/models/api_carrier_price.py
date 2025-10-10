@@ -7,61 +7,42 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.api_device_info import ApiDeviceInfo
     from ..models.api_price_adjustment import ApiPriceAdjustment
     from ..models.api_price_detail import ApiPriceDetail
-    from ..models.api_price_modifier import ApiPriceModifier
     from ..models.api_tier_pricing import ApiTierPricing
 
 
-T = TypeVar("T", bound="ApiDevicePrice")
+T = TypeVar("T", bound="ApiCarrierPrice")
 
 
 @_attrs_define
-class ApiDevicePrice:
-    """qualifiers for the tiered rule
+class ApiCarrierPrice:
+    """collection of pricing quotes by cellular carrier
 
     Attributes:
-        device_info (Union[Unset, list['ApiDeviceInfo']]): details for devices for which this device pricing data
-            applies
+        carrier (Union[Unset, str]): cellular carrier, associated with the SIM, that the cellular pricing is for
+        merchant_plan_uuid (Union[Unset, str]): 13-character UUID of the merchant plan that the cellular pricing is for,
+            or null when applies to all plans without plan-specific pricing
         base_price (Union[Unset, ApiPriceDetail]):
-        trial_price (Union[Unset, ApiPriceDetail]):
-        modifiers (Union[Unset, list['ApiPriceModifier']]): potential modifications to the base price of the current
-            device(s)
-        tier_pricing (Union[Unset, list['ApiTierPricing']]): tiered pricing for the current device(s)
-        adjustments (Union[Unset, list['ApiPriceAdjustment']]): potential adjustments to the base price of the plan
+        tier_pricing (Union[Unset, list['ApiTierPricing']]): tiered pricing for the current carrier's SIMs
+        adjustments (Union[Unset, list['ApiPriceAdjustment']]): potential adjustments to the cellular base price
     """
 
-    device_info: Union[Unset, list["ApiDeviceInfo"]] = UNSET
+    carrier: Union[Unset, str] = UNSET
+    merchant_plan_uuid: Union[Unset, str] = UNSET
     base_price: Union[Unset, "ApiPriceDetail"] = UNSET
-    trial_price: Union[Unset, "ApiPriceDetail"] = UNSET
-    modifiers: Union[Unset, list["ApiPriceModifier"]] = UNSET
     tier_pricing: Union[Unset, list["ApiTierPricing"]] = UNSET
     adjustments: Union[Unset, list["ApiPriceAdjustment"]] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        device_info: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.device_info, Unset):
-            device_info = []
-            for device_info_item_data in self.device_info:
-                device_info_item = device_info_item_data.to_dict()
-                device_info.append(device_info_item)
+        carrier = self.carrier
+
+        merchant_plan_uuid = self.merchant_plan_uuid
 
         base_price: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.base_price, Unset):
             base_price = self.base_price.to_dict()
-
-        trial_price: Union[Unset, dict[str, Any]] = UNSET
-        if not isinstance(self.trial_price, Unset):
-            trial_price = self.trial_price.to_dict()
-
-        modifiers: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.modifiers, Unset):
-            modifiers = []
-            for modifiers_item_data in self.modifiers:
-                modifiers_item = modifiers_item_data.to_dict()
-                modifiers.append(modifiers_item)
 
         tier_pricing: Union[Unset, list[dict[str, Any]]] = UNSET
         if not isinstance(self.tier_pricing, Unset):
@@ -80,14 +61,12 @@ class ApiDevicePrice:
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if device_info is not UNSET:
-            field_dict["deviceInfo"] = device_info
+        if carrier is not UNSET:
+            field_dict["carrier"] = carrier
+        if merchant_plan_uuid is not UNSET:
+            field_dict["merchantPlanUuid"] = merchant_plan_uuid
         if base_price is not UNSET:
             field_dict["basePrice"] = base_price
-        if trial_price is not UNSET:
-            field_dict["trialPrice"] = trial_price
-        if modifiers is not UNSET:
-            field_dict["modifiers"] = modifiers
         if tier_pricing is not UNSET:
             field_dict["tierPricing"] = tier_pricing
         if adjustments is not UNSET:
@@ -97,19 +76,14 @@ class ApiDevicePrice:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.api_device_info import ApiDeviceInfo
         from ..models.api_price_adjustment import ApiPriceAdjustment
         from ..models.api_price_detail import ApiPriceDetail
-        from ..models.api_price_modifier import ApiPriceModifier
         from ..models.api_tier_pricing import ApiTierPricing
 
         d = dict(src_dict)
-        device_info = []
-        _device_info = d.pop("deviceInfo", UNSET)
-        for device_info_item_data in _device_info or []:
-            device_info_item = ApiDeviceInfo.from_dict(device_info_item_data)
+        carrier = d.pop("carrier", UNSET)
 
-            device_info.append(device_info_item)
+        merchant_plan_uuid = d.pop("merchantPlanUuid", UNSET)
 
         _base_price = d.pop("basePrice", UNSET)
         base_price: Union[Unset, ApiPriceDetail]
@@ -117,20 +91,6 @@ class ApiDevicePrice:
             base_price = UNSET
         else:
             base_price = ApiPriceDetail.from_dict(_base_price)
-
-        _trial_price = d.pop("trialPrice", UNSET)
-        trial_price: Union[Unset, ApiPriceDetail]
-        if isinstance(_trial_price, Unset):
-            trial_price = UNSET
-        else:
-            trial_price = ApiPriceDetail.from_dict(_trial_price)
-
-        modifiers = []
-        _modifiers = d.pop("modifiers", UNSET)
-        for modifiers_item_data in _modifiers or []:
-            modifiers_item = ApiPriceModifier.from_dict(modifiers_item_data)
-
-            modifiers.append(modifiers_item)
 
         tier_pricing = []
         _tier_pricing = d.pop("tierPricing", UNSET)
@@ -146,17 +106,16 @@ class ApiDevicePrice:
 
             adjustments.append(adjustments_item)
 
-        api_device_price = cls(
-            device_info=device_info,
+        api_carrier_price = cls(
+            carrier=carrier,
+            merchant_plan_uuid=merchant_plan_uuid,
             base_price=base_price,
-            trial_price=trial_price,
-            modifiers=modifiers,
             tier_pricing=tier_pricing,
             adjustments=adjustments,
         )
 
-        api_device_price.additional_properties = d
-        return api_device_price
+        api_carrier_price.additional_properties = d
+        return api_carrier_price
 
     @property
     def additional_keys(self) -> list[str]:

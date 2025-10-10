@@ -9,27 +9,27 @@ from dateutil.parser import isoparse
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.api_plan_price import ApiPlanPrice
+    from ..models.api_carrier_price import ApiCarrierPrice
     from ..models.api_tax_rates import ApiTaxRates
 
 
-T = TypeVar("T", bound="ApiPlanPricing")
+T = TypeVar("T", bound="ApiCellularPricing")
 
 
 @_attrs_define
-class ApiPlanPricing:
+class ApiCellularPricing:
     """
     Attributes:
-        billing_entity_uuid (Union[Unset, str]): 26-character UUID of the billing entity that the plan pricing applies
-            for
-        reseller_uuid (Union[Unset, str]): optional 13-character UUID of the reseller that the plan pricing is for
-        merchant_uuid (Union[Unset, str]): optional 13-character UUID of the merchant that the plan pricing is for
-        currency (Union[Unset, str]): 3-letter currency code for the currency that applies to all plan pricing monetary
-            amounts Example: USD.
+        billing_entity_uuid (Union[Unset, str]): 26-character UUID of the billing entity that the cellular pricing
+            applies for
+        reseller_uuid (Union[Unset, str]): optional 13-character UUID of the reseller that the cellular pricing is for
+        merchant_uuid (Union[Unset, str]): optional 13-character UUID of the merchant that the cellular pricing is for
+        currency (Union[Unset, str]): 3-letter currency code for the currency that applies to all cellular pricing
+            monetary amounts Example: USD.
         as_of_date (Union[Unset, datetime.date]): the as-of date for the pricing quotes
         tax_rates (Union[Unset, ApiTaxRates]):
-        plan_billing_method (Union[Unset, str]): method used to bill for plan SaaS fees
-        plans (Union[Unset, list['ApiPlanPrice']]): collection of plans and their pricing quotes
+        cellular_billing_method (Union[Unset, str]): method used to bill for cellular fees
+        carriers (Union[Unset, list['ApiCarrierPrice']]): collection of pricing quotes by cellular carrier
     """
 
     billing_entity_uuid: Union[Unset, str] = UNSET
@@ -38,8 +38,8 @@ class ApiPlanPricing:
     currency: Union[Unset, str] = UNSET
     as_of_date: Union[Unset, datetime.date] = UNSET
     tax_rates: Union[Unset, "ApiTaxRates"] = UNSET
-    plan_billing_method: Union[Unset, str] = UNSET
-    plans: Union[Unset, list["ApiPlanPrice"]] = UNSET
+    cellular_billing_method: Union[Unset, str] = UNSET
+    carriers: Union[Unset, list["ApiCarrierPrice"]] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -59,14 +59,14 @@ class ApiPlanPricing:
         if not isinstance(self.tax_rates, Unset):
             tax_rates = self.tax_rates.to_dict()
 
-        plan_billing_method = self.plan_billing_method
+        cellular_billing_method = self.cellular_billing_method
 
-        plans: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.plans, Unset):
-            plans = []
-            for plans_item_data in self.plans:
-                plans_item = plans_item_data.to_dict()
-                plans.append(plans_item)
+        carriers: Union[Unset, list[dict[str, Any]]] = UNSET
+        if not isinstance(self.carriers, Unset):
+            carriers = []
+            for carriers_item_data in self.carriers:
+                carriers_item = carriers_item_data.to_dict()
+                carriers.append(carriers_item)
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -83,16 +83,16 @@ class ApiPlanPricing:
             field_dict["asOfDate"] = as_of_date
         if tax_rates is not UNSET:
             field_dict["taxRates"] = tax_rates
-        if plan_billing_method is not UNSET:
-            field_dict["planBillingMethod"] = plan_billing_method
-        if plans is not UNSET:
-            field_dict["plans"] = plans
+        if cellular_billing_method is not UNSET:
+            field_dict["cellularBillingMethod"] = cellular_billing_method
+        if carriers is not UNSET:
+            field_dict["carriers"] = carriers
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.api_plan_price import ApiPlanPrice
+        from ..models.api_carrier_price import ApiCarrierPrice
         from ..models.api_tax_rates import ApiTaxRates
 
         d = dict(src_dict)
@@ -118,28 +118,28 @@ class ApiPlanPricing:
         else:
             tax_rates = ApiTaxRates.from_dict(_tax_rates)
 
-        plan_billing_method = d.pop("planBillingMethod", UNSET)
+        cellular_billing_method = d.pop("cellularBillingMethod", UNSET)
 
-        plans = []
-        _plans = d.pop("plans", UNSET)
-        for plans_item_data in _plans or []:
-            plans_item = ApiPlanPrice.from_dict(plans_item_data)
+        carriers = []
+        _carriers = d.pop("carriers", UNSET)
+        for carriers_item_data in _carriers or []:
+            carriers_item = ApiCarrierPrice.from_dict(carriers_item_data)
 
-            plans.append(plans_item)
+            carriers.append(carriers_item)
 
-        api_plan_pricing = cls(
+        api_cellular_pricing = cls(
             billing_entity_uuid=billing_entity_uuid,
             reseller_uuid=reseller_uuid,
             merchant_uuid=merchant_uuid,
             currency=currency,
             as_of_date=as_of_date,
             tax_rates=tax_rates,
-            plan_billing_method=plan_billing_method,
-            plans=plans,
+            cellular_billing_method=cellular_billing_method,
+            carriers=carriers,
         )
 
-        api_plan_pricing.additional_properties = d
-        return api_plan_pricing
+        api_cellular_pricing.additional_properties = d
+        return api_cellular_pricing
 
     @property
     def additional_keys(self) -> list[str]:

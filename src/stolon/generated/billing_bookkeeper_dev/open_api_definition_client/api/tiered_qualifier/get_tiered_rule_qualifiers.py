@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.response_error import ResponseError
+from ...models.api_tiered_qualifier import ApiTieredQualifier
 from ...types import UNSET, Response, Unset
 
 
@@ -34,9 +34,11 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[ApiTieredQualifier]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiTieredQualifier.from_dict(response.json())
 
         return response_200
 
@@ -46,7 +48,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[ApiTieredQualifier]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -61,7 +65,7 @@ def sync_detailed(
     rule_uuid: str,
     fee_category: Union[Unset, str] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
-) -> Response[ResponseError]:
+) -> Response[ApiTieredQualifier]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -74,7 +78,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiTieredQualifier]
     """
 
     kwargs = _get_kwargs(
@@ -96,7 +100,7 @@ def sync(
     rule_uuid: str,
     fee_category: Union[Unset, str] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
-) -> Optional[ResponseError]:
+) -> Optional[ApiTieredQualifier]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -109,7 +113,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiTieredQualifier
     """
 
     return sync_detailed(
@@ -126,7 +130,7 @@ async def asyncio_detailed(
     rule_uuid: str,
     fee_category: Union[Unset, str] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
-) -> Response[ResponseError]:
+) -> Response[ApiTieredQualifier]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -139,7 +143,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiTieredQualifier]
     """
 
     kwargs = _get_kwargs(
@@ -159,7 +163,7 @@ async def asyncio(
     rule_uuid: str,
     fee_category: Union[Unset, str] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
-) -> Optional[ResponseError]:
+) -> Optional[ApiTieredQualifier]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -172,7 +176,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiTieredQualifier
     """
 
     return (

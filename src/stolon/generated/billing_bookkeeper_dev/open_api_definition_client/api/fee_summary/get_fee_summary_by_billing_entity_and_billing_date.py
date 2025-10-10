@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_fee_summary_extended import ApiFeeSummaryExtended
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -57,11 +57,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiFeeSummaryExtended]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiFeeSummaryExtended.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -71,9 +69,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiFeeSummaryExtended]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -93,7 +89,7 @@ def sync_detailed(
     exclude_zero_amounts: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiFeeSummaryExtended]:
+) -> Response[ResponseError]:
     """Get fee summary(ies) for a billing entity
 
     Args:
@@ -111,7 +107,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeSummaryExtended]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -143,7 +139,7 @@ def sync(
     exclude_zero_amounts: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiFeeSummaryExtended]:
+) -> Optional[ResponseError]:
     """Get fee summary(ies) for a billing entity
 
     Args:
@@ -161,7 +157,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeSummaryExtended
+        ResponseError
     """
 
     return sync_detailed(
@@ -188,7 +184,7 @@ async def asyncio_detailed(
     exclude_zero_amounts: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiFeeSummaryExtended]:
+) -> Response[ResponseError]:
     """Get fee summary(ies) for a billing entity
 
     Args:
@@ -206,7 +202,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeSummaryExtended]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -236,7 +232,7 @@ async def asyncio(
     exclude_zero_amounts: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiFeeSummaryExtended]:
+) -> Optional[ResponseError]:
     """Get fee summary(ies) for a billing entity
 
     Args:
@@ -254,7 +250,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeSummaryExtended
+        ResponseError
     """
 
     return (

@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_misc_specifier import ApiMiscSpecifier
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -20,11 +20,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiMiscSpecifier]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiMiscSpecifier.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -34,9 +32,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiMiscSpecifier]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -49,7 +45,7 @@ def sync_detailed(
     uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[ApiMiscSpecifier]:
+) -> Response[ResponseError]:
     """Get misc specifier by UUID
 
     Args:
@@ -60,7 +56,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscSpecifier]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -78,7 +74,7 @@ def sync(
     uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[ApiMiscSpecifier]:
+) -> Optional[ResponseError]:
     """Get misc specifier by UUID
 
     Args:
@@ -89,7 +85,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscSpecifier
+        ResponseError
     """
 
     return sync_detailed(
@@ -102,7 +98,7 @@ async def asyncio_detailed(
     uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[ApiMiscSpecifier]:
+) -> Response[ResponseError]:
     """Get misc specifier by UUID
 
     Args:
@@ -113,7 +109,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscSpecifier]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -129,7 +125,7 @@ async def asyncio(
     uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[ApiMiscSpecifier]:
+) -> Optional[ResponseError]:
     """Get misc specifier by UUID
 
     Args:
@@ -140,7 +136,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscSpecifier
+        ResponseError
     """
 
     return (
