@@ -501,9 +501,36 @@ def billing_hierarchy(
 
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
-    # Common parent hierarchies from demo2 query results
-    MERCHANT_SCHEDULE_PARENT = "CP9EA77DEYD963ZK0AK1D0QN4P"
-    MERCHANT_FEE_RATE_PARENT = "YHTEVVQ3CHKB15Q27VNQQDZHVJ"
+    # Query for common parent hierarchies in dev1
+    # Find the most commonly used parent hierarchies for each type
+    merchant_schedule_parent = dev_bb.select_first(
+        select(BillingHierarchyModel.parent_billing_hierarchy_uuid)
+        .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_SCHEDULE")
+        .where(BillingHierarchyModel.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
+        .limit(1),
+        sanitize=False,
+    )
+
+    merchant_fee_rate_parent = dev_bb.select_first(
+        select(BillingHierarchyModel.parent_billing_hierarchy_uuid)
+        .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_FEE_RATE")
+        .where(BillingHierarchyModel.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
+        .limit(1),
+        sanitize=False,
+    )
+
+    if not merchant_schedule_parent or not merchant_fee_rate_parent:
+        raise ValueError(
+            "Could not find parent hierarchies in dev1. "
+            "MERCHANT_SCHEDULE and MERCHANT_FEE_RATE parent hierarchies are required."
+        )
+
+    MERCHANT_SCHEDULE_PARENT = merchant_schedule_parent
+    MERCHANT_FEE_RATE_PARENT = merchant_fee_rate_parent
+
+    print(f"\n📋 Using parent hierarchies from dev1:")
+    print(f"    MERCHANT_SCHEDULE parent: {MERCHANT_SCHEDULE_PARENT}")
+    print(f"    MERCHANT_FEE_RATE parent: {MERCHANT_FEE_RATE_PARENT}")
 
     # Check if billing hierarchy entries already exist for this billing entity
     BillingHierarchyModel = cast(type[BillingHierarchy], dev_bb.get_model(BillingBookkeeperTable.billing_hierarchy))
