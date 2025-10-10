@@ -151,14 +151,14 @@ class ApiBillingHierarchy:
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
+        if isinstance(_effective_date, Unset) or _effective_date is None:
             effective_date = UNSET
         else:
             effective_date = isoparse(_effective_date).date()
 
         _deleted_date = d.pop("deletedDate", UNSET)
         deleted_date: Union[Unset, datetime.date]
-        if isinstance(_deleted_date, Unset):
+        if isinstance(_deleted_date, Unset) or _deleted_date is None:
             deleted_date = UNSET
         else:
             deleted_date = isoparse(_deleted_date).date()
@@ -169,14 +169,14 @@ class ApiBillingHierarchy:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
+        if isinstance(_created_timestamp, Unset) or _created_timestamp is None:
             created_timestamp = UNSET
         else:
             created_timestamp = isoparse(_created_timestamp)
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
+        if isinstance(_modified_timestamp, Unset) or _modified_timestamp is None:
             modified_timestamp = UNSET
         else:
             modified_timestamp = isoparse(_modified_timestamp)
