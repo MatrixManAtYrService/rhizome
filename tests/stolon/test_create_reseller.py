@@ -23,10 +23,12 @@ from sqlmodel import select
 from rhizome.client import RhizomeClient
 from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
 from rhizome.models.billing_bookkeeper.billing_entity import BillingEntity
+from rhizome.models.billing_bookkeeper.billing_hierarchy import BillingHierarchy
 from rhizome.models.billing_bookkeeper.billing_schedule import BillingSchedule
 from rhizome.models.billing_bookkeeper.cellular_action_fee_code import CellularActionFeeCode
 from rhizome.models.billing_bookkeeper.fee_rate import FeeRate
 from rhizome.models.billing_bookkeeper.invoice_alliance_code import InvoiceAllianceCode
+from rhizome.models.billing_bookkeeper.partner_config import PartnerConfig
 from rhizome.models.billing_bookkeeper.plan_action_fee_code import PlanActionFeeCode
 from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingGroupDates
 from rhizome.models.table_list import BillingBookkeeperTable
@@ -46,7 +48,9 @@ def _get_future_date(days_ahead: int = 30) -> str:
     return future_date.strftime("%Y-%m-%d")
 
 
-def _print_curl(method: str, url: str, json_data: dict[str, Any] | None = None, token: str = "YOUR-INTERNAL-SESSION") -> None:
+def _print_curl(
+    method: str, url: str, json_data: dict[str, Any] | None = None, token: str = "YOUR-INTERNAL-SESSION"
+) -> None:
     """Print a curl command for manual recreation."""
     import json as json_module
 
@@ -118,7 +122,9 @@ def revenue_share_group(stolon_server: RunningStolonServer) -> Generator[dict[st
 
 
 @pytest.fixture(scope="module")
-def billing_entity(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def billing_entity(
+    stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
     Uses rhizome to check if an MFF test reseller already exists.
@@ -180,7 +186,7 @@ def billing_entity(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkee
     if not billing_entity_uuid:
         # Fallback: try to get it via GET (though this seems to 404 in dev1)
         print(f"\n⚠️  Response did not contain uuid field. Response: {create_response}")
-        print(f"\n=== Trying to GET Billing Entity by entity UUID ===")
+        print("\n=== Trying to GET Billing Entity by entity UUID ===")
         _print_curl("GET", f"https://dev1.dev.clover.com/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
         entity_get = dev.get(f"/billing-bookkeeper/v1/entity/entity/{entity_uuid}")
         billing_entity_uuid = entity_get.get("uuid")
@@ -196,11 +202,16 @@ def billing_entity(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkee
     }
 
     # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Billing entity {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
+    print(
+        f"\n⚠️  Note: Billing entity {billing_entity_uuid} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 @pytest.fixture(scope="module")
-def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def alliance_code(
+    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create an alliance code for testing.
 
     Checks if the billing entity already has an alliance code.
@@ -259,11 +270,16 @@ def alliance_code(billing_entity: dict[str, Any], stolon_server: RunningStolonSe
     }
 
     # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Alliance code {alliance_code_value} cannot be automatically deleted (API does not support DELETE)")
+    print(
+        f"\n⚠️  Note: Alliance code {alliance_code_value} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 @pytest.fixture(scope="module")
-def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def billing_schedule(
+    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing schedule for testing.
 
     Checks if the billing entity already has a billing schedule.
@@ -285,7 +301,7 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
     )
 
     if existing_schedule:
-        print(f"\n♻️  Reusing existing billing schedule")
+        print("\n♻️  Reusing existing billing schedule")
         print(f"    currency: {existing_schedule.default_currency}, frequency: {existing_schedule.frequency}")
         print(f"    for billing_entity: {billing_entity_uuid}")
 
@@ -322,11 +338,16 @@ def billing_schedule(billing_entity: dict[str, Any], stolon_server: RunningStolo
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
     # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Billing schedule for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
+    print(
+        f"\n⚠️  Note: Billing schedule for {billing_entity_uuid} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 @pytest.fixture(scope="module")
-def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def fee_rate(
+    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create a fee rate for testing.
 
     Checks if the billing entity already has a fee rate.
@@ -350,7 +371,7 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer,
     )
 
     if existing_fee_rate:
-        print(f"\n♻️  Reusing existing fee rate")
+        print("\n♻️  Reusing existing fee rate")
         print(f"    {existing_fee_rate.fee_category}/{existing_fee_rate.fee_code}")
         print(f"    for billing_entity: {billing_entity_uuid}")
 
@@ -386,11 +407,16 @@ def fee_rate(billing_entity: dict[str, Any], stolon_server: RunningStolonServer,
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
     # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Fee rate for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
+    print(
+        f"\n⚠️  Note: Fee rate for {billing_entity_uuid} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 @pytest.fixture(scope="module")
-def processing_group_dates(billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def processing_group_dates(
+    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create processing group dates for testing.
 
     Checks if the billing entity already has processing group dates.
@@ -414,7 +440,7 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
     )
 
     if existing_pgd:
-        print(f"\n♻️  Reusing existing processing group dates")
+        print("\n♻️  Reusing existing processing group dates")
         print(f"    hierarchy_type: {existing_pgd.hierarchy_type}")
         print(f"    for billing_entity: {billing_entity_uuid}")
 
@@ -449,11 +475,204 @@ def processing_group_dates(billing_entity: dict[str, Any], stolon_server: Runnin
     yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
 
     # Cleanup not supported - DELETE method returns 405
-    print(f"\n⚠️  Note: Processing group dates for {billing_entity_uuid} cannot be automatically deleted (API does not support DELETE)")
+    print(
+        f"\n⚠️  Note: Processing group dates for {billing_entity_uuid} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 @pytest.fixture(scope="module")
-def plan_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def billing_hierarchy(
+    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
+    """Get or create billing hierarchy entries for testing.
+
+    Creates two hierarchy entries:
+    1. MERCHANT_SCHEDULE - links to common parent hierarchy
+    2. MERCHANT_FEE_RATE - links to common parent hierarchy
+
+    Based on demo2 query results, uses common parent hierarchies that
+    already exist in the environment.
+
+    Scope: module - reuse across all tests in this module.
+    """
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+
+    # Common parent hierarchies from demo2 query results
+    MERCHANT_SCHEDULE_PARENT = "CP9EA77DEYD963ZK0AK1D0QN4P"
+    MERCHANT_FEE_RATE_PARENT = "YHTEVVQ3CHKB15Q27VNQQDZHVJ"
+
+    # Check if billing hierarchy entries already exist for this billing entity
+    BillingHierarchyModel = cast(type[BillingHierarchy], dev_bb.get_model(BillingBookkeeperTable.billing_hierarchy))
+
+    existing_schedule_hierarchy = dev_bb.select_first(
+        select(BillingHierarchyModel)
+        .where(BillingHierarchyModel.billing_entity_uuid == billing_entity_uuid)
+        .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_SCHEDULE"),
+        sanitize=False,
+    )
+
+    existing_fee_rate_hierarchy = dev_bb.select_first(
+        select(BillingHierarchyModel)
+        .where(BillingHierarchyModel.billing_entity_uuid == billing_entity_uuid)
+        .where(BillingHierarchyModel.hierarchy_type == "MERCHANT_FEE_RATE"),
+        sanitize=False,
+    )
+
+    if existing_schedule_hierarchy and existing_fee_rate_hierarchy:
+        print("\n♻️  Reusing existing billing hierarchies")
+        print(f"    MERCHANT_SCHEDULE: {existing_schedule_hierarchy.uuid}")
+        print(f"    MERCHANT_FEE_RATE: {existing_fee_rate_hierarchy.uuid}")
+        print(f"    for billing_entity: {billing_entity_uuid}")
+
+        yield {
+            "billing_entity_uuid": billing_entity_uuid,
+            "merchant_schedule_uuid": existing_schedule_hierarchy.uuid,
+            "merchant_fee_rate_uuid": existing_fee_rate_hierarchy.uuid,
+            "was_reused": True,
+        }
+        return
+
+    # Need to create one or both hierarchy entries
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+    effective_date = _get_future_date(days_ahead=30)
+
+    created_schedule_uuid = None
+    created_fee_rate_uuid = None
+
+    if not existing_schedule_hierarchy:
+        print("\n=== Creating New MERCHANT_SCHEDULE Billing Hierarchy ===")
+
+        json_data = {
+            "billingEntityUuid": billing_entity_uuid,
+            "hierarchyType": "MERCHANT_SCHEDULE",
+            "effectiveDate": effective_date,
+            "parentBillingHierarchyUuid": MERCHANT_SCHEDULE_PARENT,
+        }
+
+        _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/hierarchy", json_data)
+
+        schedule_response = dev.post("/billing-bookkeeper/v1/hierarchy", json=json_data)
+        created_schedule_uuid = schedule_response.get("uuid")
+        print(f"✓ Created MERCHANT_SCHEDULE hierarchy: {created_schedule_uuid}")
+    else:
+        created_schedule_uuid = existing_schedule_hierarchy.uuid
+        print(f"\n♻️  Reusing existing MERCHANT_SCHEDULE hierarchy: {created_schedule_uuid}")
+
+    if not existing_fee_rate_hierarchy:
+        print("\n=== Creating New MERCHANT_FEE_RATE Billing Hierarchy ===")
+
+        json_data = {
+            "billingEntityUuid": billing_entity_uuid,
+            "hierarchyType": "MERCHANT_FEE_RATE",
+            "effectiveDate": effective_date,
+            "parentBillingHierarchyUuid": MERCHANT_FEE_RATE_PARENT,
+        }
+
+        _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/hierarchy", json_data)
+
+        fee_rate_response = dev.post("/billing-bookkeeper/v1/hierarchy", json=json_data)
+        created_fee_rate_uuid = fee_rate_response.get("uuid")
+        print(f"✓ Created MERCHANT_FEE_RATE hierarchy: {created_fee_rate_uuid}")
+    else:
+        created_fee_rate_uuid = existing_fee_rate_hierarchy.uuid
+        print(f"\n♻️  Reusing existing MERCHANT_FEE_RATE hierarchy: {created_fee_rate_uuid}")
+
+    yield {
+        "billing_entity_uuid": billing_entity_uuid,
+        "merchant_schedule_uuid": created_schedule_uuid,
+        "merchant_fee_rate_uuid": created_fee_rate_uuid,
+        "was_reused": False,
+    }
+
+    # Cleanup not supported - DELETE method returns 405
+    print(
+        f"\n⚠️  Note: Billing hierarchies for {billing_entity_uuid} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
+
+
+@pytest.fixture(scope="module")
+def partner_config(
+    billing_entity: dict[str, Any], stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
+    """Get or create a partner config for testing.
+
+    Checks if the billing entity already has a partner config for MERCHANT_SCHEDULE.
+    If found, reuses it. Otherwise, creates a new one.
+
+    Partner config is required for resellers to process invoices and settlements.
+
+    Scope: module - reuse across all tests in this module.
+    """
+    from stolon.client import StolonClient
+    from stolon.environments.dev.http import DevHttp
+
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+
+    # Check if partner config already exists for this billing entity
+    PartnerConfigModel = cast(type[PartnerConfig], dev_bb.get_model(BillingBookkeeperTable.partner_config))
+
+    existing_partner_config = dev_bb.select_first(
+        select(PartnerConfigModel)
+        .where(PartnerConfigModel.billing_entity_uuid == billing_entity_uuid)
+        .where(PartnerConfigModel.hierarchy_type == "MERCHANT_SCHEDULE"),
+        sanitize=False,
+    )
+
+    if existing_partner_config:
+        print("\n♻️  Reusing existing partner config")
+        print(f"    settlement_method: {existing_partner_config.settlement_method}")
+        print(f"    revenue_share_group: {existing_partner_config.revenue_share_group}")
+        print(f"    for billing_entity: {billing_entity_uuid}")
+
+        yield {
+            "billing_entity_uuid": billing_entity_uuid,
+            "create_response": {"uuid": existing_partner_config.uuid},
+            "was_reused": True,
+        }
+        return
+
+    # No existing partner config found, create a new one
+    print("\n=== Creating New Partner Config ===")
+
+    client = StolonClient(home=stolon_server.home, data_in_logs=False)
+    dev = DevHttp(client)
+
+    effective_date = _get_future_date(days_ahead=30)
+
+    json_data = {
+        "billingEntityUuid": billing_entity_uuid,
+        "effectiveDate": effective_date,
+        "hierarchyType": "MERCHANT_SCHEDULE",
+        "settlementMethod": "Goleo",
+        "revenueShareGroup": "Default",
+        "postMethod": "PerCycle",
+        "invoiceMethod": "ResellerDetail",
+        "invoiceNumberFormat": "AllianceCode",
+    }
+
+    _print_curl("POST", "https://dev1.dev.clover.com/billing-bookkeeper/v1/partnerconfig", json_data)
+
+    create_response = dev.post("/billing-bookkeeper/v1/partnerconfig", json=json_data)
+
+    yield {"billing_entity_uuid": billing_entity_uuid, "create_response": create_response, "was_reused": False}
+
+    # Cleanup not supported - DELETE method returns 405
+    print(
+        f"\n⚠️  Note: Partner config for {billing_entity_uuid} cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
+
+
+@pytest.fixture(scope="module")
+def plan_action_fee_code(
+    stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create a plan action fee code for testing.
 
     Plan action fee codes are GLOBAL resources (not tied to billing entity).
@@ -483,7 +702,7 @@ def plan_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBillingB
     )
 
     if existing_plan_action_fee_code:
-        print(f"\n♻️  Reusing existing plan action fee code (GLOBAL)")
+        print("\n♻️  Reusing existing plan action fee code (GLOBAL)")
         print(f"    {existing_plan_action_fee_code.fee_category}/{existing_plan_action_fee_code.fee_code}")
         print(f"    plan_uuid: {test_plan_uuid}")
 
@@ -522,11 +741,16 @@ def plan_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBillingB
     yield {"merchant_plan_uuid": test_plan_uuid, "create_response": create_response, "was_reused": False}
 
     # Cleanup not supported - DELETE method returns 405
-    print("\n⚠️  Note: Plan action fee codes are global configurations and cannot be automatically deleted (API does not support DELETE)")
+    print(
+        "\n⚠️  Note: Plan action fee codes are global configurations and cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 @pytest.fixture(scope="module")
-def cellular_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper) -> Generator[dict[str, Any], None, None]:
+def cellular_action_fee_code(
+    stolon_server: RunningStolonServer, dev_bb: DevBillingBookkeeper
+) -> Generator[dict[str, Any], None, None]:
     """Get or create a cellular action fee code for testing.
 
     Cellular action fee codes are GLOBAL resources (not tied to billing entity).
@@ -560,8 +784,11 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBill
     )
 
     if existing_cellular_action_fee_code:
-        print(f"\n♻️  Reusing existing cellular action fee code (GLOBAL)")
-        print(f"    {existing_cellular_action_fee_code.carrier}/{existing_cellular_action_fee_code.cellular_action_type}")
+        print("\n♻️  Reusing existing cellular action fee code (GLOBAL)")
+        print(
+            f"    {existing_cellular_action_fee_code.carrier}/"
+            f"{existing_cellular_action_fee_code.cellular_action_type}"
+        )
         print(f"    {existing_cellular_action_fee_code.fee_category}/{existing_cellular_action_fee_code.fee_code}")
 
         yield {
@@ -599,7 +826,10 @@ def cellular_action_fee_code(stolon_server: RunningStolonServer, dev_bb: DevBill
     yield {"carrier": carrier, "create_response": create_response, "was_reused": False}
 
     # Cleanup not supported - DELETE method returns 405
-    print("\n⚠️  Note: Cellular action fee codes are global configurations and cannot be automatically deleted (API does not support DELETE)")
+    print(
+        "\n⚠️  Note: Cellular action fee codes are global configurations and cannot be automatically deleted "
+        "(API does not support DELETE)"
+    )
 
 
 # ============================================================================
@@ -620,7 +850,9 @@ def test_create_billing_entity(billing_entity: dict[str, Any]) -> None:
     """Test creating a billing entity."""
     # entity_uuid might be masked (starts with "Hash") or real (starts with "MFF")
     entity_uuid = billing_entity["entity_uuid"]
-    assert entity_uuid.startswith("MFF") or entity_uuid.startswith("Hash"), f"Unexpected entity_uuid format: {entity_uuid}"
+    assert entity_uuid.startswith("MFF") or entity_uuid.startswith(
+        "Hash"
+    ), f"Unexpected entity_uuid format: {entity_uuid}"
     assert billing_entity["billing_entity_uuid"]
     # billing_entity_uuid might be masked or real (both are 26 chars)
     assert len(billing_entity["billing_entity_uuid"]) == 26
@@ -667,3 +899,21 @@ def test_create_cellular_action_fee_code(cellular_action_fee_code: dict[str, Any
     """Test creating a cellular action fee code."""
     assert cellular_action_fee_code["carrier"] == "AT&T"
     assert cellular_action_fee_code["create_response"]
+
+
+@pytest.mark.external_infra
+def test_create_billing_hierarchy(billing_hierarchy: dict[str, Any]) -> None:
+    """Test creating billing hierarchy entries (depends on billing_entity)."""
+    assert billing_hierarchy["billing_entity_uuid"]
+    assert billing_hierarchy["merchant_schedule_uuid"]
+    assert billing_hierarchy["merchant_fee_rate_uuid"]
+    # Both UUIDs should be 26 characters
+    assert len(billing_hierarchy["merchant_schedule_uuid"]) == 26
+    assert len(billing_hierarchy["merchant_fee_rate_uuid"]) == 26
+
+
+@pytest.mark.external_infra
+def test_create_partner_config(partner_config: dict[str, Any]) -> None:
+    """Test creating a partner config (depends on billing_entity)."""
+    assert partner_config["billing_entity_uuid"]
+    assert partner_config["create_response"]

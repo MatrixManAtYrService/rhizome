@@ -40,7 +40,7 @@ CLASS_TO_ENUM_MAP = {v.__name__: k for k, v in environment_type.items()}
 
 def _parse_test_parameters(nodeid: str) -> dict[str, str]:
     """Extract test parameters from pytest nodeid."""
-    test_params = {}
+    test_params: dict[str, str] = {}
     if "[" in nodeid:
         # Parse parametrized test name like: test_name[Env-table-Model-Emplacement] or test_name[env-table0]
         param_str = nodeid.split("[")[1].rstrip("]")
@@ -95,9 +95,9 @@ def _handle_assertion_error(report: TestReport, call: CallInfo[None], test_param
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item: Item, call: CallInfo[None]) -> Generator[None, None, None]:
+def pytest_runtest_makereport(item: Item, call: CallInfo[None]) -> Generator[None, Any, None]:
     """Hook to intercept test reports, catch errors, and aggregate them."""
-    outcome = yield
+    outcome: Any = yield
     report: TestReport = outcome.get_result()
 
     if report.when == "call" and report.failed:
@@ -106,7 +106,7 @@ def pytest_runtest_makereport(item: Item, call: CallInfo[None]) -> Generator[Non
 
         # Check if the failure is our custom DataMismatchError
         if call.excinfo and call.excinfo.errisinstance(DataMismatchError):
-            exc = call.excinfo.value
+            exc: DataMismatchError = call.excinfo.value  # type: ignore[assignment]
 
             # Convert class name to the correct CLI enum value
             env_enum_val = CLASS_TO_ENUM_MAP.get(exc.env_name)
@@ -137,7 +137,7 @@ def pytest_terminal_summary(terminalreporter: "TerminalReporter") -> None:
         )
 
         # Group failures by environment
-        grouped_failures = defaultdict(list)
+        grouped_failures: defaultdict[str, list[str]] = defaultdict(list)
         for failure in SYNC_FAILURES:
             grouped_failures[failure["env"]].append(failure["table"])
 
@@ -176,7 +176,7 @@ def pytest_terminal_summary(terminalreporter: "TerminalReporter") -> None:
         sorted_failures = sorted(ALL_FAILURES.items(), key=lambda x: x[1]["count"], reverse=True)
 
         # Group by environment for cleaner output
-        env_groups = defaultdict(list)
+        env_groups: defaultdict[Any, list[tuple[str, dict[str, Any]]]] = defaultdict(list)
         for signature, data in sorted_failures:
             env = data["env"]
             env_groups[env].append((signature, data))
@@ -186,11 +186,11 @@ def pytest_terminal_summary(terminalreporter: "TerminalReporter") -> None:
             terminalreporter.write_line(f"🔧 Environment: {env}", cyan=True)
 
             # Collect all tables for this environment
-            tables = []
-            total_failures = 0
+            tables: list[str] = []
+            total_failures: int = 0
             for _signature, data in failures:
-                table = data["table"]
-                count = data["count"]
+                table: str = data["table"]
+                count: int = data["count"]
                 if table not in tables:
                     tables.append(table)
                 total_failures += count

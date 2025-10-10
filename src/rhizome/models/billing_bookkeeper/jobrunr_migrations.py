@@ -7,8 +7,6 @@ billing-bookkeeper database, along with sanitization functions.
 
 from __future__ import annotations
 
-
-
 from sqlmodel import Field
 
 from ...models.base import RhizomeModel

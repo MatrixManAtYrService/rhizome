@@ -17,7 +17,9 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_adjust_action_ty
 from rhizome.environments.demo.expected_data.billing_bookkeeper_adjust_reason import AdjustReasonDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_app_meter_action import AppMeterActionDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_app_meter_action_error import AppMeterActionErrorDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_app_meter_action_fee_code import AppMeterActionFeeCodeDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_app_meter_action_fee_code import (
+    AppMeterActionFeeCodeDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_app_meter_action_type import AppMeterActionTypeDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_app_sub_action import AppSubActionDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_app_sub_action_error import AppSubActionErrorDemo
@@ -37,12 +39,18 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_billing_pseudo_e
 from rhizome.environments.demo.expected_data.billing_bookkeeper_billing_schedule import BillingScheduleDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_cellular_action import CellularActionDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_cellular_action_error import CellularActionErrorDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_cellular_action_fee_code import CellularActionFeeCodeDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_cellular_action_fee_code import (
+    CellularActionFeeCodeDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_cellular_action_type import CellularActionTypeDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_consumer_failure import ConsumerFailureDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_consumer_failure_history import ConsumerFailureHistoryDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_consumer_failure_history import (
+    ConsumerFailureHistoryDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_cycle_validation import CycleValidationDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_cycle_validation_mutation import CycleValidationMutationDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_cycle_validation_mutation import (
+    CycleValidationMutationDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_deserializable_failure import DeserializableFailureDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_category import FeeCategoryDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_code import FeeCodeDemo
@@ -51,7 +59,9 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_code_ledger_
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_ctd import FeeCtdDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_rate import FeeRateDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_rate_error_report import FeeRateErrorReportDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_rate_report_action_error import FeeRateReportActionErrorDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_rate_report_action_error import (
+    FeeRateReportActionErrorDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_summary import FeeSummaryDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_summary_mutation import FeeSummaryMutationDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_fee_tax import FeeTaxDemo
@@ -63,9 +73,15 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_invoice_info imp
 from rhizome.environments.demo.expected_data.billing_bookkeeper_invoice_info_amount import InvoiceInfoAmountDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_invoice_info_mutation import InvoiceInfoMutationDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_invoice_info_settlement import InvoiceInfoSettlementDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_invoice_info_settlement_mutation import InvoiceInfoSettlementMutationDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_job_assassination_contract import JobAssassinationContractDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_jobrunr_backgroundjobservers import JobrunrBackgroundjobserversDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_invoice_info_settlement_mutation import (
+    InvoiceInfoSettlementMutationDemo,
+)
+from rhizome.environments.demo.expected_data.billing_bookkeeper_job_assassination_contract import (
+    JobAssassinationContractDemo,
+)
+from rhizome.environments.demo.expected_data.billing_bookkeeper_jobrunr_backgroundjobservers import (
+    JobrunrBackgroundjobserversDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_jobrunr_jobs import JobrunrJobsDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_jobrunr_metadata import JobrunrMetadataDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_jobrunr_migrations import JobrunrMigrationsDemo
@@ -75,10 +91,16 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_a
 from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_balance import LedgerAccountBalanceDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_key import LedgerAccountKeyDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_key_app import LedgerAccountKeyAppDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_key_purpose import LedgerAccountKeyPurposeDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_key_purpose import (
+    LedgerAccountKeyPurposeDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_purpose import LedgerAccountPurposeDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_settlement import LedgerAccountSettlementDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_transition import LedgerAccountTransitionDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_settlement import (
+    LedgerAccountSettlementDemo,
+)
+from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_account_transition import (
+    LedgerAccountTransitionDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_journal import LedgerJournalDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_ledger_journal_mutation import LedgerJournalMutationDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_lexi_attribute import LexiAttributeDemo
@@ -93,7 +115,9 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_misc_action_type
 from rhizome.environments.demo.expected_data.billing_bookkeeper_misc_specifier import MiscSpecifierDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_model_fee_summary import ModelFeeSummaryDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_monetary_adjustment import MonetaryAdjustmentDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_monetary_adjustment_mutation import MonetaryAdjustmentMutationDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_monetary_adjustment_mutation import (
+    MonetaryAdjustmentMutationDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_monetary_rule_alias import MonetaryRuleAliasDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_monetary_rule_set import MonetaryRuleSetDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_monetary_rule_set_rule import MonetaryRuleSetRuleDemo
@@ -104,7 +128,9 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_plan_action_fee_
 from rhizome.environments.demo.expected_data.billing_bookkeeper_plan_action_type import PlanActionTypeDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_processing_group_dates import ProcessingGroupDatesDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_processing_note import ProcessingNoteDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_processing_note_mutation import ProcessingNoteMutationDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_processing_note_mutation import (
+    ProcessingNoteMutationDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_prototype_fee_rate import PrototypeFeeRateDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_prototype_fee_set import PrototypeFeeSetDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_revenue_action import RevenueActionDemo
@@ -116,117 +142,119 @@ from rhizome.environments.demo.expected_data.billing_bookkeeper_server_config im
 from rhizome.environments.demo.expected_data.billing_bookkeeper_settlement import SettlementDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_settlement_action import SettlementActionDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_settlement_mutation import SettlementMutationDemo
-from rhizome.environments.demo.expected_data.billing_bookkeeper_skip_fee_category_lexi_tag import SkipFeeCategoryLexiTagDemo
+from rhizome.environments.demo.expected_data.billing_bookkeeper_skip_fee_category_lexi_tag import (
+    SkipFeeCategoryLexiTagDemo,
+)
 from rhizome.environments.demo.expected_data.billing_bookkeeper_tier_detail import TierDetailDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_tiered_pricing import TieredPricingDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_tiered_qualifier import TieredQualifierDemo
 from rhizome.environments.demo.expected_data.billing_bookkeeper_tiered_rule import TieredRuleDemo
 from rhizome.models.base import Emplacement, RhizomeModel
-from rhizome.models.billing_bookkeeper.adjust_action_v1 import AdjustActionV1
 from rhizome.models.billing_bookkeeper.adjust_action_fee_code_v1 import AdjustActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.adjust_action_type_v1 import AdjustActionTypeV1
+from rhizome.models.billing_bookkeeper.adjust_action_v1 import AdjustActionV1
 from rhizome.models.billing_bookkeeper.adjust_reason_v1 import AdjustReasonV1
-from rhizome.models.billing_bookkeeper.app_meter_action_v1 import AppMeterActionV1
 from rhizome.models.billing_bookkeeper.app_meter_action_error_v1 import AppMeterActionErrorV1
 from rhizome.models.billing_bookkeeper.app_meter_action_fee_code_v1 import AppMeterActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.app_meter_action_type_v1 import AppMeterActionTypeV1
-from rhizome.models.billing_bookkeeper.app_sub_action_v1 import AppSubActionV1
+from rhizome.models.billing_bookkeeper.app_meter_action_v1 import AppMeterActionV1
 from rhizome.models.billing_bookkeeper.app_sub_action_error_v1 import AppSubActionErrorV1
 from rhizome.models.billing_bookkeeper.app_sub_action_fee_code_v1 import AppSubActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.app_sub_action_type_v1 import AppSubActionTypeV1
+from rhizome.models.billing_bookkeeper.app_sub_action_v1 import AppSubActionV1
 from rhizome.models.billing_bookkeeper.auto_adjust_advice_v1 import AutoAdjustAdviceV1
 from rhizome.models.billing_bookkeeper.auto_adjust_qualifier_v1 import AutoAdjustQualifierV1
 from rhizome.models.billing_bookkeeper.auto_adjust_rule_v1 import AutoAdjustRuleV1
 from rhizome.models.billing_bookkeeper.billing_archetype_v1 import BillingArchetypeV1
-from rhizome.models.billing_bookkeeper.billing_entity_v1 import BillingEntityV1
 from rhizome.models.billing_bookkeeper.billing_entity_config_v1 import BillingEntityConfigV1
+from rhizome.models.billing_bookkeeper.billing_entity_v1 import BillingEntityV1
 from rhizome.models.billing_bookkeeper.billing_event_history_v1 import BillingEventHistoryV1
-from rhizome.models.billing_bookkeeper.billing_hierarchy_v1 import BillingHierarchyV1
 from rhizome.models.billing_bookkeeper.billing_hierarchy_cycle_v1 import BillingHierarchyCycleV1
 from rhizome.models.billing_bookkeeper.billing_hierarchy_type_v1 import BillingHierarchyTypeV1
+from rhizome.models.billing_bookkeeper.billing_hierarchy_v1 import BillingHierarchyV1
 from rhizome.models.billing_bookkeeper.billing_pseudo_entity_v1 import BillingPseudoEntityV1
 from rhizome.models.billing_bookkeeper.billing_schedule_v1 import BillingScheduleV1
-from rhizome.models.billing_bookkeeper.cellular_action_v1 import CellularActionV1
 from rhizome.models.billing_bookkeeper.cellular_action_error_v1 import CellularActionErrorV1
 from rhizome.models.billing_bookkeeper.cellular_action_fee_code_v1 import CellularActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.cellular_action_type_v1 import CellularActionTypeV1
-from rhizome.models.billing_bookkeeper.consumer_failure_v1 import ConsumerFailureV1
+from rhizome.models.billing_bookkeeper.cellular_action_v1 import CellularActionV1
 from rhizome.models.billing_bookkeeper.consumer_failure_history_v1 import ConsumerFailureHistoryV1
-from rhizome.models.billing_bookkeeper.cycle_validation_v1 import CycleValidationV1
+from rhizome.models.billing_bookkeeper.consumer_failure_v1 import ConsumerFailureV1
 from rhizome.models.billing_bookkeeper.cycle_validation_mutation_v1 import CycleValidationMutationV1
+from rhizome.models.billing_bookkeeper.cycle_validation_v1 import CycleValidationV1
 from rhizome.models.billing_bookkeeper.deserializable_failure_v1 import DeserializableFailureV1
 from rhizome.models.billing_bookkeeper.fee_category_v1 import FeeCategoryV1
-from rhizome.models.billing_bookkeeper.fee_code_v1 import FeeCodeV1
 from rhizome.models.billing_bookkeeper.fee_code_app_v1 import FeeCodeAppV1
 from rhizome.models.billing_bookkeeper.fee_code_ledger_account_v1 import FeeCodeLedgerAccountV1
+from rhizome.models.billing_bookkeeper.fee_code_v1 import FeeCodeV1
 from rhizome.models.billing_bookkeeper.fee_ctd_v1 import FeeCtdV1
-from rhizome.models.billing_bookkeeper.fee_rate_v1 import FeeRateV1
 from rhizome.models.billing_bookkeeper.fee_rate_error_report_v1 import FeeRateErrorReportV1
 from rhizome.models.billing_bookkeeper.fee_rate_report_action_error_v1 import FeeRateReportActionErrorV1
-from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.fee_rate_v1 import FeeRateV1
 from rhizome.models.billing_bookkeeper.fee_summary_mutation_v1 import FeeSummaryMutationV1
-from rhizome.models.billing_bookkeeper.fee_tax_v1 import FeeTaxV1
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
 from rhizome.models.billing_bookkeeper.fee_tax_mutation_v1 import FeeTaxMutationV1
+from rhizome.models.billing_bookkeeper.fee_tax_v1 import FeeTaxV1
 from rhizome.models.billing_bookkeeper.fee_ytd_v1 import FeeYtdV1
 from rhizome.models.billing_bookkeeper.flyway_schema_history_v1 import FlywaySchemaHistoryV1
 from rhizome.models.billing_bookkeeper.invoice_alliance_code_v1 import InvoiceAllianceCodeV1
-from rhizome.models.billing_bookkeeper.invoice_info_v1 import InvoiceInfoV1
 from rhizome.models.billing_bookkeeper.invoice_info_amount_v1 import InvoiceInfoAmountV1
 from rhizome.models.billing_bookkeeper.invoice_info_mutation_v1 import InvoiceInfoMutationV1
-from rhizome.models.billing_bookkeeper.invoice_info_settlement_v1 import InvoiceInfoSettlementV1
 from rhizome.models.billing_bookkeeper.invoice_info_settlement_mutation_v1 import InvoiceInfoSettlementMutationV1
+from rhizome.models.billing_bookkeeper.invoice_info_settlement_v1 import InvoiceInfoSettlementV1
+from rhizome.models.billing_bookkeeper.invoice_info_v1 import InvoiceInfoV1
 from rhizome.models.billing_bookkeeper.job_assassination_contract_v1 import JobAssassinationContractV1
 from rhizome.models.billing_bookkeeper.jobrunr_backgroundjobservers_v1 import JobrunrBackgroundjobserversV1
 from rhizome.models.billing_bookkeeper.jobrunr_jobs_v1 import JobrunrJobsV1
 from rhizome.models.billing_bookkeeper.jobrunr_metadata_v1 import JobrunrMetadataV1
 from rhizome.models.billing_bookkeeper.jobrunr_migrations_v1 import JobrunrMigrationsV1
 from rhizome.models.billing_bookkeeper.jobrunr_recurring_jobs_v1 import JobrunrRecurringJobsV1
-from rhizome.models.billing_bookkeeper.ledger_account_v1 import LedgerAccountV1
 from rhizome.models.billing_bookkeeper.ledger_account_action_v1 import LedgerAccountActionV1
 from rhizome.models.billing_bookkeeper.ledger_account_balance_v1 import LedgerAccountBalanceV1
-from rhizome.models.billing_bookkeeper.ledger_account_key_v1 import LedgerAccountKeyV1
 from rhizome.models.billing_bookkeeper.ledger_account_key_app_v1 import LedgerAccountKeyAppV1
 from rhizome.models.billing_bookkeeper.ledger_account_key_purpose_v1 import LedgerAccountKeyPurposeV1
+from rhizome.models.billing_bookkeeper.ledger_account_key_v1 import LedgerAccountKeyV1
 from rhizome.models.billing_bookkeeper.ledger_account_purpose_v1 import LedgerAccountPurposeV1
 from rhizome.models.billing_bookkeeper.ledger_account_settlement_v1 import LedgerAccountSettlementV1
 from rhizome.models.billing_bookkeeper.ledger_account_transition_v1 import LedgerAccountTransitionV1
-from rhizome.models.billing_bookkeeper.ledger_journal_v1 import LedgerJournalV1
+from rhizome.models.billing_bookkeeper.ledger_account_v1 import LedgerAccountV1
 from rhizome.models.billing_bookkeeper.ledger_journal_mutation_v1 import LedgerJournalMutationV1
+from rhizome.models.billing_bookkeeper.ledger_journal_v1 import LedgerJournalV1
 from rhizome.models.billing_bookkeeper.lexi_attribute_v1 import LexiAttributeV1
 from rhizome.models.billing_bookkeeper.lexi_rule_v1 import LexiRuleV1
-from rhizome.models.billing_bookkeeper.look_v1 import LookV1
 from rhizome.models.billing_bookkeeper.look_data_v1 import LookDataV1
+from rhizome.models.billing_bookkeeper.look_v1 import LookV1
 from rhizome.models.billing_bookkeeper.merchant_detail_v1 import MerchantDetailV1
-from rhizome.models.billing_bookkeeper.misc_action_v1 import MiscActionV1
 from rhizome.models.billing_bookkeeper.misc_action_error_v1 import MiscActionErrorV1
 from rhizome.models.billing_bookkeeper.misc_action_fee_code_v1 import MiscActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.misc_action_type_v1 import MiscActionTypeV1
+from rhizome.models.billing_bookkeeper.misc_action_v1 import MiscActionV1
 from rhizome.models.billing_bookkeeper.misc_specifier_v1 import MiscSpecifierV1
 from rhizome.models.billing_bookkeeper.model_fee_summary_v1 import ModelFeeSummaryV1
-from rhizome.models.billing_bookkeeper.monetary_adjustment_v1 import MonetaryAdjustmentV1
 from rhizome.models.billing_bookkeeper.monetary_adjustment_mutation_v1 import MonetaryAdjustmentMutationV1
+from rhizome.models.billing_bookkeeper.monetary_adjustment_v1 import MonetaryAdjustmentV1
 from rhizome.models.billing_bookkeeper.monetary_rule_alias_v1 import MonetaryRuleAliasV1
-from rhizome.models.billing_bookkeeper.monetary_rule_set_v1 import MonetaryRuleSetV1
 from rhizome.models.billing_bookkeeper.monetary_rule_set_rule_v1 import MonetaryRuleSetRuleV1
+from rhizome.models.billing_bookkeeper.monetary_rule_set_v1 import MonetaryRuleSetV1
 from rhizome.models.billing_bookkeeper.partner_config_v1 import PartnerConfigV1
-from rhizome.models.billing_bookkeeper.plan_action_v1 import PlanActionV1
 from rhizome.models.billing_bookkeeper.plan_action_error_v1 import PlanActionErrorV1
 from rhizome.models.billing_bookkeeper.plan_action_fee_code_v1 import PlanActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.plan_action_type_v1 import PlanActionTypeV1
+from rhizome.models.billing_bookkeeper.plan_action_v1 import PlanActionV1
 from rhizome.models.billing_bookkeeper.processing_group_dates_v1 import ProcessingGroupDatesV1
-from rhizome.models.billing_bookkeeper.processing_note_v1 import ProcessingNoteV1
 from rhizome.models.billing_bookkeeper.processing_note_mutation_v1 import ProcessingNoteMutationV1
+from rhizome.models.billing_bookkeeper.processing_note_v1 import ProcessingNoteV1
 from rhizome.models.billing_bookkeeper.prototype_fee_rate_v1 import PrototypeFeeRateV1
 from rhizome.models.billing_bookkeeper.prototype_fee_set_v1 import PrototypeFeeSetV1
-from rhizome.models.billing_bookkeeper.revenue_action_v1 import RevenueActionV1
 from rhizome.models.billing_bookkeeper.revenue_action_error_v1 import RevenueActionErrorV1
 from rhizome.models.billing_bookkeeper.revenue_action_fee_code_v1 import RevenueActionFeeCodeV1
 from rhizome.models.billing_bookkeeper.revenue_action_type_v1 import RevenueActionTypeV1
+from rhizome.models.billing_bookkeeper.revenue_action_v1 import RevenueActionV1
 from rhizome.models.billing_bookkeeper.revenue_share_group_v1 import RevenueShareGroupV1
 from rhizome.models.billing_bookkeeper.server_config_v1 import ServerConfigV1
-from rhizome.models.billing_bookkeeper.settlement_v1 import SettlementV1
 from rhizome.models.billing_bookkeeper.settlement_action_v1 import SettlementActionV1
 from rhizome.models.billing_bookkeeper.settlement_mutation_v1 import SettlementMutationV1
+from rhizome.models.billing_bookkeeper.settlement_v1 import SettlementV1
 from rhizome.models.billing_bookkeeper.skip_fee_category_lexi_tag_v1 import SkipFeeCategoryLexiTagV1
 from rhizome.models.billing_bookkeeper.tier_detail_v1 import TierDetailV1
 from rhizome.models.billing_bookkeeper.tiered_pricing_v1 import TieredPricingV1
@@ -287,9 +315,15 @@ models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel] | None, type[Empla
     BillingBookkeeperTable.invoice_info_amount: (InvoiceInfoAmountV1, InvoiceInfoAmountDemo),
     BillingBookkeeperTable.invoice_info_mutation: (InvoiceInfoMutationV1, InvoiceInfoMutationDemo),
     BillingBookkeeperTable.invoice_info_settlement: (InvoiceInfoSettlementV1, InvoiceInfoSettlementDemo),
-    BillingBookkeeperTable.invoice_info_settlement_mutation: (InvoiceInfoSettlementMutationV1, InvoiceInfoSettlementMutationDemo),
+    BillingBookkeeperTable.invoice_info_settlement_mutation: (
+        InvoiceInfoSettlementMutationV1,
+        InvoiceInfoSettlementMutationDemo,
+    ),
     BillingBookkeeperTable.job_assassination_contract: (JobAssassinationContractV1, JobAssassinationContractDemo),
-    BillingBookkeeperTable.jobrunr_backgroundjobservers: (JobrunrBackgroundjobserversV1, JobrunrBackgroundjobserversDemo),
+    BillingBookkeeperTable.jobrunr_backgroundjobservers: (
+        JobrunrBackgroundjobserversV1,
+        JobrunrBackgroundjobserversDemo,
+    ),
     BillingBookkeeperTable.jobrunr_jobs: (JobrunrJobsV1, JobrunrJobsDemo),
     BillingBookkeeperTable.jobrunr_metadata: (JobrunrMetadataV1, JobrunrMetadataDemo),
     BillingBookkeeperTable.jobrunr_migrations: (JobrunrMigrationsV1, JobrunrMigrationsDemo),
