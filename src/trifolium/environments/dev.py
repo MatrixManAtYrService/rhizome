@@ -171,13 +171,62 @@ class DevBillingBookkeeperAPI:
     def _ensure_authenticated(self) -> AuthenticatedClient:
         """Ensure we have an authenticated client for the generated API."""
         if self._authenticated_client is None:
+            import httpx
+            import structlog
+
+            logger = structlog.get_logger()
+
             # Get token from stolon
             handle = self._client.request_internal_token(self._domain)
 
             # Import generated client
             from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
 
-            # Create authenticated client
+            # Define request/response logging hooks
+            def log_request(request: httpx.Request) -> None:
+                import os
+
+                # Sanitize headers for logging
+                sanitized_headers = {
+                    k: ("***" if k.lower() in ["cookie", "authorization"] else v) for k, v in request.headers.items()
+                }
+
+                log_data = {
+                    "method": request.method,
+                    "url": str(request.url),
+                    "headers": sanitized_headers,
+                }
+
+                # If debug mode is enabled, include request body
+                if os.getenv("STOLON_DEBUG_REQUESTS") and hasattr(request, "content"):
+                    try:
+                        import json
+
+                        body_text = request.content.decode("utf-8") if request.content else None
+                        if body_text:
+                            log_data["request_body"] = json.loads(body_text)
+                    except Exception:
+                        pass
+
+                logger.info("Generated client making HTTP request", **log_data)
+
+            def log_response(response: httpx.Response) -> None:
+                log_data = {
+                    "method": response.request.method,
+                    "url": str(response.request.url),
+                    "status_code": response.status_code,
+                    "content_length": len(response.content) if response.content else 0,
+                }
+
+                # Log error details for non-2xx responses
+                if response.status_code >= 400:
+                    if response.text:
+                        log_data["response_text"] = response.text[:500]
+                    logger.error("Generated client HTTP request failed", **log_data)
+                else:
+                    logger.info("Generated client received HTTP response", **log_data)
+
+            # Create authenticated client with logging hooks
             self._authenticated_client = AuthenticatedClient(
                 base_url=handle.base_url,
                 token=handle.token,
@@ -187,6 +236,12 @@ class DevBillingBookkeeperAPI:
                 },
                 cookies={
                     "internalSession": handle.token,
+                },
+                httpx_args={
+                    "event_hooks": {
+                        "request": [log_request],
+                        "response": [log_response],
+                    }
                 },
             )
         return self._authenticated_client
