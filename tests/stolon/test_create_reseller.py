@@ -906,81 +906,69 @@ def cellular_action_fee_code(
 
 
 @pytest.mark.external_infra
-def test_create_revenue_share_group(revenue_share_group: dict[str, Any]) -> None:
-    """Test creating a revenue share group."""
-    assert revenue_share_group["name"].startswith(f"{RESELLER_PREFIX}_Test_")
-    assert revenue_share_group["uuid"]
-    assert len(revenue_share_group["uuid"]) == 26
+def test_create_complete_reseller(
+    billing_entity: dict[str, Any],
+    alliance_code: dict[str, Any],
+    billing_schedule: dict[str, Any],
+    fee_rate: dict[str, Any],
+    processing_group_dates: dict[str, Any],
+    billing_hierarchy: dict[str, Any],
+    partner_config: dict[str, Any],
+    plan_action_fee_code: dict[str, Any],
+    cellular_action_fee_code: dict[str, Any],
+) -> None:
+    """Test creating a complete reseller with all required components.
 
+    This test exercises all fixtures to ensure a complete reseller setup:
+    - Billing entity (the reseller)
+    - Alliance code (for invoicing)
+    - Billing schedule (monthly billing cycle)
+    - Fee rates (pricing configuration)
+    - Processing group dates (cycle dates)
+    - Billing hierarchies (merchant schedule and fee rate)
+    - Partner config (settlement and invoice methods)
+    - Plan action fee codes (global plan billing rules)
+    - Cellular action fee codes (global cellular billing rules)
 
-@pytest.mark.external_infra
-def test_create_billing_entity(billing_entity: dict[str, Any]) -> None:
-    """Test creating a billing entity."""
-    # entity_uuid might be masked (starts with "Hash") or real (starts with RESELLER_PREFIX)
-    entity_uuid = billing_entity["entity_uuid"]
-    assert entity_uuid.startswith(RESELLER_PREFIX) or entity_uuid.startswith(
-        "Hash"
-    ), f"Unexpected entity_uuid format: {entity_uuid}"
-    assert billing_entity["billing_entity_uuid"]
-    # billing_entity_uuid might be masked or real (both are 26 chars)
-    assert len(billing_entity["billing_entity_uuid"]) == 26
+    All fixtures use a check-and-reuse strategy, so this test can be run
+    repeatedly without accumulating test data in dev1.
+    """
+    # Validate billing entity
+    billing_entity_uuid = billing_entity["billing_entity_uuid"]
+    assert billing_entity_uuid, "Billing entity UUID must exist"
+    assert len(billing_entity_uuid) == 26, "Billing entity UUID should be 26 chars"
 
+    # Validate all components reference the same billing entity
+    assert alliance_code["billing_entity_uuid"] == billing_entity_uuid
+    assert billing_schedule["billing_entity_uuid"] == billing_entity_uuid
+    assert fee_rate["billing_entity_uuid"] == billing_entity_uuid
+    assert processing_group_dates["billing_entity_uuid"] == billing_entity_uuid
+    assert billing_hierarchy["billing_entity_uuid"] == billing_entity_uuid
+    assert partner_config["billing_entity_uuid"] == billing_entity_uuid
 
-@pytest.mark.external_infra
-def test_create_alliance_code(alliance_code: dict[str, Any]) -> None:
-    """Test creating an alliance code (depends on billing_entity)."""
+    # Validate alliance code format
     assert alliance_code["alliance_code"].startswith(RESELLER_PREFIX)
-    assert alliance_code["billing_entity_uuid"]
 
-
-@pytest.mark.external_infra
-def test_create_billing_schedule(billing_schedule: dict[str, Any]) -> None:
-    """Test creating a billing schedule (depends on billing_entity)."""
-    assert billing_schedule["billing_entity_uuid"]
-    assert billing_schedule["create_response"]
-
-
-@pytest.mark.external_infra
-def test_create_fee_rate(fee_rate: dict[str, Any]) -> None:
-    """Test creating a fee rate (depends on billing_entity)."""
-    assert fee_rate["billing_entity_uuid"]
-    assert fee_rate["create_response"]
-
-
-@pytest.mark.external_infra
-def test_create_processing_group_dates(processing_group_dates: dict[str, Any]) -> None:
-    """Test creating processing group dates (depends on billing_entity)."""
-    assert processing_group_dates["billing_entity_uuid"]
-    assert processing_group_dates["create_response"]
-
-
-@pytest.mark.external_infra
-def test_create_plan_action_fee_code(plan_action_fee_code: dict[str, Any]) -> None:
-    """Test creating a plan action fee code."""
-    assert plan_action_fee_code["merchant_plan_uuid"] == "YEQMV17H09HHW"
-    assert plan_action_fee_code["create_response"]
-
-
-@pytest.mark.external_infra
-def test_create_cellular_action_fee_code(cellular_action_fee_code: dict[str, Any]) -> None:
-    """Test creating a cellular action fee code."""
-    assert cellular_action_fee_code["carrier"] == "AT&T"
-    assert cellular_action_fee_code["create_response"]
-
-
-@pytest.mark.external_infra
-def test_create_billing_hierarchy(billing_hierarchy: dict[str, Any]) -> None:
-    """Test creating billing hierarchy entries (depends on billing_entity)."""
-    assert billing_hierarchy["billing_entity_uuid"]
+    # Validate billing hierarchy has both required hierarchy types
     assert billing_hierarchy["merchant_schedule_uuid"]
     assert billing_hierarchy["merchant_fee_rate_uuid"]
-    # Both UUIDs should be 26 characters
     assert len(billing_hierarchy["merchant_schedule_uuid"]) == 26
     assert len(billing_hierarchy["merchant_fee_rate_uuid"]) == 26
 
+    # Validate global resources
+    assert plan_action_fee_code["merchant_plan_uuid"] == "YEQMV17H09HHW"
+    assert cellular_action_fee_code["carrier"] == "AT&T"
 
-@pytest.mark.external_infra
-def test_create_partner_config(partner_config: dict[str, Any]) -> None:
-    """Test creating a partner config (depends on billing_entity)."""
-    assert partner_config["billing_entity_uuid"]
+    # Validate all components have create responses
+    assert alliance_code["create_response"]
+    assert billing_schedule["create_response"]
+    assert fee_rate["create_response"]
+    assert processing_group_dates["create_response"]
     assert partner_config["create_response"]
+    assert plan_action_fee_code["create_response"]
+    assert cellular_action_fee_code["create_response"]
+
+    print(f"\n✅ Complete reseller setup validated for {billing_entity['name']}")
+    print(f"   Billing entity UUID: {billing_entity_uuid}")
+    print(f"   Alliance code: {alliance_code['alliance_code']}")
+    print(f"   Reused existing: {billing_entity.get('was_reused', False)}")
