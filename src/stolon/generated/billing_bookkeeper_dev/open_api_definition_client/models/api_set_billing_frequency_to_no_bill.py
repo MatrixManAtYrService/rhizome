@@ -53,10 +53,11 @@ class ApiSetBillingFrequencyToNoBill:
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         reference = d.pop("reference", UNSET)
 

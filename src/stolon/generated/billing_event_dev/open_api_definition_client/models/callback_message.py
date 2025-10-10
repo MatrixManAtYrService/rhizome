@@ -111,33 +111,37 @@ class CallbackMessage:
 
         _clover_headers = d.pop("cloverHeaders", UNSET)
         clover_headers: Union[Unset, CallbackMessageCloverHeaders]
-        if isinstance(_clover_headers, Unset):
-            clover_headers = UNSET
-        else:
+        if _clover_headers and not isinstance(_clover_headers, Unset):
             clover_headers = CallbackMessageCloverHeaders.from_dict(_clover_headers)
+
+        else:
+            clover_headers = UNSET
 
         correlation_id = d.pop("correlationId", UNSET)
 
         _vendor_details = d.pop("vendorDetails", UNSET)
         vendor_details: Union[Unset, VendorDetails]
-        if isinstance(_vendor_details, Unset):
-            vendor_details = UNSET
-        else:
+        if _vendor_details and not isinstance(_vendor_details, Unset):
             vendor_details = VendorDetails.from_dict(_vendor_details)
+
+        else:
+            vendor_details = UNSET
 
         _specific_data = d.pop("specificData", UNSET)
         specific_data: Union[Unset, SpecificData]
-        if isinstance(_specific_data, Unset):
-            specific_data = UNSET
-        else:
+        if _specific_data and not isinstance(_specific_data, Unset):
             specific_data = SpecificData.from_dict(_specific_data)
+
+        else:
+            specific_data = UNSET
 
         _schema = d.pop("schema", UNSET)
         schema: Union[Unset, Schema]
-        if isinstance(_schema, Unset):
-            schema = UNSET
-        else:
+        if _schema and not isinstance(_schema, Unset):
             schema = Schema.from_dict(_schema)
+
+        else:
+            schema = UNSET
 
         callback_message = cls(
             notification_channel=notification_channel,

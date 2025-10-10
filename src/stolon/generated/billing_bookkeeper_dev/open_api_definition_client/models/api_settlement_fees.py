@@ -172,40 +172,45 @@ class ApiSettlementFees:
         d = dict(src_dict)
         _tlement_tax_amount = d.pop("tlementTaxAmount", UNSET)
         tlement_tax_amount: Union[Unset, ApiSettlementFees]
-        if isinstance(_tlement_tax_amount, Unset):
-            tlement_tax_amount = UNSET
-        else:
+        if _tlement_tax_amount and not isinstance(_tlement_tax_amount, Unset):
             tlement_tax_amount = ApiSettlementFees.from_dict(_tlement_tax_amount)
+
+        else:
+            tlement_tax_amount = UNSET
 
         _tlement_fee_amount = d.pop("tlementFeeAmount", UNSET)
         tlement_fee_amount: Union[Unset, ApiSettlementFees]
-        if isinstance(_tlement_fee_amount, Unset):
-            tlement_fee_amount = UNSET
-        else:
+        if _tlement_fee_amount and not isinstance(_tlement_fee_amount, Unset):
             tlement_fee_amount = ApiSettlementFees.from_dict(_tlement_fee_amount)
+
+        else:
+            tlement_fee_amount = UNSET
 
         _tlement_uuid = d.pop("tlementUuid", UNSET)
         tlement_uuid: Union[Unset, ApiSettlementFees]
-        if isinstance(_tlement_uuid, Unset):
-            tlement_uuid = UNSET
-        else:
+        if _tlement_uuid and not isinstance(_tlement_uuid, Unset):
             tlement_uuid = ApiSettlementFees.from_dict(_tlement_uuid)
+
+        else:
+            tlement_uuid = UNSET
 
         _tlement_date = d.pop("tlementDate", UNSET)
         tlement_date: Union[Unset, ApiSettlementFees]
-        if isinstance(_tlement_date, Unset):
-            tlement_date = UNSET
-        else:
+        if _tlement_date and not isinstance(_tlement_date, Unset):
             tlement_date = ApiSettlementFees.from_dict(_tlement_date)
+
+        else:
+            tlement_date = UNSET
 
         settlement_uuid = d.pop("settlementUuid", UNSET)
 
         _settlement_date = d.pop("settlementDate", UNSET)
         settlement_date: Union[Unset, datetime.date]
-        if isinstance(_settlement_date, Unset):
-            settlement_date = UNSET
-        else:
+        if _settlement_date and not isinstance(_settlement_date, Unset):
             settlement_date = isoparse(_settlement_date).date()
+
+        else:
+            settlement_date = UNSET
 
         settlement_fee_amount = d.pop("settlementFeeAmount", UNSET)
 

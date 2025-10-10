@@ -65,4 +65,4 @@ CREATE TABLE `merchant_boarding` (
   UNIQUE KEY `merchant_id` (`merchant_id`),
   KEY `merchant_boarding_modified_time_idx` (`modified_time`),
   CONSTRAINT `merchant_boarding_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=525837 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=526115 DEFAULT CHARSET=utf8mb3

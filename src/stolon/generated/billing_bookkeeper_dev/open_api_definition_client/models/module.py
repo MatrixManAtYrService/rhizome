@@ -60,10 +60,11 @@ class Module:
 
         _module_type = d.pop("moduleType", UNSET)
         module_type: Union[Unset, ModuleModuleType]
-        if isinstance(_module_type, Unset):
-            module_type = UNSET
-        else:
+        if _module_type and not isinstance(_module_type, Unset):
             module_type = ModuleModuleType(_module_type)
+
+        else:
+            module_type = UNSET
 
         config = d.pop("config", UNSET)
 

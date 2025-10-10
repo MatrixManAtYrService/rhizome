@@ -111,10 +111,11 @@ class ApiConsumerFailure:
 
         _consumer_source = d.pop("consumerSource", UNSET)
         consumer_source: Union[Unset, ApiConsumerFailureConsumerSource]
-        if isinstance(_consumer_source, Unset):
-            consumer_source = UNSET
-        else:
+        if _consumer_source and not isinstance(_consumer_source, Unset):
             consumer_source = ApiConsumerFailureConsumerSource(_consumer_source)
+
+        else:
+            consumer_source = UNSET
 
         payload = d.pop("payload", UNSET)
 
@@ -128,10 +129,11 @@ class ApiConsumerFailure:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_consumer_failure = cls(
             id=id,

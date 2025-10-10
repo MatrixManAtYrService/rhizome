@@ -6,4 +6,4 @@ CREATE TABLE `merchant_merchant_plan_history` (
   `changed_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `merchant_id` (`merchant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=397215 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=397671 DEFAULT CHARSET=utf8mb3

@@ -91,10 +91,11 @@ class ApiBillingEventHistory:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiBillingEventHistoryEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiBillingEventHistoryEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         event_uuid = d.pop("eventUuid", UNSET)
 
@@ -104,10 +105,11 @@ class ApiBillingEventHistory:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_billing_event_history = cls(
             id=id,

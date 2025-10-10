@@ -78,10 +78,11 @@ class SpecificData:
         d = dict(src_dict)
         _class_loader = d.pop("classLoader", UNSET)
         class_loader: Union[Unset, SpecificDataClassLoader]
-        if isinstance(_class_loader, Unset):
-            class_loader = UNSET
-        else:
+        if _class_loader and not isinstance(_class_loader, Unset):
             class_loader = SpecificDataClassLoader.from_dict(_class_loader)
+
+        else:
+            class_loader = UNSET
 
         conversions = []
         _conversions = d.pop("conversions", UNSET)
@@ -94,10 +95,11 @@ class SpecificData:
 
         _fast_reader_builder = d.pop("fastReaderBuilder", UNSET)
         fast_reader_builder: Union[Unset, FastReaderBuilder]
-        if isinstance(_fast_reader_builder, Unset):
-            fast_reader_builder = UNSET
-        else:
+        if _fast_reader_builder and not isinstance(_fast_reader_builder, Unset):
             fast_reader_builder = FastReaderBuilder.from_dict(_fast_reader_builder)
+
+        else:
+            fast_reader_builder = UNSET
 
         custom_coders = d.pop("customCoders", UNSET)
 

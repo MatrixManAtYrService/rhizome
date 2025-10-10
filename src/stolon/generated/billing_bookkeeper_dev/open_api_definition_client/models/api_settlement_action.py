@@ -160,10 +160,11 @@ class ApiSettlementAction:
         d = dict(src_dict)
         _tlement_uuid = d.pop("tlementUuid", UNSET)
         tlement_uuid: Union[Unset, ApiSettlementAction]
-        if isinstance(_tlement_uuid, Unset):
-            tlement_uuid = UNSET
-        else:
+        if _tlement_uuid and not isinstance(_tlement_uuid, Unset):
             tlement_uuid = ApiSettlementAction.from_dict(_tlement_uuid)
+
+        else:
+            tlement_uuid = UNSET
 
         id = d.pop("id", UNSET)
 
@@ -173,10 +174,11 @@ class ApiSettlementAction:
 
         _action_date = d.pop("actionDate", UNSET)
         action_date: Union[Unset, datetime.date]
-        if isinstance(_action_date, Unset):
-            action_date = UNSET
-        else:
+        if _action_date and not isinstance(_action_date, Unset):
             action_date = isoparse(_action_date).date()
+
+        else:
+            action_date = UNSET
 
         action = d.pop("action", UNSET)
 
@@ -206,10 +208,11 @@ class ApiSettlementAction:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_settlement_action = cls(
             tlement_uuid=tlement_uuid,

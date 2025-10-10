@@ -179,10 +179,11 @@ class ApiRevenueActionFeeCode:
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         fee_category = d.pop("feeCategory", UNSET)
 
@@ -190,24 +191,27 @@ class ApiRevenueActionFeeCode:
 
         _deleted_date = d.pop("deletedDate", UNSET)
         deleted_date: Union[Unset, datetime.date]
-        if isinstance(_deleted_date, Unset):
-            deleted_date = UNSET
-        else:
+        if _deleted_date and not isinstance(_deleted_date, Unset):
             deleted_date = isoparse(_deleted_date).date()
+
+        else:
+            deleted_date = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 

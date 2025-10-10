@@ -71,10 +71,11 @@ class ApiFeeSummaryFeeCategoryReport:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiFeeSummaryFeeCategoryReportEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiFeeSummaryFeeCategoryReportEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         billing_date_fee_summaries = []
         _billing_date_fee_summaries = d.pop("billingDateFeeSummaries", UNSET)

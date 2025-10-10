@@ -119,17 +119,19 @@ class EbbMerchant:
 
         _address = d.pop("address", UNSET)
         address: Union[Unset, EbbAddress]
-        if isinstance(_address, Unset):
-            address = UNSET
-        else:
+        if _address and not isinstance(_address, Unset):
             address = EbbAddress.from_dict(_address)
+
+        else:
+            address = UNSET
 
         _owner = d.pop("owner", UNSET)
         owner: Union[Unset, EbbEmployee]
-        if isinstance(_owner, Unset):
-            owner = UNSET
-        else:
+        if _owner and not isinstance(_owner, Unset):
             owner = EbbEmployee.from_dict(_owner)
+
+        else:
+            owner = UNSET
 
         default_currency = d.pop("defaultCurrency", UNSET)
 

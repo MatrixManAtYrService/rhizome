@@ -89,17 +89,19 @@ class ApiTierPricing:
 
         _tiered_basis = d.pop("tieredBasis", UNSET)
         tiered_basis: Union[Unset, ApiTierPricingTieredBasis]
-        if isinstance(_tiered_basis, Unset):
-            tiered_basis = UNSET
-        else:
+        if _tiered_basis and not isinstance(_tiered_basis, Unset):
             tiered_basis = ApiTierPricingTieredBasis(_tiered_basis)
+
+        else:
+            tiered_basis = UNSET
 
         _tiered_model = d.pop("tieredModel", UNSET)
         tiered_model: Union[Unset, ApiTierPricingTieredModel]
-        if isinstance(_tiered_model, Unset):
-            tiered_model = UNSET
-        else:
+        if _tiered_model and not isinstance(_tiered_model, Unset):
             tiered_model = ApiTierPricingTieredModel(_tiered_model)
+
+        else:
+            tiered_model = UNSET
 
         tiers = []
         _tiers = d.pop("tiers", UNSET)

@@ -125,10 +125,11 @@ class ApiFeeRateReportActionError:
 
         _action_type = d.pop("actionType", UNSET)
         action_type: Union[Unset, ApiFeeRateReportActionErrorActionType]
-        if isinstance(_action_type, Unset):
-            action_type = UNSET
-        else:
+        if _action_type and not isinstance(_action_type, Unset):
             action_type = ApiFeeRateReportActionErrorActionType(_action_type)
+
+        else:
+            action_type = UNSET
 
         action_uuid = d.pop("actionUuid", UNSET)
 
@@ -136,26 +137,29 @@ class ApiFeeRateReportActionError:
 
         _posting_date = d.pop("postingDate", UNSET)
         posting_date: Union[Unset, datetime.date]
-        if isinstance(_posting_date, Unset):
-            posting_date = UNSET
-        else:
+        if _posting_date and not isinstance(_posting_date, Unset):
             posting_date = isoparse(_posting_date).date()
+
+        else:
+            posting_date = UNSET
 
         _original_posting_date = d.pop("originalPostingDate", UNSET)
         original_posting_date: Union[Unset, datetime.date]
-        if isinstance(_original_posting_date, Unset):
-            original_posting_date = UNSET
-        else:
+        if _original_posting_date and not isinstance(_original_posting_date, Unset):
             original_posting_date = isoparse(_original_posting_date).date()
+
+        else:
+            original_posting_date = UNSET
 
         error_details = d.pop("errorDetails", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_fee_rate_report_action_error = cls(
             id=id,

@@ -51,10 +51,11 @@ class ApiSettlementMethod:
         d = dict(src_dict)
         _tlement_method = d.pop("tlementMethod", UNSET)
         tlement_method: Union[Unset, ApiSettlementMethod]
-        if isinstance(_tlement_method, Unset):
-            tlement_method = UNSET
-        else:
+        if _tlement_method and not isinstance(_tlement_method, Unset):
             tlement_method = ApiSettlementMethod.from_dict(_tlement_method)
+
+        else:
+            tlement_method = UNSET
 
         settlement_method = d.pop("settlementMethod", UNSET)
 

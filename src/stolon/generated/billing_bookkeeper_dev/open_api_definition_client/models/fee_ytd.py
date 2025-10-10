@@ -127,17 +127,19 @@ class FeeYtd:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         fee_ytd = cls(
             id=id,

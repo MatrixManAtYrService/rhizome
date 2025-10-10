@@ -61,10 +61,11 @@ class ApiAppRatesParams:
 
         _effective_date_time_override = d.pop("effectiveDateTimeOverride", UNSET)
         effective_date_time_override: Union[Unset, datetime.datetime]
-        if isinstance(_effective_date_time_override, Unset):
-            effective_date_time_override = UNSET
-        else:
+        if _effective_date_time_override and not isinstance(_effective_date_time_override, Unset):
             effective_date_time_override = isoparse(_effective_date_time_override)
+
+        else:
+            effective_date_time_override = UNSET
 
         api_app_rates_params = cls(
             developer_uuids=developer_uuids,

@@ -91,10 +91,11 @@ class SubscriptionCountry:
 
         _app_subscription = d.pop("appSubscription", UNSET)
         app_subscription: Union[Unset, DeveloperAppCurrentSubscription]
-        if isinstance(_app_subscription, Unset):
-            app_subscription = UNSET
-        else:
+        if _app_subscription and not isinstance(_app_subscription, Unset):
             app_subscription = DeveloperAppCurrentSubscription.from_dict(_app_subscription)
+
+        else:
+            app_subscription = UNSET
 
         subscription_country = cls(
             id=id,

@@ -50,10 +50,11 @@ class CreateDetailedBulkAutoAdjustAdviceBody:
         d = dict(src_dict)
         _file = d.pop("file", UNSET)
         file: Union[Unset, File]
-        if isinstance(_file, Unset):
-            file = UNSET
-        else:
+        if _file and not isinstance(_file, Unset):
             file = File(payload=BytesIO(_file))
+
+        else:
+            file = UNSET
 
         create_detailed_bulk_auto_adjust_advice_body = cls(
             file=file,

@@ -84,4 +84,4 @@ CREATE TABLE `developer_app` (
   CONSTRAINT `_developer_app_ibfk_3` FOREIGN KEY (`android_version_id`) REFERENCES `android_version` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `_developer_app_ibfk_4` FOREIGN KEY (`approval_android_version_id`) REFERENCES `android_version` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `developer_app_ibfk_1` FOREIGN KEY (`developer_id`) REFERENCES `developer` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=132117 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=132121 DEFAULT CHARSET=utf8mb3

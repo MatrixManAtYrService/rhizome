@@ -18,4 +18,4 @@ CREATE TABLE `merchant_gateway` (
   KEY `payment_processor_id` (`payment_processor_id`),
   KEY `idx_mg_batch_close_time_merchant` (`new_batch_close_enabled`,`closing_time`,`merchant_id`),
   CONSTRAINT `merchant_gateway_ibfk_1` FOREIGN KEY (`processor_key_id`) REFERENCES `processor_key` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=1444549 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=1444827 DEFAULT CHARSET=utf8mb3

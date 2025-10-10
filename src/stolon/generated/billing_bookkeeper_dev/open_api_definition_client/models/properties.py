@@ -402,10 +402,11 @@ class Properties:
 
         _order_title = d.pop("orderTitle", UNSET)
         order_title: Union[Unset, PropertiesOrderTitle]
-        if isinstance(_order_title, Unset):
-            order_title = UNSET
-        else:
+        if _order_title and not isinstance(_order_title, Unset):
             order_title = PropertiesOrderTitle(_order_title)
+
+        else:
+            order_title = UNSET
 
         order_title_max = d.pop("orderTitleMax", UNSET)
 

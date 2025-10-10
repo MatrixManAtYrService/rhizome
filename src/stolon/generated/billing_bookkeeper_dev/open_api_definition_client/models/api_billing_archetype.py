@@ -65,17 +65,19 @@ class ApiBillingArchetype:
 
         _archetype_type = d.pop("archetypeType", UNSET)
         archetype_type: Union[Unset, ApiBillingArchetypeArchetypeType]
-        if isinstance(_archetype_type, Unset):
-            archetype_type = UNSET
-        else:
+        if _archetype_type and not isinstance(_archetype_type, Unset):
             archetype_type = ApiBillingArchetypeArchetypeType(_archetype_type)
+
+        else:
+            archetype_type = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_billing_archetype = cls(
             id=id,

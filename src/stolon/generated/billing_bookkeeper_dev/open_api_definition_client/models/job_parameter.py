@@ -59,10 +59,11 @@ class JobParameter:
 
         _object_ = d.pop("object", UNSET)
         object_: Union[Unset, JobParameterObject]
-        if isinstance(_object_, Unset):
-            object_ = UNSET
-        else:
+        if _object_ and not isinstance(_object_, Unset):
             object_ = JobParameterObject.from_dict(_object_)
+
+        else:
+            object_ = UNSET
 
         job_parameter = cls(
             class_name=class_name,

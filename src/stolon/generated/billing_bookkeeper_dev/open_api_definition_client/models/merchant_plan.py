@@ -211,10 +211,11 @@ class MerchantPlan:
 
         _merchant_plan_group = d.pop("merchantPlanGroup", UNSET)
         merchant_plan_group: Union[Unset, MerchantPlanGroup]
-        if isinstance(_merchant_plan_group, Unset):
-            merchant_plan_group = UNSET
-        else:
+        if _merchant_plan_group and not isinstance(_merchant_plan_group, Unset):
             merchant_plan_group = MerchantPlanGroup.from_dict(_merchant_plan_group)
+
+        else:
+            merchant_plan_group = UNSET
 
         merchant_plan_groups = []
         _merchant_plan_groups = d.pop("merchantPlanGroups", UNSET)
@@ -225,42 +226,47 @@ class MerchantPlan:
 
         _app_bundle = d.pop("appBundle", UNSET)
         app_bundle: Union[Unset, AppBundle]
-        if isinstance(_app_bundle, Unset):
-            app_bundle = UNSET
-        else:
+        if _app_bundle and not isinstance(_app_bundle, Unset):
             app_bundle = AppBundle.from_dict(_app_bundle)
+
+        else:
+            app_bundle = UNSET
 
         mccs = cast(list[str], d.pop("mccs", UNSET))
 
         _mcc_match = d.pop("mccMatch", UNSET)
         mcc_match: Union[Unset, MerchantPlanMccMatch]
-        if isinstance(_mcc_match, Unset):
-            mcc_match = UNSET
-        else:
+        if _mcc_match and not isinstance(_mcc_match, Unset):
             mcc_match = MerchantPlanMccMatch(_mcc_match)
+
+        else:
+            mcc_match = UNSET
 
         _type_ = d.pop("type", UNSET)
         type_: Union[Unset, MerchantPlanType]
-        if isinstance(_type_, Unset):
-            type_ = UNSET
-        else:
+        if _type_ and not isinstance(_type_, Unset):
             type_ = MerchantPlanType(_type_)
+
+        else:
+            type_ = UNSET
 
         _pricing_model = d.pop("pricingModel", UNSET)
         pricing_model: Union[Unset, MerchantPlanPricingModel]
-        if isinstance(_pricing_model, Unset):
-            pricing_model = UNSET
-        else:
+        if _pricing_model and not isinstance(_pricing_model, Unset):
             pricing_model = MerchantPlanPricingModel(_pricing_model)
+
+        else:
+            pricing_model = UNSET
 
         plan_code = d.pop("planCode", UNSET)
 
         _modules = d.pop("modules", UNSET)
         modules: Union[Unset, Modules]
-        if isinstance(_modules, Unset):
-            modules = UNSET
-        else:
+        if _modules and not isinstance(_modules, Unset):
             modules = Modules.from_dict(_modules)
+
+        else:
+            modules = UNSET
 
         hidden = d.pop("hidden", UNSET)
 

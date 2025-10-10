@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "address_1": "785 Castro Street",
+  "address_2": "Suite A",
+  "address_3": null,
+  "city": "Mountain View",
+  "state": "California",
+  "zip": "94041",
+  "country": "US",
+  "phone_number": null,
+  "latitude": null,
+  "longitude": null,
+  "created_time": "2012-07-13T23:29:44",
+  "modified_time": "2014-01-09T01:32:15"
+}

@@ -216,10 +216,11 @@ class ApiFeeSummaryExtended:
 
         _billing_date = d.pop("billingDate", UNSET)
         billing_date: Union[Unset, datetime.date]
-        if isinstance(_billing_date, Unset):
-            billing_date = UNSET
-        else:
+        if _billing_date and not isinstance(_billing_date, Unset):
             billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
 
         fee_category_group = d.pop("feeCategoryGroup", UNSET)
 
@@ -243,10 +244,11 @@ class ApiFeeSummaryExtended:
 
         _apply_type = d.pop("applyType", UNSET)
         apply_type: Union[Unset, ApiFeeSummaryExtendedApplyType]
-        if isinstance(_apply_type, Unset):
-            apply_type = UNSET
-        else:
+        if _apply_type and not isinstance(_apply_type, Unset):
             apply_type = ApiFeeSummaryExtendedApplyType(_apply_type)
+
+        else:
+            apply_type = UNSET
 
         per_item_amount = d.pop("perItemAmount", UNSET)
 
@@ -270,17 +272,19 @@ class ApiFeeSummaryExtended:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_fee_summary_extended = cls(
             id=id,

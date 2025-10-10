@@ -107,17 +107,19 @@ class EbbCommonMerchantModel:
 
         _merchant = d.pop("merchant", UNSET)
         merchant: Union[Unset, EbbMerchant]
-        if isinstance(_merchant, Unset):
-            merchant = UNSET
-        else:
+        if _merchant and not isinstance(_merchant, Unset):
             merchant = EbbMerchant.from_dict(_merchant)
+
+        else:
+            merchant = UNSET
 
         _merchant_plan = d.pop("merchantPlan", UNSET)
         merchant_plan: Union[Unset, EbbMerchantPlan]
-        if isinstance(_merchant_plan, Unset):
-            merchant_plan = UNSET
-        else:
+        if _merchant_plan and not isinstance(_merchant_plan, Unset):
             merchant_plan = EbbMerchantPlan.from_dict(_merchant_plan)
+
+        else:
+            merchant_plan = UNSET
 
         merchant_plan_histories = []
         _merchant_plan_histories = d.pop("merchantPlanHistories", UNSET)
@@ -135,17 +137,19 @@ class EbbCommonMerchantModel:
 
         _merchant_boarding = d.pop("merchantBoarding", UNSET)
         merchant_boarding: Union[Unset, EbbMerchantBoarding]
-        if isinstance(_merchant_boarding, Unset):
-            merchant_boarding = UNSET
-        else:
+        if _merchant_boarding and not isinstance(_merchant_boarding, Unset):
             merchant_boarding = EbbMerchantBoarding.from_dict(_merchant_boarding)
+
+        else:
+            merchant_boarding = UNSET
 
         _gateway = d.pop("gateway", UNSET)
         gateway: Union[Unset, EbbGateway]
-        if isinstance(_gateway, Unset):
-            gateway = UNSET
-        else:
+        if _gateway and not isinstance(_gateway, Unset):
             gateway = EbbGateway.from_dict(_gateway)
+
+        else:
+            gateway = UNSET
 
         ebb_common_merchant_model = cls(
             environment=environment,

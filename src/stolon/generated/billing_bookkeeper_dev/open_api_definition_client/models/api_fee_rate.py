@@ -140,17 +140,19 @@ class ApiFeeRate:
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         _apply_type = d.pop("applyType", UNSET)
         apply_type: Union[Unset, ApiFeeRateApplyType]
-        if isinstance(_apply_type, Unset):
-            apply_type = UNSET
-        else:
+        if _apply_type and not isinstance(_apply_type, Unset):
             apply_type = ApiFeeRateApplyType(_apply_type)
+
+        else:
+            apply_type = UNSET
 
         per_item_amount = d.pop("perItemAmount", UNSET)
 
@@ -160,17 +162,19 @@ class ApiFeeRate:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 

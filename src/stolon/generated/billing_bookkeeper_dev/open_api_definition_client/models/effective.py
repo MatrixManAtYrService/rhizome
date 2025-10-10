@@ -76,10 +76,11 @@ class Effective:
         d = dict(src_dict)
         _effective_billing_schedule = d.pop("effectiveBillingSchedule", UNSET)
         effective_billing_schedule: Union[Unset, BillingSchedule]
-        if isinstance(_effective_billing_schedule, Unset):
-            effective_billing_schedule = UNSET
-        else:
+        if _effective_billing_schedule and not isinstance(_effective_billing_schedule, Unset):
             effective_billing_schedule = BillingSchedule.from_dict(_effective_billing_schedule)
+
+        else:
+            effective_billing_schedule = UNSET
 
         effective_billing_hierarchies = []
         _effective_billing_hierarchies = d.pop("effectiveBillingHierarchies", UNSET)
@@ -90,17 +91,19 @@ class Effective:
 
         _effective_billing_hierarchy_cycle = d.pop("effectiveBillingHierarchyCycle", UNSET)
         effective_billing_hierarchy_cycle: Union[Unset, BillingHierarchyCycle]
-        if isinstance(_effective_billing_hierarchy_cycle, Unset):
-            effective_billing_hierarchy_cycle = UNSET
-        else:
+        if _effective_billing_hierarchy_cycle and not isinstance(_effective_billing_hierarchy_cycle, Unset):
             effective_billing_hierarchy_cycle = BillingHierarchyCycle.from_dict(_effective_billing_hierarchy_cycle)
+
+        else:
+            effective_billing_hierarchy_cycle = UNSET
 
         _processing_group_dates = d.pop("processingGroupDates", UNSET)
         processing_group_dates: Union[Unset, ProcessingGroupDates]
-        if isinstance(_processing_group_dates, Unset):
-            processing_group_dates = UNSET
-        else:
+        if _processing_group_dates and not isinstance(_processing_group_dates, Unset):
             processing_group_dates = ProcessingGroupDates.from_dict(_processing_group_dates)
+
+        else:
+            processing_group_dates = UNSET
 
         effective = cls(
             effective_billing_schedule=effective_billing_schedule,

@@ -10,4 +10,4 @@ CREATE TABLE `app_metered` (
   UNIQUE KEY `uuid` (`uuid`),
   KEY `developer_app_id` (`developer_app_id`),
   CONSTRAINT `app_metered_ibfk_1` FOREIGN KEY (`developer_app_id`) REFERENCES `developer_app` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=10793 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=10792 DEFAULT CHARSET=utf8mb3

@@ -82,17 +82,19 @@ class ServiceCharge:
 
         _payment_ref = d.pop("paymentRef", UNSET)
         payment_ref: Union[Unset, Reference]
-        if isinstance(_payment_ref, Unset):
-            payment_ref = UNSET
-        else:
+        if _payment_ref and not isinstance(_payment_ref, Unset):
             payment_ref = Reference.from_dict(_payment_ref)
+
+        else:
+            payment_ref = UNSET
 
         _refund_ref = d.pop("refundRef", UNSET)
         refund_ref: Union[Unset, Reference]
-        if isinstance(_refund_ref, Unset):
-            refund_ref = UNSET
-        else:
+        if _refund_ref and not isinstance(_refund_ref, Unset):
             refund_ref = Reference.from_dict(_refund_ref)
+
+        else:
+            refund_ref = UNSET
 
         percentage = d.pop("percentage", UNSET)
 

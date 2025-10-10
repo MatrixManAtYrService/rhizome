@@ -77,17 +77,19 @@ class DeltaValue:
 
         _specific_data = d.pop("specificData", UNSET)
         specific_data: Union[Unset, SpecificData]
-        if isinstance(_specific_data, Unset):
-            specific_data = UNSET
-        else:
+        if _specific_data and not isinstance(_specific_data, Unset):
             specific_data = SpecificData.from_dict(_specific_data)
+
+        else:
+            specific_data = UNSET
 
         _schema = d.pop("schema", UNSET)
         schema: Union[Unset, Schema]
-        if isinstance(_schema, Unset):
-            schema = UNSET
-        else:
+        if _schema and not isinstance(_schema, Unset):
             schema = Schema.from_dict(_schema)
+
+        else:
+            schema = UNSET
 
         delta_value = cls(
             key_name=key_name,

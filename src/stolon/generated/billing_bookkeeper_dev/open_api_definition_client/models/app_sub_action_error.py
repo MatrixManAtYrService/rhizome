@@ -135,19 +135,21 @@ class AppSubActionError:
 
         _posting_date = d.pop("postingDate", UNSET)
         posting_date: Union[Unset, datetime.date]
-        if isinstance(_posting_date, Unset):
-            posting_date = UNSET
-        else:
+        if _posting_date and not isinstance(_posting_date, Unset):
             posting_date = isoparse(_posting_date).date()
+
+        else:
+            posting_date = UNSET
 
         original_request_uuid = d.pop("originalRequestUuid", UNSET)
 
         _original_posting_date = d.pop("originalPostingDate", UNSET)
         original_posting_date: Union[Unset, datetime.date]
-        if isinstance(_original_posting_date, Unset):
-            original_posting_date = UNSET
-        else:
+        if _original_posting_date and not isinstance(_original_posting_date, Unset):
             original_posting_date = isoparse(_original_posting_date).date()
+
+        else:
+            original_posting_date = UNSET
 
         posting_attempts = d.pop("postingAttempts", UNSET)
 
@@ -159,17 +161,19 @@ class AppSubActionError:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         billing_entity_uuid = d.pop("billingEntityUuid", UNSET)
 

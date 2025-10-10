@@ -52,17 +52,19 @@ class LexiAttrIntent:
         d = dict(src_dict)
         _lexi_attribute = d.pop("lexiAttribute", UNSET)
         lexi_attribute: Union[Unset, LexiAttributeDTO]
-        if isinstance(_lexi_attribute, Unset):
-            lexi_attribute = UNSET
-        else:
+        if _lexi_attribute and not isinstance(_lexi_attribute, Unset):
             lexi_attribute = LexiAttributeDTO.from_dict(_lexi_attribute)
+
+        else:
+            lexi_attribute = UNSET
 
         _intent_type = d.pop("intentType", UNSET)
         intent_type: Union[Unset, LexiAttrIntentIntentType]
-        if isinstance(_intent_type, Unset):
-            intent_type = UNSET
-        else:
+        if _intent_type and not isinstance(_intent_type, Unset):
             intent_type = LexiAttrIntentIntentType(_intent_type)
+
+        else:
+            intent_type = UNSET
 
         lexi_attr_intent = cls(
             lexi_attribute=lexi_attribute,

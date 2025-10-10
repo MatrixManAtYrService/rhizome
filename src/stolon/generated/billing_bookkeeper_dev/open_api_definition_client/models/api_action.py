@@ -141,17 +141,19 @@ class ApiAction:
 
         _action_date_time = d.pop("actionDateTime", UNSET)
         action_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_action_date_time, Unset):
-            action_date_time = UNSET
-        else:
+        if _action_date_time and not isinstance(_action_date_time, Unset):
             action_date_time = isoparse(_action_date_time)
+
+        else:
+            action_date_time = UNSET
 
         _posting_date = d.pop("postingDate", UNSET)
         posting_date: Union[Unset, datetime.date]
-        if isinstance(_posting_date, Unset):
-            posting_date = UNSET
-        else:
+        if _posting_date and not isinstance(_posting_date, Unset):
             posting_date = isoparse(_posting_date).date()
+
+        else:
+            posting_date = UNSET
 
         fee_uuid = d.pop("feeUuid", UNSET)
 

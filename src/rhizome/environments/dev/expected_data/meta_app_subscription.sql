@@ -11,4 +11,4 @@ CREATE TABLE `app_subscription` (
   UNIQUE KEY `uuid` (`uuid`),
   KEY `developer_app_id` (`developer_app_id`),
   CONSTRAINT `app_subscription_ibfk_1` FOREIGN KEY (`developer_app_id`) REFERENCES `developer_app` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=54517 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=54521 DEFAULT CHARSET=utf8mb3

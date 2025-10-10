@@ -75,10 +75,11 @@ class Subscription:
 
         _subscription_countries = d.pop("subscriptionCountries", UNSET)
         subscription_countries: Union[Unset, SubscriptionCountries]
-        if isinstance(_subscription_countries, Unset):
-            subscription_countries = UNSET
-        else:
+        if _subscription_countries and not isinstance(_subscription_countries, Unset):
             subscription_countries = SubscriptionCountries.from_dict(_subscription_countries)
+
+        else:
+            subscription_countries = UNSET
 
         subscription = cls(
             id=id,

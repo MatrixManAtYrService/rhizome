@@ -115,26 +115,29 @@ class ApiLedgerJournalProjection:
 
         _journal_date = d.pop("journalDate", UNSET)
         journal_date: Union[Unset, datetime.date]
-        if isinstance(_journal_date, Unset):
-            journal_date = UNSET
-        else:
+        if _journal_date and not isinstance(_journal_date, Unset):
             journal_date = isoparse(_journal_date).date()
+
+        else:
+            journal_date = UNSET
 
         _ref_uuid_type = d.pop("refUuidType", UNSET)
         ref_uuid_type: Union[Unset, ApiLedgerJournalProjectionRefUuidType]
-        if isinstance(_ref_uuid_type, Unset):
-            ref_uuid_type = UNSET
-        else:
+        if _ref_uuid_type and not isinstance(_ref_uuid_type, Unset):
             ref_uuid_type = ApiLedgerJournalProjectionRefUuidType(_ref_uuid_type)
+
+        else:
+            ref_uuid_type = UNSET
 
         ref_uuid = d.pop("refUuid", UNSET)
 
         _credit_debit_ind = d.pop("creditDebitInd", UNSET)
         credit_debit_ind: Union[Unset, ApiLedgerJournalProjectionCreditDebitInd]
-        if isinstance(_credit_debit_ind, Unset):
-            credit_debit_ind = UNSET
-        else:
+        if _credit_debit_ind and not isinstance(_credit_debit_ind, Unset):
             credit_debit_ind = ApiLedgerJournalProjectionCreditDebitInd(_credit_debit_ind)
+
+        else:
+            credit_debit_ind = UNSET
 
         currency = d.pop("currency", UNSET)
 
@@ -142,10 +145,11 @@ class ApiLedgerJournalProjection:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         running_balance = d.pop("runningBalance", UNSET)
 

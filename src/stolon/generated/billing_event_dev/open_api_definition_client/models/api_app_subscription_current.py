@@ -121,31 +121,35 @@ class ApiAppSubscriptionCurrent:
 
         _trial_end_date = d.pop("trialEndDate", UNSET)
         trial_end_date: Union[Unset, datetime.date]
-        if isinstance(_trial_end_date, Unset):
-            trial_end_date = UNSET
-        else:
+        if _trial_end_date and not isinstance(_trial_end_date, Unset):
             trial_end_date = isoparse(_trial_end_date).date()
+
+        else:
+            trial_end_date = UNSET
 
         _last_advance_date = d.pop("lastAdvanceDate", UNSET)
         last_advance_date: Union[Unset, datetime.date]
-        if isinstance(_last_advance_date, Unset):
-            last_advance_date = UNSET
-        else:
+        if _last_advance_date and not isinstance(_last_advance_date, Unset):
             last_advance_date = isoparse(_last_advance_date).date()
+
+        else:
+            last_advance_date = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_app_subscription_current = cls(
             uuid=uuid,

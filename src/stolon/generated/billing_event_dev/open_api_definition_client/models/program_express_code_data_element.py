@@ -98,10 +98,11 @@ class ProgramExpressCodeDataElement:
         d = dict(src_dict)
         _action = d.pop("action", UNSET)
         action: Union[Unset, ProgramExpressCodeDataElementAction]
-        if isinstance(_action, Unset):
-            action = UNSET
-        else:
+        if _action and not isinstance(_action, Unset):
             action = ProgramExpressCodeDataElementAction(_action)
+
+        else:
+            action = UNSET
 
         program_code = d.pop("programCode", UNSET)
 
@@ -117,17 +118,19 @@ class ProgramExpressCodeDataElement:
 
         _specific_data = d.pop("specificData", UNSET)
         specific_data: Union[Unset, SpecificData]
-        if isinstance(_specific_data, Unset):
-            specific_data = UNSET
-        else:
+        if _specific_data and not isinstance(_specific_data, Unset):
             specific_data = SpecificData.from_dict(_specific_data)
+
+        else:
+            specific_data = UNSET
 
         _schema = d.pop("schema", UNSET)
         schema: Union[Unset, Schema]
-        if isinstance(_schema, Unset):
-            schema = UNSET
-        else:
+        if _schema and not isinstance(_schema, Unset):
             schema = Schema.from_dict(_schema)
+
+        else:
+            schema = UNSET
 
         program_express_code_data_element = cls(
             action=action,

@@ -1,11 +1,10 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, cast
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.merchant_passes_response_200 import MerchantPassesResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -27,12 +26,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[MerchantPassesResponse200]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[bool]:
     if response.status_code == 200:
-        response_200 = MerchantPassesResponse200.from_dict(response.json())
-
+        response_200 = cast(bool, response.json())
         return response_200
 
     if client.raise_on_unexpected_status:
@@ -41,9 +37,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[MerchantPassesResponse200]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[bool]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,7 +51,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Response[MerchantPassesResponse200]:
+) -> Response[bool]:
     """Check if merchant meets criteria
 
     Args:
@@ -69,7 +63,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[MerchantPassesResponse200]
+        Response[bool]
     """
 
     kwargs = _get_kwargs(
@@ -89,7 +83,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Optional[MerchantPassesResponse200]:
+) -> Optional[bool]:
     """Check if merchant meets criteria
 
     Args:
@@ -101,7 +95,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        MerchantPassesResponse200
+        bool
     """
 
     return sync_detailed(
@@ -116,7 +110,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Response[MerchantPassesResponse200]:
+) -> Response[bool]:
     """Check if merchant meets criteria
 
     Args:
@@ -128,7 +122,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[MerchantPassesResponse200]
+        Response[bool]
     """
 
     kwargs = _get_kwargs(
@@ -146,7 +140,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Optional[MerchantPassesResponse200]:
+) -> Optional[bool]:
     """Check if merchant meets criteria
 
     Args:
@@ -158,7 +152,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        MerchantPassesResponse200
+        bool
     """
 
     return (

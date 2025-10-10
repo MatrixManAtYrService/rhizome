@@ -21,20 +21,20 @@ class IConfig:
     Attributes:
         name (Union[Unset, str]):
         default_value (Union[Unset, IConfigDefaultValue]):
-        description (Union[Unset, str]):
-        is_nullable (Union[Unset, bool]):
         current_value (Union[Unset, IConfigCurrentValue]):
         default_value_as_string (Union[Unset, str]):
         data_type (Union[Unset, IConfigDataType]):
+        is_nullable (Union[Unset, bool]):
+        description (Union[Unset, str]):
     """
 
     name: Union[Unset, str] = UNSET
     default_value: Union[Unset, "IConfigDefaultValue"] = UNSET
-    description: Union[Unset, str] = UNSET
-    is_nullable: Union[Unset, bool] = UNSET
     current_value: Union[Unset, "IConfigCurrentValue"] = UNSET
     default_value_as_string: Union[Unset, str] = UNSET
     data_type: Union[Unset, IConfigDataType] = UNSET
+    is_nullable: Union[Unset, bool] = UNSET
+    description: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -43,10 +43,6 @@ class IConfig:
         default_value: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.default_value, Unset):
             default_value = self.default_value.to_dict()
-
-        description = self.description
-
-        is_nullable = self.is_nullable
 
         current_value: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.current_value, Unset):
@@ -58,6 +54,10 @@ class IConfig:
         if not isinstance(self.data_type, Unset):
             data_type = self.data_type.value
 
+        is_nullable = self.is_nullable
+
+        description = self.description
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -65,16 +65,16 @@ class IConfig:
             field_dict["name"] = name
         if default_value is not UNSET:
             field_dict["defaultValue"] = default_value
-        if description is not UNSET:
-            field_dict["description"] = description
-        if is_nullable is not UNSET:
-            field_dict["isNullable"] = is_nullable
         if current_value is not UNSET:
             field_dict["currentValue"] = current_value
         if default_value_as_string is not UNSET:
             field_dict["defaultValueAsString"] = default_value_as_string
         if data_type is not UNSET:
             field_dict["dataType"] = data_type
+        if is_nullable is not UNSET:
+            field_dict["isNullable"] = is_nullable
+        if description is not UNSET:
+            field_dict["description"] = description
 
         return field_dict
 
@@ -88,39 +88,42 @@ class IConfig:
 
         _default_value = d.pop("defaultValue", UNSET)
         default_value: Union[Unset, IConfigDefaultValue]
-        if isinstance(_default_value, Unset):
-            default_value = UNSET
-        else:
+        if _default_value and not isinstance(_default_value, Unset):
             default_value = IConfigDefaultValue.from_dict(_default_value)
 
-        description = d.pop("description", UNSET)
-
-        is_nullable = d.pop("isNullable", UNSET)
+        else:
+            default_value = UNSET
 
         _current_value = d.pop("currentValue", UNSET)
         current_value: Union[Unset, IConfigCurrentValue]
-        if isinstance(_current_value, Unset):
-            current_value = UNSET
-        else:
+        if _current_value and not isinstance(_current_value, Unset):
             current_value = IConfigCurrentValue.from_dict(_current_value)
+
+        else:
+            current_value = UNSET
 
         default_value_as_string = d.pop("defaultValueAsString", UNSET)
 
         _data_type = d.pop("dataType", UNSET)
         data_type: Union[Unset, IConfigDataType]
-        if isinstance(_data_type, Unset):
-            data_type = UNSET
-        else:
+        if _data_type and not isinstance(_data_type, Unset):
             data_type = IConfigDataType(_data_type)
+
+        else:
+            data_type = UNSET
+
+        is_nullable = d.pop("isNullable", UNSET)
+
+        description = d.pop("description", UNSET)
 
         i_config = cls(
             name=name,
             default_value=default_value,
-            description=description,
-            is_nullable=is_nullable,
             current_value=current_value,
             default_value_as_string=default_value_as_string,
             data_type=data_type,
+            is_nullable=is_nullable,
+            description=description,
         )
 
         i_config.additional_properties = d

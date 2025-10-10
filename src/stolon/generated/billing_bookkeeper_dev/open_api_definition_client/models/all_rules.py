@@ -129,10 +129,11 @@ class AllRules:
 
         _first = d.pop("first", UNSET)
         first: Union[Unset, BaseRule]
-        if isinstance(_first, Unset):
-            first = UNSET
-        else:
+        if _first and not isinstance(_first, Unset):
             first = BaseRule.from_dict(_first)
+
+        else:
+            first = UNSET
 
         initialized = d.pop("initialized", UNSET)
 

@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "country_code": "US",
+  "default_currency": "USD",
+  "default_locale_id": 1,
+  "default_timezone_id": 161,
+  "state_province_required": true,
+  "zip_postal_required": true,
+  "county_required": false,
+  "app_market_billing_enabled": true,
+  "vat": false
+}

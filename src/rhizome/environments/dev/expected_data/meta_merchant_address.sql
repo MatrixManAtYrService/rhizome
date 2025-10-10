@@ -15,4 +15,4 @@ CREATE TABLE `merchant_address` (
   PRIMARY KEY (`id`),
   KEY `modified_time` (`modified_time`),
   KEY `country` (`country`)
-) ENGINE=InnoDB AUTO_INCREMENT=2075581 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=2075883 DEFAULT CHARSET=utf8mb3

@@ -176,10 +176,11 @@ class Acceptance:
         d = dict(src_dict)
         _id = d.pop("id", UNSET)
         id: Union[Unset, UUID]
-        if isinstance(_id, Unset):
-            id = UNSET
-        else:
+        if _id and not isinstance(_id, Unset):
             id = UUID(_id)
+
+        else:
+            id = UNSET
 
         merchant_id = d.pop("merchantId", UNSET)
 
@@ -193,10 +194,11 @@ class Acceptance:
 
         _agreement_id = d.pop("agreementId", UNSET)
         agreement_id: Union[Unset, UUID]
-        if isinstance(_agreement_id, Unset):
-            agreement_id = UNSET
-        else:
+        if _agreement_id and not isinstance(_agreement_id, Unset):
             agreement_id = UUID(_agreement_id)
+
+        else:
+            agreement_id = UNSET
 
         signer_name = d.pop("signerName", UNSET)
 
@@ -204,10 +206,11 @@ class Acceptance:
 
         _source = d.pop("source", UNSET)
         source: Union[Unset, AcceptanceSource]
-        if isinstance(_source, Unset):
-            source = UNSET
-        else:
+        if _source and not isinstance(_source, Unset):
             source = AcceptanceSource(_source)
+
+        else:
+            source = UNSET
 
         origin_device_serial = d.pop("originDeviceSerial", UNSET)
 
@@ -215,52 +218,59 @@ class Acceptance:
 
         _template_parameters = d.pop("templateParameters", UNSET)
         template_parameters: Union[Unset, AcceptanceTemplateParameters]
-        if isinstance(_template_parameters, Unset):
-            template_parameters = UNSET
-        else:
+        if _template_parameters and not isinstance(_template_parameters, Unset):
             template_parameters = AcceptanceTemplateParameters.from_dict(_template_parameters)
+
+        else:
+            template_parameters = UNSET
 
         _metadata = d.pop("metadata", UNSET)
         metadata: Union[Unset, AcceptanceMetadata]
-        if isinstance(_metadata, Unset):
-            metadata = UNSET
-        else:
+        if _metadata and not isinstance(_metadata, Unset):
             metadata = AcceptanceMetadata.from_dict(_metadata)
+
+        else:
+            metadata = UNSET
 
         _created_time = d.pop("createdTime", UNSET)
         created_time: Union[Unset, datetime.datetime]
-        if isinstance(_created_time, Unset):
-            created_time = UNSET
-        else:
+        if _created_time and not isinstance(_created_time, Unset):
             created_time = isoparse(_created_time)
+
+        else:
+            created_time = UNSET
 
         _expiration_date = d.pop("expirationDate", UNSET)
         expiration_date: Union[Unset, datetime.datetime]
-        if isinstance(_expiration_date, Unset):
-            expiration_date = UNSET
-        else:
+        if _expiration_date and not isinstance(_expiration_date, Unset):
             expiration_date = isoparse(_expiration_date)
+
+        else:
+            expiration_date = UNSET
 
         _deleted_time = d.pop("deletedTime", UNSET)
         deleted_time: Union[Unset, datetime.datetime]
-        if isinstance(_deleted_time, Unset):
-            deleted_time = UNSET
-        else:
+        if _deleted_time and not isinstance(_deleted_time, Unset):
             deleted_time = isoparse(_deleted_time)
+
+        else:
+            deleted_time = UNSET
 
         _modified_time = d.pop("modifiedTime", UNSET)
         modified_time: Union[Unset, datetime.datetime]
-        if isinstance(_modified_time, Unset):
-            modified_time = UNSET
-        else:
+        if _modified_time and not isinstance(_modified_time, Unset):
             modified_time = isoparse(_modified_time)
+
+        else:
+            modified_time = UNSET
 
         _action = d.pop("action", UNSET)
         action: Union[Unset, AcceptanceAction]
-        if isinstance(_action, Unset):
-            action = UNSET
-        else:
+        if _action and not isinstance(_action, Unset):
             action = AcceptanceAction(_action)
+
+        else:
+            action = UNSET
 
         acceptance = cls(
             id=id,

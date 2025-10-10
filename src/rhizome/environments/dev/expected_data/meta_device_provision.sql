@@ -29,8 +29,6 @@ CREATE TABLE `device_provision` (
   KEY `reseller_id` (`reseller_id`),
   KEY `deleted_time` (`deleted_time`),
   KEY `idx_chip_uid` (`chip_uid`),
-  KEY `idx_ser_num_del_time_rese_id` (`serial_number`,`deleted_time`,`reseller_id`),
-  FULLTEXT KEY `idx_full_text_serial_number` (`serial_number`),
   CONSTRAINT `device_provision_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `device_provision_ibfk_2` FOREIGN KEY (`reseller_id`) REFERENCES `reseller` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=996605 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=996621 DEFAULT CHARSET=utf8mb3

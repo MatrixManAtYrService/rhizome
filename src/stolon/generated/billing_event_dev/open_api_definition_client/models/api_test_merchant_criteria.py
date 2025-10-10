@@ -86,33 +86,37 @@ class ApiTestMerchantCriteria:
 
         _type_ = d.pop("type", UNSET)
         type_: Union[Unset, ApiTestMerchantCriteriaType]
-        if isinstance(_type_, Unset):
-            type_ = UNSET
-        else:
+        if _type_ and not isinstance(_type_, Unset):
             type_ = ApiTestMerchantCriteriaType(_type_)
+
+        else:
+            type_ = UNSET
 
         value = d.pop("value", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         _deleted_timestamp = d.pop("deletedTimestamp", UNSET)
         deleted_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_deleted_timestamp, Unset):
-            deleted_timestamp = UNSET
-        else:
+        if _deleted_timestamp and not isinstance(_deleted_timestamp, Unset):
             deleted_timestamp = isoparse(_deleted_timestamp)
+
+        else:
+            deleted_timestamp = UNSET
 
         api_test_merchant_criteria = cls(
             id=id,

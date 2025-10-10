@@ -124,10 +124,11 @@ class ApiAppRatesEvent:
 
         _effective_date_time = d.pop("effectiveDateTime", UNSET)
         effective_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_effective_date_time, Unset):
-            effective_date_time = UNSET
-        else:
+        if _effective_date_time and not isinstance(_effective_date_time, Unset):
             effective_date_time = isoparse(_effective_date_time)
+
+        else:
+            effective_date_time = UNSET
 
         developer_uuid = d.pop("developerUuid", UNSET)
 
@@ -143,10 +144,11 @@ class ApiAppRatesEvent:
 
         _party = d.pop("party", UNSET)
         party: Union[Unset, ApiAppRatesEventParty]
-        if isinstance(_party, Unset):
-            party = UNSET
-        else:
+        if _party and not isinstance(_party, Unset):
             party = ApiAppRatesEventParty(_party)
+
+        else:
+            party = UNSET
 
         subscription_rates = []
         _subscription_rates = d.pop("subscriptionRates", UNSET)

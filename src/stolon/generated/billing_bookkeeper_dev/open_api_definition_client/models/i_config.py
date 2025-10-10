@@ -88,28 +88,31 @@ class IConfig:
 
         _default_value = d.pop("defaultValue", UNSET)
         default_value: Union[Unset, IConfigDefaultValue]
-        if isinstance(_default_value, Unset):
-            default_value = UNSET
-        else:
+        if _default_value and not isinstance(_default_value, Unset):
             default_value = IConfigDefaultValue.from_dict(_default_value)
+
+        else:
+            default_value = UNSET
 
         description = d.pop("description", UNSET)
 
         _current_value = d.pop("currentValue", UNSET)
         current_value: Union[Unset, IConfigCurrentValue]
-        if isinstance(_current_value, Unset):
-            current_value = UNSET
-        else:
+        if _current_value and not isinstance(_current_value, Unset):
             current_value = IConfigCurrentValue.from_dict(_current_value)
+
+        else:
+            current_value = UNSET
 
         default_value_as_string = d.pop("defaultValueAsString", UNSET)
 
         _data_type = d.pop("dataType", UNSET)
         data_type: Union[Unset, IConfigDataType]
-        if isinstance(_data_type, Unset):
-            data_type = UNSET
-        else:
+        if _data_type and not isinstance(_data_type, Unset):
             data_type = IConfigDataType(_data_type)
+
+        else:
+            data_type = UNSET
 
         is_nullable = d.pop("isNullable", UNSET)
 

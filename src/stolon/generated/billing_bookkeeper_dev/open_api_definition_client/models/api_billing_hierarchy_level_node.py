@@ -148,26 +148,29 @@ class ApiBillingHierarchyLevelNode:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiBillingHierarchyLevelNodeEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiBillingHierarchyLevelNodeEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         entity_uuid = d.pop("entityUuid", UNSET)
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         _deleted_date = d.pop("deletedDate", UNSET)
         deleted_date: Union[Unset, datetime.date]
-        if isinstance(_deleted_date, Unset):
-            deleted_date = UNSET
-        else:
+        if _deleted_date and not isinstance(_deleted_date, Unset):
             deleted_date = isoparse(_deleted_date).date()
+
+        else:
+            deleted_date = UNSET
 
         parent_billing_hierarchy_id = d.pop("parentBillingHierarchyId", UNSET)
 

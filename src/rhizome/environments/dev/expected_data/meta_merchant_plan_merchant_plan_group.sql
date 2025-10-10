@@ -6,4 +6,4 @@ CREATE TABLE `merchant_plan_merchant_plan_group` (
   PRIMARY KEY (`id`),
   KEY `merchant_plan_id` (`merchant_plan_id`),
   KEY `merchant_plan_group_id` (`merchant_plan_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4679 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=4678 DEFAULT CHARSET=utf8mb3

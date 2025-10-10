@@ -100,10 +100,11 @@ class ApiFeeEstimate:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiFeeEstimateEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiFeeEstimateEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         fee_totals = []
         _fee_totals = d.pop("feeTotals", UNSET)

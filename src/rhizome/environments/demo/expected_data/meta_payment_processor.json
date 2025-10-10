@@ -1,0 +1,9 @@
+{
+  "id": 3,
+  "uuid": "HashDU8MHLQfj",
+  "name": "Blackhole",
+  "payment_gateway_api": "blackhole",
+  "production": false,
+  "config": "{}",
+  "modified_time": "2016-02-15T03:30:05"
+}

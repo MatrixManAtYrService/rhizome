@@ -106,10 +106,11 @@ class ApiAppSubscriptionDaily:
 
         _event_date = d.pop("eventDate", UNSET)
         event_date: Union[Unset, datetime.date]
-        if isinstance(_event_date, Unset):
-            event_date = UNSET
-        else:
+        if _event_date and not isinstance(_event_date, Unset):
             event_date = isoparse(_event_date).date()
+
+        else:
+            event_date = UNSET
 
         starting_app_subscription_uuid = d.pop("startingAppSubscriptionUuid", UNSET)
 
@@ -121,10 +122,11 @@ class ApiAppSubscriptionDaily:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_app_subscription_daily = cls(
             uuid=uuid,

@@ -121,10 +121,11 @@ class ApiMlcCapturedEvent:
 
         _event_timestamp = d.pop("eventTimestamp", UNSET)
         event_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_event_timestamp, Unset):
-            event_timestamp = UNSET
-        else:
+        if _event_timestamp and not isinstance(_event_timestamp, Unset):
             event_timestamp = isoparse(_event_timestamp)
+
+        else:
+            event_timestamp = UNSET
 
         mlc_event_uuid = d.pop("mlcEventUuid", UNSET)
 
@@ -134,26 +135,29 @@ class ApiMlcCapturedEvent:
 
         _processed_timestamp = d.pop("processedTimestamp", UNSET)
         processed_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_processed_timestamp, Unset):
-            processed_timestamp = UNSET
-        else:
+        if _processed_timestamp and not isinstance(_processed_timestamp, Unset):
             processed_timestamp = isoparse(_processed_timestamp)
+
+        else:
+            processed_timestamp = UNSET
 
         processed_billing_event_uuid = d.pop("processedBillingEventUuid", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_mlc_captured_event = cls(
             uuid=uuid,

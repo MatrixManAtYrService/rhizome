@@ -113,10 +113,11 @@ class SpecificDataClassLoaderUnnamedModule:
 
         _descriptor = d.pop("descriptor", UNSET)
         descriptor: Union[Unset, SpecificDataClassLoaderUnnamedModuleDescriptor]
-        if isinstance(_descriptor, Unset):
-            descriptor = UNSET
-        else:
+        if _descriptor and not isinstance(_descriptor, Unset):
             descriptor = SpecificDataClassLoaderUnnamedModuleDescriptor.from_dict(_descriptor)
+
+        else:
+            descriptor = UNSET
 
         named = d.pop("named", UNSET)
 
@@ -140,10 +141,11 @@ class SpecificDataClassLoaderUnnamedModule:
 
         _layer = d.pop("layer", UNSET)
         layer: Union[Unset, SpecificDataClassLoaderUnnamedModuleLayer]
-        if isinstance(_layer, Unset):
-            layer = UNSET
-        else:
+        if _layer and not isinstance(_layer, Unset):
             layer = SpecificDataClassLoaderUnnamedModuleLayer.from_dict(_layer)
+
+        else:
+            layer = UNSET
 
         specific_data_class_loader_unnamed_module = cls(
             name=name,

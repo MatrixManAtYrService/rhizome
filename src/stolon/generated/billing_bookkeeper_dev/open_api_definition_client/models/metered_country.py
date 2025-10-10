@@ -75,10 +75,11 @@ class MeteredCountry:
 
         _app_metered = d.pop("appMetered", UNSET)
         app_metered: Union[Unset, DeveloperAppCurrentSubscription]
-        if isinstance(_app_metered, Unset):
-            app_metered = UNSET
-        else:
+        if _app_metered and not isinstance(_app_metered, Unset):
             app_metered = DeveloperAppCurrentSubscription.from_dict(_app_metered)
+
+        else:
+            app_metered = UNSET
 
         metered_country = cls(
             id=id,

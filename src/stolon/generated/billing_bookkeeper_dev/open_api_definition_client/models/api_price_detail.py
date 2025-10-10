@@ -92,10 +92,11 @@ class ApiPriceDetail:
 
         _apply_type = d.pop("applyType", UNSET)
         apply_type: Union[Unset, ApiPriceDetailApplyType]
-        if isinstance(_apply_type, Unset):
-            apply_type = UNSET
-        else:
+        if _apply_type and not isinstance(_apply_type, Unset):
             apply_type = ApiPriceDetailApplyType(_apply_type)
+
+        else:
+            apply_type = UNSET
 
         rate_amount = d.pop("rateAmount", UNSET)
 

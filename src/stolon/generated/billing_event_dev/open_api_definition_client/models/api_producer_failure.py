@@ -117,10 +117,11 @@ class ApiProducerFailure:
 
         _event_source = d.pop("eventSource", UNSET)
         event_source: Union[Unset, ApiProducerFailureEventSource]
-        if isinstance(_event_source, Unset):
-            event_source = UNSET
-        else:
+        if _event_source and not isinstance(_event_source, Unset):
             event_source = ApiProducerFailureEventSource(_event_source)
+
+        else:
+            event_source = UNSET
 
         event_context_json = d.pop("eventContextJson", UNSET)
 
@@ -136,10 +137,11 @@ class ApiProducerFailure:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_producer_failure = cls(
             id=id,

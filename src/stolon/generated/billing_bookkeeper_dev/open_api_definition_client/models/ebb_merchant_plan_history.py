@@ -57,17 +57,19 @@ class EbbMerchantPlanHistory:
         d = dict(src_dict)
         _old_plan = d.pop("oldPlan", UNSET)
         old_plan: Union[Unset, EbbMerchantPlan]
-        if isinstance(_old_plan, Unset):
-            old_plan = UNSET
-        else:
+        if _old_plan and not isinstance(_old_plan, Unset):
             old_plan = EbbMerchantPlan.from_dict(_old_plan)
+
+        else:
+            old_plan = UNSET
 
         _new_plan = d.pop("newPlan", UNSET)
         new_plan: Union[Unset, EbbMerchantPlan]
-        if isinstance(_new_plan, Unset):
-            new_plan = UNSET
-        else:
+        if _new_plan and not isinstance(_new_plan, Unset):
             new_plan = EbbMerchantPlan.from_dict(_new_plan)
+
+        else:
+            new_plan = UNSET
 
         changed_time = d.pop("changedTime", UNSET)
 

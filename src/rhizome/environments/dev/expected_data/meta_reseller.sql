@@ -57,4 +57,4 @@ CREATE TABLE `reseller` (
   CONSTRAINT `reseller_ibfk_3` FOREIGN KEY (`default_processor_key_id`) REFERENCES `processor_key` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `reseller_ibfk_4` FOREIGN KEY (`parent_id`) REFERENCES `reseller` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `reseller_ibfk_5` FOREIGN KEY (`fdmp_configuration_id`) REFERENCES `fdmp_configuration` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=21115 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=21127 DEFAULT CHARSET=utf8mb3

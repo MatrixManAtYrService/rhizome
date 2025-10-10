@@ -151,10 +151,11 @@ class ApiProcessingGroupDates:
         d = dict(src_dict)
         _tlement_date = d.pop("tlementDate", UNSET)
         tlement_date: Union[Unset, ApiProcessingGroupDates]
-        if isinstance(_tlement_date, Unset):
-            tlement_date = UNSET
-        else:
+        if _tlement_date and not isinstance(_tlement_date, Unset):
             tlement_date = ApiProcessingGroupDates.from_dict(_tlement_date)
+
+        else:
+            tlement_date = UNSET
 
         id = d.pop("id", UNSET)
 
@@ -168,73 +169,83 @@ class ApiProcessingGroupDates:
 
         _cycle_date = d.pop("cycleDate", UNSET)
         cycle_date: Union[Unset, datetime.date]
-        if isinstance(_cycle_date, Unset):
-            cycle_date = UNSET
-        else:
+        if _cycle_date and not isinstance(_cycle_date, Unset):
             cycle_date = isoparse(_cycle_date).date()
+
+        else:
+            cycle_date = UNSET
 
         _last_cycle_date = d.pop("lastCycleDate", UNSET)
         last_cycle_date: Union[Unset, datetime.date]
-        if isinstance(_last_cycle_date, Unset):
-            last_cycle_date = UNSET
-        else:
+        if _last_cycle_date and not isinstance(_last_cycle_date, Unset):
             last_cycle_date = isoparse(_last_cycle_date).date()
+
+        else:
+            last_cycle_date = UNSET
 
         _posting_date = d.pop("postingDate", UNSET)
         posting_date: Union[Unset, datetime.date]
-        if isinstance(_posting_date, Unset):
-            posting_date = UNSET
-        else:
+        if _posting_date and not isinstance(_posting_date, Unset):
             posting_date = isoparse(_posting_date).date()
+
+        else:
+            posting_date = UNSET
 
         _last_posting_date = d.pop("lastPostingDate", UNSET)
         last_posting_date: Union[Unset, datetime.date]
-        if isinstance(_last_posting_date, Unset):
-            last_posting_date = UNSET
-        else:
+        if _last_posting_date and not isinstance(_last_posting_date, Unset):
             last_posting_date = isoparse(_last_posting_date).date()
+
+        else:
+            last_posting_date = UNSET
 
         _billing_date = d.pop("billingDate", UNSET)
         billing_date: Union[Unset, datetime.date]
-        if isinstance(_billing_date, Unset):
-            billing_date = UNSET
-        else:
+        if _billing_date and not isinstance(_billing_date, Unset):
             billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
 
         _last_billing_date = d.pop("lastBillingDate", UNSET)
         last_billing_date: Union[Unset, datetime.date]
-        if isinstance(_last_billing_date, Unset):
-            last_billing_date = UNSET
-        else:
+        if _last_billing_date and not isinstance(_last_billing_date, Unset):
             last_billing_date = isoparse(_last_billing_date).date()
+
+        else:
+            last_billing_date = UNSET
 
         _settlement_date = d.pop("settlementDate", UNSET)
         settlement_date: Union[Unset, datetime.date]
-        if isinstance(_settlement_date, Unset):
-            settlement_date = UNSET
-        else:
+        if _settlement_date and not isinstance(_settlement_date, Unset):
             settlement_date = isoparse(_settlement_date).date()
+
+        else:
+            settlement_date = UNSET
 
         _last_settlement_date = d.pop("lastSettlementDate", UNSET)
         last_settlement_date: Union[Unset, datetime.date]
-        if isinstance(_last_settlement_date, Unset):
-            last_settlement_date = UNSET
-        else:
+        if _last_settlement_date and not isinstance(_last_settlement_date, Unset):
             last_settlement_date = isoparse(_last_settlement_date).date()
+
+        else:
+            last_settlement_date = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_processing_group_dates = cls(
             tlement_date=tlement_date,

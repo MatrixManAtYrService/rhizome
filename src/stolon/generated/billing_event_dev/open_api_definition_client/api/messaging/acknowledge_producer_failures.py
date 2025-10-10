@@ -5,7 +5,6 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.acknowledge_producer_failures_response_200 import AcknowledgeProducerFailuresResponse200
 from ...models.api_message_failure_update_response import ApiMessageFailureUpdateResponse
 from ...types import UNSET, Response, Unset
 
@@ -39,9 +38,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]:
+) -> Optional[Union[ApiMessageFailureUpdateResponse, list["ApiMessageFailureUpdateResponse"]]]:
     if response.status_code == 200:
-        response_200 = AcknowledgeProducerFailuresResponse200.from_dict(response.json())
+        response_200 = ApiMessageFailureUpdateResponse.from_dict(response.json())
 
         return response_200
 
@@ -73,7 +72,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]:
+) -> Response[Union[ApiMessageFailureUpdateResponse, list["ApiMessageFailureUpdateResponse"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -87,7 +86,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     body: list[str],
     comment: Union[Unset, str] = UNSET,
-) -> Response[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]:
+) -> Response[Union[ApiMessageFailureUpdateResponse, list["ApiMessageFailureUpdateResponse"]]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
     Args:
@@ -99,7 +98,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
+        Response[Union[ApiMessageFailureUpdateResponse, list['ApiMessageFailureUpdateResponse']]]
     """
 
     kwargs = _get_kwargs(
@@ -119,7 +118,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     body: list[str],
     comment: Union[Unset, str] = UNSET,
-) -> Optional[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]:
+) -> Optional[Union[ApiMessageFailureUpdateResponse, list["ApiMessageFailureUpdateResponse"]]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
     Args:
@@ -131,7 +130,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
+        Union[ApiMessageFailureUpdateResponse, list['ApiMessageFailureUpdateResponse']]
     """
 
     return sync_detailed(
@@ -146,7 +145,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     body: list[str],
     comment: Union[Unset, str] = UNSET,
-) -> Response[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]:
+) -> Response[Union[ApiMessageFailureUpdateResponse, list["ApiMessageFailureUpdateResponse"]]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
     Args:
@@ -158,7 +157,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
+        Response[Union[ApiMessageFailureUpdateResponse, list['ApiMessageFailureUpdateResponse']]]
     """
 
     kwargs = _get_kwargs(
@@ -176,7 +175,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     body: list[str],
     comment: Union[Unset, str] = UNSET,
-) -> Optional[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]:
+) -> Optional[Union[ApiMessageFailureUpdateResponse, list["ApiMessageFailureUpdateResponse"]]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
     Args:
@@ -188,7 +187,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
+        Union[ApiMessageFailureUpdateResponse, list['ApiMessageFailureUpdateResponse']]
     """
 
     return (

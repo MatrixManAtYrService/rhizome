@@ -56,24 +56,27 @@ class JobState:
         d = dict(src_dict)
         _name = d.pop("name", UNSET)
         name: Union[Unset, JobStateName]
-        if isinstance(_name, Unset):
-            name = UNSET
-        else:
+        if _name and not isinstance(_name, Unset):
             name = JobStateName(_name)
+
+        else:
+            name = UNSET
 
         _created_at = d.pop("createdAt", UNSET)
         created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
+        if _created_at and not isinstance(_created_at, Unset):
             created_at = isoparse(_created_at)
+
+        else:
+            created_at = UNSET
 
         _updated_at = d.pop("updatedAt", UNSET)
         updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
+        if _updated_at and not isinstance(_updated_at, Unset):
             updated_at = isoparse(_updated_at)
+
+        else:
+            updated_at = UNSET
 
         job_state = cls(
             name=name,

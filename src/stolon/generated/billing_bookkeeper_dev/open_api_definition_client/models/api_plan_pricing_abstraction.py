@@ -186,19 +186,21 @@ class ApiPlanPricingAbstraction:
         d = dict(src_dict)
         _as_of_date = d.pop("asOfDate", UNSET)
         as_of_date: Union[Unset, datetime.date]
-        if isinstance(_as_of_date, Unset):
-            as_of_date = UNSET
-        else:
+        if _as_of_date and not isinstance(_as_of_date, Unset):
             as_of_date = isoparse(_as_of_date).date()
+
+        else:
+            as_of_date = UNSET
 
         _plan_pricing_abstraction_type = d.pop("planPricingAbstractionType", UNSET)
         plan_pricing_abstraction_type: Union[Unset, ApiPlanPricingAbstractionPlanPricingAbstractionType]
-        if isinstance(_plan_pricing_abstraction_type, Unset):
-            plan_pricing_abstraction_type = UNSET
-        else:
+        if _plan_pricing_abstraction_type and not isinstance(_plan_pricing_abstraction_type, Unset):
             plan_pricing_abstraction_type = ApiPlanPricingAbstractionPlanPricingAbstractionType(
                 _plan_pricing_abstraction_type
             )
+
+        else:
+            plan_pricing_abstraction_type = UNSET
 
         currency = d.pop("currency", UNSET)
 

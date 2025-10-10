@@ -112,26 +112,29 @@ class ServerConfig:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 
         _data_type = d.pop("dataType", UNSET)
         data_type: Union[Unset, ServerConfigDataType]
-        if isinstance(_data_type, Unset):
-            data_type = UNSET
-        else:
+        if _data_type and not isinstance(_data_type, Unset):
             data_type = ServerConfigDataType(_data_type)
+
+        else:
+            data_type = UNSET
 
         description = d.pop("description", UNSET)
 
@@ -139,10 +142,11 @@ class ServerConfig:
 
         _transient_data_from_config = d.pop("transientDataFromConfig", UNSET)
         transient_data_from_config: Union[Unset, IConfig]
-        if isinstance(_transient_data_from_config, Unset):
-            transient_data_from_config = UNSET
-        else:
+        if _transient_data_from_config and not isinstance(_transient_data_from_config, Unset):
             transient_data_from_config = IConfig.from_dict(_transient_data_from_config)
+
+        else:
+            transient_data_from_config = UNSET
 
         server_config = cls(
             id=id,

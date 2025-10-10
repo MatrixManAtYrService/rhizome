@@ -92,10 +92,11 @@ class ApiAsOfMerchantPlan:
 
         _trial_start_date = d.pop("trialStartDate", UNSET)
         trial_start_date: Union[Unset, datetime.date]
-        if isinstance(_trial_start_date, Unset):
-            trial_start_date = UNSET
-        else:
+        if _trial_start_date and not isinstance(_trial_start_date, Unset):
             trial_start_date = isoparse(_trial_start_date).date()
+
+        else:
+            trial_start_date = UNSET
 
         trial_days = d.pop("trialDays", UNSET)
 
@@ -103,10 +104,11 @@ class ApiAsOfMerchantPlan:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_as_of_merchant_plan = cls(
             id=id,

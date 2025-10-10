@@ -73,17 +73,19 @@ class ApiResolvedFeeRate:
 
         _billing_entity_fee_rate = d.pop("billingEntityFeeRate", UNSET)
         billing_entity_fee_rate: Union[Unset, ApiFeeRate]
-        if isinstance(_billing_entity_fee_rate, Unset):
-            billing_entity_fee_rate = UNSET
-        else:
+        if _billing_entity_fee_rate and not isinstance(_billing_entity_fee_rate, Unset):
             billing_entity_fee_rate = ApiFeeRate.from_dict(_billing_entity_fee_rate)
+
+        else:
+            billing_entity_fee_rate = UNSET
 
         _applicable_fee_rate = d.pop("applicableFeeRate", UNSET)
         applicable_fee_rate: Union[Unset, ApiFeeRate]
-        if isinstance(_applicable_fee_rate, Unset):
-            applicable_fee_rate = UNSET
-        else:
+        if _applicable_fee_rate and not isinstance(_applicable_fee_rate, Unset):
             applicable_fee_rate = ApiFeeRate.from_dict(_applicable_fee_rate)
+
+        else:
+            applicable_fee_rate = UNSET
 
         missing_fee_rates = []
         _missing_fee_rates = d.pop("missingFeeRates", UNSET)

@@ -120,10 +120,11 @@ class AchTransaction:
         d = dict(src_dict)
         _payment_ref = d.pop("paymentRef", UNSET)
         payment_ref: Union[Unset, Reference]
-        if isinstance(_payment_ref, Unset):
-            payment_ref = UNSET
-        else:
+        if _payment_ref and not isinstance(_payment_ref, Unset):
             payment_ref = Reference.from_dict(_payment_ref)
+
+        else:
+            payment_ref = UNSET
 
         routing_number = d.pop("routingNumber", UNSET)
 
@@ -135,10 +136,11 @@ class AchTransaction:
 
         _extra = d.pop("extra", UNSET)
         extra: Union[Unset, AchTransactionExtra]
-        if isinstance(_extra, Unset):
-            extra = UNSET
-        else:
+        if _extra and not isinstance(_extra, Unset):
             extra = AchTransactionExtra.from_dict(_extra)
+
+        else:
+            extra = UNSET
 
         account_holder_name = d.pop("accountHolderName", UNSET)
 

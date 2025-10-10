@@ -139,10 +139,11 @@ class ApiAppMeteredEvent:
 
         _action_timestamp = d.pop("actionTimestamp", UNSET)
         action_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_action_timestamp, Unset):
-            action_timestamp = UNSET
-        else:
+        if _action_timestamp and not isinstance(_action_timestamp, Unset):
             action_timestamp = isoparse(_action_timestamp)
+
+        else:
+            action_timestamp = UNSET
 
         credit_for_trial = d.pop("creditForTrial", UNSET)
 
@@ -150,19 +151,21 @@ class ApiAppMeteredEvent:
 
         _processed_timestamp = d.pop("processedTimestamp", UNSET)
         processed_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_processed_timestamp, Unset):
-            processed_timestamp = UNSET
-        else:
+        if _processed_timestamp and not isinstance(_processed_timestamp, Unset):
             processed_timestamp = isoparse(_processed_timestamp)
+
+        else:
+            processed_timestamp = UNSET
 
         billing_event_uuid = d.pop("billingEventUuid", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_app_metered_event = cls(
             uuid=uuid,

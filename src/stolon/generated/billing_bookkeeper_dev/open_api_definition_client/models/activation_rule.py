@@ -112,17 +112,19 @@ class ActivationRule:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _deleted_timestamp = d.pop("deletedTimestamp", UNSET)
         deleted_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_deleted_timestamp, Unset):
-            deleted_timestamp = UNSET
-        else:
+        if _deleted_timestamp and not isinstance(_deleted_timestamp, Unset):
             deleted_timestamp = isoparse(_deleted_timestamp)
+
+        else:
+            deleted_timestamp = UNSET
 
         composing_rules = []
         _composing_rules = d.pop("composingRules", UNSET)

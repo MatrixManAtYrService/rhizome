@@ -78,10 +78,11 @@ class ApiSpecifierPrice:
 
         _base_price = d.pop("basePrice", UNSET)
         base_price: Union[Unset, ApiPriceDetail]
-        if isinstance(_base_price, Unset):
-            base_price = UNSET
-        else:
+        if _base_price and not isinstance(_base_price, Unset):
             base_price = ApiPriceDetail.from_dict(_base_price)
+
+        else:
+            base_price = UNSET
 
         tier_pricing = []
         _tier_pricing = d.pop("tierPricing", UNSET)

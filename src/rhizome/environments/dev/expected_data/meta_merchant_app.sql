@@ -50,4 +50,4 @@ CREATE TABLE `merchant_app` (
   KEY `deleted_time` (`deleted_time`),
   KEY `idx_composite_merchant_app` (`app_subscription_id`,`app_id`,`deleted_time`),
   CONSTRAINT `merchant_app_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6775982495263 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=6775982512573 DEFAULT CHARSET=utf8mb3

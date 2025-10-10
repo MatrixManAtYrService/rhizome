@@ -43,10 +43,11 @@ class Field:
         d = dict(src_dict)
         _object_props = d.pop("objectProps", UNSET)
         object_props: Union[Unset, FieldObjectProps]
-        if isinstance(_object_props, Unset):
-            object_props = UNSET
-        else:
+        if _object_props and not isinstance(_object_props, Unset):
             object_props = FieldObjectProps.from_dict(_object_props)
+
+        else:
+            object_props = UNSET
 
         field = cls(
             object_props=object_props,

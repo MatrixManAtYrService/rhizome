@@ -215,24 +215,27 @@ class Payment:
 
         _order = d.pop("order", UNSET)
         order: Union[Unset, Order]
-        if isinstance(_order, Unset):
-            order = UNSET
-        else:
+        if _order and not isinstance(_order, Unset):
             order = Order.from_dict(_order)
+
+        else:
+            order = UNSET
 
         _device = d.pop("device", UNSET)
         device: Union[Unset, Device]
-        if isinstance(_device, Unset):
-            device = UNSET
-        else:
+        if _device and not isinstance(_device, Unset):
             device = Device.from_dict(_device)
+
+        else:
+            device = UNSET
 
         _tender = d.pop("tender", UNSET)
         tender: Union[Unset, Tender]
-        if isinstance(_tender, Unset):
-            tender = UNSET
-        else:
+        if _tender and not isinstance(_tender, Unset):
             tender = Tender.from_dict(_tender)
+
+        else:
+            tender = UNSET
 
         amount = d.pop("amount", UNSET)
 
@@ -248,10 +251,11 @@ class Payment:
 
         _employee = d.pop("employee", UNSET)
         employee: Union[Unset, Employee]
-        if isinstance(_employee, Unset):
-            employee = UNSET
-        else:
+        if _employee and not isinstance(_employee, Unset):
             employee = Employee.from_dict(_employee)
+
+        else:
+            employee = UNSET
 
         created_time = d.pop("createdTime", UNSET)
 
@@ -267,24 +271,27 @@ class Payment:
 
         _card_transaction = d.pop("cardTransaction", UNSET)
         card_transaction: Union[Unset, CardTransaction]
-        if isinstance(_card_transaction, Unset):
-            card_transaction = UNSET
-        else:
+        if _card_transaction and not isinstance(_card_transaction, Unset):
             card_transaction = CardTransaction.from_dict(_card_transaction)
+
+        else:
+            card_transaction = UNSET
 
         _ach_transaction = d.pop("achTransaction", UNSET)
         ach_transaction: Union[Unset, AchTransaction]
-        if isinstance(_ach_transaction, Unset):
-            ach_transaction = UNSET
-        else:
+        if _ach_transaction and not isinstance(_ach_transaction, Unset):
             ach_transaction = AchTransaction.from_dict(_ach_transaction)
+
+        else:
+            ach_transaction = UNSET
 
         _service_charge = d.pop("serviceCharge", UNSET)
         service_charge: Union[Unset, ServiceCharge]
-        if isinstance(_service_charge, Unset):
-            service_charge = UNSET
-        else:
+        if _service_charge and not isinstance(_service_charge, Unset):
             service_charge = ServiceCharge.from_dict(_service_charge)
+
+        else:
+            service_charge = UNSET
 
         additional_charges = []
         _additional_charges = d.pop("additionalCharges", UNSET)
@@ -297,10 +304,11 @@ class Payment:
 
         _merchant = d.pop("merchant", UNSET)
         merchant: Union[Unset, Reference]
-        if isinstance(_merchant, Unset):
-            merchant = UNSET
-        else:
+        if _merchant and not isinstance(_merchant, Unset):
             merchant = Reference.from_dict(_merchant)
+
+        else:
+            merchant = UNSET
 
         payment = cls(
             id=id,

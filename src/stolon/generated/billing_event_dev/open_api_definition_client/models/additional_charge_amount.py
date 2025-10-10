@@ -99,24 +99,27 @@ class AdditionalChargeAmount:
 
         _payment = d.pop("payment", UNSET)
         payment: Union[Unset, Reference]
-        if isinstance(_payment, Unset):
-            payment = UNSET
-        else:
+        if _payment and not isinstance(_payment, Unset):
             payment = Reference.from_dict(_payment)
+
+        else:
+            payment = UNSET
 
         _refund = d.pop("refund", UNSET)
         refund: Union[Unset, Reference]
-        if isinstance(_refund, Unset):
-            refund = UNSET
-        else:
+        if _refund and not isinstance(_refund, Unset):
             refund = Reference.from_dict(_refund)
+
+        else:
+            refund = UNSET
 
         _incremental_auth = d.pop("incrementalAuth", UNSET)
         incremental_auth: Union[Unset, Reference]
-        if isinstance(_incremental_auth, Unset):
-            incremental_auth = UNSET
-        else:
+        if _incremental_auth and not isinstance(_incremental_auth, Unset):
             incremental_auth = Reference.from_dict(_incremental_auth)
+
+        else:
+            incremental_auth = UNSET
 
         additional_charge_amount = cls(
             id=id,

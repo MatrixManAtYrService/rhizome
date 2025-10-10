@@ -85,17 +85,19 @@ class ApiTaxedEntityTax:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiTaxedEntityTaxEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiTaxedEntityTaxEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         _transaction_date = d.pop("transactionDate", UNSET)
         transaction_date: Union[Unset, datetime.date]
-        if isinstance(_transaction_date, Unset):
-            transaction_date = UNSET
-        else:
+        if _transaction_date and not isinstance(_transaction_date, Unset):
             transaction_date = isoparse(_transaction_date).date()
+
+        else:
+            transaction_date = UNSET
 
         products = []
         _products = d.pop("products", UNSET)

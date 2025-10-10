@@ -14,4 +14,4 @@ CREATE TABLE `app_subscription_country` (
   UNIQUE KEY `uuid` (`uuid`),
   KEY `app_subscription_id_cntry_actv` (`app_subscription_id`,`country`,`active`),
   CONSTRAINT `app_subscription_country_ibfk_1` FOREIGN KEY (`app_subscription_id`) REFERENCES `app_subscription` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=114907 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=114911 DEFAULT CHARSET=utf8mb3

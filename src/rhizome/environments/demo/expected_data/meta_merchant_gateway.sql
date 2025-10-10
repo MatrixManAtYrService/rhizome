@@ -17,4 +17,4 @@ CREATE TABLE `merchant_gateway` (
   KEY `modified_time` (`modified_time`),
   KEY `payment_processor_id` (`payment_processor_id`),
   CONSTRAINT `merchant_gateway_ibfk_1` FOREIGN KEY (`processor_key_id`) REFERENCES `processor_key` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=81509 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=81841 DEFAULT CHARSET=utf8mb3

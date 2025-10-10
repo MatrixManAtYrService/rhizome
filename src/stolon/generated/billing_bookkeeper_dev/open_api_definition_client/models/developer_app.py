@@ -304,87 +304,99 @@ class DeveloperApp:
 
         _approval_status = d.pop("approvalStatus", UNSET)
         approval_status: Union[Unset, DeveloperAppApprovalStatus]
-        if isinstance(_approval_status, Unset):
-            approval_status = UNSET
-        else:
+        if _approval_status and not isinstance(_approval_status, Unset):
             approval_status = DeveloperAppApprovalStatus(_approval_status)
+
+        else:
+            approval_status = UNSET
 
         _distribution = d.pop("distribution", UNSET)
         distribution: Union[Unset, DeveloperAppDistribution]
-        if isinstance(_distribution, Unset):
-            distribution = UNSET
-        else:
+        if _distribution and not isinstance(_distribution, Unset):
             distribution = DeveloperAppDistribution(_distribution)
+
+        else:
+            distribution = UNSET
 
         _developer = d.pop("developer", UNSET)
         developer: Union[Unset, DeveloperAppDeveloper]
-        if isinstance(_developer, Unset):
-            developer = UNSET
-        else:
+        if _developer and not isinstance(_developer, Unset):
             developer = DeveloperAppDeveloper.from_dict(_developer)
+
+        else:
+            developer = UNSET
 
         _merchant = d.pop("merchant", UNSET)
         merchant: Union[Unset, DeveloperAppMerchant]
-        if isinstance(_merchant, Unset):
-            merchant = UNSET
-        else:
+        if _merchant and not isinstance(_merchant, Unset):
             merchant = DeveloperAppMerchant.from_dict(_merchant)
+
+        else:
+            merchant = UNSET
 
         _android_version = d.pop("androidVersion", UNSET)
         android_version: Union[Unset, DeveloperAppAndroidVersion]
-        if isinstance(_android_version, Unset):
-            android_version = UNSET
-        else:
+        if _android_version and not isinstance(_android_version, Unset):
             android_version = DeveloperAppAndroidVersion.from_dict(_android_version)
+
+        else:
+            android_version = UNSET
 
         _current_subscription = d.pop("currentSubscription", UNSET)
         current_subscription: Union[Unset, DeveloperAppCurrentSubscription]
-        if isinstance(_current_subscription, Unset):
-            current_subscription = UNSET
-        else:
+        if _current_subscription and not isinstance(_current_subscription, Unset):
             current_subscription = DeveloperAppCurrentSubscription.from_dict(_current_subscription)
+
+        else:
+            current_subscription = UNSET
 
         _subscriptions = d.pop("subscriptions", UNSET)
         subscriptions: Union[Unset, Subscriptions]
-        if isinstance(_subscriptions, Unset):
-            subscriptions = UNSET
-        else:
+        if _subscriptions and not isinstance(_subscriptions, Unset):
             subscriptions = Subscriptions.from_dict(_subscriptions)
+
+        else:
+            subscriptions = UNSET
 
         _metereds = d.pop("metereds", UNSET)
         metereds: Union[Unset, Metereds]
-        if isinstance(_metereds, Unset):
-            metereds = UNSET
-        else:
+        if _metereds and not isinstance(_metereds, Unset):
             metereds = Metereds.from_dict(_metereds)
+
+        else:
+            metereds = UNSET
 
         _available_subscriptions = d.pop("availableSubscriptions", UNSET)
         available_subscriptions: Union[Unset, Subscriptions]
-        if isinstance(_available_subscriptions, Unset):
-            available_subscriptions = UNSET
-        else:
+        if _available_subscriptions and not isinstance(_available_subscriptions, Unset):
             available_subscriptions = Subscriptions.from_dict(_available_subscriptions)
+
+        else:
+            available_subscriptions = UNSET
 
         _available_metereds = d.pop("availableMetereds", UNSET)
         available_metereds: Union[Unset, Metereds]
-        if isinstance(_available_metereds, Unset):
-            available_metereds = UNSET
-        else:
+        if _available_metereds and not isinstance(_available_metereds, Unset):
             available_metereds = Metereds.from_dict(_available_metereds)
+
+        else:
+            available_metereds = UNSET
 
         _permissions = d.pop("permissions", UNSET)
         permissions: Union[Unset, Permissions]
-        if isinstance(_permissions, Unset):
-            permissions = UNSET
-        else:
+        if _permissions and not isinstance(_permissions, Unset):
             permissions = Permissions.from_dict(_permissions)
+
+        else:
+            permissions = UNSET
 
         _segment = d.pop("segment", UNSET)
         segment: Union[Unset, DeveloperAppSegment]
-        if isinstance(_segment, Unset):
-            segment = UNSET
-        else:
+        if _segment and not isinstance(_segment, Unset):
             segment = DeveloperAppSegment(_segment)
+
+        else:
+            segment = UNSET
 
         paid_app_has_trial = d.pop("paidAppHasTrial", UNSET)
 

@@ -161,31 +161,35 @@ class ApiResolvedBillingEntityConfig:
         d = dict(src_dict)
         _tlement_method_be_uuid = d.pop("tlementMethodBeUuid", UNSET)
         tlement_method_be_uuid: Union[Unset, ApiResolvedBillingEntityConfig]
-        if isinstance(_tlement_method_be_uuid, Unset):
-            tlement_method_be_uuid = UNSET
-        else:
+        if _tlement_method_be_uuid and not isinstance(_tlement_method_be_uuid, Unset):
             tlement_method_be_uuid = ApiResolvedBillingEntityConfig.from_dict(_tlement_method_be_uuid)
+
+        else:
+            tlement_method_be_uuid = UNSET
 
         _tlement_method = d.pop("tlementMethod", UNSET)
         tlement_method: Union[Unset, ApiResolvedBillingEntityConfig]
-        if isinstance(_tlement_method, Unset):
-            tlement_method = UNSET
-        else:
+        if _tlement_method and not isinstance(_tlement_method, Unset):
             tlement_method = ApiResolvedBillingEntityConfig.from_dict(_tlement_method)
+
+        else:
+            tlement_method = UNSET
 
         _billing_entity_config = d.pop("billingEntityConfig", UNSET)
         billing_entity_config: Union[Unset, ApiBillingEntityConfig]
-        if isinstance(_billing_entity_config, Unset):
-            billing_entity_config = UNSET
-        else:
+        if _billing_entity_config and not isinstance(_billing_entity_config, Unset):
             billing_entity_config = ApiBillingEntityConfig.from_dict(_billing_entity_config)
+
+        else:
+            billing_entity_config = UNSET
 
         _as_of_date = d.pop("asOfDate", UNSET)
         as_of_date: Union[Unset, datetime.date]
-        if isinstance(_as_of_date, Unset):
-            as_of_date = UNSET
-        else:
+        if _as_of_date and not isinstance(_as_of_date, Unset):
             as_of_date = isoparse(_as_of_date).date()
+
+        else:
+            as_of_date = UNSET
 
         revenue_share_group = d.pop("revenueShareGroup", UNSET)
 

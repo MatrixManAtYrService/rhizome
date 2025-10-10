@@ -128,19 +128,21 @@ class ApiRevShareAbstraction:
         d = dict(src_dict)
         _as_of_date = d.pop("asOfDate", UNSET)
         as_of_date: Union[Unset, datetime.date]
-        if isinstance(_as_of_date, Unset):
-            as_of_date = UNSET
-        else:
+        if _as_of_date and not isinstance(_as_of_date, Unset):
             as_of_date = isoparse(_as_of_date).date()
+
+        else:
+            as_of_date = UNSET
 
         revenue_share_group = d.pop("revenueShareGroup", UNSET)
 
         _revenue_share_type = d.pop("revenueShareType", UNSET)
         revenue_share_type: Union[Unset, ApiRevShareAbstractionRevenueShareType]
-        if isinstance(_revenue_share_type, Unset):
-            revenue_share_type = UNSET
-        else:
+        if _revenue_share_type and not isinstance(_revenue_share_type, Unset):
             revenue_share_type = ApiRevShareAbstractionRevenueShareType(_revenue_share_type)
+
+        else:
+            revenue_share_type = UNSET
 
         currency = d.pop("currency", UNSET)
 

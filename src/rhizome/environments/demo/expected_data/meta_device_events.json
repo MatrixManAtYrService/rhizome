@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "device_event": "PROVISIONED",
+  "serial_number": "C010UC40831039",
+  "device_type_id": 2,
+  "merchant_id": 473,
+  "account_id": null,
+  "internal_account_id": null,
+  "timestamp": "2014-03-27T23:06:28"
+}

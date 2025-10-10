@@ -123,10 +123,11 @@ class ApiPriceAdjustment:
 
         _adjust_price = d.pop("adjustPrice", UNSET)
         adjust_price: Union[Unset, ApiPriceDetail]
-        if isinstance(_adjust_price, Unset):
-            adjust_price = UNSET
-        else:
+        if _adjust_price and not isinstance(_adjust_price, Unset):
             adjust_price = ApiPriceDetail.from_dict(_adjust_price)
+
+        else:
+            adjust_price = UNSET
 
         api_price_adjustment = cls(
             advice_uuid=advice_uuid,

@@ -360,10 +360,11 @@ class Developer:
 
         _bank_info = d.pop("bankInfo", UNSET)
         bank_info: Union[Unset, BankInfo]
-        if isinstance(_bank_info, Unset):
-            bank_info = UNSET
-        else:
+        if _bank_info and not isinstance(_bank_info, Unset):
             bank_info = BankInfo.from_dict(_bank_info)
+
+        else:
+            bank_info = UNSET
 
         bank_account_region = d.pop("bankAccountRegion", UNSET)
 
@@ -415,10 +416,11 @@ class Developer:
 
         _owner = d.pop("owner", UNSET)
         owner: Union[Unset, Owner]
-        if isinstance(_owner, Unset):
-            owner = UNSET
-        else:
+        if _owner and not isinstance(_owner, Unset):
             owner = Owner.from_dict(_owner)
+
+        else:
+            owner = UNSET
 
         app_billing_system = d.pop("appBillingSystem", UNSET)
 

@@ -67,10 +67,11 @@ class ApiDateJobParams:
 
         _date = d.pop("date", UNSET)
         date: Union[Unset, datetime.date]
-        if isinstance(_date, Unset):
-            date = UNSET
-        else:
+        if _date and not isinstance(_date, Unset):
             date = isoparse(_date).date()
+
+        else:
+            date = UNSET
 
         api_date_job_params = cls(
             reference_uuid=reference_uuid,

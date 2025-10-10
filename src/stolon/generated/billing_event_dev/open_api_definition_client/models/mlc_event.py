@@ -210,121 +210,137 @@ class MlcEvent:
         d = dict(src_dict)
         _event_type = d.pop("eventType", UNSET)
         event_type: Union[Unset, MlcEventEventType]
-        if isinstance(_event_type, Unset):
-            event_type = UNSET
-        else:
+        if _event_type and not isinstance(_event_type, Unset):
             event_type = MlcEventEventType(_event_type)
+
+        else:
+            event_type = UNSET
 
         source_url = d.pop("sourceUrl", UNSET)
 
         _event_date = d.pop("eventDate", UNSET)
         event_date: Union[Unset, datetime.datetime]
-        if isinstance(_event_date, Unset):
-            event_date = UNSET
-        else:
+        if _event_date and not isinstance(_event_date, Unset):
             event_date = isoparse(_event_date)
+
+        else:
+            event_date = UNSET
 
         _merchant_bank_account_change = d.pop("merchantBankAccountChange", UNSET)
         merchant_bank_account_change: Union[Unset, MerchantBankAccountChangeData]
-        if isinstance(_merchant_bank_account_change, Unset):
-            merchant_bank_account_change = UNSET
-        else:
+        if _merchant_bank_account_change and not isinstance(_merchant_bank_account_change, Unset):
             merchant_bank_account_change = MerchantBankAccountChangeData.from_dict(_merchant_bank_account_change)
+
+        else:
+            merchant_bank_account_change = UNSET
 
         _merchant_owner_email_change = d.pop("merchantOwnerEmailChange", UNSET)
         merchant_owner_email_change: Union[Unset, MerchantOwnerEmailChangeData]
-        if isinstance(_merchant_owner_email_change, Unset):
-            merchant_owner_email_change = UNSET
-        else:
+        if _merchant_owner_email_change and not isinstance(_merchant_owner_email_change, Unset):
             merchant_owner_email_change = MerchantOwnerEmailChangeData.from_dict(_merchant_owner_email_change)
+
+        else:
+            merchant_owner_email_change = UNSET
 
         _merchant_account_status_change = d.pop("merchantAccountStatusChange", UNSET)
         merchant_account_status_change: Union[Unset, MerchantAccounStatusChangeData]
-        if isinstance(_merchant_account_status_change, Unset):
-            merchant_account_status_change = UNSET
-        else:
+        if _merchant_account_status_change and not isinstance(_merchant_account_status_change, Unset):
             merchant_account_status_change = MerchantAccounStatusChangeData.from_dict(_merchant_account_status_change)
+
+        else:
+            merchant_account_status_change = UNSET
 
         _device = d.pop("device", UNSET)
         device: Union[Unset, DeviceData]
-        if isinstance(_device, Unset):
-            device = UNSET
-        else:
+        if _device and not isinstance(_device, Unset):
             device = DeviceData.from_dict(_device)
+
+        else:
+            device = UNSET
 
         _shipped_device = d.pop("shippedDevice", UNSET)
         shipped_device: Union[Unset, DeviceShippingData]
-        if isinstance(_shipped_device, Unset):
-            shipped_device = UNSET
-        else:
+        if _shipped_device and not isinstance(_shipped_device, Unset):
             shipped_device = DeviceShippingData.from_dict(_shipped_device)
+
+        else:
+            shipped_device = UNSET
 
         _program_express_code = d.pop("programExpressCode", UNSET)
         program_express_code: Union[Unset, ProgramExpressCodeData]
-        if isinstance(_program_express_code, Unset):
-            program_express_code = UNSET
-        else:
+        if _program_express_code and not isinstance(_program_express_code, Unset):
             program_express_code = ProgramExpressCodeData.from_dict(_program_express_code)
+
+        else:
+            program_express_code = UNSET
 
         _merchant_modified = d.pop("merchantModified", UNSET)
         merchant_modified: Union[Unset, MerchantModifiedData]
-        if isinstance(_merchant_modified, Unset):
-            merchant_modified = UNSET
-        else:
+        if _merchant_modified and not isinstance(_merchant_modified, Unset):
             merchant_modified = MerchantModifiedData.from_dict(_merchant_modified)
+
+        else:
+            merchant_modified = UNSET
 
         _merchant_plan_change = d.pop("merchantPlanChange", UNSET)
         merchant_plan_change: Union[Unset, MerchantPlanChangeData]
-        if isinstance(_merchant_plan_change, Unset):
-            merchant_plan_change = UNSET
-        else:
+        if _merchant_plan_change and not isinstance(_merchant_plan_change, Unset):
             merchant_plan_change = MerchantPlanChangeData.from_dict(_merchant_plan_change)
+
+        else:
+            merchant_plan_change = UNSET
 
         _merchant_created = d.pop("merchantCreated", UNSET)
         merchant_created: Union[Unset, MerchantCreatedData]
-        if isinstance(_merchant_created, Unset):
-            merchant_created = UNSET
-        else:
+        if _merchant_created and not isinstance(_merchant_created, Unset):
             merchant_created = MerchantCreatedData.from_dict(_merchant_created)
+
+        else:
+            merchant_created = UNSET
 
         _reseller_device_assignment = d.pop("resellerDeviceAssignment", UNSET)
         reseller_device_assignment: Union[Unset, ResellerDeviceAssignmentData]
-        if isinstance(_reseller_device_assignment, Unset):
-            reseller_device_assignment = UNSET
-        else:
+        if _reseller_device_assignment and not isinstance(_reseller_device_assignment, Unset):
             reseller_device_assignment = ResellerDeviceAssignmentData.from_dict(_reseller_device_assignment)
+
+        else:
+            reseller_device_assignment = UNSET
 
         _merchant_account_activated = d.pop("merchantAccountActivated", UNSET)
         merchant_account_activated: Union[Unset, MerchantAccountActivatedData]
-        if isinstance(_merchant_account_activated, Unset):
-            merchant_account_activated = UNSET
-        else:
+        if _merchant_account_activated and not isinstance(_merchant_account_activated, Unset):
             merchant_account_activated = MerchantAccountActivatedData.from_dict(_merchant_account_activated)
+
+        else:
+            merchant_account_activated = UNSET
 
         event_uuid = d.pop("eventUuid", UNSET)
 
         _merchant_shell_created = d.pop("merchantShellCreated", UNSET)
         merchant_shell_created: Union[Unset, MerchantShellCreatedData]
-        if isinstance(_merchant_shell_created, Unset):
-            merchant_shell_created = UNSET
-        else:
+        if _merchant_shell_created and not isinstance(_merchant_shell_created, Unset):
             merchant_shell_created = MerchantShellCreatedData.from_dict(_merchant_shell_created)
+
+        else:
+            merchant_shell_created = UNSET
 
         version = d.pop("version", UNSET)
 
         _specific_data = d.pop("specificData", UNSET)
         specific_data: Union[Unset, SpecificData]
-        if isinstance(_specific_data, Unset):
-            specific_data = UNSET
-        else:
+        if _specific_data and not isinstance(_specific_data, Unset):
             specific_data = SpecificData.from_dict(_specific_data)
+
+        else:
+            specific_data = UNSET
 
         _schema = d.pop("schema", UNSET)
         schema: Union[Unset, Schema]
-        if isinstance(_schema, Unset):
-            schema = UNSET
-        else:
+        if _schema and not isinstance(_schema, Unset):
             schema = Schema.from_dict(_schema)
+
+        else:
+            schema = UNSET
 
         mlc_event = cls(
             event_type=event_type,

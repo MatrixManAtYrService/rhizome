@@ -183,24 +183,27 @@ class CardTransaction:
         d = dict(src_dict)
         _payment_ref = d.pop("paymentRef", UNSET)
         payment_ref: Union[Unset, Reference]
-        if isinstance(_payment_ref, Unset):
-            payment_ref = UNSET
-        else:
+        if _payment_ref and not isinstance(_payment_ref, Unset):
             payment_ref = Reference.from_dict(_payment_ref)
+
+        else:
+            payment_ref = UNSET
 
         _refund_ref = d.pop("refundRef", UNSET)
         refund_ref: Union[Unset, Reference]
-        if isinstance(_refund_ref, Unset):
-            refund_ref = UNSET
-        else:
+        if _refund_ref and not isinstance(_refund_ref, Unset):
             refund_ref = Reference.from_dict(_refund_ref)
+
+        else:
+            refund_ref = UNSET
 
         _credit_ref = d.pop("creditRef", UNSET)
         credit_ref: Union[Unset, Reference]
-        if isinstance(_credit_ref, Unset):
-            credit_ref = UNSET
-        else:
+        if _credit_ref and not isinstance(_credit_ref, Unset):
             credit_ref = Reference.from_dict(_credit_ref)
+
+        else:
+            credit_ref = UNSET
 
         card_type = d.pop("cardType", UNSET)
 
@@ -232,10 +235,11 @@ class CardTransaction:
 
         _vaulted_card = d.pop("vaultedCard", UNSET)
         vaulted_card: Union[Unset, VaultedCard]
-        if isinstance(_vaulted_card, Unset):
-            vaulted_card = UNSET
-        else:
+        if _vaulted_card and not isinstance(_vaulted_card, Unset):
             vaulted_card = VaultedCard.from_dict(_vaulted_card)
+
+        else:
+            vaulted_card = UNSET
 
         gateway_tx_state = d.pop("gatewayTxState", UNSET)
 
@@ -245,10 +249,11 @@ class CardTransaction:
 
         _debit_refund = d.pop("debitRefund", UNSET)
         debit_refund: Union[Unset, DebitRefund]
-        if isinstance(_debit_refund, Unset):
-            debit_refund = UNSET
-        else:
+        if _debit_refund and not isinstance(_debit_refund, Unset):
             debit_refund = DebitRefund.from_dict(_debit_refund)
+
+        else:
+            debit_refund = UNSET
 
         card_transaction = cls(
             payment_ref=payment_ref,

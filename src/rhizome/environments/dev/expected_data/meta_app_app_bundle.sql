@@ -8,4 +8,4 @@ CREATE TABLE `app_app_bundle` (
   PRIMARY KEY (`id`),
   KEY `app_bundle_id` (`app_bundle_id`),
   KEY `developer_app_id` (`developer_app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82317 DEFAULT CHARSET=latin1
+) ENGINE=InnoDB AUTO_INCREMENT=82316 DEFAULT CHARSET=latin1

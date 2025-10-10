@@ -180,10 +180,11 @@ class MerchantData:
 
         _address = d.pop("address", UNSET)
         address: Union[Unset, MerchantAddressData]
-        if isinstance(_address, Unset):
-            address = UNSET
-        else:
+        if _address and not isinstance(_address, Unset):
             address = MerchantAddressData.from_dict(_address)
+
+        else:
+            address = UNSET
 
         business_level = d.pop("businessLevel", UNSET)
 
@@ -202,17 +203,19 @@ class MerchantData:
 
         _specific_data = d.pop("specificData", UNSET)
         specific_data: Union[Unset, SpecificData]
-        if isinstance(_specific_data, Unset):
-            specific_data = UNSET
-        else:
+        if _specific_data and not isinstance(_specific_data, Unset):
             specific_data = SpecificData.from_dict(_specific_data)
+
+        else:
+            specific_data = UNSET
 
         _schema = d.pop("schema", UNSET)
         schema: Union[Unset, Schema]
-        if isinstance(_schema, Unset):
-            schema = UNSET
-        else:
+        if _schema and not isinstance(_schema, Unset):
             schema = Schema.from_dict(_schema)
+
+        else:
+            schema = UNSET
 
         merchant_data = cls(
             merchant_uuid=merchant_uuid,

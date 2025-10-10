@@ -114,10 +114,11 @@ class ApiAppSubEvent:
 
         _effective_date_time = d.pop("effectiveDateTime", UNSET)
         effective_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_effective_date_time, Unset):
-            effective_date_time = UNSET
-        else:
+        if _effective_date_time and not isinstance(_effective_date_time, Unset):
             effective_date_time = isoparse(_effective_date_time)
+
+        else:
+            effective_date_time = UNSET
 
         merch_uuid = d.pop("merchUuid", UNSET)
 

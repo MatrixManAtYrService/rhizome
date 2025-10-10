@@ -75,10 +75,11 @@ class EbbMerchantPlan:
 
         _merchant_plan_group = d.pop("merchantPlanGroup", UNSET)
         merchant_plan_group: Union[Unset, EbbMerchantPlanGroup]
-        if isinstance(_merchant_plan_group, Unset):
-            merchant_plan_group = UNSET
-        else:
+        if _merchant_plan_group and not isinstance(_merchant_plan_group, Unset):
             merchant_plan_group = EbbMerchantPlanGroup.from_dict(_merchant_plan_group)
+
+        else:
+            merchant_plan_group = UNSET
 
         ebb_merchant_plan = cls(
             uuid=uuid,

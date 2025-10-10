@@ -99,10 +99,11 @@ class ApiMerchantEvent:
 
         _effective_date_time = d.pop("effectiveDateTime", UNSET)
         effective_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_effective_date_time, Unset):
-            effective_date_time = UNSET
-        else:
+        if _effective_date_time and not isinstance(_effective_date_time, Unset):
             effective_date_time = isoparse(_effective_date_time)
+
+        else:
+            effective_date_time = UNSET
 
         merch_uuid = d.pop("merchUuid", UNSET)
 
@@ -114,10 +115,11 @@ class ApiMerchantEvent:
 
         _status_change = d.pop("statusChange", UNSET)
         status_change: Union[Unset, ApiMerchantEventStatusChange]
-        if isinstance(_status_change, Unset):
-            status_change = UNSET
-        else:
+        if _status_change and not isinstance(_status_change, Unset):
             status_change = ApiMerchantEventStatusChange(_status_change)
+
+        else:
+            status_change = UNSET
 
         merch_attributes = []
         _merch_attributes = d.pop("merchAttributes", UNSET)

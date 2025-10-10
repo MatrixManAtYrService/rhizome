@@ -106,17 +106,19 @@ class ApiPlanPricingAbstractionDetails:
 
         _owning_billing_entity = d.pop("owningBillingEntity", UNSET)
         owning_billing_entity: Union[Unset, ApiBillingEntity]
-        if isinstance(_owning_billing_entity, Unset):
-            owning_billing_entity = UNSET
-        else:
+        if _owning_billing_entity and not isinstance(_owning_billing_entity, Unset):
             owning_billing_entity = ApiBillingEntity.from_dict(_owning_billing_entity)
+
+        else:
+            owning_billing_entity = UNSET
 
         _owning_billing_hierarchy = d.pop("owningBillingHierarchy", UNSET)
         owning_billing_hierarchy: Union[Unset, ApiBillingHierarchy]
-        if isinstance(_owning_billing_hierarchy, Unset):
-            owning_billing_hierarchy = UNSET
-        else:
+        if _owning_billing_hierarchy and not isinstance(_owning_billing_hierarchy, Unset):
             owning_billing_hierarchy = ApiBillingHierarchy.from_dict(_owning_billing_hierarchy)
+
+        else:
+            owning_billing_hierarchy = UNSET
 
         fee_rates = []
         _fee_rates = d.pop("feeRates", UNSET)

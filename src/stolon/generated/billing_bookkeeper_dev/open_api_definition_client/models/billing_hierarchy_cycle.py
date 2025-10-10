@@ -226,24 +226,27 @@ class BillingHierarchyCycle:
 
         _cycle_date = d.pop("cycleDate", UNSET)
         cycle_date: Union[Unset, datetime.date]
-        if isinstance(_cycle_date, Unset):
-            cycle_date = UNSET
-        else:
+        if _cycle_date and not isinstance(_cycle_date, Unset):
             cycle_date = isoparse(_cycle_date).date()
+
+        else:
+            cycle_date = UNSET
 
         _close_date = d.pop("closeDate", UNSET)
         close_date: Union[Unset, datetime.date]
-        if isinstance(_close_date, Unset):
-            close_date = UNSET
-        else:
+        if _close_date and not isinstance(_close_date, Unset):
             close_date = isoparse(_close_date).date()
+
+        else:
+            close_date = UNSET
 
         _effective_close_date = d.pop("effectiveCloseDate", UNSET)
         effective_close_date: Union[Unset, datetime.date]
-        if isinstance(_effective_close_date, Unset):
-            effective_close_date = UNSET
-        else:
+        if _effective_close_date and not isinstance(_effective_close_date, Unset):
             effective_close_date = isoparse(_effective_close_date).date()
+
+        else:
+            effective_close_date = UNSET
 
         billing_entity_uuid = d.pop("billingEntityUuid", UNSET)
 
@@ -257,33 +260,37 @@ class BillingHierarchyCycle:
 
         _frequency = d.pop("frequency", UNSET)
         frequency: Union[Unset, BillingHierarchyCycleFrequency]
-        if isinstance(_frequency, Unset):
-            frequency = UNSET
-        else:
+        if _frequency and not isinstance(_frequency, Unset):
             frequency = BillingHierarchyCycleFrequency(_frequency)
+
+        else:
+            frequency = UNSET
 
         billing_day = d.pop("billingDay", UNSET)
 
         _next_billing_date = d.pop("nextBillingDate", UNSET)
         next_billing_date: Union[Unset, datetime.date]
-        if isinstance(_next_billing_date, Unset):
-            next_billing_date = UNSET
-        else:
+        if _next_billing_date and not isinstance(_next_billing_date, Unset):
             next_billing_date = isoparse(_next_billing_date).date()
+
+        else:
+            next_billing_date = UNSET
 
         _last_billing_date = d.pop("lastBillingDate", UNSET)
         last_billing_date: Union[Unset, datetime.date]
-        if isinstance(_last_billing_date, Unset):
-            last_billing_date = UNSET
-        else:
+        if _last_billing_date and not isinstance(_last_billing_date, Unset):
             last_billing_date = isoparse(_last_billing_date).date()
+
+        else:
+            last_billing_date = UNSET
 
         _arrears_billing_date = d.pop("arrearsBillingDate", UNSET)
         arrears_billing_date: Union[Unset, datetime.date]
-        if isinstance(_arrears_billing_date, Unset):
-            arrears_billing_date = UNSET
-        else:
+        if _arrears_billing_date and not isinstance(_arrears_billing_date, Unset):
             arrears_billing_date = isoparse(_arrears_billing_date).date()
+
+        else:
+            arrears_billing_date = UNSET
 
         units_in_next_period = d.pop("unitsInNextPeriod", UNSET)
 
@@ -305,17 +312,19 @@ class BillingHierarchyCycle:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         billing_hierarchy_cycle = cls(
             id=id,

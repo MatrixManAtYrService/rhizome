@@ -79,10 +79,11 @@ class ApiCellularJobParams:
 
         _customer = d.pop("customer", UNSET)
         customer: Union[Unset, JsonNullableCustomerEnum]
-        if isinstance(_customer, Unset):
-            customer = UNSET
-        else:
+        if _customer and not isinstance(_customer, Unset):
             customer = JsonNullableCustomerEnum.from_dict(_customer)
+
+        else:
+            customer = UNSET
 
         api_cellular_job_params = cls(
             reference_uuid=reference_uuid,

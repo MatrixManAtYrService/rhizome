@@ -167,10 +167,11 @@ class ApiBulkAutoAdjustAdvice:
 
         _file_status = d.pop("fileStatus", UNSET)
         file_status: Union[Unset, ApiBulkAutoAdjustAdviceFileStatus]
-        if isinstance(_file_status, Unset):
-            file_status = UNSET
-        else:
+        if _file_status and not isinstance(_file_status, Unset):
             file_status = ApiBulkAutoAdjustAdviceFileStatus(_file_status)
+
+        else:
+            file_status = UNSET
 
         num_records = d.pop("numRecords", UNSET)
 
@@ -188,17 +189,19 @@ class ApiBulkAutoAdjustAdvice:
 
         _created_time = d.pop("createdTime", UNSET)
         created_time: Union[Unset, datetime.datetime]
-        if isinstance(_created_time, Unset):
-            created_time = UNSET
-        else:
+        if _created_time and not isinstance(_created_time, Unset):
             created_time = isoparse(_created_time)
+
+        else:
+            created_time = UNSET
 
         _modified_time = d.pop("modifiedTime", UNSET)
         modified_time: Union[Unset, datetime.datetime]
-        if isinstance(_modified_time, Unset):
-            modified_time = UNSET
-        else:
+        if _modified_time and not isinstance(_modified_time, Unset):
             modified_time = isoparse(_modified_time)
+
+        else:
+            modified_time = UNSET
 
         api_bulk_auto_adjust_advice = cls(
             id=id,

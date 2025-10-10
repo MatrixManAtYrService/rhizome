@@ -118,10 +118,11 @@ class CheckResponse:
 
         _job_uuid = d.pop("jobUuid", UNSET)
         job_uuid: Union[Unset, UUID]
-        if isinstance(_job_uuid, Unset):
-            job_uuid = UNSET
-        else:
+        if _job_uuid and not isinstance(_job_uuid, Unset):
             job_uuid = UUID(_job_uuid)
+
+        else:
+            job_uuid = UNSET
 
         check_response = cls(
             check_name=check_name,

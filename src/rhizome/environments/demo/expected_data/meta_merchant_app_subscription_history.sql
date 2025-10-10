@@ -8,4 +8,4 @@ CREATE TABLE `merchant_app_subscription_history` (
   KEY `old_app_subscription_id` (`old_app_subscription_id`),
   CONSTRAINT `merchant_app_subscription_history_ibfk_1` FOREIGN KEY (`merchant_app_id`) REFERENCES `merchant_app` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `merchant_app_subscription_history_ibfk_2` FOREIGN KEY (`old_app_subscription_id`) REFERENCES `app_subscription` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2767 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=2791 DEFAULT CHARSET=utf8mb3

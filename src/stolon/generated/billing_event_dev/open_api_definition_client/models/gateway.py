@@ -245,10 +245,11 @@ class Gateway:
 
         _key_info = d.pop("keyInfo", UNSET)
         key_info: Union[Unset, GatewayKeyInfo]
-        if isinstance(_key_info, Unset):
-            key_info = UNSET
-        else:
+        if _key_info and not isinstance(_key_info, Unset):
             key_info = GatewayKeyInfo.from_dict(_key_info)
+
+        else:
+            key_info = UNSET
 
         closing_time = d.pop("closingTime", UNSET)
 

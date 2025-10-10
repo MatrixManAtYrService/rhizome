@@ -51,10 +51,11 @@ class ResponseError:
 
         _status = d.pop("status", UNSET)
         status: Union[Unset, ResponseErrorStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
+        if _status and not isinstance(_status, Unset):
             status = ResponseErrorStatus.from_dict(_status)
+
+        else:
+            status = UNSET
 
         response_error = cls(
             message=message,

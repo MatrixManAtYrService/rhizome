@@ -146,33 +146,37 @@ class ApiBillingSchedule:
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         _frequency = d.pop("frequency", UNSET)
         frequency: Union[Unset, ApiBillingScheduleFrequency]
-        if isinstance(_frequency, Unset):
-            frequency = UNSET
-        else:
+        if _frequency and not isinstance(_frequency, Unset):
             frequency = ApiBillingScheduleFrequency(_frequency)
+
+        else:
+            frequency = UNSET
 
         billing_day = d.pop("billingDay", UNSET)
 
         _next_billing_date = d.pop("nextBillingDate", UNSET)
         next_billing_date: Union[Unset, datetime.date]
-        if isinstance(_next_billing_date, Unset):
-            next_billing_date = UNSET
-        else:
+        if _next_billing_date and not isinstance(_next_billing_date, Unset):
             next_billing_date = isoparse(_next_billing_date).date()
+
+        else:
+            next_billing_date = UNSET
 
         _last_billing_date = d.pop("lastBillingDate", UNSET)
         last_billing_date: Union[Unset, datetime.date]
-        if isinstance(_last_billing_date, Unset):
-            last_billing_date = UNSET
-        else:
+        if _last_billing_date and not isinstance(_last_billing_date, Unset):
             last_billing_date = isoparse(_last_billing_date).date()
+
+        else:
+            last_billing_date = UNSET
 
         units_in_next_period = d.pop("unitsInNextPeriod", UNSET)
 
@@ -182,31 +186,35 @@ class ApiBillingSchedule:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         _close_date = d.pop("closeDate", UNSET)
         close_date: Union[Unset, datetime.date]
-        if isinstance(_close_date, Unset) or _close_date is None:
-            close_date = UNSET
-        else:
+        if _close_date and not isinstance(_close_date, Unset):
             close_date = isoparse(_close_date).date()
+
+        else:
+            close_date = UNSET
 
         _effective_close_date = d.pop("effectiveCloseDate", UNSET)
         effective_close_date: Union[Unset, datetime.date]
-        if isinstance(_effective_close_date, Unset) or _effective_close_date is None:
-            effective_close_date = UNSET
-        else:
+        if _effective_close_date and not isinstance(_effective_close_date, Unset):
             effective_close_date = isoparse(_effective_close_date).date()
+
+        else:
+            effective_close_date = UNSET
 
         api_billing_schedule = cls(
             id=id,

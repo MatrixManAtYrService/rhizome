@@ -49,10 +49,11 @@ class ConversionObject:
         d = dict(src_dict)
         _recommended_schema = d.pop("recommendedSchema", UNSET)
         recommended_schema: Union[Unset, Schema]
-        if isinstance(_recommended_schema, Unset):
-            recommended_schema = UNSET
-        else:
+        if _recommended_schema and not isinstance(_recommended_schema, Unset):
             recommended_schema = Schema.from_dict(_recommended_schema)
+
+        else:
+            recommended_schema = UNSET
 
         logical_type_name = d.pop("logicalTypeName", UNSET)
 

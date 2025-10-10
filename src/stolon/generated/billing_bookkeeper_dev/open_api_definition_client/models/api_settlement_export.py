@@ -154,19 +154,21 @@ class ApiSettlementExport:
         d = dict(src_dict)
         _tlement_date = d.pop("tlementDate", UNSET)
         tlement_date: Union[Unset, ApiSettlementExport]
-        if isinstance(_tlement_date, Unset):
-            tlement_date = UNSET
-        else:
+        if _tlement_date and not isinstance(_tlement_date, Unset):
             tlement_date = ApiSettlementExport.from_dict(_tlement_date)
+
+        else:
+            tlement_date = UNSET
 
         uuid = d.pop("uuid", UNSET)
 
         _settlement_date = d.pop("settlementDate", UNSET)
         settlement_date: Union[Unset, datetime.date]
-        if isinstance(_settlement_date, Unset):
-            settlement_date = UNSET
-        else:
+        if _settlement_date and not isinstance(_settlement_date, Unset):
             settlement_date = isoparse(_settlement_date).date()
+
+        else:
+            settlement_date = UNSET
 
         billing_entity_uuid = d.pop("billingEntityUuid", UNSET)
 
@@ -176,10 +178,11 @@ class ApiSettlementExport:
 
         _payable_receivable = d.pop("payableReceivable", UNSET)
         payable_receivable: Union[Unset, ApiSettlementExportPayableReceivable]
-        if isinstance(_payable_receivable, Unset):
-            payable_receivable = UNSET
-        else:
+        if _payable_receivable and not isinstance(_payable_receivable, Unset):
             payable_receivable = ApiSettlementExportPayableReceivable(_payable_receivable)
+
+        else:
+            payable_receivable = UNSET
 
         currency = d.pop("currency", UNSET)
 

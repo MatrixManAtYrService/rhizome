@@ -193,31 +193,35 @@ class Merchant:
 
         _properties = d.pop("properties", UNSET)
         properties: Union[Unset, Properties]
-        if isinstance(_properties, Unset):
-            properties = UNSET
-        else:
+        if _properties and not isinstance(_properties, Unset):
             properties = Properties.from_dict(_properties)
+
+        else:
+            properties = UNSET
 
         _tip_suggestions = d.pop("tipSuggestions", UNSET)
         tip_suggestions: Union[Unset, TipSuggestions]
-        if isinstance(_tip_suggestions, Unset):
-            tip_suggestions = UNSET
-        else:
+        if _tip_suggestions and not isinstance(_tip_suggestions, Unset):
             tip_suggestions = TipSuggestions.from_dict(_tip_suggestions)
+
+        else:
+            tip_suggestions = UNSET
 
         _owner = d.pop("owner", UNSET)
         owner: Union[Unset, MerchantOwner]
-        if isinstance(_owner, Unset):
-            owner = UNSET
-        else:
+        if _owner and not isinstance(_owner, Unset):
             owner = MerchantOwner.from_dict(_owner)
+
+        else:
+            owner = UNSET
 
         _reseller = d.pop("reseller", UNSET)
         reseller: Union[Unset, MerchantReseller]
-        if isinstance(_reseller, Unset):
-            reseller = UNSET
-        else:
+        if _reseller and not isinstance(_reseller, Unset):
             reseller = MerchantReseller.from_dict(_reseller)
+
+        else:
+            reseller = UNSET
 
         phone_number = d.pop("phoneNumber", UNSET)
 
@@ -225,63 +229,71 @@ class Merchant:
 
         _logos = d.pop("logos", UNSET)
         logos: Union[Unset, LogoElements]
-        if isinstance(_logos, Unset):
-            logos = UNSET
-        else:
+        if _logos and not isinstance(_logos, Unset):
             logos = LogoElements.from_dict(_logos)
+
+        else:
+            logos = UNSET
 
         customer_contact_email = d.pop("customerContactEmail", UNSET)
 
         _compliances = d.pop("compliances", UNSET)
         compliances: Union[Unset, Compliances]
-        if isinstance(_compliances, Unset):
-            compliances = UNSET
-        else:
+        if _compliances and not isinstance(_compliances, Unset):
             compliances = Compliances.from_dict(_compliances)
+
+        else:
+            compliances = UNSET
 
         _gateway = d.pop("gateway", UNSET)
         gateway: Union[Unset, Gateway]
-        if isinstance(_gateway, Unset):
-            gateway = UNSET
-        else:
+        if _gateway and not isinstance(_gateway, Unset):
             gateway = Gateway.from_dict(_gateway)
+
+        else:
+            gateway = UNSET
 
         _merchant_plan = d.pop("merchantPlan", UNSET)
         merchant_plan: Union[Unset, MerchantPlan]
-        if isinstance(_merchant_plan, Unset):
-            merchant_plan = UNSET
-        else:
+        if _merchant_plan and not isinstance(_merchant_plan, Unset):
             merchant_plan = MerchantPlan.from_dict(_merchant_plan)
+
+        else:
+            merchant_plan = UNSET
 
         _merchant_boarding = d.pop("merchantBoarding", UNSET)
         merchant_boarding: Union[Unset, MerchantBoarding]
-        if isinstance(_merchant_boarding, Unset):
-            merchant_boarding = UNSET
-        else:
+        if _merchant_boarding and not isinstance(_merchant_boarding, Unset):
             merchant_boarding = MerchantBoarding.from_dict(_merchant_boarding)
+
+        else:
+            merchant_boarding = UNSET
 
         created_time = d.pop("createdTime", UNSET)
 
         _equipment = d.pop("equipment", UNSET)
         equipment: Union[Unset, Equipment]
-        if isinstance(_equipment, Unset):
-            equipment = UNSET
-        else:
+        if _equipment and not isinstance(_equipment, Unset):
             equipment = Equipment.from_dict(_equipment)
+
+        else:
+            equipment = UNSET
 
         _program_expresses = d.pop("programExpresses", UNSET)
         program_expresses: Union[Unset, ProgramExpresses]
-        if isinstance(_program_expresses, Unset):
-            program_expresses = UNSET
-        else:
+        if _program_expresses and not isinstance(_program_expresses, Unset):
             program_expresses = ProgramExpresses.from_dict(_program_expresses)
+
+        else:
+            program_expresses = UNSET
 
         _address = d.pop("Address", UNSET)
         address: Union[Unset, Address]
-        if isinstance(_address, Unset):
-            address = UNSET
-        else:
+        if _address and not isinstance(_address, Unset):
             address = Address.from_dict(_address)
+
+        else:
+            address = UNSET
 
         merchant = cls(
             id=id,

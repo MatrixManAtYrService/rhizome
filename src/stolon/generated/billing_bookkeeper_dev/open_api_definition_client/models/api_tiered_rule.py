@@ -127,31 +127,35 @@ class ApiTieredRule:
 
         _rule_status = d.pop("ruleStatus", UNSET)
         rule_status: Union[Unset, ApiTieredRuleRuleStatus]
-        if isinstance(_rule_status, Unset):
-            rule_status = UNSET
-        else:
+        if _rule_status and not isinstance(_rule_status, Unset):
             rule_status = ApiTieredRuleRuleStatus(_rule_status)
+
+        else:
+            rule_status = UNSET
 
         _tiered_basis = d.pop("tieredBasis", UNSET)
         tiered_basis: Union[Unset, ApiTieredRuleTieredBasis]
-        if isinstance(_tiered_basis, Unset):
-            tiered_basis = UNSET
-        else:
+        if _tiered_basis and not isinstance(_tiered_basis, Unset):
             tiered_basis = ApiTieredRuleTieredBasis(_tiered_basis)
+
+        else:
+            tiered_basis = UNSET
 
         _tiered_model = d.pop("tieredModel", UNSET)
         tiered_model: Union[Unset, ApiTieredRuleTieredModel]
-        if isinstance(_tiered_model, Unset):
-            tiered_model = UNSET
-        else:
+        if _tiered_model and not isinstance(_tiered_model, Unset):
             tiered_model = ApiTieredRuleTieredModel(_tiered_model)
+
+        else:
+            tiered_model = UNSET
 
         _target_entity_type = d.pop("targetEntityType", UNSET)
         target_entity_type: Union[Unset, ApiTieredRuleTargetEntityType]
-        if isinstance(_target_entity_type, Unset):
-            target_entity_type = UNSET
-        else:
+        if _target_entity_type and not isinstance(_target_entity_type, Unset):
             target_entity_type = ApiTieredRuleTargetEntityType(_target_entity_type)
+
+        else:
+            target_entity_type = UNSET
 
         short_desc = d.pop("shortDesc", UNSET)
 
@@ -159,17 +163,19 @@ class ApiTieredRule:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 

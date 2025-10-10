@@ -112,19 +112,21 @@ class ApiSettlementActionRequest:
         d = dict(src_dict)
         _tlement_uuid = d.pop("tlementUuid", UNSET)
         tlement_uuid: Union[Unset, ApiSettlementActionRequest]
-        if isinstance(_tlement_uuid, Unset):
-            tlement_uuid = UNSET
-        else:
+        if _tlement_uuid and not isinstance(_tlement_uuid, Unset):
             tlement_uuid = ApiSettlementActionRequest.from_dict(_tlement_uuid)
+
+        else:
+            tlement_uuid = UNSET
 
         settlement_uuid = d.pop("settlementUuid", UNSET)
 
         _action_date = d.pop("actionDate", UNSET)
         action_date: Union[Unset, datetime.date]
-        if isinstance(_action_date, Unset):
-            action_date = UNSET
-        else:
+        if _action_date and not isinstance(_action_date, Unset):
             action_date = isoparse(_action_date).date()
+
+        else:
+            action_date = UNSET
 
         action = d.pop("action", UNSET)
 

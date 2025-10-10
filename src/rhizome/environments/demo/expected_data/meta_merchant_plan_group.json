@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "uuid": "DD1AEFFC068DE",
+  "name": "TELECASH",
+  "enforce_assignment": false,
+  "linkable": false,
+  "trial_days": null,
+  "deleted_time": null,
+  "created_time": "2018-03-12T14:24:05",
+  "modified_time": "2018-03-12T14:24:05"
+}

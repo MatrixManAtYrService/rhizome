@@ -17,4 +17,4 @@ CREATE TABLE `device_events` (
   KEY `idx_de_serial_time_merchant` (`serial_number`,`timestamp` DESC,`merchant_id`),
   CONSTRAINT `device_events_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `device_events_ibfk_2` FOREIGN KEY (`internal_account_id`) REFERENCES `internal_account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=1149047 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=1149607 DEFAULT CHARSET=utf8mb3

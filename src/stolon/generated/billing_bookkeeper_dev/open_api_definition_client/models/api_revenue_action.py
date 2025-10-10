@@ -236,10 +236,11 @@ class ApiRevenueAction:
         d = dict(src_dict)
         _tlement_action_uuid = d.pop("tlementActionUuid", UNSET)
         tlement_action_uuid: Union[Unset, ApiRevenueAction]
-        if isinstance(_tlement_action_uuid, Unset):
-            tlement_action_uuid = UNSET
-        else:
+        if _tlement_action_uuid and not isinstance(_tlement_action_uuid, Unset):
             tlement_action_uuid = ApiRevenueAction.from_dict(_tlement_action_uuid)
+
+        else:
+            tlement_action_uuid = UNSET
 
         id = d.pop("id", UNSET)
 
@@ -273,10 +274,11 @@ class ApiRevenueAction:
 
         _action_date_time = d.pop("actionDateTime", UNSET)
         action_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_action_date_time, Unset):
-            action_date_time = UNSET
-        else:
+        if _action_date_time and not isinstance(_action_date_time, Unset):
             action_date_time = isoparse(_action_date_time)
+
+        else:
+            action_date_time = UNSET
 
         num_units = d.pop("numUnits", UNSET)
 
@@ -302,24 +304,27 @@ class ApiRevenueAction:
 
         _posting_date = d.pop("postingDate", UNSET)
         posting_date: Union[Unset, datetime.date]
-        if isinstance(_posting_date, Unset):
-            posting_date = UNSET
-        else:
+        if _posting_date and not isinstance(_posting_date, Unset):
             posting_date = isoparse(_posting_date).date()
+
+        else:
+            posting_date = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_revenue_action = cls(
             tlement_action_uuid=tlement_action_uuid,

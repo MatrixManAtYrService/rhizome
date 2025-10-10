@@ -58,4 +58,4 @@ CREATE TABLE `developer` (
   UNIQUE KEY `infolease_vendor_code` (`infolease_vendor_code`),
   KEY `owner_account_id` (`owner_account_id`),
   CONSTRAINT `developer_ibfk_1` FOREIGN KEY (`owner_account_id`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=10331 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=10336 DEFAULT CHARSET=utf8mb3

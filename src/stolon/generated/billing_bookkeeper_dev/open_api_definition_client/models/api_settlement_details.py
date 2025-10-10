@@ -81,10 +81,11 @@ class ApiSettlementDetails:
         d = dict(src_dict)
         _tlements = d.pop("tlements", UNSET)
         tlements: Union[Unset, ApiSettlementDetails]
-        if isinstance(_tlements, Unset):
-            tlements = UNSET
-        else:
+        if _tlements and not isinstance(_tlements, Unset):
             tlements = ApiSettlementDetails.from_dict(_tlements)
+
+        else:
+            tlements = UNSET
 
         billing_entity_uuid = d.pop("billingEntityUuid", UNSET)
 
@@ -94,10 +95,11 @@ class ApiSettlementDetails:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiSettlementDetailsEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiSettlementDetailsEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         settlements = []
         _settlements = d.pop("settlements", UNSET)

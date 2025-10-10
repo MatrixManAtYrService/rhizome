@@ -148,10 +148,11 @@ class ApiSettlementFeeSummary:
 
         _billing_date = d.pop("billingDate", UNSET)
         billing_date: Union[Unset, datetime.date]
-        if isinstance(_billing_date, Unset):
-            billing_date = UNSET
-        else:
+        if _billing_date and not isinstance(_billing_date, Unset):
             billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
 
         fee_category = d.pop("feeCategory", UNSET)
 
@@ -173,10 +174,11 @@ class ApiSettlementFeeSummary:
 
         _apply_type = d.pop("applyType", UNSET)
         apply_type: Union[Unset, ApiSettlementFeeSummaryApplyType]
-        if isinstance(_apply_type, Unset):
-            apply_type = UNSET
-        else:
+        if _apply_type and not isinstance(_apply_type, Unset):
             apply_type = ApiSettlementFeeSummaryApplyType(_apply_type)
+
+        else:
+            apply_type = UNSET
 
         per_item_amount = d.pop("perItemAmount", UNSET)
 

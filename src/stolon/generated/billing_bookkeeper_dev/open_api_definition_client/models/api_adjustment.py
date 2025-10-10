@@ -130,10 +130,11 @@ class ApiAdjustment:
         d = dict(src_dict)
         _tlement_uuid = d.pop("tlementUuid", UNSET)
         tlement_uuid: Union[Unset, ApiAdjustment]
-        if isinstance(_tlement_uuid, Unset):
-            tlement_uuid = UNSET
-        else:
+        if _tlement_uuid and not isinstance(_tlement_uuid, Unset):
             tlement_uuid = ApiAdjustment.from_dict(_tlement_uuid)
+
+        else:
+            tlement_uuid = UNSET
 
         billing_entity_uuid = d.pop("billingEntityUuid", UNSET)
 
@@ -161,17 +162,19 @@ class ApiAdjustment:
 
         _action_date_time = d.pop("actionDateTime", UNSET)
         action_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_action_date_time, Unset):
-            action_date_time = UNSET
-        else:
+        if _action_date_time and not isinstance(_action_date_time, Unset):
             action_date_time = isoparse(_action_date_time)
+
+        else:
+            action_date_time = UNSET
 
         _posting_date = d.pop("postingDate", UNSET)
         posting_date: Union[Unset, datetime.date]
-        if isinstance(_posting_date, Unset):
-            posting_date = UNSET
-        else:
+        if _posting_date and not isinstance(_posting_date, Unset):
             posting_date = isoparse(_posting_date).date()
+
+        else:
+            posting_date = UNSET
 
         api_adjustment = cls(
             tlement_uuid=tlement_uuid,

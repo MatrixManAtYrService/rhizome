@@ -128,45 +128,51 @@ class ApiRevShareAbstractionDetails:
 
         _reseller_fee_rate_entity = d.pop("resellerFeeRateEntity", UNSET)
         reseller_fee_rate_entity: Union[Unset, ApiBillingEntity]
-        if isinstance(_reseller_fee_rate_entity, Unset):
-            reseller_fee_rate_entity = UNSET
-        else:
+        if _reseller_fee_rate_entity and not isinstance(_reseller_fee_rate_entity, Unset):
             reseller_fee_rate_entity = ApiBillingEntity.from_dict(_reseller_fee_rate_entity)
+
+        else:
+            reseller_fee_rate_entity = UNSET
 
         _reseller_fee_rate_hierarchy = d.pop("resellerFeeRateHierarchy", UNSET)
         reseller_fee_rate_hierarchy: Union[Unset, ApiBillingHierarchy]
-        if isinstance(_reseller_fee_rate_hierarchy, Unset):
-            reseller_fee_rate_hierarchy = UNSET
-        else:
+        if _reseller_fee_rate_hierarchy and not isinstance(_reseller_fee_rate_hierarchy, Unset):
             reseller_fee_rate_hierarchy = ApiBillingHierarchy.from_dict(_reseller_fee_rate_hierarchy)
+
+        else:
+            reseller_fee_rate_hierarchy = UNSET
 
         _reseller_fee_rate = d.pop("resellerFeeRate", UNSET)
         reseller_fee_rate: Union[Unset, ApiFeeRate]
-        if isinstance(_reseller_fee_rate, Unset):
-            reseller_fee_rate = UNSET
-        else:
+        if _reseller_fee_rate and not isinstance(_reseller_fee_rate, Unset):
             reseller_fee_rate = ApiFeeRate.from_dict(_reseller_fee_rate)
+
+        else:
+            reseller_fee_rate = UNSET
 
         _developer_fee_rate_entity = d.pop("developerFeeRateEntity", UNSET)
         developer_fee_rate_entity: Union[Unset, ApiBillingEntity]
-        if isinstance(_developer_fee_rate_entity, Unset):
-            developer_fee_rate_entity = UNSET
-        else:
+        if _developer_fee_rate_entity and not isinstance(_developer_fee_rate_entity, Unset):
             developer_fee_rate_entity = ApiBillingEntity.from_dict(_developer_fee_rate_entity)
+
+        else:
+            developer_fee_rate_entity = UNSET
 
         _developer_fee_rate_hierarchy = d.pop("developerFeeRateHierarchy", UNSET)
         developer_fee_rate_hierarchy: Union[Unset, ApiBillingHierarchy]
-        if isinstance(_developer_fee_rate_hierarchy, Unset):
-            developer_fee_rate_hierarchy = UNSET
-        else:
+        if _developer_fee_rate_hierarchy and not isinstance(_developer_fee_rate_hierarchy, Unset):
             developer_fee_rate_hierarchy = ApiBillingHierarchy.from_dict(_developer_fee_rate_hierarchy)
+
+        else:
+            developer_fee_rate_hierarchy = UNSET
 
         _developer_fee_rate = d.pop("developerFeeRate", UNSET)
         developer_fee_rate: Union[Unset, ApiFeeRate]
-        if isinstance(_developer_fee_rate, Unset):
-            developer_fee_rate = UNSET
-        else:
+        if _developer_fee_rate and not isinstance(_developer_fee_rate, Unset):
             developer_fee_rate = ApiFeeRate.from_dict(_developer_fee_rate)
+
+        else:
+            developer_fee_rate = UNSET
 
         validation_errors = cast(list[str], d.pop("validationErrors", UNSET))
 

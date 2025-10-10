@@ -154,17 +154,19 @@ class ApiInvoiceInfoExtended:
 
         _entity_type = d.pop("entityType", UNSET)
         entity_type: Union[Unset, ApiInvoiceInfoExtendedEntityType]
-        if isinstance(_entity_type, Unset):
-            entity_type = UNSET
-        else:
+        if _entity_type and not isinstance(_entity_type, Unset):
             entity_type = ApiInvoiceInfoExtendedEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
 
         _billing_date = d.pop("billingDate", UNSET)
         billing_date: Union[Unset, datetime.date]
-        if isinstance(_billing_date, Unset):
-            billing_date = UNSET
-        else:
+        if _billing_date and not isinstance(_billing_date, Unset):
             billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
 
         invoice_num = d.pop("invoiceNum", UNSET)
 
@@ -178,10 +180,11 @@ class ApiInvoiceInfoExtended:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         invoice_info_amounts = []
         _invoice_info_amounts = d.pop("invoiceInfoAmounts", UNSET)

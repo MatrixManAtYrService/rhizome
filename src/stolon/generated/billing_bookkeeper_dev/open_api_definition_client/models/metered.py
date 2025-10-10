@@ -67,10 +67,11 @@ class Metered:
 
         _metered_countries = d.pop("meteredCountries", UNSET)
         metered_countries: Union[Unset, MeteredCountries]
-        if isinstance(_metered_countries, Unset):
-            metered_countries = UNSET
-        else:
+        if _metered_countries and not isinstance(_metered_countries, Unset):
             metered_countries = MeteredCountries.from_dict(_metered_countries)
+
+        else:
+            metered_countries = UNSET
 
         metered = cls(
             id=id,

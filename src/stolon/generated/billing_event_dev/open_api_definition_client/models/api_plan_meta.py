@@ -100,10 +100,11 @@ class ApiPlanMeta:
 
         _plan_type = d.pop("planType", UNSET)
         plan_type: Union[Unset, ApiPlanMetaPlanType]
-        if isinstance(_plan_type, Unset):
-            plan_type = UNSET
-        else:
+        if _plan_type and not isinstance(_plan_type, Unset):
             plan_type = ApiPlanMetaPlanType(_plan_type)
+
+        else:
+            plan_type = UNSET
 
         plan_uuid = d.pop("planUuid", UNSET)
 

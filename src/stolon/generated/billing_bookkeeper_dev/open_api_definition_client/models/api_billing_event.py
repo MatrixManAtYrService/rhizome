@@ -175,10 +175,11 @@ class ApiBillingEvent:
 
         _event_timestamp = d.pop("eventTimestamp", UNSET)
         event_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_event_timestamp, Unset):
-            event_timestamp = UNSET
-        else:
+        if _event_timestamp and not isinstance(_event_timestamp, Unset):
             event_timestamp = isoparse(_event_timestamp)
+
+        else:
+            event_timestamp = UNSET
 
         event_uuid = d.pop("eventUuid", UNSET)
 

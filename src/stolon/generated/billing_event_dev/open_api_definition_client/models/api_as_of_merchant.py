@@ -124,17 +124,19 @@ class ApiAsOfMerchant:
 
         _as_of_timestamp = d.pop("asOfTimestamp", UNSET)
         as_of_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_as_of_timestamp, Unset):
-            as_of_timestamp = UNSET
-        else:
+        if _as_of_timestamp and not isinstance(_as_of_timestamp, Unset):
             as_of_timestamp = isoparse(_as_of_timestamp)
+
+        else:
+            as_of_timestamp = UNSET
 
         _event_datetime = d.pop("eventDatetime", UNSET)
         event_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_event_datetime, Unset):
-            event_datetime = UNSET
-        else:
+        if _event_datetime and not isinstance(_event_datetime, Unset):
             event_datetime = isoparse(_event_datetime)
+
+        else:
+            event_datetime = UNSET
 
         billing_event_uuid = d.pop("billingEventUuid", UNSET)
 
@@ -142,17 +144,19 @@ class ApiAsOfMerchant:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _plan = d.pop("plan", UNSET)
         plan: Union[Unset, ApiAsOfMerchantPlan]
-        if isinstance(_plan, Unset):
-            plan = UNSET
-        else:
+        if _plan and not isinstance(_plan, Unset):
             plan = ApiAsOfMerchantPlan.from_dict(_plan)
+
+        else:
+            plan = UNSET
 
         devices = []
         _devices = d.pop("devices", UNSET)

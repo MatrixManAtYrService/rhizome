@@ -53,17 +53,19 @@ class MerchantPlanMetadata:
         d = dict(src_dict)
         _merchant_plans = d.pop("merchantPlans", UNSET)
         merchant_plans: Union[Unset, MerchantPlans]
-        if isinstance(_merchant_plans, Unset):
-            merchant_plans = UNSET
-        else:
+        if _merchant_plans and not isinstance(_merchant_plans, Unset):
             merchant_plans = MerchantPlans.from_dict(_merchant_plans)
+
+        else:
+            merchant_plans = UNSET
 
         _current_merchant_plan = d.pop("currentMerchantPlan", UNSET)
         current_merchant_plan: Union[Unset, MerchantPlan]
-        if isinstance(_current_merchant_plan, Unset):
-            current_merchant_plan = UNSET
-        else:
+        if _current_merchant_plan and not isinstance(_current_merchant_plan, Unset):
             current_merchant_plan = MerchantPlan.from_dict(_current_merchant_plan)
+
+        else:
+            current_merchant_plan = UNSET
 
         merchant_plan_metadata = cls(
             merchant_plans=merchant_plans,

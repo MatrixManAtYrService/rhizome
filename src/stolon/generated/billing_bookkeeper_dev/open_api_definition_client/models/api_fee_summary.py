@@ -177,10 +177,11 @@ class ApiFeeSummary:
 
         _billing_date = d.pop("billingDate", UNSET)
         billing_date: Union[Unset, datetime.date]
-        if isinstance(_billing_date, Unset):
-            billing_date = UNSET
-        else:
+        if _billing_date and not isinstance(_billing_date, Unset):
             billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
 
         fee_category = d.pop("feeCategory", UNSET)
 
@@ -214,17 +215,19 @@ class ApiFeeSummary:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_fee_summary = cls(
             id=id,

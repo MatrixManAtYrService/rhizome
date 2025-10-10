@@ -15,4 +15,4 @@ CREATE TABLE `app_metered_event` (
   CONSTRAINT `app_metered_event_ibfk_1` FOREIGN KEY (`merchant_app_id`) REFERENCES `merchant_app` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_metered_event_ibfk_2` FOREIGN KEY (`app_metered_id`) REFERENCES `app_metered` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `app_metered_event_ibfk_3` FOREIGN KEY (`charge_id`) REFERENCES `charge` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=4419 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=4551 DEFAULT CHARSET=utf8mb3

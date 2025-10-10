@@ -27,4 +27,4 @@ CREATE TABLE `account` (
   CONSTRAINT `account_ibfk_1` FOREIGN KEY (`primary_merchant_role_id`) REFERENCES `merchant_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `account_ibfk_2` FOREIGN KEY (`primary_developer_role_id`) REFERENCES `developer_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `account_ibfk_3` FOREIGN KEY (`primary_reseller_role_id`) REFERENCES `reseller_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=22641 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=22705 DEFAULT CHARSET=utf8mb3

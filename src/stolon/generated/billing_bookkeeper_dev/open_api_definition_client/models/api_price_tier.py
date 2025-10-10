@@ -78,10 +78,11 @@ class ApiPriceTier:
 
         _tier_price = d.pop("tierPrice", UNSET)
         tier_price: Union[Unset, ApiPriceDetail]
-        if isinstance(_tier_price, Unset):
-            tier_price = UNSET
-        else:
+        if _tier_price and not isinstance(_tier_price, Unset):
             tier_price = ApiPriceDetail.from_dict(_tier_price)
+
+        else:
+            tier_price = UNSET
 
         api_price_tier = cls(
             tier_uuid=tier_uuid,

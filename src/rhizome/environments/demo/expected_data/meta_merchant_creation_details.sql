@@ -11,4 +11,4 @@ CREATE TABLE `merchant_creation_details` (
   UNIQUE KEY `merchant_id` (`merchant_id`),
   KEY `source_identifier` (`source_identifier`),
   CONSTRAINT `merchant_creation_details_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=79687 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=80025 DEFAULT CHARSET=utf8mb3

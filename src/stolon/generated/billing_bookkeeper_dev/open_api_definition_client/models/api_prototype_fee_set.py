@@ -107,38 +107,43 @@ class ApiPrototypeFeeSet:
 
         _disposition = d.pop("disposition", UNSET)
         disposition: Union[Unset, ApiPrototypeFeeSetDisposition]
-        if isinstance(_disposition, Unset):
-            disposition = UNSET
-        else:
+        if _disposition and not isinstance(_disposition, Unset):
             disposition = ApiPrototypeFeeSetDisposition(_disposition)
+
+        else:
+            disposition = UNSET
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         _disposition_date_time = d.pop("dispositionDateTime", UNSET)
         disposition_date_time: Union[Unset, datetime.datetime]
-        if isinstance(_disposition_date_time, Unset):
-            disposition_date_time = UNSET
-        else:
+        if _disposition_date_time and not isinstance(_disposition_date_time, Unset):
             disposition_date_time = isoparse(_disposition_date_time)
+
+        else:
+            disposition_date_time = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_prototype_fee_set = cls(
             id=id,

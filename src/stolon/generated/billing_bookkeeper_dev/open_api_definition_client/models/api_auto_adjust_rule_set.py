@@ -56,10 +56,11 @@ class ApiAutoAdjustRuleSet:
         d = dict(src_dict)
         _rule = d.pop("rule", UNSET)
         rule: Union[Unset, ApiAutoAdjustRule]
-        if isinstance(_rule, Unset):
-            rule = UNSET
-        else:
+        if _rule and not isinstance(_rule, Unset):
             rule = ApiAutoAdjustRule.from_dict(_rule)
+
+        else:
+            rule = UNSET
 
         qualifiers = []
         _qualifiers = d.pop("qualifiers", UNSET)

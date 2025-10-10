@@ -232,24 +232,27 @@ class BillingEntityMinutiae:
         d = dict(src_dict)
         _as_of_date = d.pop("asOfDate", UNSET)
         as_of_date: Union[Unset, datetime.date]
-        if isinstance(_as_of_date, Unset):
-            as_of_date = UNSET
-        else:
+        if _as_of_date and not isinstance(_as_of_date, Unset):
             as_of_date = isoparse(_as_of_date).date()
+
+        else:
+            as_of_date = UNSET
 
         _start_date = d.pop("startDate", UNSET)
         start_date: Union[Unset, datetime.date]
-        if isinstance(_start_date, Unset):
-            start_date = UNSET
-        else:
+        if _start_date and not isinstance(_start_date, Unset):
             start_date = isoparse(_start_date).date()
+
+        else:
+            start_date = UNSET
 
         _end_date = d.pop("endDate", UNSET)
         end_date: Union[Unset, datetime.date]
-        if isinstance(_end_date, Unset):
-            end_date = UNSET
-        else:
+        if _end_date and not isinstance(_end_date, Unset):
             end_date = isoparse(_end_date).date()
+
+        else:
+            end_date = UNSET
 
         limit = d.pop("limit", UNSET)
 
@@ -257,17 +260,19 @@ class BillingEntityMinutiae:
 
         _billing_entity = d.pop("billingEntity", UNSET)
         billing_entity: Union[Unset, BillingEntity]
-        if isinstance(_billing_entity, Unset):
-            billing_entity = UNSET
-        else:
+        if _billing_entity and not isinstance(_billing_entity, Unset):
             billing_entity = BillingEntity.from_dict(_billing_entity)
+
+        else:
+            billing_entity = UNSET
 
         _effective = d.pop("effective", UNSET)
         effective: Union[Unset, Effective]
-        if isinstance(_effective, Unset):
-            effective = UNSET
-        else:
+        if _effective and not isinstance(_effective, Unset):
             effective = Effective.from_dict(_effective)
+
+        else:
+            effective = UNSET
 
         billing_schedules = []
         _billing_schedules = d.pop("billingSchedules", UNSET)
@@ -306,59 +311,67 @@ class BillingEntityMinutiae:
 
         _fees = d.pop("fees", UNSET)
         fees: Union[Unset, Fees]
-        if isinstance(_fees, Unset):
-            fees = UNSET
-        else:
+        if _fees and not isinstance(_fees, Unset):
             fees = Fees.from_dict(_fees)
+
+        else:
+            fees = UNSET
 
         _actions = d.pop("actions", UNSET)
         actions: Union[Unset, Actions]
-        if isinstance(_actions, Unset):
-            actions = UNSET
-        else:
+        if _actions and not isinstance(_actions, Unset):
             actions = Actions.from_dict(_actions)
+
+        else:
+            actions = UNSET
 
         _action_errors = d.pop("actionErrors", UNSET)
         action_errors: Union[Unset, ActionErrors]
-        if isinstance(_action_errors, Unset):
-            action_errors = UNSET
-        else:
+        if _action_errors and not isinstance(_action_errors, Unset):
             action_errors = ActionErrors.from_dict(_action_errors)
+
+        else:
+            action_errors = UNSET
 
         _ledgers = d.pop("ledgers", UNSET)
         ledgers: Union[Unset, Ledgers]
-        if isinstance(_ledgers, Unset):
-            ledgers = UNSET
-        else:
+        if _ledgers and not isinstance(_ledgers, Unset):
             ledgers = Ledgers.from_dict(_ledgers)
+
+        else:
+            ledgers = UNSET
 
         _monetary = d.pop("monetary", UNSET)
         monetary: Union[Unset, Monetary]
-        if isinstance(_monetary, Unset):
-            monetary = UNSET
-        else:
+        if _monetary and not isinstance(_monetary, Unset):
             monetary = Monetary.from_dict(_monetary)
+
+        else:
+            monetary = UNSET
 
         _processing_group_dates = d.pop("processingGroupDates", UNSET)
         processing_group_dates: Union[Unset, ProcessingGroupDates]
-        if isinstance(_processing_group_dates, Unset):
-            processing_group_dates = UNSET
-        else:
+        if _processing_group_dates and not isinstance(_processing_group_dates, Unset):
             processing_group_dates = ProcessingGroupDates.from_dict(_processing_group_dates)
+
+        else:
+            processing_group_dates = UNSET
 
         _effective_billing_schedule = d.pop("effectiveBillingSchedule", UNSET)
         effective_billing_schedule: Union[Unset, BillingSchedule]
-        if isinstance(_effective_billing_schedule, Unset):
-            effective_billing_schedule = UNSET
-        else:
+        if _effective_billing_schedule and not isinstance(_effective_billing_schedule, Unset):
             effective_billing_schedule = BillingSchedule.from_dict(_effective_billing_schedule)
+
+        else:
+            effective_billing_schedule = UNSET
 
         _effective_billing_hierarchy_cycle = d.pop("effectiveBillingHierarchyCycle", UNSET)
         effective_billing_hierarchy_cycle: Union[Unset, BillingHierarchyCycle]
-        if isinstance(_effective_billing_hierarchy_cycle, Unset):
-            effective_billing_hierarchy_cycle = UNSET
-        else:
+        if _effective_billing_hierarchy_cycle and not isinstance(_effective_billing_hierarchy_cycle, Unset):
             effective_billing_hierarchy_cycle = BillingHierarchyCycle.from_dict(_effective_billing_hierarchy_cycle)
+
+        else:
+            effective_billing_hierarchy_cycle = UNSET
 
         billing_entity_minutiae = cls(
             as_of_date=as_of_date,

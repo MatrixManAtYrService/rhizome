@@ -69,10 +69,11 @@ class ApiFeeSummaryFeeCategoryForBillingDate:
         d = dict(src_dict)
         _billing_date = d.pop("billingDate", UNSET)
         billing_date: Union[Unset, datetime.date]
-        if isinstance(_billing_date, Unset):
-            billing_date = UNSET
-        else:
+        if _billing_date and not isinstance(_billing_date, Unset):
             billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
 
         invoice_number = d.pop("invoiceNumber", UNSET)
 

@@ -82,10 +82,11 @@ class SpecificDataClassLoaderParent:
 
         _unnamed_module = d.pop("unnamedModule", UNSET)
         unnamed_module: Union[Unset, SpecificDataClassLoaderParentUnnamedModule]
-        if isinstance(_unnamed_module, Unset):
-            unnamed_module = UNSET
-        else:
+        if _unnamed_module and not isinstance(_unnamed_module, Unset):
             unnamed_module = SpecificDataClassLoaderParentUnnamedModule.from_dict(_unnamed_module)
+
+        else:
+            unnamed_module = UNSET
 
         defined_packages = []
         _defined_packages = d.pop("definedPackages", UNSET)

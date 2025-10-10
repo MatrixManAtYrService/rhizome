@@ -52,10 +52,11 @@ class Compliance:
 
         _type_ = d.pop("type", UNSET)
         type_: Union[Unset, ComplianceType]
-        if isinstance(_type_, Unset):
-            type_ = UNSET
-        else:
+        if _type_ and not isinstance(_type_, Unset):
             type_ = ComplianceType(_type_)
+
+        else:
+            type_ = UNSET
 
         enabled = d.pop("enabled", UNSET)
 

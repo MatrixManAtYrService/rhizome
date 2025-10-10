@@ -159,17 +159,19 @@ class ApiLedgerAccountSettlement:
         d = dict(src_dict)
         _tlement_item_code = d.pop("tlementItemCode", UNSET)
         tlement_item_code: Union[Unset, ApiLedgerAccountSettlement]
-        if isinstance(_tlement_item_code, Unset):
-            tlement_item_code = UNSET
-        else:
+        if _tlement_item_code and not isinstance(_tlement_item_code, Unset):
             tlement_item_code = ApiLedgerAccountSettlement.from_dict(_tlement_item_code)
+
+        else:
+            tlement_item_code = UNSET
 
         _tlement_desc = d.pop("tlementDesc", UNSET)
         tlement_desc: Union[Unset, ApiLedgerAccountSettlement]
-        if isinstance(_tlement_desc, Unset):
-            tlement_desc = UNSET
-        else:
+        if _tlement_desc and not isinstance(_tlement_desc, Unset):
             tlement_desc = ApiLedgerAccountSettlement.from_dict(_tlement_desc)
+
+        else:
+            tlement_desc = UNSET
 
         id = d.pop("id", UNSET)
 
@@ -179,10 +181,11 @@ class ApiLedgerAccountSettlement:
 
         _effective_date = d.pop("effectiveDate", UNSET)
         effective_date: Union[Unset, datetime.date]
-        if isinstance(_effective_date, Unset):
-            effective_date = UNSET
-        else:
+        if _effective_date and not isinstance(_effective_date, Unset):
             effective_date = isoparse(_effective_date).date()
+
+        else:
+            effective_date = UNSET
 
         settlement_item_code = d.pop("settlementItemCode", UNSET)
 
@@ -204,17 +207,19 @@ class ApiLedgerAccountSettlement:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 

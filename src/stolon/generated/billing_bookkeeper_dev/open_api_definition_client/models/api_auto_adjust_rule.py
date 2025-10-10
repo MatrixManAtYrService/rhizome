@@ -123,10 +123,11 @@ class ApiAutoAdjustRule:
 
         _rule_status = d.pop("ruleStatus", UNSET)
         rule_status: Union[Unset, ApiAutoAdjustRuleRuleStatus]
-        if isinstance(_rule_status, Unset):
-            rule_status = UNSET
-        else:
+        if _rule_status and not isinstance(_rule_status, Unset):
             rule_status = ApiAutoAdjustRuleRuleStatus(_rule_status)
+
+        else:
+            rule_status = UNSET
 
         rate_fee_category = d.pop("rateFeeCategory", UNSET)
 
@@ -134,10 +135,11 @@ class ApiAutoAdjustRule:
 
         _target_entity_type = d.pop("targetEntityType", UNSET)
         target_entity_type: Union[Unset, ApiAutoAdjustRuleTargetEntityType]
-        if isinstance(_target_entity_type, Unset):
-            target_entity_type = UNSET
-        else:
+        if _target_entity_type and not isinstance(_target_entity_type, Unset):
             target_entity_type = ApiAutoAdjustRuleTargetEntityType(_target_entity_type)
+
+        else:
+            target_entity_type = UNSET
 
         short_desc = d.pop("shortDesc", UNSET)
 
@@ -145,17 +147,19 @@ class ApiAutoAdjustRule:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 

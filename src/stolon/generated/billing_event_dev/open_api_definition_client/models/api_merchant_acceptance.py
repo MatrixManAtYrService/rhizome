@@ -178,45 +178,51 @@ class ApiMerchantAcceptance:
 
         _agreement_event_type = d.pop("agreementEventType", UNSET)
         agreement_event_type: Union[Unset, ApiMerchantAcceptanceAgreementEventType]
-        if isinstance(_agreement_event_type, Unset):
-            agreement_event_type = UNSET
-        else:
+        if _agreement_event_type and not isinstance(_agreement_event_type, Unset):
             agreement_event_type = ApiMerchantAcceptanceAgreementEventType(_agreement_event_type)
+
+        else:
+            agreement_event_type = UNSET
 
         _action = d.pop("action", UNSET)
         action: Union[Unset, ApiMerchantAcceptanceAction]
-        if isinstance(_action, Unset):
-            action = UNSET
-        else:
+        if _action and not isinstance(_action, Unset):
             action = ApiMerchantAcceptanceAction(_action)
+
+        else:
+            action = UNSET
 
         _acceptance_created_datetime = d.pop("acceptanceCreatedDatetime", UNSET)
         acceptance_created_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_acceptance_created_datetime, Unset):
-            acceptance_created_datetime = UNSET
-        else:
+        if _acceptance_created_datetime and not isinstance(_acceptance_created_datetime, Unset):
             acceptance_created_datetime = isoparse(_acceptance_created_datetime)
+
+        else:
+            acceptance_created_datetime = UNSET
 
         _acceptance_modified_datetime = d.pop("acceptanceModifiedDatetime", UNSET)
         acceptance_modified_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_acceptance_modified_datetime, Unset):
-            acceptance_modified_datetime = UNSET
-        else:
+        if _acceptance_modified_datetime and not isinstance(_acceptance_modified_datetime, Unset):
             acceptance_modified_datetime = isoparse(_acceptance_modified_datetime)
+
+        else:
+            acceptance_modified_datetime = UNSET
 
         _acceptance_deleted_datetime = d.pop("acceptanceDeletedDatetime", UNSET)
         acceptance_deleted_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_acceptance_deleted_datetime, Unset):
-            acceptance_deleted_datetime = UNSET
-        else:
+        if _acceptance_deleted_datetime and not isinstance(_acceptance_deleted_datetime, Unset):
             acceptance_deleted_datetime = isoparse(_acceptance_deleted_datetime)
+
+        else:
+            acceptance_deleted_datetime = UNSET
 
         _acceptance_expiration_datetime = d.pop("acceptanceExpirationDatetime", UNSET)
         acceptance_expiration_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_acceptance_expiration_datetime, Unset):
-            acceptance_expiration_datetime = UNSET
-        else:
+        if _acceptance_expiration_datetime and not isinstance(_acceptance_expiration_datetime, Unset):
             acceptance_expiration_datetime = isoparse(_acceptance_expiration_datetime)
+
+        else:
+            acceptance_expiration_datetime = UNSET
 
         serial_number = d.pop("serialNumber", UNSET)
 
@@ -226,17 +232,19 @@ class ApiMerchantAcceptance:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_merchant_acceptance = cls(
             id=id,

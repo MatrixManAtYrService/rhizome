@@ -170,65 +170,73 @@ class ApiMerchantEvolution:
 
         _billable_merchant_type = d.pop("billableMerchantType", UNSET)
         billable_merchant_type: Union[Unset, ApiMerchantEvolutionBillableMerchantType]
-        if isinstance(_billable_merchant_type, Unset):
-            billable_merchant_type = UNSET
-        else:
+        if _billable_merchant_type and not isinstance(_billable_merchant_type, Unset):
             billable_merchant_type = ApiMerchantEvolutionBillableMerchantType(_billable_merchant_type)
+
+        else:
+            billable_merchant_type = UNSET
 
         _created_in_bookkeeper_datetime = d.pop("createdInBookkeeperDatetime", UNSET)
         created_in_bookkeeper_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_created_in_bookkeeper_datetime, Unset):
-            created_in_bookkeeper_datetime = UNSET
-        else:
+        if _created_in_bookkeeper_datetime and not isinstance(_created_in_bookkeeper_datetime, Unset):
             created_in_bookkeeper_datetime = isoparse(_created_in_bookkeeper_datetime)
+
+        else:
+            created_in_bookkeeper_datetime = UNSET
 
         _mlc_merchant_created_event_datetime = d.pop("mlcMerchantCreatedEventDatetime", UNSET)
         mlc_merchant_created_event_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_mlc_merchant_created_event_datetime, Unset):
-            mlc_merchant_created_event_datetime = UNSET
-        else:
+        if _mlc_merchant_created_event_datetime and not isinstance(_mlc_merchant_created_event_datetime, Unset):
             mlc_merchant_created_event_datetime = isoparse(_mlc_merchant_created_event_datetime)
+
+        else:
+            mlc_merchant_created_event_datetime = UNSET
 
         mlc_merchant_created_event_uuid = d.pop("mlcMerchantCreatedEventUuid", UNSET)
 
         _terms_accepted_datetime = d.pop("termsAcceptedDatetime", UNSET)
         terms_accepted_datetime: Union[Unset, datetime.datetime]
-        if isinstance(_terms_accepted_datetime, Unset):
-            terms_accepted_datetime = UNSET
-        else:
+        if _terms_accepted_datetime and not isinstance(_terms_accepted_datetime, Unset):
             terms_accepted_datetime = isoparse(_terms_accepted_datetime)
+
+        else:
+            terms_accepted_datetime = UNSET
 
         agreement_event_uuid = d.pop("agreementEventUuid", UNSET)
 
         _close_date = d.pop("closeDate", UNSET)
         close_date: Union[Unset, datetime.date]
-        if isinstance(_close_date, Unset):
-            close_date = UNSET
-        else:
+        if _close_date and not isinstance(_close_date, Unset):
             close_date = isoparse(_close_date).date()
+
+        else:
+            close_date = UNSET
 
         _effective_close_date = d.pop("effectiveCloseDate", UNSET)
         effective_close_date: Union[Unset, datetime.date]
-        if isinstance(_effective_close_date, Unset):
-            effective_close_date = UNSET
-        else:
+        if _effective_close_date and not isinstance(_effective_close_date, Unset):
             effective_close_date = isoparse(_effective_close_date).date()
+
+        else:
+            effective_close_date = UNSET
 
         mlc_close_event_uuid = d.pop("mlcCloseEventUuid", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_merchant_evolution = cls(
             id=id,

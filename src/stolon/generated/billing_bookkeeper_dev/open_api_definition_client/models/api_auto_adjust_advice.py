@@ -157,17 +157,19 @@ class ApiAutoAdjustAdvice:
 
         _start_date = d.pop("startDate", UNSET)
         start_date: Union[Unset, datetime.date]
-        if isinstance(_start_date, Unset):
-            start_date = UNSET
-        else:
+        if _start_date and not isinstance(_start_date, Unset):
             start_date = isoparse(_start_date).date()
+
+        else:
+            start_date = UNSET
 
         _deleted_date = d.pop("deletedDate", UNSET)
         deleted_date: Union[Unset, datetime.date]
-        if isinstance(_deleted_date, Unset):
-            deleted_date = UNSET
-        else:
+        if _deleted_date and not isinstance(_deleted_date, Unset):
             deleted_date = isoparse(_deleted_date).date()
+
+        else:
+            deleted_date = UNSET
 
         total_periods = d.pop("totalPeriods", UNSET)
 
@@ -187,17 +189,19 @@ class ApiAutoAdjustAdvice:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         audit_id = d.pop("auditId", UNSET)
 

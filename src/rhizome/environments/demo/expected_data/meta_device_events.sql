@@ -15,4 +15,4 @@ CREATE TABLE `device_events` (
   KEY `timestamp_idx` (`timestamp`),
   CONSTRAINT `device_events_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `device_events_ibfk_2` FOREIGN KEY (`internal_account_id`) REFERENCES `internal_account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=27781 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=27881 DEFAULT CHARSET=utf8mb3

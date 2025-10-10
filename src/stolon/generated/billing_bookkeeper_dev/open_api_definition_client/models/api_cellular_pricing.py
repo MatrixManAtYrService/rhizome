@@ -106,17 +106,19 @@ class ApiCellularPricing:
 
         _as_of_date = d.pop("asOfDate", UNSET)
         as_of_date: Union[Unset, datetime.date]
-        if isinstance(_as_of_date, Unset):
-            as_of_date = UNSET
-        else:
+        if _as_of_date and not isinstance(_as_of_date, Unset):
             as_of_date = isoparse(_as_of_date).date()
+
+        else:
+            as_of_date = UNSET
 
         _tax_rates = d.pop("taxRates", UNSET)
         tax_rates: Union[Unset, ApiTaxRates]
-        if isinstance(_tax_rates, Unset):
-            tax_rates = UNSET
-        else:
+        if _tax_rates and not isinstance(_tax_rates, Unset):
             tax_rates = ApiTaxRates.from_dict(_tax_rates)
+
+        else:
+            tax_rates = UNSET
 
         cellular_billing_method = d.pop("cellularBillingMethod", UNSET)
 

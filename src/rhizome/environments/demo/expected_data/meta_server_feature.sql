@@ -9,4 +9,4 @@ CREATE TABLE `server_feature` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uuid` (`uuid`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1433 DEFAULT CHARSET=latin1
+) ENGINE=InnoDB AUTO_INCREMENT=1435 DEFAULT CHARSET=latin1

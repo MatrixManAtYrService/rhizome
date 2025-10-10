@@ -71,17 +71,19 @@ class AppEventJobParams:
 
         _start = d.pop("start", UNSET)
         start: Union[Unset, datetime.datetime]
-        if isinstance(_start, Unset):
-            start = UNSET
-        else:
+        if _start and not isinstance(_start, Unset):
             start = isoparse(_start)
+
+        else:
+            start = UNSET
 
         _stop = d.pop("stop", UNSET)
         stop: Union[Unset, datetime.datetime]
-        if isinstance(_stop, Unset):
-            stop = UNSET
-        else:
+        if _stop and not isinstance(_stop, Unset):
             stop = isoparse(_stop)
+
+        else:
+            stop = UNSET
 
         app_event_job_params = cls(
             reference_uuid=reference_uuid,

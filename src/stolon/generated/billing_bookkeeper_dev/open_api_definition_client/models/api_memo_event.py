@@ -62,17 +62,19 @@ class ApiMemoEvent:
 
         _moment = d.pop("moment", UNSET)
         moment: Union[Unset, datetime.date]
-        if isinstance(_moment, Unset):
-            moment = UNSET
-        else:
+        if _moment and not isinstance(_moment, Unset):
             moment = isoparse(_moment).date()
+
+        else:
+            moment = UNSET
 
         _properties = d.pop("properties", UNSET)
         properties: Union[Unset, ApiMemoEventProperties]
-        if isinstance(_properties, Unset):
-            properties = UNSET
-        else:
+        if _properties and not isinstance(_properties, Unset):
             properties = ApiMemoEventProperties.from_dict(_properties)
+
+        else:
+            properties = UNSET
 
         api_memo_event = cls(
             heading=heading,

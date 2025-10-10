@@ -109,10 +109,11 @@ class ApiLedgerAccountKey:
 
         _ledger_account_type = d.pop("ledgerAccountType", UNSET)
         ledger_account_type: Union[Unset, ApiLedgerAccountKeyLedgerAccountType]
-        if isinstance(_ledger_account_type, Unset):
-            ledger_account_type = UNSET
-        else:
+        if _ledger_account_type and not isinstance(_ledger_account_type, Unset):
             ledger_account_type = ApiLedgerAccountKeyLedgerAccountType(_ledger_account_type)
+
+        else:
+            ledger_account_type = UNSET
 
         default_gl_code = d.pop("defaultGlCode", UNSET)
 
@@ -124,17 +125,19 @@ class ApiLedgerAccountKey:
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _modified_timestamp = d.pop("modifiedTimestamp", UNSET)
         modified_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_modified_timestamp, Unset):
-            modified_timestamp = UNSET
-        else:
+        if _modified_timestamp and not isinstance(_modified_timestamp, Unset):
             modified_timestamp = isoparse(_modified_timestamp)
+
+        else:
+            modified_timestamp = UNSET
 
         api_ledger_account_key = cls(
             id=id,

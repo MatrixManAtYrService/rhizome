@@ -88,10 +88,11 @@ class CheckDateParams:
 
         _date = d.pop("date", UNSET)
         date: Union[Unset, datetime.date]
-        if isinstance(_date, Unset):
-            date = UNSET
-        else:
+        if _date and not isinstance(_date, Unset):
             date = isoparse(_date).date()
+
+        else:
+            date = UNSET
 
         as_job_params = []
         _as_job_params = d.pop("asJobParams", UNSET)

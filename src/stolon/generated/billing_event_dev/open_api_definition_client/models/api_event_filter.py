@@ -98,40 +98,45 @@ class ApiEventFilter:
 
         _criteria = d.pop("criteria", UNSET)
         criteria: Union[Unset, ApiEventFilterCriteria]
-        if isinstance(_criteria, Unset):
-            criteria = UNSET
-        else:
+        if _criteria and not isinstance(_criteria, Unset):
             criteria = ApiEventFilterCriteria(_criteria)
+
+        else:
+            criteria = UNSET
 
         _action = d.pop("action", UNSET)
         action: Union[Unset, ApiEventFilterAction]
-        if isinstance(_action, Unset):
-            action = UNSET
-        else:
+        if _action and not isinstance(_action, Unset):
             action = ApiEventFilterAction(_action)
+
+        else:
+            action = UNSET
 
         value = d.pop("value", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _begin_timestamp = d.pop("beginTimestamp", UNSET)
         begin_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_begin_timestamp, Unset):
-            begin_timestamp = UNSET
-        else:
+        if _begin_timestamp and not isinstance(_begin_timestamp, Unset):
             begin_timestamp = isoparse(_begin_timestamp)
+
+        else:
+            begin_timestamp = UNSET
 
         _end_timestamp = d.pop("endTimestamp", UNSET)
         end_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_end_timestamp, Unset):
-            end_timestamp = UNSET
-        else:
+        if _end_timestamp and not isinstance(_end_timestamp, Unset):
             end_timestamp = isoparse(_end_timestamp)
+
+        else:
+            end_timestamp = UNSET
 
         api_event_filter = cls(
             id=id,

@@ -106,10 +106,11 @@ class ApiEventIgnored:
 
         _consumer_source = d.pop("consumerSource", UNSET)
         consumer_source: Union[Unset, ApiEventIgnoredConsumerSource]
-        if isinstance(_consumer_source, Unset):
-            consumer_source = UNSET
-        else:
+        if _consumer_source and not isinstance(_consumer_source, Unset):
             consumer_source = ApiEventIgnoredConsumerSource(_consumer_source)
+
+        else:
+            consumer_source = UNSET
 
         payload = d.pop("payload", UNSET)
 
@@ -119,19 +120,21 @@ class ApiEventIgnored:
 
         _ignore_reason = d.pop("ignoreReason", UNSET)
         ignore_reason: Union[Unset, ApiEventIgnoredIgnoreReason]
-        if isinstance(_ignore_reason, Unset):
-            ignore_reason = UNSET
-        else:
+        if _ignore_reason and not isinstance(_ignore_reason, Unset):
             ignore_reason = ApiEventIgnoredIgnoreReason(_ignore_reason)
+
+        else:
+            ignore_reason = UNSET
 
         message = d.pop("message", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_event_ignored = cls(
             id=id,

@@ -33,4 +33,4 @@ CREATE TABLE `device_provision` (
   FULLTEXT KEY `idx_full_text_serial_number` (`serial_number`),
   CONSTRAINT `device_provision_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `device_provision_ibfk_2` FOREIGN KEY (`reseller_id`) REFERENCES `reseller` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3089 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=3095 DEFAULT CHARSET=utf8mb3

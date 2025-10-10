@@ -49,10 +49,11 @@ class Permission:
         d = dict(src_dict)
         _app_permission = d.pop("appPermission", UNSET)
         app_permission: Union[Unset, PermissionAppPermission]
-        if isinstance(_app_permission, Unset):
-            app_permission = UNSET
-        else:
+        if _app_permission and not isinstance(_app_permission, Unset):
             app_permission = PermissionAppPermission.from_dict(_app_permission)
+
+        else:
+            app_permission = UNSET
 
         required = d.pop("required", UNSET)
 

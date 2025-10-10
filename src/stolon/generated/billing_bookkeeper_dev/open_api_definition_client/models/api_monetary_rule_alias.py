@@ -73,17 +73,19 @@ class ApiMonetaryRuleAlias:
 
         _rule_type = d.pop("ruleType", UNSET)
         rule_type: Union[Unset, ApiMonetaryRuleAliasRuleType]
-        if isinstance(_rule_type, Unset):
-            rule_type = UNSET
-        else:
+        if _rule_type and not isinstance(_rule_type, Unset):
             rule_type = ApiMonetaryRuleAliasRuleType(_rule_type)
+
+        else:
+            rule_type = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         api_monetary_rule_alias = cls(
             id=id,

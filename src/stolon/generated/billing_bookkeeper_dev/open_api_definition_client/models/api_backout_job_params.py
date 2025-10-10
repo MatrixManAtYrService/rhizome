@@ -89,10 +89,11 @@ class ApiBackoutJobParams:
 
         _mode = d.pop("mode", UNSET)
         mode: Union[Unset, ApiBackoutJobParamsMode]
-        if isinstance(_mode, Unset):
-            mode = UNSET
-        else:
+        if _mode and not isinstance(_mode, Unset):
             mode = ApiBackoutJobParamsMode(_mode)
+
+        else:
+            mode = UNSET
 
         verbose = d.pop("verbose", UNSET)
 

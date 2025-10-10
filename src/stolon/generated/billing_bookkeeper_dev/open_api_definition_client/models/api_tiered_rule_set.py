@@ -69,10 +69,11 @@ class ApiTieredRuleSet:
         d = dict(src_dict)
         _rule = d.pop("rule", UNSET)
         rule: Union[Unset, ApiTieredRule]
-        if isinstance(_rule, Unset):
-            rule = UNSET
-        else:
+        if _rule and not isinstance(_rule, Unset):
             rule = ApiTieredRule.from_dict(_rule)
+
+        else:
+            rule = UNSET
 
         tiers = []
         _tiers = d.pop("tiers", UNSET)

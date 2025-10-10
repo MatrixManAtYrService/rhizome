@@ -106,38 +106,43 @@ class ApiMerchantOffboarding:
 
         _step = d.pop("step", UNSET)
         step: Union[Unset, ApiMerchantOffboardingStep]
-        if isinstance(_step, Unset):
-            step = UNSET
-        else:
+        if _step and not isinstance(_step, Unset):
             step = ApiMerchantOffboardingStep(_step)
+
+        else:
+            step = UNSET
 
         _due_date = d.pop("dueDate", UNSET)
         due_date: Union[Unset, datetime.date]
-        if isinstance(_due_date, Unset):
-            due_date = UNSET
-        else:
+        if _due_date and not isinstance(_due_date, Unset):
             due_date = isoparse(_due_date).date()
+
+        else:
+            due_date = UNSET
 
         _offboard_timestamp = d.pop("offboardTimestamp", UNSET)
         offboard_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_offboard_timestamp, Unset):
-            offboard_timestamp = UNSET
-        else:
+        if _offboard_timestamp and not isinstance(_offboard_timestamp, Unset):
             offboard_timestamp = isoparse(_offboard_timestamp)
+
+        else:
+            offboard_timestamp = UNSET
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_created_timestamp, Unset):
-            created_timestamp = UNSET
-        else:
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
             created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
 
         _deleted_timestamp = d.pop("deletedTimestamp", UNSET)
         deleted_timestamp: Union[Unset, datetime.datetime]
-        if isinstance(_deleted_timestamp, Unset):
-            deleted_timestamp = UNSET
-        else:
+        if _deleted_timestamp and not isinstance(_deleted_timestamp, Unset):
             deleted_timestamp = isoparse(_deleted_timestamp)
+
+        else:
+            deleted_timestamp = UNSET
 
         api_merchant_offboarding = cls(
             id=id,

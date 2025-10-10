@@ -63,10 +63,11 @@ class ProcessOffboardingRecordsJobParams:
 
         _cycle_date = d.pop("cycleDate", UNSET)
         cycle_date: Union[Unset, datetime.date]
-        if isinstance(_cycle_date, Unset):
-            cycle_date = UNSET
-        else:
+        if _cycle_date and not isinstance(_cycle_date, Unset):
             cycle_date = isoparse(_cycle_date).date()
+
+        else:
+            cycle_date = UNSET
 
         process_offboarding_records_job_params = cls(
             reference_uuid=reference_uuid,

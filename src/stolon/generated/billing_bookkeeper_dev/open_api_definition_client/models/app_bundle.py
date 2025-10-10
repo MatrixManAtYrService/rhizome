@@ -75,10 +75,11 @@ class AppBundle:
 
         _bundle_countries = d.pop("bundleCountries", UNSET)
         bundle_countries: Union[Unset, BundleCountries]
-        if isinstance(_bundle_countries, Unset):
-            bundle_countries = UNSET
-        else:
+        if _bundle_countries and not isinstance(_bundle_countries, Unset):
             bundle_countries = BundleCountries.from_dict(_bundle_countries)
+
+        else:
+            bundle_countries = UNSET
 
         app_bundle = cls(
             id=id,
