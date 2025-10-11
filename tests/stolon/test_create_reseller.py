@@ -218,14 +218,22 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
     # Step 2: Claim the account (no authentication required for this endpoint)
     print(f"    Step 2: Claiming account...")
 
+    # Generate a random secure password (we won't need to log in with it)
+    import secrets
+    import string
+
+    # Generate 16 random characters (letters + digits) + special character
+    password_chars = string.ascii_letters + string.digits
+    random_password = "".join(secrets.choice(password_chars) for _ in range(16)) + "!@"
+
     claim_url = "https://dev1.dev.clover.com/cos/v1/dashboard/claim_account"
     claim_payload = {
         "email": test_email,
         "uuid": invited_account.uuid,
         "name": f"{RESELLER_PREFIX} Test Owner",
         "ignoreCompany": True,
-        "password": f"{RESELLER_PREFIX}TestPassword123!",
-        "confirmPassword": f"{RESELLER_PREFIX}TestPassword123!",
+        "password": random_password,
+        "confirmPassword": random_password,
         "claimCode": invited_account.claim_code,
         "pinLength": 4,
     }
