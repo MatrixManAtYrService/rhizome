@@ -181,7 +181,7 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
     # Query the user's permissions
     print(f"    Authenticated user: {ldap_name}")
     print(f"    Account UUID: {account_uuid}")
-    print(f"    Querying permissions...")
+    print("    Querying permissions...")
 
     permissions_url = f"https://{domain}/v3/internal/internal_accounts/{account_uuid}/internal_account_permissions"
     permissions_response = make_authenticated_get(

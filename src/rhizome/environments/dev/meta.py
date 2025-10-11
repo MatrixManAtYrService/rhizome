@@ -10,7 +10,13 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from rhizome.environments.base import DatabaseConfig, Environment, PortForwardConfig, SecretManager
+from rhizome.environments.base import (
+    DatabaseConfig,
+    DatabaseConfigWithRW,
+    Environment,
+    PortForwardConfig,
+    SecretManager,
+)
 from rhizome.models.base import Emplacement, RhizomeModel
 from rhizome.models.meta.account import Account
 from rhizome.models.meta.app_app_bundle_v1 import AppAppBundleV1
@@ -184,8 +190,6 @@ class DevMeta(Environment):
     def get_database_config_rw(self) -> DatabaseConfigWithRW | None:
         """Get database configuration with both RO and RW credentials."""
         import asyncio
-
-        from rhizome.environments.base import DatabaseConfigWithRW
 
         ro_password = asyncio.run(self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
         rw_password = asyncio.run(self._get_secret("op://Shared/DevMetaRW/password", SecretManager.ONEPASSWORD))

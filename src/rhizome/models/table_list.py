@@ -266,6 +266,8 @@ class MetaTable(StrEnum):
     merchant = auto()
     terminal_config_merchant_props = auto()
     reseller = auto()
+    reseller_permissions = auto()
+    reseller_role = auto()
     merchant_address = auto()
     merchant_gateway = auto()
     payment_processor = auto()

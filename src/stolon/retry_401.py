@@ -26,7 +26,7 @@ def make_authenticated_request(
     *,
     headers: dict[str, str] | None = None,
     json: dict[str, Any] | None = None,
-    **kwargs: Any,
+    timeout: float | None = None,
 ) -> httpx.Response:
     """
     Make an authenticated HTTP request with automatic token refresh on 401.
@@ -44,7 +44,7 @@ def make_authenticated_request(
         url: Full URL to request
         headers: Optional headers (will be merged with auth headers)
         json: Optional JSON body
-        **kwargs: Additional arguments passed to httpx
+        timeout: Optional timeout in seconds
 
     Returns:
         httpx.Response: The successful response
@@ -75,7 +75,7 @@ def make_authenticated_request(
         cookies = {"internalSession": handle.token}
 
         # Make the request
-        response = httpx.request(method, url, headers=req_headers, cookies=cookies, json=json, **kwargs)
+        response = httpx.request(method, url, headers=req_headers, cookies=cookies, json=json, timeout=timeout)
 
         # Check for 401 and convert to TokenExpiredError for retry
         if response.status_code == 401:
@@ -97,7 +97,7 @@ def make_authenticated_get(
     url: str,
     *,
     headers: dict[str, str] | None = None,
-    **kwargs: Any,
+    timeout: float | None = None,
 ) -> httpx.Response:
     """
     Make an authenticated GET request with automatic token refresh on 401.
@@ -107,7 +107,7 @@ def make_authenticated_get(
         domain: Clover domain (e.g., "dev1.dev.clover.com")
         url: Full URL to request
         headers: Optional headers
-        **kwargs: Additional arguments passed to httpx
+        timeout: Optional timeout in seconds
 
     Returns:
         httpx.Response: The successful response
@@ -119,7 +119,7 @@ def make_authenticated_get(
         ...     "https://dev1.dev.clover.com/v3/internal/internal_accounts/current"
         ... )
     """
-    return make_authenticated_request(stolon_client, domain, "GET", url, headers=headers, **kwargs)
+    return make_authenticated_request(stolon_client, domain, "GET", url, headers=headers, timeout=timeout)
 
 
 def make_authenticated_post(
@@ -129,7 +129,7 @@ def make_authenticated_post(
     *,
     headers: dict[str, str] | None = None,
     json: dict[str, Any] | None = None,
-    **kwargs: Any,
+    timeout: float | None = None,
 ) -> httpx.Response:
     """
     Make an authenticated POST request with automatic token refresh on 401.
@@ -140,7 +140,7 @@ def make_authenticated_post(
         url: Full URL to request
         headers: Optional headers
         json: Optional JSON body
-        **kwargs: Additional arguments passed to httpx
+        timeout: Optional timeout in seconds
 
     Returns:
         httpx.Response: The successful response
@@ -153,4 +153,4 @@ def make_authenticated_post(
         ...     json={"name": "Test Reseller"}
         ... )
     """
-    return make_authenticated_request(stolon_client, domain, "POST", url, headers=headers, json=json, **kwargs)
+    return make_authenticated_request(stolon_client, domain, "POST", url, headers=headers, json=json, timeout=timeout)

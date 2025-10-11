@@ -24,6 +24,15 @@ class CannedQuery:
 
 # Registry of all available canned queries
 CANNED_QUERIES: dict[str, CannedQuery] = {
+    "create_account": CannedQuery(
+        name="create_account",
+        description="Create a new account with uuid, name, email, and claim code",
+        environment="dev1.meta",
+        sql="""
+            INSERT INTO account (uuid, name, email, claim_code)
+            VALUES (:uuid, :name, :email, :claim_code)
+        """,
+    ),
     "create_reseller_role": CannedQuery(
         name="create_reseller_role",
         description="Create a reseller_role entry to grant reseller permissions to an account",
@@ -31,6 +40,16 @@ CANNED_QUERIES: dict[str, CannedQuery] = {
         sql="""
             INSERT INTO reseller_role (reseller_id, account_id, permissions_id)
             VALUES (:reseller_id, :account_id, :permissions_id)
+        """,
+    ),
+    "update_account_primary_role": CannedQuery(
+        name="update_account_primary_role",
+        description="Update an account's primary_reseller_role_id",
+        environment="dev1.meta",
+        sql="""
+            UPDATE account
+            SET primary_reseller_role_id = :primary_reseller_role_id
+            WHERE id = :account_id
         """,
     ),
 }

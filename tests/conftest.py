@@ -2,8 +2,6 @@
 
 import os
 import tempfile
-import threading
-import time
 from collections import defaultdict
 from collections.abc import Callable, Generator
 from dataclasses import dataclass
@@ -11,7 +9,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-import uvicorn
 from _pytest.config import Config
 from _pytest.config.argparsing import Parser
 from _pytest.nodes import Item
@@ -22,8 +19,6 @@ from _pytest.terminal import TerminalReporter
 from rhizome.client import RhizomeClient
 from rhizome.environments.environment_list import environment_type
 from rhizome.models.base import DataMismatchError
-from rhizome.server import app, setup_logging
-from tests.utils import get_open_port
 from trifolium.config import Home
 
 # --- Aggregated Test Reporting --- #
