@@ -43,7 +43,9 @@ from rhizome.models.meta.merchant_role_v1 import MerchantRoleV1
 from rhizome.models.meta.payment_processor_v1 import PaymentProcessorV1
 from rhizome.models.meta.processor_key_v1 import ProcessorKeyV1
 from rhizome.models.meta.reseller import Reseller
+from rhizome.models.meta.reseller_permissions_v1 import ResellerPermissionsV1
 from rhizome.models.meta.reseller_plan_trial_v1 import ResellerPlanTrialV1
+from rhizome.models.meta.reseller_role_v1 import ResellerRoleV1
 from rhizome.models.meta.server_feature_v1 import ServerFeatureV1
 from rhizome.models.meta.terminal_config_merchant_props_v1 import TerminalConfigMerchantPropsV1
 from rhizome.models.meta.timezones import Timezones
@@ -81,7 +83,9 @@ from .expected_data.meta_merchant_role import MerchantRoleDemo
 from .expected_data.meta_payment_processor import PaymentProcessorDemo
 from .expected_data.meta_processor_key import ProcessorKeyDemo
 from .expected_data.meta_reseller import ResellerDemo
+from .expected_data.meta_reseller_permissions import ResellerPermissionsDemo
 from .expected_data.meta_reseller_plan_trial import ResellerPlanTrialDemo
+from .expected_data.meta_reseller_role import ResellerRoleDemo
 from .expected_data.meta_server_feature import ServerFeatureDemo
 from .expected_data.meta_terminal_config_merchant_props import TerminalConfigMerchantPropsDemo
 from .expected_data.meta_timezones import TimezonesDemo
@@ -95,6 +99,8 @@ models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] 
     MetaTable.merchant: (Merchant, MerchantDemo),
     MetaTable.terminal_config_merchant_props: (TerminalConfigMerchantPropsV1, TerminalConfigMerchantPropsDemo),
     MetaTable.reseller: (Reseller, ResellerDemo),
+    MetaTable.reseller_permissions: (ResellerPermissionsV1, ResellerPermissionsDemo),
+    MetaTable.reseller_role: (ResellerRoleV1, ResellerRoleDemo),
     MetaTable.merchant_address: (MerchantAddressV1, MerchantAddressDemo),
     MetaTable.merchant_gateway: (MerchantGatewayV1, MerchantGatewayDemo),
     MetaTable.payment_processor: (PaymentProcessorV1, PaymentProcessorDemo),
@@ -132,6 +138,8 @@ class DemoMeta(Environment):
     # Type aliases for environment-specific model versions
     DeviceType: type[DeviceTypeV1] = DeviceTypeV1
     ServerFeature: type[ServerFeatureV1] = ServerFeatureV1
+    ResellerPermissions: type[ResellerPermissionsV1] = ResellerPermissionsV1
+    ResellerRole: type[ResellerRoleV1] = ResellerRoleV1
     TerminalConfigMerchantProps: type[TerminalConfigMerchantPropsV1] = TerminalConfigMerchantPropsV1
     MerchantAddress: type[MerchantAddressV1] = MerchantAddressV1
     MerchantGateway: type[MerchantGatewayV1] = MerchantGatewayV1
