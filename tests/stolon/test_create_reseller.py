@@ -140,81 +140,43 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
 
     Scope: module - reuse across all tests in this module.
     """
-    from rhizome.environments.dev.meta import DevMeta
-    from rhizome.models.meta.account import Account as AccountModel
-    from rhizome.models.meta.reseller import Reseller as ResellerModel
+    import httpx
 
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    meta_db = DevMeta(rhizome_client)
-    Account = meta_db.get_versioned(AccountModel)
-    Reseller = meta_db.get_versioned(ResellerModel)
+    # Get the authenticated user's email from the internal account endpoint
+    # This is the person running the test, who has CREATE_RESELLER permission
+    print("\n📋 Getting authenticated user info...")
 
-    # Find a demo/test reseller owner account
-    # Based on exploration, "North reseller demo" with demo_reseller_owner@clover.com is best
-    # Try patterns in order of likelihood to have proper permissions
+    handle = environment._stolon_client.request_internal_token("dev1.dev.clover.com")
+    headers = {
+        "Accept": "application/json",
+        "X-Clover-Appenv": "dev:dev1",
+    }
+    cookies = {"internalSession": handle.token}
 
-    # 1. Try "North reseller demo" specifically (known good account)
-    parent_reseller = meta_db.select_first(
-        select(Reseller)
-        .where(Reseller.name.like("%north%demo%"))  # type: ignore[attr-defined]
-        .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
-        sanitize=False,
-    )
+    whoami_url = "https://dev1.dev.clover.com/v3/internal/internal_accounts/current"
+    whoami_response = httpx.get(whoami_url, headers=headers, cookies=cookies, timeout=10.0)
 
-    # 2. Try any reseller with "demo" in name
-    if not parent_reseller:
-        parent_reseller = meta_db.select_first(
-            select(Reseller)
-            .where(Reseller.name.like("%demo%"))  # type: ignore[attr-defined]
-            .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
-            sanitize=False,
-        )
+    if whoami_response.status_code != 200:
+        raise Exception(f"Failed to get current user info: {whoami_response.status_code} - {whoami_response.text}")
 
-    # 3. Try any reseller with "test" in name
-    if not parent_reseller:
-        parent_reseller = meta_db.select_first(
-            select(Reseller)
-            .where(Reseller.name.like("%test%"))  # type: ignore[attr-defined]
-            .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
-            sanitize=False,
-        )
+    whoami_data = whoami_response.json()
+    ldap_name = whoami_data.get("ldapName")
 
-    # 4. Try "Clover" official reseller
-    if not parent_reseller:
-        parent_reseller = meta_db.select_first(
-            select(Reseller)
-            .where(Reseller.name == "Clover")
-            .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
-            sanitize=False,
-        )
+    if not ldap_name:
+        raise Exception(f"No ldapName in whoami response: {whoami_data}")
 
-    if not parent_reseller or not parent_reseller.owner_account_id:
-        raise Exception(
-            "Could not find a demo/test/clover reseller with a valid owner account. "
-            "Run explore_reseller_owners.py to see available options."
-        )
+    # Construct email from ldapName (typically ldapName@clover.com)
+    owner_email = f"{ldap_name}@clover.com"
 
-    # Get the owner account
-    owner_account = meta_db.select_first(
-        select(Account).where(Account.id == parent_reseller.owner_account_id),
-        sanitize=False,
-    )
-
-    if not owner_account:
-        raise Exception(
-            f"Could not find owner account {parent_reseller.owner_account_id} "
-            f"for reseller {parent_reseller.name}"
-        )
-
-    print(f"\n📋 Using owner account from parent reseller '{parent_reseller.name}'")
-    print(f"    Owner email: {owner_account.email}")
-    print(f"    Account ID: {owner_account.id}, UUID: {owner_account.uuid}")
+    print(f"    Authenticated user: {ldap_name}")
+    print(f"    Using email: {owner_email}")
+    print(f"    This account has CREATE_RESELLER permission and will own the new reseller")
 
     yield {
-        "account_id": owner_account.id,
-        "uuid": owner_account.uuid,
-        "email": owner_account.email,
-        "was_reused": True,
+        "account_id": None,  # We don't have the meta.account ID for internal accounts
+        "uuid": whoami_data.get("id"),
+        "email": owner_email,
+        "was_reused": False,
     }
 
 
