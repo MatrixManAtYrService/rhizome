@@ -128,7 +128,145 @@ def revenue_share_group(environment: dev.Environment) -> Generator[dict[str, Any
 
 
 @pytest.fixture(scope="module")
-def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+    """Get or create a test owner account for the test prefix.
+
+    This ensures test isolation - each prefix (MFF, TST, etc.) has its own owner account.
+    Changing the prefix creates a new account and allows full testing of account creation.
+
+    Uses the invite + claim flow:
+    1. Check if account exists
+    2. If not, invite the account (creates it in DB with claim code)
+    3. Claim the account (sets password and activates it)
+
+    Scope: module - reuse across all tests in this module.
+    """
+    import httpx
+    from rhizome.models.meta.account import Account as AccountModel
+
+    rhizome_client = RhizomeClient(data_in_logs=False)
+    meta_db = DevMeta(rhizome_client)
+    Account = meta_db.get_versioned(AccountModel)
+
+    # Generate email based on prefix for isolation
+    test_email = f"{RESELLER_PREFIX.lower()}_test_owner@clover.com"
+
+    # Check if account already exists
+    existing_account = meta_db.select_first(
+        select(Account).where(Account.email == test_email),
+        sanitize=False,
+    )
+
+    if existing_account:
+        print(f"\n♻️  Reusing existing test owner account: {test_email}")
+        print(f"    Account ID: {existing_account.id}, UUID: {existing_account.uuid}")
+
+        yield {
+            "account_id": existing_account.id,
+            "uuid": existing_account.uuid,
+            "email": existing_account.email,
+            "was_reused": True,
+        }
+        return
+
+    # No existing account found, create via invite + claim flow
+    print(f"\n=== Creating New Test Owner Account ===")
+    print(f"    Email: {test_email}")
+
+    # Step 1: Invite the account (creates it in DB with claim code)
+    print(f"    Step 1: Sending invitation...")
+
+    handle = environment._stolon_client.request_internal_token("dev1.dev.clover.com")
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Clover-Appenv": "dev:dev1",
+    }
+    cookies = {"internalSession": handle.token}
+
+    invite_url = "https://dev1.dev.clover.com/v3/accounts/invite"
+    invite_response = httpx.post(
+        invite_url,
+        json={"email": test_email},
+        headers=headers,
+        cookies=cookies,
+        timeout=30.0,
+    )
+
+    if invite_response.status_code not in (200, 201):
+        raise Exception(f"Failed to invite account: {invite_response.status_code} - {invite_response.text}")
+
+    print(f"    ✓ Invitation sent")
+
+    # Query the DB to get the account details (uuid and claim_code)
+    invited_account = meta_db.select_first(
+        select(Account).where(Account.email == test_email),
+        sanitize=False,
+    )
+
+    if not invited_account:
+        raise Exception(f"Invitation succeeded but could not find account {test_email} in database")
+
+    if not invited_account.claim_code:
+        raise Exception(f"Account {test_email} was created but has no claim code")
+
+    print(f"    Account UUID: {invited_account.uuid}")
+    print(f"    Claim code: {invited_account.claim_code}")
+
+    # Step 2: Claim the account (no authentication required for this endpoint)
+    print(f"    Step 2: Claiming account...")
+
+    claim_url = "https://dev1.dev.clover.com/cos/v1/dashboard/claim_account"
+    claim_payload = {
+        "email": test_email,
+        "uuid": invited_account.uuid,
+        "name": f"{RESELLER_PREFIX} Test Owner",
+        "ignoreCompany": True,
+        "password": f"{RESELLER_PREFIX}TestPassword123!",
+        "confirmPassword": f"{RESELLER_PREFIX}TestPassword123!",
+        "claimCode": invited_account.claim_code,
+        "pinLength": 4,
+    }
+
+    claim_response = httpx.post(
+        claim_url,
+        json=claim_payload,
+        headers={"Content-Type": "application/json"},
+        timeout=30.0,
+    )
+
+    if claim_response.status_code not in (200, 201):
+        raise Exception(f"Failed to claim account: {claim_response.status_code} - {claim_response.text}")
+
+    print(f"    ✓ Account claimed successfully")
+
+    # Verify the account is now active
+    claimed_account = meta_db.select_first(
+        select(Account).where(Account.email == test_email),
+        sanitize=False,
+    )
+
+    if not claimed_account:
+        raise Exception(f"Account claim succeeded but could not verify account {test_email} in database")
+
+    print(f"\n✓ Created test owner account: {test_email}")
+    print(f"    Account ID: {claimed_account.id}, UUID: {claimed_account.uuid}")
+
+    yield {
+        "account_id": claimed_account.id,
+        "uuid": claimed_account.uuid,
+        "email": claimed_account.email,
+        "was_reused": False,
+    }
+
+    # Cleanup not supported for accounts
+    print(f"\n⚠️  Note: Account {claimed_account.uuid} cannot be automatically deleted")
+
+
+@pytest.fixture(scope="module")
+def meta_reseller(
+    test_owner_account: dict[str, Any], environment: dev.Environment
+) -> Generator[dict[str, Any], None, None]:
     """Get or create a meta.reseller for testing.
 
     This must be created FIRST before any billing_bookkeeper entities.
@@ -202,16 +340,18 @@ def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], Non
         raise Exception("Could not find any reseller to use as parent. The meta.reseller table may be empty.")
 
     print(f"\n📋 Using parent reseller: {demo_reseller.name} (id={demo_reseller.id}, uuid={demo_reseller.uuid})")
+    print(f"    Test owner account: {test_owner_account['email']} (id={test_owner_account['account_id']})")
 
     # Create meta.reseller using the API
-    # Use Demo's plan group if it has one, otherwise use a known good one
+    # Use parent's plan group if it has one, otherwise use a known good one
     plan_group_id = demo_reseller.plan_group_id if demo_reseller.plan_group_id else "B1DTBWV564MNE"
     if isinstance(plan_group_id, int):
         plan_group_id = str(plan_group_id)
 
+    # Use the test owner account (specific to this prefix for isolation)
     created_reseller = environment.api.resellers.create_reseller(
         name=reseller_name,
-        owner_email=f"test-{uuid_module.uuid4().hex[:8]}@clover.com",
+        owner_email=test_owner_account["email"],
         parent_reseller_id=demo_reseller.uuid,
         merchant_plan_group_id=plan_group_id,
         support_email="test@clover.com",
