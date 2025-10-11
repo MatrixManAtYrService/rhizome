@@ -149,29 +149,50 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
     Account = meta_db.get_versioned(AccountModel)
     Reseller = meta_db.get_versioned(ResellerModel)
 
-    # Find a reseller with a valid owner account
-    # Try to find Demo first, then any DEMO type, then any reseller
+    # Find a demo/test reseller owner account
+    # Based on exploration, "North reseller demo" with demo_reseller_owner@clover.com is best
+    # Try patterns in order of likelihood to have proper permissions
+
+    # 1. Try "North reseller demo" specifically (known good account)
     parent_reseller = meta_db.select_first(
-        select(Reseller).where(Reseller.name == "Demo"),
+        select(Reseller)
+        .where(Reseller.name.like("%north%demo%"))  # type: ignore[attr-defined]
+        .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
         sanitize=False,
     )
 
-    if not parent_reseller:
-        parent_reseller = meta_db.select_first(
-            select(Reseller).where(Reseller.type == "DEMO"),  # type: ignore[attr-defined]
-            sanitize=False,
-        )
-
+    # 2. Try any reseller with "demo" in name
     if not parent_reseller:
         parent_reseller = meta_db.select_first(
             select(Reseller)
-            .where(Reseller.owner_account_id.is_not(None))  # type: ignore[attr-defined]
-            .order_by(Reseller.id),  # type: ignore[attr-defined]
+            .where(Reseller.name.like("%demo%"))  # type: ignore[attr-defined]
+            .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
+            sanitize=False,
+        )
+
+    # 3. Try any reseller with "test" in name
+    if not parent_reseller:
+        parent_reseller = meta_db.select_first(
+            select(Reseller)
+            .where(Reseller.name.like("%test%"))  # type: ignore[attr-defined]
+            .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
+            sanitize=False,
+        )
+
+    # 4. Try "Clover" official reseller
+    if not parent_reseller:
+        parent_reseller = meta_db.select_first(
+            select(Reseller)
+            .where(Reseller.name == "Clover")
+            .where(Reseller.owner_account_id.is_not(None)),  # type: ignore[attr-defined]
             sanitize=False,
         )
 
     if not parent_reseller or not parent_reseller.owner_account_id:
-        raise Exception("Could not find a reseller with a valid owner account")
+        raise Exception(
+            "Could not find a demo/test/clover reseller with a valid owner account. "
+            "Run explore_reseller_owners.py to see available options."
+        )
 
     # Get the owner account
     owner_account = meta_db.select_first(
