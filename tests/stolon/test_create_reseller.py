@@ -1,6 +1,20 @@
 """
 Test complete reseller creation with proper meta.reseller → billing_bookkeeper linking.
 
+RUNNING THIS TEST:
+================================================================================
+This test requires both rhizome and stolon servers to be running in separate
+terminals BEFORE running pytest. This allows the servers to prompt for user
+approval before executing database write operations.
+
+Terminal 1: rhizome serve
+Terminal 2: stolon serve
+Terminal 3: pytest tests/stolon/test_create_reseller.py --external-infra
+
+The servers will save their ports to ~/.trifolium/config automatically.
+Keep terminals 1 and 2 open while running tests.
+================================================================================
+
 CORRECT CREATION ORDER (discovered via exploration):
 1. Create meta.reseller first (via POST /v3/resellers) → get reseller_uuid
 2. Create billing_bookkeeper.billing_entity with entity_uuid=reseller_uuid

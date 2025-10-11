@@ -336,32 +336,58 @@ def local_mysql(local_cluster: None) -> None:
 
 @pytest.fixture(scope="session")
 def rhizome_server(local_mysql: None) -> Generator[RunningServer, None, None]:
-    """Start a rhizome server for testing.
+    """Connect to a manually-started rhizome server.
+
+    IMPORTANT: This fixture expects the rhizome server to be running in a separate
+    terminal BEFORE running pytest.
+
+    The rhizome server needs to be running separately so that it can prompt the user
+    for approval before executing any database write operations.
+
+    To start the server manually:
+        Terminal 1: rhizome serve
+        Terminal 2: pytest (your tests)
 
     Args:
         local_mysql: Consumes the local_mysql fixture.
 
     Returns:
         RunningServer: Server instance with port and home attributes.
+
+    Raises:
+        Exception: If the rhizome server is not running.
     """
-    with tempfile.TemporaryDirectory() as temp_dir:
-        # Create sandboxed home
-        home = Home.sandbox(Path(temp_dir))
-        test_port = get_open_port()
-        home.set_port(test_port)
+    import httpx
 
-        # Setup logging
-        setup_logging()
+    # Use the default home to connect to an already-running server
+    home = Home()
 
-        # Start server in background thread
-        def run_server() -> None:
-            uvicorn.run(app, host="0.0.0.0", port=test_port, log_config=None)
+    # Try to get the rhizome port from home
+    rhizome_port = home.get_port()
+    if not rhizome_port:
+        raise Exception(
+            "❌ Rhizome server port not configured.\n\n"
+            "REQUIRED: Start the rhizome server in a separate terminal first:\n"
+            "  rhizome serve\n\n"
+            "The server will print its port and save it to ~/.trifolium/config"
+        )
 
-        server_thread = threading.Thread(target=run_server, daemon=True)
-        server_thread.start()
-        time.sleep(0.5)  # Give server time to start
+    # Verify the server is actually running
+    try:
+        response = httpx.get(f"http://localhost:{rhizome_port}/health", timeout=2.0)
+        if response.status_code != 200:
+            raise Exception(f"Rhizome server health check failed: {response.status_code}")
+    except (httpx.ConnectError, httpx.TimeoutException) as e:
+        raise Exception(
+            f"❌ Cannot connect to rhizome server on port {rhizome_port}.\n\n"
+            "REQUIRED: Start the rhizome server in a separate terminal first:\n"
+            "  rhizome serve\n\n"
+            f"Connection error: {e}"
+        ) from e
 
-        yield RunningServer(port=test_port, home=home)
+    print(f"\n✅ Connected to rhizome server on port {rhizome_port}")
+
+    yield RunningServer(port=rhizome_port, home=home)
 
 
 @pytest.fixture(scope="session")
@@ -396,31 +422,53 @@ class RunningStolonServer:
 
 @pytest.fixture(scope="session")
 def stolon_server() -> Generator[RunningStolonServer, None, None]:
-    """Start a stolon server for testing.
+    """Connect to a manually-started stolon server.
+
+    IMPORTANT: This fixture expects both rhizome and stolon servers to be running
+    in separate terminals BEFORE running pytest.
+
+    To start the servers manually:
+        Terminal 1: rhizome serve
+        Terminal 2: stolon serve
+        Terminal 3: pytest tests/stolon/test_create_reseller.py --external-infra
 
     This fixture is session-scoped so all tests share the same server instance,
     avoiding multiple authentication prompts.
 
     Returns:
         RunningStolonServer: Server instance with port and home attributes.
+
+    Raises:
+        Exception: If the stolon server is not running.
     """
-    from stolon.server import app as stolon_app
+    import httpx
 
-    with tempfile.TemporaryDirectory() as temp_dir:
-        # Create sandboxed home
-        home = Home.sandbox(Path(temp_dir))
-        test_port = get_open_port()
-        home.set_stolon_port(test_port)
+    # Use the default home to connect to an already-running server
+    home = Home()
 
-        # Setup logging
-        setup_logging()
+    # Try to get the stolon port from home
+    stolon_port = home.get_stolon_port()
+    if not stolon_port:
+        raise Exception(
+            "❌ Stolon server port not configured.\n\n"
+            "REQUIRED: Start the stolon server in a separate terminal first:\n"
+            "  stolon serve\n\n"
+            "The server will print its port and save it to ~/.trifolium/config"
+        )
 
-        # Start server in background thread
-        def run_server() -> None:
-            uvicorn.run(stolon_app, host="0.0.0.0", port=test_port, log_config=None)
+    # Verify the server is actually running
+    try:
+        response = httpx.get(f"http://localhost:{stolon_port}/health", timeout=2.0)
+        if response.status_code != 200:
+            raise Exception(f"Stolon server health check failed: {response.status_code}")
+    except (httpx.ConnectError, httpx.TimeoutException) as e:
+        raise Exception(
+            f"❌ Cannot connect to stolon server on port {stolon_port}.\n\n"
+            "REQUIRED: Start the stolon server in a separate terminal first:\n"
+            "  stolon serve\n\n"
+            f"Connection error: {e}"
+        ) from e
 
-        server_thread = threading.Thread(target=run_server, daemon=True)
-        server_thread.start()
-        time.sleep(0.5)  # Give server time to start
+    print(f"\n✅ Connected to stolon server on port {stolon_port}")
 
-        yield RunningStolonServer(port=test_port, home=home)
+    yield RunningStolonServer(port=stolon_port, home=home)
