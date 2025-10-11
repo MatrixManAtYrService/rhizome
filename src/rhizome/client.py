@@ -366,3 +366,49 @@ class RhizomeClient:
         with engine.connect() as connection:
             result = connection.execute(sqlalchemy.text(query))
             return result.first()
+
+    def execute_write_query(
+        self, query_name: str, environment_name: str, params: dict[str, str | int | float | None]
+    ) -> dict[str, Any]:
+        """
+        Execute a pre-defined write query with user approval via the rhizome server.
+
+        The rhizome server will:
+        1. Look up the canned query by name
+        2. Render it with the provided parameters
+        3. Show it to the user in the terminal with rich formatting
+        4. Prompt for yes/no approval
+        5. If approved, execute with RW credentials
+        6. Return the result
+
+        Args:
+            query_name: Name of the canned query to execute
+            environment_name: Environment to execute in (e.g., "DevMeta")
+            params: Parameters to pass to the query
+
+        Returns:
+            Dictionary with keys:
+            - approved: bool - Whether user approved the query
+            - executed: bool - Whether query was executed
+            - rows_affected: int | None - Number of rows affected
+            - error: str | None - Error message if any
+
+        Example:
+            >>> client.execute_write_query(
+            ...     query_name="create_reseller_role",
+            ...     environment_name="DevMeta",
+            ...     params={"reseller_id": 123, "account_id": 456, "permissions_id": 789}
+            ... )
+            {'approved': True, 'executed': True, 'rows_affected': 1, 'error': None}
+        """
+        with httpx.Client(timeout=300.0) as client:  # 5 min timeout for user interaction
+            response = client.post(
+                f"{self.base_url}/write_query",
+                json={
+                    "query_name": query_name,
+                    "environment_name": environment_name,
+                    "params": params,
+                },
+            )
+            response.raise_for_status()
+            return response.json()

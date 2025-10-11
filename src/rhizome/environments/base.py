@@ -41,6 +41,23 @@ class DatabaseConfig:
 
 
 @dataclass
+class DatabaseConfigWithRW:
+    """Database connection configuration with separate read-only and read-write credentials."""
+
+    host: str
+    port: int
+    database: str
+
+    # Read-only credentials (used by default)
+    ro_username: str
+    ro_password: str
+
+    # Read-write credentials (requires user approval for each write operation)
+    rw_username: str
+    rw_password: str
+
+
+@dataclass
 class PortForwardConfig:
     """Port forwarding configuration for Kubernetes environments."""
 
@@ -88,6 +105,18 @@ class Environment(ABC):
     @abstractmethod
     def get_database_config(self) -> DatabaseConfig:
         """Get the database configuration for this environment."""
+
+    def get_database_config_rw(self) -> DatabaseConfigWithRW | None:
+        """
+        Get the database configuration with RW credentials if available.
+
+        Returns None by default. Environments that support write operations
+        should override this method to provide RW credentials.
+
+        Returns:
+            DatabaseConfigWithRW if write access is supported, None otherwise
+        """
+        return None
 
     @abstractmethod
     def get_port_forward_config(self) -> PortForwardConfig | None:

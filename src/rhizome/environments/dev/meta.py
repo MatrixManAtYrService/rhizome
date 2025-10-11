@@ -168,7 +168,7 @@ class DevMeta(Environment):
         return models.get(table_name, (None, None))
 
     def get_database_config(self) -> DatabaseConfig:
-        """Get database configuration using legacy MySQL credentials."""
+        """Get database configuration using legacy MySQL credentials (read-only)."""
         import asyncio
 
         password = asyncio.run(self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
@@ -179,6 +179,25 @@ class DevMeta(Environment):
             database="meta",
             username="remotereadonly",
             password=password,
+        )
+
+    def get_database_config_rw(self) -> DatabaseConfigWithRW | None:
+        """Get database configuration with both RO and RW credentials."""
+        import asyncio
+
+        from rhizome.environments.base import DatabaseConfigWithRW
+
+        ro_password = asyncio.run(self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
+        rw_password = asyncio.run(self._get_secret("op://Shared/DevMetaRW/password", SecretManager.ONEPASSWORD))
+
+        return DatabaseConfigWithRW(
+            host="dev1-db01.dev.pdx10.clover.network",
+            port=3306,
+            database="meta",
+            ro_username="remotereadonly",
+            ro_password=ro_password,
+            rw_username="superuser",
+            rw_password=rw_password,
         )
 
     def get_port_forward_config(self) -> PortForwardConfig | None:
