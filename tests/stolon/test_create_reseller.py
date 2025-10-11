@@ -154,24 +154,19 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
 
     Scope: module - reuse across all tests in this module.
     """
-    import httpx
+    from stolon.retry_401 import make_authenticated_get
 
     # Get the authenticated user's email from the internal account endpoint
     # This is the person running the test, who has CREATE_RESELLER permission
     print("\n📋 Getting authenticated user info...")
 
-    handle = environment._stolon_client.request_internal_token("dev1.dev.clover.com")
-    headers = {
-        "Accept": "application/json",
-        "X-Clover-Appenv": "dev:dev1",
-    }
-    cookies = {"internalSession": handle.token}
+    domain = "dev1.dev.clover.com"
+    headers = {"X-Clover-Appenv": "dev:dev1"}
 
-    whoami_url = "https://dev1.dev.clover.com/v3/internal/internal_accounts/current"
-    whoami_response = httpx.get(whoami_url, headers=headers, cookies=cookies, timeout=10.0)
-
-    if whoami_response.status_code != 200:
-        raise Exception(f"Failed to get current user info: {whoami_response.status_code} - {whoami_response.text}")
+    whoami_url = f"https://{domain}/v3/internal/internal_accounts/current"
+    whoami_response = make_authenticated_get(
+        environment._stolon_client, domain, whoami_url, headers=headers, timeout=10.0
+    )
 
     whoami_data = whoami_response.json()
     ldap_name = whoami_data.get("ldapName")
@@ -188,13 +183,10 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
     print(f"    Account UUID: {account_uuid}")
     print(f"    Querying permissions...")
 
-    permissions_url = f"https://dev1.dev.clover.com/v3/internal/internal_accounts/{account_uuid}/internal_account_permissions"
-    permissions_response = httpx.get(permissions_url, headers=headers, cookies=cookies, timeout=10.0)
-
-    if permissions_response.status_code != 200:
-        raise Exception(
-            f"Failed to get permissions: {permissions_response.status_code} - {permissions_response.text}"
-        )
+    permissions_url = f"https://{domain}/v3/internal/internal_accounts/{account_uuid}/internal_account_permissions"
+    permissions_response = make_authenticated_get(
+        environment._stolon_client, domain, permissions_url, headers=headers, timeout=10.0
+    )
 
     permissions = permissions_response.json()
     print(f"    Found {len(permissions)} permissions")
