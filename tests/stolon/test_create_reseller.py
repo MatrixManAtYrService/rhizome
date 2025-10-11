@@ -142,6 +142,8 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
     Scope: module - reuse across all tests in this module.
     """
     import httpx
+
+    from rhizome.environments.dev.meta import DevMeta
     from rhizome.models.meta.account import Account as AccountModel
 
     rhizome_client = RhizomeClient(data_in_logs=False)
