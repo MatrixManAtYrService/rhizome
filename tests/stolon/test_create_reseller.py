@@ -177,14 +177,31 @@ def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], Non
     # Generate unique name using prefix
     reseller_name = f"{RESELLER_PREFIX} Test Reseller {uuid_module.uuid4().hex[:4].upper()}"
 
-    # Get parent reseller ID and merchant plan group ID from the Demo reseller
+    # Get parent reseller ID and merchant plan group ID
+    # Try to find the Demo reseller first
     demo_reseller = meta_db.select_first(
         select(Reseller).where(Reseller.name == "Demo"),
         sanitize=False,
     )
 
+    # If Demo doesn't exist (e.g., in dev environment), use any reseller with type=DEMO
     if not demo_reseller:
-        raise Exception("Could not find Demo reseller to use as parent")
+        demo_reseller = meta_db.select_first(
+            select(Reseller).where(Reseller.type == "DEMO"),  # type: ignore[attr-defined]
+            sanitize=False,
+        )
+
+    # If still not found, use any reseller as parent
+    if not demo_reseller:
+        demo_reseller = meta_db.select_first(
+            select(Reseller).where(Reseller.id.is_not(None)).order_by(Reseller.id),  # type: ignore[attr-defined]
+            sanitize=False,
+        )
+
+    if not demo_reseller:
+        raise Exception("Could not find any reseller to use as parent. The meta.reseller table may be empty.")
+
+    print(f"\n📋 Using parent reseller: {demo_reseller.name} (id={demo_reseller.id}, uuid={demo_reseller.uuid})")
 
     # Create meta.reseller using the API
     # Use Demo's plan group if it has one, otherwise use a known good one
