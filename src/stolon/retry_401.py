@@ -4,11 +4,10 @@ Retry wrapper for HTTP requests that automatically refreshes tokens on 401 error
 Uses stamina for retry logic with automatic token refresh.
 """
 
-from typing import Any, Callable
+from typing import Any
 
 import httpx
 import stamina
-from stamina.typing import AsyncRetryable, Retryable
 
 from stolon.client import StolonClient
 
@@ -17,20 +16,6 @@ class TokenExpiredError(Exception):
     """Raised when a 401 error indicates the token has expired."""
 
     pass
-
-
-def should_retry_for_auth(retry_state: dict[str, Any]) -> bool:
-    """
-    Determine if we should retry based on a 401 error.
-
-    Args:
-        retry_state: State from stamina containing the exception
-
-    Returns:
-        True if this is a TokenExpiredError (401), False otherwise
-    """
-    exc = retry_state.get("exception")
-    return isinstance(exc, TokenExpiredError)
 
 
 def make_authenticated_request(
