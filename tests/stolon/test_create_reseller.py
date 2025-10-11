@@ -175,6 +175,7 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
 
     whoami_data = whoami_response.json()
     ldap_name = whoami_data.get("ldapName")
+    account_uuid = whoami_data.get("id")
 
     if not ldap_name:
         raise Exception(f"No ldapName in whoami response: {whoami_data}")
@@ -182,14 +183,28 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
     # Construct email from ldapName (typically ldapName@clover.com)
     owner_email = f"{ldap_name}@clover.com"
 
+    # Query the user's permissions
     print(f"    Authenticated user: {ldap_name}")
+    print(f"    Account UUID: {account_uuid}")
+    print(f"    Querying permissions...")
+
+    permissions_url = f"https://dev1.dev.clover.com/v3/internal/internal_accounts/{account_uuid}/internal_account_permissions"
+    permissions_response = httpx.get(permissions_url, headers=headers, cookies=cookies, timeout=10.0)
+
+    if permissions_response.status_code != 200:
+        raise Exception(
+            f"Failed to get permissions: {permissions_response.status_code} - {permissions_response.text}"
+        )
+
+    permissions = permissions_response.json()
+    print(f"    Found {len(permissions)} permissions")
     print(f"    Using email: {owner_email}")
-    print(f"    This account has CREATE_RESELLER permission and will own the new reseller")
 
     yield {
         "account_id": None,  # We don't have the meta.account ID for internal accounts
-        "uuid": whoami_data.get("id"),
+        "uuid": account_uuid,
         "email": owner_email,
+        "permissions": permissions,
         "was_reused": False,
     }
 
