@@ -69,6 +69,12 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 app = FastAPI(lifespan=lifespan)
 
 
+@app.get("/health")
+async def health() -> dict[str, str]:
+    """Health check endpoint for server status."""
+    return {"status": "ok"}
+
+
 @app.post("/sleeper")
 async def sleeper(request: SleeperRequest) -> NewProcessResponse:
     """Start a sleeper subprocess for testing rhizome process management."""

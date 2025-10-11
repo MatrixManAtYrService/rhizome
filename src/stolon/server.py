@@ -54,6 +54,12 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 app = FastAPI(lifespan=lifespan)
 
 
+@app.get("/health")
+async def health() -> dict[str, str]:
+    """Health check endpoint for server status."""
+    return {"status": "ok"}
+
+
 @app.post("/internal_token")
 async def internal_token(request: InternalTokenRequest) -> InternalTokenResponse:
     """
