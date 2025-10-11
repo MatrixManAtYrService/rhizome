@@ -36,6 +36,13 @@ models: dict[BillingBookkeeperTable, tuple[type[RhizomeModel] | None, type[Empla
 class NorthAmericaBillingBookkeeper(Environment):
     """North America production billing bookkeeper environment using CloudSQL."""
 
+    # Type aliases for environment-specific model versions
+    BillingEntity: type[BillingEntityV1] = BillingEntityV1
+    FeeRate: type[FeeRateV1] = FeeRateV1
+    FeeSummary: type[FeeSummaryV1] = FeeSummaryV1
+    InvoiceInfo: type[InvoiceInfoV1] = InvoiceInfoV1
+    Settlement: type[SettlementV1] = SettlementV1
+
     def tables(self) -> list[StrEnum]:
         return list(BillingBookkeeperTable)
 

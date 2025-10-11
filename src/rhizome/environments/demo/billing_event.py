@@ -155,6 +155,50 @@ models: dict[BillingEventTable, tuple[type[RhizomeModel] | None, type[Emplacemen
 class DemoBillingEvent(Environment):
     """Demo billing event environment using CloudSQL."""
 
+    # Type aliases for environment-specific model versions
+    AppMeteredEvent: type[AppMeteredEventV1] = AppMeteredEventV1
+    AppSubscriptionCurrent: type[AppSubscriptionCurrentV1] = AppSubscriptionCurrentV1
+    AppSubscriptionDaily: type[AppSubscriptionDailyV1] = AppSubscriptionDailyV1
+    AppSubscriptionEvent: type[AppSubscriptionEventV1] = AppSubscriptionEventV1
+    AsOfMerchant: type[AsOfMerchantV2] = AsOfMerchantV2
+    AsOfMerchantDevice: type[AsOfMerchantDeviceV1] = AsOfMerchantDeviceV1
+    AsOfMerchantPlan: type[AsOfMerchantPlanV2] = AsOfMerchantPlanV2
+    BackfillAcceptance: type[BackfillAcceptanceV1] = BackfillAcceptanceV1
+    BillingEventHistory: type[BillingEventHistoryV1] = BillingEventHistoryV1
+    CellularArrearsAcceptances: type[CellularArrearsAcceptancesV1] = CellularArrearsAcceptancesV1
+    CellularBillingArrearsInfo: type[CellularBillingArrearsInfoV1] = CellularBillingArrearsInfoV1
+    ConsumerFailure: type[ConsumerFailureV1] = ConsumerFailureV1
+    ConsumerFailureHistory: type[ConsumerFailureHistoryV1] = ConsumerFailureHistoryV1
+    DeserializableFailure: type[DeserializableFailureV1] = DeserializableFailureV1
+    EventFilter: type[EventFilterV1] = EventFilterV1
+    EventIgnored: type[EventIgnoredV1] = EventIgnoredV1
+    IccidCarrier: type[IccidCarrierV1] = IccidCarrierV1
+    JobAssassinationContract: type[JobAssassinationContractV1] = JobAssassinationContractV1
+    JobrunrBackgroundjobservers: type[JobrunrBackgroundjobserversV1] = JobrunrBackgroundjobserversV1
+    JobrunrJobs: type[JobrunrJobsV1] = JobrunrJobsV1
+    JobrunrMetadata: type[JobrunrMetadataV1] = JobrunrMetadataV1
+    JobrunrMigrations: type[JobrunrMigrationsV1] = JobrunrMigrationsV1
+    JobrunrRecurringJobs: type[JobrunrRecurringJobsV1] = JobrunrRecurringJobsV1
+    Look: type[LookV1] = LookV1
+    LookData: type[LookDataV1] = LookDataV1
+    ManagedItem: type[ManagedItemV1] = ManagedItemV1
+    MerchantAcceptance: type[MerchantAcceptanceV1] = MerchantAcceptanceV1
+    MerchantEvolution: type[MerchantEvolutionV2] = MerchantEvolutionV2
+    MerchantOffboarding: type[MerchantOffboardingV1] = MerchantOffboardingV1
+    MerchantPayment: type[MerchantPaymentV1] = MerchantPaymentV1
+    MerchantPaymentHistory: type[MerchantPaymentHistoryV1] = MerchantPaymentHistoryV1
+    MigratedMerchant: type[MigratedMerchantV1] = MigratedMerchantV1
+    MlcCapturedEvent: type[MlcCapturedEventV1] = MlcCapturedEventV1
+    PendingEvent: type[PendingEventV1] = PendingEventV1
+    PlanBillingLatest: type[PlanBillingLatestV1] = PlanBillingLatestV1
+    PlanMeta: type[PlanMetaV1] = PlanMetaV1
+    PlanTrial: type[PlanTrialV1] = PlanTrialV1
+    ProducerFailure: type[ProducerFailureV1] = ProducerFailureV1
+    ProducerFailureHistory: type[ProducerFailureHistoryV1] = ProducerFailureHistoryV1
+    ServerConfig: type[ServerConfigV1] = ServerConfigV1
+    TestMerchantCriteria: type[TestMerchantCriteriaV1] = TestMerchantCriteriaV1
+    UninstalledApp: type[UninstalledAppV1] = UninstalledAppV1
+
     def tables(self) -> list[StrEnum]:
         return list(BillingEventTable)
 

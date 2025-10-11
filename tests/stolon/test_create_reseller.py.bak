@@ -84,7 +84,7 @@ def _get_future_date(days_ahead: int = 30) -> str:
 
 
 @pytest.fixture(scope="module")
-def environment(stolon_server: RunningStolonServer) -> dev.Environment:
+def environment(stolon_server: RunningStolonServer) -> dev.Dev:
     """Unified dev environment with both database and HTTP access.
 
     This fixture creates a single Dev instance that provides:
@@ -95,11 +95,11 @@ def environment(stolon_server: RunningStolonServer) -> dev.Environment:
     """
     rhizome_client = RhizomeClient(data_in_logs=False)
     stolon_client = StolonClient(home=stolon_server.home, data_in_logs=False)
-    return dev.Environment(rhizome_client=rhizome_client, stolon_client=stolon_client)
+    return dev.Dev(rhizome_client=rhizome_client, stolon_client=stolon_client)
 
 
 @pytest.fixture
-def revenue_share_group(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+def revenue_share_group(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Create and cleanup a revenue share group for testing."""
     # Create revenue share group with reseller prefix
     group_name = f"{RESELLER_PREFIX}_Test_{uuid_module.uuid4().hex[:4]}"
@@ -128,7 +128,7 @@ def revenue_share_group(environment: dev.Environment) -> Generator[dict[str, Any
 
 
 @pytest.fixture(scope="module")
-def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+def meta_reseller(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a meta.reseller for testing.
 
     This must be created FIRST before any billing_bookkeeper entities.
@@ -141,13 +141,10 @@ def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], Non
     """
     # Check if a meta reseller with our prefix name already exists
     # We need to use rhizome to query the meta database
-    from rhizome.client import RhizomeClient
     from rhizome.environments.dev.meta import DevMeta
     from rhizome.models.meta.reseller import Reseller as ResellerModel
 
-    # Create a new rhizome client for meta database access
-    rhizome_client = RhizomeClient(data_in_logs=False)
-    meta_db = DevMeta(rhizome_client)
+    meta_db = DevMeta(environment._rhizome_client)
     Reseller = meta_db.get_versioned(ResellerModel)
 
     # Query for any reseller with our prefix name
@@ -187,16 +184,12 @@ def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], Non
         raise Exception("Could not find Demo reseller to use as parent")
 
     # Create meta.reseller using the API
-    # Use Demo's plan group if it has one, otherwise use a known good one
-    plan_group_id = demo_reseller.plan_group_id if demo_reseller.plan_group_id else "B1DTBWV564MNE"
-    if isinstance(plan_group_id, int):
-        plan_group_id = str(plan_group_id)
-
     created_reseller = environment.api.resellers.create_reseller(
         name=reseller_name,
         owner_email=f"test-{uuid_module.uuid4().hex[:8]}@clover.com",
         parent_reseller_id=demo_reseller.uuid,
-        merchant_plan_group_id=plan_group_id,
+        # Use Demo's plan group if it has one, otherwise use a known good one
+        merchant_plan_group_id=demo_reseller.plan_group_id if demo_reseller.plan_group_id else "B1DTBWV564MNE",
         support_email="test@clover.com",
         support_phone="555-0100",
     )
@@ -220,9 +213,7 @@ def meta_reseller(environment: dev.Environment) -> Generator[dict[str, Any], Non
 
 
 @pytest.fixture(scope="module")
-def billing_entity(
-    meta_reseller: dict[str, Any], environment: dev.Environment
-) -> Generator[dict[str, Any], None, None]:
+def billing_entity(meta_reseller: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing entity for testing.
 
     This links to the meta.reseller via entity_uuid = reseller_uuid.
@@ -292,9 +283,7 @@ def billing_entity(
 
 
 @pytest.fixture(scope="module")
-def alliance_code(
-    billing_entity: dict[str, Any], environment: dev.Environment
-) -> Generator[dict[str, Any], None, None]:
+def alliance_code(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create an alliance code for testing.
 
     Checks if the billing entity already has an alliance code.
@@ -378,9 +367,7 @@ def alliance_code(
 
 
 @pytest.fixture(scope="module")
-def billing_schedule(
-    billing_entity: dict[str, Any], environment: dev.Environment
-) -> Generator[dict[str, Any], None, None]:
+def billing_schedule(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a billing schedule for testing.
 
     Checks if the billing entity already has a billing schedule.
@@ -436,7 +423,7 @@ def billing_schedule(
 
 
 @pytest.fixture(scope="module")
-def fee_rate(billing_entity: dict[str, Any], environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+def fee_rate(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a fee rate for testing.
 
     Checks if the billing entity already has a fee rate.
@@ -493,7 +480,7 @@ def fee_rate(billing_entity: dict[str, Any], environment: dev.Environment) -> Ge
 
 @pytest.fixture(scope="module")
 def processing_group_dates(
-    billing_entity: dict[str, Any], environment: dev.Environment
+    billing_entity: dict[str, Any], environment: dev.Dev
 ) -> Generator[dict[str, Any], None, None]:
     """Get or create processing group dates for testing.
 
@@ -548,9 +535,7 @@ def processing_group_dates(
 
 
 @pytest.fixture(scope="module")
-def billing_hierarchy(
-    billing_entity: dict[str, Any], environment: dev.Environment
-) -> Generator[dict[str, Any], None, None]:
+def billing_hierarchy(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create billing hierarchy entries for testing.
 
     Creates two hierarchy entries:
@@ -678,9 +663,7 @@ def billing_hierarchy(
 
 
 @pytest.fixture(scope="module")
-def partner_config(
-    billing_entity: dict[str, Any], environment: dev.Environment
-) -> Generator[dict[str, Any], None, None]:
+def partner_config(billing_entity: dict[str, Any], environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a partner config for testing.
 
     Checks if the billing entity already has a partner config for MERCHANT_SCHEDULE.
@@ -740,7 +723,7 @@ def partner_config(
 
 
 @pytest.fixture(scope="module")
-def plan_action_fee_code(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+def plan_action_fee_code(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a plan action fee code for testing.
 
     Plan action fee codes are GLOBAL resources (not tied to billing entity).
@@ -804,7 +787,7 @@ def plan_action_fee_code(environment: dev.Environment) -> Generator[dict[str, An
 
 
 @pytest.fixture(scope="module")
-def cellular_action_fee_code(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+def cellular_action_fee_code(environment: dev.Dev) -> Generator[dict[str, Any], None, None]:
     """Get or create a cellular action fee code for testing.
 
     Cellular action fee codes are GLOBAL resources (not tied to billing entity).
@@ -962,21 +945,23 @@ def test_create_complete_reseller(
     print("\n" + "=" * 80)
     print("✅ COMPLETE RESELLER SETUP VALIDATED")
     print("=" * 80)
-    print("\n📋 Meta Reseller:")
+    print(f"\n📋 Meta Reseller:")
     print(f"   Name: {meta_reseller['name']}")
     print(f"   UUID: {reseller_uuid}")
     print(f"   Was Reused: {meta_reseller.get('was_reused', False)}")
-    print("\n💰 Billing Entity:")
+    print(f"\n💰 Billing Entity:")
     print(f"   Billing Entity UUID: {billing_entity_uuid}")
     print(f"   Entity UUID (links to reseller): {billing_entity['entity_uuid']}")
     print(f"   Was Reused: {billing_entity.get('was_reused', False)}")
-    print("\n🔗 Link Verified:")
-    print("   meta.reseller.uuid == billing_entity.entity_uuid: ✓")
-    print("\n📇 Billing Configuration:")
+    print(f"\n🔗 Link Verified:")
+    print(f"   meta.reseller.uuid == billing_entity.entity_uuid: ✓")
+    print(f"\n📇 Billing Configuration:")
     print(f"   Alliance code: {alliance_code['alliance_code']}")
-    print("   Billing schedule: Created")
-    print("   Fee rates: Created")
-    print("   Processing group dates: Created")
-    print("   Billing hierarchies: 2 types")
-    print("   Partner config: Created")
+    print(f"   Billing schedule: Created")
+    print(f"   Fee rates: Created")
+    print(f"   Processing group dates: Created")
+    print(
+        f"   Billing hierarchies: {len([billing_hierarchy['merchant_schedule_uuid'], billing_hierarchy['merchant_fee_rate_uuid']])} types"
+    )
+    print(f"   Partner config: Created")
     print("\n🎉 Reseller is ready for merchant onboarding!")

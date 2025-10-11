@@ -304,6 +304,81 @@ models: dict[BillingTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any
 class NorthAmericaBilling(Environment):
     """North America production billing environment using direct database connection."""
 
+    # Type aliases for environment-specific model versions
+    AppSuppression: type[AppSuppressionV1] = AppSuppressionV1
+    AutoDebitNoAuthConfig: type[AutoDebitNoAuthConfigV1] = AutoDebitNoAuthConfigV1
+    BankRouting: type[BankRoutingV1] = BankRoutingV1
+    BiContext: type[BiContextV1] = BiContextV1
+    BiieConfig: type[BiieConfigV1] = BiieConfigV1
+    BiieFileDef: type[BiieFileDefV1] = BiieFileDefV1
+    BiieFileInstance: type[BiieFileInstanceV1] = BiieFileInstanceV1
+    BiieFileInstanceRequest: type[BiieFileInstanceRequestV1] = BiieFileInstanceRequestV1
+    BiieFileStagingData: type[BiieFileStagingDataV1] = BiieFileStagingDataV1
+    BillingBusinessInitiative: type[BillingBusinessInitiativeV1] = BillingBusinessInitiativeV1
+    BillingRequest: type[BillingRequestV1] = BillingRequestV1
+    BillingRequestState: type[BillingRequestStateV1] = BillingRequestStateV1
+    ChargeCaptureError: type[ChargeCaptureErrorV1] = ChargeCaptureErrorV1
+    ChargeInvoiceNumber: type[ChargeInvoiceNumberV1] = ChargeInvoiceNumberV1
+    ChargePostDate: type[ChargePostDateV1] = ChargePostDateV1
+    ChargeStateAttempt: type[ChargeStateAttemptV1] = ChargeStateAttemptV1
+    CombinedCharge: type[CombinedChargeV1] = CombinedChargeV1
+    CombinedChargeTree: type[CombinedChargeTreeV1] = CombinedChargeTreeV1
+    CombinedDisbursement: type[CombinedDisbursementV1] = CombinedDisbursementV1
+    CombinedDisbursementTree: type[CombinedDisbursementTreeV1] = CombinedDisbursementTreeV1
+    CorollaryData: type[CorollaryDataV1] = CorollaryDataV1
+    CountrySuppression: type[CountrySuppressionV1] = CountrySuppressionV1
+    DisbursementInvoiceNumber: type[DisbursementInvoiceNumberV1] = DisbursementInvoiceNumberV1
+    EmailAudit: type[EmailAuditV1] = EmailAuditV1
+    EmailDeveloperCharge: type[EmailDeveloperChargeV1] = EmailDeveloperChargeV1
+    Explanation: type[ExplanationV1] = ExplanationV1
+    ExplanationData: type[ExplanationDataV1] = ExplanationDataV1
+    ExportTracker: type[ExportTrackerV1] = ExportTrackerV1
+    Fee: type[FeeV1] = FeeV1
+    FeeException: type[FeeExceptionV1] = FeeExceptionV1
+    FlightCheck: type[FlightCheckV1] = FlightCheckV1
+    FlightCheckArchive: type[FlightCheckArchiveV1] = FlightCheckArchiveV1
+    FlightCheckExecution: type[FlightCheckExecutionV1] = FlightCheckExecutionV1
+    InvoiceCharge: type[InvoiceChargeV1] = InvoiceChargeV1
+    JobLock: type[JobLockV1] = JobLockV1
+    MerchantDeviceInfo: type[MerchantDeviceInfoV1] = MerchantDeviceInfoV1
+    MerchantQueueSensitive: type[MerchantQueueSensitiveV1] = MerchantQueueSensitiveV1
+    MerchantSubscriptionAction: type[MerchantSubscriptionActionV1] = MerchantSubscriptionActionV1
+    MerchantSuppression: type[MerchantSuppressionV1] = MerchantSuppressionV1
+    MerchantSuppressionByApp: type[MerchantSuppressionByAppV1] = MerchantSuppressionByAppV1
+    MerchantTermsAcceptance: type[MerchantTermsAcceptanceV1] = MerchantTermsAcceptanceV1
+    Offboarding: type[OffboardingV1] = OffboardingV1
+    PlanAuthorizationSettings: type[PlanAuthorizationSettingsV1] = PlanAuthorizationSettingsV1
+    PlanMeta: type[PlanMetaV1] = PlanMetaV1
+    PlanMetaHistory: type[PlanMetaHistoryV1] = PlanMetaHistoryV1
+    ProducerFailure: type[ProducerFailureV1] = ProducerFailureV1
+    Promo: type[PromoV1] = PromoV1
+    PromoControl: type[PromoControlV1] = PromoControlV1
+    RemitMerchantDetails: type[RemitMerchantDetailsV1] = RemitMerchantDetailsV1
+    ResellerAppRevShare: type[ResellerAppRevShareV1] = ResellerAppRevShareV1
+    ResellerInvoiceAlliance: type[ResellerInvoiceAllianceV1] = ResellerInvoiceAllianceV1
+    ResellerPlanFee: type[ResellerPlanFeeV1] = ResellerPlanFeeV1
+    ResellerPlanRevShare: type[ResellerPlanRevShareV1] = ResellerPlanRevShareV1
+    ResellerSuppression: type[ResellerSuppressionV1] = ResellerSuppressionV1
+    ResellerUsageJobConfig: type[ResellerUsageJobConfigV1] = ResellerUsageJobConfigV1
+    RevShare: type[RevShareV1] = RevShareV1
+    SeasonalResellerInfo: type[SeasonalResellerInfoV1] = SeasonalResellerInfoV1
+    ServerConfig: type[ServerConfigV1] = ServerConfigV1
+    StageAppMeteredEvent: type[StageAppMeteredEventV1] = StageAppMeteredEventV1
+    StageCharge: type[StageChargeV1] = StageChargeV1
+    StageChargeCaptureError: type[StageChargeCaptureErrorV1] = StageChargeCaptureErrorV1
+    StageChargeHistory: type[StageChargeHistoryV1] = StageChargeHistoryV1
+    StageChargeStateAttempt: type[StageChargeStateAttemptV1] = StageChargeStateAttemptV1
+    StageChargeUpdate: type[StageChargeUpdateV1] = StageChargeUpdateV1
+    StageEmail: type[StageEmailV1] = StageEmailV1
+    StageEmailMerchantCharge: type[StageEmailMerchantChargeV1] = StageEmailMerchantChargeV1
+    StageInfoleaseChargeAttempt: type[StageInfoleaseChargeAttemptV1] = StageInfoleaseChargeAttemptV1
+    StageMerchantAppCharge: type[StageMerchantAppChargeV1] = StageMerchantAppChargeV1
+    StageMerchantPlanCharge: type[StageMerchantPlanChargeV1] = StageMerchantPlanChargeV1
+    StageVendorDisbursementError: type[StageVendorDisbursementErrorV1] = StageVendorDisbursementErrorV1
+    SuppressionMetrics: type[SuppressionMetricsV1] = SuppressionMetricsV1
+    VatVendorDisbursement: type[VatVendorDisbursementV1] = VatVendorDisbursementV1
+    VendorDisbursementError: type[VendorDisbursementErrorV1] = VendorDisbursementErrorV1
+
     def tables(self) -> list[StrEnum]:
         return list(BillingTable)
 

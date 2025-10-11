@@ -59,7 +59,7 @@ if TYPE_CHECKING:
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
 
 
-class Environment:
+class Dev:
     """
     Unified dev environment providing both database and HTTP API access.
 
@@ -68,7 +68,7 @@ class Environment:
         from rhizome.client import RhizomeClient
         from stolon.client import StolonClient
 
-        environment = dev.Environment(
+        environment = dev.Dev(
             rhizome_client=RhizomeClient(),
             stolon_client=StolonClient()
         )
@@ -705,7 +705,7 @@ class DevResellersAPI:
         support_phone: str = "",
         support_email: str = "",
         locale: str = "en-US",
-        **kwargs: str | dict[str, str] | bool | None,
+        **kwargs: Any,
     ) -> dict[str, Any]:
         """Create a reseller in meta.reseller table.
 

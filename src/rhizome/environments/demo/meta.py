@@ -129,6 +129,36 @@ models: dict[MetaTable, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] 
 class DemoMeta(Environment):
     """Demo meta environment using direct database connection."""
 
+    # Type aliases for environment-specific model versions
+    DeviceType: type[DeviceTypeV1] = DeviceTypeV1
+    ServerFeature: type[ServerFeatureV1] = ServerFeatureV1
+    TerminalConfigMerchantProps: type[TerminalConfigMerchantPropsV1] = TerminalConfigMerchantPropsV1
+    MerchantAddress: type[MerchantAddressV1] = MerchantAddressV1
+    MerchantGateway: type[MerchantGatewayV1] = MerchantGatewayV1
+    PaymentProcessor: type[PaymentProcessorV1] = PaymentProcessorV1
+    ProcessorKey: type[ProcessorKeyV1] = ProcessorKeyV1
+    MerchantPlan: type[MerchantPlanV1] = MerchantPlanV1
+    MerchantPlanGroup: type[MerchantPlanGroupV1] = MerchantPlanGroupV1
+    MerchantPlanMerchantPlanGroup: type[MerchantPlanMerchantPlanGroupV1] = MerchantPlanMerchantPlanGroupV1
+    MerchantRole: type[MerchantRoleV1] = MerchantRoleV1
+    AppAppBundle: type[AppAppBundleV1] = AppAppBundleV1
+    AppBundle: type[AppBundleV1] = AppBundleV1
+    AppMetered: type[AppMeteredV1] = AppMeteredV1
+    AppMeteredCountry: type[AppMeteredCountryV1] = AppMeteredCountryV1
+    AppMeteredEvent: type[AppMeteredEventV1] = AppMeteredEventV1
+    AppPermission: type[AppPermissionV1] = AppPermissionV1
+    AppSubscription: type[AppSubscriptionV1] = AppSubscriptionV1
+    AppSubscriptionCountry: type[AppSubscriptionCountryV1] = AppSubscriptionCountryV1
+    DeveloperApp: type[DeveloperAppV1] = DeveloperAppV1
+    DeviceEvents: type[DeviceEventsV1] = DeviceEventsV1
+    DeviceProvision: type[DeviceProvisionV1] = DeviceProvisionV1
+    MerchantApp: type[MerchantAppV1] = MerchantAppV1
+    MerchantAppSubscriptionHistory: type[MerchantAppSubscriptionHistoryV1] = MerchantAppSubscriptionHistoryV1
+    MerchantBoarding: type[MerchantBoardingV1] = MerchantBoardingV1
+    MerchantCreationDetails: type[MerchantCreationDetailsV1] = MerchantCreationDetailsV1
+    MerchantMerchantPlanHistory: type[MerchantMerchantPlanHistoryV1] = MerchantMerchantPlanHistoryV1
+    ResellerPlanTrial: type[ResellerPlanTrialV1] = ResellerPlanTrialV1
+
     def tables(self) -> list[StrEnum]:
         return list(MetaTable)
 

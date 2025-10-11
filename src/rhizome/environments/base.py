@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 TFirst = TypeVar("TFirst", bound="RhizomeModel")
 TAll = TypeVar("TAll", bound="RhizomeModel")
 TOne = TypeVar("TOne", bound="RhizomeModel")
+TModel = TypeVar("TModel", bound="RhizomeModel")
 
 
 class SecretManager(StrEnum):
@@ -109,44 +110,107 @@ class Environment(ABC):
         # Initialize table situation
         self.table_situation = {table: self.situate_table(table) for table in self.tables()}
 
-    def get_model(self, table_name: StrEnum) -> type[RhizomeModel]:
+    def get_versioned(self, model_class: type[TModel]) -> type[TModel]:
         """
-        Get the appropriate model class for a given table in this environment.
+        Get the appropriate versioned model class for this environment.
 
-        This method returns the correct versioned model (V1, V2, etc.) based on
-        what this specific environment is configured to use, eliminating the need
-        for users to know which version to import.
+        This method takes a base model class and returns the correct versioned model (V1, V2, etc.) based on what
+        `rhizome sync schema` has found for this specific environment. This allows writing version-agnostic code
+        that works across environments with different schema versions.
 
         Args:
-            table_name: The table enum value (e.g., BillingBookkeeperTable.fee_summary)
+            model_class: The base model class (e.g., BillingEntityModel, MerchantEvolutionModel)
 
         Returns:
-            The model class appropriate for this environment (e.g., FeeSummaryV1 or FeeSummaryV2)
+            The versioned model class appropriate for this environment.
+
+            At runtime, this will be a specific version (e.g., BillingEntityV1, MerchantEvolutionV2). The type system
+            treats it as the base class though, so attempts to reference version-specific columns will fail type
+            checking. If version-specific usage is required, see the examples below.
 
         Raises:
-            KeyError: If the table is not configured for this environment
-            ValueError: If the table's model class is None (not yet implemented)
+            TypeError: If no matching model is found for the given base class
 
-        Example:
+        Usage Pattern 1 - Totally version-agnostic (recommended for portable code):
+            Use get_versioned() with base classes. Only access fields guaranteed to exist in all versions.
+
+            >>> from rhizome.models.billing_bookkeeper.billing_entity import BillingEntity as BillingEntityModel
+            >>> from sqlmodel import select
+            >>>
             >>> db = DevBillingBookkeeper(client)
-            >>> FeeSummary = db.get_model(BillingBookkeeperTable.fee_summary)
-            >>> # FeeSummary is now the correct version for DevBillingBookkeeper
+            >>> BillingEntity = db.get_versioned(BillingEntityModel)
+            >>>
+            >>> # Write code using only fields from the base class - works in any environment
+            >>> entities = db.select_all(
+            ...     select(BillingEntity).where(BillingEntity.entity_type == "RESELLER")
+            ... )
+            >>> for entity in entities:
+            ...     print(entity.uuid, entity.name)  # Base fields work everywhere
+
+        Usage Pattern 2 - Version-agnostic with runtime edge cases:
+            Use get_versioned() with base classes, but handle specific versions when needed via match/case.
+
+            >>> from rhizome.models.billing_event.merchant_evolution import MerchantEvolution as MerchantEvolutionModel
+            >>> from rhizome.models.billing_event.merchant_evolution_v1 import MerchantEvolutionV1
+            >>> from rhizome.models.billing_event.merchant_evolution_v2 import MerchantEvolutionV2
+            >>>
+            >>> db = DevBillingEvent(client)
+            >>> MerchantEvolution = db.get_versioned(MerchantEvolutionModel)
+            >>>
+            >>> merchant = db.select_first(select(MerchantEvolution).where(...))
+            >>> match merchant:
+            ...     case MerchantEvolutionV2():
+            ...         # Type checker knows this is V2 with billable_merchant_type field
+            ...         print(f"Billable type: {merchant.billable_merchant_type}")
+            ...     case MerchantEvolutionV1():
+            ...         # Type checker knows this is V1 without that field
+            ...         print("V1 merchant - no billable type field")
+            ...     case _:
+            ...         raise TypeError(f"Unknown merchant evolution version: {type(merchant)}")
+
+        Usage Pattern 3 - Totally version-explicit (not portable):
+            Import and use versioned classes directly. Ties code to specific schema version.
+
+            >>> from rhizome.models.billing_event.merchant_evolution_v2 import MerchantEvolutionV2
+            >>> from sqlmodel import select
+            >>>
+            >>> db = DevBillingEvent(client)
+            >>> merchants = db.select_all(select(MerchantEvolutionV2).where(...))
+            >>> for merchant in merchants:
+            ...     print(merchant.billable_merchant_type)  # V2-specific field
+
+            This approach fails in environments using different versions (e.g., production uses V1).
+            Only use when you know the target environment and need version-specific fields throughout.
+
+        Usage Pattern 4 - Environment-specific aliases:
+            Use type aliases on environment classes for environment-specific but version-agnostic code.
+            This provides compile-time type safety for the specific version an environment uses.
+
+            >>> from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+            >>> from sqlmodel import select
+            >>>
+            >>> # DevBillingBookkeeper.BillingEntity is a type alias to BillingEntityV1
+            >>> db = DevBillingBookkeeper(client)
+            >>> entities = db.select_all(
+            ...     select(DevBillingBookkeeper.BillingEntity)
+            ...     .where(DevBillingBookkeeper.BillingEntity.entity_type == "RESELLER")
+            ... )
+            >>> for entity in entities:
+            ...     print(entity.uuid, entity.name)  # Type checker knows V1 fields
+
+            This pattern is ideal for environment-specific code (scripts, tests) that needs
+            type-checked access to version-specific fields while remaining portable within
+            that environment.
         """
-        if table_name not in self.table_situation:
-            raise KeyError(
-                f"Table {table_name} is not configured for environment {self.name}. "
-                f"Available tables: {', '.join(str(t) for t in self.table_situation)}"
-            )
+        # Search through table_situation for a model that is a subclass of the requested base class
+        for env_model_class, _ in self.table_situation.values():
+            if env_model_class is not None and issubclass(env_model_class, model_class):
+                return env_model_class
 
-        model_class, _ = self.table_situation[table_name]
-
-        if model_class is None:
-            raise ValueError(
-                f"Model for table {table_name} is not yet implemented in environment {self.name}. "
-                f"Please check if the model class has been created and registered."
-            )
-
-        return model_class
+        raise TypeError(
+            f"No model found for {model_class.__name__} in environment {self.name}. "
+            f"Available models: {', '.join(m.__name__ for m, _ in self.table_situation.values() if m is not None)}"
+        )
 
     def setup_port_forwarding(self, config: PortForwardConfig) -> None:
         """Set up port forwarding using the provided configuration."""

@@ -29,8 +29,9 @@ Rhizome uses a base class + versioned class inheritance pattern with environment
 
 ### Environment Version Mapping
 - **Purpose**: Track which table version each environment currently uses
-- **Implementation**: Enums in environment modules
+- **Implementation**: `table_situation` dictionary in Environment classes, populated by `situate_table()` method
 - **Location**: `src/rhizome/environments/{env}/{database}.py`
+- **Access Method**: Use `get_versioned()` method to retrieve the appropriate versioned model for an environment
 
 ## Implementation Details
 
@@ -105,69 +106,147 @@ class FeeSummaryV2(FeeSummary, table=True):
 ### Environment Version Tracking
 ```python
 # src/rhizome/environments/dev/billing_bookkeeper.py
-class DevBillingBookkeeperModel(Enum):
-    """Table version mapping for DevBillingBookkeeper environment."""
-    FeeSummary = FeeSummaryV2  # Dev has the new schema
+class DevBillingBookkeeper(Environment):
+    """Dev environment for billing_bookkeeper database."""
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]:
+        """Map table names to their versioned models and emplacements."""
+        match table_name:
+            case BillingBookkeeperTable.fee_summary:
+                return (FeeSummaryV2, None)  # Dev has the new schema
+            # ... other tables
+        return (None, None)
 
 # src/rhizome/environments/na_prod/billing_bookkeeper.py
-class NorthAmericaBillingBookkeeperModel(Enum):
-    """Table version mapping for NorthAmericaBillingBookkeeper environment."""
-    FeeSummary = FeeSummaryV1  # Prod still on old schema
+class NorthAmericaBillingBookkeeper(Environment):
+    """Production environment for billing_bookkeeper database."""
+
+    def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]:
+        """Map table names to their versioned models and emplacements."""
+        match table_name:
+            case BillingBookkeeperTable.fee_summary:
+                return (FeeSummaryV1, None)  # Prod still on old schema
+            # ... other tables
+        return (None, None)
 ```
 
 ## Usage Patterns
 
-### Version-Agnostic Code (Recommended)
-Use base classes when your code only needs fields guaranteed to exist across all environments:
+Rhizome provides the `get_versioned()` method on Environment classes to retrieve the appropriate versioned model for a given base class. This method enables version-agnostic programming while maintaining type safety.
+
+### Pattern 1: Totally Version-Agnostic (Recommended for Portable Code)
+
+Use `get_versioned()` with base classes. Only access fields guaranteed to exist in all versions. This pattern makes your code work across any environment regardless of schema version.
 
 ```python
-from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
+from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary as FeeSummaryModel
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from sqlmodel import select
 
-# This works regardless of environment schema version
-def get_fee_amount(fee: FeeSummary) -> Decimal:
-    return fee.total_fee_amount  # Field exists in all versions
+# Get the versioned model for this environment
+db = DevBillingBookkeeper(client)
+FeeSummary = db.get_versioned(FeeSummaryModel)
 
-# Query using base class - works with any version
-statement = select(FeeSummary).where(FeeSummary.uuid == target_uuid)
+# Write code using only fields from the base class - works in any environment
+fees = db.select_all(
+    select(FeeSummary).where(FeeSummary.billing_entity_uuid == target_uuid)
+)
+for fee in fees:
+    print(fee.uuid, fee.total_fee_amount)  # Base fields work everywhere
 ```
 
-### Version-Specific Code (When Necessary)
-Use versioned classes when you need fields that don't exist in all versions:
+**When to use**: Default choice for most code. Use when your logic only needs fields present in all schema versions.
+
+### Pattern 2: Version-Agnostic with Runtime Edge Cases
+
+Use `get_versioned()` with base classes, but handle specific versions when needed via `match/case`. This pattern is version-agnostic 90% of the time but can access version-specific fields in the 10% of cases that need them.
+
+```python
+from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary as FeeSummaryModel
+from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1
+from rhizome.models.billing_bookkeeper.fee_summary_v2 import FeeSummaryV2
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from sqlmodel import select
+
+# Get the versioned model for this environment
+db = DevBillingBookkeeper(client)
+FeeSummary = db.get_versioned(FeeSummaryModel)
+
+# Query using base class
+fee = db.select_first(select(FeeSummary).where(FeeSummary.uuid == target_uuid))
+
+# Handle version-specific fields at runtime
+match fee:
+    case FeeSummaryV2():
+        # Type checker knows this is V2 with processing_status field
+        print(f"Processing status: {fee.processing_status}")
+    case FeeSummaryV1():
+        # Type checker knows this is V1 without that field
+        print("V1 fee - no processing status field")
+    case _:
+        raise TypeError(f"Unknown fee summary version: {type(fee)}")
+```
+
+**When to use**: When you need version-specific fields occasionally but want most of your code to remain version-agnostic.
+
+### Pattern 3: Totally Version-Explicit (Not Portable)
+
+Import and use versioned classes directly. This ties your code to a specific schema version and will fail in environments using different versions.
 
 ```python
 from rhizome.models.billing_bookkeeper.fee_summary_v2 import FeeSummaryV2
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from sqlmodel import select
 
-# This only works in environments with V2 schema
-def get_processing_status(fee: FeeSummaryV2) -> str:
-    return fee.processing_status  # Field only exists in V2
+db = DevBillingBookkeeper(client)
 
-# Query using versioned class - only works with V2+ environments
-statement = select(FeeSummaryV2).where(FeeSummaryV2.processing_status == "PENDING")
+# Query directly with V2 class
+fees = db.select_all(
+    select(FeeSummaryV2).where(FeeSummaryV2.processing_status == "PENDING")
+)
+for fee in fees:
+    print(fee.processing_status)  # V2-specific field
 ```
 
-### Environment-Aware Code
-Access the specific version for an environment through version enums:
+**When to use**: Only when you know the target environment and need version-specific fields throughout your logic. This approach fails in environments using different versions (e.g., if production uses V1).
+
+### Pattern 4: Environment-Specific Aliases
+
+Use type aliases on environment classes for environment-specific but version-agnostic code. This provides compile-time type safety for the specific version an environment uses.
 
 ```python
-from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeperModel
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from sqlmodel import select
 
-# Get the specific version used in dev environment
-DevFeeSummary = DevBillingBookkeeperModel.FeeSummary.value
-statement = select(DevFeeSummary).where(DevFeeSummary.id == 123)
+# DevBillingBookkeeper.FeeSummary is a type alias to FeeSummaryV1
+db = DevBillingBookkeeper(client)
+fees = db.select_all(
+    select(DevBillingBookkeeper.FeeSummary).where(
+        DevBillingBookkeeper.FeeSummary.billing_entity_uuid == target_uuid
+    )
+)
+for fee in fees:
+    print(fee.uuid, fee.total_fee_amount)  # Type checker knows V1 fields
 ```
+
+**When to use**: When you need type checking for environment-specific code (scripts, tests) that you know will only run in particular environments. This provides better IDE support and type safety than Pattern 1, while being more portable than Pattern 3.
 
 ## Testing Strategy
 
 ### Dual Test Coverage
-Tests use both approaches to ensure compatibility:
+Tests use multiple approaches to ensure compatibility:
 
 ```python
-# Version-agnostic test - uses base class
-def test_fee_calculation_all_environments():
-    from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary
+# Pattern 1: Version-agnostic test - uses get_versioned() with base class
+def test_fee_calculation_all_environments(client):
+    from rhizome.models.billing_bookkeeper.fee_summary import FeeSummary as FeeSummaryModel
+    from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+
+    db = DevBillingBookkeeper(client)
+    FeeSummary = db.get_versioned(FeeSummaryModel)
     # Test logic using only common fields
 
-# Version-specific test - uses V2 class
+# Pattern 3: Version-specific test - uses V2 class directly
 def test_processing_status_tracking():
     from rhizome.models.billing_bookkeeper.fee_summary_v2 import FeeSummaryV2
     # Test logic using V2-specific fields
@@ -204,15 +283,23 @@ ENVIRONMENT_DATABASE_COMBINATIONS = [
        processing_status: str | None = Field(default=None, max_length=20)
    ```
 
-3. **Update environment version mappings** as schema deploys:
+3. **Update environment `situate_table()` mappings** as schema deploys:
    ```python
    # First: Dev environment gets V2
-   class DevBillingBookkeeperModel(Enum):
-       FeeSummary = FeeSummaryV2
+   class DevBillingBookkeeper(Environment):
+       def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]:
+           match table_name:
+               case BillingBookkeeperTable.fee_summary:
+                   return (FeeSummaryV2, None)  # Updated to V2
+               # ... other tables
 
    # Later: Production environments get V2
-   class NorthAmericaBillingBookkeeperModel(Enum):
-       FeeSummary = FeeSummaryV2
+   class NorthAmericaBillingBookkeeper(Environment):
+       def situate_table(self, table_name: StrEnum) -> tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]:
+           match table_name:
+               case BillingBookkeeperTable.fee_summary:
+                   return (FeeSummaryV2, None)  # Updated to V2
+               # ... other tables
    ```
 
 4. **Add exports to __init__.py**:
@@ -263,9 +350,30 @@ def v2_function(fee: FeeSummaryV2) -> str:
 
 ## Best Practices
 
-1. **Prefer base classes** for new code unless you specifically need version-specific fields
-2. **Use version enums** when you need to query environment-specific table versions
-3. **Test both patterns** - version-agnostic tests for common logic, version-specific tests for new features
-4. **Document schema changes** in version class docstrings
-5. **Update environment mappings** promptly when schemas are deployed
-6. **Keep base classes minimal** - only include fields that will exist in ALL future versions
+### For Framework/Library Code (Primary Use Case)
+
+When writing maintainable, type-checked code that accepts dependency-injection via environment objects:
+
+1. **Prefer Pattern 1** (version-agnostic with `get_versioned()`) for new code unless you specifically need version-specific fields
+2. **Use `get_versioned()` method** to retrieve the environment-appropriate versioned model from base classes
+3. **Use Pattern 2** (match/case) when you occasionally need version-specific fields but want most code version-agnostic
+4. **Reserve Pattern 3** (direct version imports) only for code tied to specific environments
+5. **Test both patterns** - version-agnostic tests for common logic, version-specific tests for new features
+
+### For One-Off Scripts and Ad-Hoc Queries
+
+When writing scripts to answer specific questions about data in a particular environment:
+
+- **Pattern 4 is recommended** for environment-specific scripts and exploratory code
+- Use environment-specific aliases (e.g., `DevBillingBookkeeper.FeeSummary`) for type safety and clarity
+- **Pattern 3 is acceptable** as an alternative for readability in throwaway/exploratory code
+- One-off scripts don't need to be portable across environments
+- Direct version imports (e.g., `from rhizome.models.billing_bookkeeper.fee_summary_v1 import FeeSummaryV1`) can make scripts clearer when you know the target environment
+- These scripts trade cross-environment portability for environment-specific clarity - acceptable for exploratory work but not for library code
+
+### General Guidelines
+
+1. **Document schema changes** in version class docstrings
+2. **Update `situate_table()` mappings** promptly when schemas are deployed to new environments
+3. **Keep base classes minimal** - only include fields that will exist in ALL future versions
+4. **Choose pattern based on code lifecycle** - framework code needs portability, scripts can prioritize readability
