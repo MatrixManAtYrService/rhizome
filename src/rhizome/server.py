@@ -314,8 +314,11 @@ async def log_query(query: SqlQueryLog) -> dict[str, str]:
     # Log metadata via structlog
     logger.info("SQL query", **log_data)
 
-    # Print the statement to stderr with proper newline rendering
-    print(f"  Statement:\n{query.statement}", file=sys.stderr)
+    # Print the statement to stderr with proper newline rendering and indentation
+    import textwrap
+
+    indented_statement = textwrap.indent(query.statement, "    ")
+    print(f"  Statement:\n{indented_statement}", file=sys.stderr)
 
     return {"status": "logged"}
 

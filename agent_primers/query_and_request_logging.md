@@ -297,6 +297,7 @@ WHERE account.email = %(email_1)s
 - **Short timeout**: 1 second timeout on logging requests to avoid blocking database queries
 - **No data logging**: Only metadata (query, row count) is logged, not actual result data
 - **Performance**: Minimal overhead due to fire-and-forget approach
+- **Readable SQL**: Statements are printed to stderr (not structlog) so newlines render properly instead of showing as `\n`
 
 ### Benefits
 
