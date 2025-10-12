@@ -442,6 +442,64 @@ def meta_reseller(
 
 
 @pytest.fixture(scope="module")
+def boarded_merchant(
+    meta_reseller: dict[str, Any], environment: dev.Environment
+) -> Generator[dict[str, Any], None, None]:
+    """Board a merchant to the test reseller.
+
+    This creates a merchant associated with the reseller we created.
+    Merchants are boarded via the IPG (Integrated Partner Gateway) endpoint.
+
+    Scope: module - reuse across all tests in this module.
+    """
+    # Generate unique merchant ID using prefix + random hex
+    merchant_id = f"{RESELLER_PREFIX}_{uuid_module.uuid4().hex[:8].upper()}"
+    dba_name = f"{RESELLER_PREFIX} Test Merchant {uuid_module.uuid4().hex[:4].upper()}"
+    legal_name = f"{RESELLER_PREFIX} Test LLC"
+
+    print("\n=== Boarding Merchant to Reseller ===")
+    print(f"    Reseller: {meta_reseller['name']}")
+    print(f"    Reseller Code: {RESELLER_PREFIX}")
+    print(f"    Merchant ID: {merchant_id}")
+    print(f"    DBA Name: {dba_name}")
+
+    # Get reseller code from meta_reseller fixture
+    # The code is extracted from the reseller name (first word)
+    reseller_code = RESELLER_PREFIX
+
+    # Board the merchant
+    boarding_response = environment.api.resellers.board_merchant(
+        reseller_code=reseller_code,
+        merchant_id=merchant_id,
+        dba_name=dba_name,
+        legal_name=legal_name,
+        email="test@clover.com",
+        country="US",
+        currency="USD",
+        timezone="America/Los_Angeles",
+    )
+
+    merchant_uuid = boarding_response["merchant_uuid"]
+
+    print(f"\n✓ Merchant boarded successfully")
+    print(f"    Merchant UUID: {merchant_uuid}")
+    print(f"    Merchant ID (MID): {merchant_id}")
+
+    yield {
+        "merchant_uuid": merchant_uuid,
+        "merchant_id": merchant_id,
+        "dba_name": dba_name,
+        "legal_name": legal_name,
+        "reseller_code": reseller_code,
+        "reseller_uuid": meta_reseller["reseller_uuid"],
+        "boarding_response": boarding_response,
+    }
+
+    # Cleanup: Merchants cannot be deleted via API
+    print(f"\n⚠️  Note: Merchant {merchant_uuid} cannot be automatically deleted (API does not support DELETE)")
+
+
+@pytest.fixture(scope="module")
 def billing_entity(
     meta_reseller: dict[str, Any], environment: dev.Environment
 ) -> Generator[dict[str, Any], None, None]:
@@ -1103,6 +1161,7 @@ def cellular_action_fee_code(environment: dev.Environment) -> Generator[dict[str
 @pytest.mark.external_infra
 def test_create_complete_reseller(
     meta_reseller: dict[str, Any],
+    boarded_merchant: dict[str, Any],
     billing_entity: dict[str, Any],
     alliance_code: dict[str, Any],
     billing_schedule: dict[str, Any],
@@ -1113,15 +1172,17 @@ def test_create_complete_reseller(
     plan_action_fee_code: dict[str, Any],
     cellular_action_fee_code: dict[str, Any],
 ) -> None:
-    """Test creating a complete reseller with all required components.
+    """Test creating a complete reseller with all required components and boarding a merchant.
 
     This test follows the correct creation order discovered via exploration:
     1. meta.reseller (core reseller entity via /v3/resellers)
-    2. billing_bookkeeper.billing_entity (billing config, links via entity_uuid=reseller.uuid)
-    3. All billing configuration components (link via billing_entity_uuid)
+    2. Merchant boarding (associate a test merchant with the reseller)
+    3. billing_bookkeeper.billing_entity (billing config, links via entity_uuid=reseller.uuid)
+    4. All billing configuration components (link via billing_entity_uuid)
 
     Components tested:
     - Meta reseller (the core reseller record in meta.reseller table)
+    - Boarded merchant (merchant associated with the reseller)
     - Billing entity (billing configuration, entity_uuid = reseller UUID)
     - Alliance code (for invoicing)
     - Billing schedule (monthly billing cycle)
@@ -1139,6 +1200,15 @@ def test_create_complete_reseller(
     reseller_uuid = meta_reseller["reseller_uuid"]
     assert reseller_uuid, "Reseller UUID must exist"
     assert len(reseller_uuid) == 13, "Reseller UUID should be 13 chars"
+
+    # Validate boarded merchant
+    merchant_uuid = boarded_merchant["merchant_uuid"]
+    assert merchant_uuid, "Merchant UUID must exist"
+    assert len(merchant_uuid) == 13, "Merchant UUID should be 13 chars"
+    assert boarded_merchant["reseller_uuid"] == reseller_uuid, "Merchant should be linked to the reseller"
+    assert boarded_merchant["reseller_code"] == RESELLER_PREFIX, f"Merchant should use reseller code {RESELLER_PREFIX}"
+    assert boarded_merchant["merchant_id"], "Merchant ID (MID) must exist"
+    assert RESELLER_PREFIX in boarded_merchant["merchant_id"], f"Merchant ID should contain prefix {RESELLER_PREFIX}"
 
     # Validate billing entity links to meta reseller
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
@@ -1187,13 +1257,21 @@ def test_create_complete_reseller(
     print("\n📋 Meta Reseller:")
     print(f"   Name: {meta_reseller['name']}")
     print(f"   UUID: {reseller_uuid}")
+    print(f"   Code: {RESELLER_PREFIX}")
     print(f"   Was Reused: {meta_reseller.get('was_reused', False)}")
+    print("\n🏪 Boarded Merchant:")
+    print(f"   DBA Name: {boarded_merchant['dba_name']}")
+    print(f"   Legal Name: {boarded_merchant['legal_name']}")
+    print(f"   Merchant UUID: {merchant_uuid}")
+    print(f"   Merchant ID (MID): {boarded_merchant['merchant_id']}")
+    print(f"   Reseller Code: {boarded_merchant['reseller_code']}")
     print("\n💰 Billing Entity:")
     print(f"   Billing Entity UUID: {billing_entity_uuid}")
     print(f"   Entity UUID (links to reseller): {billing_entity['entity_uuid']}")
     print(f"   Was Reused: {billing_entity.get('was_reused', False)}")
-    print("\n🔗 Link Verified:")
+    print("\n🔗 Links Verified:")
     print("   meta.reseller.uuid == billing_entity.entity_uuid: ✓")
+    print("   merchant.reseller_code == meta.reseller.code: ✓")
     print("\n📇 Billing Configuration:")
     print(f"   Alliance code: {alliance_code['alliance_code']}")
     print("   Billing schedule: Created")
@@ -1201,4 +1279,4 @@ def test_create_complete_reseller(
     print("   Processing group dates: Created")
     print("   Billing hierarchies: 2 types")
     print("   Partner config: Created")
-    print("\n🎉 Reseller is ready for merchant onboarding!")
+    print("\n🎉 Reseller is fully configured with a boarded merchant!")

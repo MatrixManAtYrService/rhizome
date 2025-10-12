@@ -869,3 +869,118 @@ class DevResellersAPI(base.Environment):
         """
         endpoint = f"/v3/merchant_plan_groups/{plan_group_id}"
         self.delete(endpoint, timeout=30.0)
+
+    def board_merchant(
+        self,
+        reseller_code: str,
+        merchant_id: str,
+        dba_name: str,
+        legal_name: str,
+        email: str,
+        country: str = "US",
+        currency: str = "USD",
+        timezone: str = "America/Los_Angeles",
+    ) -> dict[str, Any]:
+        """Board a new merchant to a reseller via IPG endpoint.
+
+        Args:
+            reseller_code: Reseller code (e.g., "MFF")
+            merchant_id: Unique merchant ID (MID)
+            dba_name: Doing Business As name
+            legal_name: Legal business name
+            email: Contact email
+            country: Country code (default: "US")
+            currency: Currency code (default: "USD")
+            timezone: Timezone (default: "America/Los_Angeles")
+
+        Returns:
+            Parsed response containing merchant UUID
+
+        Raises:
+            Exception: If boarding fails
+        """
+        # Build XML payload for merchant boarding
+        xml_payload = f"""<?xml version="1.0" encoding="UTF-8"?>
+<CloverBoardingRequest xmlns="com.clover.boarding">
+  <RequestAction>Create</RequestAction>
+  <MerchantDetail>
+    <merchantNumber>{merchant_id}</merchantNumber>
+    <mid>{merchant_id}</mid>
+    <dbaName>{dba_name}</dbaName>
+    <legalName>{legal_name}</legalName>
+    <address>
+      <address1>123 Test Street</address1>
+      <address2>Suite 100</address2>
+      <city>Test City</city>
+      <state>CA</state>
+      <zip>12345</zip>
+      <country>{country}</country>
+    </address>
+    <contactInformation>
+      <contactName>Test Contact</contactName>
+      <phoneNumber>1234567890</phoneNumber>
+      <email>{email}</email>
+    </contactInformation>
+    <reseller>{reseller_code}</reseller>
+    <currency>{currency}</currency>
+    <timeZone>{timezone}</timeZone>
+    <supportPhone>1234567890</supportPhone>
+  </MerchantDetail>
+  <CardTypes>
+    <CardType cardName="VISA"/>
+  </CardTypes>
+  <ShipAddress>
+    <shipAddress>
+      <shipName>Test Shipping Address</shipName>
+      <address1>123 Test Street</address1>
+      <address2>Suite 100</address2>
+      <city>Test City</city>
+      <state>CA</state>
+      <zip>12345</zip>
+    </shipAddress>
+  </ShipAddress>
+</CloverBoardingRequest>"""
+
+        # Make request to boarding endpoint
+        self._ensure_authenticated()
+        assert self._handle is not None
+
+        headers = {
+            "Cookie": f"internalSession={self._handle.token}",
+            "Content-Type": "application/xml",
+            "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
+        }
+
+        full_url = f"{self._handle.base_url}/cos/v1/partner/ipg/create_merchant"
+
+        import xml.etree.ElementTree as ET
+
+        with self._create_httpx_client() as client:
+            response = client.post(
+                full_url,
+                headers=headers,
+                content=xml_payload,
+                timeout=30.0,
+            )
+
+            response.raise_for_status()
+
+            # Parse XML response
+            root = ET.fromstring(response.text)
+
+            # Extract merchant UUID from response
+            # Response format: <CloverBoardingResponse><UUID>...</UUID>...</CloverBoardingResponse>
+            uuid_elem = root.find(".//{com.clover.boarding}UUID")
+            merchant_uuid = uuid_elem.text if uuid_elem is not None else None
+
+            if not merchant_uuid:
+                raise Exception(f"No UUID found in boarding response: {response.text}")
+
+            return {
+                "merchant_uuid": merchant_uuid,
+                "merchant_id": merchant_id,
+                "dba_name": dba_name,
+                "legal_name": legal_name,
+                "reseller_code": reseller_code,
+                "raw_response": response.text,
+            }
