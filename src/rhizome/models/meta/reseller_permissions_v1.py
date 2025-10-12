@@ -22,6 +22,8 @@ class ResellerPermissionsType(str, Enum):
     SUPER = "Super"
     FACTORY_OPS = "FACTORY_OPS"
     SIM_VIEWER = "SIM_VIEWER"
+    # Temporary marker to verify this code is being used
+    TEST_MARKER_NOT_IN_DB = "TEST_MARKER"
 
 
 class ResellerPermissionsV1(RhizomeModel, table=True):

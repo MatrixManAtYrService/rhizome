@@ -15,6 +15,19 @@ class FilterLoggingEndpoints(logging.Filter):
         )
 
 
+class FilterHttpxLoggingEndpoints(logging.Filter):
+    """Filter to exclude httpx logs for health checks and logging endpoints."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Return False to filter out health check and logging endpoint requests."""
+        message = record.getMessage()
+        # Filter out httpx logs for health checks and logging endpoints
+        return not any(
+            endpoint in message
+            for endpoint in ["/health", "/log_query", "/log_query_result", "/log_request", "/log_response"]
+        )
+
+
 def setup_logging() -> None:
     """Set up unified logging through structlog."""
     # Shared processors for both structlog and standard logging
@@ -77,3 +90,5 @@ def setup_logging() -> None:
     httpx_logger.propagate = False
     httpx_logger.addHandler(simple_handler)
     httpx_logger.setLevel(logging.INFO)
+    # Filter out httpx logs for health checks and logging endpoints
+    httpx_logger.addFilter(FilterHttpxLoggingEndpoints())
