@@ -77,15 +77,17 @@ class Environment(ABC):
 
         def log_response_hook(response: httpx.Response) -> None:
             """Log HTTP response to stolon server (fire-and-forget)."""
+            # Extract response body if present (may fail for streaming responses)
+            body_str: str | None = None
             try:
-                # Extract response body if present
-                body_str: str | None = None
                 if response.content:
-                    try:
-                        body_str = response.content.decode("utf-8")
-                    except Exception:
-                        body_str = f"<binary data, {len(response.content)} bytes>"
+                    body_str = response.content.decode("utf-8")
+            except Exception:
+                # Content access failed (streaming response or decode error) - skip body
+                pass
 
+            # Send to stolon server (fire-and-forget with fallback logging)
+            try:
                 httpx.post(
                     f"{self.client.base_url}/log_response",
                     json={
