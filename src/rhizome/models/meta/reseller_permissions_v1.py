@@ -19,7 +19,7 @@ class ResellerPermissionsType(str, Enum):
 
     CS = "CS"
     SALES = "Sales"
-    SUPER = "Super"
+    SUPER = "SUPER"
     FACTORY_OPS = "FACTORY_OPS"
     SIM_VIEWER = "SIM_VIEWER"
 
