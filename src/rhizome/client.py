@@ -454,7 +454,12 @@ class RhizomeClient:
             return result.first()
 
     def execute_write_query(
-        self, query_name: str, environment_name: str, params: dict[str, str | int | float | None]
+        self,
+        query_name: str,
+        environment_name: str,
+        params: dict[str, str | int | float | None],
+        reason: str | None = None,
+        entity_descriptions: dict[str, str] | None = None,
     ) -> dict[str, Any]:
         """
         Execute a pre-defined write query with user approval via the rhizome server.
@@ -469,8 +474,11 @@ class RhizomeClient:
 
         Args:
             query_name: Name of the canned query to execute
-            environment_name: Environment to execute in (e.g., "DevMeta")
+            environment_name: Environment to execute in (e.g., "dev_meta")
             params: Parameters to pass to the query
+            reason: Optional explanation of why this operation is necessary
+            entity_descriptions: Optional dict providing context about entities being modified
+                                (e.g., {"role_id_7477": "Super Administrator role for Clover reseller"})
 
         Returns:
             Dictionary with keys:
@@ -482,19 +490,33 @@ class RhizomeClient:
         Example:
             >>> client.execute_write_query(
             ...     query_name="create_reseller_role",
-            ...     environment_name="DevMeta",
-            ...     params={"reseller_id": 123, "account_id": 456, "permissions_id": 789}
+            ...     environment_name="dev_meta",
+            ...     params={"reseller_id": 123, "account_id": 456, "permissions_id": 789},
+            ...     reason="Grant Super Administrator permissions to MFF test account",
+            ...     entity_descriptions={
+            ...         "reseller_id_123": "Clover reseller",
+            ...         "account_id_456": "mff_user@example.com (MFF test account)",
+            ...         "permissions_id_789": "Super Administrator role"
+            ...     }
             ... )
             {'approved': True, 'executed': True, 'rows_affected': 1, 'error': None}
         """
+        payload: dict[str, Any] = {
+            "query_name": query_name,
+            "environment_name": environment_name,
+            "params": params,
+        }
+
+        if reason is not None:
+            payload["reason"] = reason
+
+        if entity_descriptions is not None:
+            payload["entity_descriptions"] = entity_descriptions
+
         with httpx.Client(timeout=300.0) as client:  # 5 min timeout for user interaction
             response = client.post(
                 f"{self.base_url}/write_query",
-                json={
-                    "query_name": query_name,
-                    "environment_name": environment_name,
-                    "params": params,
-                },
+                json=payload,
             )
             response.raise_for_status()
             return response.json()

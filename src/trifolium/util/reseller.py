@@ -106,7 +106,6 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
     # Create account
     print("\n5. Creating account...")
     print("   ⚠️  This requires user approval in the rhizome server terminal")
-    print(f"   🔍 DEBUG: Sending environment_name='dev_meta' to rhizome server")
     account_result = rhizome_client.execute_write_query(
         query_name="create_account",
         environment_name="dev_meta",
@@ -115,6 +114,11 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
             "name": "MFF User",
             "email": email,
             "claim_code": claim_code,
+        },
+        reason="Create the MFF Reseller Owner account for test reseller creation",
+        entity_descriptions={
+            f"account_uuid_{account_uuid}": "New MFF test account UUID",
+            f"email_{email}": "MFF test account email address",
         },
     )
 
@@ -146,6 +150,12 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
             "reseller_id": clover_reseller_id,
             "account_id": account_id,
             "permissions_id": super_admin_role_id,
+        },
+        reason="Grant Super Administrator permissions to MFF test account for Clover reseller",
+        entity_descriptions={
+            f"reseller_id_{clover_reseller_id}": "Clover reseller (parent reseller for test accounts)",
+            f"account_id_{account_id}": f"MFF test account ({email})",
+            f"permissions_id_{super_admin_role_id}": "Super Administrator role (allows creating resellers)",
         },
     )
 
@@ -179,6 +189,11 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
         params={
             "account_id": account_id,
             "primary_reseller_role_id": reseller_role_id,
+        },
+        reason="Set the MFF account's primary role to enable reseller management capabilities",
+        entity_descriptions={
+            f"account_id_{account_id}": f"MFF test account ({email})",
+            f"role_id_{reseller_role_id}": f"Super Administrator role for Clover reseller (reseller_id={clover_reseller_id})",
         },
     )
 

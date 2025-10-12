@@ -49,6 +49,8 @@ class WriteQueryRequest(BaseModel):
     query_name: str
     environment_name: str  # e.g., "DevMeta"
     params: dict[str, str | int | float | None]
+    reason: str | None = None  # Why this operation is necessary
+    entity_descriptions: dict[str, str] | None = None  # Context about entities (e.g., {"role_id_7477": "Super Admin for Clover"})
 
 
 class WriteQueryResponse(BaseModel):
@@ -241,15 +243,32 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         # Render query for display
         rendered = render_query(request.query_name, request.params)
 
+        # Build the panel content
+        panel_content = (
+            f"[bold cyan]Query:[/bold cyan] {query.name}\n"
+            f"[bold cyan]Description:[/bold cyan] {query.description}\n"
+            f"[bold cyan]Environment:[/bold cyan] {request.environment_name}\n"
+            f"[bold cyan]Database:[/bold cyan] {db_config_rw.database}\n"
+        )
+
+        # Add reason if provided
+        if request.reason:
+            panel_content += f"\n[bold green]Why:[/bold green] {request.reason}\n"
+
+        # Add entity descriptions if provided
+        if request.entity_descriptions:
+            panel_content += "\n[bold magenta]Entities:[/bold magenta]\n"
+            for entity_key, description in request.entity_descriptions.items():
+                panel_content += f"  • [magenta]{entity_key}:[/magenta] {description}\n"
+
+        # Add the SQL query
+        panel_content += f"\n[yellow]{rendered}[/yellow]"
+
         # Show query to user with rich formatting
         console.print()
         console.print(
             Panel.fit(
-                f"[bold cyan]Query:[/bold cyan] {query.name}\n"
-                f"[bold cyan]Description:[/bold cyan] {query.description}\n"
-                f"[bold cyan]Environment:[/bold cyan] {request.environment_name}\n"
-                f"[bold cyan]Database:[/bold cyan] {db_config_rw.database}\n\n"
-                f"[yellow]{rendered}[/yellow]",
+                panel_content,
                 title="[bold red]⚠️  WRITE OPERATION[/bold red]",
                 border_style="red",
             )

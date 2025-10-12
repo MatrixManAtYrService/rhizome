@@ -52,6 +52,34 @@ CANNED_QUERIES: dict[str, CannedQuery] = {
             WHERE id = :account_id
         """,
     ),
+    "reset_account_primary_role": CannedQuery(
+        name="reset_account_primary_role",
+        description="Reset an account's primary_reseller_role_id to NULL",
+        environment="dev1.meta",
+        sql="""
+            UPDATE account
+            SET primary_reseller_role_id = NULL
+            WHERE id = :account_id
+        """,
+    ),
+    "delete_reseller_role": CannedQuery(
+        name="delete_reseller_role",
+        description="Delete a reseller_role entry by id",
+        environment="dev1.meta",
+        sql="""
+            DELETE FROM reseller_role
+            WHERE id = :reseller_role_id
+        """,
+    ),
+    "delete_account": CannedQuery(
+        name="delete_account",
+        description="Delete an account by id",
+        environment="dev1.meta",
+        sql="""
+            DELETE FROM account
+            WHERE id = :account_id
+        """,
+    ),
 }
 
 
