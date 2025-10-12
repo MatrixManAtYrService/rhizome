@@ -741,3 +741,55 @@ class DevResellersAPI(base.Environment):
             raise Exception("No response data returned from reseller creation")
 
         return response  # type: ignore[return-value]
+
+    def create_merchant_plan_group(self, name: str) -> dict[str, Any]:
+        """Create a merchant plan group.
+
+        Args:
+            name: Name of the plan group
+
+        Returns:
+            Created plan group data including ID (UUID)
+
+        Raises:
+            Exception: If creation fails
+        """
+        payload = {"name": name}
+        response = self.post("/v3/merchant_plan_groups", json=payload, timeout=30.0)
+
+        if response is None:
+            raise Exception("No response data returned from merchant plan group creation")
+
+        return response  # type: ignore[return-value]
+
+    def create_merchant_plan(
+        self, merchant_plan_group_id: str, name: str, plan_code: str, plan_type: str | None = None
+    ) -> dict[str, Any]:
+        """Create a merchant plan within a plan group.
+
+        Args:
+            merchant_plan_group_id: ID of the parent plan group
+            name: Name of the plan
+            plan_code: Plan code (e.g., "MFF_TEST")
+            plan_type: Optional plan type (e.g., "PAYMENTS", "REGISTER")
+
+        Returns:
+            Created plan data including UUID and app bundle
+
+        Raises:
+            Exception: If creation fails
+        """
+        payload: dict[str, Any] = {
+            "name": name,
+            "planCode": plan_code,
+        }
+        if plan_type:
+            payload["type"] = plan_type
+
+        endpoint = f"/v3/merchant_plan_groups/{merchant_plan_group_id}/merchant_plans"
+        response = self.post(endpoint, json=payload, timeout=30.0)
+
+        if response is None:
+            raise Exception("No response data returned from merchant plan creation")
+
+        return response  # type: ignore[return-value]

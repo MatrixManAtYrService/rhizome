@@ -171,8 +171,152 @@ def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any]
 
 
 @pytest.fixture(scope="module")
+def merchant_plan_group(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
+    """Get or create a merchant plan group for testing.
+
+    Checks if a test plan group with RESELLER_PREFIX already exists.
+    If found, reuses it. Otherwise, creates a new one.
+
+    Scope: module - reuse across all tests in this module.
+    """
+    from rhizome.client import RhizomeClient
+    from rhizome.environments.dev.meta import DevMeta
+    from rhizome.models.meta.merchant_plan_group import MerchantPlanGroup as MerchantPlanGroupModel
+
+    # Check if a plan group with our prefix name already exists
+    rhizome_client = RhizomeClient(data_in_logs=False)
+    meta_db = DevMeta(rhizome_client)
+    MerchantPlanGroup = meta_db.get_versioned(MerchantPlanGroupModel)
+
+    existing_group = meta_db.select_first(
+        select(MerchantPlanGroup)
+        .where(MerchantPlanGroup.name.like(f"{RESELLER_PREFIX} Test Plan Group%"))  # type: ignore[attr-defined]
+        .where(MerchantPlanGroup.deleted_time.is_(None))  # type: ignore[attr-defined]
+        .order_by(MerchantPlanGroup.id.desc()),  # type: ignore[attr-defined]
+        sanitize=False,
+    )
+
+    if existing_group:
+        print(f"\n♻️  Reusing existing {RESELLER_PREFIX} merchant plan group: {existing_group.name}")
+        print(f"    plan_group_id: {existing_group.id}")
+        print(f"    plan_group_uuid: {existing_group.uuid}")
+
+        yield {
+            "plan_group_id": existing_group.id,
+            "plan_group_uuid": existing_group.uuid,
+            "name": existing_group.name,
+            "was_reused": True,
+        }
+        return
+
+    # No existing plan group found, create a new one
+    print("\n=== Creating New Merchant Plan Group ===")
+
+    group_name = f"{RESELLER_PREFIX} Test Plan Group {uuid_module.uuid4().hex[:4].upper()}"
+
+    created_group = environment.api.resellers.create_merchant_plan_group(name=group_name)
+
+    plan_group_id = created_group.get("id")
+    plan_group_uuid = created_group.get("uuid")
+
+    if not plan_group_id:
+        raise Exception(f"Response did not contain id field. Response: {created_group}")
+
+    print(f"\n✓ Created merchant plan group: {group_name}")
+    print(f"    plan_group_id: {plan_group_id}")
+    print(f"    plan_group_uuid: {plan_group_uuid}")
+
+    yield {
+        "plan_group_id": plan_group_id,
+        "plan_group_uuid": plan_group_uuid,
+        "name": group_name,
+        "was_reused": False,
+    }
+
+    # Cleanup not supported - plan groups cannot be deleted
+    print(f"\n⚠️  Note: Merchant plan group {plan_group_id} cannot be automatically deleted")
+
+
+@pytest.fixture(scope="module")
+def merchant_plan(
+    merchant_plan_group: dict[str, Any], environment: dev.Environment
+) -> Generator[dict[str, Any], None, None]:
+    """Get or create a merchant plan for testing.
+
+    Checks if the plan group already has a plan with RESELLER_PREFIX.
+    If found, reuses it. Otherwise, creates a new one.
+
+    Scope: module - reuse across all tests in this module.
+    """
+    from rhizome.client import RhizomeClient
+    from rhizome.environments.dev.meta import DevMeta
+    from rhizome.models.meta.merchant_plan import MerchantPlan as MerchantPlanModel
+
+    plan_group_id = merchant_plan_group["plan_group_id"]
+
+    # Check if a plan already exists in this group
+    rhizome_client = RhizomeClient(data_in_logs=False)
+    meta_db = DevMeta(rhizome_client)
+    MerchantPlan = meta_db.get_versioned(MerchantPlanModel)
+
+    existing_plan = meta_db.select_first(
+        select(MerchantPlan)
+        .where(MerchantPlan.merchant_plan_group_id == plan_group_id)
+        .where(MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
+        .order_by(MerchantPlan.id.desc()),  # type: ignore[attr-defined]
+        sanitize=False,
+    )
+
+    if existing_plan:
+        print(f"\n♻️  Reusing existing {RESELLER_PREFIX} merchant plan: {existing_plan.name}")
+        print(f"    plan_uuid: {existing_plan.uuid}")
+        print(f"    plan_code: {existing_plan.plan_code}")
+
+        yield {
+            "plan_uuid": existing_plan.uuid,
+            "name": existing_plan.name,
+            "plan_code": existing_plan.plan_code,
+            "plan_group_id": plan_group_id,
+            "was_reused": True,
+        }
+        return
+
+    # No existing plan found, create a new one
+    print("\n=== Creating New Merchant Plan ===")
+
+    plan_name = f"{RESELLER_PREFIX} Test Plan {uuid_module.uuid4().hex[:4].upper()}"
+    plan_code = f"{RESELLER_PREFIX}_TEST"
+
+    # Convert plan_group_id to string if it's an int
+    plan_group_id_str = str(plan_group_id) if isinstance(plan_group_id, int) else plan_group_id
+
+    created_plan = environment.api.resellers.create_merchant_plan(
+        merchant_plan_group_id=plan_group_id_str, name=plan_name, plan_code=plan_code, plan_type="PAYMENTS"
+    )
+
+    plan_uuid = created_plan.get("uuid")
+    if not plan_uuid:
+        raise Exception(f"Response did not contain uuid field. Response: {created_plan}")
+
+    print(f"\n✓ Created merchant plan: {plan_name}")
+    print(f"    plan_uuid: {plan_uuid}")
+    print(f"    plan_code: {plan_code}")
+
+    yield {
+        "plan_uuid": plan_uuid,
+        "name": plan_name,
+        "plan_code": plan_code,
+        "plan_group_id": plan_group_id,
+        "was_reused": False,
+    }
+
+    # Cleanup not supported - plans cannot be deleted
+    print(f"\n⚠️  Note: Merchant plan {plan_uuid} cannot be automatically deleted")
+
+
+@pytest.fixture(scope="module")
 def meta_reseller(
-    test_owner_account: dict[str, Any], environment: dev.Environment
+    test_owner_account: dict[str, Any], merchant_plan_group: dict[str, Any], environment: dev.Environment
 ) -> Generator[dict[str, Any], None, None]:
     """Get or create a meta.reseller for testing.
 
@@ -248,10 +392,11 @@ def meta_reseller(
 
     print(f"\n📋 Using parent reseller: {demo_reseller.name} (id={demo_reseller.id}, uuid={demo_reseller.uuid})")
     print(f"    Test owner account: {test_owner_account['email']} (id={test_owner_account['account_id']})")
+    print(f"    Merchant plan group: {merchant_plan_group['name']} (id={merchant_plan_group['plan_group_id']})")
 
     # Create meta.reseller using the API
-    # Use parent's plan group if it has one, otherwise use a known good one
-    plan_group_id = demo_reseller.plan_group_id if demo_reseller.plan_group_id else "B1DTBWV564MNE"
+    # Use the merchant_plan_group fixture (created/reused with MFF prefix)
+    plan_group_id = merchant_plan_group["plan_group_id"]
     if isinstance(plan_group_id, int):
         plan_group_id = str(plan_group_id)
 
