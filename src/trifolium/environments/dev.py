@@ -202,13 +202,10 @@ class DevBillingBookkeeperAPI(base.Environment):
             # Import generated client
             from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
 
-            # Create instrumented httpx client via parent's method
-            httpx_client = self._create_httpx_client()
-
             # Add /billing-bookkeeper path prefix to base URL
             billing_bookkeeper_base_url = f"{self._handle.base_url}/billing-bookkeeper"
 
-            # Create authenticated client using our instrumented httpx client
+            # Create authenticated client with config
             self._authenticated_client = AuthenticatedClient(
                 base_url=billing_bookkeeper_base_url,
                 token=self._handle.token,
@@ -219,8 +216,14 @@ class DevBillingBookkeeperAPI(base.Environment):
                 cookies={
                     "internalSession": self._handle.token,
                 },
-                httpx_args={"client": httpx_client},
             )
+
+            # Create instrumented httpx client via parent's method
+            httpx_client = self._create_httpx_client()
+
+            # Inject our instrumented httpx client into the authenticated client
+            self._authenticated_client.set_httpx_client(httpx_client)
+
         return self._authenticated_client
 
     def create_entity(self, entity_uuid: str, entity_type: str, name: str) -> dict[str, Any]:
