@@ -77,7 +77,7 @@ class Environment(ABC):
 
         def log_response_hook(response: httpx.Response) -> None:
             """Log HTTP response to stolon server (fire-and-forget)."""
-            with suppress(Exception):
+            try:
                 # Extract response body if present
                 body_str: str | None = None
                 if response.content:
@@ -95,6 +95,15 @@ class Environment(ABC):
                         "data": body_str,
                     },
                     timeout=1.0,
+                )
+            except Exception as e:
+                # If server logging fails, log locally as fallback for debugging
+                logger = structlog.get_logger()
+                logger.warning(
+                    "Failed to log response to stolon server",
+                    error=str(e),
+                    url=str(response.request.url),
+                    status_code=response.status_code,
                 )
 
         # Add hooks to lists

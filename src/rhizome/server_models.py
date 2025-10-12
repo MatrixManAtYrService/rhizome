@@ -21,3 +21,13 @@ class SqlQueryResultLog(BaseModel):
     query_id: str
     duration_ms: float
     row_count: int | None = None
+
+
+class DatabaseConnectionLog(BaseModel):
+    """Request model for database connection logging."""
+
+    host: str
+    port: int
+    username: str
+    database: str
+    mysql_command: str

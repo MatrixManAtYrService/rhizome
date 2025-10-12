@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from rhizome.logging import setup_logging
 from rhizome.portforward import start_portforward
 from rhizome.proc import NewProcessResponse, ProcessListResponse, process_manager
-from rhizome.server_models import SqlQueryLog, SqlQueryResultLog
+from rhizome.server_models import DatabaseConnectionLog, SqlQueryLog, SqlQueryResultLog
 from rhizome.sleeper import start_sleeper
 from trifolium.config import Home
 
@@ -363,6 +363,26 @@ async def log_query_result(result: SqlQueryResultLog) -> dict[str, str]:
         log_data["row_count"] = result.row_count
 
     logger.info("SQL query result", **log_data)
+
+    return {"status": "logged"}
+
+
+@app.post("/log_connection")
+async def log_connection(connection: DatabaseConnectionLog) -> dict[str, str]:
+    """
+    Log database connection details.
+
+    Logs host, port, username, database, and mysql_command equivalent.
+    This is called once per unique connection configuration to avoid duplicate logging.
+    """
+    logger.info(
+        "MySQL connection details",
+        mysql_command=connection.mysql_command,
+        host=connection.host,
+        port=connection.port,
+        username=connection.username,
+        database=connection.database,
+    )
 
     return {"status": "logged"}
 

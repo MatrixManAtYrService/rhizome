@@ -136,25 +136,15 @@ class DevBilling(Environment):
         """Build the connection string for this environment."""
         from urllib.parse import quote_plus
 
-        import structlog
-
-        log = structlog.get_logger()
         db_config = self.get_database_config()
         encoded_password = quote_plus(db_config.password)
         connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}?ssl_verify_cert=false"
 
-        # Log the MySQL command equivalent for debugging (with redacted password)
+        # Log connection details
         mysql_command = (
             f"mysql --user={db_config.username} --password=[REDACTED] --host={db_config.host} "
             f"--port={db_config.port} --batch --skip-ssl-verify-server-cert {db_config.database}"
         )
-        log.info(
-            "MySQL connection details",
-            mysql_command=mysql_command,
-            host=db_config.host,
-            port=db_config.port,
-            username=db_config.username,
-            database=db_config.database,
-        )
+        self._log_connection_if_new(db_config, mysql_command)
 
         return connection_string

@@ -88,6 +88,9 @@ class Environment(ABC):
 
     table_situation: dict[StrEnum, tuple[type[RhizomeModel] | None, type[Emplacement[Any]] | None]]
 
+    # Class-level set to track logged connections (shared across all environments)
+    _logged_connections: set[tuple[str, int, str, str]] = set()
+
     @abstractmethod
     def tables(self) -> list[StrEnum]:
         """
@@ -332,11 +335,50 @@ class Environment(ABC):
                 continue  # Port is in use, try the next one
         raise RuntimeError("No unused ports available in range")
 
+    def _log_connection_if_new(self, db_config: DatabaseConfig, mysql_command: str) -> None:
+        """
+        Log database connection details to rhizome server if not already logged.
+
+        Args:
+            db_config: Database configuration to log
+            mysql_command: MySQL command string for debugging (should have password redacted)
+        """
+        from contextlib import suppress
+
+        import httpx
+
+        connection_key = (db_config.host, db_config.port, db_config.username, db_config.database)
+        if connection_key not in Environment._logged_connections:
+            # Send connection details to rhizome server (fire-and-forget)
+            with suppress(Exception):
+                httpx.post(
+                    f"{self.client.base_url}/log_connection",
+                    json={
+                        "host": db_config.host,
+                        "port": db_config.port,
+                        "username": db_config.username,
+                        "database": db_config.database,
+                        "mysql_command": mysql_command,
+                    },
+                    timeout=1.0,
+                )
+
+            Environment._logged_connections.add(connection_key)
+
     def get_connection_string(self) -> str:
         """Build the connection string for this environment."""
         db_config = self.get_database_config()
         encoded_password = quote_plus(db_config.password)
-        return f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}"
+        connection_string = f"mysql+pymysql://{db_config.username}:{encoded_password}@{db_config.host}:{db_config.port}/{db_config.database}"
+
+        # Log connection details
+        mysql_command = (
+            f"mysql --user={db_config.username} --password=[REDACTED] --host={db_config.host} "
+            f"--port={db_config.port} --batch {db_config.database}"
+        )
+        self._log_connection_if_new(db_config, mysql_command)
+
+        return connection_string
 
     def select_first(self, query: SelectOfScalar[TFirst], sanitize: bool = True) -> TFirst | None:
         """Execute a query and return the first result or None.
