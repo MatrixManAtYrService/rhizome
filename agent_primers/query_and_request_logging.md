@@ -156,6 +156,9 @@ def _create_instrumented_engine(self, connection_string: str) -> sqlalchemy.Engi
         executemany: bool,
     ) -> None:
         """Log SQL query before execution."""
+        # Generate unique query ID and store with start time
+        query_id = str(uuid.uuid4())[:8]  # Use first 8 chars for readability
+        context._query_id = query_id
         context._query_start_time = time.time()
 
         # Fire-and-forget logging with exception suppression
@@ -163,6 +166,7 @@ def _create_instrumented_engine(self, connection_string: str) -> sqlalchemy.Engi
             httpx.post(
                 f"{self.base_url}/log_query",
                 json={
+                    "query_id": query_id,
                     "statement": statement,
                     "parameters": parameters,
                     "database": database,
@@ -182,16 +186,16 @@ def _create_instrumented_engine(self, connection_string: str) -> sqlalchemy.Engi
     ) -> None:
         """Log SQL query result after execution."""
         duration = (time.time() - context._query_start_time) * 1000  # ms
+        query_id = context._query_id  # Retrieve query ID from context
         row_count = cursor.rowcount if cursor.rowcount >= 0 else None
 
         # Fire-and-forget logging with exception suppression
+        # Note: Only log query_id, duration, and row_count (context already logged above)
         with suppress(Exception):
             httpx.post(
                 f"{self.base_url}/log_query_result",
                 json={
-                    "statement": statement,
-                    "database": database,
-                    "connection_string": connection_string,
+                    "query_id": query_id,
                     "duration_ms": duration,
                     "row_count": row_count,
                 },
@@ -240,20 +244,16 @@ class SqlQueryResultLog(BaseModel):
     """Request model for SQL query result logging."""
 
     query_id: str
-    database: str
-    connection_string: str
     duration_ms: float
     row_count: int | None = None
 ```
 
 **Logged Fields**:
 - `query_id` - Unique identifier linking this result to the original query
-- `database` - Database name
-- `connection_string` - Connection string used
 - `duration_ms` - Query execution time in milliseconds
 - `row_count` - Number of rows returned (if available)
 
-**Efficiency Note**: The full SQL statement is only logged once in `/log_query`. The result log uses `query_id` to associate with the original query, significantly reducing log verbosity for long SQL statements.
+**Efficiency Note**: Only new information (duration, row count) is logged here. All context (statement, database, connection_string, parameters) was already logged in `/log_query` and can be traced via `query_id`.
 
 **Data**: Result data is NOT logged (only row count)
 
@@ -281,9 +281,15 @@ result = client.select_first(
 
 **Example Output**:
 ```
-15:23:56 SQL query                    [rhizome.server] query_id=a1b2c3d4 database=meta statement="SELECT account.id FROM account WHERE account.email = %(email_1)s" parameters={'email_1': 'user@example.com'}
-15:23:56 SQL query result             [rhizome.server] query_id=a1b2c3d4 database=meta duration_ms=122.55 row_count=0
+15:23:56 SQL query                    [rhizome.server] query_id=a1b2c3d4 database=meta connection_string=mysql://... parameters={'email_1': 'user@example.com'}
+  Statement:
+SELECT account.id, account.uuid, account.name, account.email
+FROM account
+WHERE account.email = %(email_1)s
+15:23:56 SQL query result             [rhizome.server] query_id=a1b2c3d4 duration_ms=122.55 row_count=0
 ```
+
+**Note**: The SQL statement is printed to stderr (not logged via structlog) so that newlines render properly for readability.
 
 ### Implementation Details
 

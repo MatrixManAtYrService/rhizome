@@ -320,14 +320,12 @@ class RhizomeClient:
             row_count = cursor.rowcount if cursor.rowcount >= 0 else None
 
             # Log to rhizome server (non-blocking, fire-and-forget)
-            # Note: We don't log the full statement here, only the query_id to associate with the original query
+            # Note: Only log query_id, duration, and row_count. Context (statement, database, etc.) was already logged.
             with suppress(Exception):
                 httpx.post(
                     f"{self.base_url}/log_query_result",
                     json={  # type: ignore[arg-type]
                         "query_id": query_id,
-                        "database": database,
-                        "connection_string": connection_string,
                         "duration_ms": duration,
                         "row_count": row_count,
                     },

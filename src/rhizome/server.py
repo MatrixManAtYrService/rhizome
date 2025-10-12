@@ -293,15 +293,16 @@ async def log_query(query: SqlQueryLog) -> dict[str, str]:
     """
     Log SQL query details before execution.
 
-    Logs query_id, statement, database, and parameters (if present).
+    Logs query_id, database, and parameters (if present) via structlog.
+    Prints the statement to stderr so newlines render properly for readability.
     Does not log result data.
     """
+    import sys
     from typing import Any
 
-    # Prepare log data
+    # Prepare log data (without statement - we'll print that separately)
     log_data: dict[str, Any] = {
         "query_id": query.query_id,
-        "statement": query.statement,
         "database": query.database,
         "connection_string": query.connection_string,
     }
@@ -310,7 +311,11 @@ async def log_query(query: SqlQueryLog) -> dict[str, str]:
     if query.parameters is not None:
         log_data["parameters"] = query.parameters
 
+    # Log metadata via structlog
     logger.info("SQL query", **log_data)
+
+    # Print the statement to stderr with proper newline rendering
+    print(f"  Statement:\n{query.statement}", file=sys.stderr)
 
     return {"status": "logged"}
 
@@ -320,16 +325,14 @@ async def log_query_result(result: SqlQueryResultLog) -> dict[str, str]:
     """
     Log SQL query result details after execution.
 
-    Logs query_id (to associate with original query), database, duration, and row count.
-    Does not log the statement (already logged in /log_query) or result data.
+    Logs only query_id (to associate with original query), duration, and row count.
+    Context (statement, database, connection_string) was already logged in /log_query.
     """
     from typing import Any
 
-    # Prepare log data
+    # Prepare log data - only new information, not context already in /log_query
     log_data: dict[str, Any] = {
         "query_id": result.query_id,
-        "database": result.database,
-        "connection_string": result.connection_string,
         "duration_ms": result.duration_ms,
     }
 

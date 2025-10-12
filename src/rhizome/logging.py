@@ -3,6 +3,18 @@ import logging
 import structlog
 
 
+class FilterLoggingEndpoints(logging.Filter):
+    """Filter to exclude access logs for logging endpoints."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Return False to filter out logging endpoint requests."""
+        message = record.getMessage()
+        # Filter out POST requests to logging endpoints
+        return not any(
+            endpoint in message for endpoint in ["/log_query", "/log_query_result", "/log_request", "/log_response"]
+        )
+
+
 def setup_logging() -> None:
     """Set up unified logging through structlog."""
     # Shared processors for both structlog and standard logging
@@ -54,6 +66,10 @@ def setup_logging() -> None:
         logger.propagate = False
         logger.addHandler(simple_handler)
         logger.setLevel(logging.INFO)
+
+    # Add filter to uvicorn.access to hide logging endpoint requests
+    access_logger = logging.getLogger("uvicorn.access")
+    access_logger.addFilter(FilterLoggingEndpoints())
 
     # Configure httpx to use simple formatting (it has very verbose messages)
     httpx_logger = logging.getLogger("httpx")

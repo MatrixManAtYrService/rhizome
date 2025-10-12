@@ -19,7 +19,5 @@ class SqlQueryResultLog(BaseModel):
     """Request model for SQL query result logging."""
 
     query_id: str
-    database: str
-    connection_string: str
     duration_ms: float
     row_count: int | None = None
