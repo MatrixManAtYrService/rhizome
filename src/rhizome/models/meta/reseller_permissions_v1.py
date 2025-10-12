@@ -29,7 +29,7 @@ class ResellerPermissionsV1(RhizomeModel, table=True):
     SQLModel for the `reseller_permissions` table.
     """
 
-    __tablename__ = "reseller_permissions"
+    __tablename__ = "reseller_permissions"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True)
     uuid: str = Field(max_length=13, unique=True)

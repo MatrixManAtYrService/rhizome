@@ -143,62 +143,31 @@ def revenue_share_group(environment: dev.Environment) -> Generator[dict[str, Any
 
 @pytest.fixture(scope="module")
 def test_owner_account(environment: dev.Environment) -> Generator[dict[str, Any], None, None]:
-    """Get the owner account from a suitable parent reseller.
+    """Get or create the MFF Reseller Owner account.
 
-    Note: Creating new accounts with reseller owner privileges requires database-level
-    operations (reseller_role setup) that can't be done via API alone. Therefore, we
-    use an existing reseller owner account from a parent reseller.
+    This fixture ensures the MFF User account exists with Super Administrator privileges
+    for the Clover reseller. The account can create test resellers and serves as their owner.
 
-    The test isolation comes from the unique reseller name with the prefix, not the
-    owner account. Multiple test resellers can share the same owner account.
+    The fixture is idempotent - if the account already exists, it will be reused.
 
     Scope: module - reuse across all tests in this module.
     """
-    from stolon.retry_401 import make_authenticated_get
+    from trifolium.util.models import TestOwnerAccount
+    from trifolium.util.reseller import create_reseller_owner
 
-    # Get the authenticated user's email from the internal account endpoint
-    # This is the person running the test, who has CREATE_RESELLER permission
-    print("\n📋 Getting authenticated user info...")
+    # Create or retrieve the MFF Reseller Owner account
+    account_info = create_reseller_owner(environment)
 
-    domain = "dev1.dev.clover.com"
-    headers = {"X-Clover-Appenv": "dev:dev1"}
-
-    whoami_url = f"https://{domain}/v3/internal/internal_accounts/current"
-    whoami_response = make_authenticated_get(
-        environment._stolon_client, domain, whoami_url, headers=headers, timeout=10.0
+    # Convert to TestOwnerAccount and yield as dict for compatibility
+    test_account = TestOwnerAccount(
+        account_id=account_info.id,
+        uuid=account_info.uuid,
+        email=account_info.email,
+        name=account_info.name,
+        was_reused=True,  # Will be True if account existed, effectively True always after first run
     )
 
-    whoami_data = whoami_response.json()
-    ldap_name = whoami_data.get("ldapName")
-    account_uuid = whoami_data.get("id")
-
-    if not ldap_name:
-        raise Exception(f"No ldapName in whoami response: {whoami_data}")
-
-    # Construct email from ldapName (typically ldapName@clover.com)
-    owner_email = f"{ldap_name}@clover.com"
-
-    # Query the user's permissions
-    print(f"    Authenticated user: {ldap_name}")
-    print(f"    Account UUID: {account_uuid}")
-    print("    Querying permissions...")
-
-    permissions_url = f"https://{domain}/v3/internal/internal_accounts/{account_uuid}/internal_account_permissions"
-    permissions_response = make_authenticated_get(
-        environment._stolon_client, domain, permissions_url, headers=headers, timeout=10.0
-    )
-
-    permissions = permissions_response.json()
-    print(f"    Found {len(permissions)} permissions")
-    print(f"    Using email: {owner_email}")
-
-    yield {
-        "account_id": None,  # We don't have the meta.account ID for internal accounts
-        "uuid": account_uuid,
-        "email": owner_email,
-        "permissions": permissions,
-        "was_reused": False,
-    }
+    yield test_account.to_dict()
 
 
 @pytest.fixture(scope="module")

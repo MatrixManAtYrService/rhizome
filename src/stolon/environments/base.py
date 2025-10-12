@@ -5,6 +5,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, TypedDict, Unpack
 
+import httpx
+import structlog
+
 if TYPE_CHECKING:
     from stolon.client import HttpHandle, StolonClient
 
@@ -38,6 +41,31 @@ class Environment(ABC):
         self.client = client
         self._handle: HttpHandle | None = None
 
+    def _create_httpx_client(self) -> httpx.Client:
+        """
+        Create an httpx.Client with event hook structure prepared for instrumentation.
+
+        This method provides a single point where request/response hooks can be added
+        for logging and observability. Currently returns a basic client, but the hook
+        structure is ready for future instrumentation.
+
+        Returns:
+            httpx.Client configured for this environment
+        """
+        from collections.abc import Callable
+
+        # Event hooks ready for instrumentation (currently no-ops)
+        # Type the lists explicitly for the type checker
+        request_hooks: list[Callable[[httpx.Request], None]] = []
+        response_hooks: list[Callable[[httpx.Response], None]] = []
+
+        event_hooks = {
+            "request": request_hooks,
+            "response": response_hooks,
+        }
+
+        return httpx.Client(event_hooks=event_hooks)
+
     def _ensure_authenticated(self, *, force_refresh: bool = False) -> None:
         """
         Ensure we have a valid authentication token.
@@ -62,8 +90,6 @@ class Environment(ABC):
         """
         self._ensure_authenticated()
         assert self._handle is not None  # For type checker
-        import httpx
-        import structlog
 
         logger = structlog.get_logger()
 
@@ -114,7 +140,7 @@ class Environment(ABC):
 
         logger.info("Making HTTP request", **log_data)
 
-        with httpx.Client() as client:
+        with self._create_httpx_client() as client:
             response: httpx.Response = client.request(
                 method,
                 full_url,

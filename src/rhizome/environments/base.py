@@ -274,7 +274,7 @@ class Environment(ABC):
     def get_database_config_from_port_forward(self, port_forward_config: PortForwardConfig) -> DatabaseConfig:
         """Helper method to get database config for port forwarding environments."""
         password = asyncio.run(
-            self._get_secret(port_forward_config.secret_reference, port_forward_config.secret_manager)
+            self.get_secret(port_forward_config.secret_reference, port_forward_config.secret_manager)
         )
         return DatabaseConfig(
             host="127.0.0.1",
@@ -284,7 +284,7 @@ class Environment(ABC):
             password=password,
         )
 
-    async def _get_secret(self, secret_reference: str, secret_manager: SecretManager) -> str:
+    async def get_secret(self, secret_reference: str, secret_manager: SecretManager) -> str:
         """Get secret from the appropriate credential manager."""
         if secret_manager == SecretManager.ONEPASSWORD:
             return await self.client.tools.onepassword.read_secret(secret_reference)

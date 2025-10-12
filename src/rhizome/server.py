@@ -203,7 +203,7 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
     from rich.console import Console
     from rich.panel import Panel
     from rich.prompt import Confirm
-    from sqlmodel import Session, create_engine
+    from sqlmodel import create_engine
 
     from rhizome.canned_queries import get_query, render_query
     from rhizome.environments.environment_list import environment_type
@@ -215,7 +215,7 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         query = get_query(request.query_name)
 
         # Get the environment class
-        env_class = environment_type.get(request.environment_name)
+        env_class = environment_type.get(request.environment_name)  # type: ignore[arg-type]
         if not env_class:
             return WriteQueryResponse(
                 approved=False,
@@ -269,9 +269,10 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         connection_string = f"mysql+pymysql://{db_config_rw.rw_username}:{encoded_password}@{db_config_rw.host}:{db_config_rw.port}/{db_config_rw.database}"
 
         engine = create_engine(connection_string)
-        with Session(engine) as session:
-            result = session.exec(sqlalchemy.text(query.sql), params=request.params)
-            session.commit()
+        # For raw SQL with parameters, use engine connection directly
+        with engine.connect() as connection:
+            result = connection.execute(sqlalchemy.text(query.sql), request.params)
+            connection.commit()
             rows_affected = result.rowcount
 
         console.print(f"[green]✓ Query executed successfully. Rows affected: {rows_affected}[/green]")

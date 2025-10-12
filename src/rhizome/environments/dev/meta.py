@@ -185,7 +185,7 @@ class DevMeta(Environment):
         """Get database configuration using legacy MySQL credentials (read-only)."""
         import asyncio
 
-        password = asyncio.run(self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
+        password = asyncio.run(self.get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
 
         return DatabaseConfig(
             host="dev1-db01.dev.pdx10.clover.network",
@@ -199,8 +199,8 @@ class DevMeta(Environment):
         """Get database configuration with both RO and RW credentials."""
         import asyncio
 
-        ro_password = asyncio.run(self._get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
-        rw_password = asyncio.run(self._get_secret("op://Shared/DevMetaRW/password", SecretManager.ONEPASSWORD))
+        ro_password = asyncio.run(self.get_secret("op://Shared/MysqlDevLegacy/password", SecretManager.ONEPASSWORD))
+        rw_password = asyncio.run(self.get_secret("op://Shared/DevMetaRW/password", SecretManager.ONEPASSWORD))
 
         return DatabaseConfigWithRW(
             host="dev1-db01.dev.pdx10.clover.network",

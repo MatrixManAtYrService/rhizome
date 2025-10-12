@@ -19,7 +19,7 @@ class ResellerRoleV1(RhizomeModel, table=True):
     SQLModel for the `reseller_role` table.
     """
 
-    __tablename__ = "reseller_role"
+    __tablename__ = "reseller_role"  # type: ignore
 
     id: int | None = Field(default=None, primary_key=True)
     account_id: int = Field(foreign_key="account.id")

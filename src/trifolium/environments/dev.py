@@ -5,6 +5,8 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING, Any
 
+from stolon.environments import base
+
 # Generated API imports - moved to top level to avoid deep indentation
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
     create_invoice_alliance_code,
@@ -87,8 +89,8 @@ class Environment:
             rhizome_client: Client for database access
             stolon_client: Client for HTTP API access
         """
-        self._rhizome_client = rhizome_client
-        self._stolon_client = stolon_client
+        self.rhizome_client = rhizome_client
+        self.stolon_client = stolon_client
         self._db: DevDatabase | None = None
         self._api: DevAPI | None = None
 
@@ -96,14 +98,14 @@ class Environment:
     def db(self) -> DevDatabase:
         """Database access via Rhizome."""
         if self._db is None:
-            self._db = DevDatabase(self._rhizome_client)
+            self._db = DevDatabase(self.rhizome_client)
         return self._db
 
     @property
     def api(self) -> DevAPI:
         """HTTP API access via Stolon with generated client."""
         if self._api is None:
-            self._api = DevAPI(self._stolon_client)
+            self._api = DevAPI(self.stolon_client)
         return self._api
 
 
@@ -157,7 +159,7 @@ class DevAPI:
         return self._resellers
 
 
-class DevBillingBookkeeperAPI:
+class DevBillingBookkeeperAPI(base.Environment):
     """
     Billing Bookkeeper API wrapper using generated OpenAPI client.
 
@@ -165,101 +167,59 @@ class DevBillingBookkeeperAPI:
     for common operations without requiring direct imports of generated models.
     """
 
+    @property
+    def name(self) -> str:
+        """Environment name."""
+        return "dev"
+
+    @property
+    def domain(self) -> str:
+        """Clover domain for this environment."""
+        return "dev1.dev.clover.com"
+
     def __init__(self, client: StolonClient) -> None:
         """Initialize Billing Bookkeeper API.
 
         Args:
             client: Stolon client for HTTP requests
         """
-        self._client = client
+        super().__init__(client)
         self._authenticated_client: AuthenticatedClient | None = None
-        self._domain = "dev1.dev.clover.com"
-        self._env_name = "dev"
 
-    def _ensure_authenticated(self) -> AuthenticatedClient:
-        """Ensure we have an authenticated client for the generated API."""
+    def _ensure_generated_client_authenticated(self) -> AuthenticatedClient:
+        """
+        Ensure we have an authenticated client for the generated OpenAPI client.
+
+        This creates an AuthenticatedClient instance that wraps our instrumented
+        httpx client, ensuring all requests flow through the same logging/observability
+        infrastructure.
+        """
         if self._authenticated_client is None:
-            import httpx
-            import structlog
-
-            logger = structlog.get_logger()
-
-            # Get token from stolon
-            handle = self._client.request_internal_token(self._domain)
+            # Get authentication token via parent's method
+            self._ensure_authenticated()
+            assert self._handle is not None
 
             # Import generated client
             from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
 
-            # Define request/response logging hooks
-            def log_request(request: httpx.Request) -> None:
-                import os
+            # Create instrumented httpx client via parent's method
+            httpx_client = self._create_httpx_client()
 
-                # Sanitize headers for logging
-                sanitized_headers = {
-                    k: ("***" if k.lower() in ["cookie", "authorization"] else v) for k, v in request.headers.items()
-                }
-
-                log_data = {
-                    "method": request.method,
-                    "url": str(request.url),
-                    "headers": sanitized_headers,
-                }
-
-                # If debug mode is enabled, include request body
-                if os.getenv("STOLON_DEBUG_REQUESTS") and hasattr(request, "content"):
-                    try:
-                        import json
-
-                        body_text = request.content.decode("utf-8") if request.content else None
-                        if body_text:
-                            log_data["request_body"] = json.loads(body_text)
-                    except Exception:
-                        pass
-
-                logger.info("Generated client making HTTP request", **log_data)
-
-            def log_response(response: httpx.Response) -> None:
-                # Get content length from header if available
-                content_length_header = response.headers.get("content-length")
-                content_length = int(content_length_header) if content_length_header else None
-
-                log_data = {
-                    "method": response.request.method,
-                    "url": str(response.request.url),
-                    "status_code": response.status_code,
-                }
-
-                if content_length is not None:
-                    log_data["content_length"] = content_length
-
-                # Log error details for non-2xx responses
-                # Note: We can't access response.text or response.content here in the hook
-                # as the response hasn't been read yet
-                if response.status_code >= 400:
-                    logger.error("Generated client HTTP request failed", **log_data)
-                else:
-                    logger.info("Generated client received HTTP response", **log_data)
-
-            # Create authenticated client with logging hooks
             # Add /billing-bookkeeper path prefix to base URL
-            billing_bookkeeper_base_url = f"{handle.base_url}/billing-bookkeeper"
+            billing_bookkeeper_base_url = f"{self._handle.base_url}/billing-bookkeeper"
 
+            # Create authenticated client using our instrumented httpx client
             self._authenticated_client = AuthenticatedClient(
                 base_url=billing_bookkeeper_base_url,
-                token=handle.token,
+                token=self._handle.token,
                 prefix="",  # Token goes in Cookie header
                 headers={
-                    "X-Clover-Appenv": f"{self._env_name}:{self._domain.split('.')[0]}",
+                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
                 },
                 cookies={
-                    "internalSession": handle.token,
+                    "internalSession": self._handle.token,
                 },
-                httpx_args={
-                    "event_hooks": {
-                        "request": [log_request],
-                        "response": [log_response],
-                    }
-                },
+                httpx_args={"client": httpx_client},
             )
         return self._authenticated_client
 
@@ -277,7 +237,7 @@ class DevBillingBookkeeperAPI:
         Raises:
             Exception: If creation fails
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         # Create model
         entity_model = api_billing_entity.ApiBillingEntity(
@@ -310,7 +270,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created alliance code data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_invoice_alliance_code.ApiInvoiceAllianceCode(
             billing_entity_uuid=billing_entity_uuid,
@@ -340,7 +300,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created revenue share group data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_revenue_share_group.ApiRevenueShareGroup(
             revenue_share_group=revenue_share_group_name,
@@ -363,7 +323,7 @@ class DevBillingBookkeeperAPI:
         Args:
             uuid: UUID of the revenue share group to delete
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
         delete_revenue_share_group_by_uuid.sync(client=client, uuid=uuid)
 
     def create_billing_schedule(
@@ -390,7 +350,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created billing schedule data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_billing_schedule.ApiBillingSchedule(
             billing_entity_uuid=billing_entity_uuid,
@@ -437,7 +397,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created fee rate data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_fee_rate.ApiFeeRate(
             billing_entity_uuid=billing_entity_uuid,
@@ -481,7 +441,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created processing group dates data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_processing_group_dates.ApiProcessingGroupDates(
             billing_entity_uuid=billing_entity_uuid,
@@ -519,7 +479,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created billing hierarchy data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_billing_hierarchy.ApiBillingHierarchy(
             billing_entity_uuid=billing_entity_uuid,
@@ -567,7 +527,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created partner config data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_partner_config.ApiPartnerConfig(
             billing_entity_uuid=billing_entity_uuid,
@@ -613,7 +573,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created plan action fee code data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_plan_action_fee_code.ApiPlanActionFeeCode(
             merchant_plan_uuid=merchant_plan_uuid,
@@ -655,7 +615,7 @@ class DevBillingBookkeeperAPI:
         Returns:
             Created cellular action fee code data
         """
-        client = self._ensure_authenticated()
+        client = self._ensure_generated_client_authenticated()
 
         model = api_cellular_action_fee_code.ApiCellularActionFeeCode(
             carrier=carrier,
@@ -676,7 +636,7 @@ class DevBillingBookkeeperAPI:
         raise Exception("No response data returned")
 
 
-class DevResellersAPI:
+class DevResellersAPI(base.Environment):
     """
     Resellers API wrapper for /v3/resellers endpoint.
 
@@ -686,15 +646,15 @@ class DevResellersAPI:
     - billing_bookkeeper.billing_entity: The billing configuration
     """
 
-    def __init__(self, client: StolonClient) -> None:
-        """Initialize Resellers API.
+    @property
+    def name(self) -> str:
+        """Environment name."""
+        return "dev"
 
-        Args:
-            client: Stolon client for HTTP requests
-        """
-        self._client = client
-        self._domain = "dev1.dev.clover.com"
-        self._env_name = "dev"
+    @property
+    def domain(self) -> str:
+        """Clover domain for this environment."""
+        return "dev1.dev.clover.com"
 
     def create_reseller(
         self,
@@ -725,11 +685,6 @@ class DevResellersAPI:
         Raises:
             Exception: If creation fails
         """
-        import httpx
-
-        # Get authentication token
-        handle = self._client.request_internal_token(self._domain)
-
         # Build the request payload with minimal required fields
         payload = {
             "name": name,
@@ -767,18 +722,10 @@ class DevResellersAPI:
         # Override with any additional kwargs
         payload.update(kwargs)
 
-        # Make the HTTP request
-        url = f"https://{self._domain}/v3/resellers"
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "X-Clover-Appenv": f"{self._env_name}:{self._domain.split('.')[0]}",
-        }
-        cookies = {"internalSession": handle.token}
+        # Use parent class's post method (handles auth, logging, retries)
+        response = self.post("/v3/resellers", json=payload, timeout=30.0)
 
-        response = httpx.post(url, json=payload, headers=headers, cookies=cookies, timeout=30.0)
+        if response is None:
+            raise Exception("No response data returned from reseller creation")
 
-        if response.status_code not in (200, 201):
-            raise Exception(f"Failed to create reseller: {response.status_code} - {response.text}")
-
-        return response.json()
+        return response  # type: ignore[return-value]
