@@ -820,6 +820,7 @@ class DevResellersAPI(base.Environment):
         plan_code: str,
         plan_type: str | None = None,
         default_plan: bool = False,
+        tags: list[str] | None = None,
     ) -> dict[str, Any]:
         """Create a merchant plan within a plan group.
 
@@ -827,8 +828,9 @@ class DevResellersAPI(base.Environment):
             merchant_plan_group_id: ID of the parent plan group
             name: Name of the plan
             plan_code: Plan code (e.g., "MFF_TEST")
-            plan_type: Optional plan type (e.g., "PAYMENTS", "REGISTER")
+            plan_type: Optional plan type (e.g., "PAYMENTS", "REGISTER", "NO_HARDWARE")
             default_plan: Whether this should be the default plan in the group (default: False)
+            tags: Optional list of tags (e.g., ["NO_HARDWARE"] for virtual/no-device plans)
 
         Returns:
             Created plan data including UUID and app bundle
@@ -843,6 +845,8 @@ class DevResellersAPI(base.Environment):
         }
         if plan_type:
             payload["type"] = plan_type
+        if tags:
+            payload["tags"] = tags
 
         endpoint = f"/v3/merchant_plan_groups/{merchant_plan_group_id}/merchant_plans"
         response = self.post(endpoint, json=payload, timeout=30.0)

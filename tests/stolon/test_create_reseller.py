@@ -266,13 +266,14 @@ def merchant_plan(
     meta_db = DevMeta(rhizome_client)
     MerchantPlan = meta_db.get_versioned(MerchantPlanModel)
 
-    # Look for a default plan first (needed for merchant boarding)
+    # Look for a default NO_HARDWARE plan (needed for merchant boarding without devices)
     existing_plan = meta_db.select_first(
         select(MerchantPlan)
         .where(MerchantPlan.merchant_plan_group_id == plan_group_id)
         .where(MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
         .where(MerchantPlan.deactivation_time.is_(None))  # type: ignore[attr-defined]  # Exclude deactivated plans
-        .where(MerchantPlan.default_plan == True)  # type: ignore[attr-defined]  # Prefer default plans
+        .where(MerchantPlan.default_plan == True)  # type: ignore[attr-defined]  # Must be default
+        .where(MerchantPlan.type == "NO_HARDWARE")  # type: ignore[attr-defined]  # Must support no-device boarding
         .order_by(MerchantPlan.id.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
@@ -304,8 +305,9 @@ def merchant_plan(
         merchant_plan_group_id=plan_group_id_str,
         name=plan_name,
         plan_code=plan_code,
-        plan_type="PAYMENTS",
+        plan_type="NO_HARDWARE",  # No hardware/virtual terminal plan
         default_plan=True,  # Mark as default so merchants can be boarded
+        tags=["NO_HARDWARE"],  # Required for boarding merchants without devices
     )
 
     plan_uuid = created_plan.get("uuid")
