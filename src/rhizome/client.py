@@ -248,6 +248,88 @@ class RhizomeClient:
         except Exception:
             return {"error": "Could not extract model fields"}
 
+    def _create_instrumented_engine(self, connection_string: str) -> sqlalchemy.Engine:
+        """
+        Create a SQLAlchemy engine with event listeners for query logging.
+
+        This method provides centralized query logging via SQLAlchemy's event system.
+        All queries are logged to the rhizome server before and after execution.
+
+        Args:
+            connection_string: Database connection string
+
+        Returns:
+            sqlalchemy.Engine configured with logging event listeners
+        """
+        import time
+        from contextlib import suppress
+
+        from sqlalchemy import event
+        from sqlalchemy.engine import Connection, ExecutionContext
+
+        engine = create_engine(connection_string)
+
+        # Extract database name from connection string for logging
+        database = engine.url.database or "unknown"
+
+        @event.listens_for(engine, "before_cursor_execute")
+        def before_cursor_execute(  # type: ignore[reportUnusedFunction]
+            conn: Connection,
+            cursor: Any,  # noqa: ANN401 - DBAPI cursor type varies by driver
+            statement: str,
+            parameters: tuple[Any, ...] | dict[str, Any],
+            context: ExecutionContext,
+            executemany: bool,
+        ) -> None:
+            """Log SQL query before execution."""
+            # Store start time for duration calculation
+            context._query_start_time = time.time()  # type: ignore[attr-defined]
+
+            # Log to rhizome server (non-blocking, fire-and-forget)
+            with suppress(Exception):
+                httpx.post(
+                    f"{self.base_url}/log_query",
+                    json={
+                        "statement": statement,
+                        "parameters": parameters,
+                        "database": database,
+                        "connection_string": connection_string,
+                    },
+                    timeout=1.0,  # Short timeout to avoid blocking queries
+                )
+
+        @event.listens_for(engine, "after_cursor_execute")
+        def after_cursor_execute(  # type: ignore[reportUnusedFunction]
+            conn: Connection,
+            cursor: Any,  # noqa: ANN401 - DBAPI cursor type varies by driver
+            statement: str,
+            parameters: tuple[Any, ...] | dict[str, Any],
+            context: ExecutionContext,
+            executemany: bool,
+        ) -> None:
+            """Log SQL query result after execution."""
+            # Calculate duration
+            duration = (time.time() - context._query_start_time) * 1000  # type: ignore[attr-defined]  # Convert to ms
+
+            # Get row count if available
+            row_count = cursor.rowcount if cursor.rowcount >= 0 else None
+
+            # Log to rhizome server (non-blocking, fire-and-forget)
+            with suppress(Exception):
+                httpx.post(
+                    f"{self.base_url}/log_query_result",
+                    json={  # type: ignore[arg-type]
+                        "statement": statement,
+                        "database": database,
+                        "connection_string": connection_string,
+                        "duration_ms": duration,
+                        "row_count": row_count,
+                    },
+                    timeout=1.0,  # Short timeout to avoid blocking queries
+                )
+
+        return engine
+
     def select_first(
         self, connection_string: str, query: SelectOfScalar[TFirst], sanitize: bool = True
     ) -> TFirst | None:
@@ -262,7 +344,7 @@ class RhizomeClient:
         Returns:
             First model instance (sanitized or raw) or None
         """
-        engine = create_engine(connection_string)
+        engine = self._create_instrumented_engine(connection_string)
         with Session(engine) as session:
             result = session.exec(query).first()
 
@@ -296,7 +378,7 @@ class RhizomeClient:
         Returns:
             List of model instances (sanitized or raw)
         """
-        engine = create_engine(connection_string)
+        engine = self._create_instrumented_engine(connection_string)
         with Session(engine) as session:
             results = list(session.exec(query).all())
 
@@ -332,7 +414,7 @@ class RhizomeClient:
         Raises:
             Exception: If zero or more than one results found
         """
-        engine = create_engine(connection_string)
+        engine = self._create_instrumented_engine(connection_string)
         with Session(engine) as session:
             result = session.exec(query).one()
 
@@ -362,7 +444,7 @@ class RhizomeClient:
         Returns:
             The result of the query execution.
         """
-        engine = create_engine(connection_string)
+        engine = self._create_instrumented_engine(connection_string)
         with engine.connect() as connection:
             result = connection.execute(sqlalchemy.text(query))
             return result.first()

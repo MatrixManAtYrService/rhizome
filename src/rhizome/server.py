@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from rhizome.logging import setup_logging
 from rhizome.portforward import start_portforward
 from rhizome.proc import NewProcessResponse, ProcessListResponse, process_manager
+from rhizome.server_models import SqlQueryLog, SqlQueryResultLog
 from rhizome.sleeper import start_sleeper
 from trifolium.config import Home
 
@@ -285,6 +286,59 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         console.print(f"[red]✗ Error: {error_msg}[/red]")
         console.print()
         return WriteQueryResponse(approved=False, executed=False, error=error_msg)
+
+
+@app.post("/log_query")
+async def log_query(query: SqlQueryLog) -> dict[str, str]:
+    """
+    Log SQL query details before execution.
+
+    Logs statement, database, and parameters (if present).
+    Does not log result data.
+    """
+    from typing import Any
+
+    # Prepare log data
+    log_data: dict[str, Any] = {
+        "statement": query.statement,
+        "database": query.database,
+        "connection_string": query.connection_string,
+    }
+
+    # Include parameters if present
+    if query.parameters is not None:
+        log_data["parameters"] = query.parameters
+
+    logger.info("SQL query", **log_data)
+
+    return {"status": "logged"}
+
+
+@app.post("/log_query_result")
+async def log_query_result(result: SqlQueryResultLog) -> dict[str, str]:
+    """
+    Log SQL query result details after execution.
+
+    Logs statement, database, duration, and row count.
+    Does not log result data.
+    """
+    from typing import Any
+
+    # Prepare log data
+    log_data: dict[str, Any] = {
+        "statement": result.statement,
+        "database": result.database,
+        "connection_string": result.connection_string,
+        "duration_ms": result.duration_ms,
+    }
+
+    # Include row count if present
+    if result.row_count is not None:
+        log_data["row_count"] = result.row_count
+
+    logger.info("SQL query result", **log_data)
+
+    return {"status": "logged"}
 
 
 def message() -> str:

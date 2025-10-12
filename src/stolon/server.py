@@ -6,26 +6,11 @@ from contextlib import asynccontextmanager
 import structlog
 import uvicorn
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 
 from rhizome.logging import setup_logging
 from stolon.get_internal_token import get_internal_token
+from stolon.models import HttpRequestLog, HttpResponseLog, InternalTokenRequest, InternalTokenResponse
 from trifolium.config import Home
-
-
-class InternalTokenRequest(BaseModel):
-    """Request model for internal token requests."""
-
-    domain: str
-
-
-class InternalTokenResponse(BaseModel):
-    """Response model for internal token responses."""
-
-    token: str
-    domain: str
-    cached: bool = False
-
 
 logger = structlog.get_logger()
 
@@ -121,6 +106,79 @@ async def delete_cached_token(domain: str) -> dict[str, str]:
     logger.info(f"Deleted cached token for {domain}")
 
     return {"message": f"Cached token for {domain} deleted successfully"}
+
+
+@app.post("/log_request")
+async def log_request(request: HttpRequestLog) -> dict[str, str]:
+    """
+    Log HTTP request details.
+
+    Logs method, hostname, path, and data (truncated if too long).
+    Headers are not logged for security.
+    """
+    from typing import Any
+    from urllib.parse import urlparse
+
+    # Parse URL to extract hostname and path
+    parsed = urlparse(request.url)
+    hostname = parsed.netloc
+    path = parsed.path or "/"
+
+    # Prepare log data
+    log_data: dict[str, Any] = {
+        "method": request.method,
+        "hostname": hostname,
+        "path": path,
+        "url": request.url,
+    }
+
+    # Handle data field - show if <= 256 chars, otherwise show length
+    if request.data is not None:
+        if len(request.data) <= 256:
+            log_data["data"] = request.data
+        else:
+            log_data["data_length"] = f"{len(request.data)} characters"
+
+    logger.info("HTTP request", **log_data)
+
+    return {"status": "logged"}
+
+
+@app.post("/log_response")
+async def log_response(response: HttpResponseLog) -> dict[str, str]:
+    """
+    Log HTTP response details.
+
+    Logs method, hostname, path, status code, and data (truncated if too long).
+    Headers are not logged for security.
+    """
+    from typing import Any
+    from urllib.parse import urlparse
+
+    # Parse URL to extract hostname and path
+    parsed = urlparse(response.url)
+    hostname = parsed.netloc
+    path = parsed.path or "/"
+
+    # Prepare log data
+    log_data: dict[str, Any] = {
+        "method": response.method,
+        "hostname": hostname,
+        "path": path,
+        "url": response.url,
+        "status_code": response.status_code,
+    }
+
+    # Handle data field - show if <= 256 chars, otherwise show length
+    if response.data is not None:
+        if len(response.data) <= 256:
+            log_data["data"] = response.data
+        else:
+            log_data["data_length"] = f"{len(response.data)} characters"
+
+    logger.info("HTTP response", **log_data)
+
+    return {"status": "logged"}
 
 
 def message() -> str:
