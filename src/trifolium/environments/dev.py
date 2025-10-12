@@ -190,8 +190,8 @@ class DevBillingBookkeeperAPI(base.Environment):
         """
         Ensure we have an authenticated client for the generated OpenAPI client.
 
-        This creates an AuthenticatedClient instance that wraps our instrumented
-        httpx client, ensuring all requests flow through the same logging/observability
+        This creates an AuthenticatedClient instance with logging hooks
+        to ensure all requests flow through the same logging/observability
         infrastructure.
         """
         if self._authenticated_client is None:
@@ -205,7 +205,60 @@ class DevBillingBookkeeperAPI(base.Environment):
             # Add /billing-bookkeeper path prefix to base URL
             billing_bookkeeper_base_url = f"{self._handle.base_url}/billing-bookkeeper"
 
-            # Create authenticated client with config
+            # Create event hooks for logging (same as parent's _create_httpx_client)
+            from collections.abc import Callable
+            from contextlib import suppress
+
+            def log_request_hook(request: httpx.Request) -> None:
+                """Log HTTP request to stolon server (fire-and-forget)."""
+                with suppress(Exception):
+                    body_str: str | None = None
+                    if request.content:
+                        try:
+                            body_str = request.content.decode("utf-8")
+                        except Exception:
+                            body_str = f"<binary data, {len(request.content)} bytes>"
+
+                    httpx.post(
+                        f"{self.client.base_url}/log_request",
+                        json={
+                            "method": request.method,
+                            "url": str(request.url),
+                            "data": body_str,
+                        },
+                        timeout=1.0,
+                    )
+
+            def log_response_hook(response: httpx.Response) -> None:
+                """Log HTTP response to stolon server (fire-and-forget)."""
+                body_str: str | None = None
+                try:
+                    if response.content:
+                        body_str = response.content.decode("utf-8")
+                except Exception:
+                    pass
+
+                with suppress(Exception):
+                    httpx.post(
+                        f"{self.client.base_url}/log_response",
+                        json={
+                            "method": response.request.method,
+                            "url": str(response.request.url),
+                            "status_code": response.status_code,
+                            "data": body_str,
+                        },
+                        timeout=1.0,
+                    )
+
+            request_hooks: list[Callable[[httpx.Request], None]] = [log_request_hook]
+            response_hooks: list[Callable[[httpx.Response], None]] = [log_response_hook]
+
+            event_hooks = {
+                "request": request_hooks,
+                "response": response_hooks,
+            }
+
+            # Create authenticated client with logging hooks
             self._authenticated_client = AuthenticatedClient(
                 base_url=billing_bookkeeper_base_url,
                 token=self._handle.token,
@@ -216,13 +269,8 @@ class DevBillingBookkeeperAPI(base.Environment):
                 cookies={
                     "internalSession": self._handle.token,
                 },
+                httpx_args={"event_hooks": event_hooks},
             )
-
-            # Create instrumented httpx client via parent's method
-            httpx_client = self._create_httpx_client()
-
-            # Inject our instrumented httpx client into the authenticated client
-            self._authenticated_client.set_httpx_client(httpx_client)
 
         return self._authenticated_client
 
