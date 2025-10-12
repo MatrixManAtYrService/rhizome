@@ -81,7 +81,7 @@ logging.getLogger("httpx").setLevel(logging.DEBUG)
 # - To find all framework-created resources, search for this prefix in:
 #   * billing_entity.entity_uuid
 #   * revenue_share_group.revenue_share_group
-RESELLER_PREFIX = "MFF"
+RESELLER_PREFIX = "MFFTEST004"
 
 
 def _get_future_date(days_ahead: int = 30) -> str:
