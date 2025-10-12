@@ -106,6 +106,7 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
     # Create account
     print("\n5. Creating account...")
     print("   ⚠️  This requires user approval in the rhizome server terminal")
+    print(f"   🔍 DEBUG: Sending environment_name='dev_meta' to rhizome server")
     account_result = rhizome_client.execute_write_query(
         query_name="create_account",
         environment_name="dev_meta",
