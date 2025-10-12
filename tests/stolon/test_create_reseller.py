@@ -233,8 +233,15 @@ def merchant_plan_group(environment: dev.Environment) -> Generator[dict[str, Any
         "was_reused": False,
     }
 
-    # Cleanup not supported - plan groups cannot be deleted
-    print(f"\n⚠️  Note: Merchant plan group {plan_group_id} cannot be automatically deleted")
+    # Cleanup: Try to delete the merchant plan group (only works if empty)
+    # Note: This will only succeed if all plans in the group have been deleted first
+    try:
+        print(f"\n🗑️  Attempting to delete merchant plan group {plan_group_id}")
+        environment.api.resellers.delete_merchant_plan_group(str(plan_group_id))
+        print("✅ Merchant plan group deleted successfully")
+    except Exception as e:
+        print(f"⚠️  Note: Merchant plan group {plan_group_id} could not be deleted: {e}")
+        print("    (Plan groups can only be deleted when empty)")
 
 
 @pytest.fixture(scope="module")
@@ -263,6 +270,7 @@ def merchant_plan(
         select(MerchantPlan)
         .where(MerchantPlan.merchant_plan_group_id == plan_group_id)
         .where(MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
+        .where(MerchantPlan.deactivation_time.is_(None))  # type: ignore[attr-defined]  # Exclude deactivated plans
         .order_by(MerchantPlan.id.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
@@ -310,8 +318,13 @@ def merchant_plan(
         "was_reused": False,
     }
 
-    # Cleanup not supported - plans cannot be deleted
-    print(f"\n⚠️  Note: Merchant plan {plan_uuid} cannot be automatically deleted")
+    # Cleanup: Try to delete the merchant plan
+    try:
+        print(f"\n🗑️  Attempting to delete merchant plan {plan_uuid}")
+        environment.api.resellers.delete_merchant_plan(str(plan_group_id), plan_uuid)
+        print("✅ Merchant plan deleted successfully")
+    except Exception as e:
+        print(f"⚠️  Note: Merchant plan {plan_uuid} could not be deleted: {e}")
 
 
 @pytest.fixture(scope="module")
@@ -425,7 +438,7 @@ def meta_reseller(
     }
 
     # Cleanup not supported for meta.reseller
-    print(f"\n⚠️  Note: Meta reseller {reseller_uuid} cannot be automatically deleted")
+    print(f"\n⚠️  Note: Meta reseller {reseller_uuid} cannot be automatically deleted (API does not support DELETE)")
 
 
 @pytest.fixture(scope="module")

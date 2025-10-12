@@ -844,3 +844,28 @@ class DevResellersAPI(base.Environment):
             raise Exception("No response data returned from merchant plan creation")
 
         return response  # type: ignore[return-value]
+
+    def delete_merchant_plan(self, merchant_plan_group_id: str, plan_uuid: str) -> None:
+        """Delete a merchant plan from a plan group.
+
+        Args:
+            merchant_plan_group_id: ID of the parent plan group
+            plan_uuid: UUID of the plan to delete
+
+        Raises:
+            Exception: If deletion fails
+        """
+        endpoint = f"/v3/merchant_plan_groups/{merchant_plan_group_id}/merchant_plans/{plan_uuid}"
+        self.delete(endpoint, timeout=30.0)
+
+    def delete_merchant_plan_group(self, plan_group_id: str) -> None:
+        """Delete a merchant plan group (must be empty).
+
+        Args:
+            plan_group_id: ID of the plan group to delete
+
+        Raises:
+            Exception: If deletion fails (e.g., group not empty)
+        """
+        endpoint = f"/v3/merchant_plan_groups/{plan_group_id}"
+        self.delete(endpoint, timeout=30.0)
