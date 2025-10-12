@@ -18,12 +18,10 @@ class ResellerPermissionsType(str, Enum):
     """Enum for reseller permissions types."""
 
     CS = "CS"
-    SALES = "Sales"
-    SUPER = "Super"
+    Sales = "Sales"  # Use member name that matches the value
+    Super = "Super"  # Use member name that matches the value
     FACTORY_OPS = "FACTORY_OPS"
     SIM_VIEWER = "SIM_VIEWER"
-    # Temporary marker to verify this code is being used
-    TEST_MARKER_NOT_IN_DB = "TEST_MARKER"
 
 
 class ResellerPermissionsV1(RhizomeModel, table=True):

@@ -229,9 +229,17 @@ def pytest_addoption(parser: Parser) -> None:
 
 
 def pytest_configure(config: Config) -> None:
-    """Register custom markers."""
+    """Register custom markers and configure logging filters."""
     config.addinivalue_line("markers", "local_cluster: mark test as requiring a local Kind cluster")
     config.addinivalue_line("markers", "external_infra: mark test as requiring external infrastructure")
+
+    # Set up logging filters to hide health check and logging endpoint httpx logs
+    import logging
+
+    from rhizome.logging import FilterHttpxLoggingEndpoints
+
+    httpx_logger = logging.getLogger("httpx")
+    httpx_logger.addFilter(FilterHttpxLoggingEndpoints())
 
 
 def pytest_collection_modifyitems(config: Config, items: list[Item]) -> None:
