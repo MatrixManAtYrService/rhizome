@@ -43,21 +43,63 @@ class Environment(ABC):
 
     def _create_httpx_client(self) -> httpx.Client:
         """
-        Create an httpx.Client with event hook structure prepared for instrumentation.
+        Create an httpx.Client with event hooks for automatic request/response logging.
 
-        This method provides a single point where request/response hooks can be added
-        for logging and observability. Currently returns a basic client, but the hook
-        structure is ready for future instrumentation.
+        All HTTP requests made through this client will be logged to the stolon server
+        at the /log_request and /log_response endpoints.
 
         Returns:
-            httpx.Client configured for this environment
+            httpx.Client configured for this environment with logging hooks
         """
         from collections.abc import Callable
+        from contextlib import suppress
 
-        # Event hooks ready for instrumentation (currently no-ops)
-        # Type the lists explicitly for the type checker
-        request_hooks: list[Callable[[httpx.Request], None]] = []
-        response_hooks: list[Callable[[httpx.Response], None]] = []
+        def log_request_hook(request: httpx.Request) -> None:
+            """Log HTTP request to stolon server (fire-and-forget)."""
+            with suppress(Exception):
+                # Extract request body if present
+                body_str: str | None = None
+                if request.content:
+                    try:
+                        body_str = request.content.decode("utf-8")
+                    except Exception:
+                        body_str = f"<binary data, {len(request.content)} bytes>"
+
+                httpx.post(
+                    f"{self.client.base_url}/log_request",
+                    json={
+                        "method": request.method,
+                        "url": str(request.url),
+                        "data": body_str,
+                    },
+                    timeout=1.0,
+                )
+
+        def log_response_hook(response: httpx.Response) -> None:
+            """Log HTTP response to stolon server (fire-and-forget)."""
+            with suppress(Exception):
+                # Extract response body if present
+                body_str: str | None = None
+                if response.content:
+                    try:
+                        body_str = response.content.decode("utf-8")
+                    except Exception:
+                        body_str = f"<binary data, {len(response.content)} bytes>"
+
+                httpx.post(
+                    f"{self.client.base_url}/log_response",
+                    json={
+                        "method": response.request.method,
+                        "url": str(response.request.url),
+                        "status_code": response.status_code,
+                        "data": body_str,
+                    },
+                    timeout=1.0,
+                )
+
+        # Add hooks to lists
+        request_hooks: list[Callable[[httpx.Request], None]] = [log_request_hook]
+        response_hooks: list[Callable[[httpx.Response], None]] = [log_response_hook]
 
         event_hooks = {
             "request": request_hooks,
