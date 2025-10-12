@@ -132,12 +132,13 @@ async def log_request(request: HttpRequestLog) -> dict[str, str]:
         "url": request.url,
     }
 
-    # Handle data field - show if <= 256 chars, otherwise show length
+    # Handle data field - show up to 1028 chars with length indicator if longer
     if request.data is not None:
-        if len(request.data) <= 256:
+        if len(request.data) <= 1028:
             log_data["data"] = request.data
         else:
-            log_data["data_length"] = f"{len(request.data)} characters"
+            log_data["data"] = request.data[:1028] + "..."
+            log_data["data_length"] = f"{len(request.data)} characters (showing first 1028)"
 
     logger.info("HTTP request", **log_data)
 
@@ -169,12 +170,13 @@ async def log_response(response: HttpResponseLog) -> dict[str, str]:
         "status_code": response.status_code,
     }
 
-    # Handle data field - show if <= 256 chars, otherwise show length
+    # Handle data field - show up to 1028 chars with length indicator if longer
     if response.data is not None:
-        if len(response.data) <= 256:
+        if len(response.data) <= 1028:
             log_data["data"] = response.data
         else:
-            log_data["data_length"] = f"{len(response.data)} characters"
+            log_data["data"] = response.data[:1028] + "..."
+            log_data["data_length"] = f"{len(response.data)} characters (showing first 1028)"
 
     logger.info("HTTP response", **log_data)
 

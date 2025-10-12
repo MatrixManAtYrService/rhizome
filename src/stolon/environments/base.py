@@ -151,37 +151,6 @@ class Environment(ABC):
         # Build full URL
         full_url = f"{self._handle.base_url}{path}"
 
-        # Log request details (sanitize sensitive data)
-        sanitized_headers = {k: ("***" if k == "Cookie" else v) for k, v in headers.items()}
-
-        # Build log entry with request details
-        log_data = {
-            "method": method,
-            "url": full_url,
-            "headers": sanitized_headers,
-            "has_json_body": json_data is not None,
-            "has_params": params is not None,
-        }
-
-        # Add body details if present
-        if json_data is not None:
-            if isinstance(json_data, dict):
-                # Optionally show the full body for debugging (can be toggled via env var)
-                import os
-                from typing import cast
-
-                json_dict = cast(dict[str, Any], json_data)
-                if os.getenv("STOLON_DEBUG_REQUESTS"):
-                    log_data["json_body"] = json_dict
-                else:
-                    # Just show keys in normal mode
-                    json_keys_str = ", ".join(json_dict.keys())
-                    log_data["json_body_keys"] = json_keys_str
-            else:
-                log_data["json_body_type"] = type(json_data).__name__
-
-        logger.info("Making HTTP request", **log_data)
-
         with self._create_httpx_client() as client:
             response: httpx.Response = client.request(
                 method,
@@ -190,16 +159,6 @@ class Environment(ABC):
                 json=json_data,  # type: ignore[arg-type]
                 params=params,
                 timeout=timeout_val,
-            )
-
-            # Log response details
-            logger.info(
-                "Received HTTP response",
-                method=method,
-                url=full_url,
-                status_code=response.status_code,
-                content_length=len(response.content),
-                content_type=response.headers.get("content-type"),
             )
 
             # If we get a 401, the token is expired - invalidate cache and get fresh token
