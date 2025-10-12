@@ -293,13 +293,14 @@ async def log_query(query: SqlQueryLog) -> dict[str, str]:
     """
     Log SQL query details before execution.
 
-    Logs statement, database, and parameters (if present).
+    Logs query_id, statement, database, and parameters (if present).
     Does not log result data.
     """
     from typing import Any
 
     # Prepare log data
     log_data: dict[str, Any] = {
+        "query_id": query.query_id,
         "statement": query.statement,
         "database": query.database,
         "connection_string": query.connection_string,
@@ -319,14 +320,14 @@ async def log_query_result(result: SqlQueryResultLog) -> dict[str, str]:
     """
     Log SQL query result details after execution.
 
-    Logs statement, database, duration, and row count.
-    Does not log result data.
+    Logs query_id (to associate with original query), database, duration, and row count.
+    Does not log the statement (already logged in /log_query) or result data.
     """
     from typing import Any
 
     # Prepare log data
     log_data: dict[str, Any] = {
-        "statement": result.statement,
+        "query_id": result.query_id,
         "database": result.database,
         "connection_string": result.connection_string,
         "duration_ms": result.duration_ms,

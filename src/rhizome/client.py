@@ -262,6 +262,7 @@ class RhizomeClient:
             sqlalchemy.Engine configured with logging event listeners
         """
         import time
+        import uuid
         from contextlib import suppress
 
         from sqlalchemy import event
@@ -282,7 +283,9 @@ class RhizomeClient:
             executemany: bool,
         ) -> None:
             """Log SQL query before execution."""
-            # Store start time for duration calculation
+            # Generate unique query ID and store with start time
+            query_id = str(uuid.uuid4())[:8]  # Use first 8 chars for readability
+            context._query_id = query_id  # type: ignore[attr-defined]
             context._query_start_time = time.time()  # type: ignore[attr-defined]
 
             # Log to rhizome server (non-blocking, fire-and-forget)
@@ -290,6 +293,7 @@ class RhizomeClient:
                 httpx.post(
                     f"{self.base_url}/log_query",
                     json={
+                        "query_id": query_id,
                         "statement": statement,
                         "parameters": parameters,
                         "database": database,
@@ -308,18 +312,20 @@ class RhizomeClient:
             executemany: bool,
         ) -> None:
             """Log SQL query result after execution."""
-            # Calculate duration
+            # Calculate duration and retrieve query ID
             duration = (time.time() - context._query_start_time) * 1000  # type: ignore[attr-defined]  # Convert to ms
+            query_id = context._query_id  # type: ignore[attr-defined]
 
             # Get row count if available
             row_count = cursor.rowcount if cursor.rowcount >= 0 else None
 
             # Log to rhizome server (non-blocking, fire-and-forget)
+            # Note: We don't log the full statement here, only the query_id to associate with the original query
             with suppress(Exception):
                 httpx.post(
                     f"{self.base_url}/log_query_result",
                     json={  # type: ignore[arg-type]
-                        "statement": statement,
+                        "query_id": query_id,
                         "database": database,
                         "connection_string": connection_string,
                         "duration_ms": duration,
