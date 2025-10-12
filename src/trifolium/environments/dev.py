@@ -665,6 +665,7 @@ class DevResellersAPI(base.Environment):
         support_phone: str = "",
         support_email: str = "",
         locale: str = "en-US",
+        code: str | None = None,
         **kwargs: str | dict[str, str] | bool | None,
     ) -> dict[str, Any]:
         """Create a reseller in meta.reseller table.
@@ -677,6 +678,7 @@ class DevResellersAPI(base.Environment):
             support_phone: Support phone number
             support_email: Support email address
             locale: Locale (default: "en-US")
+            code: Reseller code (if not provided, extracts first word from name)
             **kwargs: Additional fields to include in the request
 
         Returns:
@@ -685,8 +687,18 @@ class DevResellersAPI(base.Environment):
         Raises:
             Exception: If creation fails
         """
+        # Extract code from name if not provided (e.g., "MFF" from "MFF Test Reseller 1234")
+        if code is None:
+            code = name.split()[0] if name else "UNKNOWN"
+
+        # Use reasonable defaults if not provided (empty strings cause NPE on server)
+        if not support_phone:
+            support_phone = "1-888-111-1111"
+        if not support_email:
+            support_email = "trifolium@github.corp.clover.com"
+
         # Build the request payload with minimal required fields
-        payload = {
+        payload: dict[str, Any] = {
             "name": name,
             "owner": {"email": owner_email},
             "parentReseller": {"id": parent_reseller_id},
@@ -694,13 +706,13 @@ class DevResellersAPI(base.Environment):
             "locale": locale,
             "supportPhone": support_phone,
             "supportEmail": support_email,
+            "code": code,  # Required field
             # Common defaults from the curl example
             "allowBlackhole": False,
-            "alternateName": "",
-            "code": None,
-            "defaultPaymentProcessor": {"id": ""},
-            "defaultProcessorKey": {"id": ""},
-            "fdClientId": None,
+            # "alternateName": "",  # Commented out - may cause NPE
+            # "defaultPaymentProcessor": {"id": ""},  # Commented out - may cause NPE when resolving empty ID
+            # "defaultProcessorKey": {"id": ""},  # Commented out - may cause NPE when resolving empty ID
+            # "fdClientId": None,  # Commented out - may cause NPE
             "filterApps": False,
             "forcePhone": False,
             "isBulkPurchaser": False,
@@ -710,12 +722,12 @@ class DevResellersAPI(base.Environment):
             "isRapidDepositEnabled": False,
             "isRkiIdentifier": False,
             "isSelfBoarding": False,
-            "partnerSupportEmail": "",
-            "rapidDepositServiceEntitlementNumber": "",
+            # "partnerSupportEmail": "",  # Commented out - probably safe but not needed
+            # "rapidDepositServiceEntitlementNumber": "",  # Commented out - probably safe but not needed
             "stationsOnClassic": True,
             "supportsNakedCredit": True,
             "supportsOutboundBoarding": False,
-            "tasqCustomerNumber": "",
+            # "tasqCustomerNumber": "",  # Commented out - probably safe but not needed
             "type": "UNKNOWN",
         }
 
