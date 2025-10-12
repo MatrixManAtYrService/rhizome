@@ -266,11 +266,13 @@ def merchant_plan(
     meta_db = DevMeta(rhizome_client)
     MerchantPlan = meta_db.get_versioned(MerchantPlanModel)
 
+    # Look for a default plan first (needed for merchant boarding)
     existing_plan = meta_db.select_first(
         select(MerchantPlan)
         .where(MerchantPlan.merchant_plan_group_id == plan_group_id)
         .where(MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
         .where(MerchantPlan.deactivation_time.is_(None))  # type: ignore[attr-defined]  # Exclude deactivated plans
+        .where(MerchantPlan.default_plan == True)  # type: ignore[attr-defined]  # Prefer default plans
         .order_by(MerchantPlan.id.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
@@ -299,7 +301,11 @@ def merchant_plan(
     plan_group_id_str = str(plan_group_id) if isinstance(plan_group_id, int) else plan_group_id
 
     created_plan = environment.api.resellers.create_merchant_plan(
-        merchant_plan_group_id=plan_group_id_str, name=plan_name, plan_code=plan_code, plan_type="PAYMENTS"
+        merchant_plan_group_id=plan_group_id_str,
+        name=plan_name,
+        plan_code=plan_code,
+        plan_type="PAYMENTS",
+        default_plan=True,  # Mark as default so merchants can be boarded
     )
 
     plan_uuid = created_plan.get("uuid")

@@ -814,7 +814,12 @@ class DevResellersAPI(base.Environment):
         return response  # type: ignore[return-value]
 
     def create_merchant_plan(
-        self, merchant_plan_group_id: str, name: str, plan_code: str, plan_type: str | None = None
+        self,
+        merchant_plan_group_id: str,
+        name: str,
+        plan_code: str,
+        plan_type: str | None = None,
+        default_plan: bool = False,
     ) -> dict[str, Any]:
         """Create a merchant plan within a plan group.
 
@@ -823,6 +828,7 @@ class DevResellersAPI(base.Environment):
             name: Name of the plan
             plan_code: Plan code (e.g., "MFF_TEST")
             plan_type: Optional plan type (e.g., "PAYMENTS", "REGISTER")
+            default_plan: Whether this should be the default plan in the group (default: False)
 
         Returns:
             Created plan data including UUID and app bundle
@@ -833,6 +839,7 @@ class DevResellersAPI(base.Environment):
         payload: dict[str, Any] = {
             "name": name,
             "planCode": plan_code,
+            "defaultPlan": default_plan,
         }
         if plan_type:
             payload["type"] = plan_type
