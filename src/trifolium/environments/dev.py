@@ -1251,8 +1251,6 @@ class DevAgreementAPI(base.Environment):
             locale="en_US",
             comment=f"Acceptance created via trifolium for {merchant_uuid}",
         )
-        # Add devices field via additional_properties (not in the generated model but required by API)
-        backfill_body.additional_properties["devices"] = []
 
         # Call the backfill API
         backfill_response = create_4.sync_detailed(
