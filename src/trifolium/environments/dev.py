@@ -1210,11 +1210,13 @@ class DevAgreementAPI(base.Environment):
         # If account_id is numeric (not a UUID), we need to look it up
         if account_id.isdigit() and rhizome_client is not None:
             from rhizome.environments.dev.meta import DevMeta
+            from rhizome.models.meta.account import Account as AccountModel
             from sqlmodel import select
 
             meta_db = DevMeta(rhizome_client)
+            Account = meta_db.get_versioned(AccountModel)
             account = meta_db.select_first(
-                select(DevMeta.Account).where(DevMeta.Account.id == int(account_id)),
+                select(Account).where(Account.id == int(account_id)),
                 sanitize=False,
             )
             if not account:
