@@ -550,6 +550,7 @@ def merchant_billing_terms(
         merchant_uuid=merchant_uuid,
         account_id=account_id,
         agreement_type="BILLING",
+        rhizome_client=environment.rhizome_client,
     )
 
     print(f"✓ Merchant has BILLING acceptance (Agreement ID: {acceptance.agreement_id})")
