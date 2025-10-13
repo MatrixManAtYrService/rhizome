@@ -1065,6 +1065,7 @@ class DevAgreementAPI(base.Environment):
         """
         super().__init__(client)
         self._authenticated_client: AgreementAuthenticatedClient | None = None
+        self._billing_event_client: BillingEventAuthenticatedClient | None = None
 
     def _ensure_agreement_client_authenticated(self) -> AgreementAuthenticatedClient:
         """
