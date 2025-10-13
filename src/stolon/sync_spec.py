@@ -51,7 +51,9 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
         typer.echo("✅ Fetched spec without authentication")
     except httpx.HTTPError as e:
         # If that fails, try with authentication
-        typer.echo(f"⚠️  Failed without auth ({e.response.status_code if hasattr(e, 'response') else 'error'}), trying with authentication...")
+        status: int | str
+        status = e.response.status_code if isinstance(e, httpx.HTTPStatusError) else "error"
+        typer.echo(f"⚠️  Failed without auth ({status}), trying with authentication...")
 
         # Get authentication token
         typer.echo("🔐 Getting authentication token...")

@@ -50,7 +50,9 @@ class WriteQueryRequest(BaseModel):
     environment_name: str  # e.g., "DevMeta"
     params: dict[str, str | int | float | None]
     reason: str | None = None  # Why this operation is necessary
-    entity_descriptions: dict[str, str] | None = None  # Context about entities (e.g., {"role_id_7477": "Super Admin for Clover"})
+    entity_descriptions: dict[str, str] | None = (
+        None  # Context about entities (e.g., {"role_id_7477": "Super Admin for Clover"})
+    )
 
 
 class WriteQueryResponse(BaseModel):

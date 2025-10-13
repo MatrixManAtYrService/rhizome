@@ -56,6 +56,7 @@ from rhizome.models.billing_bookkeeper.invoice_alliance_code import InvoiceAllia
 from rhizome.models.billing_bookkeeper.partner_config import PartnerConfig as PartnerConfigModel
 from rhizome.models.billing_bookkeeper.plan_action_fee_code import PlanActionFeeCode as PlanActionFeeCodeModel
 from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingGroupDates as ProcessingGroupDatesModel
+from rhizome.models.meta.merchant import Merchant as MerchantModel
 from stolon.client import StolonClient
 from tests.conftest import RunningStolonServer
 from trifolium.environments import dev
@@ -272,7 +273,7 @@ def merchant_plan(
         .where(MerchantPlan.merchant_plan_group_id == plan_group_id)
         .where(MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
         .where(MerchantPlan.deactivation_time.is_(None))  # type: ignore[attr-defined]  # Exclude deactivated plans
-        .where(MerchantPlan.default_plan == True)  # type: ignore[attr-defined]  # Must be default
+        .where(MerchantPlan.default_plan)  # type: ignore[attr-defined]  # Must be default
         .where(MerchantPlan.type == "NO_HARDWARE")  # type: ignore[attr-defined]  # Must support no-device boarding
         .order_by(MerchantPlan.id.desc()),  # type: ignore[attr-defined]
         sanitize=False,
@@ -449,7 +450,7 @@ def meta_reseller(
     print(f"\n⚠️  Note: Meta reseller {reseller_uuid} cannot be automatically deleted (API does not support DELETE)")
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def boarded_merchant(
     meta_reseller: dict[str, Any], environment: dev.Environment
 ) -> Generator[dict[str, Any], None, None]:
@@ -458,7 +459,9 @@ def boarded_merchant(
     This creates a merchant associated with the reseller we created.
     Merchants are boarded via the IPG (Integrated Partner Gateway) endpoint.
 
-    Scope: module - reuse across all tests in this module.
+    Scope: function - creates a NEW merchant for each test function.
+    Unlike other resources (resellers, billing entities, etc.), we always
+    create a fresh merchant rather than reusing existing ones.
     """
     # Generate unique merchant ID using prefix + random hex
     merchant_id = f"{RESELLER_PREFIX}_{uuid_module.uuid4().hex[:8].upper()}"
@@ -489,7 +492,7 @@ def boarded_merchant(
 
     merchant_uuid = boarding_response["merchant_uuid"]
 
-    print(f"\n✓ Merchant boarded successfully")
+    print("\n✓ Merchant boarded successfully")
     print(f"    Merchant UUID: {merchant_uuid}")
     print(f"    Merchant ID (MID): {merchant_id}")
 
@@ -505,6 +508,72 @@ def boarded_merchant(
 
     # Cleanup: Merchants cannot be deleted via API
     print(f"\n⚠️  Note: Merchant {merchant_uuid} cannot be automatically deleted (API does not support DELETE)")
+
+
+@pytest.fixture(scope="function")
+def merchant_billing_terms(
+    boarded_merchant: dict[str, Any], environment: dev.Environment
+) -> Generator[dict[str, Any], None, None]:
+    """Ensure merchant has accepted BILLING terms.
+
+    Uses helper methods from environment.api.agreement to check/accept terms
+    and wait for propagation to billing_event database via pubsub.
+
+    Scope: function - creates new terms acceptance for each test function.
+    This matches the boarded_merchant fixture scope, ensuring each test
+    gets a fresh merchant with fresh billing terms.
+    """
+    merchant_uuid = boarded_merchant["merchant_uuid"]
+
+    print("\n=== Checking/Accepting Merchant Billing Terms ===")
+    print(f"    Merchant UUID: {merchant_uuid}")
+
+    # Get merchant's account_id from meta.merchant
+    from rhizome.environments.dev.meta import DevMeta
+
+    meta_db = DevMeta(environment.rhizome_client)
+    Merchant = meta_db.get_versioned(MerchantModel)
+
+    merchant = meta_db.select_first(
+        select(Merchant).where(Merchant.uuid == merchant_uuid),
+        sanitize=False,
+    )
+
+    if not merchant:
+        raise Exception(f"Merchant {merchant_uuid} not found in meta.merchant")
+
+    account_id = str(merchant.owner_account_id)
+    print(f"    Account ID: {account_id}")
+
+    # Use helper to ensure acceptance (idempotent - checks first, only creates if needed)
+    acceptance = environment.api.agreement.ensure_merchant_acceptance(
+        merchant_uuid=merchant_uuid,
+        account_id=account_id,
+        agreement_type="BILLING",
+    )
+
+    print(f"✓ Merchant has BILLING acceptance (Agreement ID: {acceptance.agreement_id})")
+
+    # Wait for acceptance to propagate to billing_event database
+    print("\n⏳ Waiting for acceptance to propagate to billing_event...")
+    propagation_result = environment.api.agreement.wait_for_acceptance_propagation(
+        rhizome_client=environment.rhizome_client,
+        merchant_uuid=merchant_uuid,
+        agreement_type="BILLING",
+    )
+
+    if propagation_result:
+        print("✓ Acceptance propagated to billing_event")
+    else:
+        print("⚠️  Warning: Acceptance not found in billing_event after waiting")
+
+    yield {
+        "merchant_uuid": merchant_uuid,
+        "account_id": account_id,
+        "agreement_id": str(acceptance.agreement_id) if acceptance.agreement_id else None,
+        "acceptance_id": str(acceptance.id) if acceptance.id else None,
+        "propagated_to_billing_event": propagation_result is not None,
+    }
 
 
 @pytest.fixture(scope="module")
@@ -1170,6 +1239,7 @@ def cellular_action_fee_code(environment: dev.Environment) -> Generator[dict[str
 def test_create_complete_reseller(
     meta_reseller: dict[str, Any],
     boarded_merchant: dict[str, Any],
+    merchant_billing_terms: dict[str, Any],
     billing_entity: dict[str, Any],
     alliance_code: dict[str, Any],
     billing_schedule: dict[str, Any],
@@ -1185,12 +1255,14 @@ def test_create_complete_reseller(
     This test follows the correct creation order discovered via exploration:
     1. meta.reseller (core reseller entity via /v3/resellers)
     2. Merchant boarding (associate a test merchant with the reseller)
-    3. billing_bookkeeper.billing_entity (billing config, links via entity_uuid=reseller.uuid)
-    4. All billing configuration components (link via billing_entity_uuid)
+    3. Merchant billing terms acceptance (via agreement-k8s API)
+    4. billing_bookkeeper.billing_entity (billing config, links via entity_uuid=reseller.uuid)
+    5. All billing configuration components (link via billing_entity_uuid)
 
     Components tested:
     - Meta reseller (the core reseller record in meta.reseller table)
     - Boarded merchant (merchant associated with the reseller)
+    - Merchant billing terms (BILLING agreement acceptance via agreement-k8s API)
     - Billing entity (billing configuration, entity_uuid = reseller UUID)
     - Alliance code (for invoicing)
     - Billing schedule (monthly billing cycle)
@@ -1217,6 +1289,12 @@ def test_create_complete_reseller(
     assert boarded_merchant["reseller_code"] == RESELLER_PREFIX, f"Merchant should use reseller code {RESELLER_PREFIX}"
     assert boarded_merchant["merchant_id"], "Merchant ID (MID) must exist"
     assert RESELLER_PREFIX in boarded_merchant["merchant_id"], f"Merchant ID should contain prefix {RESELLER_PREFIX}"
+
+    # Validate merchant billing terms acceptance
+    assert merchant_billing_terms["merchant_uuid"] == merchant_uuid, "Billing terms should be for the boarded merchant"
+    assert merchant_billing_terms["account_id"], "Merchant account ID must exist"
+    assert merchant_billing_terms["agreement_id"], "Agreement ID must exist"
+    assert merchant_billing_terms["acceptance_id"], "Acceptance ID must exist"
 
     # Validate billing entity links to meta reseller
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
@@ -1273,6 +1351,11 @@ def test_create_complete_reseller(
     print(f"   Merchant UUID: {merchant_uuid}")
     print(f"   Merchant ID (MID): {boarded_merchant['merchant_id']}")
     print(f"   Reseller Code: {boarded_merchant['reseller_code']}")
+    print("\n📝 Merchant Billing Terms:")
+    print(f"   Account ID: {merchant_billing_terms['account_id']}")
+    print(f"   Agreement ID: {merchant_billing_terms['agreement_id']}")
+    print(f"   Acceptance ID: {merchant_billing_terms['acceptance_id']}")
+    print(f"   Propagated to billing_event: {merchant_billing_terms['propagated_to_billing_event']}")
     print("\n💰 Billing Entity:")
     print(f"   Billing Entity UUID: {billing_entity_uuid}")
     print(f"   Entity UUID (links to reseller): {billing_entity['entity_uuid']}")

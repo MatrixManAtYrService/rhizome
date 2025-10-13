@@ -193,7 +193,9 @@ def create_reseller_owner(environment: "Environment") -> ResellerOwnerAccount:
         reason="Set the MFF account's primary role to enable reseller management capabilities",
         entity_descriptions={
             f"account_id_{account_id}": f"MFF test account ({email})",
-            f"role_id_{reseller_role_id}": f"Super Administrator role for Clover reseller (reseller_id={clover_reseller_id})",
+            f"role_id_{reseller_role_id}": (
+                f"Super Administrator role for Clover reseller (reseller_id={clover_reseller_id})"
+            ),
         },
     )
 
