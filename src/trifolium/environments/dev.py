@@ -1148,13 +1148,29 @@ class DevAgreementAPI(base.Environment):
         client = self._ensure_agreement_client_authenticated()
 
         # Get the latest agreement for the specified type
-        latest_agreement = get_latest_agreement.sync(
+        agreement_response = get_latest_agreement.sync_detailed(
             type_=agreement_type,
             client=client,
         )
 
+        if agreement_response.status_code != 200:
+            error_detail = ""
+            if agreement_response.content:
+                try:
+                    error_detail = f"\nResponse body: {agreement_response.content.decode('utf-8')}"
+                except Exception:
+                    error_detail = f"\nResponse body (binary): {len(agreement_response.content)} bytes"
+
+            raise Exception(
+                f"Could not fetch latest {agreement_type} agreement\n"
+                f"Status code: {agreement_response.status_code}\n"
+                f"URL: {client.base_url}/v1/agreements/type/{agreement_type}/latest"
+                f"{error_detail}"
+            )
+
+        latest_agreement = agreement_response.parsed
         if not latest_agreement:
-            raise Exception(f"Could not fetch latest {agreement_type} agreement")
+            raise Exception(f"Could not parse latest {agreement_type} agreement response")
 
         # Ensure agreement has an ID
         if not latest_agreement.id or latest_agreement.id is UNSET:
@@ -1173,17 +1189,32 @@ class DevAgreementAPI(base.Environment):
             account_id=account_id,
         )
 
-        acceptance = create_acceptance.sync(
+        response = create_acceptance.sync_detailed(
             client=client,
             body=acceptance_body,
             x_clover_merchant_id=merchant_uuid,
             x_clover_account_id=account_id,
         )
 
-        if not acceptance:
-            raise Exception(f"Failed to create {agreement_type} acceptance for merchant {merchant_uuid}")
+        if response.status_code != 200:
+            error_detail = ""
+            if response.content:
+                try:
+                    error_detail = f"\nResponse body: {response.content.decode('utf-8')}"
+                except Exception:
+                    error_detail = f"\nResponse body (binary): {len(response.content)} bytes"
 
-        return acceptance
+            raise Exception(
+                f"Failed to create {agreement_type} acceptance for merchant {merchant_uuid}\n"
+                f"Status code: {response.status_code}\n"
+                f"URL: {client.base_url}/v1/acceptances"
+                f"{error_detail}"
+            )
+
+        if not response.parsed:
+            raise Exception(f"No acceptance data returned for merchant {merchant_uuid}")
+
+        return response.parsed
 
     def wait_for_acceptance_propagation(
         self,
