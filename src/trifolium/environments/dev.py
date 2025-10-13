@@ -1071,18 +1071,33 @@ class DevAgreementAPI(base.Environment):
             Authenticated client for agreement service
         """
         if self._authenticated_client is None:
-            # Get authentication token via stolon's internal token method
-            from stolon.get_internal_token import get_internal_token
-
-            token = get_internal_token(self.domain)
+            # Get authentication token via parent's method
+            self._ensure_authenticated()
+            assert self._handle is not None
 
             # Import generated client
             from stolon.generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
 
-            # Create authenticated client for agreement service
+            # Add /agreement path prefix to base URL
+            agreement_base_url = f"{self._handle.base_url}/agreement"
+
+            # Create event hooks using parent's _create_httpx_client infrastructure
+            # We need to extract the event_hooks from the parent's client
+            parent_client = self._create_httpx_client()
+            event_hooks = parent_client.event_hooks
+
+            # Create authenticated client with logging hooks and proper auth
             self._authenticated_client = AuthenticatedClient(
-                base_url=f"https://{self.domain}/agreement",
-                token=token,
+                base_url=agreement_base_url,
+                token=self._handle.token,
+                prefix="",  # Token goes in Cookie header
+                headers={
+                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
+                },
+                cookies={
+                    "internalSession": self._handle.token,
+                },
+                httpx_args={"event_hooks": event_hooks},
             )
 
         return self._authenticated_client
@@ -1154,18 +1169,11 @@ class DevAgreementAPI(base.Environment):
         )
 
         if agreement_response.status_code != 200:
-            error_detail = ""
-            if agreement_response.content:
-                try:
-                    error_detail = f"\nResponse body: {agreement_response.content.decode('utf-8')}"
-                except Exception:
-                    error_detail = f"\nResponse body (binary): {len(agreement_response.content)} bytes"
-
+            # Format error message with response details
+            error_body = agreement_response.content.decode('utf-8') if agreement_response.content else "(no body)"
             raise Exception(
-                f"Could not fetch latest {agreement_type} agreement\n"
-                f"Status code: {agreement_response.status_code}\n"
-                f"URL: {client._base_url}/v1/agreements/type/{agreement_type}/latest"
-                f"{error_detail}"
+                f"Failed to fetch latest {agreement_type} agreement: HTTP {agreement_response.status_code}\n"
+                f"{error_body}"
             )
 
         latest_agreement = agreement_response.parsed
@@ -1197,18 +1205,11 @@ class DevAgreementAPI(base.Environment):
         )
 
         if response.status_code != 200:
-            error_detail = ""
-            if response.content:
-                try:
-                    error_detail = f"\nResponse body: {response.content.decode('utf-8')}"
-                except Exception:
-                    error_detail = f"\nResponse body (binary): {len(response.content)} bytes"
-
+            # Format error message with response details
+            error_body = response.content.decode('utf-8') if response.content else "(no body)"
             raise Exception(
-                f"Failed to create {agreement_type} acceptance for merchant {merchant_uuid}\n"
-                f"Status code: {response.status_code}\n"
-                f"URL: {client._base_url}/v1/acceptances"
-                f"{error_detail}"
+                f"Failed to create {agreement_type} acceptance for merchant {merchant_uuid}: "
+                f"HTTP {response.status_code}\n{error_body}"
             )
 
         if not response.parsed:
