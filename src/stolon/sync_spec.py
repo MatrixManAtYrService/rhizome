@@ -32,7 +32,13 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
         typer.echo(f"❌ Unknown environment: {env}. Valid options: {', '.join(domain_map.keys())}")
         raise typer.Exit(1)
 
-    domain = domain_map[env]
+    # Some services use different subdomains
+    # Map: (env, service) -> custom domain
+    custom_domain_map = {
+        ("dev", "agreement-k8s"): "apidev1.dev.clover.com",
+    }
+
+    domain = custom_domain_map.get((env, service), domain_map[env])
     spec_url = f"https://{domain}/{service}/v3/api-docs"
 
     typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
