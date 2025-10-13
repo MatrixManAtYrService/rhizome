@@ -2,13 +2,14 @@
 
 import webbrowser
 
+import httpx
 import typer
 
 from stolon.auth_interceptor import start_auth_server
 from trifolium.config import Home, InternalTokenPreference
 
 
-def get_internal_token(domain: str) -> str:
+def get_internal_token(domain: str, *, _skip_server_check: bool = False) -> str:
     """
     Get an internal session token via browser authentication.
 
@@ -21,6 +22,7 @@ def get_internal_token(domain: str) -> str:
 
     Args:
         domain: Clover domain to authenticate with (e.g., dev1.dev.clover.com)
+        _skip_server_check: Internal flag to prevent recursion when called from server
 
     Returns:
         The captured internal session token
@@ -29,6 +31,42 @@ def get_internal_token(domain: str) -> str:
         typer.Exit: If user cancels or authentication fails
     """
     home = Home()
+
+    # First, check if there's a stolon server already running (unless disabled)
+    if not _skip_server_check:
+        stolon_port = home.get_stolon_port()
+        if stolon_port is not None:
+            # Try to get the token from the running server
+            try:
+                base_url = f"http://0.0.0.0:{stolon_port}"
+                with httpx.Client() as client:
+                    # First try to get cached token
+                    try:
+                        response = client.get(f"{base_url}/internal_token/{domain}", timeout=5.0)
+                        response.raise_for_status()
+                        token = response.json()["token"]
+                        typer.echo(f"✅ Retrieved cached token from stolon server (port {stolon_port})")
+                        return token
+                    except httpx.HTTPStatusError as e:
+                        if e.response.status_code != 404:
+                            raise
+                        # Token not cached, need to authenticate via the server
+                        typer.echo(f"ℹ️  No cached token for {domain}, authenticating via stolon server...")
+
+                    # Token not cached, use POST /internal_token to authenticate
+                    response = client.post(
+                        f"{base_url}/internal_token",
+                        json={"domain": domain},
+                        timeout=120.0,  # Authentication might take a while
+                    )
+                    response.raise_for_status()
+                    token = response.json()["token"]
+                    typer.echo("✅ Authentication successful via stolon server")
+                    return token
+            except (httpx.HTTPError, KeyError) as e:
+                typer.echo(f"⚠️  Could not use stolon server on port {stolon_port}: {e}")
+                typer.echo("   Falling back to standalone authentication...")
+
     config_file = home.config / "trifolium.json"
 
     # If this is the first time the user has run the command, ask for their preference.
