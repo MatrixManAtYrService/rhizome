@@ -1041,7 +1041,7 @@ class DevAgreementAPI(base.Environment):
     Agreement API wrapper for merchant terms acceptance.
 
     This class provides helper methods for checking and creating merchant
-    agreement acceptances, handling the agreement-k8s service at dev1.dev.clover.com.
+    agreement acceptances, handling the agreement service at dev1.dev.clover.com.
     """
 
     @property
@@ -1068,7 +1068,7 @@ class DevAgreementAPI(base.Environment):
         Ensure we have an authenticated client for the agreement API.
 
         Returns:
-            Authenticated client for agreement-k8s service
+            Authenticated client for agreement service
         """
         if self._authenticated_client is None:
             # Get authentication token via stolon's internal token method
@@ -1079,9 +1079,9 @@ class DevAgreementAPI(base.Environment):
             # Import generated client
             from stolon.generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
 
-            # Create authenticated client for agreement-k8s
+            # Create authenticated client for agreement service
             self._authenticated_client = AuthenticatedClient(
-                base_url=f"https://{self.domain}/agreement-k8s",
+                base_url=f"https://{self.domain}/agreement",
                 token=token,
             )
 
