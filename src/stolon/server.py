@@ -60,7 +60,8 @@ async def internal_token(request: InternalTokenRequest) -> InternalTokenResponse
 
     # No cached token, get a new one
     logger.info(f"No cached token for {request.domain}, initiating authentication")
-    token = get_internal_token(request.domain)
+    # Use _skip_server_check=True to prevent recursion (server shouldn't call itself)
+    token = get_internal_token(request.domain, _skip_server_check=True)
 
     # Cache the token for future requests
     _token_cache[request.domain] = token

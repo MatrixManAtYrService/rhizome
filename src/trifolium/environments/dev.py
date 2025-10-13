@@ -5,9 +5,31 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING, Any
 
+import httpx
+
+# Environment-specific database class aliases
+# These allow code in this module to use BillingEvent, BillingBookkeeper, Meta
+# instead of the Dev-prefixed versions. This makes it easier to:
+# 1. Move code to base.py (use the alias name instead of environment-specific name)
+# 2. Create demo.py (just change the alias target: BillingEvent = DemoBillingEvent)
+from rhizome.environments.dev.billing_event import DevBillingEvent as BillingEvent
 from stolon.environments import base
 
-# Generated API imports - moved to top level to avoid deep indentation
+# Generated API imports - Agreement K8s
+from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import (
+    create_acceptance,
+    get_bulk_acceptances_service_scope,
+)
+from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import (
+    get_latest_agreement,
+)
+from stolon.generated.agreement_k8s_dev.open_api_definition_client.models import (
+    get_bulk_acceptances_service_scope_body,
+    get_bulk_acceptances_service_scope_body_request_body,
+)
+from stolon.generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+
+# Generated API imports - Billing Bookkeeper
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
     create_invoice_alliance_code,
 )
@@ -58,7 +80,19 @@ if TYPE_CHECKING:
     from rhizome.client import RhizomeClient
     from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
     from stolon.client import StolonClient
+    from stolon.generated.agreement_k8s_dev.open_api_definition_client import (
+        AuthenticatedClient as AgreementAuthenticatedClient,
+    )
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
+    from stolon.generated.billing_event_dev.open_api_definition_client import (
+        AuthenticatedClient as BillingEventAuthenticatedClient,
+    )
+
+# Type aliases for agreement models (needed to avoid line-length issues with long import paths)
+GetBulkAcceptancesServiceScopeBody = get_bulk_acceptances_service_scope_body.GetBulkAcceptancesServiceScopeBody
+GetBulkAcceptancesServiceScopeBodyRequestBody = (
+    get_bulk_acceptances_service_scope_body_request_body.GetBulkAcceptancesServiceScopeBodyRequestBody
+)
 
 
 class Environment:
@@ -143,6 +177,7 @@ class DevAPI:
         self._client = client
         self._billing_bookkeeper: DevBillingBookkeeperAPI | None = None
         self._resellers: DevResellersAPI | None = None
+        self._agreement: DevAgreementAPI | None = None
 
     @property
     def billing_bookkeeper(self) -> DevBillingBookkeeperAPI:
@@ -157,6 +192,13 @@ class DevAPI:
         if self._resellers is None:
             self._resellers = DevResellersAPI(self._client)
         return self._resellers
+
+    @property
+    def agreement(self) -> DevAgreementAPI:
+        """Agreement API access for merchant terms acceptance."""
+        if self._agreement is None:
+            self._agreement = DevAgreementAPI(self._client)
+        return self._agreement
 
 
 class DevBillingBookkeeperAPI(base.Environment):
@@ -820,6 +862,7 @@ class DevResellersAPI(base.Environment):
         plan_code: str,
         plan_type: str | None = None,
         default_plan: bool = False,
+        tags: list[str] | None = None,
     ) -> dict[str, Any]:
         """Create a merchant plan within a plan group.
 
@@ -827,8 +870,9 @@ class DevResellersAPI(base.Environment):
             merchant_plan_group_id: ID of the parent plan group
             name: Name of the plan
             plan_code: Plan code (e.g., "MFF_TEST")
-            plan_type: Optional plan type (e.g., "PAYMENTS", "REGISTER")
+            plan_type: Optional plan type (e.g., "PAYMENTS", "REGISTER", "NO_HARDWARE")
             default_plan: Whether this should be the default plan in the group (default: False)
+            tags: Optional list of tags (e.g., ["NO_HARDWARE"] for virtual/no-device plans)
 
         Returns:
             Created plan data including UUID and app bundle
@@ -843,6 +887,8 @@ class DevResellersAPI(base.Environment):
         }
         if plan_type:
             payload["type"] = plan_type
+        if tags:
+            payload["tags"] = tags
 
         endpoint = f"/v3/merchant_plan_groups/{merchant_plan_group_id}/merchant_plans"
         response = self.post(endpoint, json=payload, timeout=30.0)
@@ -991,3 +1037,313 @@ class DevResellersAPI(base.Environment):
                 "reseller_code": reseller_code,
                 "raw_response": response.text,
             }
+
+
+class DevAgreementAPI(base.Environment):
+    """
+    Agreement API wrapper for merchant terms acceptance.
+
+    This class provides helper methods for checking and creating merchant
+    agreement acceptances, handling the agreement service at dev1.dev.clover.com.
+    """
+
+    @property
+    def name(self) -> str:
+        """Environment name."""
+        return "dev"
+
+    @property
+    def domain(self) -> str:
+        """Agreement service domain."""
+        return "dev1.dev.clover.com"
+
+    def __init__(self, client: StolonClient) -> None:
+        """Initialize Agreement API.
+
+        Args:
+            client: Stolon client for HTTP requests
+        """
+        super().__init__(client)
+        self._authenticated_client: AgreementAuthenticatedClient | None = None
+        self._billing_event_client: BillingEventAuthenticatedClient | None = None
+
+    def _ensure_agreement_client_authenticated(self) -> AgreementAuthenticatedClient:
+        """
+        Ensure we have an authenticated client for the agreement API.
+
+        Returns:
+            Authenticated client for agreement service
+        """
+        if self._authenticated_client is None:
+            # Get authentication token via parent's method
+            self._ensure_authenticated()
+            assert self._handle is not None
+
+            # Import generated client
+            from stolon.generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
+
+            # Add /agreement path prefix to base URL
+            agreement_base_url = f"{self._handle.base_url}/agreement"
+
+            # Create event hooks using parent's _create_httpx_client infrastructure
+            # We need to extract the event_hooks from the parent's client
+            parent_client = self._create_httpx_client()
+            event_hooks = parent_client.event_hooks
+
+            # Create authenticated client with logging hooks and proper auth
+            self._authenticated_client = AuthenticatedClient(
+                base_url=agreement_base_url,
+                token=self._handle.token,
+                prefix="",  # Token goes in Cookie header
+                headers={
+                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
+                },
+                cookies={
+                    "internalSession": self._handle.token,
+                },
+                httpx_args={"event_hooks": event_hooks},
+            )
+
+        return self._authenticated_client
+
+    def _ensure_billing_event_client_authenticated(self) -> BillingEventAuthenticatedClient:
+        """
+        Ensure we have an authenticated client for the billing-event API.
+
+        Returns:
+            Authenticated client for billing-event service
+        """
+        if self._billing_event_client is None:
+            # Get authentication token via parent's method
+            self._ensure_authenticated()
+            assert self._handle is not None
+
+            # Import generated client
+            from stolon.generated.billing_event_dev.open_api_definition_client import AuthenticatedClient
+
+            # Add /billing-event path prefix to base URL
+            billing_event_base_url = f"{self._handle.base_url}/billing-event"
+
+            # Create event hooks using parent's _create_httpx_client infrastructure
+            parent_client = self._create_httpx_client()
+            event_hooks = parent_client.event_hooks
+
+            # Create authenticated client with logging hooks and proper auth
+            self._billing_event_client = AuthenticatedClient(
+                base_url=billing_event_base_url,
+                token=self._handle.token,
+                prefix="",  # Token goes in Cookie header
+                headers={
+                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
+                },
+                cookies={
+                    "internalSession": self._handle.token,
+                },
+                httpx_args={"event_hooks": event_hooks},
+            )
+
+        return self._billing_event_client
+
+    def has_merchant_accepted(self, merchant_uuid: str, agreement_type: str = "BILLING") -> Acceptance | None:
+        """Check if merchant has accepted a specific agreement type.
+
+        Args:
+            merchant_uuid: Merchant UUID
+            agreement_type: Agreement type to check (default: "BILLING")
+
+        Returns:
+            Acceptance object if merchant has accepted, None otherwise
+        """
+        client = self._ensure_agreement_client_authenticated()
+
+        # Query bulk acceptances API using nested request body structure
+        request_body = GetBulkAcceptancesServiceScopeBodyRequestBody()
+        request_body["merchant_id"] = [merchant_uuid]
+
+        bulk_request = GetBulkAcceptancesServiceScopeBody(request_body=request_body)
+        acceptances = get_bulk_acceptances_service_scope.sync(
+            client=client,
+            body=bulk_request,
+        )
+
+        if not acceptances:
+            return None
+
+        # Find current acceptance for the specified agreement type
+        for acceptance in acceptances:
+            if acceptance.agreement_type == agreement_type and acceptance.current:
+                return acceptance
+
+        return None
+
+    def ensure_merchant_acceptance(
+        self,
+        merchant_uuid: str,
+        account_id: str,
+        agreement_type: str = "BILLING",
+        signer_name: str | None = None,
+        rhizome_client: RhizomeClient | None = None,
+    ) -> Acceptance:
+        """Ensure merchant has accepted a specific agreement type.
+
+        This method is idempotent - it checks if the merchant has already accepted
+        the agreement, and only creates a new acceptance if needed.
+
+        Args:
+            merchant_uuid: Merchant UUID
+            account_id: Merchant's account ID (numeric) or UUID
+            agreement_type: Agreement type (default: "BILLING")
+            signer_name: Name of signer (default: "Test User for {merchant_uuid}")
+            rhizome_client: Optional Rhizome client to look up account UUID if numeric ID provided
+
+        Returns:
+            Acceptance object (either existing or newly created)
+
+        Raises:
+            Exception: If acceptance creation fails
+        """
+        # Check if merchant already has acceptance
+        existing_acceptance = self.has_merchant_accepted(merchant_uuid, agreement_type)
+        if existing_acceptance:
+            return existing_acceptance
+
+        # If account_id is numeric (not a UUID), we need to look it up
+        if account_id.isdigit() and rhizome_client is not None:
+            from rhizome.environments.dev.meta import DevMeta
+            from rhizome.models.meta.account import Account as AccountModel
+            from sqlmodel import select
+
+            meta_db = DevMeta(rhizome_client)
+            Account = meta_db.get_versioned(AccountModel)
+            account = meta_db.select_first(
+                select(Account).where(Account.id == int(account_id)),
+                sanitize=False,
+            )
+            if not account:
+                raise Exception(f"Could not find account with id={account_id}")
+            account_uuid = account.uuid
+        else:
+            # Assume it's already a UUID
+            account_uuid = account_id
+
+        # Create new acceptance
+        client = self._ensure_agreement_client_authenticated()
+
+        # Get the latest agreement for the specified type
+        agreement_response = get_latest_agreement.sync_detailed(
+            type_=agreement_type,
+            client=client,
+        )
+
+        if agreement_response.status_code != 200:
+            # Format error message with response details
+            error_body = agreement_response.content.decode('utf-8') if agreement_response.content else "(no body)"
+            raise Exception(
+                f"Failed to fetch latest {agreement_type} agreement: HTTP {agreement_response.status_code}\n"
+                f"{error_body}"
+            )
+
+        latest_agreement = agreement_response.parsed
+        if not latest_agreement:
+            raise Exception(f"Could not parse latest {agreement_type} agreement response")
+
+        # Ensure agreement has an ID
+        if not latest_agreement.id or latest_agreement.id is UNSET:
+            raise Exception(f"Latest {agreement_type} agreement has no ID")
+
+        # Create acceptance
+        if signer_name is None:
+            signer_name = f"Test User for {merchant_uuid}"
+
+        # Use the billing-event backfill endpoint instead of the agreement API
+        # This is the correct way to programmatically create acceptances
+        from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import create_4
+        from stolon.generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
+            ApiBackfillAcceptance,
+        )
+        from stolon.generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance_type import (
+            ApiBackfillAcceptanceType,
+        )
+
+        # Get authenticated client for billing-event service
+        billing_event_client = self._ensure_billing_event_client_authenticated()
+
+        # Create the backfill acceptance model
+        backfill_body = ApiBackfillAcceptance(
+            merchant_id=merchant_uuid,
+            account_id=account_uuid,
+            type_=ApiBackfillAcceptanceType(agreement_type),
+            locale="en_US",
+            comment=f"Acceptance created via trifolium for {merchant_uuid}",
+        )
+
+        # Call the backfill API
+        backfill_response = create_4.sync_detailed(
+            client=billing_event_client,
+            body=backfill_body,
+        )
+
+        if backfill_response.status_code != 200:
+            error_body = backfill_response.content.decode('utf-8') if backfill_response.content else "(no body)"
+            raise Exception(
+                f"Failed to backfill {agreement_type} acceptance for merchant {merchant_uuid}: "
+                f"HTTP {backfill_response.status_code}\n{error_body}"
+            )
+
+        # Now fetch the acceptance from the agreement API to return the proper object
+        acceptance = self.has_merchant_accepted(merchant_uuid, agreement_type)
+        if not acceptance:
+            raise Exception(
+                f"Backfill succeeded but could not find {agreement_type} acceptance for merchant {merchant_uuid}"
+            )
+
+        return acceptance
+
+    def wait_for_acceptance_propagation(
+        self,
+        rhizome_client: RhizomeClient,
+        merchant_uuid: str,
+        agreement_type: str = "BILLING",
+        max_retries: int = 10,
+        retry_delay: float = 1.0,
+    ) -> dict[str, Any] | None:
+        """Wait for acceptance to propagate to billing_event.merchant_acceptance.
+
+        Args:
+            rhizome_client: Rhizome client for database access
+            merchant_uuid: Merchant UUID
+            agreement_type: Agreement type (default: "BILLING")
+            max_retries: Maximum number of retry attempts (default: 10)
+            retry_delay: Delay between retries in seconds (default: 1.0)
+
+        Returns:
+            Dictionary with acceptance record data if found, None otherwise
+        """
+        import time
+
+        from sqlmodel import desc, select
+
+        billing_event_db = BillingEvent(rhizome_client)
+
+        for attempt in range(1, max_retries + 1):
+            acceptance_record = billing_event_db.select_first(
+                select(BillingEvent.MerchantAcceptance)
+                .where(BillingEvent.MerchantAcceptance.merchant_uuid == merchant_uuid)
+                .where(BillingEvent.MerchantAcceptance.agreement_type == agreement_type)
+                .order_by(desc(BillingEvent.MerchantAcceptance.acceptance_created_datetime)),
+                sanitize=False,
+            )
+
+            if acceptance_record:
+                return {
+                    "merchant_uuid": acceptance_record.merchant_uuid,
+                    "agreement_type": acceptance_record.agreement_type,
+                    "agreement_id": str(acceptance_record.agreement_id),
+                    "acceptance_created_datetime": acceptance_record.acceptance_created_datetime,
+                    "created_timestamp": acceptance_record.created_timestamp,
+                }
+
+            if attempt < max_retries:
+                time.sleep(retry_delay)
+
+        return None

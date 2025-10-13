@@ -208,10 +208,11 @@ def test_mocked_environment_database_access(
     def mock_session_context_factory(engine: object) -> object:
         return MockSessionContext()
 
-    def mock_create_engine(cs: str) -> MagicMock:
+    def mock_create_instrumented_engine(self: object, cs: str) -> MagicMock:
+        """Mock the instrumented engine to bypass SQLAlchemy event listeners."""
         return MagicMock()
 
-    monkeypatch.setattr("rhizome.client.create_engine", mock_create_engine)
+    monkeypatch.setattr("rhizome.client.RhizomeClient._create_instrumented_engine", mock_create_instrumented_engine)
     monkeypatch.setattr("rhizome.client.Session", mock_session_context_factory)
 
     # Build query - handle models with composite primary keys vs single id field

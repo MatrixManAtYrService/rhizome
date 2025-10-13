@@ -32,28 +32,47 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
         typer.echo(f"❌ Unknown environment: {env}. Valid options: {', '.join(domain_map.keys())}")
         raise typer.Exit(1)
 
-    domain = domain_map[env]
+    # Some services use different subdomains
+    # Map: (env, service) -> custom domain
+    custom_domain_map = {
+        ("dev", "agreement-k8s"): "apidev1.dev.clover.com",
+    }
+
+    domain = custom_domain_map.get((env, service), domain_map[env])
     spec_url = f"https://{domain}/{service}/v3/api-docs"
 
     typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
 
-    # Get authentication token
-    typer.echo("🔐 Getting authentication token...")
-    token = get_internal_token(domain)
-
-    # Fetch the OpenAPI spec with authentication
+    # Try to fetch the OpenAPI spec without authentication first (most specs are public)
     try:
-        headers = {
-            "Cookie": f"internalSession={token}",
-            "Content-Type": "application/json",
-            "X-Clover-Appenv": f"{env}:{domain.split('.')[0]}",
-        }
-        response = httpx.get(spec_url, headers=headers, follow_redirects=True, timeout=30.0)
+        response = httpx.get(spec_url, follow_redirects=True, timeout=30.0)
         response.raise_for_status()
         spec_data = response.json()
+        typer.echo("✅ Fetched spec without authentication")
     except httpx.HTTPError as e:
-        typer.echo(f"❌ Failed to fetch spec: {e}")
-        raise typer.Exit(1) from e
+        # If that fails, try with authentication
+        status: int | str
+        status = e.response.status_code if isinstance(e, httpx.HTTPStatusError) else "error"
+        typer.echo(f"⚠️  Failed without auth ({status}), trying with authentication...")
+
+        # Get authentication token
+        typer.echo("🔐 Getting authentication token...")
+        token = get_internal_token(domain)
+
+        # Fetch the OpenAPI spec with authentication
+        try:
+            headers = {
+                "Cookie": f"internalSession={token}",
+                "Content-Type": "application/json",
+                "X-Clover-Appenv": f"{env}:{domain.split('.')[0]}",
+            }
+            response = httpx.get(spec_url, headers=headers, follow_redirects=True, timeout=30.0)
+            response.raise_for_status()
+            spec_data = response.json()
+            typer.echo("✅ Fetched spec with authentication")
+        except httpx.HTTPError as e2:
+            typer.echo(f"❌ Failed to fetch spec even with authentication: {e2}")
+            raise typer.Exit(1) from e2
 
     # Determine output path
     # Store generated clients in src/stolon/generated/{service}_{env}
