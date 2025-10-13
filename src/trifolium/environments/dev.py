@@ -1041,7 +1041,7 @@ class DevAgreementAPI(base.Environment):
     Agreement API wrapper for merchant terms acceptance.
 
     This class provides helper methods for checking and creating merchant
-    agreement acceptances, handling the agreement-k8s service at apidev1.dev.clover.com.
+    agreement acceptances, handling the agreement-k8s service at dev1.dev.clover.com.
     """
 
     @property
@@ -1051,8 +1051,8 @@ class DevAgreementAPI(base.Environment):
 
     @property
     def domain(self) -> str:
-        """Agreement service domain (uses apidev1 subdomain)."""
-        return "apidev1.dev.clover.com"
+        """Agreement service domain."""
+        return "dev1.dev.clover.com"
 
     def __init__(self, client: StolonClient) -> None:
         """Initialize Agreement API.
