@@ -1164,7 +1164,7 @@ class DevAgreementAPI(base.Environment):
             raise Exception(
                 f"Could not fetch latest {agreement_type} agreement\n"
                 f"Status code: {agreement_response.status_code}\n"
-                f"URL: {client.base_url}/v1/agreements/type/{agreement_type}/latest"
+                f"URL: {client._base_url}/v1/agreements/type/{agreement_type}/latest"
                 f"{error_detail}"
             )
 
@@ -1207,7 +1207,7 @@ class DevAgreementAPI(base.Environment):
             raise Exception(
                 f"Failed to create {agreement_type} acceptance for merchant {merchant_uuid}\n"
                 f"Status code: {response.status_code}\n"
-                f"URL: {client.base_url}/v1/acceptances"
+                f"URL: {client._base_url}/v1/acceptances"
                 f"{error_detail}"
             )
 
