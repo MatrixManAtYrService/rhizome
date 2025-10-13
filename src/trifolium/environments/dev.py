@@ -84,6 +84,9 @@ if TYPE_CHECKING:
         AuthenticatedClient as AgreementAuthenticatedClient,
     )
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
+    from stolon.generated.billing_event_dev.open_api_definition_client import (
+        AuthenticatedClient as BillingEventAuthenticatedClient,
+    )
 
 # Type aliases for agreement models (needed to avoid line-length issues with long import paths)
 GetBulkAcceptancesServiceScopeBody = get_bulk_acceptances_service_scope_body.GetBulkAcceptancesServiceScopeBody
