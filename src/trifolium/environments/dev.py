@@ -1188,34 +1188,49 @@ class DevAgreementAPI(base.Environment):
         if signer_name is None:
             signer_name = f"Test User for {merchant_uuid}"
 
-        # Note: source field is optional. AcceptanceSource enum only has: CLOVERGO, DEVICE, WEB
-        # Not providing source since ADMIN is not a valid value
-        acceptance_body = Acceptance(
-            agreement_id=latest_agreement.id,
-            signer_name=signer_name,
+        # Use the billing-event backfill endpoint instead of the agreement API
+        # This is the correct way to programmatically create acceptances
+        from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import create_4
+        from stolon.generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
+            ApiBackfillAcceptance,
+        )
+        from stolon.generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance_type import (
+            ApiBackfillAcceptanceType,
+        )
+
+        # Get authenticated client for billing-event service
+        billing_event_client = self._ensure_billing_event_client_authenticated()
+
+        # Create the backfill acceptance model
+        backfill_body = ApiBackfillAcceptance(
             merchant_id=merchant_uuid,
             account_id=account_id,
+            type_=ApiBackfillAcceptanceType(agreement_type),
+            locale="en_US",
+            comment=f"Acceptance created via trifolium for {merchant_uuid}",
         )
 
-        response = create_acceptance.sync_detailed(
-            client=client,
-            body=acceptance_body,
-            x_clover_merchant_id=merchant_uuid,
-            x_clover_account_id=account_id,
+        # Call the backfill API
+        backfill_response = create_4.sync_detailed(
+            client=billing_event_client,
+            body=backfill_body,
         )
 
-        if response.status_code != 200:
-            # Format error message with response details
-            error_body = response.content.decode('utf-8') if response.content else "(no body)"
+        if backfill_response.status_code != 200:
+            error_body = backfill_response.content.decode('utf-8') if backfill_response.content else "(no body)"
             raise Exception(
-                f"Failed to create {agreement_type} acceptance for merchant {merchant_uuid}: "
-                f"HTTP {response.status_code}\n{error_body}"
+                f"Failed to backfill {agreement_type} acceptance for merchant {merchant_uuid}: "
+                f"HTTP {backfill_response.status_code}\n{error_body}"
             )
 
-        if not response.parsed:
-            raise Exception(f"No acceptance data returned for merchant {merchant_uuid}")
+        # Now fetch the acceptance from the agreement API to return the proper object
+        acceptance = self.has_merchant_accepted(merchant_uuid, agreement_type)
+        if not acceptance:
+            raise Exception(
+                f"Backfill succeeded but could not find {agreement_type} acceptance for merchant {merchant_uuid}"
+            )
 
-        return response.parsed
+        return acceptance
 
     def wait_for_acceptance_propagation(
         self,
