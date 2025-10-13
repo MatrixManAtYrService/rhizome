@@ -1156,11 +1156,11 @@ class DevAgreementAPI(base.Environment):
         """
         client = self._ensure_agreement_client_authenticated()
 
-        # Query bulk acceptances API using nested request body structure
-        request_body = GetBulkAcceptancesServiceScopeBodyRequestBody()
-        request_body["merchant_id"] = [merchant_uuid]
+        # Query bulk acceptances API - use additional_properties to set merchantId at top level
+        # Browser sends: {"merchantId":["MERCHANT_UUID"]} not nested in requestBody
+        bulk_request = GetBulkAcceptancesServiceScopeBody()
+        bulk_request["merchantId"] = [merchant_uuid]
 
-        bulk_request = GetBulkAcceptancesServiceScopeBody(request_body=request_body)
         acceptances = get_bulk_acceptances_service_scope.sync(
             client=client,
             body=bulk_request,
