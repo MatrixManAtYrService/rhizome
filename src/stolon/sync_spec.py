@@ -43,23 +43,34 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
 
     typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
 
-    # Get authentication token
-    typer.echo("🔐 Getting authentication token...")
-    token = get_internal_token(domain)
-
-    # Fetch the OpenAPI spec with authentication
+    # Try to fetch the OpenAPI spec without authentication first (most specs are public)
     try:
-        headers = {
-            "Cookie": f"internalSession={token}",
-            "Content-Type": "application/json",
-            "X-Clover-Appenv": f"{env}:{domain.split('.')[0]}",
-        }
-        response = httpx.get(spec_url, headers=headers, follow_redirects=True, timeout=30.0)
+        response = httpx.get(spec_url, follow_redirects=True, timeout=30.0)
         response.raise_for_status()
         spec_data = response.json()
+        typer.echo("✅ Fetched spec without authentication")
     except httpx.HTTPError as e:
-        typer.echo(f"❌ Failed to fetch spec: {e}")
-        raise typer.Exit(1) from e
+        # If that fails, try with authentication
+        typer.echo(f"⚠️  Failed without auth ({e.response.status_code if hasattr(e, 'response') else 'error'}), trying with authentication...")
+
+        # Get authentication token
+        typer.echo("🔐 Getting authentication token...")
+        token = get_internal_token(domain)
+
+        # Fetch the OpenAPI spec with authentication
+        try:
+            headers = {
+                "Cookie": f"internalSession={token}",
+                "Content-Type": "application/json",
+                "X-Clover-Appenv": f"{env}:{domain.split('.')[0]}",
+            }
+            response = httpx.get(spec_url, headers=headers, follow_redirects=True, timeout=30.0)
+            response.raise_for_status()
+            spec_data = response.json()
+            typer.echo("✅ Fetched spec with authentication")
+        except httpx.HTTPError as e2:
+            typer.echo(f"❌ Failed to fetch spec even with authentication: {e2}")
+            raise typer.Exit(1) from e2
 
     # Determine output path
     # Store generated clients in src/stolon/generated/{service}_{env}
