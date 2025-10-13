@@ -1106,6 +1106,44 @@ class DevAgreementAPI(base.Environment):
 
         return self._authenticated_client
 
+    def _ensure_billing_event_client_authenticated(self) -> BillingEventAuthenticatedClient:
+        """
+        Ensure we have an authenticated client for the billing-event API.
+
+        Returns:
+            Authenticated client for billing-event service
+        """
+        if self._billing_event_client is None:
+            # Get authentication token via parent's method
+            self._ensure_authenticated()
+            assert self._handle is not None
+
+            # Import generated client
+            from stolon.generated.billing_event_dev.open_api_definition_client import AuthenticatedClient
+
+            # Add /billing-event path prefix to base URL
+            billing_event_base_url = f"{self._handle.base_url}/billing-event"
+
+            # Create event hooks using parent's _create_httpx_client infrastructure
+            parent_client = self._create_httpx_client()
+            event_hooks = parent_client.event_hooks
+
+            # Create authenticated client with logging hooks and proper auth
+            self._billing_event_client = AuthenticatedClient(
+                base_url=billing_event_base_url,
+                token=self._handle.token,
+                prefix="",  # Token goes in Cookie header
+                headers={
+                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
+                },
+                cookies={
+                    "internalSession": self._handle.token,
+                },
+                httpx_args={"event_hooks": event_hooks},
+            )
+
+        return self._billing_event_client
+
     def has_merchant_accepted(self, merchant_uuid: str, agreement_type: str = "BILLING") -> Acceptance | None:
         """Check if merchant has accepted a specific agreement type.
 
