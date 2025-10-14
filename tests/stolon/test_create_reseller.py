@@ -41,22 +41,15 @@ from collections.abc import Generator
 from datetime import datetime, timedelta
 from typing import Any
 
+import httpx
 import pytest
 from sqlmodel import select
 
 from rhizome.client import RhizomeClient
-from rhizome.models.billing_bookkeeper.billing_entity import BillingEntity as BillingEntityModel
-from rhizome.models.billing_bookkeeper.billing_hierarchy import BillingHierarchy as BillingHierarchyModel
-from rhizome.models.billing_bookkeeper.billing_schedule import BillingSchedule as BillingScheduleModel
-from rhizome.models.billing_bookkeeper.cellular_action_fee_code import (
-    CellularActionFeeCode as CellularActionFeeCodeModel,
-)
-from rhizome.models.billing_bookkeeper.fee_rate import FeeRate as FeeRateModel
-from rhizome.models.billing_bookkeeper.invoice_alliance_code import InvoiceAllianceCode as InvoiceAllianceCodeModel
-from rhizome.models.billing_bookkeeper.partner_config import PartnerConfig as PartnerConfigModel
-from rhizome.models.billing_bookkeeper.plan_action_fee_code import PlanActionFeeCode as PlanActionFeeCodeModel
-from rhizome.models.billing_bookkeeper.processing_group_dates import ProcessingGroupDates as ProcessingGroupDatesModel
-from rhizome.models.meta.merchant import Merchant as MerchantModel
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from rhizome.environments.dev.meta import DevMeta
+from rhizome.models.meta.merchant import Merchant
+from rhizome.models.meta.reseller import Reseller
 from stolon.client import StolonClient
 from tests.conftest import RunningStolonServer
 from trifolium.environments import dev
@@ -180,20 +173,15 @@ def merchant_plan_group(environment: dev.Environment) -> Generator[dict[str, Any
 
     Scope: module - reuse across all tests in this module.
     """
-    from rhizome.client import RhizomeClient
-    from rhizome.environments.dev.meta import DevMeta
-    from rhizome.models.meta.merchant_plan_group import MerchantPlanGroup as MerchantPlanGroupModel
-
     # Check if a plan group with our prefix name already exists
     rhizome_client = RhizomeClient(data_in_logs=False)
     meta_db = DevMeta(rhizome_client)
-    MerchantPlanGroup = meta_db.get_versioned(MerchantPlanGroupModel)
 
     existing_group = meta_db.select_first(
-        select(MerchantPlanGroup)
-        .where(MerchantPlanGroup.name.like(f"{RESELLER_PREFIX} Test Plan Group%"))  # type: ignore[attr-defined]
-        .where(MerchantPlanGroup.deleted_time.is_(None))  # type: ignore[attr-defined]
-        .order_by(MerchantPlanGroup.id.desc()),  # type: ignore[attr-defined]
+        select(DevMeta.MerchantPlanGroup)
+        .where(DevMeta.MerchantPlanGroup.name.like(f"{RESELLER_PREFIX} Test Plan Group%"))  # type: ignore[attr-defined]
+        .where(DevMeta.MerchantPlanGroup.deleted_time.is_(None))  # type: ignore[attr-defined]
+        .order_by(DevMeta.MerchantPlanGroup.id.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
 
@@ -256,26 +244,21 @@ def merchant_plan(
 
     Scope: module - reuse across all tests in this module.
     """
-    from rhizome.client import RhizomeClient
-    from rhizome.environments.dev.meta import DevMeta
-    from rhizome.models.meta.merchant_plan import MerchantPlan as MerchantPlanModel
-
     plan_group_id = merchant_plan_group["plan_group_id"]
 
     # Check if a plan already exists in this group
     rhizome_client = RhizomeClient(data_in_logs=False)
     meta_db = DevMeta(rhizome_client)
-    MerchantPlan = meta_db.get_versioned(MerchantPlanModel)
 
     # Look for a default NO_HARDWARE plan (needed for merchant boarding without devices)
     existing_plan = meta_db.select_first(
-        select(MerchantPlan)
-        .where(MerchantPlan.merchant_plan_group_id == plan_group_id)
-        .where(MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
-        .where(MerchantPlan.deactivation_time.is_(None))  # type: ignore[attr-defined]  # Exclude deactivated plans
-        .where(MerchantPlan.default_plan)  # type: ignore[attr-defined]  # Must be default
-        .where(MerchantPlan.type == "NO_HARDWARE")  # type: ignore[attr-defined]  # Must support no-device boarding
-        .order_by(MerchantPlan.id.desc()),  # type: ignore[attr-defined]
+        select(DevMeta.MerchantPlan)
+        .where(DevMeta.MerchantPlan.merchant_plan_group_id == plan_group_id)
+        .where(DevMeta.MerchantPlan.name.like(f"{RESELLER_PREFIX} Test Plan%"))  # type: ignore[attr-defined]
+        .where(DevMeta.MerchantPlan.deactivation_time.is_(None))  # type: ignore[attr-defined]  # Exclude deactivated plans
+        .where(DevMeta.MerchantPlan.default_plan)  # type: ignore[attr-defined]  # Must be default
+        .where(DevMeta.MerchantPlan.type == "NO_HARDWARE")  # type: ignore[attr-defined]  # Must support no-device boarding
+        .order_by(DevMeta.MerchantPlan.id.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
 
@@ -352,14 +335,8 @@ def meta_reseller(
     """
     # Check if a meta reseller with our prefix name already exists
     # We need to use rhizome to query the meta database
-    from rhizome.client import RhizomeClient
-    from rhizome.environments.dev.meta import DevMeta
-    from rhizome.models.meta.reseller import Reseller as ResellerModel
-
-    # Create a new rhizome client for meta database access
     rhizome_client = RhizomeClient(data_in_logs=False)
     meta_db = DevMeta(rhizome_client)
-    Reseller = meta_db.get_versioned(ResellerModel)
 
     # Query for any reseller with our prefix name
     existing_reseller = meta_db.select_first(
@@ -528,11 +505,8 @@ def merchant_billing_terms(
     print("\n=== Checking/Accepting Merchant Billing Terms ===")
     print(f"    Merchant UUID: {merchant_uuid}")
 
-    # Get merchant's account_id from meta.merchant
-    from rhizome.environments.dev.meta import DevMeta
-
+    # Get merchant's account UUID from meta.merchant and meta.account
     meta_db = DevMeta(environment.rhizome_client)
-    Merchant = meta_db.get_versioned(MerchantModel)
 
     merchant = meta_db.select_first(
         select(Merchant).where(Merchant.uuid == merchant_uuid),
@@ -542,15 +516,25 @@ def merchant_billing_terms(
     if not merchant:
         raise Exception(f"Merchant {merchant_uuid} not found in meta.merchant")
 
-    account_id = str(merchant.owner_account_id)
-    print(f"    Account ID: {account_id}")
+    # Look up the account UUID from the numeric account ID
+    from rhizome.models.meta.account import Account
+
+    account = meta_db.select_first(
+        select(Account).where(Account.id == merchant.owner_account_id),
+        sanitize=False,
+    )
+
+    if not account:
+        raise Exception(f"Account with id={merchant.owner_account_id} not found in meta.account")
+
+    account_uuid = account.uuid
+    print(f"    Account UUID: {account_uuid}")
 
     # Use helper to ensure acceptance (idempotent - checks first, only creates if needed)
     acceptance = environment.api.agreement.ensure_merchant_acceptance(
         merchant_uuid=merchant_uuid,
-        account_id=account_id,
+        account_uuid=account_uuid,
         agreement_type="BILLING",
-        rhizome_client=environment.rhizome_client,
     )
 
     print(f"✓ Merchant has BILLING acceptance (Agreement ID: {acceptance.agreement_id})")
@@ -570,7 +554,7 @@ def merchant_billing_terms(
 
     yield {
         "merchant_uuid": merchant_uuid,
-        "account_id": account_id,
+        "account_uuid": account_uuid,
         "agreement_id": str(acceptance.agreement_id) if acceptance.agreement_id else None,
         "acceptance_id": str(acceptance.id) if acceptance.id else None,
         "propagated_to_billing_event": propagation_result is not None,
@@ -592,12 +576,10 @@ def billing_entity(
     reseller_name = meta_reseller["name"]
 
     # Check if billing entity already exists for this reseller UUID
-    BillingEntity = environment.db.billing_bookkeeper.get_versioned(BillingEntityModel)
-
     existing_entity = environment.db.billing_bookkeeper.select_first(
-        select(BillingEntity)
-        .where(BillingEntity.entity_type == "RESELLER")
-        .where(BillingEntity.entity_uuid == reseller_uuid),
+        select(DevBillingBookkeeper.BillingEntity)
+        .where(DevBillingBookkeeper.BillingEntity.entity_type == "RESELLER")
+        .where(DevBillingBookkeeper.BillingEntity.entity_uuid == reseller_uuid),
         sanitize=False,
     )
 
@@ -667,10 +649,10 @@ def alliance_code(
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if alliance code already exists for this billing entity
-    InvoiceAllianceCode = environment.db.billing_bookkeeper.get_versioned(InvoiceAllianceCodeModel)
-
     existing_alliance_code = environment.db.billing_bookkeeper.select_first(
-        select(InvoiceAllianceCode).where(InvoiceAllianceCode.billing_entity_uuid == billing_entity_uuid),
+        select(DevBillingBookkeeper.InvoiceAllianceCode).where(
+            DevBillingBookkeeper.InvoiceAllianceCode.billing_entity_uuid == billing_entity_uuid
+        ),
         sanitize=False,
     )
 
@@ -694,9 +676,9 @@ def alliance_code(
     # The billing_entity_uuid foreign key ties it to the reseller
     # Format: 3-digit number (001, 002, ..., 999)
     existing_codes = environment.db.billing_bookkeeper.select_all(
-        select(InvoiceAllianceCode)
-        .where(InvoiceAllianceCode.alliance_code.regexp_match(r"^\d{3}$"))  # type: ignore[attr-defined]
-        .order_by(InvoiceAllianceCode.alliance_code.desc()),  # type: ignore[attr-defined]
+        select(DevBillingBookkeeper.InvoiceAllianceCode)
+        .where(DevBillingBookkeeper.InvoiceAllianceCode.alliance_code.regexp_match(r"^\d{3}$"))  # type: ignore[attr-defined]
+        .order_by(DevBillingBookkeeper.InvoiceAllianceCode.alliance_code.desc()),  # type: ignore[attr-defined]
         sanitize=False,
     )
 
@@ -749,10 +731,10 @@ def billing_schedule(
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if billing schedule already exists for this billing entity
-    BillingSchedule = environment.db.billing_bookkeeper.get_versioned(BillingScheduleModel)
-
     existing_schedule = environment.db.billing_bookkeeper.select_first(
-        select(BillingSchedule).where(BillingSchedule.billing_entity_uuid == billing_entity_uuid),
+        select(DevBillingBookkeeper.BillingSchedule).where(
+            DevBillingBookkeeper.BillingSchedule.billing_entity_uuid == billing_entity_uuid
+        ),
         sanitize=False,
     )
 
@@ -805,12 +787,10 @@ def fee_rate(billing_entity: dict[str, Any], environment: dev.Environment) -> Ge
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if fee rate already exists for this billing entity
-    FeeRate = environment.db.billing_bookkeeper.get_versioned(FeeRateModel)
-
     existing_fee_rate = environment.db.billing_bookkeeper.select_first(
-        select(FeeRate)
-        .where(FeeRate.billing_entity_uuid == billing_entity_uuid)
-        .order_by(FeeRate.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
+        select(DevBillingBookkeeper.FeeRate)
+        .where(DevBillingBookkeeper.FeeRate.billing_entity_uuid == billing_entity_uuid)
+        .order_by(DevBillingBookkeeper.FeeRate.created_timestamp.desc()),  # type: ignore[attr-defined]  # SQLModel columns have .desc()
         sanitize=False,
     )
 
@@ -863,10 +843,10 @@ def processing_group_dates(
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if processing group dates already exist for this billing entity
-    ProcessingGroupDates = environment.db.billing_bookkeeper.get_versioned(ProcessingGroupDatesModel)
-
     existing_pgd = environment.db.billing_bookkeeper.select_first(
-        select(ProcessingGroupDates).where(ProcessingGroupDates.billing_entity_uuid == billing_entity_uuid),
+        select(DevBillingBookkeeper.ProcessingGroupDates).where(
+            DevBillingBookkeeper.ProcessingGroupDates.billing_entity_uuid == billing_entity_uuid
+        ),
         sanitize=False,
     )
 
@@ -922,23 +902,20 @@ def billing_hierarchy(
     """
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
-    # Get the model first so we can use it in queries
-    BillingHierarchy = environment.db.billing_bookkeeper.get_versioned(BillingHierarchyModel)
-
     # Query for common parent hierarchies in dev1
     # Find the most commonly used parent hierarchies for each type
     merchant_schedule_parent = environment.db.billing_bookkeeper.select_first(
-        select(BillingHierarchy.parent_billing_hierarchy_uuid)
-        .where(BillingHierarchy.hierarchy_type == "MERCHANT_SCHEDULE")
-        .where(BillingHierarchy.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
+        select(DevBillingBookkeeper.BillingHierarchy.parent_billing_hierarchy_uuid)
+        .where(DevBillingBookkeeper.BillingHierarchy.hierarchy_type == "MERCHANT_SCHEDULE")
+        .where(DevBillingBookkeeper.BillingHierarchy.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
         .limit(1),
         sanitize=False,
     )
 
     merchant_fee_rate_parent = environment.db.billing_bookkeeper.select_first(
-        select(BillingHierarchy.parent_billing_hierarchy_uuid)
-        .where(BillingHierarchy.hierarchy_type == "MERCHANT_FEE_RATE")
-        .where(BillingHierarchy.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
+        select(DevBillingBookkeeper.BillingHierarchy.parent_billing_hierarchy_uuid)
+        .where(DevBillingBookkeeper.BillingHierarchy.hierarchy_type == "MERCHANT_FEE_RATE")
+        .where(DevBillingBookkeeper.BillingHierarchy.parent_billing_hierarchy_uuid.is_not(None))  # type: ignore[attr-defined]
         .limit(1),
         sanitize=False,
     )
@@ -958,16 +935,16 @@ def billing_hierarchy(
 
     # Check if billing hierarchy entries already exist for this billing entity
     existing_schedule_hierarchy = environment.db.billing_bookkeeper.select_first(
-        select(BillingHierarchy)
-        .where(BillingHierarchy.billing_entity_uuid == billing_entity_uuid)
-        .where(BillingHierarchy.hierarchy_type == "MERCHANT_SCHEDULE"),
+        select(DevBillingBookkeeper.BillingHierarchy)
+        .where(DevBillingBookkeeper.BillingHierarchy.billing_entity_uuid == billing_entity_uuid)
+        .where(DevBillingBookkeeper.BillingHierarchy.hierarchy_type == "MERCHANT_SCHEDULE"),
         sanitize=False,
     )
 
     existing_fee_rate_hierarchy = environment.db.billing_bookkeeper.select_first(
-        select(BillingHierarchy)
-        .where(BillingHierarchy.billing_entity_uuid == billing_entity_uuid)
-        .where(BillingHierarchy.hierarchy_type == "MERCHANT_FEE_RATE"),
+        select(DevBillingBookkeeper.BillingHierarchy)
+        .where(DevBillingBookkeeper.BillingHierarchy.billing_entity_uuid == billing_entity_uuid)
+        .where(DevBillingBookkeeper.BillingHierarchy.hierarchy_type == "MERCHANT_FEE_RATE"),
         sanitize=False,
     )
 
@@ -1051,12 +1028,10 @@ def partner_config(
     billing_entity_uuid = billing_entity["billing_entity_uuid"]
 
     # Check if partner config already exists for this billing entity
-    PartnerConfig = environment.db.billing_bookkeeper.get_versioned(PartnerConfigModel)
-
     existing_partner_config = environment.db.billing_bookkeeper.select_first(
-        select(PartnerConfig)
-        .where(PartnerConfig.billing_entity_uuid == billing_entity_uuid)
-        .where(PartnerConfig.hierarchy_type == "MERCHANT_SCHEDULE"),
+        select(DevBillingBookkeeper.PartnerConfig)
+        .where(DevBillingBookkeeper.PartnerConfig.billing_entity_uuid == billing_entity_uuid)
+        .where(DevBillingBookkeeper.PartnerConfig.hierarchy_type == "MERCHANT_SCHEDULE"),
         sanitize=False,
     )
 
@@ -1106,19 +1081,15 @@ def plan_action_fee_code(environment: dev.Environment) -> Generator[dict[str, An
 
     Scope: module - reuse across all tests in this module.
     """
-    import httpx
-
     test_plan_uuid = "YEQMV17H09HHW"
 
     # Check if plan action fee code already exists (global resource)
-    PlanActionFeeCode = environment.db.billing_bookkeeper.get_versioned(PlanActionFeeCodeModel)
-
     existing_plan_action_fee_code = environment.db.billing_bookkeeper.select_first(
-        select(PlanActionFeeCode)
-        .where(PlanActionFeeCode.merchant_plan_uuid == test_plan_uuid)
-        .where(PlanActionFeeCode.plan_action_type == "PLAN_ASSIGN")
-        .where(PlanActionFeeCode.fee_category == "PLAN_RETAIL")
-        .where(PlanActionFeeCode.fee_code == "PaymentsPDVT.PRC"),
+        select(DevBillingBookkeeper.PlanActionFeeCode)
+        .where(DevBillingBookkeeper.PlanActionFeeCode.merchant_plan_uuid == test_plan_uuid)
+        .where(DevBillingBookkeeper.PlanActionFeeCode.plan_action_type == "PLAN_ASSIGN")
+        .where(DevBillingBookkeeper.PlanActionFeeCode.fee_category == "PLAN_RETAIL")
+        .where(DevBillingBookkeeper.PlanActionFeeCode.fee_code == "PaymentsPDVT.PRC"),
         sanitize=False,
     )
 
@@ -1173,20 +1144,16 @@ def cellular_action_fee_code(environment: dev.Environment) -> Generator[dict[str
 
     Scope: module - reuse across all tests in this module.
     """
-    import httpx
-
     carrier = "AT&T"
     cellular_action_type = "CELLULAR_ARREARS"
 
     # Check if cellular action fee code already exists (global resource)
-    CellularActionFeeCode = environment.db.billing_bookkeeper.get_versioned(CellularActionFeeCodeModel)
-
     existing_cellular_action_fee_code = environment.db.billing_bookkeeper.select_first(
-        select(CellularActionFeeCode)
-        .where(CellularActionFeeCode.carrier == carrier)
-        .where(CellularActionFeeCode.cellular_action_type == cellular_action_type)
-        .where(CellularActionFeeCode.fee_category == "CELLULAR_RETAIL")
-        .where(CellularActionFeeCode.fee_code == "CellularArr.ATT"),
+        select(DevBillingBookkeeper.CellularActionFeeCode)
+        .where(DevBillingBookkeeper.CellularActionFeeCode.carrier == carrier)
+        .where(DevBillingBookkeeper.CellularActionFeeCode.cellular_action_type == cellular_action_type)
+        .where(DevBillingBookkeeper.CellularActionFeeCode.fee_category == "CELLULAR_RETAIL")
+        .where(DevBillingBookkeeper.CellularActionFeeCode.fee_code == "CellularArr.ATT"),
         sanitize=False,
     )
 
@@ -1293,7 +1260,7 @@ def test_create_complete_reseller(
 
     # Validate merchant billing terms acceptance
     assert merchant_billing_terms["merchant_uuid"] == merchant_uuid, "Billing terms should be for the boarded merchant"
-    assert merchant_billing_terms["account_id"], "Merchant account ID must exist"
+    assert merchant_billing_terms["account_uuid"], "Merchant account UUID must exist"
     assert merchant_billing_terms["agreement_id"], "Agreement ID must exist"
     assert merchant_billing_terms["acceptance_id"], "Acceptance ID must exist"
 
@@ -1353,7 +1320,7 @@ def test_create_complete_reseller(
     print(f"   Merchant ID (MID): {boarded_merchant['merchant_id']}")
     print(f"   Reseller Code: {boarded_merchant['reseller_code']}")
     print("\n📝 Merchant Billing Terms:")
-    print(f"   Account ID: {merchant_billing_terms['account_id']}")
+    print(f"   Account UUID: {merchant_billing_terms['account_uuid']}")
     print(f"   Agreement ID: {merchant_billing_terms['agreement_id']}")
     print(f"   Acceptance ID: {merchant_billing_terms['acceptance_id']}")
     print(f"   Propagated to billing_event: {merchant_billing_terms['propagated_to_billing_event']}")

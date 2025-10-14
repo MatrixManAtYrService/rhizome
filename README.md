@@ -47,20 +47,38 @@ Then you can run code like this:
 ```python3
 from sqlmodel import select
 from rhizome.client import RhizomeClient
-from rhizome.environments import DevBillingBookkeeper
-from rhizome.models.billing_bookkeeper.table_list import BillingBookkeeperTable
+from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
+from stolon.client import StolonClient
+from trifolium.environments import dev
 
-db = DevBillingBookkeeper(RhizomeClient(data_in_logs=False))
-
-# Get the correct FeeSummary version for this environment
-FeeSummary = db.get_model(BillingBookkeeperTable.fee_summary)
-
-fee_summary = db.select_first(
-    select(FeeSummary).where(FeeSummary.id == 30)
+# having an object for the "environment" enables dependency injection
+# this makes for code that's easier to share
+environment = dev.Environment(
+    rhizome_client=RhizomeClient(data_in_logs=False),
+    stolon_client=StolonClient(data_in_logs=False)
 )
-assert fee_summary # fail if there is no fee summary with id == 30
-safe_fee_summary = fee_summary.sanitize()
-assert safe_fee_summary.total_period_units == 3
+merchant_uuid = "ABC123DEF4567"
+
+merchant_detail = environment.db.billing_bookkeeper.select_first(
+    select(DevBillingBookkeeper.MerchantDetail)
+    .join(DevBillingBookkeeper.BillingEntity)
+    .where(DevBillingBookkeeper.BillingEntity.entity_uuid == merchant_uuid)
+    # if entity_uuid weren't a valid column in dev, this would fail during type-checking
+    # also, you can tab-complete it (unlike string full of SQL)
+)
+
+if merchant_detail:
+    print(f"Merchant {merchant_uuid} exists in billing system")
+else:
+    # this helper function uses a client generated from the agreement service's openapi spec
+    # if the endpoint changed in a way that causes a problem for our test,
+    # that breakage would show up in your editor as a type error
+    acceptance = environment.api.agreement.ensure_merchant_acceptance(
+        merchant_uuid=merchant_uuid,
+        account_uuid="XYZ789GHI0123",
+        agreement_type="BILLING",
+    )
+    print(f"Created billing acceptance: {acceptance.id}")
 ```
 
 If you have a `rhizome` or `stolon` server running, it will handle the "tribal knowledge" part.
@@ -71,4 +89,17 @@ Since the server is running in a separate terminal, there is a dedicated place f
 Debugging things like authentication or flaky servers happens within the server.
 This keeps the test logic simple and easy to read.
 
+## Env-specific Types
 
+Whevever possible, references are type hinted and those types are environment specific.
+This is made possible by a variety of sync commands:
+
+- `rhizome sync schema` queries environment databases and generates files like [billing_app_suppression.sql](./src/rhizome/environments/dev/expected_data/billing_app_suppression.sql) which are then used to generate files like [app_suppression.py](src/rhizome/models/billing/app_suppression.py)
+`rhizome sync data` queries environment databases and generates files like [billing_bookkeeper_tier_detail.json]( src/rhizome/environments/dev/expected_data/billing_bookkeeper_tier_detail.json) which are used by [test_environment_access.py](tests/test_environment_access.py) to ensure that the above models are correct for that environment.
+`stolon sync spec` requests openapi specs generates http clients in directories like [src/stolon/generated/billing_bookkeeper_dev](src/stolon/generated/billing_bookkeeper_dev)
+
+This means that--supposing the syncs were run recently--the types are representative of what you'll actually find in those environments.
+So if you have a test that will succeed in dev but will error in demo due to environment differences there's chance that a type checker can find those problems for you in seconds rather than finding them later on when you actually run the code.
+
+This is handy for catching bugs early, but it also enables LSP-enabled editors to provide tab completion and enhanced navigation (unlike strings containing SQL queries).
+Lastly, You can use an LSP-MCP bridge like [serena](https://github.com/oraios/serena) to give AI agents a way to explore the synced types--the added context improves their ability to reason about our data landscape.

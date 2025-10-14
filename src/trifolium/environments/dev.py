@@ -17,7 +17,6 @@ from stolon.environments import base
 
 # Generated API imports - Agreement K8s
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import (
-    create_acceptance,
     get_bulk_acceptances_service_scope,
 )
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import (
@@ -1179,10 +1178,9 @@ class DevAgreementAPI(base.Environment):
     def ensure_merchant_acceptance(
         self,
         merchant_uuid: str,
-        account_id: str,
+        account_uuid: str,
         agreement_type: str = "BILLING",
         signer_name: str | None = None,
-        rhizome_client: RhizomeClient | None = None,
     ) -> Acceptance:
         """Ensure merchant has accepted a specific agreement type.
 
@@ -1191,10 +1189,9 @@ class DevAgreementAPI(base.Environment):
 
         Args:
             merchant_uuid: Merchant UUID
-            account_id: Merchant's account ID (numeric) or UUID
+            account_uuid: Account UUID (use meta.account.uuid, not the numeric ID)
             agreement_type: Agreement type (default: "BILLING")
             signer_name: Name of signer (default: "Test User for {merchant_uuid}")
-            rhizome_client: Optional Rhizome client to look up account UUID if numeric ID provided
 
         Returns:
             Acceptance object (either existing or newly created)
@@ -1207,25 +1204,6 @@ class DevAgreementAPI(base.Environment):
         if existing_acceptance:
             return existing_acceptance
 
-        # If account_id is numeric (not a UUID), we need to look it up
-        if account_id.isdigit() and rhizome_client is not None:
-            from rhizome.environments.dev.meta import DevMeta
-            from rhizome.models.meta.account import Account as AccountModel
-            from sqlmodel import select
-
-            meta_db = DevMeta(rhizome_client)
-            Account = meta_db.get_versioned(AccountModel)
-            account = meta_db.select_first(
-                select(Account).where(Account.id == int(account_id)),
-                sanitize=False,
-            )
-            if not account:
-                raise Exception(f"Could not find account with id={account_id}")
-            account_uuid = account.uuid
-        else:
-            # Assume it's already a UUID
-            account_uuid = account_id
-
         # Create new acceptance
         client = self._ensure_agreement_client_authenticated()
 
@@ -1237,7 +1215,7 @@ class DevAgreementAPI(base.Environment):
 
         if agreement_response.status_code != 200:
             # Format error message with response details
-            error_body = agreement_response.content.decode('utf-8') if agreement_response.content else "(no body)"
+            error_body = agreement_response.content.decode("utf-8") if agreement_response.content else "(no body)"
             raise Exception(
                 f"Failed to fetch latest {agreement_type} agreement: HTTP {agreement_response.status_code}\n"
                 f"{error_body}"
@@ -1284,7 +1262,7 @@ class DevAgreementAPI(base.Environment):
         )
 
         if backfill_response.status_code != 200:
-            error_body = backfill_response.content.decode('utf-8') if backfill_response.content else "(no body)"
+            error_body = backfill_response.content.decode("utf-8") if backfill_response.content else "(no body)"
             raise Exception(
                 f"Failed to backfill {agreement_type} acceptance for merchant {merchant_uuid}: "
                 f"HTTP {backfill_response.status_code}\n{error_body}"
