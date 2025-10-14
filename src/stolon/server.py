@@ -4,6 +4,7 @@ import asyncio
 from collections.abc import AsyncGenerator
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
+from functools import partial
 
 import structlog
 import uvicorn
@@ -66,7 +67,9 @@ async def internal_token(request: InternalTokenRequest) -> InternalTokenResponse
     # Run in thread pool to avoid blocking event loop and allow signal handling
     loop = asyncio.get_event_loop()
     with ThreadPoolExecutor() as executor:
-        token = await loop.run_in_executor(executor, get_internal_token, request.domain, True)
+        token = await loop.run_in_executor(
+            executor, partial(get_internal_token, request.domain, _skip_server_check=True)
+        )
 
     # Cache the token for future requests
     _token_cache[request.domain] = token
