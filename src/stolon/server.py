@@ -1,6 +1,8 @@
 """Stolon server for managing HTTP API access and authentication."""
 
+import asyncio
 from collections.abc import AsyncGenerator
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
 import structlog
@@ -61,7 +63,10 @@ async def internal_token(request: InternalTokenRequest) -> InternalTokenResponse
     # No cached token, get a new one
     logger.info(f"No cached token for {request.domain}, initiating authentication")
     # Use _skip_server_check=True to prevent recursion (server shouldn't call itself)
-    token = get_internal_token(request.domain, _skip_server_check=True)
+    # Run in thread pool to avoid blocking event loop and allow signal handling
+    loop = asyncio.get_event_loop()
+    with ThreadPoolExecutor() as executor:
+        token = await loop.run_in_executor(executor, get_internal_token, request.domain, True)
 
     # Cache the token for future requests
     _token_cache[request.domain] = token
