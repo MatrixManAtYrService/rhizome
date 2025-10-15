@@ -98,7 +98,11 @@ class ApiFunctionExtractor(cst.CSTVisitor):
         # Extract both regular params and keyword-only params
         # OpenAPI-generated functions use *, client: ..., body: ... syntax
         # So parameters are in kwonlyparams, not params
-        all_params = list(node.params.params) + list(node.params.kwonlyparams)
+        all_params = list(node.params.params)
+
+        # Some functions have keyword-only params (after *), some don't
+        if hasattr(node.params, 'kwonlyparams') and node.params.kwonlyparams:
+            all_params.extend(node.params.kwonlyparams)
 
         for param in all_params:
             # Skip 'client' parameter as we'll replace it with StolonClient
