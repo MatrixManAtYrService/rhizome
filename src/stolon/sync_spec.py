@@ -12,43 +12,28 @@ from stolon.get_internal_token import get_internal_token
 logger = structlog.get_logger()
 
 
-def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
-    """
-    Fetch OpenAPI spec and generate a Python client.
+def _fetch_openapi_spec(env: str, service: str, domain: str, spec_url: str) -> dict:
+    """Fetch OpenAPI spec from the service, with or without authentication.
 
     Args:
-        env: Environment name (e.g., 'dev', 'demo', 'prod')
-        service: Service name (e.g., 'billing-bookkeeper')
-        overwrite: Whether to overwrite existing generated client
+        env: Environment name
+        service: Service name
+        domain: Domain to fetch from
+        spec_url: Full URL to the OpenAPI spec
+
+    Returns:
+        Dictionary containing the OpenAPI spec
+
+    Raises:
+        typer.Exit: If fetching fails
     """
-    # Map environment to domain
-    domain_map = {
-        "dev": "dev1.dev.clover.com",
-        "demo": "demo.clover.com",
-        "prod": "www.clover.com",
-    }
-
-    if env not in domain_map:
-        typer.echo(f"❌ Unknown environment: {env}. Valid options: {', '.join(domain_map.keys())}")
-        raise typer.Exit(1)
-
-    # Some services use different subdomains
-    # Map: (env, service) -> custom domain
-    custom_domain_map = {
-        ("dev", "agreement-k8s"): "apidev1.dev.clover.com",
-    }
-
-    domain = custom_domain_map.get((env, service), domain_map[env])
-    spec_url = f"https://{domain}/{service}/v3/api-docs"
-
-    typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
-
     # Try to fetch the OpenAPI spec without authentication first (most specs are public)
     try:
         response = httpx.get(spec_url, follow_redirects=True, timeout=30.0)
         response.raise_for_status()
         spec_data = response.json()
         typer.echo("✅ Fetched spec without authentication")
+        return spec_data
     except httpx.HTTPError as e:
         # If that fails, try with authentication
         status: int | str
@@ -70,19 +55,25 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
             response.raise_for_status()
             spec_data = response.json()
             typer.echo("✅ Fetched spec with authentication")
+            return spec_data
         except httpx.HTTPError as e2:
             typer.echo(f"❌ Failed to fetch spec even with authentication: {e2}")
             raise typer.Exit(1) from e2
 
-    # Determine output path
-    # Store generated clients in src/stolon/generated/{service}_{env}
-    output_path = Path("src/stolon/generated") / f"{service.replace('-', '_')}_{env}"
 
-    if output_path.exists() and not overwrite:
-        typer.echo(f"⚠️  Client already exists at {output_path}")
-        typer.echo("   Use --overwrite to regenerate")
-        raise typer.Exit(1)
+def _generate_client_from_spec(spec_data: dict, service: str, env: str, output_path: Path, overwrite: bool) -> None:
+    """Generate Python client from OpenAPI spec using openapi-python-client.
 
+    Args:
+        spec_data: OpenAPI spec dictionary
+        service: Service name
+        env: Environment name
+        output_path: Where to generate the client
+        overwrite: Whether to overwrite existing client
+
+    Raises:
+        typer.Exit: If generation fails
+    """
     # Save spec to temporary file for openapi-python-client
     spec_file = output_path.parent / f"{service}_{env}_spec.json"
     spec_file.parent.mkdir(parents=True, exist_ok=True)
@@ -119,7 +110,10 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
         typer.echo(f"✅ Client generated successfully at {output_path}")
 
         if result.stdout:
-            typer.echo(result.stdout)
+            # Filter out excessive blank lines from openapi-python-client output
+            lines = [line for line in result.stdout.split("\n") if line.strip()]
+            if lines:
+                typer.echo("\n".join(lines))
 
     except subprocess.CalledProcessError as e:
         typer.echo(f"❌ Failed to generate client: {e}")
@@ -130,14 +124,20 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
         typer.echo("❌ openapi-python-client not found. Please install it:")
         typer.echo("   pipx install openapi-python-client --include-deps")
         raise typer.Exit(1) from e
+    finally:
+        # Clean up spec file
+        if spec_file.exists():
+            spec_file.unlink()
 
-    # Clean up spec file
-    spec_file.unlink()
 
-    typer.echo("")
-    typer.echo(f"✅ Client generated at {output_path}")
+def _generate_proxied_wrappers(service: str, env: str, output_path: Path) -> None:
+    """Generate proxied wrapper functions for the generated client.
 
-    # Generate proxied wrappers
+    Args:
+        service: Service name
+        env: Environment name
+        output_path: Path to the generated client
+    """
     typer.echo("")
     typer.echo("🔧 Generating proxied wrapper functions...")
 
@@ -165,7 +165,60 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
 
             typer.echo(traceback.format_exc())
 
+
+def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
+    """
+    Fetch OpenAPI spec and generate a Python client.
+
+    Args:
+        env: Environment name (e.g., 'dev', 'demo', 'prod')
+        service: Service name (e.g., 'billing-bookkeeper')
+        overwrite: Whether to overwrite existing generated client
+    """
+    # Map environment to domain
+    domain_map = {
+        "dev": "dev1.dev.clover.com",
+        "demo": "demo.clover.com",
+        "prod": "www.clover.com",
+    }
+
+    if env not in domain_map:
+        typer.echo(f"❌ Unknown environment: {env}. Valid options: {', '.join(domain_map.keys())}")
+        raise typer.Exit(1)
+
+    # Some services use different subdomains
+    # Map: (env, service) -> custom domain
+    custom_domain_map = {
+        ("dev", "agreement-k8s"): "apidev1.dev.clover.com",
+    }
+
+    domain = custom_domain_map.get((env, service), domain_map[env])
+    spec_url = f"https://{domain}/{service}/v3/api-docs"
+
+    typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
+
+    # Fetch the spec
+    spec_data = _fetch_openapi_spec(env, service, domain, spec_url)
+
+    # Determine output path
+    # Store generated clients in src/stolon/generated/{service}_{env}
+    output_path = Path("src/stolon/generated") / f"{service.replace('-', '_')}_{env}"
+
+    if output_path.exists() and not overwrite:
+        typer.echo(f"⚠️  Client already exists at {output_path}")
+        typer.echo("   Use --overwrite to regenerate")
+        raise typer.Exit(1)
+
+    # Generate the client
+    _generate_client_from_spec(spec_data, service, env, output_path, overwrite)
+
     typer.echo("")
-    typer.echo(f"🎉 Done! You can now:")
+    typer.echo(f"✅ Client generated at {output_path}")
+
+    # Generate proxied wrappers
+    _generate_proxied_wrappers(service, env, output_path)
+
+    typer.echo("")
+    typer.echo("🎉 Done! You can now:")
     typer.echo(f"   - Use generated client: stolon.generated.{service.replace('-', '_')}_{env}")
     typer.echo(f"   - Use proxied wrappers: stolon.api.{service.replace('-', '_')}_{env}")

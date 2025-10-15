@@ -136,8 +136,11 @@ class ApiFunctionExtractor(cst.CSTVisitor):
                 expr_stmt = first_stmt.body[0]
                 if isinstance(expr_stmt, cst.Expr) and isinstance(expr_stmt.value, cst.SimpleString):
                     # Remove quotes and clean up
-                    docstring = expr_stmt.value.value.strip('"""').strip("'''").strip()
-                    return docstring
+                    docstring = expr_stmt.value.value
+                    # Remove triple quotes if present
+                    if docstring.startswith('"""') and docstring.endswith('"""') or docstring.startswith("'''") and docstring.endswith("'''"):
+                        docstring = docstring[3:-3]
+                    return docstring.strip()
         return ""
 
     def _extract_response_model(self, return_type: str, variant: str) -> str | None:
@@ -148,7 +151,8 @@ class ApiFunctionExtractor(cst.CSTVisitor):
             variant: Function variant (sync, sync_detailed, etc.)
 
         Returns:
-            Model class name if found, None otherwise
+            Simple model class name if found (e.g., "ApiBillingEntity"), None otherwise.
+            Returns None for complex types like Union, list, etc.
         """
         # For detailed variants, return type is Response[Model]
         if "detailed" in variant and "Response[" in return_type:
@@ -156,7 +160,10 @@ class ApiFunctionExtractor(cst.CSTVisitor):
             start = return_type.find("[") + 1
             end = return_type.rfind("]")
             if start > 0 and end > start:
-                return return_type[start:end].strip()
+                inner_type = return_type[start:end].strip()
+                # Only return if it's a simple type (starts with capital, no special characters)
+                if self._is_simple_model_type(inner_type):
+                    return inner_type
 
         # For non-detailed variants, return type is Optional[Model] or Model
         if "Optional[" in return_type:
@@ -164,13 +171,40 @@ class ApiFunctionExtractor(cst.CSTVisitor):
             start = return_type.find("[") + 1
             end = return_type.rfind("]")
             if start > 0 and end > start:
-                return return_type[start:end].strip()
+                inner_type = return_type[start:end].strip()
+                # Only return if it's a simple type
+                if self._is_simple_model_type(inner_type):
+                    return inner_type
 
-        # If no Optional/Response wrapper, it might be the model itself
-        if return_type not in {"None", "Any", "dict", "list", "str", "int", "bool"}:
+        # If no Optional/Response wrapper, check if it's a simple model
+        if self._is_simple_model_type(return_type):
             return return_type
 
         return None
+
+    def _is_simple_model_type(self, type_str: str) -> bool:
+        """Check if a type string is a simple model class (not Union, list, dict, etc.).
+
+        Args:
+            type_str: Type annotation string
+
+        Returns:
+            True if it's a simple model class name, False otherwise
+        """
+        # Skip built-in types
+        if type_str in {"None", "Any", "dict", "list", "str", "int", "bool", "float"}:
+            return False
+
+        # Skip complex types (Union, list, dict, etc.)
+        if any(keyword in type_str for keyword in ["Union[", "list[", "dict[", "List[", "Dict[", "Optional["]):
+            return False
+
+        # Skip types with special characters (except underscore)
+        if any(char in type_str for char in ["[", "]", ",", "|", '"', "'"]):
+            return False
+
+        # Must start with capital letter (standard for model classes)
+        return not (not type_str or not type_str[0].isupper())
 
 
 def discover_api_functions(generated_client_path: Path) -> list[FunctionInfo]:
@@ -225,19 +259,63 @@ def discover_api_functions(generated_client_path: Path) -> list[FunctionInfo]:
     return all_functions
 
 
-def convert_optional_to_union(type_annotation: str) -> str:
-    """Convert Optional[X] to X | None.
+def convert_to_pipe_union(type_annotation: str) -> str:
+    """Convert Union[X, Y] and Optional[X] to pipe union syntax (X | Y) recursively.
+
+    Handles nested types like Response[Union[X, Y]] -> Response[X | Y].
 
     Args:
-        type_annotation: Type annotation string (e.g., "Optional[ApiBillingEntity]")
+        type_annotation: Type annotation string (e.g., "Union[X, Y]" or "Optional[X]")
 
     Returns:
-        Converted type annotation using union syntax (e.g., "ApiBillingEntity | None")
+        Converted type annotation using pipe union syntax (e.g., "X | Y" or "X | None")
     """
-    # Convert Optional[X] to X | None
+    type_annotation = type_annotation.strip()
+
+    # Base case: no brackets, return as-is
+    if "[" not in type_annotation:
+        return type_annotation
+
+    # Handle Optional[X] -> X | None
     if type_annotation.startswith("Optional[") and type_annotation.endswith("]"):
         inner_type = type_annotation[9:-1]  # Extract X from Optional[X]
-        return f"{inner_type} | None"
+        converted_inner = convert_to_pipe_union(inner_type)  # Recursive
+        return f"{converted_inner} | None"
+
+    # Handle Union[X, Y, Z] -> X | Y | Z
+    if type_annotation.startswith("Union[") and type_annotation.endswith("]"):
+        inner = type_annotation[6:-1]  # Remove "Union[" and "]"
+
+        # Split by comma, but respect nested brackets
+        types = []
+        current = ""
+        depth = 0
+        for char in inner:
+            if char == "[":
+                depth += 1
+            elif char == "]":
+                depth -= 1
+            elif char == "," and depth == 0:
+                types.append(current.strip())
+                current = ""
+                continue
+            current += char
+        if current:
+            types.append(current.strip())
+
+        # Convert each type recursively and join with pipe
+        converted_types = [convert_to_pipe_union(t) for t in types]
+        return " | ".join(converted_types)
+
+    # Handle generic types like Response[X], list[Y], dict[K, V]
+    # Extract the wrapper and the content, convert content recursively
+    bracket_pos = type_annotation.find("[")
+    if bracket_pos > 0 and type_annotation.endswith("]"):
+        wrapper = type_annotation[:bracket_pos]
+        inner = type_annotation[bracket_pos + 1 : -1]
+        converted_inner = convert_to_pipe_union(inner)
+        return f"{wrapper}[{converted_inner}]"
+
     return type_annotation
 
 
@@ -262,30 +340,50 @@ def generate_wrapper_code(
     """
     service_underscore = service.replace("-", "_")
 
-    # Convert return type from Optional[X] to X | None
-    return_type = convert_optional_to_union(func_info.return_type)
+    # Convert return type to pipe union syntax (Union[X, Y] -> X | Y, Optional[X] -> X | None)
+    return_type = convert_to_pipe_union(func_info.return_type)
+
+    # Extract module directory name (first part of module_path before any dots)
+    # e.g., "billing_entity.create_billing_entity" -> "billing_entity"
+    module_dir = func_info.module_path.split(".")[0]
 
     # Build import statements as a dict for deduplication
     imports = {
         "typing_Any": "from typing import Any",
         "stolon_client": "from stolon.client import StolonClient",
-        f"api_{func_info.api_function_name}": f"from stolon.generated.{service_underscore}_{env}.open_api_definition_client.api.{func_info.module_path} import {func_info.api_function_name}",
+        f"api_{func_info.api_function_name}": (
+            f"from stolon.generated.{service_underscore}_{env}."
+            f"open_api_definition_client.api.{module_dir} "
+            f"import {func_info.api_function_name}"
+        ),
     }
 
     # Add Response and HTTPStatus imports for detailed variants
     if "detailed" in func_info.variant:
         imports["http_HTTPStatus"] = "from http import HTTPStatus"
-        imports["types_Response"] = f"from stolon.generated.{service_underscore}_{env}.open_api_definition_client.types import Response"
+        imports["types_Response"] = (
+            f"from stolon.generated.{service_underscore}_{env}.open_api_definition_client.types import Response"
+        )
 
     # Add JSON import (always needed)
     imports["json"] = "import json"
+
+    # Add ResponseError import for delete endpoints that return bool | ResponseError
+    if "ResponseError" in return_type:
+        model_module = "response_error"
+        imports["model_ResponseError"] = (
+            f"from stolon.generated.{service_underscore}_{env}."
+            f"open_api_definition_client.models.{model_module} import ResponseError"
+        )
 
     # Add response model import if available
     if func_info.response_model:
         # Guess model module path (lowercase with underscores)
         model_module = "".join(["_" + c.lower() if c.isupper() else c for c in func_info.response_model]).lstrip("_")
         imports[f"model_{func_info.response_model}"] = (
-            f"from stolon.generated.{service_underscore}_{env}.open_api_definition_client.models.{model_module} import {func_info.response_model}"
+            f"from stolon.generated.{service_underscore}_{env}."
+            f"open_api_definition_client.models.{model_module} "
+            f"import {func_info.response_model}"
         )
 
     # Build function parameters

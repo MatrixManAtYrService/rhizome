@@ -5,14 +5,43 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING, Any
 
-import httpx
-
 # Environment-specific database class aliases
 # These allow code in this module to use BillingEvent, BillingBookkeeper, Meta
 # instead of the Dev-prefixed versions. This makes it easier to:
 # 1. Move code to base.py (use the alias name instead of environment-specific name)
 # 2. Create demo.py (just change the alias target: BillingEvent = DemoBillingEvent)
 from rhizome.environments.dev.billing_event import DevBillingEvent as BillingEvent
+
+# Generated API imports - Billing Bookkeeper (using wrappers that proxy through stolon)
+from stolon.api.billing_bookkeeper_dev.alliance_code import (
+    create_invoice_alliance_code_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.billing_entity import (
+    create_billing_entity_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.billing_hierarchy import (
+    create_billing_hierarchy_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.billing_schedule import (
+    create_billing_schedule_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.cellular_action_fee_code import (
+    create_cellular_action_fee_code_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.fee_rate import create_fee_rate_sync_detailed
+from stolon.api.billing_bookkeeper_dev.partner_config import (
+    create_partner_config_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.plan_action_fee_code import (
+    create_plan_action_fee_code_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.processing_group_dates import (
+    create_processing_group_dates_sync_detailed,
+)
+from stolon.api.billing_bookkeeper_dev.revenue_share_group import (
+    create_revenue_share_group_sync_detailed,
+    delete_revenue_share_group_by_uuid_sync,
+)
 from stolon.environments import base
 
 # Generated API imports - Agreement K8s
@@ -27,37 +56,6 @@ from stolon.generated.agreement_k8s_dev.open_api_definition_client.models import
     get_bulk_acceptances_service_scope_body_request_body,
 )
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
-
-# Generated API imports - Billing Bookkeeper
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
-    create_invoice_alliance_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import (
-    create_billing_entity,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import (
-    create_billing_hierarchy,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import (
-    create_billing_schedule,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import (
-    create_cellular_action_fee_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_rate import create_fee_rate
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import (
-    create_partner_config,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_action_fee_code import (
-    create_plan_action_fee_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
-    create_processing_group_dates,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import (
-    create_revenue_share_group,
-    delete_revenue_share_group_by_uuid,
-)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models import (
     api_billing_entity,
     api_billing_entity_entity_type,
@@ -82,7 +80,6 @@ if TYPE_CHECKING:
     from stolon.generated.agreement_k8s_dev.open_api_definition_client import (
         AuthenticatedClient as AgreementAuthenticatedClient,
     )
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
     from stolon.generated.billing_event_dev.open_api_definition_client import (
         AuthenticatedClient as BillingEventAuthenticatedClient,
     )
@@ -202,10 +199,11 @@ class DevAPI:
 
 class DevBillingBookkeeperAPI(base.Environment):
     """
-    Billing Bookkeeper API wrapper using generated OpenAPI client.
+    Billing Bookkeeper API wrapper using proxied wrapper functions.
 
-    This class wraps the generated API client to provide a cleaner interface
-    for common operations without requiring direct imports of generated models.
+    This class uses the generated wrapper functions that automatically proxy
+    all requests through the stolon server, which handles authentication,
+    token management, and logging.
     """
 
     @property
@@ -217,103 +215,6 @@ class DevBillingBookkeeperAPI(base.Environment):
     def domain(self) -> str:
         """Clover domain for this environment."""
         return "dev1.dev.clover.com"
-
-    def __init__(self, client: StolonClient) -> None:
-        """Initialize Billing Bookkeeper API.
-
-        Args:
-            client: Stolon client for HTTP requests
-        """
-        super().__init__(client)
-        self._authenticated_client: AuthenticatedClient | None = None
-
-    def _ensure_generated_client_authenticated(self) -> AuthenticatedClient:
-        """
-        Ensure we have an authenticated client for the generated OpenAPI client.
-
-        This creates an AuthenticatedClient instance with logging hooks
-        to ensure all requests flow through the same logging/observability
-        infrastructure.
-        """
-        if self._authenticated_client is None:
-            # Get authentication token via parent's method
-            self.ensure_authenticated()
-            assert self.handle is not None
-
-            # Import generated client
-            from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
-
-            # Add /billing-bookkeeper path prefix to base URL
-            billing_bookkeeper_base_url = f"{self.handle.base_url}/billing-bookkeeper"
-
-            # Create event hooks for logging (same as parent's _create_httpx_client)
-            from collections.abc import Callable
-            from contextlib import suppress
-
-            def log_request_hook(request: httpx.Request) -> None:
-                """Log HTTP request to stolon server (fire-and-forget)."""
-                with suppress(Exception):
-                    body_str: str | None = None
-                    if request.content:
-                        try:
-                            body_str = request.content.decode("utf-8")
-                        except Exception:
-                            body_str = f"<binary data, {len(request.content)} bytes>"
-
-                    httpx.post(
-                        f"{self.client.base_url}/log_request",
-                        json={
-                            "method": request.method,
-                            "url": str(request.url),
-                            "data": body_str,
-                        },
-                        timeout=1.0,
-                    )
-
-            def log_response_hook(response: httpx.Response) -> None:
-                """Log HTTP response to stolon server (fire-and-forget)."""
-                body_str: str | None = None
-                try:
-                    if response.content:
-                        body_str = response.content.decode("utf-8")
-                except Exception:
-                    pass
-
-                with suppress(Exception):
-                    httpx.post(
-                        f"{self.client.base_url}/log_response",
-                        json={
-                            "method": response.request.method,
-                            "url": str(response.request.url),
-                            "status_code": response.status_code,
-                            "data": body_str,
-                        },
-                        timeout=1.0,
-                    )
-
-            request_hooks: list[Callable[[httpx.Request], None]] = [log_request_hook]
-            response_hooks: list[Callable[[httpx.Response], None]] = [log_response_hook]
-
-            event_hooks = {
-                "request": request_hooks,
-                "response": response_hooks,
-            }
-
-            # Create authenticated client with logging hooks
-            self._authenticated_client = AuthenticatedClient(
-                base_url=billing_bookkeeper_base_url,
-                token=self.handle.token,
-                prefix="",  # Token goes in Cookie header
-                headers={
-                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
-                },
-                cookies={
-                    "internalSession": self.handle.token,
-                },
-                httpx_args={"event_hooks": event_hooks},
-            )
-
-        return self._authenticated_client
 
     def create_entity(self, entity_uuid: str, entity_type: str, name: str) -> dict[str, Any]:
         """Create a billing entity.
@@ -329,8 +230,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Raises:
             Exception: If creation fails
         """
-        client = self._ensure_generated_client_authenticated()
-
         # Create model
         entity_model = api_billing_entity.ApiBillingEntity(
             entity_uuid=entity_uuid,
@@ -338,8 +237,13 @@ class DevBillingBookkeeperAPI(base.Environment):
             name=name,
         )
 
-        # Call API
-        response = create_billing_entity.sync_detailed(client=client, body=entity_model)
+        # Call API wrapper (automatically proxies through stolon server)
+        response = create_billing_entity_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=entity_model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create entity: {response.status_code} - {response.content}")
@@ -362,15 +266,18 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created alliance code data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_invoice_alliance_code.ApiInvoiceAllianceCode(
             billing_entity_uuid=billing_entity_uuid,
             alliance_code=alliance_code_value,
             invoice_count=invoice_count,
         )
 
-        response = create_invoice_alliance_code.sync_detailed(client=client, body=model)
+        response = create_invoice_alliance_code_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create alliance code: {response.status_code} - {response.content}")
@@ -392,15 +299,18 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created revenue share group data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_revenue_share_group.ApiRevenueShareGroup(
             revenue_share_group=revenue_share_group_name,
             short_desc=short_desc,
             description=description,
         )
 
-        response = create_revenue_share_group.sync_detailed(client=client, body=model)
+        response = create_revenue_share_group_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create revenue share group: {response.status_code} - {response.content}")
@@ -415,8 +325,12 @@ class DevBillingBookkeeperAPI(base.Environment):
         Args:
             uuid: UUID of the revenue share group to delete
         """
-        client = self._ensure_generated_client_authenticated()
-        delete_revenue_share_group_by_uuid.sync(client=client, uuid=uuid)
+        delete_revenue_share_group_by_uuid_sync(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            uuid=uuid,
+        )
 
     def create_billing_schedule(
         self,
@@ -442,8 +356,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created billing schedule data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_billing_schedule.ApiBillingSchedule(
             billing_entity_uuid=billing_entity_uuid,
             effective_date=datetime.strptime(effective_date, "%Y-%m-%d").date(),
@@ -454,7 +366,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             default_currency=default_currency,
         )
 
-        response = create_billing_schedule.sync_detailed(client=client, body=model)
+        response = create_billing_schedule_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create billing schedule: {response.status_code} - {response.content}")
@@ -489,8 +406,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created fee rate data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_fee_rate.ApiFeeRate(
             billing_entity_uuid=billing_entity_uuid,
             fee_category=fee_category,
@@ -502,7 +417,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             percentage=percentage if percentage is not None else UNSET,
         )
 
-        response = create_fee_rate.sync_detailed(client=client, body=model)
+        response = create_fee_rate_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create fee rate: {response.status_code} - {response.content}")
@@ -533,8 +453,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created processing group dates data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_processing_group_dates.ApiProcessingGroupDates(
             billing_entity_uuid=billing_entity_uuid,
             hierarchy_type=hierarchy_type,
@@ -544,7 +462,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             settlement_date=datetime.strptime(settlement_date, "%Y-%m-%d").date(),
         )
 
-        response = create_processing_group_dates.sync_detailed(client=client, body=model)
+        response = create_processing_group_dates_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create processing group dates: {response.status_code} - {response.content}")
@@ -571,8 +494,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created billing hierarchy data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_billing_hierarchy.ApiBillingHierarchy(
             billing_entity_uuid=billing_entity_uuid,
             hierarchy_type=hierarchy_type,
@@ -580,7 +501,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             parent_billing_hierarchy_uuid=parent_billing_hierarchy_uuid,
         )
 
-        response = create_billing_hierarchy.sync_detailed(client=client, body=model)
+        response = create_billing_hierarchy_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create billing hierarchy: {response.status_code} - {response.content}")
@@ -619,8 +545,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created partner config data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_partner_config.ApiPartnerConfig(
             billing_entity_uuid=billing_entity_uuid,
             effective_date=datetime.strptime(effective_date, "%Y-%m-%d").date(),
@@ -634,7 +558,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             seasonal_rule_set_uuid=seasonal_rule_set_uuid if seasonal_rule_set_uuid is not None else UNSET,
         )
 
-        response = create_partner_config.sync_detailed(client=client, body=model)
+        response = create_partner_config_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create partner config: {response.status_code} - {response.content}")
@@ -665,8 +594,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created plan action fee code data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_plan_action_fee_code.ApiPlanActionFeeCode(
             merchant_plan_uuid=merchant_plan_uuid,
             plan_action_type=plan_action_type,
@@ -676,7 +603,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             device_type=device_type if device_type is not None else UNSET,
         )
 
-        response = create_plan_action_fee_code.sync_detailed(client=client, body=model)
+        response = create_plan_action_fee_code_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create plan action fee code: {response.status_code} - {response.content}")
@@ -707,8 +639,6 @@ class DevBillingBookkeeperAPI(base.Environment):
         Returns:
             Created cellular action fee code data
         """
-        client = self._ensure_generated_client_authenticated()
-
         model = api_cellular_action_fee_code.ApiCellularActionFeeCode(
             carrier=carrier,
             cellular_action_type=cellular_action_type,
@@ -718,7 +648,12 @@ class DevBillingBookkeeperAPI(base.Environment):
             merchant_plan_uuid=merchant_plan_uuid if merchant_plan_uuid is not None else UNSET,
         )
 
-        response = create_cellular_action_fee_code.sync_detailed(client=client, body=model)
+        response = create_cellular_action_fee_code_sync_detailed(
+            stolon_client=self.client,
+            domain=self.domain,
+            environment_name=self.name,
+            body=model,
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to create cellular action fee code: {response.status_code} - {response.content}")

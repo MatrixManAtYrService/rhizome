@@ -34,9 +34,7 @@ class GeneratedMethodCall(BaseModel):
 class DiscoveryResult(BaseModel):
     """Complete discovery result with all found method calls."""
 
-    methods: dict[str, GeneratedMethodCall] = Field(
-        description="Map of unique method keys to their call information"
-    )
+    methods: dict[str, GeneratedMethodCall] = Field(description="Map of unique method keys to their call information")
 
     @property
     def total_call_sites(self) -> int:
@@ -99,7 +97,9 @@ class GeneratedClientUsageVisitor(cst.CSTVisitor):
             else:
                 for name_item in node.names:
                     if isinstance(name_item, cst.ImportAlias):
-                        imported_name = name_item.name.value if isinstance(name_item.name, cst.Name) else str(name_item.name)
+                        imported_name = (
+                            name_item.name.value if isinstance(name_item.name, cst.Name) else str(name_item.name)
+                        )
                         local_name = name_item.asname.name.value if name_item.asname else imported_name
 
                         # Store mapping: local_name -> (module_path, service, api_module, api_function)
