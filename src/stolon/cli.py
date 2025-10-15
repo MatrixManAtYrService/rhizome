@@ -116,11 +116,26 @@ def clear_cache(
 
 @sync_app.command()
 def spec(
-    env: Annotated[str, typer.Option(help="Environment to sync (e.g., 'dev', 'demo', 'prod')")],
-    service: Annotated[str, typer.Option(help="Service to sync (e.g., 'billing-bookkeeper')")],
+    env: Annotated[str, typer.Option(help="Environment: dev, demo, or prod")],
+    service: Annotated[str, typer.Option(help="Service name (e.g., billing-bookkeeper, agreement-k8s, billing-event)")],
     overwrite: Annotated[bool, typer.Option(help="Overwrite existing generated client")] = False,
 ) -> None:
-    """Generate a Python client from an OpenAPI specification."""
+    """Generate a Python client from an OpenAPI specification.
+
+    Available environments:
+      - dev:  Development environment (dev1.dev.clover.com)
+      - demo: Demo environment (demo.clover.com)
+      - prod: Production environment (www.clover.com)
+
+    Common services:
+      - billing-bookkeeper
+      - billing-event
+      - agreement-k8s
+
+    Examples:
+      stolon sync spec --env dev --service billing-bookkeeper
+      stolon sync spec --env prod --service billing-event --overwrite
+    """
     from stolon.sync_spec import sync_spec
 
     sync_spec(env=env, service=service, overwrite=overwrite)
