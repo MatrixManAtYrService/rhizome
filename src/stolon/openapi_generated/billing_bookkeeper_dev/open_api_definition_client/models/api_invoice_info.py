@@ -1,0 +1,205 @@
+import datetime
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+from dateutil.parser import isoparse
+
+from ..models.api_invoice_info_entity_type import ApiInvoiceInfoEntityType
+from ..types import UNSET, Unset
+
+T = TypeVar("T", bound="ApiInvoiceInfo")
+
+
+@_attrs_define
+class ApiInvoiceInfo:
+    """
+    Attributes:
+        id (Union[Unset, int]): Id of the invoice info
+        uuid (Union[Unset, str]): 26-character UUID of the invoice document
+        billing_entity_uuid (Union[Unset, str]): 26-character UUID of the billing entity that the invoice belongs to
+        entity_uuid (Union[Unset, str]): 13-character UUID of the entity that the invoice belongs to
+        alternate_id (Union[Unset, str]): alternate identifier (such as a MID) for the entity that the invoice belongs
+            to
+        name (Union[Unset, str]): name of billing entity
+        entity_type (Union[Unset, ApiInvoiceInfoEntityType]):
+        billing_date (Union[Unset, datetime.date]): billing date when the invoice was created
+        invoice_num (Union[Unset, str]): invoice number assigned to the invoice
+        currency (Union[Unset, str]): the currency of the invoice total amount Example: USD.
+        total_amount (Union[Unset, float]): the total amount of the invoice
+        document_uuid (Union[Unset, str]): 26-character UUID of the invoice document
+        request_uuid (Union[Unset, str]): 26-character UUID of the billing request that produced this settlement request
+        created_timestamp (Union[Unset, datetime.datetime]): date and time when the ledger account transition was
+            created Example: 2020-12-31T23:59:59.123456Z.
+    """
+
+    id: Union[Unset, int] = UNSET
+    uuid: Union[Unset, str] = UNSET
+    billing_entity_uuid: Union[Unset, str] = UNSET
+    entity_uuid: Union[Unset, str] = UNSET
+    alternate_id: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
+    entity_type: Union[Unset, ApiInvoiceInfoEntityType] = UNSET
+    billing_date: Union[Unset, datetime.date] = UNSET
+    invoice_num: Union[Unset, str] = UNSET
+    currency: Union[Unset, str] = UNSET
+    total_amount: Union[Unset, float] = UNSET
+    document_uuid: Union[Unset, str] = UNSET
+    request_uuid: Union[Unset, str] = UNSET
+    created_timestamp: Union[Unset, datetime.datetime] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        id = self.id
+
+        uuid = self.uuid
+
+        billing_entity_uuid = self.billing_entity_uuid
+
+        entity_uuid = self.entity_uuid
+
+        alternate_id = self.alternate_id
+
+        name = self.name
+
+        entity_type: Union[Unset, str] = UNSET
+        if not isinstance(self.entity_type, Unset):
+            entity_type = self.entity_type.value
+
+        billing_date: Union[Unset, str] = UNSET
+        if not isinstance(self.billing_date, Unset):
+            billing_date = self.billing_date.isoformat()
+
+        invoice_num = self.invoice_num
+
+        currency = self.currency
+
+        total_amount = self.total_amount
+
+        document_uuid = self.document_uuid
+
+        request_uuid = self.request_uuid
+
+        created_timestamp: Union[Unset, str] = UNSET
+        if not isinstance(self.created_timestamp, Unset):
+            created_timestamp = self.created_timestamp.isoformat()
+
+        field_dict: dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if id is not UNSET:
+            field_dict["id"] = id
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if billing_entity_uuid is not UNSET:
+            field_dict["billingEntityUuid"] = billing_entity_uuid
+        if entity_uuid is not UNSET:
+            field_dict["entityUuid"] = entity_uuid
+        if alternate_id is not UNSET:
+            field_dict["alternateId"] = alternate_id
+        if name is not UNSET:
+            field_dict["name"] = name
+        if entity_type is not UNSET:
+            field_dict["entityType"] = entity_type
+        if billing_date is not UNSET:
+            field_dict["billingDate"] = billing_date
+        if invoice_num is not UNSET:
+            field_dict["invoiceNum"] = invoice_num
+        if currency is not UNSET:
+            field_dict["currency"] = currency
+        if total_amount is not UNSET:
+            field_dict["totalAmount"] = total_amount
+        if document_uuid is not UNSET:
+            field_dict["documentUuid"] = document_uuid
+        if request_uuid is not UNSET:
+            field_dict["requestUuid"] = request_uuid
+        if created_timestamp is not UNSET:
+            field_dict["createdTimestamp"] = created_timestamp
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        d = dict(src_dict)
+        id = d.pop("id", UNSET)
+
+        uuid = d.pop("uuid", UNSET)
+
+        billing_entity_uuid = d.pop("billingEntityUuid", UNSET)
+
+        entity_uuid = d.pop("entityUuid", UNSET)
+
+        alternate_id = d.pop("alternateId", UNSET)
+
+        name = d.pop("name", UNSET)
+
+        _entity_type = d.pop("entityType", UNSET)
+        entity_type: Union[Unset, ApiInvoiceInfoEntityType]
+        if _entity_type and not isinstance(_entity_type, Unset):
+            entity_type = ApiInvoiceInfoEntityType(_entity_type)
+
+        else:
+            entity_type = UNSET
+
+        _billing_date = d.pop("billingDate", UNSET)
+        billing_date: Union[Unset, datetime.date]
+        if _billing_date and not isinstance(_billing_date, Unset):
+            billing_date = isoparse(_billing_date).date()
+
+        else:
+            billing_date = UNSET
+
+        invoice_num = d.pop("invoiceNum", UNSET)
+
+        currency = d.pop("currency", UNSET)
+
+        total_amount = d.pop("totalAmount", UNSET)
+
+        document_uuid = d.pop("documentUuid", UNSET)
+
+        request_uuid = d.pop("requestUuid", UNSET)
+
+        _created_timestamp = d.pop("createdTimestamp", UNSET)
+        created_timestamp: Union[Unset, datetime.datetime]
+        if _created_timestamp and not isinstance(_created_timestamp, Unset):
+            created_timestamp = isoparse(_created_timestamp)
+
+        else:
+            created_timestamp = UNSET
+
+        api_invoice_info = cls(
+            id=id,
+            uuid=uuid,
+            billing_entity_uuid=billing_entity_uuid,
+            entity_uuid=entity_uuid,
+            alternate_id=alternate_id,
+            name=name,
+            entity_type=entity_type,
+            billing_date=billing_date,
+            invoice_num=invoice_num,
+            currency=currency,
+            total_amount=total_amount,
+            document_uuid=document_uuid,
+            request_uuid=request_uuid,
+            created_timestamp=created_timestamp,
+        )
+
+        api_invoice_info.additional_properties = d
+        return api_invoice_info
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
