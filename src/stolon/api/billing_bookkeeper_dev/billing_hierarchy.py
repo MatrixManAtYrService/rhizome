@@ -6,41 +6,37 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import (
-    create_billing_hierarchy,
-    delete_billing_hierarchy_by_uuid,
-    get_archetypes,
-    get_billing_hierarchies,
-    get_billing_hierarchy_by_uuid,
-    get_billing_hierarchy_child_nodes,
-    get_billing_hierarchy_children,
-    get_billing_hierarchy_children_of_entity,
-    get_billing_hierarchy_date_nodes_for_entity,
-    get_billing_hierarchy_merchant_children,
-    get_billing_hierarchy_parent_nodes,
-    get_billing_hierarchy_parents,
-    get_billing_hierarchy_parents_of_entity,
-    get_effective_billing_hierarchy,
-    move_merchant_billing_hierarchies,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy import (
-    ApiBillingHierarchy,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level import (
-    ApiBillingHierarchyLevel,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level_node import (
-    ApiBillingHierarchyLevelNode,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import create_billing_hierarchy
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import delete_billing_hierarchy_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_archetypes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchies
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_child_nodes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_children
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_children_of_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_date_nodes_for_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_merchant_children
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_parent_nodes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_parents
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_parents_of_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_effective_billing_hierarchy
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import move_merchant_billing_hierarchies
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy import ApiBillingHierarchy
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level import ApiBillingHierarchyLevel
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level_node import ApiBillingHierarchyLevelNode
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingHierarchy]:
+def get_billing_hierarchy_children_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -53,7 +49,7 @@ def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -63,7 +59,7 @@ def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: 
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
@@ -80,29 +76,39 @@ def get_billing_hierarchy_children_sync_detailed(*, client: StolonClient, uuid: 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_children_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -115,7 +121,7 @@ def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -125,7 +131,7 @@ def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> A
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
@@ -142,19 +148,23 @@ def get_billing_hierarchy_children_sync(*, client: StolonClient, uuid: str) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_children_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -167,7 +177,7 @@ def get_billing_hierarchy_children_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -177,7 +187,7 @@ def get_billing_hierarchy_children_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
@@ -194,29 +204,39 @@ def get_billing_hierarchy_children_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_children_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get immediate children of billing hierarchy
 
     Args:
@@ -229,7 +249,7 @@ def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -239,7 +259,7 @@ def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid)
@@ -256,17 +276,22 @@ def get_billing_hierarchy_children_asyncio(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def move_merchant_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def move_merchant_billing_hierarchies_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Move billing hierarchy merchants
 
     Args:
@@ -279,17 +304,17 @@ def move_merchant_billing_hierarchies_sync_detailed(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = move_merchant_billing_hierarchies._get_kwargs()
@@ -306,29 +331,38 @@ def move_merchant_billing_hierarchies_sync_detailed(*, client: StolonClient) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def move_merchant_billing_hierarchies_sync(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def move_merchant_billing_hierarchies_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Move billing hierarchy merchants
 
     Args:
@@ -341,17 +375,17 @@ def move_merchant_billing_hierarchies_sync(*, client: StolonClient) -> ApiBillin
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = move_merchant_billing_hierarchies._get_kwargs()
@@ -368,17 +402,22 @@ def move_merchant_billing_hierarchies_sync(*, client: StolonClient) -> ApiBillin
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def move_merchant_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def move_merchant_billing_hierarchies_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Move billing hierarchy merchants
 
     Args:
@@ -391,17 +430,17 @@ def move_merchant_billing_hierarchies_asyncio_detailed(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = move_merchant_billing_hierarchies._get_kwargs()
@@ -418,29 +457,38 @@ def move_merchant_billing_hierarchies_asyncio_detailed(*, client: StolonClient) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def move_merchant_billing_hierarchies_asyncio(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def move_merchant_billing_hierarchies_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Move billing hierarchy merchants
 
     Args:
@@ -453,17 +501,17 @@ def move_merchant_billing_hierarchies_asyncio(*, client: StolonClient) -> ApiBil
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = move_merchant_billing_hierarchies._get_kwargs()
@@ -480,17 +528,23 @@ def move_merchant_billing_hierarchies_asyncio(*, client: StolonClient) -> ApiBil
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchy_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingHierarchy | ResponseError]:
     """Get a billing hierarchy by UUID
 
     Args:
@@ -501,7 +555,7 @@ def get_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[Union[ApiBillingHierarchy, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -511,7 +565,7 @@ def get_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ApiBillingHierarchy | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -528,29 +582,39 @@ def get_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingHierarchy | ResponseError | None:
     """Get a billing hierarchy by UUID
 
     Args:
@@ -561,7 +625,7 @@ def get_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        Union[ApiBillingHierarchy, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -571,7 +635,7 @@ def get_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ApiBillingHierarchy | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -587,18 +651,17 @@ def get_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_hierarchy_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchy_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingHierarchy | ResponseError]:
     """Get a billing hierarchy by UUID
 
     Args:
@@ -609,7 +672,7 @@ def get_billing_hierarchy_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[Union[ApiBillingHierarchy, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -619,7 +682,7 @@ def get_billing_hierarchy_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ApiBillingHierarchy | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -636,29 +699,39 @@ def get_billing_hierarchy_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingHierarchy | ResponseError | None:
     """Get a billing hierarchy by UUID
 
     Args:
@@ -669,7 +742,7 @@ def get_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        Union[ApiBillingHierarchy, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -679,7 +752,7 @@ def get_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ApiBillingHierarchy | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -695,18 +768,16 @@ def get_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -718,17 +789,17 @@ def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
@@ -745,29 +816,38 @@ def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(*, client: StolonC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_date_nodes_for_entity_sync(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_date_nodes_for_entity_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -779,17 +859,17 @@ def get_billing_hierarchy_date_nodes_for_entity_sync(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
@@ -806,19 +886,22 @@ def get_billing_hierarchy_date_nodes_for_entity_sync(*, client: StolonClient) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -830,17 +913,17 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
@@ -857,29 +940,38 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_date_nodes_for_entity_asyncio(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_date_nodes_for_entity_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get hierarchy relationship effective-date nodes for billing entity
 
     Args:
@@ -891,17 +983,17 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs()
@@ -918,18 +1010,22 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio(*, client: StolonClient)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_parent_nodes_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -970,13 +1066,17 @@ def get_billing_hierarchy_parent_nodes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
@@ -986,14 +1086,18 @@ def get_billing_hierarchy_parent_nodes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_hierarchy_parent_nodes_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1034,7 +1138,7 @@ def get_billing_hierarchy_parent_nodes_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1042,10 +1146,14 @@ def get_billing_hierarchy_parent_nodes_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_parent_nodes_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1086,13 +1194,17 @@ def get_billing_hierarchy_parent_nodes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
@@ -1102,14 +1214,18 @@ def get_billing_hierarchy_parent_nodes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_hierarchy_parent_nodes_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1150,7 +1266,7 @@ def get_billing_hierarchy_parent_nodes_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1160,7 +1276,12 @@ def get_billing_hierarchy_parent_nodes_asyncio(
     return None
 
 
-def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchyLevel]:
+
+
+def get_archetypes_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingHierarchyLevel]:
     """Get billing entity archetypes
 
     Args:
@@ -1179,7 +1300,7 @@ def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBilling
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingHierarchyLevel]
@@ -1199,13 +1320,17 @@ def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBilling
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
@@ -1215,13 +1340,18 @@ def get_archetypes_sync_detailed(*, client: StolonClient) -> Response[ApiBilling
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+
+
+def get_archetypes_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingHierarchyLevel | None:
     """Get billing entity archetypes
 
     Args:
@@ -1240,7 +1370,7 @@ def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingHierarchyLevel | None
@@ -1260,7 +1390,7 @@ def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | N
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1270,7 +1400,12 @@ def get_archetypes_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | N
     return None
 
 
-def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchyLevel]:
+
+
+def get_archetypes_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingHierarchyLevel]:
     """Get billing entity archetypes
 
     Args:
@@ -1289,7 +1424,7 @@ def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBill
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingHierarchyLevel]
@@ -1309,13 +1444,17 @@ def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBill
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
@@ -1325,13 +1464,18 @@ def get_archetypes_asyncio_detailed(*, client: StolonClient) -> Response[ApiBill
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+
+
+def get_archetypes_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingHierarchyLevel | None:
     """Get billing entity archetypes
 
     Args:
@@ -1350,7 +1494,7 @@ def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingHierarchyLevel | None
@@ -1370,7 +1514,7 @@ def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1380,7 +1524,13 @@ def get_archetypes_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel 
     return None
 
 
-def delete_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingHierarchy]:
+
+
+def delete_billing_hierarchy_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingHierarchy | ResponseError]:
     """Mark billing hierarchy as deleted
 
     Args:
@@ -1392,7 +1542,7 @@ def delete_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[Union[ApiBillingHierarchy, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1402,7 +1552,7 @@ def delete_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ApiBillingHierarchy | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -1419,29 +1569,39 @@ def delete_billing_hierarchy_by_uuid_sync_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def delete_billing_hierarchy_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingHierarchy | ResponseError | None:
     """Mark billing hierarchy as deleted
 
     Args:
@@ -1453,7 +1613,7 @@ def delete_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        Union[ApiBillingHierarchy, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1463,7 +1623,7 @@ def delete_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ApiBillingHierarchy | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -1479,20 +1639,17 @@ def delete_billing_hierarchy_by_uuid_sync(*, client: StolonClient, uuid: str) ->
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def delete_billing_hierarchy_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingHierarchy | ResponseError]:
     """Mark billing hierarchy as deleted
 
     Args:
@@ -1504,7 +1661,7 @@ def delete_billing_hierarchy_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[Union[ApiBillingHierarchy, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1514,7 +1671,7 @@ def delete_billing_hierarchy_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ApiBillingHierarchy | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -1531,29 +1688,39 @@ def delete_billing_hierarchy_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def delete_billing_hierarchy_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingHierarchy | ResponseError | None:
     """Mark billing hierarchy as deleted
 
     Args:
@@ -1565,7 +1732,7 @@ def delete_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        Union[ApiBillingHierarchy, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1575,7 +1742,7 @@ def delete_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ApiBillingHierarchy | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
@@ -1591,18 +1758,16 @@ def delete_billing_hierarchy_by_uuid_asyncio(*, client: StolonClient, uuid: str)
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_hierarchy_children_of_entity_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchy_children_of_entity_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1615,17 +1780,17 @@ def get_billing_hierarchy_children_of_entity_sync_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
@@ -1642,29 +1807,38 @@ def get_billing_hierarchy_children_of_entity_sync_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_children_of_entity_sync(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_children_of_entity_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1677,17 +1851,17 @@ def get_billing_hierarchy_children_of_entity_sync(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
@@ -1704,17 +1878,22 @@ def get_billing_hierarchy_children_of_entity_sync(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_hierarchy_children_of_entity_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchy_children_of_entity_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1727,17 +1906,17 @@ def get_billing_hierarchy_children_of_entity_asyncio_detailed(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
@@ -1754,29 +1933,38 @@ def get_billing_hierarchy_children_of_entity_asyncio_detailed(*, client: StolonC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_children_of_entity_asyncio(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_children_of_entity_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get hierarchy children of billing entity
 
     Args:
@@ -1789,17 +1977,17 @@ def get_billing_hierarchy_children_of_entity_asyncio(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_children_of_entity._get_kwargs()
@@ -1816,19 +2004,23 @@ def get_billing_hierarchy_children_of_entity_asyncio(*, client: StolonClient) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_effective_billing_hierarchy_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
     Args:
@@ -1841,7 +2033,7 @@ def get_effective_billing_hierarchy_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1851,7 +2043,7 @@ def get_effective_billing_hierarchy_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1868,31 +2060,39 @@ def get_effective_billing_hierarchy_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_effective_billing_hierarchy_sync(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiBillingHierarchy | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
     Args:
@@ -1905,7 +2105,7 @@ def get_effective_billing_hierarchy_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1915,7 +2115,7 @@ def get_effective_billing_hierarchy_sync(
                 billing_entity_uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1932,19 +2132,23 @@ def get_effective_billing_hierarchy_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_effective_billing_hierarchy_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
     Args:
@@ -1957,7 +2161,7 @@ def get_effective_billing_hierarchy_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1967,7 +2171,7 @@ def get_effective_billing_hierarchy_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1984,31 +2188,39 @@ def get_effective_billing_hierarchy_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_effective_billing_hierarchy_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiBillingHierarchy | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
     Args:
@@ -2021,7 +2233,7 @@ def get_effective_billing_hierarchy_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -2031,7 +2243,7 @@ def get_effective_billing_hierarchy_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -2048,17 +2260,22 @@ def get_effective_billing_hierarchy_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchies_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2071,17 +2288,17 @@ def get_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchies._get_kwargs()
@@ -2098,29 +2315,38 @@ def get_billing_hierarchies_sync_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchies_sync(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchies_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2133,17 +2359,17 @@ def get_billing_hierarchies_sync(*, client: StolonClient) -> ApiBillingHierarchy
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchies._get_kwargs()
@@ -2160,17 +2386,22 @@ def get_billing_hierarchies_sync(*, client: StolonClient) -> ApiBillingHierarchy
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def get_billing_hierarchies_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2183,17 +2414,17 @@ def get_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchies._get_kwargs()
@@ -2210,29 +2441,38 @@ def get_billing_hierarchies_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchies_asyncio(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchies_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get billing hierarchies by name or entity uuid
 
     Args:
@@ -2245,17 +2485,17 @@ def get_billing_hierarchies_asyncio(*, client: StolonClient) -> ApiBillingHierar
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchies._get_kwargs()
@@ -2272,18 +2512,22 @@ def get_billing_hierarchies_asyncio(*, client: StolonClient) -> ApiBillingHierar
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_parents_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get parents of billing hierarchy
 
@@ -2322,13 +2566,17 @@ def get_billing_hierarchy_parents_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
@@ -2338,13 +2586,19 @@ def get_billing_hierarchy_parents_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_parents_sync(*, client: StolonClient, uuid: str) -> ApiBillingHierarchyLevel | None:
+
+
+def get_billing_hierarchy_parents_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingHierarchyLevel | None:
     """Get parents of billing hierarchy
 
     Args:
@@ -2382,7 +2636,7 @@ def get_billing_hierarchy_parents_sync(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2390,10 +2644,14 @@ def get_billing_hierarchy_parents_sync(*, client: StolonClient, uuid: str) -> Ap
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_parents_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get parents of billing hierarchy
 
@@ -2432,13 +2690,17 @@ def get_billing_hierarchy_parents_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
@@ -2448,13 +2710,19 @@ def get_billing_hierarchy_parents_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_parents_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingHierarchyLevel | None:
+
+
+def get_billing_hierarchy_parents_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingHierarchyLevel | None:
     """Get parents of billing hierarchy
 
     Args:
@@ -2492,7 +2760,7 @@ def get_billing_hierarchy_parents_asyncio(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2500,10 +2768,14 @@ def get_billing_hierarchy_parents_asyncio(*, client: StolonClient, uuid: str) ->
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_child_nodes_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2545,13 +2817,17 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
@@ -2561,14 +2837,18 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_hierarchy_child_nodes_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2610,7 +2890,7 @@ def get_billing_hierarchy_child_nodes_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2620,8 +2900,12 @@ def get_billing_hierarchy_child_nodes_sync(
     return None
 
 
+
+
 def get_billing_hierarchy_child_nodes_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2663,13 +2947,17 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
@@ -2679,14 +2967,18 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_billing_hierarchy_child_nodes_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -2728,7 +3020,7 @@ def get_billing_hierarchy_child_nodes_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2738,7 +3030,12 @@ def get_billing_hierarchy_child_nodes_asyncio(
     return None
 
 
-def create_billing_hierarchy_sync_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def create_billing_hierarchy_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create billing hierarchy
 
     Args:
@@ -2749,17 +3046,17 @@ def create_billing_hierarchy_sync_detailed(*, client: StolonClient) -> Response[
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy._get_kwargs()
@@ -2776,29 +3073,38 @@ def create_billing_hierarchy_sync_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_hierarchy_sync(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def create_billing_hierarchy_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create billing hierarchy
 
     Args:
@@ -2809,17 +3115,17 @@ def create_billing_hierarchy_sync(*, client: StolonClient) -> ApiBillingHierarch
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy._get_kwargs()
@@ -2836,17 +3142,22 @@ def create_billing_hierarchy_sync(*, client: StolonClient) -> ApiBillingHierarch
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_billing_hierarchy_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingHierarchy]:
+
+
+def create_billing_hierarchy_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create billing hierarchy
 
     Args:
@@ -2857,17 +3168,17 @@ def create_billing_hierarchy_asyncio_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy._get_kwargs()
@@ -2884,29 +3195,38 @@ def create_billing_hierarchy_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_hierarchy_asyncio(*, client: StolonClient) -> ApiBillingHierarchy | None:
+
+
+def create_billing_hierarchy_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create billing hierarchy
 
     Args:
@@ -2917,17 +3237,17 @@ def create_billing_hierarchy_asyncio(*, client: StolonClient) -> ApiBillingHiera
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy._get_kwargs()
@@ -2944,18 +3264,21 @@ def create_billing_hierarchy_asyncio(*, client: StolonClient) -> ApiBillingHiera
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_parents_of_entity_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get hierarchy parents of billing entity
 
@@ -2976,7 +3299,7 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingHierarchyLevel]
@@ -2996,13 +3319,17 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
@@ -3012,13 +3339,18 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+
+
+def get_billing_hierarchy_parents_of_entity_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingHierarchyLevel | None:
     """Get hierarchy parents of billing entity
 
     Args:
@@ -3038,7 +3370,7 @@ def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingHierarchyLevel | None
@@ -3058,7 +3390,7 @@ def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3066,10 +3398,13 @@ def get_billing_hierarchy_parents_of_entity_sync(*, client: StolonClient) -> Api
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get hierarchy parents of billing entity
 
@@ -3090,7 +3425,7 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingHierarchyLevel]
@@ -3110,13 +3445,17 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
@@ -3126,13 +3465,18 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> ApiBillingHierarchyLevel | None:
+
+
+def get_billing_hierarchy_parents_of_entity_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingHierarchyLevel | None:
     """Get hierarchy parents of billing entity
 
     Args:
@@ -3152,7 +3496,7 @@ def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingHierarchyLevel | None
@@ -3172,7 +3516,7 @@ def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3182,9 +3526,13 @@ def get_billing_hierarchy_parents_of_entity_asyncio(*, client: StolonClient) -> 
     return None
 
 
+
+
 def get_billing_hierarchy_merchant_children_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get immediate merchant children of billing hierarchy
 
     Args:
@@ -3199,7 +3547,7 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3209,7 +3557,7 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
@@ -3226,29 +3574,39 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_merchant_children_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get immediate merchant children of billing hierarchy
 
     Args:
@@ -3263,7 +3621,7 @@ def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3273,7 +3631,7 @@ def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: 
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
@@ -3290,19 +3648,23 @@ def get_billing_hierarchy_merchant_children_sync(*, client: StolonClient, uuid: 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_hierarchy_merchant_children_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingHierarchy]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get immediate merchant children of billing hierarchy
 
     Args:
@@ -3317,7 +3679,7 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3327,7 +3689,7 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingHierarchy]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
@@ -3344,29 +3706,39 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchy:
-        parsed = ApiBillingHierarchy.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_hierarchy_merchant_children_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingHierarchy | None:
+
+
+def get_billing_hierarchy_merchant_children_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get immediate merchant children of billing hierarchy
 
     Args:
@@ -3381,7 +3753,7 @@ def get_billing_hierarchy_merchant_children_asyncio(*, client: StolonClient, uui
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchy
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3391,7 +3763,7 @@ def get_billing_hierarchy_merchant_children_asyncio(*, client: StolonClient, uui
                 uuid: str
 
     Returns:
-        ApiBillingHierarchy | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid)
@@ -3408,11 +3780,12 @@ def get_billing_hierarchy_merchant_children_asyncio(*, client: StolonClient, uui
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchy.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

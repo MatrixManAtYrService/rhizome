@@ -6,23 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_reason import (
-    create_adjust_reason,
-    delete_adjust_reason_by_uuid,
-    get_adjust_reason_by_uuid,
-    get_adjust_reasons,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjust_reason import ApiAdjustReason
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_reason import create_adjust_reason
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_reason import delete_adjust_reason_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_reason import get_adjust_reason_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_reason import get_adjust_reasons
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_adjust_reasons_sync_detailed(*, client: StolonClient) -> Response[ApiAdjustReason]:
+def get_adjust_reasons_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -33,17 +32,17 @@ def get_adjust_reasons_sync_detailed(*, client: StolonClient) -> Response[ApiAdj
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reasons._get_kwargs()
@@ -60,29 +59,38 @@ def get_adjust_reasons_sync_detailed(*, client: StolonClient) -> Response[ApiAdj
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustReason:
-        parsed = ApiAdjustReason.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_adjust_reasons_sync(*, client: StolonClient) -> ApiAdjustReason | None:
+
+
+def get_adjust_reasons_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -93,17 +101,17 @@ def get_adjust_reasons_sync(*, client: StolonClient) -> ApiAdjustReason | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustReason
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAdjustReason | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reasons._get_kwargs()
@@ -120,17 +128,22 @@ def get_adjust_reasons_sync(*, client: StolonClient) -> ApiAdjustReason | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustReason.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_adjust_reasons_asyncio_detailed(*, client: StolonClient) -> Response[ApiAdjustReason]:
+
+
+def get_adjust_reasons_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -141,17 +154,17 @@ def get_adjust_reasons_asyncio_detailed(*, client: StolonClient) -> Response[Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reasons._get_kwargs()
@@ -168,29 +181,38 @@ def get_adjust_reasons_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustReason:
-        parsed = ApiAdjustReason.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_adjust_reasons_asyncio(*, client: StolonClient) -> ApiAdjustReason | None:
+
+
+def get_adjust_reasons_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get adjustment reasons optionally filtering by reason value
 
     Args:
@@ -201,17 +223,17 @@ def get_adjust_reasons_asyncio(*, client: StolonClient) -> ApiAdjustReason | Non
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustReason
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAdjustReason | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reasons._get_kwargs()
@@ -228,17 +250,23 @@ def get_adjust_reasons_asyncio(*, client: StolonClient) -> ApiAdjustReason | Non
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustReason.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAdjustReason]:
+
+
+def get_adjust_reason_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get adjustment reason by UUID
 
     Args:
@@ -249,7 +277,7 @@ def get_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -259,7 +287,7 @@ def get_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reason_by_uuid._get_kwargs(uuid=uuid)
@@ -276,29 +304,39 @@ def get_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustReason:
-        parsed = ApiAdjustReason.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAdjustReason | None:
+
+
+def get_adjust_reason_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get adjustment reason by UUID
 
     Args:
@@ -309,7 +347,7 @@ def get_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAdj
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustReason
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -319,7 +357,7 @@ def get_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAdj
                 uuid: str
 
     Returns:
-        ApiAdjustReason | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reason_by_uuid._get_kwargs(uuid=uuid)
@@ -336,17 +374,23 @@ def get_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAdj
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustReason.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAdjustReason]:
+
+
+def get_adjust_reason_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get adjustment reason by UUID
 
     Args:
@@ -357,7 +401,7 @@ def get_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -367,7 +411,7 @@ def get_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reason_by_uuid._get_kwargs(uuid=uuid)
@@ -384,29 +428,39 @@ def get_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustReason:
-        parsed = ApiAdjustReason.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAdjustReason | None:
+
+
+def get_adjust_reason_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get adjustment reason by UUID
 
     Args:
@@ -417,7 +471,7 @@ def get_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustReason
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -427,7 +481,7 @@ def get_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiAdjustReason | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_adjust_reason_by_uuid._get_kwargs(uuid=uuid)
@@ -444,17 +498,22 @@ def get_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustReason.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_adjust_reason_sync_detailed(*, client: StolonClient) -> Response[ApiAdjustReason]:
+
+
+def create_adjust_reason_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create adjustment reason
 
     Args:
@@ -465,17 +524,17 @@ def create_adjust_reason_sync_detailed(*, client: StolonClient) -> Response[ApiA
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_adjust_reason._get_kwargs()
@@ -492,29 +551,38 @@ def create_adjust_reason_sync_detailed(*, client: StolonClient) -> Response[ApiA
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustReason:
-        parsed = ApiAdjustReason.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjust_reason_sync(*, client: StolonClient) -> ApiAdjustReason | None:
+
+
+def create_adjust_reason_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create adjustment reason
 
     Args:
@@ -525,17 +593,17 @@ def create_adjust_reason_sync(*, client: StolonClient) -> ApiAdjustReason | None
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustReason
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAdjustReason | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_adjust_reason._get_kwargs()
@@ -552,17 +620,22 @@ def create_adjust_reason_sync(*, client: StolonClient) -> ApiAdjustReason | None
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustReason.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_adjust_reason_asyncio_detailed(*, client: StolonClient) -> Response[ApiAdjustReason]:
+
+
+def create_adjust_reason_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create adjustment reason
 
     Args:
@@ -573,17 +646,17 @@ def create_adjust_reason_asyncio_detailed(*, client: StolonClient) -> Response[A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAdjustReason]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_adjust_reason._get_kwargs()
@@ -600,29 +673,38 @@ def create_adjust_reason_asyncio_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustReason:
-        parsed = ApiAdjustReason.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjust_reason_asyncio(*, client: StolonClient) -> ApiAdjustReason | None:
+
+
+def create_adjust_reason_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create adjustment reason
 
     Args:
@@ -633,17 +715,17 @@ def create_adjust_reason_asyncio(*, client: StolonClient) -> ApiAdjustReason | N
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustReason
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAdjustReason | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_adjust_reason._get_kwargs()
@@ -660,17 +742,23 @@ def create_adjust_reason_asyncio(*, client: StolonClient) -> ApiAdjustReason | N
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustReason.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def delete_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_adjust_reason_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete adjustment reason
 
     Args:
@@ -708,13 +796,17 @@ def delete_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -724,13 +816,19 @@ def delete_adjust_reason_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_adjust_reason_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete adjustment reason
 
     Args:
@@ -768,7 +866,7 @@ def delete_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> Res
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -778,7 +876,13 @@ def delete_adjust_reason_by_uuid_sync(*, client: StolonClient, uuid: str) -> Res
     return None
 
 
-def delete_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_adjust_reason_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete adjustment reason
 
     Args:
@@ -816,13 +920,17 @@ def delete_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -832,13 +940,19 @@ def delete_adjust_reason_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_adjust_reason_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete adjustment reason
 
     Args:
@@ -876,7 +990,7 @@ def delete_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -884,3 +998,4 @@ def delete_adjust_reason_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

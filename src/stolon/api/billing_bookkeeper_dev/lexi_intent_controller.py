@@ -6,24 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import (
-    apply_rules,
-    apply_rules_from_input,
-    create_activation_rule_intent,
-    create_conditional_rule_intent,
-    create_simple_rule_intent,
-    create_unit_rule_intent,
-    delete_rule_intent,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import apply_rules
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import apply_rules_from_input
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_activation_rule_intent
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_conditional_rule_intent
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_simple_rule_intent
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_unit_rule_intent
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import delete_rule_intent
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.lexi_attr_intent import LexiAttrIntent
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def apply_rules_sync_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+def apply_rules_sync_detailed(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -60,26 +62,39 @@ def apply_rules_sync_detailed(*, client: StolonClient, lexicon: str) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_rules_sync(*, client: StolonClient, lexicon: str) -> int | None:
+
+
+def apply_rules_sync(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -105,7 +120,7 @@ def apply_rules_sync(*, client: StolonClient, lexicon: str) -> int | None:
     kwargs = apply_rules._get_kwargs(lexicon=lexicon)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -119,7 +134,13 @@ def apply_rules_sync(*, client: StolonClient, lexicon: str) -> int | None:
     return None
 
 
-def apply_rules_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+
+
+def apply_rules_asyncio_detailed(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -156,26 +177,39 @@ def apply_rules_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_rules_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
+
+
+def apply_rules_asyncio(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -201,7 +235,7 @@ def apply_rules_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
     kwargs = apply_rules._get_kwargs(lexicon=lexicon)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -215,7 +249,13 @@ def apply_rules_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
     return None
 
 
-def apply_rules_from_input_sync_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+
+
+def apply_rules_from_input_sync_detailed(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -253,26 +293,39 @@ def apply_rules_from_input_sync_detailed(*, client: StolonClient, lexicon: str) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_rules_from_input_sync(*, client: StolonClient, lexicon: str) -> int | None:
+
+
+def apply_rules_from_input_sync(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -299,7 +352,7 @@ def apply_rules_from_input_sync(*, client: StolonClient, lexicon: str) -> int | 
     kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -313,7 +366,13 @@ def apply_rules_from_input_sync(*, client: StolonClient, lexicon: str) -> int | 
     return None
 
 
-def apply_rules_from_input_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Response[int]:
+
+
+def apply_rules_from_input_asyncio_detailed(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> Response[int]:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -351,26 +410,39 @@ def apply_rules_from_input_asyncio_detailed(*, client: StolonClient, lexicon: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_rules_from_input_asyncio(*, client: StolonClient, lexicon: str) -> int | None:
+
+
+def apply_rules_from_input_asyncio(
+    *,
+    client: StolonClient,
+    lexicon: str
+) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -397,7 +469,7 @@ def apply_rules_from_input_asyncio(*, client: StolonClient, lexicon: str) -> int
     kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -411,7 +483,12 @@ def apply_rules_from_input_asyncio(*, client: StolonClient, lexicon: str) -> int
     return None
 
 
-def create_conditional_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_conditional_rule_intent_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -429,7 +506,7 @@ def create_conditional_rule_intent_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -449,26 +526,38 @@ def create_conditional_rule_intent_sync_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_conditional_rule_intent_sync(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -486,7 +575,7 @@ def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAt
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -495,7 +584,7 @@ def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAt
     kwargs = create_conditional_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -509,7 +598,12 @@ def create_conditional_rule_intent_sync(*, client: StolonClient) -> list["LexiAt
     return None
 
 
-def create_conditional_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_conditional_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -527,7 +621,7 @@ def create_conditional_rule_intent_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -547,26 +641,38 @@ def create_conditional_rule_intent_asyncio_detailed(*, client: StolonClient) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_conditional_rule_intent_asyncio(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -584,7 +690,7 @@ def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["Lex
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -593,7 +699,7 @@ def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["Lex
     kwargs = create_conditional_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -607,7 +713,13 @@ def create_conditional_rule_intent_asyncio(*, client: StolonClient) -> list["Lex
     return None
 
 
-def delete_rule_intent_sync_detailed(*, client: StolonClient, uuid: str) -> Response[list["LexiAttrIntent"]]:
+
+
+def delete_rule_intent_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -645,26 +757,39 @@ def delete_rule_intent_sync_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_rule_intent_sync(*, client: StolonClient, uuid: str) -> list["LexiAttrIntent"] | None:
+
+
+def delete_rule_intent_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> list["LexiAttrIntent"] | None:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -691,7 +816,7 @@ def delete_rule_intent_sync(*, client: StolonClient, uuid: str) -> list["LexiAtt
     kwargs = delete_rule_intent._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -705,7 +830,13 @@ def delete_rule_intent_sync(*, client: StolonClient, uuid: str) -> list["LexiAtt
     return None
 
 
-def delete_rule_intent_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[list["LexiAttrIntent"]]:
+
+
+def delete_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -743,26 +874,39 @@ def delete_rule_intent_asyncio_detailed(*, client: StolonClient, uuid: str) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_rule_intent_asyncio(*, client: StolonClient, uuid: str) -> list["LexiAttrIntent"] | None:
+
+
+def delete_rule_intent_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> list["LexiAttrIntent"] | None:
     """Args:
         uuid (str):
         page_size (Union[Unset, int]):
@@ -789,7 +933,7 @@ def delete_rule_intent_asyncio(*, client: StolonClient, uuid: str) -> list["Lexi
     kwargs = delete_rule_intent._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -803,7 +947,12 @@ def delete_rule_intent_asyncio(*, client: StolonClient, uuid: str) -> list["Lexi
     return None
 
 
-def create_unit_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_unit_rule_intent_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -821,7 +970,7 @@ def create_unit_rule_intent_sync_detailed(*, client: StolonClient) -> Response[l
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -841,26 +990,38 @@ def create_unit_rule_intent_sync_detailed(*, client: StolonClient) -> Response[l
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_unit_rule_intent_sync(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -878,7 +1039,7 @@ def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInten
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -887,7 +1048,7 @@ def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInten
     kwargs = create_unit_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -901,7 +1062,12 @@ def create_unit_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInten
     return None
 
 
-def create_unit_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_unit_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -919,7 +1085,7 @@ def create_unit_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -939,26 +1105,38 @@ def create_unit_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_unit_rule_intent_asyncio(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -976,7 +1154,7 @@ def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIn
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -985,7 +1163,7 @@ def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIn
     kwargs = create_unit_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -999,7 +1177,12 @@ def create_unit_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIn
     return None
 
 
-def create_activation_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_activation_rule_intent_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1017,7 +1200,7 @@ def create_activation_rule_intent_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -1037,26 +1220,38 @@ def create_activation_rule_intent_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_activation_rule_intent_sync(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1074,7 +1269,7 @@ def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAtt
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -1083,7 +1278,7 @@ def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAtt
     kwargs = create_activation_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1097,7 +1292,12 @@ def create_activation_rule_intent_sync(*, client: StolonClient) -> list["LexiAtt
     return None
 
 
-def create_activation_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_activation_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1115,7 +1315,7 @@ def create_activation_rule_intent_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -1135,26 +1335,38 @@ def create_activation_rule_intent_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_activation_rule_intent_asyncio(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1172,7 +1384,7 @@ def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["Lexi
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -1181,7 +1393,7 @@ def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["Lexi
     kwargs = create_activation_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1195,7 +1407,12 @@ def create_activation_rule_intent_asyncio(*, client: StolonClient) -> list["Lexi
     return None
 
 
-def create_simple_rule_intent_sync_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_simple_rule_intent_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1213,7 +1430,7 @@ def create_simple_rule_intent_sync_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -1233,26 +1450,38 @@ def create_simple_rule_intent_sync_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_simple_rule_intent_sync(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1270,7 +1499,7 @@ def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInt
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -1279,7 +1508,7 @@ def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInt
     kwargs = create_simple_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1293,7 +1522,12 @@ def create_simple_rule_intent_sync(*, client: StolonClient) -> list["LexiAttrInt
     return None
 
 
-def create_simple_rule_intent_asyncio_detailed(*, client: StolonClient) -> Response[list["LexiAttrIntent"]]:
+
+
+def create_simple_rule_intent_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1311,7 +1545,7 @@ def create_simple_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list["LexiAttrIntent"]]
@@ -1331,26 +1565,38 @@ def create_simple_rule_intent_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_simple_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttrIntent"] | None:
+
+
+def create_simple_rule_intent_asyncio(
+    *,
+    client: StolonClient
+) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -1368,7 +1614,7 @@ def create_simple_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttr
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list["LexiAttrIntent"] | None
@@ -1377,7 +1623,7 @@ def create_simple_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttr
     kwargs = create_simple_rule_intent._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1389,3 +1635,4 @@ def create_simple_rule_intent_asyncio(*, client: StolonClient) -> list["LexiAttr
 
     # No response model, return None
     return None
+

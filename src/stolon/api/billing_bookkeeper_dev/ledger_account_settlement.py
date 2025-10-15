@@ -6,25 +6,24 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import (
-    create_ledger_account_settlement,
-    delete_ledger_account_settlement_by_uuid,
-    get_ledger_account_settlement_by_uuid,
-    get_ledger_account_settlements,
-    update_ledger_account_settlement,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_settlement import (
-    ApiLedgerAccountSettlement,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import create_ledger_account_settlement
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import delete_ledger_account_settlement_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import get_ledger_account_settlement_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import get_ledger_account_settlements
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_settlement import update_ledger_account_settlement
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_settlement import ApiLedgerAccountSettlement
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_ledger_account_settlement_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountSettlement]:
+def create_ledger_account_settlement_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create ledger account settlement configuration
 
     Args:
@@ -35,17 +34,17 @@ def create_ledger_account_settlement_sync_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_settlement._get_kwargs()
@@ -62,29 +61,38 @@ def create_ledger_account_settlement_sync_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountSettlement:
-        parsed = ApiLedgerAccountSettlement.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_ledger_account_settlement_sync(*, client: StolonClient) -> ApiLedgerAccountSettlement | None:
+
+
+def create_ledger_account_settlement_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create ledger account settlement configuration
 
     Args:
@@ -95,17 +103,17 @@ def create_ledger_account_settlement_sync(*, client: StolonClient) -> ApiLedgerA
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountSettlement
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountSettlement | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_settlement._get_kwargs()
@@ -122,17 +130,22 @@ def create_ledger_account_settlement_sync(*, client: StolonClient) -> ApiLedgerA
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountSettlement.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_ledger_account_settlement_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountSettlement]:
+
+
+def create_ledger_account_settlement_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create ledger account settlement configuration
 
     Args:
@@ -143,17 +156,17 @@ def create_ledger_account_settlement_asyncio_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_settlement._get_kwargs()
@@ -170,29 +183,38 @@ def create_ledger_account_settlement_asyncio_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountSettlement:
-        parsed = ApiLedgerAccountSettlement.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_ledger_account_settlement_asyncio(*, client: StolonClient) -> ApiLedgerAccountSettlement | None:
+
+
+def create_ledger_account_settlement_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create ledger account settlement configuration
 
     Args:
@@ -203,17 +225,17 @@ def create_ledger_account_settlement_asyncio(*, client: StolonClient) -> ApiLedg
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountSettlement
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountSettlement | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_settlement._get_kwargs()
@@ -230,17 +252,23 @@ def create_ledger_account_settlement_asyncio(*, client: StolonClient) -> ApiLedg
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountSettlement.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def delete_ledger_account_settlement_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
+
+
+def delete_ledger_account_settlement_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete ledger account settlement configuration
 
     Args:
@@ -251,7 +279,7 @@ def delete_ledger_account_settlement_by_uuid_sync_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[Union[ResponseError, str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -261,7 +289,7 @@ def delete_ledger_account_settlement_by_uuid_sync_detailed(*, client: StolonClie
                 uuid: str
 
     Returns:
-        Response[str]
+        Response[ResponseError | str]
     """
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
@@ -278,26 +306,39 @@ def delete_ledger_account_settlement_by_uuid_sync_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid: str) -> str | None:
+
+
+def delete_ledger_account_settlement_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete ledger account settlement configuration
 
     Args:
@@ -308,7 +349,7 @@ def delete_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        Union[ResponseError, str]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -318,13 +359,13 @@ def delete_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        str | None
+        ResponseError | str | None
     """
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -338,7 +379,13 @@ def delete_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid:
     return None
 
 
-def delete_ledger_account_settlement_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
+
+
+def delete_ledger_account_settlement_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete ledger account settlement configuration
 
     Args:
@@ -349,7 +396,7 @@ def delete_ledger_account_settlement_by_uuid_asyncio_detailed(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[Union[ResponseError, str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -359,7 +406,7 @@ def delete_ledger_account_settlement_by_uuid_asyncio_detailed(*, client: StolonC
                 uuid: str
 
     Returns:
-        Response[str]
+        Response[ResponseError | str]
     """
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
@@ -376,26 +423,39 @@ def delete_ledger_account_settlement_by_uuid_asyncio_detailed(*, client: StolonC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_ledger_account_settlement_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> str | None:
+
+
+def delete_ledger_account_settlement_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete ledger account settlement configuration
 
     Args:
@@ -406,7 +466,7 @@ def delete_ledger_account_settlement_by_uuid_asyncio(*, client: StolonClient, uu
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        Union[ResponseError, str]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -416,13 +476,13 @@ def delete_ledger_account_settlement_by_uuid_asyncio(*, client: StolonClient, uu
                 uuid: str
 
     Returns:
-        str | None
+        ResponseError | str | None
     """
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -434,11 +494,14 @@ def delete_ledger_account_settlement_by_uuid_asyncio(*, client: StolonClient, uu
 
     # No response model, return None
     return None
+
+
 
 
 def get_ledger_account_settlements_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiLedgerAccountSettlement"]]:
     """Get ledger account settlement configurations using the ledger account key
 
     Args:
@@ -452,17 +515,17 @@ def get_ledger_account_settlements_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiLedgerAccountSettlement, list['ApiLedgerAccountSettlement']]]
+        Response[Union[ResponseError, list['ApiLedgerAccountSettlement']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"]]
+        Response[ResponseError | list["ApiLedgerAccountSettlement"]]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlements._get_kwargs()
@@ -479,28 +542,38 @@ def get_ledger_account_settlements_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_account_settlements_sync(
-    *, client: StolonClient
-) -> ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiLedgerAccountSettlement"] | None:
     """Get ledger account settlement configurations using the ledger account key
 
     Args:
@@ -514,23 +587,23 @@ def get_ledger_account_settlements_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiLedgerAccountSettlement, list['ApiLedgerAccountSettlement']]
+        Union[ResponseError, list['ApiLedgerAccountSettlement']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"] | None
+        ResponseError | list["ApiLedgerAccountSettlement"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlements._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -542,11 +615,14 @@ def get_ledger_account_settlements_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_ledger_account_settlements_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiLedgerAccountSettlement"]]:
     """Get ledger account settlement configurations using the ledger account key
 
     Args:
@@ -560,17 +636,17 @@ def get_ledger_account_settlements_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiLedgerAccountSettlement, list['ApiLedgerAccountSettlement']]]
+        Response[Union[ResponseError, list['ApiLedgerAccountSettlement']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"]]
+        Response[ResponseError | list["ApiLedgerAccountSettlement"]]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlements._get_kwargs()
@@ -587,28 +663,38 @@ def get_ledger_account_settlements_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_ledger_account_settlements_asyncio(
-    *, client: StolonClient
-) -> ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiLedgerAccountSettlement"] | None:
     """Get ledger account settlement configurations using the ledger account key
 
     Args:
@@ -622,23 +708,23 @@ def get_ledger_account_settlements_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiLedgerAccountSettlement, list['ApiLedgerAccountSettlement']]
+        Union[ResponseError, list['ApiLedgerAccountSettlement']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountSettlement | list["ApiLedgerAccountSettlement"] | None
+        ResponseError | list["ApiLedgerAccountSettlement"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlements._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -652,9 +738,13 @@ def get_ledger_account_settlements_asyncio(
     return None
 
 
+
+
 def update_ledger_account_settlement_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiLedgerAccountSettlement]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountSettlement | ResponseError]:
     """Update ledger account settlement configuration
 
     Args:
@@ -666,7 +756,7 @@ def update_ledger_account_settlement_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[Union[ApiLedgerAccountSettlement, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -676,7 +766,7 @@ def update_ledger_account_settlement_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ApiLedgerAccountSettlement | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
@@ -693,29 +783,39 @@ def update_ledger_account_settlement_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountSettlement:
-        parsed = ApiLedgerAccountSettlement.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_ledger_account_settlement_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountSettlement | None:
+
+
+def update_ledger_account_settlement_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountSettlement | ResponseError | None:
     """Update ledger account settlement configuration
 
     Args:
@@ -727,7 +827,7 @@ def update_ledger_account_settlement_sync(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountSettlement
+        Union[ApiLedgerAccountSettlement, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -737,7 +837,7 @@ def update_ledger_account_settlement_sync(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ApiLedgerAccountSettlement | None
+        ApiLedgerAccountSettlement | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
@@ -753,20 +853,17 @@ def update_ledger_account_settlement_sync(*, client: StolonClient, uuid: str) ->
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountSettlement.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def update_ledger_account_settlement_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiLedgerAccountSettlement]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountSettlement | ResponseError]:
     """Update ledger account settlement configuration
 
     Args:
@@ -778,7 +875,7 @@ def update_ledger_account_settlement_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[Union[ApiLedgerAccountSettlement, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -788,7 +885,7 @@ def update_ledger_account_settlement_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ApiLedgerAccountSettlement | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
@@ -805,29 +902,39 @@ def update_ledger_account_settlement_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountSettlement:
-        parsed = ApiLedgerAccountSettlement.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_ledger_account_settlement_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerAccountSettlement | None:
+
+
+def update_ledger_account_settlement_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountSettlement | ResponseError | None:
     """Update ledger account settlement configuration
 
     Args:
@@ -839,7 +946,7 @@ def update_ledger_account_settlement_asyncio(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountSettlement
+        Union[ApiLedgerAccountSettlement, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -849,7 +956,7 @@ def update_ledger_account_settlement_asyncio(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        ApiLedgerAccountSettlement | None
+        ApiLedgerAccountSettlement | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_settlement._get_kwargs(uuid=uuid)
@@ -865,20 +972,17 @@ def update_ledger_account_settlement_asyncio(*, client: StolonClient, uuid: str)
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountSettlement.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_ledger_account_settlement_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiLedgerAccountSettlement]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountSettlement | ResponseError]:
     """Get ledger account settlement configuration by UUID
 
     Args:
@@ -889,7 +993,7 @@ def get_ledger_account_settlement_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[Union[ApiLedgerAccountSettlement, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -899,7 +1003,7 @@ def get_ledger_account_settlement_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ApiLedgerAccountSettlement | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
@@ -916,29 +1020,39 @@ def get_ledger_account_settlement_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountSettlement:
-        parsed = ApiLedgerAccountSettlement.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountSettlement | None:
+
+
+def get_ledger_account_settlement_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountSettlement | ResponseError | None:
     """Get ledger account settlement configuration by UUID
 
     Args:
@@ -949,7 +1063,7 @@ def get_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountSettlement
+        Union[ApiLedgerAccountSettlement, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -959,7 +1073,7 @@ def get_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        ApiLedgerAccountSettlement | None
+        ApiLedgerAccountSettlement | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
@@ -975,20 +1089,17 @@ def get_ledger_account_settlement_by_uuid_sync(*, client: StolonClient, uuid: st
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountSettlement.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_ledger_account_settlement_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiLedgerAccountSettlement]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountSettlement | ResponseError]:
     """Get ledger account settlement configuration by UUID
 
     Args:
@@ -999,7 +1110,7 @@ def get_ledger_account_settlement_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[Union[ApiLedgerAccountSettlement, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1009,7 +1120,7 @@ def get_ledger_account_settlement_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountSettlement]
+        Response[ApiLedgerAccountSettlement | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
@@ -1026,31 +1137,39 @@ def get_ledger_account_settlement_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountSettlement:
-        parsed = ApiLedgerAccountSettlement.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_ledger_account_settlement_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
-) -> ApiLedgerAccountSettlement | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountSettlement | ResponseError | None:
     """Get ledger account settlement configuration by UUID
 
     Args:
@@ -1061,7 +1180,7 @@ def get_ledger_account_settlement_by_uuid_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountSettlement
+        Union[ApiLedgerAccountSettlement, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1071,7 +1190,7 @@ def get_ledger_account_settlement_by_uuid_asyncio(
                 uuid: str
 
     Returns:
-        ApiLedgerAccountSettlement | None
+        ApiLedgerAccountSettlement | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_settlement_by_uuid._get_kwargs(uuid=uuid)
@@ -1087,12 +1206,6 @@ def get_ledger_account_settlement_by_uuid_asyncio(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountSettlement.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+

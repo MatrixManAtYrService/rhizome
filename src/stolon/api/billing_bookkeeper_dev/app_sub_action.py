@@ -6,22 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import (
-    create_app_sub_action,
-    get_app_sub_action_by_uuid,
-    get_app_sub_actions,
-    get_unposted_app_sub_actions_by_billing_entity,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import create_app_sub_action
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import get_app_sub_action_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import get_app_sub_actions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import get_unposted_app_sub_actions_by_billing_entity
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_sub_action import ApiAppSubAction
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppSubAction]:
+def get_app_sub_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiAppSubAction]:
     """Get app subscription action by UUID
 
     Args:
@@ -59,13 +60,17 @@ def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -75,13 +80,19 @@ def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppSubAction | None:
+
+
+def get_app_sub_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiAppSubAction | None:
     """Get app subscription action by UUID
 
     Args:
@@ -119,7 +130,7 @@ def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -129,7 +140,13 @@ def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAp
     return None
 
 
-def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppSubAction]:
+
+
+def get_app_sub_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiAppSubAction]:
     """Get app subscription action by UUID
 
     Args:
@@ -167,13 +184,17 @@ def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -183,13 +204,19 @@ def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppSubAction | None:
+
+
+def get_app_sub_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiAppSubAction | None:
     """Get app subscription action by UUID
 
     Args:
@@ -227,7 +254,7 @@ def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -237,7 +264,12 @@ def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def create_app_sub_action_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubAction]:
+
+
+def create_app_sub_action_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiAppSubAction]:
     """Create app subscription action
 
     Args:
@@ -255,7 +287,7 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiAppSubAction]
@@ -275,13 +307,17 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient) -> Response[Api
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -291,13 +327,18 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient) -> Response[Api
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_sub_action_sync(*, client: StolonClient) -> ApiAppSubAction | None:
+
+
+def create_app_sub_action_sync(
+    *,
+    client: StolonClient
+) -> ApiAppSubAction | None:
     """Create app subscription action
 
     Args:
@@ -315,7 +356,7 @@ def create_app_sub_action_sync(*, client: StolonClient) -> ApiAppSubAction | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiAppSubAction | None
@@ -335,7 +376,7 @@ def create_app_sub_action_sync(*, client: StolonClient) -> ApiAppSubAction | Non
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -345,7 +386,12 @@ def create_app_sub_action_sync(*, client: StolonClient) -> ApiAppSubAction | Non
     return None
 
 
-def create_app_sub_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubAction]:
+
+
+def create_app_sub_action_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiAppSubAction]:
     """Create app subscription action
 
     Args:
@@ -363,7 +409,7 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiAppSubAction]
@@ -383,13 +429,17 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -399,13 +449,18 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient) -> Response[
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_sub_action_asyncio(*, client: StolonClient) -> ApiAppSubAction | None:
+
+
+def create_app_sub_action_asyncio(
+    *,
+    client: StolonClient
+) -> ApiAppSubAction | None:
     """Create app subscription action
 
     Args:
@@ -423,7 +478,7 @@ def create_app_sub_action_asyncio(*, client: StolonClient) -> ApiAppSubAction | 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiAppSubAction | None
@@ -443,7 +498,7 @@ def create_app_sub_action_asyncio(*, client: StolonClient) -> ApiAppSubAction | 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -451,10 +506,14 @@ def create_app_sub_action_asyncio(*, client: StolonClient) -> ApiAppSubAction | 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiAppSubAction]:
     """Get unposted app subscription actions for billing entity
 
@@ -493,13 +552,17 @@ def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -509,14 +572,18 @@ def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_app_sub_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiAppSubAction | None:
     """Get unposted app subscription actions for billing entity
 
@@ -555,7 +622,7 @@ def get_unposted_app_sub_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -565,8 +632,12 @@ def get_unposted_app_sub_actions_by_billing_entity_sync(
     return None
 
 
+
+
 def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiAppSubAction]:
     """Get unposted app subscription actions for billing entity
 
@@ -605,13 +676,17 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -621,14 +696,18 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_unposted_app_sub_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiAppSubAction | None:
     """Get unposted app subscription actions for billing entity
 
@@ -667,7 +746,7 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -677,7 +756,12 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio(
     return None
 
 
-def get_app_sub_actions_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubAction]:
+
+
+def get_app_sub_actions_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiAppSubAction]:
     """Get app subscription actions
 
     Args:
@@ -705,7 +789,7 @@ def get_app_sub_actions_sync_detailed(*, client: StolonClient) -> Response[ApiAp
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiAppSubAction]
@@ -725,13 +809,17 @@ def get_app_sub_actions_sync_detailed(*, client: StolonClient) -> Response[ApiAp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -741,13 +829,18 @@ def get_app_sub_actions_sync_detailed(*, client: StolonClient) -> Response[ApiAp
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_actions_sync(*, client: StolonClient) -> ApiAppSubAction | None:
+
+
+def get_app_sub_actions_sync(
+    *,
+    client: StolonClient
+) -> ApiAppSubAction | None:
     """Get app subscription actions
 
     Args:
@@ -775,7 +868,7 @@ def get_app_sub_actions_sync(*, client: StolonClient) -> ApiAppSubAction | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiAppSubAction | None
@@ -795,7 +888,7 @@ def get_app_sub_actions_sync(*, client: StolonClient) -> ApiAppSubAction | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -805,7 +898,12 @@ def get_app_sub_actions_sync(*, client: StolonClient) -> ApiAppSubAction | None:
     return None
 
 
-def get_app_sub_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubAction]:
+
+
+def get_app_sub_actions_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiAppSubAction]:
     """Get app subscription actions
 
     Args:
@@ -833,7 +931,7 @@ def get_app_sub_actions_asyncio_detailed(*, client: StolonClient) -> Response[Ap
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiAppSubAction]
@@ -853,13 +951,17 @@ def get_app_sub_actions_asyncio_detailed(*, client: StolonClient) -> Response[Ap
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
@@ -869,13 +971,18 @@ def get_app_sub_actions_asyncio_detailed(*, client: StolonClient) -> Response[Ap
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_actions_asyncio(*, client: StolonClient) -> ApiAppSubAction | None:
+
+
+def get_app_sub_actions_asyncio(
+    *,
+    client: StolonClient
+) -> ApiAppSubAction | None:
     """Get app subscription actions
 
     Args:
@@ -903,7 +1010,7 @@ def get_app_sub_actions_asyncio(*, client: StolonClient) -> ApiAppSubAction | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiAppSubAction | None
@@ -923,7 +1030,7 @@ def get_app_sub_actions_asyncio(*, client: StolonClient) -> ApiAppSubAction | No
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -931,3 +1038,4 @@ def get_app_sub_actions_asyncio(*, client: StolonClient) -> ApiAppSubAction | No
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

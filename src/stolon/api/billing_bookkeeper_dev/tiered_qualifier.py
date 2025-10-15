@@ -6,24 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_qualifier import (
-    create_tiered_qualifier,
-    delete_tiered_qualifier_by_uuid,
-    get_tiered_qualifier_by_uuid,
-    get_tiered_rule_qualifiers,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_qualifier import (
-    ApiTieredQualifier,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_qualifier import create_tiered_qualifier
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_qualifier import delete_tiered_qualifier_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_qualifier import get_tiered_qualifier_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_qualifier import get_tiered_rule_qualifiers
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_qualifier import ApiTieredQualifier
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_tiered_qualifier_sync_detailed(*, client: StolonClient) -> Response[ApiTieredQualifier]:
+def create_tiered_qualifier_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create tiered qualifier
 
     Args:
@@ -34,17 +33,17 @@ def create_tiered_qualifier_sync_detailed(*, client: StolonClient) -> Response[A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_tiered_qualifier._get_kwargs()
@@ -61,29 +60,38 @@ def create_tiered_qualifier_sync_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiTieredQualifier:
-        parsed = ApiTieredQualifier.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_tiered_qualifier_sync(*, client: StolonClient) -> ApiTieredQualifier | None:
+
+
+def create_tiered_qualifier_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create tiered qualifier
 
     Args:
@@ -94,17 +102,17 @@ def create_tiered_qualifier_sync(*, client: StolonClient) -> ApiTieredQualifier 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiTieredQualifier
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiTieredQualifier | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_tiered_qualifier._get_kwargs()
@@ -121,17 +129,22 @@ def create_tiered_qualifier_sync(*, client: StolonClient) -> ApiTieredQualifier 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiTieredQualifier.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_tiered_qualifier_asyncio_detailed(*, client: StolonClient) -> Response[ApiTieredQualifier]:
+
+
+def create_tiered_qualifier_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create tiered qualifier
 
     Args:
@@ -142,17 +155,17 @@ def create_tiered_qualifier_asyncio_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_tiered_qualifier._get_kwargs()
@@ -169,29 +182,38 @@ def create_tiered_qualifier_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiTieredQualifier:
-        parsed = ApiTieredQualifier.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_tiered_qualifier_asyncio(*, client: StolonClient) -> ApiTieredQualifier | None:
+
+
+def create_tiered_qualifier_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create tiered qualifier
 
     Args:
@@ -202,17 +224,17 @@ def create_tiered_qualifier_asyncio(*, client: StolonClient) -> ApiTieredQualifi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiTieredQualifier
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiTieredQualifier | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_tiered_qualifier._get_kwargs()
@@ -229,116 +251,22 @@ def create_tiered_qualifier_asyncio(*, client: StolonClient) -> ApiTieredQualifi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiTieredQualifier.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def delete_tiered_qualifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
-    """Delete tiered qualifier
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ResponseError, bool]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ResponseError | bool]
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
 
 
-def delete_tiered_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
-    """Delete tiered qualifier
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ResponseError, bool]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ResponseError | bool | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def delete_tiered_qualifier_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+def delete_tiered_qualifier_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete tiered qualifier
 
@@ -377,26 +305,39 @@ def delete_tiered_qualifier_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_tiered_qualifier_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete tiered qualifier
 
     Args:
@@ -423,7 +364,7 @@ def delete_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     kwargs = delete_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -437,7 +378,129 @@ def delete_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_tiered_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Response[ApiTieredQualifier]:
+
+
+def delete_tiered_qualifier_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
+    """Delete tiered qualifier
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ResponseError, bool]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError | bool]
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def delete_tiered_qualifier_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
+    """Delete tiered qualifier
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ResponseError, bool]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | bool | None
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def get_tiered_rule_qualifiers_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -450,17 +513,17 @@ def get_tiered_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_qualifiers._get_kwargs()
@@ -477,29 +540,38 @@ def get_tiered_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiTieredQualifier:
-        parsed = ApiTieredQualifier.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tiered_rule_qualifiers_sync(*, client: StolonClient) -> ApiTieredQualifier | None:
+
+
+def get_tiered_rule_qualifiers_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -512,17 +584,17 @@ def get_tiered_rule_qualifiers_sync(*, client: StolonClient) -> ApiTieredQualifi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiTieredQualifier
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiTieredQualifier | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_qualifiers._get_kwargs()
@@ -539,17 +611,22 @@ def get_tiered_rule_qualifiers_sync(*, client: StolonClient) -> ApiTieredQualifi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiTieredQualifier.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_tiered_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Response[ApiTieredQualifier]:
+
+
+def get_tiered_rule_qualifiers_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -562,17 +639,17 @@ def get_tiered_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_qualifiers._get_kwargs()
@@ -589,29 +666,38 @@ def get_tiered_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiTieredQualifier:
-        parsed = ApiTieredQualifier.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tiered_rule_qualifiers_asyncio(*, client: StolonClient) -> ApiTieredQualifier | None:
+
+
+def get_tiered_rule_qualifiers_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get tiered qualifiers for a tiered pricing rule
 
     Args:
@@ -624,17 +710,17 @@ def get_tiered_rule_qualifiers_asyncio(*, client: StolonClient) -> ApiTieredQual
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiTieredQualifier
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiTieredQualifier | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_qualifiers._get_kwargs()
@@ -651,17 +737,23 @@ def get_tiered_rule_qualifiers_asyncio(*, client: StolonClient) -> ApiTieredQual
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiTieredQualifier.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_tiered_qualifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredQualifier]:
+
+
+def get_tiered_qualifier_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTieredQualifier | ResponseError]:
     """Get tiered qualifier by UUID
 
     Args:
@@ -672,7 +764,7 @@ def get_tiered_qualifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[Union[ApiTieredQualifier, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -682,7 +774,7 @@ def get_tiered_qualifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ApiTieredQualifier | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
@@ -699,29 +791,39 @@ def get_tiered_qualifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiTieredQualifier:
-        parsed = ApiTieredQualifier.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tiered_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTieredQualifier | None:
+
+
+def get_tiered_qualifier_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTieredQualifier | ResponseError | None:
     """Get tiered qualifier by UUID
 
     Args:
@@ -732,7 +834,7 @@ def get_tiered_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiTieredQualifier
+        Union[ApiTieredQualifier, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -742,7 +844,7 @@ def get_tiered_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiTieredQualifier | None
+        ApiTieredQualifier | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
@@ -758,18 +860,17 @@ def get_tiered_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiTieredQualifier.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_tiered_qualifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredQualifier]:
+
+
+def get_tiered_qualifier_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTieredQualifier | ResponseError]:
     """Get tiered qualifier by UUID
 
     Args:
@@ -780,7 +881,7 @@ def get_tiered_qualifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[Union[ApiTieredQualifier, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -790,7 +891,7 @@ def get_tiered_qualifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        Response[ApiTieredQualifier]
+        Response[ApiTieredQualifier | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
@@ -807,29 +908,39 @@ def get_tiered_qualifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiTieredQualifier:
-        parsed = ApiTieredQualifier.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredQualifier | None:
+
+
+def get_tiered_qualifier_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTieredQualifier | ResponseError | None:
     """Get tiered qualifier by UUID
 
     Args:
@@ -840,7 +951,7 @@ def get_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiTieredQualifier
+        Union[ApiTieredQualifier, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -850,7 +961,7 @@ def get_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiTieredQualifier | None
+        ApiTieredQualifier | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_tiered_qualifier_by_uuid._get_kwargs(uuid=uuid)
@@ -866,12 +977,6 @@ def get_tiered_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiTieredQualifier.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+

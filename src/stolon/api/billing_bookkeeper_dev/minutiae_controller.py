@@ -6,19 +6,18 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-from typing import Any
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.minutiae_controller import (
-    get_billing_entity_minutiae,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.minutiae_controller import get_billing_entity_minutiae
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_billing_entity_minutiae_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_billing_entity_minutiae_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[Any]:
     """Args:
         billing_entity_uuid (Union[Unset, str]):
         entity_uuid (Union[Unset, str]):
@@ -45,7 +44,7 @@ def get_billing_entity_minutiae_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[Any]
@@ -65,26 +64,38 @@ def get_billing_entity_minutiae_sync_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_minutiae_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+
+
+def get_billing_entity_minutiae_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[Any]:
     """Args:
         billing_entity_uuid (Union[Unset, str]):
         entity_uuid (Union[Unset, str]):
@@ -111,7 +122,7 @@ def get_billing_entity_minutiae_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[Any]
@@ -131,20 +142,28 @@ def get_billing_entity_minutiae_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+

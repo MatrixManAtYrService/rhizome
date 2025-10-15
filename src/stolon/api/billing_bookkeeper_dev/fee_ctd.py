@@ -6,25 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import (
-    create_fee_ctd,
-    get_fee_ctd_by_billing_entity,
-    get_fee_ctd_by_uuid,
-    update_fee_ctd,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import create_fee_ctd
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import get_fee_ctd_by_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import get_fee_ctd_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import update_fee_ctd
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ctd import ApiFeeCtd
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ctd_extended import (
-    ApiFeeCtdExtended,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ctd_extended import ApiFeeCtdExtended
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_fee_ctd_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCtdExtended]:
+def get_fee_ctd_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCtdExtended | ResponseError]:
     """Get current-to-date (CTD) fee by UUID
 
     Args:
@@ -35,7 +35,7 @@ def get_fee_ctd_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCtdExtended]
+        Response[Union[ApiFeeCtdExtended, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -45,7 +45,7 @@ def get_fee_ctd_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Res
                 uuid: str
 
     Returns:
-        Response[ApiFeeCtdExtended]
+        Response[ApiFeeCtdExtended | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
@@ -62,29 +62,39 @@ def get_fee_ctd_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCtdExtended:
-        parsed = ApiFeeCtdExtended.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExtended | None:
+
+
+def get_fee_ctd_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCtdExtended | ResponseError | None:
     """Get current-to-date (CTD) fee by UUID
 
     Args:
@@ -95,7 +105,7 @@ def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExt
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCtdExtended
+        Union[ApiFeeCtdExtended, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -105,7 +115,7 @@ def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExt
                 uuid: str
 
     Returns:
-        ApiFeeCtdExtended | None
+        ApiFeeCtdExtended | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
@@ -121,18 +131,17 @@ def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExt
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCtdExtended.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_fee_ctd_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCtdExtended]:
+
+
+def get_fee_ctd_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCtdExtended | ResponseError]:
     """Get current-to-date (CTD) fee by UUID
 
     Args:
@@ -143,7 +152,7 @@ def get_fee_ctd_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCtdExtended]
+        Response[Union[ApiFeeCtdExtended, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -153,7 +162,7 @@ def get_fee_ctd_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        Response[ApiFeeCtdExtended]
+        Response[ApiFeeCtdExtended | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
@@ -170,29 +179,39 @@ def get_fee_ctd_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCtdExtended:
-        parsed = ApiFeeCtdExtended.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtdExtended | None:
+
+
+def get_fee_ctd_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCtdExtended | ResponseError | None:
     """Get current-to-date (CTD) fee by UUID
 
     Args:
@@ -203,7 +222,7 @@ def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtd
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCtdExtended
+        Union[ApiFeeCtdExtended, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -213,7 +232,7 @@ def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtd
                 uuid: str
 
     Returns:
-        ApiFeeCtdExtended | None
+        ApiFeeCtdExtended | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
@@ -229,18 +248,17 @@ def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtd
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCtdExtended.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def update_fee_ctd_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCtd]:
+
+
+def update_fee_ctd_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCtd | ResponseError]:
     """Update current-to-date (CTD) fee
 
     Args:
@@ -252,7 +270,7 @@ def update_fee_ctd_sync_detailed(*, client: StolonClient, uuid: str) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCtd]
+        Response[Union[ApiFeeCtd, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -262,7 +280,7 @@ def update_fee_ctd_sync_detailed(*, client: StolonClient, uuid: str) -> Response
                 uuid: str
 
     Returns:
-        Response[ApiFeeCtd]
+        Response[ApiFeeCtd | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
@@ -279,484 +297,298 @@ def update_fee_ctd_sync_detailed(*, client: StolonClient, uuid: str) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = ApiFeeCtd.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCtd else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def update_fee_ctd_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtd | None:
-    """Update current-to-date (CTD) fee
-
-    Args:
-        uuid (str):
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiFeeCtd
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiFeeCtd | None
-    """
-    # Extract request parameters from generated function
-    kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCtd.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
+        except json.JSONDecodeError:
             pass
-    return None
-
-
-def update_fee_ctd_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCtd]:
-    """Update current-to-date (CTD) fee
-
-    Args:
-        uuid (str):
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiFeeCtd]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiFeeCtd]
-    """
-    # Extract request parameters from generated function
-    kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
 
     # Parse response using generated function's parser
-    parsed = ApiFeeCtd.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCtd else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def update_fee_ctd_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtd | None:
-    """Update current-to-date (CTD) fee
-
-    Args:
-        uuid (str):
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiFeeCtd
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiFeeCtd | None
-    """
-    # Extract request parameters from generated function
-    kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCtd.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def create_fee_ctd_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCtd]:
-    """Create current-to-date (CTD) fee
-
-    Args:
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiFeeCtd]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[ApiFeeCtd]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_fee_ctd._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = ApiFeeCtd.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCtd else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_fee_ctd_sync(*, client: StolonClient) -> ApiFeeCtd | None:
-    """Create current-to-date (CTD) fee
-
-    Args:
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiFeeCtd
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        ApiFeeCtd | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_fee_ctd._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCtd.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def create_fee_ctd_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCtd]:
-    """Create current-to-date (CTD) fee
-
-    Args:
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiFeeCtd]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[ApiFeeCtd]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_fee_ctd._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = ApiFeeCtd.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCtd else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_fee_ctd_asyncio(*, client: StolonClient) -> ApiFeeCtd | None:
-    """Create current-to-date (CTD) fee
-
-    Args:
-        body (ApiFeeCtd):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiFeeCtd
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        ApiFeeCtd | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_fee_ctd._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCtd.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_fee_ctd_by_billing_entity_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCtdExtended]:
-    """Get current-to-date fee(s) for a billing entity
-
-    Args:
-        billing_entity_uuid (str):
-        fee_category (Union[Unset, list[str]]):
-        fee_code (Union[Unset, str]):
-        currency (Union[Unset, str]):
-        exclude_zero_amounts (Union[Unset, bool]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiFeeCtdExtended]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[ApiFeeCtdExtended]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_fee_ctd_by_billing_entity._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCtdExtended:
-        parsed = ApiFeeCtdExtended.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_ctd_by_billing_entity_sync(*, client: StolonClient) -> ApiFeeCtdExtended | None:
-    """Get current-to-date fee(s) for a billing entity
+
+
+def update_fee_ctd_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCtd | ResponseError | None:
+    """Update current-to-date (CTD) fee
 
     Args:
-        billing_entity_uuid (str):
-        fee_category (Union[Unset, list[str]]):
-        fee_code (Union[Unset, str]):
-        currency (Union[Unset, str]):
-        exclude_zero_amounts (Union[Unset, bool]):
+        uuid (str):
+        body (ApiFeeCtd):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCtdExtended
+        Union[ApiFeeCtd, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+                uuid: str
 
     Returns:
-        ApiFeeCtdExtended | None
+        ApiFeeCtd | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_ctd_by_billing_entity._get_kwargs()
+    kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def update_fee_ctd_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCtd | ResponseError]:
+    """Update current-to-date (CTD) fee
+
+    Args:
+        uuid (str):
+        body (ApiFeeCtd):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ApiFeeCtd, ResponseError]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ApiFeeCtd | ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def update_fee_ctd_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCtd | ResponseError | None:
+    """Update current-to-date (CTD) fee
+
+    Args:
+        uuid (str):
+        body (ApiFeeCtd):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ApiFeeCtd, ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ApiFeeCtd | ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = update_fee_ctd._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def create_fee_ctd_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
+    """Create current-to-date (CTD) fee
+
+    Args:
+        body (ApiFeeCtd):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_fee_ctd._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_fee_ctd_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
+    """Create current-to-date (CTD) fee
+
+    Args:
+        body (ApiFeeCtd):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_fee_ctd._get_kwargs()
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -770,17 +602,144 @@ def get_fee_ctd_by_billing_entity_sync(*, client: StolonClient) -> ApiFeeCtdExte
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCtdExtended.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_fee_ctd_by_billing_entity_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCtdExtended]:
+
+
+def create_fee_ctd_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
+    """Create current-to-date (CTD) fee
+
+    Args:
+        body (ApiFeeCtd):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_fee_ctd._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_fee_ctd_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
+    """Create current-to-date (CTD) fee
+
+    Args:
+        body (ApiFeeCtd):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_fee_ctd._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_fee_ctd_by_billing_entity_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get current-to-date fee(s) for a billing entity
 
     Args:
@@ -795,17 +754,17 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCtdExtended]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCtdExtended]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_billing_entity._get_kwargs()
@@ -822,29 +781,38 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCtdExtended:
-        parsed = ApiFeeCtdExtended.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_ctd_by_billing_entity_asyncio(*, client: StolonClient) -> ApiFeeCtdExtended | None:
+
+
+def get_fee_ctd_by_billing_entity_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get current-to-date fee(s) for a billing entity
 
     Args:
@@ -859,17 +827,17 @@ def get_fee_ctd_by_billing_entity_asyncio(*, client: StolonClient) -> ApiFeeCtdE
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCtdExtended
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCtdExtended | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_billing_entity._get_kwargs()
@@ -886,11 +854,142 @@ def get_fee_ctd_by_billing_entity_asyncio(*, client: StolonClient) -> ApiFeeCtdE
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCtdExtended.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def get_fee_ctd_by_billing_entity_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
+    """Get current-to-date fee(s) for a billing entity
+
+    Args:
+        billing_entity_uuid (str):
+        fee_category (Union[Unset, list[str]]):
+        fee_code (Union[Unset, str]):
+        currency (Union[Unset, str]):
+        exclude_zero_amounts (Union[Unset, bool]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_fee_ctd_by_billing_entity._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_fee_ctd_by_billing_entity_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
+    """Get current-to-date fee(s) for a billing entity
+
+    Args:
+        billing_entity_uuid (str):
+        fee_category (Union[Unset, list[str]]):
+        fee_code (Union[Unset, str]):
+        currency (Union[Unset, str]):
+        exclude_zero_amounts (Union[Unset, bool]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_fee_ctd_by_billing_entity._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+

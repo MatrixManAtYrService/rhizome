@@ -6,138 +6,18 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.bulk_detailed_auto_adjust_advice import (
-    create_detailed_bulk_auto_adjust_advice,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import (
-    ApiBulkAutoAdjustAdvice,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.bulk_detailed_auto_adjust_advice import create_detailed_bulk_auto_adjust_advice
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import ApiBulkAutoAdjustAdvice
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_detailed_bulk_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response[ApiBulkAutoAdjustAdvice]:
-    """Create bulk detailed auto-adjust advice
-
-    Args:
-        rule_uuid (str):
-        currency (str):
-        reference (str):
-        email_address (str):
-        body (CreateDetailedBulkAutoAdjustAdviceBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiBulkAutoAdjustAdvice]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[ApiBulkAutoAdjustAdvice]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBulkAutoAdjustAdvice:
-        parsed = ApiBulkAutoAdjustAdvice.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_detailed_bulk_auto_adjust_advice_sync(*, client: StolonClient) -> ApiBulkAutoAdjustAdvice | None:
-    """Create bulk detailed auto-adjust advice
-
-    Args:
-        rule_uuid (str):
-        currency (str):
-        reference (str):
-        email_address (str):
-        body (CreateDetailedBulkAutoAdjustAdviceBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiBulkAutoAdjustAdvice
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        ApiBulkAutoAdjustAdvice | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBulkAutoAdjustAdvice.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
-    *, client: StolonClient
+def create_detailed_bulk_auto_adjust_advice_sync_detailed(
+    *,
+    client: StolonClient
 ) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk detailed auto-adjust advice
 
@@ -160,7 +40,7 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
@@ -180,13 +60,17 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBulkAutoAdjustAdvice:
@@ -196,13 +80,18 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiBulkAutoAdjustAdvice | None:
+
+
+def create_detailed_bulk_auto_adjust_advice_sync(
+    *,
+    client: StolonClient
+) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -224,7 +113,7 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBulkAutoAdjustAdvice | None
@@ -244,7 +133,7 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -252,3 +141,134 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBulkAutoAdjustAdvice]:
+    """Create bulk detailed auto-adjust advice
+
+    Args:
+        rule_uuid (str):
+        currency (str):
+        reference (str):
+        email_address (str):
+        body (CreateDetailedBulkAutoAdjustAdviceBody):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiBulkAutoAdjustAdvice]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[ApiBulkAutoAdjustAdvice]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiBulkAutoAdjustAdvice:
+        parsed = ApiBulkAutoAdjustAdvice.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_detailed_bulk_auto_adjust_advice_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBulkAutoAdjustAdvice | None:
+    """Create bulk detailed auto-adjust advice
+
+    Args:
+        rule_uuid (str):
+        currency (str):
+        reference (str):
+        email_address (str):
+        body (CreateDetailedBulkAutoAdjustAdviceBody):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiBulkAutoAdjustAdvice
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        ApiBulkAutoAdjustAdvice | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_detailed_bulk_auto_adjust_advice._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiBulkAutoAdjustAdvice.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+

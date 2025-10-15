@@ -6,24 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_adjustment import (
-    get_monetary_adjustment_by_uuid,
-    get_monetary_adjustments,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_adjustment import (
-    ApiMonetaryAdjustment,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_adjustment import get_monetary_adjustment_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_adjustment import get_monetary_adjustments
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_adjustment import ApiMonetaryAdjustment
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_monetary_adjustment_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiMonetaryAdjustment]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryAdjustment | ResponseError]:
     """Get a monetary adjustment by UUID
 
     Args:
@@ -34,7 +32,7 @@ def get_monetary_adjustment_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[Union[ApiMonetaryAdjustment, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -44,7 +42,7 @@ def get_monetary_adjustment_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[ApiMonetaryAdjustment | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustment_by_uuid._get_kwargs(uuid=uuid)
@@ -61,29 +59,39 @@ def get_monetary_adjustment_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryAdjustment:
-        parsed = ApiMonetaryAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_adjustment_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryAdjustment | None:
+
+
+def get_monetary_adjustment_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryAdjustment | ResponseError | None:
     """Get a monetary adjustment by UUID
 
     Args:
@@ -94,7 +102,7 @@ def get_monetary_adjustment_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryAdjustment
+        Union[ApiMonetaryAdjustment, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -104,7 +112,7 @@ def get_monetary_adjustment_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiMonetaryAdjustment | None
+        ApiMonetaryAdjustment | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustment_by_uuid._get_kwargs(uuid=uuid)
@@ -120,20 +128,17 @@ def get_monetary_adjustment_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryAdjustment.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_monetary_adjustment_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiMonetaryAdjustment]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryAdjustment | ResponseError]:
     """Get a monetary adjustment by UUID
 
     Args:
@@ -144,7 +149,7 @@ def get_monetary_adjustment_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[Union[ApiMonetaryAdjustment, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -154,7 +159,7 @@ def get_monetary_adjustment_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[ApiMonetaryAdjustment | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustment_by_uuid._get_kwargs(uuid=uuid)
@@ -171,29 +176,39 @@ def get_monetary_adjustment_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryAdjustment:
-        parsed = ApiMonetaryAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_adjustment_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMonetaryAdjustment | None:
+
+
+def get_monetary_adjustment_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryAdjustment | ResponseError | None:
     """Get a monetary adjustment by UUID
 
     Args:
@@ -204,7 +219,7 @@ def get_monetary_adjustment_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryAdjustment
+        Union[ApiMonetaryAdjustment, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -214,7 +229,7 @@ def get_monetary_adjustment_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiMonetaryAdjustment | None
+        ApiMonetaryAdjustment | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustment_by_uuid._get_kwargs(uuid=uuid)
@@ -230,18 +245,16 @@ def get_monetary_adjustment_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryAdjustment.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_monetary_adjustments_sync_detailed(*, client: StolonClient) -> Response[ApiMonetaryAdjustment]:
+
+
+def get_monetary_adjustments_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get monetary adjustments
 
     Args:
@@ -257,17 +270,17 @@ def get_monetary_adjustments_sync_detailed(*, client: StolonClient) -> Response[
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustments._get_kwargs()
@@ -284,29 +297,38 @@ def get_monetary_adjustments_sync_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryAdjustment:
-        parsed = ApiMonetaryAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_adjustments_sync(*, client: StolonClient) -> ApiMonetaryAdjustment | None:
+
+
+def get_monetary_adjustments_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get monetary adjustments
 
     Args:
@@ -322,17 +344,17 @@ def get_monetary_adjustments_sync(*, client: StolonClient) -> ApiMonetaryAdjustm
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryAdjustment
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryAdjustment | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustments._get_kwargs()
@@ -349,17 +371,22 @@ def get_monetary_adjustments_sync(*, client: StolonClient) -> ApiMonetaryAdjustm
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryAdjustment.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_monetary_adjustments_asyncio_detailed(*, client: StolonClient) -> Response[ApiMonetaryAdjustment]:
+
+
+def get_monetary_adjustments_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get monetary adjustments
 
     Args:
@@ -375,17 +402,17 @@ def get_monetary_adjustments_asyncio_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryAdjustment]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustments._get_kwargs()
@@ -402,29 +429,38 @@ def get_monetary_adjustments_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryAdjustment:
-        parsed = ApiMonetaryAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_adjustments_asyncio(*, client: StolonClient) -> ApiMonetaryAdjustment | None:
+
+
+def get_monetary_adjustments_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get monetary adjustments
 
     Args:
@@ -440,17 +476,17 @@ def get_monetary_adjustments_asyncio(*, client: StolonClient) -> ApiMonetaryAdju
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryAdjustment
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryAdjustment | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_adjustments._get_kwargs()
@@ -467,11 +503,12 @@ def get_monetary_adjustments_asyncio(*, client: StolonClient) -> ApiMonetaryAdju
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryAdjustment.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

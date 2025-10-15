@@ -6,30 +6,29 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import (
-    advance_billing_schedule,
-    create_billing_schedule,
-    get_archetype_schedule,
-    get_archetype_schedule_by_entity_uuid,
-    get_billing_schedule_by_billing_entity_uuid,
-    get_billing_schedule_by_entity_uuid,
-    get_billing_schedule_by_uuid,
-    get_billing_schedules_by_next_billing_date,
-    get_reseller_billing_schedule_by_billing_entity_uuid,
-    set_billing_frequency_to_no_bill,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_schedule import (
-    ApiBillingSchedule,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import advance_billing_schedule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import create_billing_schedule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_archetype_schedule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_archetype_schedule_by_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedule_by_billing_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedule_by_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedule_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedules_by_next_billing_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_reseller_billing_schedule_by_billing_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import set_billing_frequency_to_no_bill
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_schedule import ApiBillingSchedule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def set_billing_frequency_to_no_bill_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+def set_billing_frequency_to_no_bill_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Set billing schedule frequency to NO_BILL
 
     Args:
@@ -40,17 +39,17 @@ def set_billing_frequency_to_no_bill_sync_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs()
@@ -67,29 +66,38 @@ def set_billing_frequency_to_no_bill_sync_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_billing_frequency_to_no_bill_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def set_billing_frequency_to_no_bill_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Set billing schedule frequency to NO_BILL
 
     Args:
@@ -100,17 +108,17 @@ def set_billing_frequency_to_no_bill_sync(*, client: StolonClient) -> ApiBilling
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs()
@@ -127,17 +135,22 @@ def set_billing_frequency_to_no_bill_sync(*, client: StolonClient) -> ApiBilling
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def set_billing_frequency_to_no_bill_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def set_billing_frequency_to_no_bill_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Set billing schedule frequency to NO_BILL
 
     Args:
@@ -148,17 +161,17 @@ def set_billing_frequency_to_no_bill_asyncio_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs()
@@ -175,29 +188,38 @@ def set_billing_frequency_to_no_bill_asyncio_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_billing_frequency_to_no_bill_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def set_billing_frequency_to_no_bill_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Set billing schedule frequency to NO_BILL
 
     Args:
@@ -208,17 +230,17 @@ def set_billing_frequency_to_no_bill_asyncio(*, client: StolonClient) -> ApiBill
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs()
@@ -235,17 +257,22 @@ def set_billing_frequency_to_no_bill_asyncio(*, client: StolonClient) -> ApiBill
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_schedule_by_entity_uuid_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_billing_schedule_by_entity_uuid_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
     Args:
@@ -257,17 +284,17 @@ def get_billing_schedule_by_entity_uuid_sync_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs()
@@ -284,29 +311,38 @@ def get_billing_schedule_by_entity_uuid_sync_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_entity_uuid_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedule_by_entity_uuid_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
     Args:
@@ -318,17 +354,17 @@ def get_billing_schedule_by_entity_uuid_sync(*, client: StolonClient) -> ApiBill
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs()
@@ -344,18 +380,16 @@ def get_billing_schedule_by_entity_uuid_sync(*, client: StolonClient) -> ApiBill
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_schedule_by_entity_uuid_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_billing_schedule_by_entity_uuid_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
     Args:
@@ -367,17 +401,17 @@ def get_billing_schedule_by_entity_uuid_asyncio_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs()
@@ -394,29 +428,38 @@ def get_billing_schedule_by_entity_uuid_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_entity_uuid_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedule_by_entity_uuid_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
     Args:
@@ -428,17 +471,17 @@ def get_billing_schedule_by_entity_uuid_asyncio(*, client: StolonClient) -> ApiB
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs()
@@ -454,18 +497,17 @@ def get_billing_schedule_by_entity_uuid_asyncio(*, client: StolonClient) -> ApiB
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_schedule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingSchedule]:
+
+
+def get_billing_schedule_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule by UUID
 
     Args:
@@ -476,7 +518,7 @@ def get_billing_schedule_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -486,7 +528,7 @@ def get_billing_schedule_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
@@ -503,29 +545,39 @@ def get_billing_schedule_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedule_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule by UUID
 
     Args:
@@ -536,7 +588,7 @@ def get_billing_schedule_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -546,7 +598,7 @@ def get_billing_schedule_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
@@ -562,18 +614,17 @@ def get_billing_schedule_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_schedule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingSchedule]:
+
+
+def get_billing_schedule_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule by UUID
 
     Args:
@@ -584,7 +635,7 @@ def get_billing_schedule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -594,7 +645,7 @@ def get_billing_schedule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
@@ -611,29 +662,39 @@ def get_billing_schedule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedule_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule by UUID
 
     Args:
@@ -644,7 +705,7 @@ def get_billing_schedule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -654,7 +715,7 @@ def get_billing_schedule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
@@ -670,18 +731,16 @@ def get_billing_schedule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def create_billing_schedule_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def create_billing_schedule_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create billing schedule
 
     Args:
@@ -692,17 +751,17 @@ def create_billing_schedule_sync_detailed(*, client: StolonClient) -> Response[A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_billing_schedule._get_kwargs()
@@ -719,29 +778,38 @@ def create_billing_schedule_sync_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_schedule_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def create_billing_schedule_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create billing schedule
 
     Args:
@@ -752,17 +820,17 @@ def create_billing_schedule_sync(*, client: StolonClient) -> ApiBillingSchedule 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_billing_schedule._get_kwargs()
@@ -779,17 +847,22 @@ def create_billing_schedule_sync(*, client: StolonClient) -> ApiBillingSchedule 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_billing_schedule_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def create_billing_schedule_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create billing schedule
 
     Args:
@@ -800,17 +873,17 @@ def create_billing_schedule_asyncio_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_billing_schedule._get_kwargs()
@@ -827,29 +900,38 @@ def create_billing_schedule_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_schedule_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def create_billing_schedule_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create billing schedule
 
     Args:
@@ -860,17 +942,17 @@ def create_billing_schedule_asyncio(*, client: StolonClient) -> ApiBillingSchedu
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_billing_schedule._get_kwargs()
@@ -887,17 +969,22 @@ def create_billing_schedule_asyncio(*, client: StolonClient) -> ApiBillingSchedu
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_schedule_by_billing_entity_uuid_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_billing_schedule_by_billing_entity_uuid_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -909,17 +996,17 @@ def get_billing_schedule_by_billing_entity_uuid_sync_detailed(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs()
@@ -936,29 +1023,38 @@ def get_billing_schedule_by_billing_entity_uuid_sync_detailed(*, client: StolonC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_billing_entity_uuid_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedule_by_billing_entity_uuid_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -970,17 +1066,17 @@ def get_billing_schedule_by_billing_entity_uuid_sync(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs()
@@ -996,20 +1092,16 @@ def get_billing_schedule_by_billing_entity_uuid_sync(*, client: StolonClient) ->
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiBillingSchedule]:
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -1021,17 +1113,17 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs()
@@ -1048,29 +1140,38 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_billing_entity_uuid_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedule_by_billing_entity_uuid_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -1082,17 +1183,17 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs()
@@ -1108,18 +1209,16 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio(*, client: StolonClient)
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_billing_schedules_by_next_billing_date_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_billing_schedules_by_next_billing_date_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get billing schedules by their next billing date
 
     Args:
@@ -1132,17 +1231,17 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedules_by_next_billing_date._get_kwargs()
@@ -1159,29 +1258,38 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(*, client: StolonCl
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedules_by_next_billing_date_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedules_by_next_billing_date_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get billing schedules by their next billing date
 
     Args:
@@ -1194,17 +1302,17 @@ def get_billing_schedules_by_next_billing_date_sync(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedules_by_next_billing_date._get_kwargs()
@@ -1221,19 +1329,22 @@ def get_billing_schedules_by_next_billing_date_sync(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_schedules_by_next_billing_date_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiBillingSchedule]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get billing schedules by their next billing date
 
     Args:
@@ -1246,17 +1357,17 @@ def get_billing_schedules_by_next_billing_date_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedules_by_next_billing_date._get_kwargs()
@@ -1273,29 +1384,38 @@ def get_billing_schedules_by_next_billing_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedules_by_next_billing_date_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_billing_schedules_by_next_billing_date_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get billing schedules by their next billing date
 
     Args:
@@ -1308,17 +1428,17 @@ def get_billing_schedules_by_next_billing_date_asyncio(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_schedules_by_next_billing_date._get_kwargs()
@@ -1335,19 +1455,23 @@ def get_billing_schedules_by_next_billing_date_asyncio(*, client: StolonClient) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
-    *, client: StolonClient, r_id: str
-) -> Response[ApiBillingSchedule]:
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
@@ -1362,7 +1486,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1372,7 +1496,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
                 r_id: str
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id)
@@ -1389,31 +1513,39 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
-    *, client: StolonClient, r_id: str
-) -> ApiBillingSchedule | None:
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
@@ -1428,7 +1560,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1438,7 +1570,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
                 r_id: str
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id)
@@ -1454,20 +1586,17 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, r_id: str
-) -> Response[ApiBillingSchedule]:
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
@@ -1482,7 +1611,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1492,7 +1621,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
                 r_id: str
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id)
@@ -1509,31 +1638,39 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
-    *, client: StolonClient, r_id: str
-) -> ApiBillingSchedule | None:
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
     Args:
@@ -1548,7 +1685,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1558,7 +1695,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
                 r_id: str
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id)
@@ -1574,18 +1711,16 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_archetype_schedule_by_entity_uuid_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_archetype_schedule_by_entity_uuid_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
     Args:
@@ -1598,17 +1733,17 @@ def get_archetype_schedule_by_entity_uuid_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs()
@@ -1625,29 +1760,38 @@ def get_archetype_schedule_by_entity_uuid_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_archetype_schedule_by_entity_uuid_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_archetype_schedule_by_entity_uuid_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
     Args:
@@ -1660,17 +1804,17 @@ def get_archetype_schedule_by_entity_uuid_sync(*, client: StolonClient) -> ApiBi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs()
@@ -1686,18 +1830,16 @@ def get_archetype_schedule_by_entity_uuid_sync(*, client: StolonClient) -> ApiBi
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_archetype_schedule_by_entity_uuid_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_archetype_schedule_by_entity_uuid_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
     Args:
@@ -1710,17 +1852,17 @@ def get_archetype_schedule_by_entity_uuid_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs()
@@ -1737,29 +1879,38 @@ def get_archetype_schedule_by_entity_uuid_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_archetype_schedule_by_entity_uuid_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_archetype_schedule_by_entity_uuid_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
     Args:
@@ -1772,17 +1923,17 @@ def get_archetype_schedule_by_entity_uuid_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs()
@@ -1798,18 +1949,17 @@ def get_archetype_schedule_by_entity_uuid_asyncio(*, client: StolonClient) -> Ap
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingSchedule]:
+
+
+def advance_billing_schedule_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Advance the billing schedule
 
     Args:
@@ -1820,7 +1970,7 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1830,7 +1980,7 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
                 uuid: str
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
@@ -1847,29 +1997,39 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> ApiBillingSchedule | None:
+
+
+def advance_billing_schedule_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Advance the billing schedule
 
     Args:
@@ -1880,7 +2040,7 @@ def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> ApiBill
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1890,7 +2050,7 @@ def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> ApiBill
                 uuid: str
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
@@ -1907,17 +2067,23 @@ def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> ApiBill
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingSchedule]:
+
+
+def advance_billing_schedule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Advance the billing schedule
 
     Args:
@@ -1928,7 +2094,7 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1938,7 +2104,7 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
@@ -1955,29 +2121,39 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingSchedule | None:
+
+
+def advance_billing_schedule_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Advance the billing schedule
 
     Args:
@@ -1988,7 +2164,7 @@ def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> ApiB
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1998,7 +2174,7 @@ def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> ApiB
                 uuid: str
 
     Returns:
-        ApiBillingSchedule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
@@ -2015,17 +2191,22 @@ def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> ApiB
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_archetype_schedule_sync_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_archetype_schedule_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype
 
     Args:
@@ -2037,17 +2218,17 @@ def get_archetype_schedule_sync_detailed(*, client: StolonClient) -> Response[Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs()
@@ -2064,29 +2245,38 @@ def get_archetype_schedule_sync_detailed(*, client: StolonClient) -> Response[Ap
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_archetype_schedule_sync(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_archetype_schedule_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype
 
     Args:
@@ -2098,17 +2288,17 @@ def get_archetype_schedule_sync(*, client: StolonClient) -> ApiBillingSchedule |
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs()
@@ -2124,18 +2314,16 @@ def get_archetype_schedule_sync(*, client: StolonClient) -> ApiBillingSchedule |
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_archetype_schedule_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingSchedule]:
+
+
+def get_archetype_schedule_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype
 
     Args:
@@ -2147,17 +2335,17 @@ def get_archetype_schedule_asyncio_detailed(*, client: StolonClient) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[ApiBillingSchedule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs()
@@ -2174,29 +2362,38 @@ def get_archetype_schedule_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingSchedule:
-        parsed = ApiBillingSchedule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_archetype_schedule_asyncio(*, client: StolonClient) -> ApiBillingSchedule | None:
+
+
+def get_archetype_schedule_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype
 
     Args:
@@ -2208,17 +2405,17 @@ def get_archetype_schedule_asyncio(*, client: StolonClient) -> ApiBillingSchedul
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingSchedule | None
+        ApiBillingSchedule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs()
@@ -2234,12 +2431,6 @@ def get_archetype_schedule_asyncio(*, client: StolonClient) -> ApiBillingSchedul
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingSchedule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+

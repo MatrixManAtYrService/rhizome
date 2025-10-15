@@ -6,26 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import (
-    create_billing_entity_config,
-    delete_billing_entity_config_by_uuid,
-    get_billing_entity_config_by_uuid,
-    get_resolved_billing_entity_config,
-    get_unresolved_billing_entity_config,
-    update_billing_entity_config,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import create_billing_entity_config
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import delete_billing_entity_config_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import get_billing_entity_config_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import get_resolved_billing_entity_config
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import get_unresolved_billing_entity_config
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import update_billing_entity_config
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity_config import ApiBillingEntityConfig
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_resolved_billing_entity_config import ApiResolvedBillingEntityConfig
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_unresolved_billing_entity_config_sync_detailed(
-    *, client: StolonClient
-) -> Response[ResponseError | list["ApiBillingEntityConfig"]]:
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -40,17 +40,17 @@ def get_unresolved_billing_entity_config_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ResponseError, list['ApiBillingEntityConfig']]]
+        Response[Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError | list["ApiBillingEntityConfig"]]
+        Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]
     """
     # Extract request parameters from generated function
     kwargs = get_unresolved_billing_entity_config._get_kwargs()
@@ -67,28 +67,38 @@ def get_unresolved_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unresolved_billing_entity_config_sync(
-    *, client: StolonClient
-) -> ResponseError | list["ApiBillingEntityConfig"] | None:
+    *,
+    client: StolonClient
+) -> ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -103,23 +113,23 @@ def get_unresolved_billing_entity_config_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ResponseError, list['ApiBillingEntityConfig']]
+        Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | list["ApiBillingEntityConfig"] | None
+        ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_unresolved_billing_entity_config._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -131,11 +141,14 @@ def get_unresolved_billing_entity_config_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_unresolved_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ResponseError | list["ApiBillingEntityConfig"]]:
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -150,17 +163,17 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ResponseError, list['ApiBillingEntityConfig']]]
+        Response[Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError | list["ApiBillingEntityConfig"]]
+        Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]
     """
     # Extract request parameters from generated function
     kwargs = get_unresolved_billing_entity_config._get_kwargs()
@@ -177,28 +190,38 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unresolved_billing_entity_config_asyncio(
-    *, client: StolonClient
-) -> ResponseError | list["ApiBillingEntityConfig"] | None:
+    *,
+    client: StolonClient
+) -> ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None:
     """Get the unresolved billing entity configuration for a billing entity
 
     Args:
@@ -213,23 +236,23 @@ def get_unresolved_billing_entity_config_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ResponseError, list['ApiBillingEntityConfig']]
+        Union[ApiBillingEntityConfig, list['ApiBillingEntityConfig']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | list["ApiBillingEntityConfig"] | None
+        ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_unresolved_billing_entity_config._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -243,7 +266,12 @@ def get_unresolved_billing_entity_config_asyncio(
     return None
 
 
-def create_billing_entity_config_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def create_billing_entity_config_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntityConfig]:
     """Create a billing entity configuration
 
     Args:
@@ -254,17 +282,17 @@ def create_billing_entity_config_sync_detailed(*, client: StolonClient) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiBillingEntityConfig]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs()
@@ -281,29 +309,38 @@ def create_billing_entity_config_sync_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
+        parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_entity_config_sync(*, client: StolonClient) -> ResponseError | None:
+
+
+def create_billing_entity_config_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingEntityConfig | None:
     """Create a billing entity configuration
 
     Args:
@@ -314,17 +351,17 @@ def create_billing_entity_config_sync(*, client: StolonClient) -> ResponseError 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiBillingEntityConfig
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs()
@@ -341,17 +378,22 @@ def create_billing_entity_config_sync(*, client: StolonClient) -> ResponseError 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiBillingEntityConfig.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_billing_entity_config_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def create_billing_entity_config_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntityConfig]:
     """Create a billing entity configuration
 
     Args:
@@ -362,17 +404,17 @@ def create_billing_entity_config_asyncio_detailed(*, client: StolonClient) -> Re
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiBillingEntityConfig]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs()
@@ -389,29 +431,38 @@ def create_billing_entity_config_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
+        parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_entity_config_asyncio(*, client: StolonClient) -> ResponseError | None:
+
+
+def create_billing_entity_config_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingEntityConfig | None:
     """Create a billing entity configuration
 
     Args:
@@ -422,17 +473,17 @@ def create_billing_entity_config_asyncio(*, client: StolonClient) -> ResponseErr
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiBillingEntityConfig
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs()
@@ -449,19 +500,23 @@ def create_billing_entity_config_asyncio(*, client: StolonClient) -> ResponseErr
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiBillingEntityConfig.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_entity_config_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEntityConfig | ResponseError]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntityConfig]:
     """Get a billing entity configuration by UUID
 
     Args:
@@ -472,7 +527,7 @@ def get_billing_entity_config_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiBillingEntityConfig, ResponseError]]
+        Response[ApiBillingEntityConfig]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -482,7 +537,7 @@ def get_billing_entity_config_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEntityConfig | ResponseError]
+        Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
@@ -499,28 +554,39 @@ def get_billing_entity_config_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
+        parsed = ApiBillingEntityConfig.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_entity_config_by_uuid_sync(
-    *, client: StolonClient, uuid: str
-) -> ApiBillingEntityConfig | ResponseError | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntityConfig | None:
     """Get a billing entity configuration by UUID
 
     Args:
@@ -531,7 +597,7 @@ def get_billing_entity_config_by_uuid_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiBillingEntityConfig, ResponseError]
+        ApiBillingEntityConfig
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -541,13 +607,13 @@ def get_billing_entity_config_by_uuid_sync(
                 uuid: str
 
     Returns:
-        ApiBillingEntityConfig | ResponseError | None
+        ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -557,13 +623,24 @@ def get_billing_entity_config_by_uuid_sync(
         timeout=30.0,
     )
 
-    # No response model, return None
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiBillingEntityConfig.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
     return None
+
+
 
 
 def get_billing_entity_config_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEntityConfig | ResponseError]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntityConfig]:
     """Get a billing entity configuration by UUID
 
     Args:
@@ -574,7 +651,7 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiBillingEntityConfig, ResponseError]]
+        Response[ApiBillingEntityConfig]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -584,7 +661,7 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEntityConfig | ResponseError]
+        Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
@@ -601,28 +678,39 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
+        parsed = ApiBillingEntityConfig.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_entity_config_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
-) -> ApiBillingEntityConfig | ResponseError | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntityConfig | None:
     """Get a billing entity configuration by UUID
 
     Args:
@@ -633,7 +721,7 @@ def get_billing_entity_config_by_uuid_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiBillingEntityConfig, ResponseError]
+        ApiBillingEntityConfig
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -643,13 +731,13 @@ def get_billing_entity_config_by_uuid_asyncio(
                 uuid: str
 
     Returns:
-        ApiBillingEntityConfig | ResponseError | None
+        ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -659,13 +747,24 @@ def get_billing_entity_config_by_uuid_asyncio(
         timeout=30.0,
     )
 
-    # No response model, return None
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiBillingEntityConfig.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
     return None
+
+
 
 
 def update_billing_entity_config_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEntityConfig | ResponseError]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntityConfig]:
     """Update a billing entity configuration
 
     Args:
@@ -677,7 +776,7 @@ def update_billing_entity_config_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiBillingEntityConfig, ResponseError]]
+        Response[ApiBillingEntityConfig]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -687,7 +786,7 @@ def update_billing_entity_config_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEntityConfig | ResponseError]
+        Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
@@ -704,28 +803,39 @@ def update_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
+        parsed = ApiBillingEntityConfig.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_billing_entity_config_sync(
-    *, client: StolonClient, uuid: str
-) -> ApiBillingEntityConfig | ResponseError | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntityConfig | None:
     """Update a billing entity configuration
 
     Args:
@@ -737,7 +847,7 @@ def update_billing_entity_config_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiBillingEntityConfig, ResponseError]
+        ApiBillingEntityConfig
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -747,13 +857,13 @@ def update_billing_entity_config_sync(
                 uuid: str
 
     Returns:
-        ApiBillingEntityConfig | ResponseError | None
+        ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -763,13 +873,24 @@ def update_billing_entity_config_sync(
         timeout=30.0,
     )
 
-    # No response model, return None
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiBillingEntityConfig.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
     return None
+
+
 
 
 def update_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEntityConfig | ResponseError]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntityConfig]:
     """Update a billing entity configuration
 
     Args:
@@ -781,7 +902,7 @@ def update_billing_entity_config_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiBillingEntityConfig, ResponseError]]
+        Response[ApiBillingEntityConfig]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -791,7 +912,7 @@ def update_billing_entity_config_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEntityConfig | ResponseError]
+        Response[ApiBillingEntityConfig]
     """
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
@@ -808,28 +929,39 @@ def update_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
+        parsed = ApiBillingEntityConfig.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_billing_entity_config_asyncio(
-    *, client: StolonClient, uuid: str
-) -> ApiBillingEntityConfig | ResponseError | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntityConfig | None:
     """Update a billing entity configuration
 
     Args:
@@ -841,7 +973,7 @@ def update_billing_entity_config_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiBillingEntityConfig, ResponseError]
+        ApiBillingEntityConfig
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -851,13 +983,13 @@ def update_billing_entity_config_asyncio(
                 uuid: str
 
     Returns:
-        ApiBillingEntityConfig | ResponseError | None
+        ApiBillingEntityConfig | None
     """
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -867,12 +999,22 @@ def update_billing_entity_config_asyncio(
         timeout=30.0,
     )
 
-    # No response model, return None
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiBillingEntityConfig.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
     return None
+
+
 
 
 def get_resolved_billing_entity_config_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiResolvedBillingEntityConfig | ResponseError]:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -894,7 +1036,7 @@ def get_resolved_billing_entity_config_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiResolvedBillingEntityConfig | ResponseError]
@@ -914,27 +1056,37 @@ def get_resolved_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_resolved_billing_entity_config_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ApiResolvedBillingEntityConfig | ResponseError | None:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -956,7 +1108,7 @@ def get_resolved_billing_entity_config_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiResolvedBillingEntityConfig | ResponseError | None
@@ -965,7 +1117,7 @@ def get_resolved_billing_entity_config_sync(
     kwargs = get_resolved_billing_entity_config._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -979,8 +1131,11 @@ def get_resolved_billing_entity_config_sync(
     return None
 
 
+
+
 def get_resolved_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiResolvedBillingEntityConfig | ResponseError]:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1002,7 +1157,7 @@ def get_resolved_billing_entity_config_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiResolvedBillingEntityConfig | ResponseError]
@@ -1022,27 +1177,37 @@ def get_resolved_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_resolved_billing_entity_config_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ApiResolvedBillingEntityConfig | ResponseError | None:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1064,7 +1229,7 @@ def get_resolved_billing_entity_config_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiResolvedBillingEntityConfig | ResponseError | None
@@ -1073,7 +1238,7 @@ def get_resolved_billing_entity_config_asyncio(
     kwargs = get_resolved_billing_entity_config._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1087,7 +1252,13 @@ def get_resolved_billing_entity_config_asyncio(
     return None
 
 
-def delete_billing_entity_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
+
+
+def delete_billing_entity_config_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete a billing entity configuration
 
     Args:
@@ -1098,7 +1269,7 @@ def delete_billing_entity_config_by_uuid_sync_detailed(*, client: StolonClient, 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[Union[ResponseError, str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1108,7 +1279,7 @@ def delete_billing_entity_config_by_uuid_sync_detailed(*, client: StolonClient, 
                 uuid: str
 
     Returns:
-        Response[str]
+        Response[ResponseError | str]
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
@@ -1125,26 +1296,39 @@ def delete_billing_entity_config_by_uuid_sync_detailed(*, client: StolonClient, 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> str | None:
+
+
+def delete_billing_entity_config_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a billing entity configuration
 
     Args:
@@ -1155,7 +1339,7 @@ def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        Union[ResponseError, str]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1165,13 +1349,13 @@ def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        str | None
+        ResponseError | str | None
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1185,7 +1369,13 @@ def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str
     return None
 
 
-def delete_billing_entity_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
+
+
+def delete_billing_entity_config_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete a billing entity configuration
 
     Args:
@@ -1196,7 +1386,7 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[Union[ResponseError, str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1206,7 +1396,7 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(*, client: StolonClien
                 uuid: str
 
     Returns:
-        Response[str]
+        Response[ResponseError | str]
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
@@ -1223,26 +1413,39 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> str | None:
+
+
+def delete_billing_entity_config_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a billing entity configuration
 
     Args:
@@ -1253,7 +1456,7 @@ def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        Union[ResponseError, str]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1263,13 +1466,13 @@ def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: 
                 uuid: str
 
     Returns:
-        str | None
+        ResponseError | str | None
     """
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1281,3 +1484,4 @@ def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: 
 
     # No response model, return None
     return None
+

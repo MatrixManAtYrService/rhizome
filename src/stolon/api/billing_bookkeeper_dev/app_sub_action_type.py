@@ -6,25 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_type import (
-    create_app_sub_action_type,
-    delete_app_sub_action_type_by_uuid,
-    get_app_sub_action_type_by_uuid,
-    get_app_sub_action_types_by_action_type,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_sub_action_type import (
-    ApiAppSubActionType,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_type import create_app_sub_action_type
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_type import delete_app_sub_action_type_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_type import get_app_sub_action_type_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_type import get_app_sub_action_types_by_action_type
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_app_sub_action_type_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubActionType]:
+def create_app_sub_action_type_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create app subscription action type
 
     Args:
@@ -35,17 +32,17 @@ def create_app_sub_action_type_sync_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_app_sub_action_type._get_kwargs()
@@ -62,29 +59,38 @@ def create_app_sub_action_type_sync_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppSubActionType:
-        parsed = ApiAppSubActionType.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_sub_action_type_sync(*, client: StolonClient) -> ApiAppSubActionType | None:
+
+
+def create_app_sub_action_type_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create app subscription action type
 
     Args:
@@ -95,17 +101,17 @@ def create_app_sub_action_type_sync(*, client: StolonClient) -> ApiAppSubActionT
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppSubActionType
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppSubActionType | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_app_sub_action_type._get_kwargs()
@@ -122,17 +128,22 @@ def create_app_sub_action_type_sync(*, client: StolonClient) -> ApiAppSubActionT
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppSubActionType.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_app_sub_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubActionType]:
+
+
+def create_app_sub_action_type_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create app subscription action type
 
     Args:
@@ -143,17 +154,17 @@ def create_app_sub_action_type_asyncio_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_app_sub_action_type._get_kwargs()
@@ -170,29 +181,38 @@ def create_app_sub_action_type_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppSubActionType:
-        parsed = ApiAppSubActionType.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_sub_action_type_asyncio(*, client: StolonClient) -> ApiAppSubActionType | None:
+
+
+def create_app_sub_action_type_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create app subscription action type
 
     Args:
@@ -203,17 +223,17 @@ def create_app_sub_action_type_asyncio(*, client: StolonClient) -> ApiAppSubActi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppSubActionType
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppSubActionType | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_app_sub_action_type._get_kwargs()
@@ -230,17 +250,22 @@ def create_app_sub_action_type_asyncio(*, client: StolonClient) -> ApiAppSubActi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppSubActionType.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_sub_action_types_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubActionType]:
+
+
+def get_app_sub_action_types_by_action_type_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get app subscription action type by action type
 
     Args:
@@ -251,17 +276,17 @@ def get_app_sub_action_types_by_action_type_sync_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_types_by_action_type._get_kwargs()
@@ -278,29 +303,38 @@ def get_app_sub_action_types_by_action_type_sync_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppSubActionType:
-        parsed = ApiAppSubActionType.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_types_by_action_type_sync(*, client: StolonClient) -> ApiAppSubActionType | None:
+
+
+def get_app_sub_action_types_by_action_type_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get app subscription action type by action type
 
     Args:
@@ -311,17 +345,17 @@ def get_app_sub_action_types_by_action_type_sync(*, client: StolonClient) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppSubActionType
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppSubActionType | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_types_by_action_type._get_kwargs()
@@ -338,17 +372,22 @@ def get_app_sub_action_types_by_action_type_sync(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppSubActionType.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_sub_action_types_by_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubActionType]:
+
+
+def get_app_sub_action_types_by_action_type_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get app subscription action type by action type
 
     Args:
@@ -359,17 +398,17 @@ def get_app_sub_action_types_by_action_type_asyncio_detailed(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_types_by_action_type._get_kwargs()
@@ -386,29 +425,38 @@ def get_app_sub_action_types_by_action_type_asyncio_detailed(*, client: StolonCl
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppSubActionType:
-        parsed = ApiAppSubActionType.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_types_by_action_type_asyncio(*, client: StolonClient) -> ApiAppSubActionType | None:
+
+
+def get_app_sub_action_types_by_action_type_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get app subscription action type by action type
 
     Args:
@@ -419,17 +467,17 @@ def get_app_sub_action_types_by_action_type_asyncio(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppSubActionType
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppSubActionType | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_types_by_action_type._get_kwargs()
@@ -446,17 +494,23 @@ def get_app_sub_action_types_by_action_type_asyncio(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppSubActionType.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppSubActionType]:
+
+
+def get_app_sub_action_type_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get app subscription action type by UUID
 
     Args:
@@ -467,7 +521,7 @@ def get_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -477,7 +531,7 @@ def get_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_type_by_uuid._get_kwargs(uuid=uuid)
@@ -494,29 +548,39 @@ def get_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppSubActionType:
-        parsed = ApiAppSubActionType.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppSubActionType | None:
+
+
+def get_app_sub_action_type_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get app subscription action type by UUID
 
     Args:
@@ -527,7 +591,7 @@ def get_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppSubActionType
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -537,7 +601,7 @@ def get_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiAppSubActionType | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_type_by_uuid._get_kwargs(uuid=uuid)
@@ -554,19 +618,23 @@ def get_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppSubActionType.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_app_sub_action_type_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiAppSubActionType]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get app subscription action type by UUID
 
     Args:
@@ -577,7 +645,7 @@ def get_app_sub_action_type_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -587,7 +655,7 @@ def get_app_sub_action_type_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiAppSubActionType]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_type_by_uuid._get_kwargs(uuid=uuid)
@@ -604,29 +672,39 @@ def get_app_sub_action_type_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppSubActionType:
-        parsed = ApiAppSubActionType.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppSubActionType | None:
+
+
+def get_app_sub_action_type_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get app subscription action type by UUID
 
     Args:
@@ -637,7 +715,7 @@ def get_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppSubActionType
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -647,7 +725,7 @@ def get_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiAppSubActionType | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_type_by_uuid._get_kwargs(uuid=uuid)
@@ -664,17 +742,23 @@ def get_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppSubActionType.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def delete_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_app_sub_action_type_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete app subscription action type
 
     Args:
@@ -712,13 +796,17 @@ def delete_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uu
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -728,13 +816,19 @@ def delete_app_sub_action_type_by_uuid_sync_detailed(*, client: StolonClient, uu
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_app_sub_action_type_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete app subscription action type
 
     Args:
@@ -772,7 +866,7 @@ def delete_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -782,7 +876,13 @@ def delete_app_sub_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) 
     return None
 
 
-def delete_app_sub_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_app_sub_action_type_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete app subscription action type
 
     Args:
@@ -820,13 +920,17 @@ def delete_app_sub_action_type_by_uuid_asyncio_detailed(*, client: StolonClient,
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -836,13 +940,19 @@ def delete_app_sub_action_type_by_uuid_asyncio_detailed(*, client: StolonClient,
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_app_sub_action_type_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete app subscription action type
 
     Args:
@@ -880,7 +990,7 @@ def delete_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -888,3 +998,4 @@ def delete_app_sub_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: st
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -6,27 +6,24 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import (
-    get_billing_event_history,
-    get_billing_event_history_by_entity,
-    get_developer_billing_event_history,
-    get_merchant_billing_event_history,
-    get_reseller_billing_event_history,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event_history import (
-    ApiBillingEventHistory,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history_by_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_developer_billing_event_history
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_merchant_billing_event_history
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_reseller_billing_event_history
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_merchant_billing_event_history_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
     Args:
@@ -39,7 +36,7 @@ def get_merchant_billing_event_history_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -49,7 +46,7 @@ def get_merchant_billing_event_history_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
@@ -66,29 +63,39 @@ def get_merchant_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_merchant_billing_event_history_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for a merchant
 
     Args:
@@ -101,7 +108,7 @@ def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -111,7 +118,7 @@ def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
@@ -128,19 +135,23 @@ def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_merchant_billing_event_history_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
     Args:
@@ -153,7 +164,7 @@ def get_merchant_billing_event_history_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -163,7 +174,7 @@ def get_merchant_billing_event_history_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
@@ -180,29 +191,39 @@ def get_merchant_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_merchant_billing_event_history_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for a merchant
 
     Args:
@@ -215,7 +236,7 @@ def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -225,7 +246,7 @@ def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid)
@@ -242,17 +263,22 @@ def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response[ApiBillingEventHistory]:
+
+
+def get_billing_event_history_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get billing event history records
 
     Args:
@@ -268,17 +294,17 @@ def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history._get_kwargs()
@@ -295,29 +321,38 @@ def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_event_history_sync(*, client: StolonClient) -> ApiBillingEventHistory | None:
+
+
+def get_billing_event_history_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get billing event history records
 
     Args:
@@ -333,17 +368,17 @@ def get_billing_event_history_sync(*, client: StolonClient) -> ApiBillingEventHi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history._get_kwargs()
@@ -360,17 +395,22 @@ def get_billing_event_history_sync(*, client: StolonClient) -> ApiBillingEventHi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingEventHistory]:
+
+
+def get_billing_event_history_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get billing event history records
 
     Args:
@@ -386,17 +426,17 @@ def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history._get_kwargs()
@@ -413,29 +453,38 @@ def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_event_history_asyncio(*, client: StolonClient) -> ApiBillingEventHistory | None:
+
+
+def get_billing_event_history_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get billing event history records
 
     Args:
@@ -451,17 +500,17 @@ def get_billing_event_history_asyncio(*, client: StolonClient) -> ApiBillingEven
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history._get_kwargs()
@@ -478,19 +527,23 @@ def get_billing_event_history_asyncio(*, client: StolonClient) -> ApiBillingEven
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_billing_event_history_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
     Args:
@@ -503,7 +556,7 @@ def get_reseller_billing_event_history_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -513,7 +566,7 @@ def get_reseller_billing_event_history_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
@@ -530,29 +583,39 @@ def get_reseller_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_reseller_billing_event_history_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for a reseller
 
     Args:
@@ -565,7 +628,7 @@ def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -575,7 +638,7 @@ def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
@@ -592,19 +655,23 @@ def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_billing_event_history_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
     Args:
@@ -617,7 +684,7 @@ def get_reseller_billing_event_history_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -627,7 +694,7 @@ def get_reseller_billing_event_history_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
@@ -644,29 +711,39 @@ def get_reseller_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_reseller_billing_event_history_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for a reseller
 
     Args:
@@ -679,7 +756,7 @@ def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -689,7 +766,7 @@ def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid)
@@ -706,19 +783,23 @@ def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_event_history_by_entity_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
     Args:
@@ -731,7 +812,7 @@ def get_billing_event_history_by_entity_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -741,7 +822,7 @@ def get_billing_event_history_by_entity_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
@@ -758,29 +839,39 @@ def get_billing_event_history_by_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_billing_event_history_by_entity_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
     Args:
@@ -793,7 +884,7 @@ def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -803,7 +894,7 @@ def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
@@ -820,19 +911,23 @@ def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_event_history_by_entity_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
     Args:
@@ -845,7 +940,7 @@ def get_billing_event_history_by_entity_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -855,7 +950,7 @@ def get_billing_event_history_by_entity_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
@@ -872,29 +967,39 @@ def get_billing_event_history_by_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_billing_event_history_by_entity_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
     Args:
@@ -907,7 +1012,7 @@ def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -917,7 +1022,7 @@ def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid)
@@ -934,19 +1039,23 @@ def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: s
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_developer_billing_event_history_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for a developer
 
     Args:
@@ -959,7 +1068,7 @@ def get_developer_billing_event_history_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -969,7 +1078,7 @@ def get_developer_billing_event_history_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
@@ -986,29 +1095,39 @@ def get_developer_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_developer_billing_event_history_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for a developer
 
     Args:
@@ -1021,7 +1140,7 @@ def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1031,7 +1150,7 @@ def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
@@ -1048,19 +1167,23 @@ def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_developer_billing_event_history_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingEventHistory]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get billing event history for a developer
 
     Args:
@@ -1073,7 +1196,7 @@ def get_developer_billing_event_history_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1083,7 +1206,7 @@ def get_developer_billing_event_history_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiBillingEventHistory]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
@@ -1100,29 +1223,39 @@ def get_developer_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiBillingEventHistory:
-        parsed = ApiBillingEventHistory.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEventHistory | None:
+
+
+def get_developer_billing_event_history_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get billing event history for a developer
 
     Args:
@@ -1135,7 +1268,7 @@ def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingEventHistory
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1145,7 +1278,7 @@ def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        ApiBillingEventHistory | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid)
@@ -1162,11 +1295,12 @@ def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: s
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiBillingEventHistory.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

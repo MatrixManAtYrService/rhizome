@@ -6,22 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action import (
-    create_misc_action,
-    get_misc_action_by_uuid,
-    get_misc_actions,
-    get_unposted_misc_actions_by_billing_entity,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_action import ApiMiscAction
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action import create_misc_action
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action import get_misc_action_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action import get_misc_actions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action import get_unposted_misc_actions_by_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_misc_action_sync_detailed(*, client: StolonClient) -> Response[ApiMiscAction]:
+def create_misc_action_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create miscellaneous action
 
     Args:
@@ -32,17 +32,17 @@ def create_misc_action_sync_detailed(*, client: StolonClient) -> Response[ApiMis
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action._get_kwargs()
@@ -59,29 +59,38 @@ def create_misc_action_sync_detailed(*, client: StolonClient) -> Response[ApiMis
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_misc_action_sync(*, client: StolonClient) -> ApiMiscAction | None:
+
+
+def create_misc_action_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create miscellaneous action
 
     Args:
@@ -92,17 +101,17 @@ def create_misc_action_sync(*, client: StolonClient) -> ApiMiscAction | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action._get_kwargs()
@@ -119,17 +128,22 @@ def create_misc_action_sync(*, client: StolonClient) -> ApiMiscAction | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_misc_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiMiscAction]:
+
+
+def create_misc_action_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create miscellaneous action
 
     Args:
@@ -140,17 +154,17 @@ def create_misc_action_asyncio_detailed(*, client: StolonClient) -> Response[Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action._get_kwargs()
@@ -167,29 +181,38 @@ def create_misc_action_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_misc_action_asyncio(*, client: StolonClient) -> ApiMiscAction | None:
+
+
+def create_misc_action_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create miscellaneous action
 
     Args:
@@ -200,17 +223,17 @@ def create_misc_action_asyncio(*, client: StolonClient) -> ApiMiscAction | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action._get_kwargs()
@@ -227,17 +250,23 @@ def create_misc_action_asyncio(*, client: StolonClient) -> ApiMiscAction | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMiscAction]:
+
+
+def get_misc_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get miscellaneous action by UUID
 
     Args:
@@ -248,7 +277,7 @@ def get_misc_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -258,7 +287,7 @@ def get_misc_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_by_uuid._get_kwargs(uuid=uuid)
@@ -275,29 +304,39 @@ def get_misc_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMiscAction | None:
+
+
+def get_misc_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get miscellaneous action by UUID
 
     Args:
@@ -308,7 +347,7 @@ def get_misc_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMiscA
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -318,7 +357,7 @@ def get_misc_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMiscA
                 uuid: str
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_by_uuid._get_kwargs(uuid=uuid)
@@ -335,17 +374,23 @@ def get_misc_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMiscA
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMiscAction]:
+
+
+def get_misc_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get miscellaneous action by UUID
 
     Args:
@@ -356,7 +401,7 @@ def get_misc_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -366,7 +411,7 @@ def get_misc_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_by_uuid._get_kwargs(uuid=uuid)
@@ -383,29 +428,39 @@ def get_misc_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMiscAction | None:
+
+
+def get_misc_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get miscellaneous action by UUID
 
     Args:
@@ -416,7 +471,7 @@ def get_misc_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -426,7 +481,7 @@ def get_misc_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMi
                 uuid: str
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_by_uuid._get_kwargs(uuid=uuid)
@@ -443,17 +498,22 @@ def get_misc_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_actions_sync_detailed(*, client: StolonClient) -> Response[ApiMiscAction]:
+
+
+def get_misc_actions_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get miscellaneous actions
 
     Args:
@@ -472,17 +532,17 @@ def get_misc_actions_sync_detailed(*, client: StolonClient) -> Response[ApiMiscA
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_actions._get_kwargs()
@@ -499,29 +559,38 @@ def get_misc_actions_sync_detailed(*, client: StolonClient) -> Response[ApiMiscA
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_actions_sync(*, client: StolonClient) -> ApiMiscAction | None:
+
+
+def get_misc_actions_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get miscellaneous actions
 
     Args:
@@ -540,17 +609,17 @@ def get_misc_actions_sync(*, client: StolonClient) -> ApiMiscAction | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_actions._get_kwargs()
@@ -567,17 +636,22 @@ def get_misc_actions_sync(*, client: StolonClient) -> ApiMiscAction | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiMiscAction]:
+
+
+def get_misc_actions_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get miscellaneous actions
 
     Args:
@@ -596,17 +670,17 @@ def get_misc_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiMi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_actions._get_kwargs()
@@ -623,29 +697,38 @@ def get_misc_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiMi
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_actions_asyncio(*, client: StolonClient) -> ApiMiscAction | None:
+
+
+def get_misc_actions_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get miscellaneous actions
 
     Args:
@@ -664,17 +747,17 @@ def get_misc_actions_asyncio(*, client: StolonClient) -> ApiMiscAction | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_actions._get_kwargs()
@@ -691,19 +774,23 @@ def get_misc_actions_asyncio(*, client: StolonClient) -> ApiMiscAction | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_misc_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiMiscAction]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get unposted miscellaneous actions for billing entity
 
     Args:
@@ -714,7 +801,7 @@ def get_unposted_misc_actions_by_billing_entity_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -724,7 +811,7 @@ def get_unposted_misc_actions_by_billing_entity_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_misc_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -741,31 +828,39 @@ def get_unposted_misc_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_misc_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiMiscAction | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get unposted miscellaneous actions for billing entity
 
     Args:
@@ -776,7 +871,7 @@ def get_unposted_misc_actions_by_billing_entity_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -786,7 +881,7 @@ def get_unposted_misc_actions_by_billing_entity_sync(
                 billing_entity_uuid: str
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_misc_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -803,19 +898,23 @@ def get_unposted_misc_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
+
+
 def get_unposted_misc_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiMiscAction]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get unposted miscellaneous actions for billing entity
 
     Args:
@@ -826,7 +925,7 @@ def get_unposted_misc_actions_by_billing_entity_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -836,7 +935,7 @@ def get_unposted_misc_actions_by_billing_entity_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiMiscAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_misc_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -853,31 +952,39 @@ def get_unposted_misc_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscAction:
-        parsed = ApiMiscAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_unposted_misc_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiMiscAction | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get unposted miscellaneous actions for billing entity
 
     Args:
@@ -888,7 +995,7 @@ def get_unposted_misc_actions_by_billing_entity_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -898,7 +1005,7 @@ def get_unposted_misc_actions_by_billing_entity_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        ApiMiscAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_misc_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -915,11 +1022,12 @@ def get_unposted_misc_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

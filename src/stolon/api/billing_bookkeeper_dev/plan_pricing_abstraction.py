@@ -6,31 +6,24 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import (
-    apply_to_children,
-    create_update_plan_pricing_abstraction,
-    get_plan_pricing_abstraction,
-    get_plan_pricing_abstraction_details,
-    preview_plan_pricing_abstraction_for_create_or_update,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction import (
-    ApiPlanPricingAbstraction,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction_details import (
-    ApiPlanPricingAbstractionDetails,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction_updates import (
-    ApiPlanPricingAbstractionUpdates,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import apply_to_children
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import create_update_plan_pricing_abstraction
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import get_plan_pricing_abstraction
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import get_plan_pricing_abstraction_details
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import preview_plan_pricing_abstraction_for_create_or_update
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction_details import ApiPlanPricingAbstractionDetails
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_plan_pricing_abstraction_sync_detailed(*, client: StolonClient) -> Response[ApiPlanPricingAbstraction]:
+def get_plan_pricing_abstraction_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Gets a plan pricing abstraction
 
     Args:
@@ -43,17 +36,17 @@ def get_plan_pricing_abstraction_sync_detailed(*, client: StolonClient) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs()
@@ -70,29 +63,38 @@ def get_plan_pricing_abstraction_sync_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstraction:
-        parsed = ApiPlanPricingAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_abstraction_sync(*, client: StolonClient) -> ApiPlanPricingAbstraction | None:
+
+
+def get_plan_pricing_abstraction_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Gets a plan pricing abstraction
 
     Args:
@@ -105,17 +107,17 @@ def get_plan_pricing_abstraction_sync(*, client: StolonClient) -> ApiPlanPricing
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs()
@@ -132,17 +134,22 @@ def get_plan_pricing_abstraction_sync(*, client: StolonClient) -> ApiPlanPricing
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_plan_pricing_abstraction_asyncio_detailed(*, client: StolonClient) -> Response[ApiPlanPricingAbstraction]:
+
+
+def get_plan_pricing_abstraction_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Gets a plan pricing abstraction
 
     Args:
@@ -155,17 +162,17 @@ def get_plan_pricing_abstraction_asyncio_detailed(*, client: StolonClient) -> Re
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs()
@@ -182,29 +189,38 @@ def get_plan_pricing_abstraction_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstraction:
-        parsed = ApiPlanPricingAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_abstraction_asyncio(*, client: StolonClient) -> ApiPlanPricingAbstraction | None:
+
+
+def get_plan_pricing_abstraction_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Gets a plan pricing abstraction
 
     Args:
@@ -217,17 +233,17 @@ def get_plan_pricing_abstraction_asyncio(*, client: StolonClient) -> ApiPlanPric
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs()
@@ -244,18 +260,21 @@ def get_plan_pricing_abstraction_asyncio(*, client: StolonClient) -> ApiPlanPric
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_abstraction_details_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiPlanPricingAbstractionDetails]:
     """Get details of a plan pricing abstraction
 
@@ -276,7 +295,7 @@ def get_plan_pricing_abstraction_details_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiPlanPricingAbstractionDetails]
@@ -296,13 +315,17 @@ def get_plan_pricing_abstraction_details_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstractionDetails:
@@ -312,13 +335,18 @@ def get_plan_pricing_abstraction_details_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_abstraction_details_sync(*, client: StolonClient) -> ApiPlanPricingAbstractionDetails | None:
+
+
+def get_plan_pricing_abstraction_details_sync(
+    *,
+    client: StolonClient
+) -> ApiPlanPricingAbstractionDetails | None:
     """Get details of a plan pricing abstraction
 
     Args:
@@ -338,7 +366,7 @@ def get_plan_pricing_abstraction_details_sync(*, client: StolonClient) -> ApiPla
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiPlanPricingAbstractionDetails | None
@@ -358,7 +386,7 @@ def get_plan_pricing_abstraction_details_sync(*, client: StolonClient) -> ApiPla
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -366,10 +394,13 @@ def get_plan_pricing_abstraction_details_sync(*, client: StolonClient) -> ApiPla
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_abstraction_details_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiPlanPricingAbstractionDetails]:
     """Get details of a plan pricing abstraction
 
@@ -390,7 +421,7 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiPlanPricingAbstractionDetails]
@@ -410,13 +441,17 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstractionDetails:
@@ -426,13 +461,18 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_abstraction_details_asyncio(*, client: StolonClient) -> ApiPlanPricingAbstractionDetails | None:
+
+
+def get_plan_pricing_abstraction_details_asyncio(
+    *,
+    client: StolonClient
+) -> ApiPlanPricingAbstractionDetails | None:
     """Get details of a plan pricing abstraction
 
     Args:
@@ -452,7 +492,7 @@ def get_plan_pricing_abstraction_details_asyncio(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiPlanPricingAbstractionDetails | None
@@ -472,7 +512,7 @@ def get_plan_pricing_abstraction_details_asyncio(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -482,9 +522,12 @@ def get_plan_pricing_abstraction_details_asyncio(*, client: StolonClient) -> Api
     return None
 
 
+
+
 def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiPlanPricingAbstractionUpdates]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
     Args:
@@ -495,17 +538,17 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstractionUpdates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstractionUpdates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs()
@@ -522,31 +565,38 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstractionUpdates:
-        parsed = ApiPlanPricingAbstractionUpdates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_plan_pricing_abstraction_for_create_or_update_sync(
-    *, client: StolonClient
-) -> ApiPlanPricingAbstractionUpdates | None:
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
     Args:
@@ -557,17 +607,17 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstractionUpdates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstractionUpdates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs()
@@ -584,19 +634,22 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstractionUpdates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiPlanPricingAbstractionUpdates]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
     Args:
@@ -607,17 +660,17 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstractionUpdates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstractionUpdates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs()
@@ -634,31 +687,38 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstractionUpdates:
-        parsed = ApiPlanPricingAbstractionUpdates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
-    *, client: StolonClient
-) -> ApiPlanPricingAbstractionUpdates | None:
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
     Args:
@@ -669,17 +729,17 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstractionUpdates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstractionUpdates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs()
@@ -696,19 +756,22 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstractionUpdates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_update_plan_pricing_abstraction_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiPlanPricingAbstraction]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
     Args:
@@ -719,17 +782,17 @@ def create_update_plan_pricing_abstraction_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs()
@@ -746,29 +809,38 @@ def create_update_plan_pricing_abstraction_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstraction:
-        parsed = ApiPlanPricingAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_update_plan_pricing_abstraction_sync(*, client: StolonClient) -> ApiPlanPricingAbstraction | None:
+
+
+def create_update_plan_pricing_abstraction_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
     Args:
@@ -779,17 +851,17 @@ def create_update_plan_pricing_abstraction_sync(*, client: StolonClient) -> ApiP
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs()
@@ -806,19 +878,22 @@ def create_update_plan_pricing_abstraction_sync(*, client: StolonClient) -> ApiP
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_update_plan_pricing_abstraction_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiPlanPricingAbstraction]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
     Args:
@@ -829,17 +904,17 @@ def create_update_plan_pricing_abstraction_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs()
@@ -856,29 +931,38 @@ def create_update_plan_pricing_abstraction_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstraction:
-        parsed = ApiPlanPricingAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_update_plan_pricing_abstraction_asyncio(*, client: StolonClient) -> ApiPlanPricingAbstraction | None:
+
+
+def create_update_plan_pricing_abstraction_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
     Args:
@@ -889,17 +973,17 @@ def create_update_plan_pricing_abstraction_asyncio(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs()
@@ -916,17 +1000,22 @@ def create_update_plan_pricing_abstraction_asyncio(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def apply_to_children_sync_detailed(*, client: StolonClient) -> Response[ApiPlanPricingAbstraction]:
+
+
+def apply_to_children_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
 
@@ -938,17 +1027,17 @@ def apply_to_children_sync_detailed(*, client: StolonClient) -> Response[ApiPlan
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs()
@@ -965,29 +1054,38 @@ def apply_to_children_sync_detailed(*, client: StolonClient) -> Response[ApiPlan
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstraction:
-        parsed = ApiPlanPricingAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_to_children_sync(*, client: StolonClient) -> ApiPlanPricingAbstraction | None:
+
+
+def apply_to_children_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
 
@@ -999,17 +1097,17 @@ def apply_to_children_sync(*, client: StolonClient) -> ApiPlanPricingAbstraction
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs()
@@ -1026,17 +1124,22 @@ def apply_to_children_sync(*, client: StolonClient) -> ApiPlanPricingAbstraction
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def apply_to_children_asyncio_detailed(*, client: StolonClient) -> Response[ApiPlanPricingAbstraction]:
+
+
+def apply_to_children_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
 
@@ -1048,17 +1151,17 @@ def apply_to_children_asyncio_detailed(*, client: StolonClient) -> Response[ApiP
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiPlanPricingAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs()
@@ -1075,29 +1178,38 @@ def apply_to_children_asyncio_detailed(*, client: StolonClient) -> Response[ApiP
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstraction:
-        parsed = ApiPlanPricingAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_to_children_asyncio(*, client: StolonClient) -> ApiPlanPricingAbstraction | None:
+
+
+def apply_to_children_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
 
@@ -1109,17 +1221,17 @@ def apply_to_children_asyncio(*, client: StolonClient) -> ApiPlanPricingAbstract
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanPricingAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiPlanPricingAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs()
@@ -1136,11 +1248,12 @@ def apply_to_children_asyncio(*, client: StolonClient) -> ApiPlanPricingAbstract
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanPricingAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

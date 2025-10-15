@@ -6,25 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_summary import (
-    create_fee_summary,
-    get_fee_summary_billing_dates_by_billing_entity_uuid,
-    get_fee_summary_by_billing_entity_and_billing_date,
-    get_fee_summary_by_uuid,
-    get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_summary import create_fee_summary
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_summary import get_fee_summary_billing_dates_by_billing_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_summary import get_fee_summary_by_billing_entity_and_billing_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_summary import get_fee_summary_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_summary import get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_summary import ApiFeeSummary
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_summary_extended import ApiFeeSummaryExtended
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_summary_fee_category_report import ApiFeeSummaryFeeCategoryReport
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_fee_summary_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiFeeSummaryExtended | ResponseError]:
     """Get fee summary by UUID
 
@@ -63,26 +64,39 @@ def get_fee_summary_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_summary_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeSummaryExtended | ResponseError | None:
+
+
+def get_fee_summary_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeSummaryExtended | ResponseError | None:
     """Get fee summary by UUID
 
     Args:
@@ -109,7 +123,7 @@ def get_fee_summary_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeSu
     kwargs = get_fee_summary_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -121,10 +135,14 @@ def get_fee_summary_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeSu
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_summary_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiFeeSummaryExtended | ResponseError]:
     """Get fee summary by UUID
 
@@ -163,26 +181,39 @@ def get_fee_summary_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_summary_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeSummaryExtended | ResponseError | None:
+
+
+def get_fee_summary_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeSummaryExtended | ResponseError | None:
     """Get fee summary by UUID
 
     Args:
@@ -209,7 +240,7 @@ def get_fee_summary_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFe
     kwargs = get_fee_summary_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -223,7 +254,12 @@ def get_fee_summary_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFe
     return None
 
 
-def create_fee_summary_sync_detailed(*, client: StolonClient) -> Response[ApiFeeSummary]:
+
+
+def create_fee_summary_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiFeeSummary]:
     """Create fee summary
 
     Args:
@@ -241,115 +277,7 @@ def create_fee_summary_sync_detailed(*, client: StolonClient) -> Response[ApiFee
 
     Args:
         client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[ApiFeeSummary]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_fee_summary._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeSummary:
-        parsed = ApiFeeSummary.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_fee_summary_sync(*, client: StolonClient) -> ApiFeeSummary | None:
-    """Create fee summary
-
-    Args:
-        body (ApiFeeSummary):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiFeeSummary
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        ApiFeeSummary | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_fee_summary._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeSummary.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def create_fee_summary_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeSummary]:
-    """Create fee summary
-
-    Args:
-        body (ApiFeeSummary):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiFeeSummary]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiFeeSummary]
@@ -369,13 +297,17 @@ def create_fee_summary_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiFeeSummary:
@@ -385,13 +317,18 @@ def create_fee_summary_asyncio_detailed(*, client: StolonClient) -> Response[Api
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_summary_asyncio(*, client: StolonClient) -> ApiFeeSummary | None:
+
+
+def create_fee_summary_sync(
+    *,
+    client: StolonClient
+) -> ApiFeeSummary | None:
     """Create fee summary
 
     Args:
@@ -409,7 +346,7 @@ def create_fee_summary_asyncio(*, client: StolonClient) -> ApiFeeSummary | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiFeeSummary | None
@@ -429,7 +366,7 @@ def create_fee_summary_asyncio(*, client: StolonClient) -> ApiFeeSummary | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -437,10 +374,135 @@ def create_fee_summary_asyncio(*, client: StolonClient) -> ApiFeeSummary | None:
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def create_fee_summary_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiFeeSummary]:
+    """Create fee summary
+
+    Args:
+        body (ApiFeeSummary):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiFeeSummary]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[ApiFeeSummary]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_fee_summary._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiFeeSummary:
+        parsed = ApiFeeSummary.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_fee_summary_asyncio(
+    *,
+    client: StolonClient
+) -> ApiFeeSummary | None:
+    """Create fee summary
+
+    Args:
+        body (ApiFeeSummary):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiFeeSummary
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        ApiFeeSummary | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_fee_summary._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiFeeSummary.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
 
 
 def get_fee_summary_by_billing_entity_and_billing_date_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ResponseError]:
     """Get fee summary(ies) for a billing entity
 
@@ -466,7 +528,7 @@ def get_fee_summary_by_billing_entity_and_billing_date_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError]
@@ -486,13 +548,17 @@ def get_fee_summary_by_billing_entity_and_billing_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -502,13 +568,18 @@ def get_fee_summary_by_billing_entity_and_billing_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_summary_by_billing_entity_and_billing_date_sync(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_fee_summary_by_billing_entity_and_billing_date_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get fee summary(ies) for a billing entity
 
     Args:
@@ -533,7 +604,7 @@ def get_fee_summary_by_billing_entity_and_billing_date_sync(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | None
@@ -553,7 +624,7 @@ def get_fee_summary_by_billing_entity_and_billing_date_sync(*, client: StolonCli
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -561,10 +632,13 @@ def get_fee_summary_by_billing_entity_and_billing_date_sync(*, client: StolonCli
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_fee_summary_by_billing_entity_and_billing_date_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ResponseError]:
     """Get fee summary(ies) for a billing entity
 
@@ -590,7 +664,7 @@ def get_fee_summary_by_billing_entity_and_billing_date_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError]
@@ -610,13 +684,17 @@ def get_fee_summary_by_billing_entity_and_billing_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -626,13 +704,18 @@ def get_fee_summary_by_billing_entity_and_billing_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_summary_by_billing_entity_and_billing_date_asyncio(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_fee_summary_by_billing_entity_and_billing_date_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get fee summary(ies) for a billing entity
 
     Args:
@@ -657,7 +740,7 @@ def get_fee_summary_by_billing_entity_and_billing_date_asyncio(*, client: Stolon
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | None
@@ -677,7 +760,7 @@ def get_fee_summary_by_billing_entity_and_billing_date_asyncio(*, client: Stolon
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -687,9 +770,13 @@ def get_fee_summary_by_billing_entity_and_billing_date_asyncio(*, client: Stolon
     return None
 
 
+
+
 def get_fee_summary_billing_dates_by_billing_entity_uuid_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[datetime.date | list[datetime.date]]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError | list[datetime.date]]:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -702,7 +789,7 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[datetime.date, list[datetime.date]]]
+        Response[Union[ResponseError, list[datetime.date]]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -712,7 +799,7 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[datetime.date | list[datetime.date]]
+        Response[ResponseError | list[datetime.date]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_summary_billing_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -729,28 +816,39 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_summary_billing_dates_by_billing_entity_uuid_sync(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> datetime.date | list[datetime.date] | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | list[datetime.date] | None:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -763,7 +861,7 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[datetime.date, list[datetime.date]]
+        Union[ResponseError, list[datetime.date]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -773,13 +871,13 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_sync(
                 billing_entity_uuid: str
 
     Returns:
-        datetime.date | list[datetime.date] | None
+        ResponseError | list[datetime.date] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_summary_billing_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -791,11 +889,15 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[datetime.date | list[datetime.date]]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError | list[datetime.date]]:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -808,7 +910,7 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[datetime.date, list[datetime.date]]]
+        Response[Union[ResponseError, list[datetime.date]]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -818,7 +920,7 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[datetime.date | list[datetime.date]]
+        Response[ResponseError | list[datetime.date]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_summary_billing_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -835,28 +937,39 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> datetime.date | list[datetime.date] | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | list[datetime.date] | None:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -869,7 +982,7 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[datetime.date, list[datetime.date]]
+        Union[ResponseError, list[datetime.date]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -879,13 +992,13 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        datetime.date | list[datetime.date] | None
+        ResponseError | list[datetime.date] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_summary_billing_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -897,10 +1010,14 @@ def get_fee_summary_billing_dates_by_billing_entity_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiFeeSummaryFeeCategoryReport | ResponseError]:
     """Get fee summary totals grouped by fee categories by billing entity UUID and date range
 
@@ -927,9 +1044,7 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_sync_de
         Response[ApiFeeSummaryFeeCategoryReport | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -943,27 +1058,38 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_sync_de
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiFeeSummaryFeeCategoryReport | ResponseError | None:
     """Get fee summary totals grouped by fee categories by billing entity UUID and date range
 
@@ -990,12 +1116,10 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_sync(
         ApiFeeSummaryFeeCategoryReport | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1009,8 +1133,12 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_sync(
     return None
 
 
+
+
 def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiFeeSummaryFeeCategoryReport | ResponseError]:
     """Get fee summary totals grouped by fee categories by billing entity UUID and date range
 
@@ -1037,9 +1165,7 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_asyncio
         Response[ApiFeeSummaryFeeCategoryReport | ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1053,27 +1179,38 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_asyncio
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiFeeSummaryFeeCategoryReport | ResponseError | None:
     """Get fee summary totals grouped by fee categories by billing entity UUID and date range
 
@@ -1100,12 +1237,10 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_asyncio
         ApiFeeSummaryFeeCategoryReport | ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1117,3 +1252,4 @@ def get_fee_summary_fee_categories_by_billing_entity_uuid_and_date_range_asyncio
 
     # No response model, return None
     return None
+

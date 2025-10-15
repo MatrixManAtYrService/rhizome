@@ -6,31 +6,29 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import (
-    get_cellular_pricing,
-    get_cellular_pricing_for_merchant,
-    get_cellular_pricing_for_reseller,
-    get_misc_pricing,
-    get_misc_pricing_for_merchant,
-    get_misc_pricing_for_reseller,
-    get_plan_pricing,
-    get_plan_pricing_for_merchant,
-    get_plan_pricing_for_reseller,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_pricing import (
-    ApiCellularPricing,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_pricing import ApiMiscPricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing_for_merchant
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing_for_reseller
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing_for_merchant
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing_for_reseller
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing_for_merchant
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing_for_reseller
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_pricing import ApiCellularPricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing import ApiPlanPricing
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -55,7 +53,7 @@ def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiC
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiCellularPricing]
@@ -75,13 +73,17 @@ def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -91,13 +93,18 @@ def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiC
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | None:
+
+
+def get_cellular_pricing_sync(
+    *,
+    client: StolonClient
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -122,7 +129,7 @@ def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiCellularPricing | None
@@ -142,7 +149,7 @@ def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | N
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -152,7 +159,12 @@ def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | N
     return None
 
 
-def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularPricing]:
+
+
+def get_cellular_pricing_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -177,7 +189,7 @@ def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[A
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiCellularPricing]
@@ -197,13 +209,17 @@ def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -213,13 +229,18 @@ def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[A
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing | None:
+
+
+def get_cellular_pricing_asyncio(
+    *,
+    client: StolonClient
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -244,7 +265,7 @@ def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiCellularPricing | None
@@ -264,7 +285,7 @@ def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -274,7 +295,12 @@ def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing 
     return None
 
 
-def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiMiscPricing]:
+
+
+def get_misc_pricing_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -291,17 +317,17 @@ def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiMiscP
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscPricing]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMiscPricing]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_pricing._get_kwargs()
@@ -318,29 +344,38 @@ def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiMiscP
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscPricing:
-        parsed = ApiMiscPricing.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_pricing_sync(*, client: StolonClient) -> ApiMiscPricing | None:
+
+
+def get_misc_pricing_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -357,17 +392,17 @@ def get_misc_pricing_sync(*, client: StolonClient) -> ApiMiscPricing | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscPricing
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMiscPricing | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_pricing._get_kwargs()
@@ -384,17 +419,22 @@ def get_misc_pricing_sync(*, client: StolonClient) -> ApiMiscPricing | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscPricing.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiMiscPricing]:
+
+
+def get_misc_pricing_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -411,17 +451,17 @@ def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiMi
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscPricing]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMiscPricing]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_pricing._get_kwargs()
@@ -438,29 +478,38 @@ def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiMi
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscPricing:
-        parsed = ApiMiscPricing.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_pricing_asyncio(*, client: StolonClient) -> ApiMiscPricing | None:
+
+
+def get_misc_pricing_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -477,17 +526,17 @@ def get_misc_pricing_asyncio(*, client: StolonClient) -> ApiMiscPricing | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscPricing
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMiscPricing | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_pricing._get_kwargs()
@@ -504,17 +553,23 @@ def get_misc_pricing_asyncio(*, client: StolonClient) -> ApiMiscPricing | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMiscPricing.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_plan_pricing_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -532,7 +587,7 @@ def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -542,7 +597,7 @@ def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
@@ -559,29 +614,39 @@ def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
+        parsed = ApiPlanPricing.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_plan_pricing_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -599,7 +664,7 @@ def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Re
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiPlanPricing
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -609,7 +674,7 @@ def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Re
                 uuid: str
 
     Returns:
-        ResponseError | None
+        ApiPlanPricing | None
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
@@ -626,17 +691,23 @@ def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> Re
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiPlanPricing.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_plan_pricing_for_merchant_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -654,7 +725,7 @@ def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -664,7 +735,7 @@ def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
                 uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
@@ -681,29 +752,39 @@ def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
+        parsed = ApiPlanPricing.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_plan_pricing_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -721,7 +802,7 @@ def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiPlanPricing
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -731,7 +812,7 @@ def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ResponseError | None
+        ApiPlanPricing | None
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid)
@@ -748,497 +829,29 @@ def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiPlanPricing.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMiscPricing]:
+
+
+def get_misc_pricing_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
         uuid (str):
         currency (str):
         misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiMiscPricing]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiMiscPricing]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscPricing:
-        parsed = ApiMiscPricing.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_misc_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiMiscPricing | None:
-    """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        uuid (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiMiscPricing
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiMiscPricing | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMiscPricing.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_misc_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMiscPricing]:
-    """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        uuid (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiMiscPricing]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiMiscPricing]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscPricing:
-        parsed = ApiMiscPricing.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_misc_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiMiscPricing | None:
-    """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        uuid (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiMiscPricing
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiMiscPricing | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMiscPricing.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_misc_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiMiscPricing]:
-    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        r_id (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiMiscPricing]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                r_id: str
-
-    Returns:
-        Response[ApiMiscPricing]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscPricing:
-        parsed = ApiMiscPricing.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_misc_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ApiMiscPricing | None:
-    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        r_id (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiMiscPricing
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                r_id: str
-
-    Returns:
-        ApiMiscPricing | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMiscPricing.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_misc_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ApiMiscPricing]:
-    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        r_id (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiMiscPricing]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                r_id: str
-
-    Returns:
-        Response[ApiMiscPricing]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMiscPricing:
-        parsed = ApiMiscPricing.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_misc_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ApiMiscPricing | None:
-    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
-
-    Args:
-        r_id (str):
-        currency (str):
-        misc_specifiers (list[str]):
-        rule_aliases (Union[Unset, list[str]]):
-        date (Union[Unset, datetime.date]):
-        x_clover_appenv (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiMiscPricing
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                r_id: str
-
-    Returns:
-        ApiMiscPricing | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMiscPricing.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
-    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
-    date
-
-    Args:
-        r_id (str):
-        plan_uuids (list[str]):
-        currency (str):
-        billing_method (Union[Unset, str]):
         rule_aliases (Union[Unset, list[str]]):
         date (Union[Unset, datetime.date]):
         x_clover_appenv (str):
@@ -1255,13 +868,13 @@ def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
 
     Args:
         client: StolonClient instance for proxying requests
-                r_id: str
+                uuid: str
 
     Returns:
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1275,13 +888,17 @@ def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1291,21 +908,293 @@ def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
-    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
-    date
+
+
+def get_misc_pricing_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
+    """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
+
+    Args:
+        uuid (str):
+        currency (str):
+        misc_specifiers (list[str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_misc_pricing_for_merchant_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
+    """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
+
+    Args:
+        uuid (str):
+        currency (str):
+        misc_specifiers (list[str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_misc_pricing_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
+    """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
+
+    Args:
+        uuid (str):
+        currency (str):
+        misc_specifiers (list[str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_misc_pricing_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ResponseError]:
+    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
         r_id (str):
-        plan_uuids (list[str]):
         currency (str):
-        billing_method (Union[Unset, str]):
+        misc_specifiers (list[str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                r_id: str
+
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_misc_pricing_for_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ResponseError | None:
+    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
+
+    Args:
+        r_id (str):
+        currency (str):
+        misc_specifiers (list[str]):
         rule_aliases (Union[Unset, list[str]]):
         date (Union[Unset, datetime.date]):
         x_clover_appenv (str):
@@ -1328,7 +1217,7 @@ def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Re
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1342,7 +1231,7 @@ def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Re
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1352,15 +1241,19 @@ def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> Re
     return None
 
 
-def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
-    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
-    date
+
+
+def get_misc_pricing_for_reseller_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ResponseError]:
+    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
         r_id (str):
-        plan_uuids (list[str]):
         currency (str):
-        billing_method (Union[Unset, str]):
+        misc_specifiers (list[str]):
         rule_aliases (Union[Unset, list[str]]):
         date (Union[Unset, datetime.date]):
         x_clover_appenv (str):
@@ -1383,7 +1276,7 @@ def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1397,13 +1290,17 @@ def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1413,21 +1310,25 @@ def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
-    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
-    date
+
+
+def get_misc_pricing_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ResponseError | None:
+    """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
         r_id (str):
-        plan_uuids (list[str]):
         currency (str):
-        billing_method (Union[Unset, str]):
+        misc_specifiers (list[str]):
         rule_aliases (Union[Unset, list[str]]):
         date (Union[Unset, datetime.date]):
         x_clover_appenv (str):
@@ -1450,6 +1351,144 @@ def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) ->
         ResponseError | None
     """
     # Extract request parameters from generated function
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_plan_pricing_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ApiPlanPricing]:
+    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
+    date
+
+    Args:
+        r_id (str):
+        plan_uuids (list[str]):
+        currency (str):
+        billing_method (Union[Unset, str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPlanPricing]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                r_id: str
+
+    Returns:
+        Response[ApiPlanPricing]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
+        parsed = ApiPlanPricing.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_plan_pricing_for_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ApiPlanPricing | None:
+    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
+    date
+
+    Args:
+        r_id (str):
+        plan_uuids (list[str]):
+        currency (str):
+        billing_method (Union[Unset, str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPlanPricing
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                r_id: str
+
+    Returns:
+        ApiPlanPricing | None
+    """
+    # Extract request parameters from generated function
     kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
@@ -1464,17 +1503,160 @@ def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiPlanPricing.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def get_plan_pricing_for_reseller_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ApiPlanPricing]:
+    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
+    date
+
+    Args:
+        r_id (str):
+        plan_uuids (list[str]):
+        currency (str):
+        billing_method (Union[Unset, str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPlanPricing]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                r_id: str
+
+    Returns:
+        Response[ApiPlanPricing]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
+        parsed = ApiPlanPricing.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_plan_pricing_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ApiPlanPricing | None:
+    """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
+    date
+
+    Args:
+        r_id (str):
+        plan_uuids (list[str]):
+        currency (str):
+        billing_method (Union[Unset, str]):
+        rule_aliases (Union[Unset, list[str]]):
+        date (Union[Unset, datetime.date]):
+        x_clover_appenv (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPlanPricing
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                r_id: str
+
+    Returns:
+        ApiPlanPricing | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiPlanPricing.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_plan_pricing_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1492,17 +1674,17 @@ def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing._get_kwargs()
@@ -1519,29 +1701,38 @@ def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
+        parsed = ApiPlanPricing.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_sync(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_plan_pricing_sync(
+    *,
+    client: StolonClient
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1559,17 +1750,17 @@ def get_plan_pricing_sync(*, client: StolonClient) -> ResponseError | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiPlanPricing
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiPlanPricing | None
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing._get_kwargs()
@@ -1586,17 +1777,22 @@ def get_plan_pricing_sync(*, client: StolonClient) -> ResponseError | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiPlanPricing.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def get_plan_pricing_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1614,17 +1810,17 @@ def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiPlanPricing]
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing._get_kwargs()
@@ -1641,29 +1837,38 @@ def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
+        parsed = ApiPlanPricing.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_plan_pricing_asyncio(
+    *,
+    client: StolonClient
+) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1681,17 +1886,17 @@ def get_plan_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiPlanPricing
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiPlanPricing | None
     """
     # Extract request parameters from generated function
     kwargs = get_plan_pricing._get_kwargs()
@@ -1708,17 +1913,23 @@ def get_plan_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiPlanPricing.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiCellularPricing]:
+
+
+def get_cellular_pricing_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1763,13 +1974,17 @@ def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uui
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -1779,13 +1994,19 @@ def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uui
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiCellularPricing | None:
+
+
+def get_cellular_pricing_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1830,7 +2051,7 @@ def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1838,10 +2059,14 @@ def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_for_merchant_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -1887,13 +2112,17 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -1903,13 +2132,19 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiCellularPricing | None:
+
+
+def get_cellular_pricing_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1954,7 +2189,7 @@ def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1964,7 +2199,13 @@ def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiCellularPricing]:
+
+
+def get_cellular_pricing_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2009,13 +2250,17 @@ def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_i
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -2025,13 +2270,19 @@ def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_i
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ApiCellularPricing | None:
+
+
+def get_cellular_pricing_for_reseller_sync(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2076,7 +2327,7 @@ def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2084,10 +2335,14 @@ def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_for_reseller_asyncio_detailed(
-    *, client: StolonClient, r_id: str
+    *,
+    client: StolonClient,
+    r_id: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -2133,13 +2388,17 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -2149,13 +2408,19 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ApiCellularPricing | None:
+
+
+def get_cellular_pricing_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2200,7 +2465,7 @@ def get_cellular_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2208,3 +2473,4 @@ def get_cellular_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

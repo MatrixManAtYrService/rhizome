@@ -6,24 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import (
-    create_app_meter_action,
-    get_app_meter_action_by_uuid,
-    get_app_meter_actions,
-    get_unposted_app_meter_actions_by_billing_entity,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_meter_action import (
-    ApiAppMeterAction,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import create_app_meter_action
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import get_app_meter_action_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import get_app_meter_actions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import get_unposted_app_meter_actions_by_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_app_meter_action_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeterAction]:
+def create_app_meter_action_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create app metered action
 
     Args:
@@ -34,17 +32,17 @@ def create_app_meter_action_sync_detailed(*, client: StolonClient) -> Response[A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_app_meter_action._get_kwargs()
@@ -61,29 +59,38 @@ def create_app_meter_action_sync_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_meter_action_sync(*, client: StolonClient) -> ApiAppMeterAction | None:
+
+
+def create_app_meter_action_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create app metered action
 
     Args:
@@ -94,17 +101,17 @@ def create_app_meter_action_sync(*, client: StolonClient) -> ApiAppMeterAction |
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_app_meter_action._get_kwargs()
@@ -121,17 +128,22 @@ def create_app_meter_action_sync(*, client: StolonClient) -> ApiAppMeterAction |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_app_meter_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppMeterAction]:
+
+
+def create_app_meter_action_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create app metered action
 
     Args:
@@ -142,17 +154,17 @@ def create_app_meter_action_asyncio_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_app_meter_action._get_kwargs()
@@ -169,29 +181,38 @@ def create_app_meter_action_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_meter_action_asyncio(*, client: StolonClient) -> ApiAppMeterAction | None:
+
+
+def create_app_meter_action_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create app metered action
 
     Args:
@@ -202,17 +223,17 @@ def create_app_meter_action_asyncio(*, client: StolonClient) -> ApiAppMeterActio
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_app_meter_action._get_kwargs()
@@ -229,17 +250,22 @@ def create_app_meter_action_asyncio(*, client: StolonClient) -> ApiAppMeterActio
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_meter_actions_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeterAction]:
+
+
+def get_app_meter_actions_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get app metered actions
 
     Args:
@@ -260,17 +286,17 @@ def get_app_meter_actions_sync_detailed(*, client: StolonClient) -> Response[Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_actions._get_kwargs()
@@ -287,29 +313,38 @@ def get_app_meter_actions_sync_detailed(*, client: StolonClient) -> Response[Api
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_meter_actions_sync(*, client: StolonClient) -> ApiAppMeterAction | None:
+
+
+def get_app_meter_actions_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get app metered actions
 
     Args:
@@ -330,17 +365,17 @@ def get_app_meter_actions_sync(*, client: StolonClient) -> ApiAppMeterAction | N
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_actions._get_kwargs()
@@ -357,17 +392,22 @@ def get_app_meter_actions_sync(*, client: StolonClient) -> ApiAppMeterAction | N
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_meter_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppMeterAction]:
+
+
+def get_app_meter_actions_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get app metered actions
 
     Args:
@@ -388,17 +428,17 @@ def get_app_meter_actions_asyncio_detailed(*, client: StolonClient) -> Response[
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_actions._get_kwargs()
@@ -415,29 +455,38 @@ def get_app_meter_actions_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_meter_actions_asyncio(*, client: StolonClient) -> ApiAppMeterAction | None:
+
+
+def get_app_meter_actions_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get app metered actions
 
     Args:
@@ -458,17 +507,17 @@ def get_app_meter_actions_asyncio(*, client: StolonClient) -> ApiAppMeterAction 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_actions._get_kwargs()
@@ -485,19 +534,23 @@ def get_app_meter_actions_asyncio(*, client: StolonClient) -> ApiAppMeterAction 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiAppMeterAction]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get unposted app metered actions for billing entity
 
     Args:
@@ -508,7 +561,7 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -518,7 +571,7 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -535,31 +588,39 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_app_meter_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiAppMeterAction | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get unposted app metered actions for billing entity
 
     Args:
@@ -570,7 +631,7 @@ def get_unposted_app_meter_actions_by_billing_entity_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -580,7 +641,7 @@ def get_unposted_app_meter_actions_by_billing_entity_sync(
                 billing_entity_uuid: str
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -597,19 +658,23 @@ def get_unposted_app_meter_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiAppMeterAction]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get unposted app metered actions for billing entity
 
     Args:
@@ -620,7 +685,7 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -630,7 +695,7 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -647,31 +712,39 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_app_meter_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiAppMeterAction | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get unposted app metered actions for billing entity
 
     Args:
@@ -682,7 +755,7 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -692,7 +765,7 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -709,17 +782,23 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppMeterAction]:
+
+
+def get_app_meter_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get app metered action by UUID
 
     Args:
@@ -730,7 +809,7 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -740,7 +819,7 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
@@ -757,29 +836,39 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppMeterAction | None:
+
+
+def get_app_meter_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get app metered action by UUID
 
     Args:
@@ -790,7 +879,7 @@ def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -800,7 +889,7 @@ def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
@@ -817,17 +906,23 @@ def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppMeterAction]:
+
+
+def get_app_meter_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get app metered action by UUID
 
     Args:
@@ -838,7 +933,7 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -848,7 +943,7 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        Response[ApiAppMeterAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
@@ -865,29 +960,39 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAppMeterAction:
-        parsed = ApiAppMeterAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppMeterAction | None:
+
+
+def get_app_meter_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get app metered action by UUID
 
     Args:
@@ -898,7 +1003,7 @@ def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeterAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -908,7 +1013,7 @@ def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiAppMeterAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
@@ -925,11 +1030,12 @@ def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAppMeterAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

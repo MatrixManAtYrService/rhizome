@@ -6,18 +6,19 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_metadata import (
-    get_invoice_fee_code_metadata,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_metadata import get_invoice_fee_code_metadata
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Response[list[str] | str]:
+def get_invoice_fee_code_metadata_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list[str]]:
     """returns a fee code attributes for invoice
 
     Args:
@@ -29,17 +30,17 @@ def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[list[str], str]]
+        Response[Union[ResponseError, list[str]]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[list[str] | str]
+        Response[ResponseError | list[str]]
     """
     # Extract request parameters from generated function
     kwargs = get_invoice_fee_code_metadata._get_kwargs()
@@ -56,26 +57,38 @@ def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> list[str] | str | None:
+
+
+def get_invoice_fee_code_metadata_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | list[str] | None:
     """returns a fee code attributes for invoice
 
     Args:
@@ -87,23 +100,23 @@ def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> list[str] | s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[list[str], str]
+        Union[ResponseError, list[str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        list[str] | str | None
+        ResponseError | list[str] | None
     """
     # Extract request parameters from generated function
     kwargs = get_invoice_fee_code_metadata._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -117,7 +130,12 @@ def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> list[str] | s
     return None
 
 
-def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> Response[list[str] | str]:
+
+
+def get_invoice_fee_code_metadata_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list[str]]:
     """returns a fee code attributes for invoice
 
     Args:
@@ -129,17 +147,17 @@ def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[list[str], str]]
+        Response[Union[ResponseError, list[str]]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[list[str] | str]
+        Response[ResponseError | list[str]]
     """
     # Extract request parameters from generated function
     kwargs = get_invoice_fee_code_metadata._get_kwargs()
@@ -156,26 +174,38 @@ def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_invoice_fee_code_metadata_asyncio(*, client: StolonClient) -> list[str] | str | None:
+
+
+def get_invoice_fee_code_metadata_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | list[str] | None:
     """returns a fee code attributes for invoice
 
     Args:
@@ -187,23 +217,23 @@ def get_invoice_fee_code_metadata_asyncio(*, client: StolonClient) -> list[str] 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[list[str], str]
+        Union[ResponseError, list[str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        list[str] | str | None
+        ResponseError | list[str] | None
     """
     # Extract request parameters from generated function
     kwargs = get_invoice_fee_code_metadata._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -215,3 +245,4 @@ def get_invoice_fee_code_metadata_asyncio(*, client: StolonClient) -> list[str] 
 
     # No response model, return None
     return None
+

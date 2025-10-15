@@ -6,35 +6,30 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import (
-    create_fee_code_ledger_account,
-    delete_fee_code_ledger_account_by_uuid,
-    get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date,
-    get_fee_code_ledger_account_by_uuid,
-    get_fee_code_ledger_accounts_by_date,
-    get_fee_code_ledger_accounts_by_fee_category_fee_code,
-    get_fee_code_ledger_accounts_by_ledger_account_key,
-    resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account,
-    resolve_fee_code_to_ledger_account_mapping,
-    update_fee_code_ledger_account,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_ledger_account import (
-    ApiFeeCodeLedgerAccount,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account import (
-    ApiLedgerAccount,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import create_fee_code_ledger_account
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import delete_fee_code_ledger_account_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_account_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_fee_category_fee_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_ledger_account_key
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import resolve_fee_code_to_ledger_account_mapping
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import update_fee_code_ledger_account
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_ledger_account import ApiFeeCodeLedgerAccount
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account import ApiLedgerAccount
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
     Args:
@@ -47,17 +42,17 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
@@ -74,29 +69,38 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def resolve_fee_code_to_ledger_account_mapping_sync(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | None:
+
+
+def resolve_fee_code_to_ledger_account_mapping_sync(
+    *,
+    client: StolonClient
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
     Args:
@@ -109,17 +113,17 @@ def resolve_fee_code_to_ledger_account_mapping_sync(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
@@ -135,20 +139,16 @@ def resolve_fee_code_to_ledger_account_mapping_sync(*, client: StolonClient) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
     Args:
@@ -161,17 +161,17 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
@@ -188,29 +188,38 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def resolve_fee_code_to_ledger_account_mapping_asyncio(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | None:
+
+
+def resolve_fee_code_to_ledger_account_mapping_asyncio(
+    *,
+    client: StolonClient
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
     Args:
@@ -223,17 +232,17 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
@@ -249,20 +258,16 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(*, client: StolonClient) 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -276,17 +281,17 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]]
+        Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]
+        Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
@@ -303,28 +308,38 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -338,23 +353,23 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]
+        Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None
+        ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -366,11 +381,14 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -384,17 +402,17 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]]
+        Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]
+        Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
@@ -411,28 +429,38 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -446,23 +474,23 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]
+        Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None
+        ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -474,11 +502,15 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_account_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping by UUID
 
     Args:
@@ -489,7 +521,7 @@ def get_fee_code_ledger_account_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -499,7 +531,7 @@ def get_fee_code_ledger_account_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
@@ -516,29 +548,39 @@ def get_fee_code_ledger_account_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCodeLedgerAccount | None:
+
+
+def get_fee_code_ledger_account_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping by UUID
 
     Args:
@@ -549,7 +591,7 @@ def get_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -559,7 +601,7 @@ def get_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
@@ -575,20 +617,17 @@ def get_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str)
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping by UUID
 
     Args:
@@ -599,7 +638,7 @@ def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -609,7 +648,7 @@ def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
@@ -626,29 +665,39 @@ def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCodeLedgerAccount | None:
+
+
+def get_fee_code_ledger_account_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping by UUID
 
     Args:
@@ -659,7 +708,7 @@ def get_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -669,7 +718,7 @@ def get_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
@@ -685,18 +734,87 @@ def get_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: s
         timeout=30.0,
     )
 
-    # Parse response body
+    # No response model, return None
+    return None
 
-    if proxy_response.body and proxy_response.status_code == 200:
+
+
+
+def delete_fee_code_ledger_account_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
+    """Delete a fee-code-to-ledger-account mapping
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ResponseError, str]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError | str]
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
+        except json.JSONDecodeError:
             pass
-    return None
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
 
 
-def delete_fee_code_ledger_account_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
+
+
+def delete_fee_code_ledger_account_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a fee-code-to-ledger-account mapping
 
     Args:
@@ -707,7 +825,7 @@ def delete_fee_code_ledger_account_by_uuid_sync_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Union[ResponseError, str]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -717,7 +835,54 @@ def delete_fee_code_ledger_account_by_uuid_sync_detailed(*, client: StolonClient
                 uuid: str
 
     Returns:
-        Response[str]
+        ResponseError | str | None
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
+    """Delete a fee-code-to-ledger-account mapping
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ResponseError, str]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError | str]
     """
     # Extract request parameters from generated function
     kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
@@ -734,26 +899,39 @@ def delete_fee_code_ledger_account_by_uuid_sync_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str) -> str | None:
+
+
+def delete_fee_code_ledger_account_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a fee-code-to-ledger-account mapping
 
     Args:
@@ -764,7 +942,7 @@ def delete_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        Union[ResponseError, str]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -774,48 +952,7 @@ def delete_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        str | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
-    """Delete a fee-code-to-ledger-account mapping
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[str]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[str]
+        ResponseError | str | None
     """
     # Extract request parameters from generated function
     kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
@@ -831,70 +968,16 @@ def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(*, client: StolonCli
         timeout=30.0,
     )
 
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def delete_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> str | None:
-    """Delete a fee-code-to-ledger-account mapping
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        str
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        str | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
     # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
     Args:
@@ -907,17 +990,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
@@ -934,31 +1017,38 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | None:
+    *,
+    client: StolonClient
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
     Args:
@@ -971,17 +1061,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
@@ -997,20 +1087,16 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
     Args:
@@ -1023,17 +1109,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
@@ -1050,31 +1136,38 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | None:
+    *,
+    client: StolonClient
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
     Args:
@@ -1087,17 +1180,17 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
@@ -1113,19 +1206,16 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1154,9 +1244,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
         Response[ApiLedgerAccount]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1170,13 +1258,17 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccount:
@@ -1186,14 +1278,18 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1222,9 +1318,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
         ApiLedgerAccount | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1238,7 +1332,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1248,8 +1342,12 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     return None
 
 
+
+
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1278,9 +1376,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
         Response[ApiLedgerAccount]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1294,13 +1390,17 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccount:
@@ -1310,14 +1410,18 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1346,9 +1450,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
         ApiLedgerAccount | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid
-    )
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1362,7 +1464,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1372,9 +1474,13 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     return None
 
 
+
+
 def update_fee_code_ledger_account_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
     Args:
@@ -1386,7 +1492,7 @@ def update_fee_code_ledger_account_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1396,7 +1502,7 @@ def update_fee_code_ledger_account_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
@@ -1413,29 +1519,39 @@ def update_fee_code_ledger_account_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_fee_code_ledger_account_sync(*, client: StolonClient, uuid: str) -> ApiFeeCodeLedgerAccount | None:
+
+
+def update_fee_code_ledger_account_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
     Args:
@@ -1447,7 +1563,7 @@ def update_fee_code_ledger_account_sync(*, client: StolonClient, uuid: str) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1457,7 +1573,7 @@ def update_fee_code_ledger_account_sync(*, client: StolonClient, uuid: str) -> A
                 uuid: str
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
@@ -1473,20 +1589,17 @@ def update_fee_code_ledger_account_sync(*, client: StolonClient, uuid: str) -> A
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def update_fee_code_ledger_account_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiFeeCodeLedgerAccount]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
     Args:
@@ -1498,7 +1611,7 @@ def update_fee_code_ledger_account_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1508,7 +1621,7 @@ def update_fee_code_ledger_account_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
@@ -1525,29 +1638,39 @@ def update_fee_code_ledger_account_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_fee_code_ledger_account_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCodeLedgerAccount | None:
+
+
+def update_fee_code_ledger_account_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
     Args:
@@ -1559,7 +1682,7 @@ def update_fee_code_ledger_account_asyncio(*, client: StolonClient, uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1569,7 +1692,7 @@ def update_fee_code_ledger_account_asyncio(*, client: StolonClient, uuid: str) -
                 uuid: str
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
@@ -1585,18 +1708,16 @@ def update_fee_code_ledger_account_asyncio(*, client: StolonClient, uuid: str) -
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def create_fee_code_ledger_account_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCodeLedgerAccount]:
+
+
+def create_fee_code_ledger_account_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1607,17 +1728,17 @@ def create_fee_code_ledger_account_sync_detailed(*, client: StolonClient) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_ledger_account._get_kwargs()
@@ -1634,29 +1755,38 @@ def create_fee_code_ledger_account_sync_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | None:
+
+
+def create_fee_code_ledger_account_sync(
+    *,
+    client: StolonClient
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1667,17 +1797,17 @@ def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_ledger_account._get_kwargs()
@@ -1693,18 +1823,16 @@ def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLe
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def create_fee_code_ledger_account_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCodeLedgerAccount]:
+
+
+def create_fee_code_ledger_account_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1715,17 +1843,17 @@ def create_fee_code_ledger_account_asyncio_detailed(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount]
+        Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_ledger_account._get_kwargs()
@@ -1742,29 +1870,38 @@ def create_fee_code_ledger_account_asyncio_detailed(*, client: StolonClient) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeLedgerAccount:
-        parsed = ApiFeeCodeLedgerAccount.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | None:
+
+
+def create_fee_code_ledger_account_asyncio(
+    *,
+    client: StolonClient
+) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1775,17 +1912,17 @@ def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCod
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeLedgerAccount
+        Union[ApiFeeCodeLedgerAccount, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | None
+        ApiFeeCodeLedgerAccount | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_ledger_account._get_kwargs()
@@ -1801,20 +1938,16 @@ def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCod
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
 
@@ -1829,17 +1962,17 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]]
+        Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]
+        Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
@@ -1856,28 +1989,38 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
 
@@ -1892,23 +2035,23 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]
+        Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None
+        ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1920,11 +2063,14 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
 
@@ -1939,17 +2085,17 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]]
+        Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]
+        Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
@@ -1966,28 +2112,38 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
 
@@ -2002,23 +2158,23 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]
+        Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None
+        ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2030,11 +2186,14 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_code_ledger_accounts_by_date_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -2050,17 +2209,17 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]]
+        Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]
+        Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
@@ -2077,28 +2236,38 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_code_ledger_accounts_by_date_sync(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -2114,23 +2283,23 @@ def get_fee_code_ledger_accounts_by_date_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]
+        Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None
+        ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2144,9 +2313,12 @@ def get_fee_code_ledger_accounts_by_date_sync(
     return None
 
 
+
+
 def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -2162,17 +2334,17 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]]
+        Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"]]
+        Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
@@ -2189,28 +2361,38 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_fee_code_ledger_accounts_by_date_asyncio(
-    *, client: StolonClient
-) -> ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
     Args:
@@ -2226,23 +2408,23 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiFeeCodeLedgerAccount, list['ApiFeeCodeLedgerAccount']]
+        Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeLedgerAccount | list["ApiFeeCodeLedgerAccount"] | None
+        ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2254,3 +2436,4 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
 
     # No response model, return None
     return None
+

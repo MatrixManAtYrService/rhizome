@@ -6,24 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import (
-    create_cellular_action,
-    get_cellular_action_by_uuid,
-    get_cellular_actions,
-    get_unposted_cellular_actions_by_billing_entity,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action import (
-    ApiCellularAction,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import create_cellular_action
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import get_cellular_action_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import get_cellular_actions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import get_unposted_cellular_actions_by_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_cellular_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiCellularAction]:
+def get_cellular_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get cellular action by UUID
 
     Args:
@@ -34,7 +33,7 @@ def get_cellular_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -44,7 +43,7 @@ def get_cellular_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_by_uuid._get_kwargs(uuid=uuid)
@@ -61,29 +60,39 @@ def get_cellular_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiCellularAction | None:
+
+
+def get_cellular_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get cellular action by UUID
 
     Args:
@@ -94,7 +103,7 @@ def get_cellular_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -104,7 +113,7 @@ def get_cellular_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiC
                 uuid: str
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_by_uuid._get_kwargs(uuid=uuid)
@@ -121,17 +130,23 @@ def get_cellular_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiC
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_cellular_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiCellularAction]:
+
+
+def get_cellular_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get cellular action by UUID
 
     Args:
@@ -142,7 +157,7 @@ def get_cellular_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -152,7 +167,7 @@ def get_cellular_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: 
                 uuid: str
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_by_uuid._get_kwargs(uuid=uuid)
@@ -169,29 +184,39 @@ def get_cellular_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiCellularAction | None:
+
+
+def get_cellular_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get cellular action by UUID
 
     Args:
@@ -202,7 +227,7 @@ def get_cellular_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -212,7 +237,7 @@ def get_cellular_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> A
                 uuid: str
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_by_uuid._get_kwargs(uuid=uuid)
@@ -229,19 +254,23 @@ def get_cellular_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiCellularAction]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get unposted cellular actions for billing entity
 
     Args:
@@ -252,7 +281,7 @@ def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -262,7 +291,7 @@ def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_cellular_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -279,31 +308,39 @@ def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_cellular_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiCellularAction | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get unposted cellular actions for billing entity
 
     Args:
@@ -314,7 +351,7 @@ def get_unposted_cellular_actions_by_billing_entity_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -324,7 +361,7 @@ def get_unposted_cellular_actions_by_billing_entity_sync(
                 billing_entity_uuid: str
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_cellular_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -341,19 +378,23 @@ def get_unposted_cellular_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiCellularAction]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Get unposted cellular actions for billing entity
 
     Args:
@@ -364,7 +405,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -374,7 +415,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_cellular_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -391,31 +432,39 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_cellular_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiCellularAction | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Get unposted cellular actions for billing entity
 
     Args:
@@ -426,7 +475,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -436,7 +485,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_unposted_cellular_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -453,17 +502,22 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[ApiCellularAction]:
+
+
+def create_cellular_action_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create cellular action
 
     Args:
@@ -474,17 +528,17 @@ def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action._get_kwargs()
@@ -501,29 +555,38 @@ def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[Ap
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_cellular_action_sync(*, client: StolonClient) -> ApiCellularAction | None:
+
+
+def create_cellular_action_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create cellular action
 
     Args:
@@ -534,17 +597,17 @@ def create_cellular_action_sync(*, client: StolonClient) -> ApiCellularAction | 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action._get_kwargs()
@@ -561,17 +624,22 @@ def create_cellular_action_sync(*, client: StolonClient) -> ApiCellularAction | 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularAction]:
+
+
+def create_cellular_action_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create cellular action
 
     Args:
@@ -582,17 +650,17 @@ def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action._get_kwargs()
@@ -609,29 +677,38 @@ def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_cellular_action_asyncio(*, client: StolonClient) -> ApiCellularAction | None:
+
+
+def create_cellular_action_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create cellular action
 
     Args:
@@ -642,17 +719,17 @@ def create_cellular_action_asyncio(*, client: StolonClient) -> ApiCellularAction
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action._get_kwargs()
@@ -669,17 +746,22 @@ def create_cellular_action_asyncio(*, client: StolonClient) -> ApiCellularAction
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[ApiCellularAction]:
+
+
+def get_cellular_actions_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get cellular actions
 
     Args:
@@ -699,17 +781,17 @@ def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[ApiC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_actions._get_kwargs()
@@ -726,29 +808,38 @@ def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[ApiC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_actions_sync(*, client: StolonClient) -> ApiCellularAction | None:
+
+
+def get_cellular_actions_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get cellular actions
 
     Args:
@@ -768,17 +859,17 @@ def get_cellular_actions_sync(*, client: StolonClient) -> ApiCellularAction | No
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_actions._get_kwargs()
@@ -795,17 +886,22 @@ def get_cellular_actions_sync(*, client: StolonClient) -> ApiCellularAction | No
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularAction]:
+
+
+def get_cellular_actions_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get cellular actions
 
     Args:
@@ -825,17 +921,17 @@ def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularAction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_actions._get_kwargs()
@@ -852,29 +948,38 @@ def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularAction:
-        parsed = ApiCellularAction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_actions_asyncio(*, client: StolonClient) -> ApiCellularAction | None:
+
+
+def get_cellular_actions_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get cellular actions
 
     Args:
@@ -894,17 +999,17 @@ def get_cellular_actions_asyncio(*, client: StolonClient) -> ApiCellularAction |
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularAction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularAction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_actions._get_kwargs()
@@ -921,11 +1026,12 @@ def get_cellular_actions_asyncio(*, client: StolonClient) -> ApiCellularAction |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularAction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -6,66 +6,66 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import (
-    enqueue_backout_generate_invoices_job,
-    enqueue_backout_post_app_meter_actions_job,
-    enqueue_backout_post_app_sub_actions_job,
-    enqueue_backout_post_cellular_actions_job,
-    enqueue_backout_post_developer_revenue_actions_job,
-    enqueue_backout_post_misc_actions_job,
-    enqueue_backout_post_plan_actions_job,
-    enqueue_backout_post_reseller_revenue_actions_job,
-    enqueue_backout_settlement_export_job,
-    enqueue_backout_summarize_fees_job,
-    enqueue_backout_validate_cycle_job,
-    enqueue_delete_terms_for_closed_merchants_job,
-    enqueue_generate_developer_invoices_job,
-    enqueue_generate_fee_rate_error_report_developer_job,
-    enqueue_generate_fee_rate_error_report_merchant_job,
-    enqueue_generate_fee_rate_error_report_reseller_job,
-    enqueue_generate_merchant_invoices_job,
-    enqueue_generate_reseller_invoices_job,
-    enqueue_manage_documents_job,
-    enqueue_no_op_job,
-    enqueue_populate_developer_cycle_job,
-    enqueue_populate_merchant_cycle_job,
-    enqueue_populate_reseller_cycle_job,
-    enqueue_post_app_meter_actions_job,
-    enqueue_post_app_sub_actions_job,
-    enqueue_post_cellular_actions_job,
-    enqueue_post_developer_revenue_actions_job,
-    enqueue_post_misc_actions_job,
-    enqueue_post_plan_actions_job,
-    enqueue_post_reseller_revenue_actions_job,
-    enqueue_settlement_export_developer_job,
-    enqueue_settlement_export_merchant_job,
-    enqueue_settlement_export_reseller_job,
-    enqueue_summarize_developer_fees_job,
-    enqueue_summarize_merchant_fees_job,
-    enqueue_summarize_reseller_fees_job,
-    enqueue_sync_developers_job,
-    exec_advance_billing_date_job,
-    exec_advance_cycle_date_job,
-    exec_advance_posting_date_job,
-    exec_advance_settlement_date_job,
-    exec_validate_events_job,
-    exec_validate_invoiced_balances_job,
-    exec_validate_posted_actions_job,
-    exec_validate_settlement_balances_job,
-    exec_validate_summarized_balances_job,
-    kill_job,
-    query_job,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_job_response import ApiJobResponse
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_generate_invoices_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_app_meter_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_app_sub_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_cellular_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_developer_revenue_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_misc_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_plan_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_post_reseller_revenue_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_settlement_export_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_summarize_fees_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_backout_validate_cycle_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_delete_terms_for_closed_merchants_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_generate_developer_invoices_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_generate_fee_rate_error_report_developer_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_generate_fee_rate_error_report_merchant_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_generate_fee_rate_error_report_reseller_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_generate_merchant_invoices_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_generate_reseller_invoices_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_manage_documents_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_no_op_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_populate_developer_cycle_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_populate_merchant_cycle_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_populate_reseller_cycle_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_app_meter_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_app_sub_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_cellular_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_developer_revenue_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_misc_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_plan_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_post_reseller_revenue_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_settlement_export_developer_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_settlement_export_merchant_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_settlement_export_reseller_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_summarize_developer_fees_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_summarize_merchant_fees_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_summarize_reseller_fees_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import enqueue_sync_developers_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_advance_billing_date_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_advance_cycle_date_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_advance_posting_date_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_advance_settlement_date_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_validate_events_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_validate_invoiced_balances_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_validate_posted_actions_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_validate_settlement_balances_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import exec_validate_summarized_balances_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import kill_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.job_execution import query_job
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def exec_advance_posting_date_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def exec_advance_posting_date_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-posting-date job
 
     Args:
@@ -76,17 +76,17 @@ def exec_advance_posting_date_job_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_posting_date_job._get_kwargs()
@@ -103,29 +103,38 @@ def exec_advance_posting_date_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_posting_date_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_posting_date_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-posting-date job
 
     Args:
@@ -136,17 +145,17 @@ def exec_advance_posting_date_job_sync(*, client: StolonClient) -> ApiJobRespons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_posting_date_job._get_kwargs()
@@ -163,17 +172,22 @@ def exec_advance_posting_date_job_sync(*, client: StolonClient) -> ApiJobRespons
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_posting_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_posting_date_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-posting-date job
 
     Args:
@@ -184,17 +198,17 @@ def exec_advance_posting_date_job_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_posting_date_job._get_kwargs()
@@ -211,29 +225,38 @@ def exec_advance_posting_date_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_posting_date_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_posting_date_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-posting-date job
 
     Args:
@@ -244,17 +267,17 @@ def exec_advance_posting_date_job_asyncio(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_posting_date_job._get_kwargs()
@@ -271,17 +294,22 @@ def exec_advance_posting_date_job_asyncio(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_validate_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_validate_cycle_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -292,17 +320,17 @@ def enqueue_backout_validate_cycle_job_sync_detailed(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
@@ -319,29 +347,38 @@ def enqueue_backout_validate_cycle_job_sync_detailed(*, client: StolonClient) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_validate_cycle_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -352,17 +389,17 @@ def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient) -> ApiJobRe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
@@ -379,17 +416,22 @@ def enqueue_backout_validate_cycle_job_sync(*, client: StolonClient) -> ApiJobRe
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_validate_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_validate_cycle_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -400,17 +442,17 @@ def enqueue_backout_validate_cycle_job_asyncio_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
@@ -427,29 +469,38 @@ def enqueue_backout_validate_cycle_job_asyncio_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_validate_cycle_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_validate_cycle_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-validate-cycle job
 
     Args:
@@ -460,17 +511,17 @@ def enqueue_backout_validate_cycle_job_asyncio(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_validate_cycle_job._get_kwargs()
@@ -487,17 +538,22 @@ def enqueue_backout_validate_cycle_job_asyncio(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_billing_date_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_billing_date_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-billing-date job
 
     Args:
@@ -508,17 +564,17 @@ def exec_advance_billing_date_job_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_billing_date_job._get_kwargs()
@@ -535,29 +591,38 @@ def exec_advance_billing_date_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_billing_date_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_billing_date_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-billing-date job
 
     Args:
@@ -568,17 +633,17 @@ def exec_advance_billing_date_job_sync(*, client: StolonClient) -> ApiJobRespons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_billing_date_job._get_kwargs()
@@ -595,17 +660,22 @@ def exec_advance_billing_date_job_sync(*, client: StolonClient) -> ApiJobRespons
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_billing_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_billing_date_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-billing-date job
 
     Args:
@@ -616,17 +686,17 @@ def exec_advance_billing_date_job_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_billing_date_job._get_kwargs()
@@ -643,29 +713,38 @@ def exec_advance_billing_date_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_billing_date_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_billing_date_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-billing-date job
 
     Args:
@@ -676,17 +755,17 @@ def exec_advance_billing_date_job_asyncio(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_billing_date_job._get_kwargs()
@@ -703,17 +782,22 @@ def exec_advance_billing_date_job_asyncio(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_cellular_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -724,17 +808,17 @@ def enqueue_backout_post_cellular_actions_job_sync_detailed(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
@@ -751,29 +835,38 @@ def enqueue_backout_post_cellular_actions_job_sync_detailed(*, client: StolonCli
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_cellular_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_cellular_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -784,17 +877,17 @@ def enqueue_backout_post_cellular_actions_job_sync(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
@@ -811,17 +904,22 @@ def enqueue_backout_post_cellular_actions_job_sync(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_cellular_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -832,17 +930,17 @@ def enqueue_backout_post_cellular_actions_job_asyncio_detailed(*, client: Stolon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
@@ -859,29 +957,38 @@ def enqueue_backout_post_cellular_actions_job_asyncio_detailed(*, client: Stolon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_cellular_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_cellular_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-cellular-actions job
 
     Args:
@@ -892,17 +999,17 @@ def enqueue_backout_post_cellular_actions_job_asyncio(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_cellular_actions_job._get_kwargs()
@@ -919,17 +1026,22 @@ def enqueue_backout_post_cellular_actions_job_asyncio(*, client: StolonClient) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_summarize_fees_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_summarize_fees_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -940,17 +1052,17 @@ def enqueue_backout_summarize_fees_job_sync_detailed(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
@@ -967,29 +1079,38 @@ def enqueue_backout_summarize_fees_job_sync_detailed(*, client: StolonClient) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_summarize_fees_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -1000,17 +1121,17 @@ def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient) -> ApiJobRe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
@@ -1027,17 +1148,22 @@ def enqueue_backout_summarize_fees_job_sync(*, client: StolonClient) -> ApiJobRe
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_summarize_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_summarize_fees_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -1048,17 +1174,17 @@ def enqueue_backout_summarize_fees_job_asyncio_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
@@ -1075,29 +1201,38 @@ def enqueue_backout_summarize_fees_job_asyncio_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_summarize_fees_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_summarize_fees_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-summarize-fees job
 
     Args:
@@ -1108,17 +1243,17 @@ def enqueue_backout_summarize_fees_job_asyncio(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_summarize_fees_job._get_kwargs()
@@ -1135,17 +1270,22 @@ def enqueue_backout_summarize_fees_job_asyncio(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_app_meter_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1156,17 +1296,17 @@ def enqueue_backout_post_app_meter_actions_job_sync_detailed(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
@@ -1183,29 +1323,38 @@ def enqueue_backout_post_app_meter_actions_job_sync_detailed(*, client: StolonCl
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_app_meter_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_app_meter_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1216,17 +1365,17 @@ def enqueue_backout_post_app_meter_actions_job_sync(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
@@ -1243,17 +1392,22 @@ def enqueue_backout_post_app_meter_actions_job_sync(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1264,17 +1418,17 @@ def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(*, client: Stolo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
@@ -1291,29 +1445,38 @@ def enqueue_backout_post_app_meter_actions_job_asyncio_detailed(*, client: Stolo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_app_meter_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-app-meter-actions job
 
     Args:
@@ -1324,17 +1487,17 @@ def enqueue_backout_post_app_meter_actions_job_asyncio(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_meter_actions_job._get_kwargs()
@@ -1351,17 +1514,22 @@ def enqueue_backout_post_app_meter_actions_job_asyncio(*, client: StolonClient) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_summarize_developer_fees_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_summarize_developer_fees_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1372,17 +1540,17 @@ def enqueue_summarize_developer_fees_job_sync_detailed(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
@@ -1399,29 +1567,38 @@ def enqueue_summarize_developer_fees_job_sync_detailed(*, client: StolonClient) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_summarize_developer_fees_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_summarize_developer_fees_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1432,17 +1609,17 @@ def enqueue_summarize_developer_fees_job_sync(*, client: StolonClient) -> ApiJob
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
@@ -1459,17 +1636,22 @@ def enqueue_summarize_developer_fees_job_sync(*, client: StolonClient) -> ApiJob
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_summarize_developer_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_summarize_developer_fees_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1480,17 +1662,17 @@ def enqueue_summarize_developer_fees_job_asyncio_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
@@ -1507,29 +1689,38 @@ def enqueue_summarize_developer_fees_job_asyncio_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_summarize_developer_fees_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_summarize_developer_fees_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the summarize-developer-fees job
 
     Args:
@@ -1540,17 +1731,17 @@ def enqueue_summarize_developer_fees_job_asyncio(*, client: StolonClient) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_developer_fees_job._get_kwargs()
@@ -1567,17 +1758,22 @@ def enqueue_summarize_developer_fees_job_asyncio(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_cellular_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1588,17 +1784,17 @@ def enqueue_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_cellular_actions_job._get_kwargs()
@@ -1615,29 +1811,38 @@ def enqueue_post_cellular_actions_job_sync_detailed(*, client: StolonClient) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_cellular_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_cellular_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1648,17 +1853,17 @@ def enqueue_post_cellular_actions_job_sync(*, client: StolonClient) -> ApiJobRes
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_cellular_actions_job._get_kwargs()
@@ -1675,17 +1880,22 @@ def enqueue_post_cellular_actions_job_sync(*, client: StolonClient) -> ApiJobRes
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_cellular_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1696,17 +1906,17 @@ def enqueue_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_cellular_actions_job._get_kwargs()
@@ -1723,29 +1933,38 @@ def enqueue_post_cellular_actions_job_asyncio_detailed(*, client: StolonClient) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_cellular_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_cellular_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-cellular-actions job
 
     Args:
@@ -1756,17 +1975,17 @@ def enqueue_post_cellular_actions_job_asyncio(*, client: StolonClient) -> ApiJob
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_cellular_actions_job._get_kwargs()
@@ -1783,19 +2002,22 @@ def enqueue_post_cellular_actions_job_asyncio(*, client: StolonClient) -> ApiJob
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_generate_fee_rate_error_report_developer_job_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
     Args:
@@ -1806,17 +2028,17 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
@@ -1833,29 +2055,38 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_fee_rate_error_report_developer_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_fee_rate_error_report_developer_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
     Args:
@@ -1866,17 +2097,17 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
@@ -1893,19 +2124,22 @@ def enqueue_generate_fee_rate_error_report_developer_job_sync(*, client: StolonC
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_generate_fee_rate_error_report_developer_job_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
     Args:
@@ -1916,17 +2150,17 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
@@ -1943,29 +2177,38 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_fee_rate_error_report_developer_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_fee_rate_error_report_developer_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for developer actions
 
     Args:
@@ -1976,17 +2219,17 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio(*, client: Stol
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_developer_job._get_kwargs()
@@ -2003,19 +2246,22 @@ def enqueue_generate_fee_rate_error_report_developer_job_asyncio(*, client: Stol
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_generate_fee_rate_error_report_reseller_job_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
     Args:
@@ -2026,17 +2272,17 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
@@ -2053,29 +2299,38 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_fee_rate_error_report_reseller_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_fee_rate_error_report_reseller_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
     Args:
@@ -2086,17 +2341,17 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
@@ -2113,19 +2368,22 @@ def enqueue_generate_fee_rate_error_report_reseller_job_sync(*, client: StolonCl
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_generate_fee_rate_error_report_reseller_job_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
     Args:
@@ -2136,17 +2394,17 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
@@ -2163,29 +2421,38 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for reseller actions
 
     Args:
@@ -2196,17 +2463,17 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(*, client: Stolo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_reseller_job._get_kwargs()
@@ -2223,17 +2490,22 @@ def enqueue_generate_fee_rate_error_report_reseller_job_asyncio(*, client: Stolo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_generate_developer_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_generate_developer_invoices_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2244,17 +2516,17 @@ def enqueue_generate_developer_invoices_job_sync_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
@@ -2271,29 +2543,38 @@ def enqueue_generate_developer_invoices_job_sync_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_developer_invoices_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_developer_invoices_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2304,17 +2585,17 @@ def enqueue_generate_developer_invoices_job_sync(*, client: StolonClient) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
@@ -2331,17 +2612,22 @@ def enqueue_generate_developer_invoices_job_sync(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_generate_developer_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_generate_developer_invoices_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2352,17 +2638,17 @@ def enqueue_generate_developer_invoices_job_asyncio_detailed(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
@@ -2379,29 +2665,38 @@ def enqueue_generate_developer_invoices_job_asyncio_detailed(*, client: StolonCl
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_developer_invoices_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_developer_invoices_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-invoices for developers job
 
     Args:
@@ -2412,17 +2707,17 @@ def enqueue_generate_developer_invoices_job_asyncio(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_developer_invoices_job._get_kwargs()
@@ -2439,17 +2734,22 @@ def enqueue_generate_developer_invoices_job_asyncio(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_reseller_revenue_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2460,17 +2760,17 @@ def enqueue_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
@@ -2487,29 +2787,38 @@ def enqueue_post_reseller_revenue_actions_job_sync_detailed(*, client: StolonCli
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_reseller_revenue_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2520,17 +2829,17 @@ def enqueue_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
@@ -2547,17 +2856,22 @@ def enqueue_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2568,17 +2882,17 @@ def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(*, client: Stolon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
@@ -2595,29 +2909,38 @@ def enqueue_post_reseller_revenue_actions_job_asyncio_detailed(*, client: Stolon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_reseller_revenue_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-reseller-revenue-actions job
 
     Args:
@@ -2628,17 +2951,17 @@ def enqueue_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_reseller_revenue_actions_job._get_kwargs()
@@ -2655,17 +2978,22 @@ def enqueue_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_posted_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_posted_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2676,17 +3004,17 @@ def exec_validate_posted_actions_job_sync_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_posted_actions_job._get_kwargs()
@@ -2703,29 +3031,38 @@ def exec_validate_posted_actions_job_sync_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_posted_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_posted_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2736,17 +3073,17 @@ def exec_validate_posted_actions_job_sync(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_posted_actions_job._get_kwargs()
@@ -2763,17 +3100,22 @@ def exec_validate_posted_actions_job_sync(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_posted_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_posted_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2784,17 +3126,17 @@ def exec_validate_posted_actions_job_asyncio_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_posted_actions_job._get_kwargs()
@@ -2811,29 +3153,38 @@ def exec_validate_posted_actions_job_asyncio_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_posted_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_posted_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-posted-actions job
 
     Args:
@@ -2844,17 +3195,17 @@ def exec_validate_posted_actions_job_asyncio(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_posted_actions_job._get_kwargs()
@@ -2871,17 +3222,22 @@ def exec_validate_posted_actions_job_asyncio(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_misc_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -2892,17 +3248,17 @@ def enqueue_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_misc_actions_job._get_kwargs()
@@ -2919,29 +3275,38 @@ def enqueue_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_misc_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_misc_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -2952,17 +3317,17 @@ def enqueue_post_misc_actions_job_sync(*, client: StolonClient) -> ApiJobRespons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_misc_actions_job._get_kwargs()
@@ -2979,17 +3344,22 @@ def enqueue_post_misc_actions_job_sync(*, client: StolonClient) -> ApiJobRespons
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_misc_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -3000,17 +3370,17 @@ def enqueue_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_misc_actions_job._get_kwargs()
@@ -3027,29 +3397,38 @@ def enqueue_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_misc_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_misc_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-misc-actions job
 
     Args:
@@ -3060,17 +3439,17 @@ def enqueue_post_misc_actions_job_asyncio(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_misc_actions_job._get_kwargs()
@@ -3087,17 +3466,22 @@ def enqueue_post_misc_actions_job_asyncio(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_plan_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3108,17 +3492,17 @@ def enqueue_backout_post_plan_actions_job_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
@@ -3135,29 +3519,38 @@ def enqueue_backout_post_plan_actions_job_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_plan_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_plan_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3168,17 +3561,17 @@ def enqueue_backout_post_plan_actions_job_sync(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
@@ -3195,17 +3588,22 @@ def enqueue_backout_post_plan_actions_job_sync(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_plan_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3216,17 +3614,17 @@ def enqueue_backout_post_plan_actions_job_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
@@ -3243,29 +3641,38 @@ def enqueue_backout_post_plan_actions_job_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_plan_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_plan_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-plan-actions job
 
     Args:
@@ -3276,17 +3683,17 @@ def enqueue_backout_post_plan_actions_job_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_plan_actions_job._get_kwargs()
@@ -3303,17 +3710,22 @@ def enqueue_backout_post_plan_actions_job_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_settlement_export_merchant_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_settlement_export_merchant_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3324,17 +3736,17 @@ def enqueue_settlement_export_merchant_job_sync_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
@@ -3351,29 +3763,38 @@ def enqueue_settlement_export_merchant_job_sync_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_settlement_export_merchant_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_settlement_export_merchant_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3384,17 +3805,17 @@ def enqueue_settlement_export_merchant_job_sync(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
@@ -3411,17 +3832,22 @@ def enqueue_settlement_export_merchant_job_sync(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_settlement_export_merchant_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_settlement_export_merchant_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3432,17 +3858,17 @@ def enqueue_settlement_export_merchant_job_asyncio_detailed(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
@@ -3459,29 +3885,38 @@ def enqueue_settlement_export_merchant_job_asyncio_detailed(*, client: StolonCli
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_settlement_export_merchant_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_settlement_export_merchant_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the settlement-export for merchants job
 
     Args:
@@ -3492,17 +3927,17 @@ def enqueue_settlement_export_merchant_job_asyncio(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_merchant_job._get_kwargs()
@@ -3519,17 +3954,23 @@ def enqueue_settlement_export_merchant_job_asyncio(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def kill_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
+
+
+def kill_job_sync_detailed(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> Response[ResponseError]:
     """Request to prematurely terminate, or kill, the specified job execution
 
     Args:
@@ -3540,7 +3981,7 @@ def kill_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3550,7 +3991,7 @@ def kill_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Respon
                 request_uuid: str
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = kill_job._get_kwargs(request_uuid=request_uuid)
@@ -3567,29 +4008,39 @@ def kill_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def kill_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
+
+
+def kill_job_sync(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> ResponseError | None:
     """Request to prematurely terminate, or kill, the specified job execution
 
     Args:
@@ -3600,7 +4051,7 @@ def kill_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3610,7 +4061,7 @@ def kill_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse 
                 request_uuid: str
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = kill_job._get_kwargs(request_uuid=request_uuid)
@@ -3627,17 +4078,23 @@ def kill_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def kill_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
+
+
+def kill_job_asyncio_detailed(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> Response[ResponseError]:
     """Request to prematurely terminate, or kill, the specified job execution
 
     Args:
@@ -3648,7 +4105,7 @@ def kill_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3658,7 +4115,7 @@ def kill_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Res
                 request_uuid: str
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = kill_job._get_kwargs(request_uuid=request_uuid)
@@ -3675,29 +4132,39 @@ def kill_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
+
+
+def kill_job_asyncio(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> ResponseError | None:
     """Request to prematurely terminate, or kill, the specified job execution
 
     Args:
@@ -3708,7 +4175,7 @@ def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -3718,7 +4185,7 @@ def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespon
                 request_uuid: str
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = kill_job._get_kwargs(request_uuid=request_uuid)
@@ -3735,17 +4202,22 @@ def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespon
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_populate_reseller_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_populate_reseller_cycle_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3756,17 +4228,17 @@ def enqueue_populate_reseller_cycle_job_sync_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
@@ -3783,29 +4255,38 @@ def enqueue_populate_reseller_cycle_job_sync_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_populate_reseller_cycle_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_populate_reseller_cycle_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3816,17 +4297,17 @@ def enqueue_populate_reseller_cycle_job_sync(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
@@ -3843,17 +4324,22 @@ def enqueue_populate_reseller_cycle_job_sync(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_populate_reseller_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_populate_reseller_cycle_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3864,17 +4350,17 @@ def enqueue_populate_reseller_cycle_job_asyncio_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
@@ -3891,29 +4377,38 @@ def enqueue_populate_reseller_cycle_job_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_populate_reseller_cycle_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_populate_reseller_cycle_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for resellers
 
     Args:
@@ -3924,17 +4419,17 @@ def enqueue_populate_reseller_cycle_job_asyncio(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_reseller_cycle_job._get_kwargs()
@@ -3951,17 +4446,22 @@ def enqueue_populate_reseller_cycle_job_asyncio(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_app_sub_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -3972,17 +4472,17 @@ def enqueue_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
@@ -3999,29 +4499,38 @@ def enqueue_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_app_sub_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_app_sub_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4032,17 +4541,17 @@ def enqueue_post_app_sub_actions_job_sync(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
@@ -4059,17 +4568,22 @@ def enqueue_post_app_sub_actions_job_sync(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_app_sub_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4080,17 +4594,17 @@ def enqueue_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
@@ -4107,29 +4621,38 @@ def enqueue_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_app_sub_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-app-subscription-actions job
 
     Args:
@@ -4140,17 +4663,17 @@ def enqueue_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_sub_actions_job._get_kwargs()
@@ -4167,17 +4690,22 @@ def enqueue_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_cycle_date_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_cycle_date_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4188,17 +4716,17 @@ def exec_advance_cycle_date_job_sync_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_cycle_date_job._get_kwargs()
@@ -4215,29 +4743,38 @@ def exec_advance_cycle_date_job_sync_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_cycle_date_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_cycle_date_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4248,17 +4785,17 @@ def exec_advance_cycle_date_job_sync(*, client: StolonClient) -> ApiJobResponse 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_cycle_date_job._get_kwargs()
@@ -4275,17 +4812,22 @@ def exec_advance_cycle_date_job_sync(*, client: StolonClient) -> ApiJobResponse 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_cycle_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_cycle_date_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4296,17 +4838,17 @@ def exec_advance_cycle_date_job_asyncio_detailed(*, client: StolonClient) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_cycle_date_job._get_kwargs()
@@ -4323,29 +4865,38 @@ def exec_advance_cycle_date_job_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_cycle_date_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_cycle_date_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-cycle-date job
 
     Args:
@@ -4356,17 +4907,17 @@ def exec_advance_cycle_date_job_asyncio(*, client: StolonClient) -> ApiJobRespon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_cycle_date_job._get_kwargs()
@@ -4383,17 +4934,22 @@ def exec_advance_cycle_date_job_asyncio(*, client: StolonClient) -> ApiJobRespon
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_settlement_export_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_settlement_export_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4404,17 +4960,17 @@ def enqueue_backout_settlement_export_job_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_settlement_export_job._get_kwargs()
@@ -4431,29 +4987,38 @@ def enqueue_backout_settlement_export_job_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_settlement_export_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_settlement_export_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4464,17 +5029,17 @@ def enqueue_backout_settlement_export_job_sync(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_settlement_export_job._get_kwargs()
@@ -4491,17 +5056,22 @@ def enqueue_backout_settlement_export_job_sync(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_settlement_export_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_settlement_export_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4512,17 +5082,17 @@ def enqueue_backout_settlement_export_job_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_settlement_export_job._get_kwargs()
@@ -4539,29 +5109,38 @@ def enqueue_backout_settlement_export_job_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_settlement_export_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_settlement_export_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-settlement-export job
 
     Args:
@@ -4572,17 +5151,17 @@ def enqueue_backout_settlement_export_job_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_settlement_export_job._get_kwargs()
@@ -4599,17 +5178,22 @@ def enqueue_backout_settlement_export_job_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_developer_revenue_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_developer_revenue_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4620,17 +5204,17 @@ def enqueue_post_developer_revenue_actions_job_sync_detailed(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
@@ -4647,29 +5231,38 @@ def enqueue_post_developer_revenue_actions_job_sync_detailed(*, client: StolonCl
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_developer_revenue_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4680,17 +5273,17 @@ def enqueue_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
@@ -4707,17 +5300,22 @@ def enqueue_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_developer_revenue_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_developer_revenue_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4728,17 +5326,17 @@ def enqueue_post_developer_revenue_actions_job_asyncio_detailed(*, client: Stolo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
@@ -4755,29 +5353,38 @@ def enqueue_post_developer_revenue_actions_job_asyncio_detailed(*, client: Stolo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_developer_revenue_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-developer-revenue-actions job
 
     Args:
@@ -4788,17 +5395,17 @@ def enqueue_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_developer_revenue_actions_job._get_kwargs()
@@ -4815,17 +5422,22 @@ def enqueue_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_populate_developer_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_populate_developer_cycle_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -4836,17 +5448,17 @@ def enqueue_populate_developer_cycle_job_sync_detailed(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
@@ -4863,29 +5475,38 @@ def enqueue_populate_developer_cycle_job_sync_detailed(*, client: StolonClient) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_populate_developer_cycle_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_populate_developer_cycle_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -4896,17 +5517,17 @@ def enqueue_populate_developer_cycle_job_sync(*, client: StolonClient) -> ApiJob
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
@@ -4923,17 +5544,22 @@ def enqueue_populate_developer_cycle_job_sync(*, client: StolonClient) -> ApiJob
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_populate_developer_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_populate_developer_cycle_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -4944,17 +5570,17 @@ def enqueue_populate_developer_cycle_job_asyncio_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
@@ -4971,29 +5597,38 @@ def enqueue_populate_developer_cycle_job_asyncio_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_populate_developer_cycle_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_populate_developer_cycle_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for developers
 
     Args:
@@ -5004,17 +5639,17 @@ def enqueue_populate_developer_cycle_job_asyncio(*, client: StolonClient) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_developer_cycle_job._get_kwargs()
@@ -5031,17 +5666,22 @@ def enqueue_populate_developer_cycle_job_asyncio(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_events_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-events job
 
     Args:
@@ -5052,17 +5692,17 @@ def exec_validate_events_job_sync_detailed(*, client: StolonClient) -> Response[
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_events_job._get_kwargs()
@@ -5079,29 +5719,38 @@ def exec_validate_events_job_sync_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_events_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-events job
 
     Args:
@@ -5112,17 +5761,17 @@ def exec_validate_events_job_sync(*, client: StolonClient) -> ApiJobResponse | N
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_events_job._get_kwargs()
@@ -5139,17 +5788,22 @@ def exec_validate_events_job_sync(*, client: StolonClient) -> ApiJobResponse | N
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_events_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-events job
 
     Args:
@@ -5160,17 +5814,17 @@ def exec_validate_events_job_asyncio_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_events_job._get_kwargs()
@@ -5187,29 +5841,38 @@ def exec_validate_events_job_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_events_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-events job
 
     Args:
@@ -5220,17 +5883,17 @@ def exec_validate_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_events_job._get_kwargs()
@@ -5247,17 +5910,22 @@ def exec_validate_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_generate_merchant_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_generate_merchant_invoices_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5268,17 +5936,17 @@ def enqueue_generate_merchant_invoices_job_sync_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
@@ -5295,29 +5963,38 @@ def enqueue_generate_merchant_invoices_job_sync_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_merchant_invoices_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_merchant_invoices_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5328,17 +6005,17 @@ def enqueue_generate_merchant_invoices_job_sync(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
@@ -5355,17 +6032,22 @@ def enqueue_generate_merchant_invoices_job_sync(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_generate_merchant_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_generate_merchant_invoices_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5376,17 +6058,17 @@ def enqueue_generate_merchant_invoices_job_asyncio_detailed(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
@@ -5403,29 +6085,38 @@ def enqueue_generate_merchant_invoices_job_asyncio_detailed(*, client: StolonCli
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_merchant_invoices_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_merchant_invoices_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-invoices for merchants job
 
     Args:
@@ -5436,17 +6127,17 @@ def enqueue_generate_merchant_invoices_job_asyncio(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_merchant_invoices_job._get_kwargs()
@@ -5463,17 +6154,22 @@ def enqueue_generate_merchant_invoices_job_asyncio(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_sync_developers_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_sync_developers_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5484,17 +6180,17 @@ def enqueue_sync_developers_job_sync_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_sync_developers_job._get_kwargs()
@@ -5511,29 +6207,38 @@ def enqueue_sync_developers_job_sync_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_sync_developers_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_sync_developers_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5544,17 +6249,17 @@ def enqueue_sync_developers_job_sync(*, client: StolonClient) -> ApiJobResponse 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_sync_developers_job._get_kwargs()
@@ -5571,17 +6276,22 @@ def enqueue_sync_developers_job_sync(*, client: StolonClient) -> ApiJobResponse 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_sync_developers_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_sync_developers_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5592,17 +6302,17 @@ def enqueue_sync_developers_job_asyncio_detailed(*, client: StolonClient) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_sync_developers_job._get_kwargs()
@@ -5619,29 +6329,38 @@ def enqueue_sync_developers_job_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_sync_developers_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_sync_developers_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the Sync COS developers with Bookkeeper job
 
     Args:
@@ -5652,17 +6371,17 @@ def enqueue_sync_developers_job_asyncio(*, client: StolonClient) -> ApiJobRespon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_sync_developers_job._get_kwargs()
@@ -5679,19 +6398,22 @@ def enqueue_sync_developers_job_asyncio(*, client: StolonClient) -> ApiJobRespon
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5702,17 +6424,17 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
@@ -5729,29 +6451,38 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_reseller_revenue_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_reseller_revenue_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5762,17 +6493,17 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
@@ -5789,19 +6520,22 @@ def enqueue_backout_post_reseller_revenue_actions_job_sync(*, client: StolonClie
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_backout_post_reseller_revenue_actions_job_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5812,17 +6546,17 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
@@ -5839,29 +6573,38 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_reseller_revenue_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_reseller_revenue_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-reseller-revenue-actions job
 
     Args:
@@ -5872,17 +6615,17 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_reseller_revenue_actions_job._get_kwargs()
@@ -5899,17 +6642,22 @@ def enqueue_backout_post_reseller_revenue_actions_job_asyncio(*, client: StolonC
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_app_meter_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -5920,17 +6668,17 @@ def enqueue_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
@@ -5947,29 +6695,38 @@ def enqueue_post_app_meter_actions_job_sync_detailed(*, client: StolonClient) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_app_meter_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_app_meter_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -5980,17 +6737,17 @@ def enqueue_post_app_meter_actions_job_sync(*, client: StolonClient) -> ApiJobRe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
@@ -6007,17 +6764,22 @@ def enqueue_post_app_meter_actions_job_sync(*, client: StolonClient) -> ApiJobRe
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_app_meter_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -6028,17 +6790,17 @@ def enqueue_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
@@ -6055,29 +6817,38 @@ def enqueue_post_app_meter_actions_job_asyncio_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_app_meter_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-app-metered-actions job
 
     Args:
@@ -6088,17 +6859,17 @@ def enqueue_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_app_meter_actions_job._get_kwargs()
@@ -6115,17 +6886,22 @@ def enqueue_post_app_meter_actions_job_asyncio(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_summarized_balances_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_summarized_balances_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6136,17 +6912,17 @@ def exec_validate_summarized_balances_job_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_summarized_balances_job._get_kwargs()
@@ -6163,29 +6939,38 @@ def exec_validate_summarized_balances_job_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_summarized_balances_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_summarized_balances_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6196,17 +6981,17 @@ def exec_validate_summarized_balances_job_sync(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_summarized_balances_job._get_kwargs()
@@ -6223,17 +7008,22 @@ def exec_validate_summarized_balances_job_sync(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_summarized_balances_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_summarized_balances_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6244,17 +7034,17 @@ def exec_validate_summarized_balances_job_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_summarized_balances_job._get_kwargs()
@@ -6271,29 +7061,38 @@ def exec_validate_summarized_balances_job_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_summarized_balances_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_summarized_balances_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-summarized-balances job
 
     Args:
@@ -6304,17 +7103,17 @@ def exec_validate_summarized_balances_job_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_summarized_balances_job._get_kwargs()
@@ -6331,17 +7130,23 @@ def exec_validate_summarized_balances_job_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def query_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
+
+
+def query_job_sync_detailed(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> Response[ResponseError]:
     """Get the current state of a job execution request
 
     Args:
@@ -6352,7 +7157,7 @@ def query_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -6362,7 +7167,7 @@ def query_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Respo
                 request_uuid: str
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = query_job._get_kwargs(request_uuid=request_uuid)
@@ -6379,29 +7184,39 @@ def query_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def query_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
+
+
+def query_job_sync(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> ResponseError | None:
     """Get the current state of a job execution request
 
     Args:
@@ -6412,7 +7227,7 @@ def query_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -6422,7 +7237,7 @@ def query_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse
                 request_uuid: str
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = query_job._get_kwargs(request_uuid=request_uuid)
@@ -6439,17 +7254,23 @@ def query_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def query_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
+
+
+def query_job_asyncio_detailed(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> Response[ResponseError]:
     """Get the current state of a job execution request
 
     Args:
@@ -6460,7 +7281,7 @@ def query_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Re
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -6470,7 +7291,7 @@ def query_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Re
                 request_uuid: str
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = query_job._get_kwargs(request_uuid=request_uuid)
@@ -6487,29 +7308,39 @@ def query_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
+
+
+def query_job_asyncio(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> ResponseError | None:
     """Get the current state of a job execution request
 
     Args:
@@ -6520,7 +7351,7 @@ def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -6530,7 +7361,7 @@ def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespo
                 request_uuid: str
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = query_job._get_kwargs(request_uuid=request_uuid)
@@ -6547,17 +7378,22 @@ def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_manage_documents_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_manage_documents_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the manage-documents job
 
     Args:
@@ -6568,17 +7404,17 @@ def enqueue_manage_documents_job_sync_detailed(*, client: StolonClient) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_manage_documents_job._get_kwargs()
@@ -6595,29 +7431,38 @@ def enqueue_manage_documents_job_sync_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_manage_documents_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_manage_documents_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the manage-documents job
 
     Args:
@@ -6628,17 +7473,17 @@ def enqueue_manage_documents_job_sync(*, client: StolonClient) -> ApiJobResponse
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_manage_documents_job._get_kwargs()
@@ -6655,17 +7500,22 @@ def enqueue_manage_documents_job_sync(*, client: StolonClient) -> ApiJobResponse
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_manage_documents_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_manage_documents_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the manage-documents job
 
     Args:
@@ -6676,17 +7526,17 @@ def enqueue_manage_documents_job_asyncio_detailed(*, client: StolonClient) -> Re
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_manage_documents_job._get_kwargs()
@@ -6703,29 +7553,38 @@ def enqueue_manage_documents_job_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_manage_documents_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_manage_documents_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the manage-documents job
 
     Args:
@@ -6736,17 +7595,17 @@ def enqueue_manage_documents_job_asyncio(*, client: StolonClient) -> ApiJobRespo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_manage_documents_job._get_kwargs()
@@ -6763,17 +7622,22 @@ def enqueue_manage_documents_job_asyncio(*, client: StolonClient) -> ApiJobRespo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_misc_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_misc_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -6784,17 +7648,17 @@ def enqueue_backout_post_misc_actions_job_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
@@ -6811,29 +7675,38 @@ def enqueue_backout_post_misc_actions_job_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_misc_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_misc_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -6844,17 +7717,17 @@ def enqueue_backout_post_misc_actions_job_sync(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
@@ -6871,17 +7744,22 @@ def enqueue_backout_post_misc_actions_job_sync(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_misc_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_misc_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -6892,17 +7770,17 @@ def enqueue_backout_post_misc_actions_job_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
@@ -6919,29 +7797,38 @@ def enqueue_backout_post_misc_actions_job_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_misc_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_misc_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-misc-actions job
 
     Args:
@@ -6952,17 +7839,17 @@ def enqueue_backout_post_misc_actions_job_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_misc_actions_job._get_kwargs()
@@ -6979,17 +7866,22 @@ def enqueue_backout_post_misc_actions_job_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_app_sub_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_app_sub_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7000,17 +7892,17 @@ def enqueue_backout_post_app_sub_actions_job_sync_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
@@ -7027,29 +7919,38 @@ def enqueue_backout_post_app_sub_actions_job_sync_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_app_sub_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_app_sub_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7060,17 +7961,17 @@ def enqueue_backout_post_app_sub_actions_job_sync(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
@@ -7087,17 +7988,22 @@ def enqueue_backout_post_app_sub_actions_job_sync(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7108,17 +8014,17 @@ def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(*, client: StolonC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
@@ -7135,29 +8041,38 @@ def enqueue_backout_post_app_sub_actions_job_asyncio_detailed(*, client: StolonC
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_app_sub_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_app_sub_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-app-sub-actions job
 
     Args:
@@ -7168,17 +8083,17 @@ def enqueue_backout_post_app_sub_actions_job_asyncio(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_app_sub_actions_job._get_kwargs()
@@ -7195,17 +8110,22 @@ def enqueue_backout_post_app_sub_actions_job_asyncio(*, client: StolonClient) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_plan_actions_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7216,17 +8136,17 @@ def enqueue_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_plan_actions_job._get_kwargs()
@@ -7243,29 +8163,38 @@ def enqueue_post_plan_actions_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_plan_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_plan_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7276,17 +8205,17 @@ def enqueue_post_plan_actions_job_sync(*, client: StolonClient) -> ApiJobRespons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_plan_actions_job._get_kwargs()
@@ -7303,17 +8232,22 @@ def enqueue_post_plan_actions_job_sync(*, client: StolonClient) -> ApiJobRespons
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_post_plan_actions_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7324,17 +8258,17 @@ def enqueue_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_plan_actions_job._get_kwargs()
@@ -7351,29 +8285,38 @@ def enqueue_post_plan_actions_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_post_plan_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_post_plan_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the post-plan-actions job
 
     Args:
@@ -7384,17 +8327,17 @@ def enqueue_post_plan_actions_job_asyncio(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_post_plan_actions_job._get_kwargs()
@@ -7411,17 +8354,22 @@ def enqueue_post_plan_actions_job_asyncio(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_settlement_export_developer_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_settlement_export_developer_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7432,17 +8380,17 @@ def enqueue_settlement_export_developer_job_sync_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_developer_job._get_kwargs()
@@ -7459,29 +8407,38 @@ def enqueue_settlement_export_developer_job_sync_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_settlement_export_developer_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_settlement_export_developer_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7492,17 +8449,17 @@ def enqueue_settlement_export_developer_job_sync(*, client: StolonClient) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_developer_job._get_kwargs()
@@ -7519,17 +8476,22 @@ def enqueue_settlement_export_developer_job_sync(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_settlement_export_developer_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_settlement_export_developer_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7540,17 +8502,17 @@ def enqueue_settlement_export_developer_job_asyncio_detailed(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_developer_job._get_kwargs()
@@ -7567,29 +8529,38 @@ def enqueue_settlement_export_developer_job_asyncio_detailed(*, client: StolonCl
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_settlement_export_developer_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_settlement_export_developer_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the settlement-export for developers job
 
     Args:
@@ -7600,17 +8571,17 @@ def enqueue_settlement_export_developer_job_asyncio(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_developer_job._get_kwargs()
@@ -7627,17 +8598,22 @@ def enqueue_settlement_export_developer_job_asyncio(*, client: StolonClient) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_settlement_balances_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_settlement_balances_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7648,17 +8624,17 @@ def exec_validate_settlement_balances_job_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_settlement_balances_job._get_kwargs()
@@ -7675,29 +8651,38 @@ def exec_validate_settlement_balances_job_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_settlement_balances_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_settlement_balances_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7708,17 +8693,17 @@ def exec_validate_settlement_balances_job_sync(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_settlement_balances_job._get_kwargs()
@@ -7735,17 +8720,22 @@ def exec_validate_settlement_balances_job_sync(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_settlement_balances_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_settlement_balances_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7756,17 +8746,17 @@ def exec_validate_settlement_balances_job_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_settlement_balances_job._get_kwargs()
@@ -7783,29 +8773,38 @@ def exec_validate_settlement_balances_job_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_settlement_balances_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_settlement_balances_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-settlement-balances job
 
     Args:
@@ -7816,17 +8815,17 @@ def exec_validate_settlement_balances_job_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_settlement_balances_job._get_kwargs()
@@ -7843,17 +8842,22 @@ def exec_validate_settlement_balances_job_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_summarize_merchant_fees_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_summarize_merchant_fees_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -7864,17 +8868,17 @@ def enqueue_summarize_merchant_fees_job_sync_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
@@ -7891,29 +8895,38 @@ def enqueue_summarize_merchant_fees_job_sync_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_summarize_merchant_fees_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_summarize_merchant_fees_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -7924,17 +8937,17 @@ def enqueue_summarize_merchant_fees_job_sync(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
@@ -7951,17 +8964,22 @@ def enqueue_summarize_merchant_fees_job_sync(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_summarize_merchant_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_summarize_merchant_fees_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -7972,17 +8990,17 @@ def enqueue_summarize_merchant_fees_job_asyncio_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
@@ -7999,29 +9017,38 @@ def enqueue_summarize_merchant_fees_job_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_summarize_merchant_fees_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_summarize_merchant_fees_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the summarize-merchant-fees job
 
     Args:
@@ -8032,17 +9059,17 @@ def enqueue_summarize_merchant_fees_job_asyncio(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_merchant_fees_job._get_kwargs()
@@ -8059,17 +9086,22 @@ def enqueue_summarize_merchant_fees_job_asyncio(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_settlement_date_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_settlement_date_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8080,17 +9112,17 @@ def exec_advance_settlement_date_job_sync_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_settlement_date_job._get_kwargs()
@@ -8107,29 +9139,38 @@ def exec_advance_settlement_date_job_sync_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_settlement_date_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_settlement_date_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8140,17 +9181,17 @@ def exec_advance_settlement_date_job_sync(*, client: StolonClient) -> ApiJobResp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_settlement_date_job._get_kwargs()
@@ -8167,17 +9208,22 @@ def exec_advance_settlement_date_job_sync(*, client: StolonClient) -> ApiJobResp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_advance_settlement_date_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_advance_settlement_date_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8188,17 +9234,17 @@ def exec_advance_settlement_date_job_asyncio_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_settlement_date_job._get_kwargs()
@@ -8215,29 +9261,38 @@ def exec_advance_settlement_date_job_asyncio_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_advance_settlement_date_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_advance_settlement_date_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the advance-settlement-date job
 
     Args:
@@ -8248,17 +9303,17 @@ def exec_advance_settlement_date_job_asyncio(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_advance_settlement_date_job._get_kwargs()
@@ -8275,17 +9330,22 @@ def exec_advance_settlement_date_job_asyncio(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_no_op_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8296,17 +9356,17 @@ def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_no_op_job._get_kwargs()
@@ -8323,29 +9383,38 @@ def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobR
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_no_op_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8356,17 +9425,17 @@ def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_no_op_job._get_kwargs()
@@ -8383,17 +9452,22 @@ def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_no_op_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8404,17 +9478,17 @@ def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_no_op_job._get_kwargs()
@@ -8431,29 +9505,38 @@ def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJ
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_no_op_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the no-op job for execution
 
     Args:
@@ -8464,17 +9547,17 @@ def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_no_op_job._get_kwargs()
@@ -8491,17 +9574,22 @@ def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_settlement_export_reseller_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_settlement_export_reseller_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8512,17 +9600,17 @@ def enqueue_settlement_export_reseller_job_sync_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
@@ -8539,29 +9627,38 @@ def enqueue_settlement_export_reseller_job_sync_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_settlement_export_reseller_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_settlement_export_reseller_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8572,17 +9669,17 @@ def enqueue_settlement_export_reseller_job_sync(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
@@ -8599,17 +9696,22 @@ def enqueue_settlement_export_reseller_job_sync(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_settlement_export_reseller_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_settlement_export_reseller_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8620,17 +9722,17 @@ def enqueue_settlement_export_reseller_job_asyncio_detailed(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
@@ -8647,29 +9749,38 @@ def enqueue_settlement_export_reseller_job_asyncio_detailed(*, client: StolonCli
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_settlement_export_reseller_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_settlement_export_reseller_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the settlement-export for resellers job
 
     Args:
@@ -8680,17 +9791,17 @@ def enqueue_settlement_export_reseller_job_asyncio(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_settlement_export_reseller_job._get_kwargs()
@@ -8707,17 +9818,22 @@ def enqueue_settlement_export_reseller_job_asyncio(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_summarize_reseller_fees_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_summarize_reseller_fees_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -8728,17 +9844,17 @@ def enqueue_summarize_reseller_fees_job_sync_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
@@ -8755,29 +9871,38 @@ def enqueue_summarize_reseller_fees_job_sync_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_summarize_reseller_fees_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_summarize_reseller_fees_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -8788,17 +9913,17 @@ def enqueue_summarize_reseller_fees_job_sync(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
@@ -8815,17 +9940,22 @@ def enqueue_summarize_reseller_fees_job_sync(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_summarize_reseller_fees_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_summarize_reseller_fees_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -8836,17 +9966,17 @@ def enqueue_summarize_reseller_fees_job_asyncio_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
@@ -8863,29 +9993,38 @@ def enqueue_summarize_reseller_fees_job_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_summarize_reseller_fees_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_summarize_reseller_fees_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the summarize-reseller-fees job
 
     Args:
@@ -8896,17 +10035,17 @@ def enqueue_summarize_reseller_fees_job_asyncio(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_summarize_reseller_fees_job._get_kwargs()
@@ -8923,17 +10062,22 @@ def enqueue_summarize_reseller_fees_job_asyncio(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_invoiced_balances_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_invoiced_balances_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -8944,17 +10088,17 @@ def exec_validate_invoiced_balances_job_sync_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_invoiced_balances_job._get_kwargs()
@@ -8971,29 +10115,38 @@ def exec_validate_invoiced_balances_job_sync_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_invoiced_balances_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_invoiced_balances_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9004,17 +10157,17 @@ def exec_validate_invoiced_balances_job_sync(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_invoiced_balances_job._get_kwargs()
@@ -9031,17 +10184,22 @@ def exec_validate_invoiced_balances_job_sync(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def exec_validate_invoiced_balances_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def exec_validate_invoiced_balances_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9052,17 +10210,17 @@ def exec_validate_invoiced_balances_job_asyncio_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_invoiced_balances_job._get_kwargs()
@@ -9079,29 +10237,38 @@ def exec_validate_invoiced_balances_job_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def exec_validate_invoiced_balances_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def exec_validate_invoiced_balances_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Executes the validate-invoiced-balances job
 
     Args:
@@ -9112,17 +10279,17 @@ def exec_validate_invoiced_balances_job_asyncio(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = exec_validate_invoiced_balances_job._get_kwargs()
@@ -9139,19 +10306,22 @@ def exec_validate_invoiced_balances_job_asyncio(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_generate_fee_rate_error_report_merchant_job_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
     Args:
@@ -9162,17 +10332,17 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
@@ -9189,29 +10359,38 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_fee_rate_error_report_merchant_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_fee_rate_error_report_merchant_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
     Args:
@@ -9222,17 +10401,17 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync(*, client: StolonCl
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
@@ -9249,19 +10428,22 @@ def enqueue_generate_fee_rate_error_report_merchant_job_sync(*, client: StolonCl
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_generate_fee_rate_error_report_merchant_job_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
     Args:
@@ -9272,17 +10454,17 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
@@ -9299,29 +10481,38 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-fee-rate-error-report job for merchant actions
 
     Args:
@@ -9332,17 +10523,17 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(*, client: Stolo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_fee_rate_error_report_merchant_job._get_kwargs()
@@ -9359,17 +10550,22 @@ def enqueue_generate_fee_rate_error_report_merchant_job_asyncio(*, client: Stolo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_generate_reseller_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_generate_reseller_invoices_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9380,17 +10576,17 @@ def enqueue_generate_reseller_invoices_job_sync_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
@@ -9407,29 +10603,38 @@ def enqueue_generate_reseller_invoices_job_sync_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_reseller_invoices_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_reseller_invoices_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9440,17 +10645,17 @@ def enqueue_generate_reseller_invoices_job_sync(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
@@ -9467,17 +10672,22 @@ def enqueue_generate_reseller_invoices_job_sync(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_generate_reseller_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_generate_reseller_invoices_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9488,17 +10698,17 @@ def enqueue_generate_reseller_invoices_job_asyncio_detailed(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
@@ -9515,29 +10725,38 @@ def enqueue_generate_reseller_invoices_job_asyncio_detailed(*, client: StolonCli
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_generate_reseller_invoices_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_generate_reseller_invoices_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the generate-invoices for resellers job
 
     Args:
@@ -9548,17 +10767,17 @@ def enqueue_generate_reseller_invoices_job_asyncio(*, client: StolonClient) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_generate_reseller_invoices_job._get_kwargs()
@@ -9575,19 +10794,22 @@ def enqueue_generate_reseller_invoices_job_asyncio(*, client: StolonClient) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_backout_post_developer_revenue_actions_job_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-developer-revenue-actions job
 
     Args:
@@ -9598,17 +10820,17 @@ def enqueue_backout_post_developer_revenue_actions_job_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
@@ -9625,29 +10847,38 @@ def enqueue_backout_post_developer_revenue_actions_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_developer_revenue_actions_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_developer_revenue_actions_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-developer-revenue-actions job
 
     Args:
@@ -9658,17 +10889,17 @@ def enqueue_backout_post_developer_revenue_actions_job_sync(*, client: StolonCli
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
@@ -9685,19 +10916,22 @@ def enqueue_backout_post_developer_revenue_actions_job_sync(*, client: StolonCli
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def enqueue_backout_post_developer_revenue_actions_job_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiJobResponse]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-post-developer-revenue-actions job
 
     Args:
@@ -9708,17 +10942,17 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
@@ -9735,29 +10969,38 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_post_developer_revenue_actions_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_post_developer_revenue_actions_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-post-developer-revenue-actions job
 
     Args:
@@ -9768,17 +11011,17 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio(*, client: Stolon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_post_developer_revenue_actions_job._get_kwargs()
@@ -9795,17 +11038,22 @@ def enqueue_backout_post_developer_revenue_actions_job_asyncio(*, client: Stolon
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_populate_merchant_cycle_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_populate_merchant_cycle_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -9816,17 +11064,17 @@ def enqueue_populate_merchant_cycle_job_sync_detailed(*, client: StolonClient) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
@@ -9843,29 +11091,38 @@ def enqueue_populate_merchant_cycle_job_sync_detailed(*, client: StolonClient) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_populate_merchant_cycle_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_populate_merchant_cycle_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -9876,17 +11133,17 @@ def enqueue_populate_merchant_cycle_job_sync(*, client: StolonClient) -> ApiJobR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
@@ -9903,17 +11160,22 @@ def enqueue_populate_merchant_cycle_job_sync(*, client: StolonClient) -> ApiJobR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_populate_merchant_cycle_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_populate_merchant_cycle_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -9924,17 +11186,17 @@ def enqueue_populate_merchant_cycle_job_asyncio_detailed(*, client: StolonClient
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
@@ -9951,29 +11213,38 @@ def enqueue_populate_merchant_cycle_job_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_populate_merchant_cycle_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_populate_merchant_cycle_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the populate-cycle-tasks job for merchants
 
     Args:
@@ -9984,17 +11255,17 @@ def enqueue_populate_merchant_cycle_job_asyncio(*, client: StolonClient) -> ApiJ
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_populate_merchant_cycle_job._get_kwargs()
@@ -10011,17 +11282,22 @@ def enqueue_populate_merchant_cycle_job_asyncio(*, client: StolonClient) -> ApiJ
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10032,17 +11308,17 @@ def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(*, client: Stolo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
@@ -10059,29 +11335,38 @@ def enqueue_delete_terms_for_closed_merchants_job_sync_detailed(*, client: Stolo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_delete_terms_for_closed_merchants_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_delete_terms_for_closed_merchants_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10092,17 +11377,17 @@ def enqueue_delete_terms_for_closed_merchants_job_sync(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
@@ -10119,17 +11404,22 @@ def enqueue_delete_terms_for_closed_merchants_job_sync(*, client: StolonClient) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10140,17 +11430,17 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(*, client: St
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
@@ -10167,29 +11457,38 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio_detailed(*, client: St
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_delete_terms_for_closed_merchants_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_delete_terms_for_closed_merchants_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the delete-billing-terms job
 
     Args:
@@ -10200,17 +11499,17 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_delete_terms_for_closed_merchants_job._get_kwargs()
@@ -10227,17 +11526,22 @@ def enqueue_delete_terms_for_closed_merchants_job_asyncio(*, client: StolonClien
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_generate_invoices_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_generate_invoices_job_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10248,17 +11552,17 @@ def enqueue_backout_generate_invoices_job_sync_detailed(*, client: StolonClient)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
@@ -10275,29 +11579,38 @@ def enqueue_backout_generate_invoices_job_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_generate_invoices_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_generate_invoices_job_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10308,17 +11621,17 @@ def enqueue_backout_generate_invoices_job_sync(*, client: StolonClient) -> ApiJo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
@@ -10335,17 +11648,22 @@ def enqueue_backout_generate_invoices_job_sync(*, client: StolonClient) -> ApiJo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def enqueue_backout_generate_invoices_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+
+
+def enqueue_backout_generate_invoices_job_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10356,17 +11674,17 @@ def enqueue_backout_generate_invoices_job_asyncio_detailed(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiJobResponse]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
@@ -10383,29 +11701,38 @@ def enqueue_backout_generate_invoices_job_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiJobResponse:
-        parsed = ApiJobResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def enqueue_backout_generate_invoices_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+
+
+def enqueue_backout_generate_invoices_job_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Enqueues the backout-generate-invoices job
 
     Args:
@@ -10416,17 +11743,17 @@ def enqueue_backout_generate_invoices_job_asyncio(*, client: StolonClient) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiJobResponse
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiJobResponse | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = enqueue_backout_generate_invoices_job._get_kwargs()
@@ -10443,11 +11770,12 @@ def enqueue_backout_generate_invoices_job_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiJobResponse.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

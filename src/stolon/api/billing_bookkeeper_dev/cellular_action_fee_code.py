@@ -6,26 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import (
-    create_cellular_action_fee_code,
-    delete_cellular_action_fee_code_by_uuid,
-    get_cellular_action_fee_code_by_uuid,
-    get_cellular_action_fee_codes,
-    update_cellular_action_fee_code,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action_fee_code import (
-    ApiCellularActionFeeCode,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import create_cellular_action_fee_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import delete_cellular_action_fee_code_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import get_cellular_action_fee_code_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import get_cellular_action_fee_codes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import update_cellular_action_fee_code
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_cellular_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiCellularActionFeeCode]:
+def create_cellular_action_fee_code_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create cellular action fee code mapping
 
     Args:
@@ -36,17 +33,17 @@ def create_cellular_action_fee_code_sync_detailed(*, client: StolonClient) -> Re
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs()
@@ -63,29 +60,38 @@ def create_cellular_action_fee_code_sync_detailed(*, client: StolonClient) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_cellular_action_fee_code_sync(*, client: StolonClient) -> ApiCellularActionFeeCode | None:
+
+
+def create_cellular_action_fee_code_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create cellular action fee code mapping
 
     Args:
@@ -96,17 +102,17 @@ def create_cellular_action_fee_code_sync(*, client: StolonClient) -> ApiCellular
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs()
@@ -123,17 +129,22 @@ def create_cellular_action_fee_code_sync(*, client: StolonClient) -> ApiCellular
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_cellular_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularActionFeeCode]:
+
+
+def create_cellular_action_fee_code_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create cellular action fee code mapping
 
     Args:
@@ -144,17 +155,17 @@ def create_cellular_action_fee_code_asyncio_detailed(*, client: StolonClient) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs()
@@ -171,29 +182,38 @@ def create_cellular_action_fee_code_asyncio_detailed(*, client: StolonClient) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_cellular_action_fee_code_asyncio(*, client: StolonClient) -> ApiCellularActionFeeCode | None:
+
+
+def create_cellular_action_fee_code_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create cellular action fee code mapping
 
     Args:
@@ -204,17 +224,17 @@ def create_cellular_action_fee_code_asyncio(*, client: StolonClient) -> ApiCellu
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs()
@@ -231,18 +251,22 @@ def create_cellular_action_fee_code_asyncio(*, client: StolonClient) -> ApiCellu
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def delete_cellular_action_fee_code_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError]:
     """Delete cellular action fee code mapping
 
@@ -281,13 +305,17 @@ def delete_cellular_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -297,13 +325,19 @@ def delete_cellular_action_fee_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_cellular_action_fee_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete cellular action fee code mapping
 
     Args:
@@ -341,7 +375,7 @@ def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -349,10 +383,14 @@ def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError]:
     """Delete cellular action fee code mapping
 
@@ -391,13 +429,17 @@ def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -407,13 +449,19 @@ def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_cellular_action_fee_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete cellular action fee code mapping
 
     Args:
@@ -451,7 +499,7 @@ def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uui
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -461,9 +509,13 @@ def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uui
     return None
 
 
+
+
 def update_cellular_action_fee_code_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiCellularActionFeeCode]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Update cellular action fee code mapping
 
     Args:
@@ -475,7 +527,7 @@ def update_cellular_action_fee_code_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -485,7 +537,7 @@ def update_cellular_action_fee_code_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid)
@@ -502,29 +554,39 @@ def update_cellular_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_cellular_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiCellularActionFeeCode | None:
+
+
+def update_cellular_action_fee_code_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Update cellular action fee code mapping
 
     Args:
@@ -536,7 +598,7 @@ def update_cellular_action_fee_code_sync(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -546,7 +608,7 @@ def update_cellular_action_fee_code_sync(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid)
@@ -563,19 +625,23 @@ def update_cellular_action_fee_code_sync(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_cellular_action_fee_code_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiCellularActionFeeCode]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Update cellular action fee code mapping
 
     Args:
@@ -587,7 +653,7 @@ def update_cellular_action_fee_code_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -597,7 +663,7 @@ def update_cellular_action_fee_code_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid)
@@ -614,29 +680,39 @@ def update_cellular_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_cellular_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiCellularActionFeeCode | None:
+
+
+def update_cellular_action_fee_code_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Update cellular action fee code mapping
 
     Args:
@@ -648,7 +724,7 @@ def update_cellular_action_fee_code_asyncio(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -658,7 +734,7 @@ def update_cellular_action_fee_code_asyncio(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid)
@@ -675,19 +751,23 @@ def update_cellular_action_fee_code_asyncio(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_action_fee_code_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiCellularActionFeeCode]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get cellular action fee code mapping by UUID
 
     Args:
@@ -698,7 +778,7 @@ def get_cellular_action_fee_code_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -708,7 +788,7 @@ def get_cellular_action_fee_code_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -725,29 +805,39 @@ def get_cellular_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiCellularActionFeeCode | None:
+
+
+def get_cellular_action_fee_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get cellular action fee code mapping by UUID
 
     Args:
@@ -758,7 +848,7 @@ def get_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -768,7 +858,7 @@ def get_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -785,19 +875,23 @@ def get_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiCellularActionFeeCode]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get cellular action fee code mapping by UUID
 
     Args:
@@ -808,7 +902,7 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -818,7 +912,7 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -835,29 +929,39 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiCellularActionFeeCode | None:
+
+
+def get_cellular_action_fee_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get cellular action fee code mapping by UUID
 
     Args:
@@ -868,7 +972,7 @@ def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -878,7 +982,7 @@ def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: 
                 uuid: str
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -895,17 +999,22 @@ def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_cellular_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ApiCellularActionFeeCode]:
+
+
+def get_cellular_action_fee_codes_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get cellular action fee codes
 
     Args:
@@ -923,17 +1032,17 @@ def get_cellular_action_fee_codes_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_codes._get_kwargs()
@@ -950,29 +1059,38 @@ def get_cellular_action_fee_codes_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_fee_codes_sync(*, client: StolonClient) -> ApiCellularActionFeeCode | None:
+
+
+def get_cellular_action_fee_codes_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get cellular action fee codes
 
     Args:
@@ -990,17 +1108,17 @@ def get_cellular_action_fee_codes_sync(*, client: StolonClient) -> ApiCellularAc
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_codes._get_kwargs()
@@ -1017,17 +1135,22 @@ def get_cellular_action_fee_codes_sync(*, client: StolonClient) -> ApiCellularAc
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_cellular_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularActionFeeCode]:
+
+
+def get_cellular_action_fee_codes_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get cellular action fee codes
 
     Args:
@@ -1045,17 +1168,17 @@ def get_cellular_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_codes._get_kwargs()
@@ -1072,29 +1195,38 @@ def get_cellular_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiCellularActionFeeCode:
-        parsed = ApiCellularActionFeeCode.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_fee_codes_asyncio(*, client: StolonClient) -> ApiCellularActionFeeCode | None:
+
+
+def get_cellular_action_fee_codes_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get cellular action fee codes
 
     Args:
@@ -1112,17 +1244,17 @@ def get_cellular_action_fee_codes_asyncio(*, client: StolonClient) -> ApiCellula
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiCellularActionFeeCode | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_codes._get_kwargs()
@@ -1139,11 +1271,12 @@ def get_cellular_action_fee_codes_asyncio(*, client: StolonClient) -> ApiCellula
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiCellularActionFeeCode.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -6,23 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import (
-    create_misc_action_fee_code,
-    delete_misc_action_fee_code_by_uuid,
-    get_misc_action_fee_code_by_uuid,
-    get_misc_action_fee_codes,
-    update_misc_action_fee_code,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import create_misc_action_fee_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import delete_misc_action_fee_code_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import get_misc_action_fee_code_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import get_misc_action_fee_codes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_action_fee_code import update_misc_action_fee_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_action_fee_code import ApiMiscActionFeeCode
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def delete_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def delete_misc_action_fee_code_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete miscellaneous action fee code mapping
 
     Args:
@@ -60,13 +62,17 @@ def delete_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, u
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -76,13 +82,19 @@ def delete_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, u
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_misc_action_fee_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete miscellaneous action fee code mapping
 
     Args:
@@ -120,7 +132,7 @@ def delete_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -130,7 +142,13 @@ def delete_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str)
     return None
 
 
-def delete_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_misc_action_fee_code_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete miscellaneous action fee code mapping
 
     Args:
@@ -168,13 +186,17 @@ def delete_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -184,13 +206,19 @@ def delete_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_misc_action_fee_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete miscellaneous action fee code mapping
 
     Args:
@@ -228,7 +256,7 @@ def delete_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: s
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -238,7 +266,13 @@ def delete_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: s
     return None
 
 
-def get_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_misc_action_fee_code_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee code mapping by UUID
 
     Args:
@@ -249,7 +283,7 @@ def get_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -259,7 +293,7 @@ def get_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid
                 uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -276,29 +310,39 @@ def get_misc_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_misc_action_fee_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMiscActionFeeCode | None:
     """Get miscellaneous action fee code mapping by UUID
 
     Args:
@@ -309,7 +353,7 @@ def get_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -319,7 +363,7 @@ def get_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -336,17 +380,23 @@ def get_misc_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_misc_action_fee_code_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee code mapping by UUID
 
     Args:
@@ -357,7 +407,7 @@ def get_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, u
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -367,7 +417,7 @@ def get_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, u
                 uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -384,29 +434,39 @@ def get_misc_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, u
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_misc_action_fee_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMiscActionFeeCode | None:
     """Get miscellaneous action fee code mapping by UUID
 
     Args:
@@ -417,7 +477,7 @@ def get_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -427,7 +487,7 @@ def get_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str)
                 uuid: str
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
@@ -444,17 +504,22 @@ def get_misc_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def get_misc_action_fee_codes_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -471,17 +536,17 @@ def get_misc_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_codes._get_kwargs()
@@ -498,29 +563,38 @@ def get_misc_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_action_fee_codes_sync(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_misc_action_fee_codes_sync(
+    *,
+    client: StolonClient
+) -> ApiMiscActionFeeCode | None:
     """Get miscellaneous action fee codes
 
     Args:
@@ -537,17 +611,17 @@ def get_misc_action_fee_codes_sync(*, client: StolonClient) -> ResponseError | N
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_codes._get_kwargs()
@@ -564,17 +638,22 @@ def get_misc_action_fee_codes_sync(*, client: StolonClient) -> ResponseError | N
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_misc_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def get_misc_action_fee_codes_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -591,17 +670,17 @@ def get_misc_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_codes._get_kwargs()
@@ -618,29 +697,38 @@ def get_misc_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_misc_action_fee_codes_asyncio(
+    *,
+    client: StolonClient
+) -> ApiMiscActionFeeCode | None:
     """Get miscellaneous action fee codes
 
     Args:
@@ -657,17 +745,17 @@ def get_misc_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseError 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = get_misc_action_fee_codes._get_kwargs()
@@ -684,17 +772,23 @@ def get_misc_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseError 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def update_misc_action_fee_code_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMiscActionFeeCode]:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -706,7 +800,7 @@ def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -716,7 +810,7 @@ def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
@@ -733,29 +827,39 @@ def update_misc_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def update_misc_action_fee_code_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMiscActionFeeCode | None:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -767,7 +871,7 @@ def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -777,7 +881,7 @@ def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> Resp
                 uuid: str
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
@@ -794,17 +898,23 @@ def update_misc_action_fee_code_sync(*, client: StolonClient, uuid: str) -> Resp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def update_misc_action_fee_code_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMiscActionFeeCode]:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -816,7 +926,7 @@ def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -826,7 +936,7 @@ def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: 
                 uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
@@ -843,29 +953,39 @@ def update_misc_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def update_misc_action_fee_code_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMiscActionFeeCode | None:
     """Update miscellaneous action fee code mapping
 
     Args:
@@ -877,7 +997,7 @@ def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -887,7 +1007,7 @@ def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> R
                 uuid: str
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = update_misc_action_fee_code._get_kwargs(uuid=uuid)
@@ -904,17 +1024,22 @@ def update_misc_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> R
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_misc_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def create_misc_action_fee_code_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiMiscActionFeeCode]:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -925,17 +1050,17 @@ def create_misc_action_fee_code_sync_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action_fee_code._get_kwargs()
@@ -952,29 +1077,38 @@ def create_misc_action_fee_code_sync_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_misc_action_fee_code_sync(*, client: StolonClient) -> ResponseError | None:
+
+
+def create_misc_action_fee_code_sync(
+    *,
+    client: StolonClient
+) -> ApiMiscActionFeeCode | None:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -985,17 +1119,17 @@ def create_misc_action_fee_code_sync(*, client: StolonClient) -> ResponseError |
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action_fee_code._get_kwargs()
@@ -1012,17 +1146,22 @@ def create_misc_action_fee_code_sync(*, client: StolonClient) -> ResponseError |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_misc_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def create_misc_action_fee_code_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiMiscActionFeeCode]:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -1033,17 +1172,17 @@ def create_misc_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action_fee_code._get_kwargs()
@@ -1060,29 +1199,38 @@ def create_misc_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ApiMiscActionFeeCode:
+        parsed = ApiMiscActionFeeCode.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_misc_action_fee_code_asyncio(*, client: StolonClient) -> ResponseError | None:
+
+
+def create_misc_action_fee_code_asyncio(
+    *,
+    client: StolonClient
+) -> ApiMiscActionFeeCode | None:
     """Create miscellaneous action fee code mapping
 
     Args:
@@ -1093,17 +1241,17 @@ def create_misc_action_fee_code_asyncio(*, client: StolonClient) -> ResponseErro
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ResponseError | None
+        ApiMiscActionFeeCode | None
     """
     # Extract request parameters from generated function
     kwargs = create_misc_action_fee_code._get_kwargs()
@@ -1120,11 +1268,12 @@ def create_misc_action_fee_code_asyncio(*, client: StolonClient) -> ResponseErro
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
+            return ApiMiscActionFeeCode.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -6,23 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import (
-    create_fee_code_app,
-    get_fee_code_app,
-    get_fee_code_app_by_category,
-    get_fee_code_app_by_code,
-    get_fee_code_app_by_uuid,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import create_fee_code_app
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app_by_category
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app_by_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app_by_uuid
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_app import ApiFeeCodeApp
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_fee_code_app_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCodeApp]:
+def get_fee_code_app_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCodeApp | ResponseError]:
     """Get fee-code-to-app mapping by UUID
 
     Args:
@@ -33,7 +35,7 @@ def get_fee_code_app_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[Union[ApiFeeCodeApp, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -43,7 +45,7 @@ def get_fee_code_app_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -
                 uuid: str
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ApiFeeCodeApp | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_uuid._get_kwargs(uuid=uuid)
@@ -60,29 +62,39 @@ def get_fee_code_app_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCodeApp | ResponseError | None:
     """Get fee-code-to-app mapping by UUID
 
     Args:
@@ -93,7 +105,7 @@ def get_fee_code_app_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeC
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        Union[ApiFeeCodeApp, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -103,7 +115,7 @@ def get_fee_code_app_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeC
                 uuid: str
 
     Returns:
-        ApiFeeCodeApp | None
+        ApiFeeCodeApp | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_uuid._get_kwargs(uuid=uuid)
@@ -119,18 +131,17 @@ def get_fee_code_app_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeC
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_fee_code_app_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCodeApp]:
+
+
+def get_fee_code_app_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiFeeCodeApp | ResponseError]:
     """Get fee-code-to-app mapping by UUID
 
     Args:
@@ -141,7 +152,7 @@ def get_fee_code_app_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[Union[ApiFeeCodeApp, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -151,7 +162,7 @@ def get_fee_code_app_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ApiFeeCodeApp | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_uuid._get_kwargs(uuid=uuid)
@@ -168,29 +179,39 @@ def get_fee_code_app_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCodeApp | ResponseError | None:
     """Get fee-code-to-app mapping by UUID
 
     Args:
@@ -201,7 +222,7 @@ def get_fee_code_app_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiF
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        Union[ApiFeeCodeApp, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -211,7 +232,7 @@ def get_fee_code_app_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiF
                 uuid: str
 
     Returns:
-        ApiFeeCodeApp | None
+        ApiFeeCodeApp | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_uuid._get_kwargs(uuid=uuid)
@@ -227,18 +248,17 @@ def get_fee_code_app_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiF
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_fee_code_app_by_category_sync_detailed(*, client: StolonClient, fee_category: str) -> Response[ApiFeeCodeApp]:
+
+
+def get_fee_code_app_by_category_sync_detailed(
+    *,
+    client: StolonClient,
+    fee_category: str
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -251,7 +271,7 @@ def get_fee_code_app_by_category_sync_detailed(*, client: StolonClient, fee_cate
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -261,7 +281,7 @@ def get_fee_code_app_by_category_sync_detailed(*, client: StolonClient, fee_cate
                 fee_category: str
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_category._get_kwargs(fee_category=fee_category)
@@ -278,29 +298,39 @@ def get_fee_code_app_by_category_sync_detailed(*, client: StolonClient, fee_cate
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_by_category_sync(*, client: StolonClient, fee_category: str) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_by_category_sync(
+    *,
+    client: StolonClient,
+    fee_category: str
+) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -313,7 +343,7 @@ def get_fee_code_app_by_category_sync(*, client: StolonClient, fee_category: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -323,7 +353,7 @@ def get_fee_code_app_by_category_sync(*, client: StolonClient, fee_category: str
                 fee_category: str
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_category._get_kwargs(fee_category=fee_category)
@@ -340,19 +370,23 @@ def get_fee_code_app_by_category_sync(*, client: StolonClient, fee_category: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_fee_code_app_by_category_asyncio_detailed(
-    *, client: StolonClient, fee_category: str
-) -> Response[ApiFeeCodeApp]:
+    *,
+    client: StolonClient,
+    fee_category: str
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -365,7 +399,7 @@ def get_fee_code_app_by_category_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -375,7 +409,7 @@ def get_fee_code_app_by_category_asyncio_detailed(
                 fee_category: str
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_category._get_kwargs(fee_category=fee_category)
@@ -392,29 +426,39 @@ def get_fee_code_app_by_category_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_by_category_asyncio(*, client: StolonClient, fee_category: str) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_by_category_asyncio(
+    *,
+    client: StolonClient,
+    fee_category: str
+) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -427,7 +471,7 @@ def get_fee_code_app_by_category_asyncio(*, client: StolonClient, fee_category: 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -437,7 +481,7 @@ def get_fee_code_app_by_category_asyncio(*, client: StolonClient, fee_category: 
                 fee_category: str
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_category._get_kwargs(fee_category=fee_category)
@@ -454,17 +498,23 @@ def get_fee_code_app_by_category_asyncio(*, client: StolonClient, fee_category: 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_fee_code_app_by_code_sync_detailed(*, client: StolonClient, fee_code: str) -> Response[ApiFeeCodeApp]:
+
+
+def get_fee_code_app_by_code_sync_detailed(
+    *,
+    client: StolonClient,
+    fee_code: str
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -477,7 +527,7 @@ def get_fee_code_app_by_code_sync_detailed(*, client: StolonClient, fee_code: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -487,7 +537,7 @@ def get_fee_code_app_by_code_sync_detailed(*, client: StolonClient, fee_code: st
                 fee_code: str
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_code._get_kwargs(fee_code=fee_code)
@@ -504,29 +554,39 @@ def get_fee_code_app_by_code_sync_detailed(*, client: StolonClient, fee_code: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_by_code_sync(*, client: StolonClient, fee_code: str) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_by_code_sync(
+    *,
+    client: StolonClient,
+    fee_code: str
+) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -539,7 +599,7 @@ def get_fee_code_app_by_code_sync(*, client: StolonClient, fee_code: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -549,7 +609,7 @@ def get_fee_code_app_by_code_sync(*, client: StolonClient, fee_code: str) -> Api
                 fee_code: str
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_code._get_kwargs(fee_code=fee_code)
@@ -566,17 +626,23 @@ def get_fee_code_app_by_code_sync(*, client: StolonClient, fee_code: str) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_fee_code_app_by_code_asyncio_detailed(*, client: StolonClient, fee_code: str) -> Response[ApiFeeCodeApp]:
+
+
+def get_fee_code_app_by_code_asyncio_detailed(
+    *,
+    client: StolonClient,
+    fee_code: str
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -589,7 +655,7 @@ def get_fee_code_app_by_code_asyncio_detailed(*, client: StolonClient, fee_code:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -599,7 +665,7 @@ def get_fee_code_app_by_code_asyncio_detailed(*, client: StolonClient, fee_code:
                 fee_code: str
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_code._get_kwargs(fee_code=fee_code)
@@ -616,29 +682,39 @@ def get_fee_code_app_by_code_asyncio_detailed(*, client: StolonClient, fee_code:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_by_code_asyncio(*, client: StolonClient, fee_code: str) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_by_code_asyncio(
+    *,
+    client: StolonClient,
+    fee_code: str
+) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -651,7 +727,7 @@ def get_fee_code_app_by_code_asyncio(*, client: StolonClient, fee_code: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -661,7 +737,7 @@ def get_fee_code_app_by_code_asyncio(*, client: StolonClient, fee_code: str) -> 
                 fee_code: str
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app_by_code._get_kwargs(fee_code=fee_code)
@@ -678,17 +754,22 @@ def get_fee_code_app_by_code_asyncio(*, client: StolonClient, fee_code: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCodeApp]:
+
+
+def get_fee_code_app_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -705,17 +786,17 @@ def get_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app._get_kwargs()
@@ -732,29 +813,38 @@ def get_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_sync(*, client: StolonClient) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -771,17 +861,17 @@ def get_fee_code_app_sync(*, client: StolonClient) -> ApiFeeCodeApp | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app._get_kwargs()
@@ -798,17 +888,22 @@ def get_fee_code_app_sync(*, client: StolonClient) -> ApiFeeCodeApp | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCodeApp]:
+
+
+def get_fee_code_app_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -825,17 +920,17 @@ def get_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[ApiFe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app._get_kwargs()
@@ -852,29 +947,38 @@ def get_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[ApiFe
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_code_app_asyncio(*, client: StolonClient) -> ApiFeeCodeApp | None:
+
+
+def get_fee_code_app_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -891,17 +995,17 @@ def get_fee_code_app_asyncio(*, client: StolonClient) -> ApiFeeCodeApp | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_code_app._get_kwargs()
@@ -918,17 +1022,22 @@ def get_fee_code_app_asyncio(*, client: StolonClient) -> ApiFeeCodeApp | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCodeApp]:
+
+
+def create_fee_code_app_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create fee-code-to-app mapping
 
     Args:
@@ -939,17 +1048,17 @@ def create_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ApiFe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_app._get_kwargs()
@@ -966,29 +1075,38 @@ def create_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ApiFe
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_code_app_sync(*, client: StolonClient) -> ApiFeeCodeApp | None:
+
+
+def create_fee_code_app_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create fee-code-to-app mapping
 
     Args:
@@ -999,17 +1117,17 @@ def create_fee_code_app_sync(*, client: StolonClient) -> ApiFeeCodeApp | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_app._get_kwargs()
@@ -1026,17 +1144,22 @@ def create_fee_code_app_sync(*, client: StolonClient) -> ApiFeeCodeApp | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCodeApp]:
+
+
+def create_fee_code_app_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create fee-code-to-app mapping
 
     Args:
@@ -1047,17 +1170,17 @@ def create_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_app._get_kwargs()
@@ -1074,29 +1197,38 @@ def create_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[Ap
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCodeApp:
-        parsed = ApiFeeCodeApp.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_code_app_asyncio(*, client: StolonClient) -> ApiFeeCodeApp | None:
+
+
+def create_fee_code_app_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create fee-code-to-app mapping
 
     Args:
@@ -1107,17 +1239,17 @@ def create_fee_code_app_asyncio(*, client: StolonClient) -> ApiFeeCodeApp | None
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeCodeApp | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_fee_code_app._get_kwargs()
@@ -1134,11 +1266,12 @@ def create_fee_code_app_asyncio(*, client: StolonClient) -> ApiFeeCodeApp | None
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiFeeCodeApp.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

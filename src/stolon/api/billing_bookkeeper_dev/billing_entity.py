@@ -6,31 +6,30 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import (
-    create_billing_entity,
-    create_developer_billing_entity,
-    get_billing_entities_by_name_contains,
-    get_billing_entity_by_entity_uuid,
-    get_billing_entity_by_uuid,
-    get_billing_entity_for_archetype,
-    get_billing_entity_for_developer,
-    get_billing_entity_for_merchant,
-    get_billing_entity_for_pseudo,
-    get_billing_entity_for_reseller,
-    get_billing_entity_for_reseller_merchant,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity import (
-    ApiBillingEntity,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import create_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import create_developer_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entities_by_name_contains
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_by_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_for_archetype
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_for_developer
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_for_merchant
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_for_pseudo
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_for_reseller
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity import get_billing_entity_for_reseller_merchant
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity import ApiBillingEntity
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_billing_entity_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+def get_billing_entity_for_merchant_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a merchant
 
     Args:
@@ -68,13 +67,17 @@ def get_billing_entity_for_merchant_sync_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -84,13 +87,19 @@ def get_billing_entity_for_merchant_sync_detailed(*, client: StolonClient, uuid:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_merchant_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a merchant
 
     Args:
@@ -128,7 +137,7 @@ def get_billing_entity_for_merchant_sync(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -138,7 +147,13 @@ def get_billing_entity_for_merchant_sync(*, client: StolonClient, uuid: str) -> 
     return None
 
 
-def get_billing_entity_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_merchant_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a merchant
 
     Args:
@@ -176,13 +191,17 @@ def get_billing_entity_for_merchant_asyncio_detailed(*, client: StolonClient, uu
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -192,13 +211,19 @@ def get_billing_entity_for_merchant_asyncio_detailed(*, client: StolonClient, uu
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_merchant_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a merchant
 
     Args:
@@ -236,7 +261,7 @@ def get_billing_entity_for_merchant_asyncio(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -246,7 +271,13 @@ def get_billing_entity_for_merchant_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_billing_entity_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity by UUID
 
     Args:
@@ -284,13 +315,17 @@ def get_billing_entity_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -300,13 +335,19 @@ def get_billing_entity_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity by UUID
 
     Args:
@@ -344,7 +385,7 @@ def get_billing_entity_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -354,7 +395,13 @@ def get_billing_entity_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBi
     return None
 
 
-def get_billing_entity_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity by UUID
 
     Args:
@@ -392,13 +439,17 @@ def get_billing_entity_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -408,13 +459,19 @@ def get_billing_entity_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity by UUID
 
     Args:
@@ -452,7 +509,7 @@ def get_billing_entity_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -462,7 +519,13 @@ def get_billing_entity_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def get_billing_entity_for_reseller_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_reseller_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a reseller
 
     Args:
@@ -500,13 +563,17 @@ def get_billing_entity_for_reseller_sync_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -516,13 +583,19 @@ def get_billing_entity_for_reseller_sync_detailed(*, client: StolonClient, uuid:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_reseller_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_reseller_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a reseller
 
     Args:
@@ -560,7 +633,7 @@ def get_billing_entity_for_reseller_sync(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -570,7 +643,13 @@ def get_billing_entity_for_reseller_sync(*, client: StolonClient, uuid: str) -> 
     return None
 
 
-def get_billing_entity_for_reseller_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_reseller_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a reseller
 
     Args:
@@ -608,13 +687,17 @@ def get_billing_entity_for_reseller_asyncio_detailed(*, client: StolonClient, uu
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -624,13 +707,19 @@ def get_billing_entity_for_reseller_asyncio_detailed(*, client: StolonClient, uu
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_reseller_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_reseller_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a reseller
 
     Args:
@@ -668,7 +757,7 @@ def get_billing_entity_for_reseller_asyncio(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -678,7 +767,13 @@ def get_billing_entity_for_reseller_asyncio(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_billing_entity_for_archetype_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_archetype_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for an archetype
 
     Args:
@@ -716,13 +811,17 @@ def get_billing_entity_for_archetype_sync_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -732,13 +831,19 @@ def get_billing_entity_for_archetype_sync_detailed(*, client: StolonClient, uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_archetype_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_archetype_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for an archetype
 
     Args:
@@ -776,7 +881,7 @@ def get_billing_entity_for_archetype_sync(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -786,7 +891,13 @@ def get_billing_entity_for_archetype_sync(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def get_billing_entity_for_archetype_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_archetype_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for an archetype
 
     Args:
@@ -824,13 +935,17 @@ def get_billing_entity_for_archetype_asyncio_detailed(*, client: StolonClient, u
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -840,13 +955,19 @@ def get_billing_entity_for_archetype_asyncio_detailed(*, client: StolonClient, u
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_archetype_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_archetype_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for an archetype
 
     Args:
@@ -884,7 +1005,7 @@ def get_billing_entity_for_archetype_asyncio(*, client: StolonClient, uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -894,7 +1015,13 @@ def get_billing_entity_for_archetype_asyncio(*, client: StolonClient, uuid: str)
     return None
 
 
-def get_billing_entity_for_developer_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_developer_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a developer
 
     Args:
@@ -932,13 +1059,17 @@ def get_billing_entity_for_developer_sync_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -948,13 +1079,19 @@ def get_billing_entity_for_developer_sync_detailed(*, client: StolonClient, uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_developer_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_developer_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a developer
 
     Args:
@@ -992,7 +1129,7 @@ def get_billing_entity_for_developer_sync(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1002,7 +1139,13 @@ def get_billing_entity_for_developer_sync(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def get_billing_entity_for_developer_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_developer_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a developer
 
     Args:
@@ -1040,13 +1183,17 @@ def get_billing_entity_for_developer_asyncio_detailed(*, client: StolonClient, u
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1056,13 +1203,19 @@ def get_billing_entity_for_developer_asyncio_detailed(*, client: StolonClient, u
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_developer_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_developer_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a developer
 
     Args:
@@ -1100,7 +1253,7 @@ def get_billing_entity_for_developer_asyncio(*, client: StolonClient, uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1110,7 +1263,12 @@ def get_billing_entity_for_developer_asyncio(*, client: StolonClient, uuid: str)
     return None
 
 
-def get_billing_entities_by_name_contains_sync_detailed(*, client: StolonClient) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entities_by_name_contains_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntity]:
     """Get billing entities by name contains
 
     Args:
@@ -1130,7 +1288,7 @@ def get_billing_entities_by_name_contains_sync_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingEntity]
@@ -1150,13 +1308,17 @@ def get_billing_entities_by_name_contains_sync_detailed(*, client: StolonClient)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1166,13 +1328,18 @@ def get_billing_entities_by_name_contains_sync_detailed(*, client: StolonClient)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entities_by_name_contains_sync(*, client: StolonClient) -> ApiBillingEntity | None:
+
+
+def get_billing_entities_by_name_contains_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingEntity | None:
     """Get billing entities by name contains
 
     Args:
@@ -1192,7 +1359,7 @@ def get_billing_entities_by_name_contains_sync(*, client: StolonClient) -> ApiBi
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingEntity | None
@@ -1212,7 +1379,7 @@ def get_billing_entities_by_name_contains_sync(*, client: StolonClient) -> ApiBi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1222,7 +1389,12 @@ def get_billing_entities_by_name_contains_sync(*, client: StolonClient) -> ApiBi
     return None
 
 
-def get_billing_entities_by_name_contains_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entities_by_name_contains_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntity]:
     """Get billing entities by name contains
 
     Args:
@@ -1242,7 +1414,7 @@ def get_billing_entities_by_name_contains_asyncio_detailed(*, client: StolonClie
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingEntity]
@@ -1262,13 +1434,17 @@ def get_billing_entities_by_name_contains_asyncio_detailed(*, client: StolonClie
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1278,13 +1454,18 @@ def get_billing_entities_by_name_contains_asyncio_detailed(*, client: StolonClie
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entities_by_name_contains_asyncio(*, client: StolonClient) -> ApiBillingEntity | None:
+
+
+def get_billing_entities_by_name_contains_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingEntity | None:
     """Get billing entities by name contains
 
     Args:
@@ -1304,7 +1485,7 @@ def get_billing_entities_by_name_contains_asyncio(*, client: StolonClient) -> Ap
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingEntity | None
@@ -1324,7 +1505,7 @@ def get_billing_entities_by_name_contains_asyncio(*, client: StolonClient) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1334,7 +1515,12 @@ def get_billing_entities_by_name_contains_asyncio(*, client: StolonClient) -> Ap
     return None
 
 
-def create_billing_entity_sync_detailed(*, client: StolonClient) -> Response[ApiBillingEntity]:
+
+
+def create_billing_entity_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntity]:
     """Create billing entity
 
     Args:
@@ -1352,7 +1538,7 @@ def create_billing_entity_sync_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingEntity]
@@ -1372,13 +1558,17 @@ def create_billing_entity_sync_detailed(*, client: StolonClient) -> Response[Api
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1388,13 +1578,18 @@ def create_billing_entity_sync_detailed(*, client: StolonClient) -> Response[Api
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_entity_sync(*, client: StolonClient) -> ApiBillingEntity | None:
+
+
+def create_billing_entity_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingEntity | None:
     """Create billing entity
 
     Args:
@@ -1412,7 +1607,7 @@ def create_billing_entity_sync(*, client: StolonClient) -> ApiBillingEntity | No
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingEntity | None
@@ -1432,7 +1627,7 @@ def create_billing_entity_sync(*, client: StolonClient) -> ApiBillingEntity | No
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1442,7 +1637,12 @@ def create_billing_entity_sync(*, client: StolonClient) -> ApiBillingEntity | No
     return None
 
 
-def create_billing_entity_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingEntity]:
+
+
+def create_billing_entity_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntity]:
     """Create billing entity
 
     Args:
@@ -1460,7 +1660,7 @@ def create_billing_entity_asyncio_detailed(*, client: StolonClient) -> Response[
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingEntity]
@@ -1480,13 +1680,17 @@ def create_billing_entity_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1496,13 +1700,18 @@ def create_billing_entity_asyncio_detailed(*, client: StolonClient) -> Response[
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_entity_asyncio(*, client: StolonClient) -> ApiBillingEntity | None:
+
+
+def create_billing_entity_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingEntity | None:
     """Create billing entity
 
     Args:
@@ -1520,7 +1729,7 @@ def create_billing_entity_asyncio(*, client: StolonClient) -> ApiBillingEntity |
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingEntity | None
@@ -1540,7 +1749,7 @@ def create_billing_entity_asyncio(*, client: StolonClient) -> ApiBillingEntity |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1550,7 +1759,13 @@ def create_billing_entity_asyncio(*, client: StolonClient) -> ApiBillingEntity |
     return None
 
 
-def get_billing_entity_by_entity_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_by_entity_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity by entity UUID
 
     Args:
@@ -1588,13 +1803,17 @@ def get_billing_entity_by_entity_uuid_sync_detailed(*, client: StolonClient, uui
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1604,13 +1823,19 @@ def get_billing_entity_by_entity_uuid_sync_detailed(*, client: StolonClient, uui
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_by_entity_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_by_entity_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity by entity UUID
 
     Args:
@@ -1648,7 +1873,7 @@ def get_billing_entity_by_entity_uuid_sync(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1656,10 +1881,14 @@ def get_billing_entity_by_entity_uuid_sync(*, client: StolonClient, uuid: str) -
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_entity_by_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingEntity]:
     """Get billing entity by entity UUID
 
@@ -1698,13 +1927,17 @@ def get_billing_entity_by_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1714,13 +1947,19 @@ def get_billing_entity_by_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_by_entity_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_by_entity_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity by entity UUID
 
     Args:
@@ -1758,7 +1997,7 @@ def get_billing_entity_by_entity_uuid_asyncio(*, client: StolonClient, uuid: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1768,7 +2007,12 @@ def get_billing_entity_by_entity_uuid_asyncio(*, client: StolonClient, uuid: str
     return None
 
 
-def create_developer_billing_entity_sync_detailed(*, client: StolonClient) -> Response[ApiBillingEntity]:
+
+
+def create_developer_billing_entity_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntity]:
     """Create billing entity for a developer
 
     Args:
@@ -1786,7 +2030,7 @@ def create_developer_billing_entity_sync_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingEntity]
@@ -1806,13 +2050,17 @@ def create_developer_billing_entity_sync_detailed(*, client: StolonClient) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1822,13 +2070,18 @@ def create_developer_billing_entity_sync_detailed(*, client: StolonClient) -> Re
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_developer_billing_entity_sync(*, client: StolonClient) -> ApiBillingEntity | None:
+
+
+def create_developer_billing_entity_sync(
+    *,
+    client: StolonClient
+) -> ApiBillingEntity | None:
     """Create billing entity for a developer
 
     Args:
@@ -1846,7 +2099,7 @@ def create_developer_billing_entity_sync(*, client: StolonClient) -> ApiBillingE
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingEntity | None
@@ -1866,7 +2119,7 @@ def create_developer_billing_entity_sync(*, client: StolonClient) -> ApiBillingE
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1876,7 +2129,12 @@ def create_developer_billing_entity_sync(*, client: StolonClient) -> ApiBillingE
     return None
 
 
-def create_developer_billing_entity_asyncio_detailed(*, client: StolonClient) -> Response[ApiBillingEntity]:
+
+
+def create_developer_billing_entity_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiBillingEntity]:
     """Create billing entity for a developer
 
     Args:
@@ -1894,7 +2152,7 @@ def create_developer_billing_entity_asyncio_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiBillingEntity]
@@ -1914,13 +2172,17 @@ def create_developer_billing_entity_asyncio_detailed(*, client: StolonClient) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -1930,13 +2192,18 @@ def create_developer_billing_entity_asyncio_detailed(*, client: StolonClient) ->
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_developer_billing_entity_asyncio(*, client: StolonClient) -> ApiBillingEntity | None:
+
+
+def create_developer_billing_entity_asyncio(
+    *,
+    client: StolonClient
+) -> ApiBillingEntity | None:
     """Create billing entity for a developer
 
     Args:
@@ -1954,7 +2221,7 @@ def create_developer_billing_entity_asyncio(*, client: StolonClient) -> ApiBilli
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiBillingEntity | None
@@ -1974,7 +2241,7 @@ def create_developer_billing_entity_asyncio(*, client: StolonClient) -> ApiBilli
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1984,7 +2251,13 @@ def create_developer_billing_entity_asyncio(*, client: StolonClient) -> ApiBilli
     return None
 
 
-def get_billing_entity_for_pseudo_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_pseudo_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a pseudo entity
 
     Args:
@@ -2022,13 +2295,17 @@ def get_billing_entity_for_pseudo_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -2038,13 +2315,19 @@ def get_billing_entity_for_pseudo_sync_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_pseudo_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_pseudo_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a pseudo entity
 
     Args:
@@ -2082,7 +2365,7 @@ def get_billing_entity_for_pseudo_sync(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2092,7 +2375,13 @@ def get_billing_entity_for_pseudo_sync(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def get_billing_entity_for_pseudo_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiBillingEntity]:
+
+
+def get_billing_entity_for_pseudo_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingEntity]:
     """Get billing entity for a pseudo entity
 
     Args:
@@ -2130,13 +2419,17 @@ def get_billing_entity_for_pseudo_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -2146,13 +2439,19 @@ def get_billing_entity_for_pseudo_asyncio_detailed(*, client: StolonClient, uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_for_pseudo_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntity | None:
+
+
+def get_billing_entity_for_pseudo_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntity | None:
     """Get billing entity for a pseudo entity
 
     Args:
@@ -2190,7 +2489,7 @@ def get_billing_entity_for_pseudo_asyncio(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2198,10 +2497,15 @@ def get_billing_entity_for_pseudo_asyncio(*, client: StolonClient, uuid: str) ->
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_entity_for_reseller_merchant_sync_detailed(
-    *, client: StolonClient, r_id: str, uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str
 ) -> Response[ApiBillingEntity]:
     """Get billing entity for a reseller's merchant
 
@@ -2243,13 +2547,17 @@ def get_billing_entity_for_reseller_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -2259,14 +2567,19 @@ def get_billing_entity_for_reseller_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_entity_for_reseller_merchant_sync(
-    *, client: StolonClient, r_id: str, uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str
 ) -> ApiBillingEntity | None:
     """Get billing entity for a reseller's merchant
 
@@ -2308,7 +2621,7 @@ def get_billing_entity_for_reseller_merchant_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2318,8 +2631,13 @@ def get_billing_entity_for_reseller_merchant_sync(
     return None
 
 
+
+
 def get_billing_entity_for_reseller_merchant_asyncio_detailed(
-    *, client: StolonClient, r_id: str, uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str
 ) -> Response[ApiBillingEntity]:
     """Get billing entity for a reseller's merchant
 
@@ -2361,13 +2679,17 @@ def get_billing_entity_for_reseller_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiBillingEntity:
@@ -2377,14 +2699,19 @@ def get_billing_entity_for_reseller_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_billing_entity_for_reseller_merchant_asyncio(
-    *, client: StolonClient, r_id: str, uuid: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str
 ) -> ApiBillingEntity | None:
     """Get billing entity for a reseller's merchant
 
@@ -2426,7 +2753,7 @@ def get_billing_entity_for_reseller_merchant_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2434,3 +2761,4 @@ def get_billing_entity_for_reseller_merchant_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -6,32 +6,29 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import (
-    acknowledge_consumer_failure,
-    acknowledge_consumer_failures,
-    get_consumer_failure_by_uuid,
-    get_consumer_failure_histories,
-    get_consumer_failures,
-    retry_consumer_failure,
-    retry_consumer_failures,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure import (
-    ApiConsumerFailure,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_update_response import (
-    ApiConsumerFailureUpdateResponse,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failure
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failures
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import get_consumer_failure_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import get_consumer_failure_histories
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import get_consumer_failures
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import retry_consumer_failure
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import retry_consumer_failures
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure import ApiConsumerFailure
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_history import ApiConsumerFailureHistory
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_update_response import ApiConsumerFailureUpdateResponse
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def acknowledge_consumer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiConsumerFailureUpdateResponse]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -43,7 +40,7 @@ def acknowledge_consumer_failure_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[Union[ApiConsumerFailureUpdateResponse, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -53,7 +50,7 @@ def acknowledge_consumer_failure_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
@@ -70,29 +67,39 @@ def acknowledge_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiConsumerFailureUpdateResponse:
-        parsed = ApiConsumerFailureUpdateResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def acknowledge_consumer_failure_sync(*, client: StolonClient, uuid: str) -> ApiConsumerFailureUpdateResponse | None:
+
+
+def acknowledge_consumer_failure_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -104,7 +111,7 @@ def acknowledge_consumer_failure_sync(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiConsumerFailureUpdateResponse
+        Union[ApiConsumerFailureUpdateResponse, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -114,7 +121,7 @@ def acknowledge_consumer_failure_sync(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiConsumerFailureUpdateResponse | None
+        ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
@@ -130,20 +137,17 @@ def acknowledge_consumer_failure_sync(*, client: StolonClient, uuid: str) -> Api
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiConsumerFailureUpdateResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def acknowledge_consumer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiConsumerFailureUpdateResponse]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -155,7 +159,7 @@ def acknowledge_consumer_failure_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[Union[ApiConsumerFailureUpdateResponse, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -165,7 +169,7 @@ def acknowledge_consumer_failure_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
@@ -182,29 +186,39 @@ def acknowledge_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiConsumerFailureUpdateResponse:
-        parsed = ApiConsumerFailureUpdateResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def acknowledge_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> ApiConsumerFailureUpdateResponse | None:
+
+
+def acknowledge_consumer_failure_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -216,7 +230,7 @@ def acknowledge_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiConsumerFailureUpdateResponse
+        Union[ApiConsumerFailureUpdateResponse, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -226,7 +240,7 @@ def acknowledge_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiConsumerFailureUpdateResponse | None
+        ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
@@ -242,20 +256,17 @@ def acknowledge_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiConsumerFailureUpdateResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def retry_consumer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiConsumerFailureUpdateResponse]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Retry a consumer failure
 
     Args:
@@ -267,7 +278,7 @@ def retry_consumer_failure_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[Union[ApiConsumerFailureUpdateResponse, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -277,7 +288,7 @@ def retry_consumer_failure_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
@@ -294,29 +305,39 @@ def retry_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiConsumerFailureUpdateResponse:
-        parsed = ApiConsumerFailureUpdateResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def retry_consumer_failure_sync(*, client: StolonClient, uuid: str) -> ApiConsumerFailureUpdateResponse | None:
+
+
+def retry_consumer_failure_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Retry a consumer failure
 
     Args:
@@ -328,7 +349,7 @@ def retry_consumer_failure_sync(*, client: StolonClient, uuid: str) -> ApiConsum
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiConsumerFailureUpdateResponse
+        Union[ApiConsumerFailureUpdateResponse, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -338,7 +359,7 @@ def retry_consumer_failure_sync(*, client: StolonClient, uuid: str) -> ApiConsum
                 uuid: str
 
     Returns:
-        ApiConsumerFailureUpdateResponse | None
+        ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
@@ -354,20 +375,17 @@ def retry_consumer_failure_sync(*, client: StolonClient, uuid: str) -> ApiConsum
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiConsumerFailureUpdateResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def retry_consumer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiConsumerFailureUpdateResponse]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Retry a consumer failure
 
     Args:
@@ -379,7 +397,7 @@ def retry_consumer_failure_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[Union[ApiConsumerFailureUpdateResponse, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -389,7 +407,7 @@ def retry_consumer_failure_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse]
+        Response[ApiConsumerFailureUpdateResponse | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
@@ -406,29 +424,39 @@ def retry_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiConsumerFailureUpdateResponse:
-        parsed = ApiConsumerFailureUpdateResponse.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def retry_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> ApiConsumerFailureUpdateResponse | None:
+
+
+def retry_consumer_failure_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Retry a consumer failure
 
     Args:
@@ -440,7 +468,7 @@ def retry_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> ApiCon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiConsumerFailureUpdateResponse
+        Union[ApiConsumerFailureUpdateResponse, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -450,7 +478,7 @@ def retry_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> ApiCon
                 uuid: str
 
     Returns:
-        ApiConsumerFailureUpdateResponse | None
+        ApiConsumerFailureUpdateResponse | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
@@ -466,20 +494,16 @@ def retry_consumer_failure_asyncio(*, client: StolonClient, uuid: str) -> ApiCon
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiConsumerFailureUpdateResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_consumer_failures_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiConsumerFailure | list["ApiConsumerFailure"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
     Args:
@@ -495,17 +519,17 @@ def get_consumer_failures_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailure, list['ApiConsumerFailure']]]
+        Response[Union[ResponseError, list['ApiConsumerFailure']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiConsumerFailure | list["ApiConsumerFailure"]]
+        Response[ResponseError | list["ApiConsumerFailure"]]
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failures._get_kwargs()
@@ -522,26 +546,38 @@ def get_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_consumer_failures_sync(*, client: StolonClient) -> ApiConsumerFailure | list["ApiConsumerFailure"] | None:
+
+
+def get_consumer_failures_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
     Args:
@@ -557,23 +593,23 @@ def get_consumer_failures_sync(*, client: StolonClient) -> ApiConsumerFailure | 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailure, list['ApiConsumerFailure']]
+        Union[ResponseError, list['ApiConsumerFailure']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiConsumerFailure | list["ApiConsumerFailure"] | None
+        ResponseError | list["ApiConsumerFailure"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -585,11 +621,14 @@ def get_consumer_failures_sync(*, client: StolonClient) -> ApiConsumerFailure | 
 
     # No response model, return None
     return None
+
+
 
 
 def get_consumer_failures_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiConsumerFailure | list["ApiConsumerFailure"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
     Args:
@@ -605,17 +644,17 @@ def get_consumer_failures_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailure, list['ApiConsumerFailure']]]
+        Response[Union[ResponseError, list['ApiConsumerFailure']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiConsumerFailure | list["ApiConsumerFailure"]]
+        Response[ResponseError | list["ApiConsumerFailure"]]
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failures._get_kwargs()
@@ -632,26 +671,38 @@ def get_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_consumer_failures_asyncio(*, client: StolonClient) -> ApiConsumerFailure | list["ApiConsumerFailure"] | None:
+
+
+def get_consumer_failures_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
     Args:
@@ -667,23 +718,23 @@ def get_consumer_failures_asyncio(*, client: StolonClient) -> ApiConsumerFailure
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailure, list['ApiConsumerFailure']]
+        Union[ResponseError, list['ApiConsumerFailure']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiConsumerFailure | list["ApiConsumerFailure"] | None
+        ResponseError | list["ApiConsumerFailure"] | None
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -697,7 +748,13 @@ def get_consumer_failures_asyncio(*, client: StolonClient) -> ApiConsumerFailure
     return None
 
 
-def get_consumer_failure_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiConsumerFailure]:
+
+
+def get_consumer_failure_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiConsumerFailure | ResponseError]:
     """Get a messaging consumer failure by UUID
 
     Args:
@@ -708,7 +765,7 @@ def get_consumer_failure_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiConsumerFailure]
+        Response[Union[ApiConsumerFailure, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -718,7 +775,7 @@ def get_consumer_failure_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiConsumerFailure]
+        Response[ApiConsumerFailure | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
@@ -735,29 +792,39 @@ def get_consumer_failure_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiConsumerFailure:
-        parsed = ApiConsumerFailure.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_consumer_failure_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiConsumerFailure | None:
+
+
+def get_consumer_failure_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiConsumerFailure | ResponseError | None:
     """Get a messaging consumer failure by UUID
 
     Args:
@@ -768,7 +835,7 @@ def get_consumer_failure_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiConsumerFailure
+        Union[ApiConsumerFailure, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -778,7 +845,7 @@ def get_consumer_failure_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiConsumerFailure | None
+        ApiConsumerFailure | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
@@ -794,18 +861,17 @@ def get_consumer_failure_by_uuid_sync(*, client: StolonClient, uuid: str) -> Api
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiConsumerFailure.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_consumer_failure_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiConsumerFailure]:
+
+
+def get_consumer_failure_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiConsumerFailure | ResponseError]:
     """Get a messaging consumer failure by UUID
 
     Args:
@@ -816,7 +882,7 @@ def get_consumer_failure_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiConsumerFailure]
+        Response[Union[ApiConsumerFailure, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -826,7 +892,7 @@ def get_consumer_failure_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        Response[ApiConsumerFailure]
+        Response[ApiConsumerFailure | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
@@ -843,29 +909,39 @@ def get_consumer_failure_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiConsumerFailure:
-        parsed = ApiConsumerFailure.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_consumer_failure_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiConsumerFailure | None:
+
+
+def get_consumer_failure_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiConsumerFailure | ResponseError | None:
     """Get a messaging consumer failure by UUID
 
     Args:
@@ -876,7 +952,7 @@ def get_consumer_failure_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiConsumerFailure
+        Union[ApiConsumerFailure, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -886,7 +962,7 @@ def get_consumer_failure_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiConsumerFailure | None
+        ApiConsumerFailure | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
@@ -902,20 +978,16 @@ def get_consumer_failure_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiConsumerFailure.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def retry_consumer_failures_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Retry consumer failures
 
     Args:
@@ -926,17 +998,17 @@ def retry_consumer_failures_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]]
+        Response[Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]
+        Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs()
@@ -953,28 +1025,38 @@ def retry_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def retry_consumer_failures_sync(
-    *, client: StolonClient
-) -> ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Retry consumer failures
 
     Args:
@@ -985,23 +1067,23 @@ def retry_consumer_failures_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]
+        Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None
+        ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1013,11 +1095,14 @@ def retry_consumer_failures_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def retry_consumer_failures_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Retry consumer failures
 
     Args:
@@ -1028,17 +1113,17 @@ def retry_consumer_failures_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]]
+        Response[Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]
+        Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs()
@@ -1055,28 +1140,38 @@ def retry_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def retry_consumer_failures_asyncio(
-    *, client: StolonClient
-) -> ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Retry consumer failures
 
     Args:
@@ -1087,23 +1182,23 @@ def retry_consumer_failures_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]
+        Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None
+        ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1115,10 +1210,13 @@ def retry_consumer_failures_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_consumer_failure_histories_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -1142,7 +1240,7 @@ def get_consumer_failure_histories_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]
@@ -1162,27 +1260,37 @@ def get_consumer_failure_histories_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_failure_histories_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -1206,7 +1314,7 @@ def get_consumer_failure_histories_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None
@@ -1215,7 +1323,7 @@ def get_consumer_failure_histories_sync(
     kwargs = get_consumer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1229,8 +1337,11 @@ def get_consumer_failure_histories_sync(
     return None
 
 
+
+
 def get_consumer_failure_histories_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -1254,7 +1365,7 @@ def get_consumer_failure_histories_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]
@@ -1274,27 +1385,37 @@ def get_consumer_failure_histories_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_consumer_failure_histories_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -1318,7 +1439,7 @@ def get_consumer_failure_histories_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None
@@ -1327,7 +1448,7 @@ def get_consumer_failure_histories_asyncio(
     kwargs = get_consumer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1339,11 +1460,14 @@ def get_consumer_failure_histories_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def acknowledge_consumer_failures_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
     Args:
@@ -1355,17 +1479,17 @@ def acknowledge_consumer_failures_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]]
+        Response[Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]
+        Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs()
@@ -1382,28 +1506,38 @@ def acknowledge_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def acknowledge_consumer_failures_sync(
-    *, client: StolonClient
-) -> ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
     Args:
@@ -1415,23 +1549,23 @@ def acknowledge_consumer_failures_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]
+        Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None
+        ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1445,9 +1579,12 @@ def acknowledge_consumer_failures_sync(
     return None
 
 
+
+
 def acknowledge_consumer_failures_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
     Args:
@@ -1459,17 +1596,17 @@ def acknowledge_consumer_failures_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]]
+        Response[Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"]]
+        Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs()
@@ -1486,28 +1623,38 @@ def acknowledge_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def acknowledge_consumer_failures_asyncio(
-    *, client: StolonClient
-) -> ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None:
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
     Args:
@@ -1519,23 +1666,23 @@ def acknowledge_consumer_failures_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]
+        Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiConsumerFailureUpdateResponse | list["ApiConsumerFailureUpdateResponse"] | None
+        ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
     """
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1547,3 +1694,4 @@ def acknowledge_consumer_failures_asyncio(
 
     # No response model, return None
     return None
+

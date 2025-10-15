@@ -6,26 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import (
-    create_ledger_account_key,
-    delete_ledger_account_key_by_uuid,
-    get_ledger_account_key_by_key,
-    get_ledger_account_key_by_uuid,
-    list_ledger_account_keys,
-    update_ledger_account_key,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_key import (
-    ApiLedgerAccountKey,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import create_ledger_account_key
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import delete_ledger_account_key_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import get_ledger_account_key_by_key
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import get_ledger_account_key_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import list_ledger_account_keys
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import update_ledger_account_key
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_key import ApiLedgerAccountKey
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def delete_ledger_account_key_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
+def delete_ledger_account_key_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete ledger account key
 
     Args:
@@ -36,7 +36,7 @@ def delete_ledger_account_key_by_uuid_sync_detailed(*, client: StolonClient, uui
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[Union[ResponseError, str]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -46,7 +46,7 @@ def delete_ledger_account_key_by_uuid_sync_detailed(*, client: StolonClient, uui
                 uuid: str
 
     Returns:
-        Response[str]
+        Response[ResponseError | str]
     """
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
@@ -63,225 +63,203 @@ def delete_ledger_account_key_by_uuid_sync_detailed(*, client: StolonClient, uui
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def delete_ledger_account_key_by_uuid_sync(*, client: StolonClient, uuid: str) -> str | None:
-    """Delete ledger account key
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        str
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        str | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def delete_ledger_account_key_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[str]:
-    """Delete ledger account key
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[str]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[str]
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def delete_ledger_account_key_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> str | None:
-    """Delete ledger account key
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        str
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        str | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def get_ledger_account_key_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerAccountKey]:
-    """Get ledger account key by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiLedgerAccountKey]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiLedgerAccountKey]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_account_key_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountKey | None:
+
+
+def delete_ledger_account_key_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
+    """Delete ledger account key
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ResponseError, str]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | str | None
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def delete_ledger_account_key_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
+    """Delete ledger account key
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ResponseError, str]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError | str]
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def delete_ledger_account_key_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
+    """Delete ledger account key
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ResponseError, str]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | str | None
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def get_ledger_account_key_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key by UUID
 
     Args:
@@ -292,7 +270,7 @@ def get_ledger_account_key_by_uuid_sync(*, client: StolonClient, uuid: str) -> A
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        Response[Union[ApiLedgerAccountKey, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -302,7 +280,7 @@ def get_ledger_account_key_by_uuid_sync(*, client: StolonClient, uuid: str) -> A
                 uuid: str
 
     Returns:
-        ApiLedgerAccountKey | None
+        Response[ApiLedgerAccountKey | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
@@ -318,20 +296,87 @@ def get_ledger_account_key_by_uuid_sync(*, client: StolonClient, uuid: str) -> A
         timeout=30.0,
     )
 
-    # Parse response body
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
-    if proxy_response.body and proxy_response.status_code == 200:
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
+        except json.JSONDecodeError:
             pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_ledger_account_key_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountKey | ResponseError | None:
+    """Get ledger account key by UUID
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ApiLedgerAccountKey, ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ApiLedgerAccountKey | ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
     return None
+
+
 
 
 def get_ledger_account_key_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiLedgerAccountKey]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key by UUID
 
     Args:
@@ -342,7 +387,7 @@ def get_ledger_account_key_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[Union[ApiLedgerAccountKey, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -352,7 +397,7 @@ def get_ledger_account_key_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ApiLedgerAccountKey | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
@@ -369,29 +414,39 @@ def get_ledger_account_key_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_account_key_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerAccountKey | None:
+
+
+def get_ledger_account_key_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key by UUID
 
     Args:
@@ -402,7 +457,7 @@ def get_ledger_account_key_by_uuid_asyncio(*, client: StolonClient, uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        Union[ApiLedgerAccountKey, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -412,7 +467,7 @@ def get_ledger_account_key_by_uuid_asyncio(*, client: StolonClient, uuid: str) -
                 uuid: str
 
     Returns:
-        ApiLedgerAccountKey | None
+        ApiLedgerAccountKey | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
@@ -428,18 +483,16 @@ def get_ledger_account_key_by_uuid_asyncio(*, client: StolonClient, uuid: str) -
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def create_ledger_account_key_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKey]:
+
+
+def create_ledger_account_key_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create ledger account key
 
     Args:
@@ -450,17 +503,17 @@ def create_ledger_account_key_sync_detailed(*, client: StolonClient) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_key._get_kwargs()
@@ -477,29 +530,38 @@ def create_ledger_account_key_sync_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_ledger_account_key_sync(*, client: StolonClient) -> ApiLedgerAccountKey | None:
+
+
+def create_ledger_account_key_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create ledger account key
 
     Args:
@@ -510,17 +572,17 @@ def create_ledger_account_key_sync(*, client: StolonClient) -> ApiLedgerAccountK
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountKey | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_key._get_kwargs()
@@ -537,17 +599,22 @@ def create_ledger_account_key_sync(*, client: StolonClient) -> ApiLedgerAccountK
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_ledger_account_key_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKey]:
+
+
+def create_ledger_account_key_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create ledger account key
 
     Args:
@@ -558,17 +625,17 @@ def create_ledger_account_key_asyncio_detailed(*, client: StolonClient) -> Respo
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_key._get_kwargs()
@@ -585,29 +652,38 @@ def create_ledger_account_key_asyncio_detailed(*, client: StolonClient) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_ledger_account_key_asyncio(*, client: StolonClient) -> ApiLedgerAccountKey | None:
+
+
+def create_ledger_account_key_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create ledger account key
 
     Args:
@@ -618,17 +694,17 @@ def create_ledger_account_key_asyncio(*, client: StolonClient) -> ApiLedgerAccou
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountKey | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_ledger_account_key._get_kwargs()
@@ -645,17 +721,23 @@ def create_ledger_account_key_asyncio(*, client: StolonClient) -> ApiLedgerAccou
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def update_ledger_account_key_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerAccountKey]:
+
+
+def update_ledger_account_key_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Update ledger account key
 
     Args:
@@ -667,7 +749,7 @@ def update_ledger_account_key_sync_detailed(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[Union[ApiLedgerAccountKey, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -677,7 +759,7 @@ def update_ledger_account_key_sync_detailed(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ApiLedgerAccountKey | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_key._get_kwargs(uuid=uuid)
@@ -694,29 +776,39 @@ def update_ledger_account_key_sync_detailed(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_ledger_account_key_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountKey | None:
+
+
+def update_ledger_account_key_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountKey | ResponseError | None:
     """Update ledger account key
 
     Args:
@@ -728,7 +820,7 @@ def update_ledger_account_key_sync(*, client: StolonClient, uuid: str) -> ApiLed
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        Union[ApiLedgerAccountKey, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -738,7 +830,7 @@ def update_ledger_account_key_sync(*, client: StolonClient, uuid: str) -> ApiLed
                 uuid: str
 
     Returns:
-        ApiLedgerAccountKey | None
+        ApiLedgerAccountKey | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_key._get_kwargs(uuid=uuid)
@@ -754,18 +846,17 @@ def update_ledger_account_key_sync(*, client: StolonClient, uuid: str) -> ApiLed
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def update_ledger_account_key_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerAccountKey]:
+
+
+def update_ledger_account_key_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Update ledger account key
 
     Args:
@@ -777,7 +868,7 @@ def update_ledger_account_key_asyncio_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[Union[ApiLedgerAccountKey, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -787,7 +878,7 @@ def update_ledger_account_key_asyncio_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ApiLedgerAccountKey | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_key._get_kwargs(uuid=uuid)
@@ -804,29 +895,39 @@ def update_ledger_account_key_asyncio_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_ledger_account_key_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerAccountKey | None:
+
+
+def update_ledger_account_key_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountKey | ResponseError | None:
     """Update ledger account key
 
     Args:
@@ -838,7 +939,7 @@ def update_ledger_account_key_asyncio(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        Union[ApiLedgerAccountKey, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -848,7 +949,7 @@ def update_ledger_account_key_asyncio(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiLedgerAccountKey | None
+        ApiLedgerAccountKey | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_ledger_account_key._get_kwargs(uuid=uuid)
@@ -864,18 +965,16 @@ def update_ledger_account_key_asyncio(*, client: StolonClient, uuid: str) -> Api
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def list_ledger_account_keys_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKey]:
+
+
+def list_ledger_account_keys_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Lists ledger account keys
 
     Args:
@@ -889,17 +988,17 @@ def list_ledger_account_keys_sync_detailed(*, client: StolonClient) -> Response[
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = list_ledger_account_keys._get_kwargs()
@@ -916,29 +1015,38 @@ def list_ledger_account_keys_sync_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def list_ledger_account_keys_sync(*, client: StolonClient) -> ApiLedgerAccountKey | None:
+
+
+def list_ledger_account_keys_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Lists ledger account keys
 
     Args:
@@ -952,17 +1060,17 @@ def list_ledger_account_keys_sync(*, client: StolonClient) -> ApiLedgerAccountKe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountKey | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = list_ledger_account_keys._get_kwargs()
@@ -979,17 +1087,22 @@ def list_ledger_account_keys_sync(*, client: StolonClient) -> ApiLedgerAccountKe
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def list_ledger_account_keys_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKey]:
+
+
+def list_ledger_account_keys_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Lists ledger account keys
 
     Args:
@@ -1003,17 +1116,17 @@ def list_ledger_account_keys_asyncio_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = list_ledger_account_keys._get_kwargs()
@@ -1030,29 +1143,38 @@ def list_ledger_account_keys_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def list_ledger_account_keys_asyncio(*, client: StolonClient) -> ApiLedgerAccountKey | None:
+
+
+def list_ledger_account_keys_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Lists ledger account keys
 
     Args:
@@ -1066,17 +1188,17 @@ def list_ledger_account_keys_asyncio(*, client: StolonClient) -> ApiLedgerAccoun
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountKey | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = list_ledger_account_keys._get_kwargs()
@@ -1093,17 +1215,22 @@ def list_ledger_account_keys_asyncio(*, client: StolonClient) -> ApiLedgerAccoun
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_ledger_account_key_by_key_sync_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKey]:
+
+
+def get_ledger_account_key_by_key_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key using the key value
 
     Args:
@@ -1114,17 +1241,17 @@ def get_ledger_account_key_by_key_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[Union[ApiLedgerAccountKey, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ApiLedgerAccountKey | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_key._get_kwargs()
@@ -1141,29 +1268,38 @@ def get_ledger_account_key_by_key_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_account_key_by_key_sync(*, client: StolonClient) -> ApiLedgerAccountKey | None:
+
+
+def get_ledger_account_key_by_key_sync(
+    *,
+    client: StolonClient
+) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key using the key value
 
     Args:
@@ -1174,17 +1310,17 @@ def get_ledger_account_key_by_key_sync(*, client: StolonClient) -> ApiLedgerAcco
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        Union[ApiLedgerAccountKey, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountKey | None
+        ApiLedgerAccountKey | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_key._get_kwargs()
@@ -1200,18 +1336,16 @@ def get_ledger_account_key_by_key_sync(*, client: StolonClient) -> ApiLedgerAcco
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_ledger_account_key_by_key_asyncio_detailed(*, client: StolonClient) -> Response[ApiLedgerAccountKey]:
+
+
+def get_ledger_account_key_by_key_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key using the key value
 
     Args:
@@ -1222,17 +1356,17 @@ def get_ledger_account_key_by_key_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[Union[ApiLedgerAccountKey, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiLedgerAccountKey]
+        Response[ApiLedgerAccountKey | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_key._get_kwargs()
@@ -1249,29 +1383,38 @@ def get_ledger_account_key_by_key_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccountKey:
-        parsed = ApiLedgerAccountKey.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_account_key_by_key_asyncio(*, client: StolonClient) -> ApiLedgerAccountKey | None:
+
+
+def get_ledger_account_key_by_key_asyncio(
+    *,
+    client: StolonClient
+) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key using the key value
 
     Args:
@@ -1282,17 +1425,17 @@ def get_ledger_account_key_by_key_asyncio(*, client: StolonClient) -> ApiLedgerA
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountKey
+        Union[ApiLedgerAccountKey, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiLedgerAccountKey | None
+        ApiLedgerAccountKey | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_ledger_account_key_by_key._get_kwargs()
@@ -1308,12 +1451,6 @@ def get_ledger_account_key_by_key_asyncio(*, client: StolonClient) -> ApiLedgerA
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccountKey.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+

@@ -6,22 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.device_type import (
-    get_device_type,
-    get_device_type_by_serial_number,
-    get_device_types,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.device_type import get_device_type
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.device_type import get_device_type_by_serial_number
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.device_type import get_device_types
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_device_type import ApiDeviceType
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_device_type_by_serial_number_sync_detailed(
-    *, client: StolonClient, serial_number: str
+    *,
+    client: StolonClient,
+    serial_number: str
 ) -> Response[ApiDeviceType | ResponseError]:
     """Get device type for the specified serial number
 
@@ -60,27 +60,38 @@ def get_device_type_by_serial_number_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_device_type_by_serial_number_sync(
-    *, client: StolonClient, serial_number: str
+    *,
+    client: StolonClient,
+    serial_number: str
 ) -> ApiDeviceType | ResponseError | None:
     """Get device type for the specified serial number
 
@@ -108,7 +119,7 @@ def get_device_type_by_serial_number_sync(
     kwargs = get_device_type_by_serial_number._get_kwargs(serial_number=serial_number)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -120,10 +131,14 @@ def get_device_type_by_serial_number_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_device_type_by_serial_number_asyncio_detailed(
-    *, client: StolonClient, serial_number: str
+    *,
+    client: StolonClient,
+    serial_number: str
 ) -> Response[ApiDeviceType | ResponseError]:
     """Get device type for the specified serial number
 
@@ -162,27 +177,38 @@ def get_device_type_by_serial_number_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_device_type_by_serial_number_asyncio(
-    *, client: StolonClient, serial_number: str
+    *,
+    client: StolonClient,
+    serial_number: str
 ) -> ApiDeviceType | ResponseError | None:
     """Get device type for the specified serial number
 
@@ -210,7 +236,7 @@ def get_device_type_by_serial_number_asyncio(
     kwargs = get_device_type_by_serial_number._get_kwargs(serial_number=serial_number)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -224,7 +250,12 @@ def get_device_type_by_serial_number_asyncio(
     return None
 
 
-def get_device_types_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def get_device_types_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -242,7 +273,7 @@ def get_device_types_sync_detailed(*, client: StolonClient) -> Response[Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError]
@@ -262,13 +293,17 @@ def get_device_types_sync_detailed(*, client: StolonClient) -> Response[Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -278,13 +313,18 @@ def get_device_types_sync_detailed(*, client: StolonClient) -> Response[Response
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_device_types_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get all device types for devices and device groups
 
     Args:
@@ -302,7 +342,7 @@ def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | None
@@ -322,7 +362,7 @@ def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -332,7 +372,12 @@ def get_device_types_sync(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+
+
+def get_device_types_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get all device types for devices and device groups
 
     Args:
@@ -350,7 +395,7 @@ def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError]
@@ -370,13 +415,17 @@ def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -386,13 +435,18 @@ def get_device_types_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_device_types_asyncio(*, client: StolonClient) -> ResponseError | None:
+
+
+def get_device_types_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get all device types for devices and device groups
 
     Args:
@@ -410,7 +464,7 @@ def get_device_types_asyncio(*, client: StolonClient) -> ResponseError | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | None
@@ -430,7 +484,7 @@ def get_device_types_asyncio(*, client: StolonClient) -> ResponseError | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -440,106 +494,12 @@ def get_device_types_asyncio(*, client: StolonClient) -> ResponseError | None:
     return None
 
 
-def get_device_type_sync_detailed(*, client: StolonClient, device_type: str) -> Response[ApiDeviceType | ResponseError]:
-    """Get device or device group for specified device type
-
-    Args:
-        device_type (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ApiDeviceType, ResponseError]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                device_type: str
-
-    Returns:
-        Response[ApiDeviceType | ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_device_type._get_kwargs(device_type=device_type)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
 
 
-def get_device_type_sync(*, client: StolonClient, device_type: str) -> ApiDeviceType | ResponseError | None:
-    """Get device or device group for specified device type
-
-    Args:
-        device_type (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ApiDeviceType, ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                device_type: str
-
-    Returns:
-        ApiDeviceType | ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_device_type._get_kwargs(device_type=device_type)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def get_device_type_asyncio_detailed(
-    *, client: StolonClient, device_type: str
+def get_device_type_sync_detailed(
+    *,
+    client: StolonClient,
+    device_type: str
 ) -> Response[ApiDeviceType | ResponseError]:
     """Get device or device group for specified device type
 
@@ -578,26 +538,39 @@ def get_device_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_device_type_asyncio(*, client: StolonClient, device_type: str) -> ApiDeviceType | ResponseError | None:
+
+
+def get_device_type_sync(
+    *,
+    client: StolonClient,
+    device_type: str
+) -> ApiDeviceType | ResponseError | None:
     """Get device or device group for specified device type
 
     Args:
@@ -624,7 +597,7 @@ def get_device_type_asyncio(*, client: StolonClient, device_type: str) -> ApiDev
     kwargs = get_device_type._get_kwargs(device_type=device_type)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -636,3 +609,121 @@ def get_device_type_asyncio(*, client: StolonClient, device_type: str) -> ApiDev
 
     # No response model, return None
     return None
+
+
+
+
+def get_device_type_asyncio_detailed(
+    *,
+    client: StolonClient,
+    device_type: str
+) -> Response[ApiDeviceType | ResponseError]:
+    """Get device or device group for specified device type
+
+    Args:
+        device_type (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ApiDeviceType, ResponseError]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                device_type: str
+
+    Returns:
+        Response[ApiDeviceType | ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_device_type._get_kwargs(device_type=device_type)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_device_type_asyncio(
+    *,
+    client: StolonClient,
+    device_type: str
+) -> ApiDeviceType | ResponseError | None:
+    """Get device or device group for specified device type
+
+    Args:
+        device_type (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ApiDeviceType, ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                device_type: str
+
+    Returns:
+        ApiDeviceType | ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_device_type._get_kwargs(device_type=device_type)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+

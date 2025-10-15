@@ -6,31 +6,28 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
-    advance_billing_date,
-    advance_cycle_date,
-    advance_posting_date,
-    advance_settlement_date,
-    create_processing_group_dates,
-    get_processing_group_dates_by_billing_entity_uuid,
-    get_processing_group_dates_by_uuid,
-    list_processing_group_dates,
-    resolve_processing_group_dates_for_child,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_processing_group_dates import (
-    ApiProcessingGroupDates,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_billing_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_cycle_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_posting_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_settlement_date
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import create_processing_group_dates
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import get_processing_group_dates_by_billing_entity_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import get_processing_group_dates_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import list_processing_group_dates
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import resolve_processing_group_dates_for_child
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def resolve_processing_group_dates_for_child_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
 
@@ -43,7 +40,7 @@ def resolve_processing_group_dates_for_child_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -53,7 +50,7 @@ def resolve_processing_group_dates_for_child_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -70,31 +67,39 @@ def resolve_processing_group_dates_for_child_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def resolve_processing_group_dates_for_child_sync(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiProcessingGroupDates | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
 
@@ -107,7 +112,7 @@ def resolve_processing_group_dates_for_child_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -117,7 +122,7 @@ def resolve_processing_group_dates_for_child_sync(
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -134,19 +139,23 @@ def resolve_processing_group_dates_for_child_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def resolve_processing_group_dates_for_child_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
 
@@ -159,7 +168,7 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -169,7 +178,7 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -186,31 +195,39 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def resolve_processing_group_dates_for_child_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiProcessingGroupDates | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
 
@@ -223,7 +240,7 @@ def resolve_processing_group_dates_for_child_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -233,7 +250,7 @@ def resolve_processing_group_dates_for_child_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -250,17 +267,22 @@ def resolve_processing_group_dates_for_child_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[ApiProcessingGroupDates]:
+
+
+def list_processing_group_dates_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Lists processing group dates
 
     Args:
@@ -274,17 +296,17 @@ def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = list_processing_group_dates._get_kwargs()
@@ -301,29 +323,38 @@ def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def list_processing_group_dates_sync(*, client: StolonClient) -> ApiProcessingGroupDates | None:
+
+
+def list_processing_group_dates_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Lists processing group dates
 
     Args:
@@ -337,17 +368,17 @@ def list_processing_group_dates_sync(*, client: StolonClient) -> ApiProcessingGr
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = list_processing_group_dates._get_kwargs()
@@ -364,17 +395,22 @@ def list_processing_group_dates_sync(*, client: StolonClient) -> ApiProcessingGr
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[ApiProcessingGroupDates]:
+
+
+def list_processing_group_dates_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Lists processing group dates
 
     Args:
@@ -388,17 +424,17 @@ def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = list_processing_group_dates._get_kwargs()
@@ -415,29 +451,38 @@ def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def list_processing_group_dates_asyncio(*, client: StolonClient) -> ApiProcessingGroupDates | None:
+
+
+def list_processing_group_dates_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Lists processing group dates
 
     Args:
@@ -451,17 +496,17 @@ def list_processing_group_dates_asyncio(*, client: StolonClient) -> ApiProcessin
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = list_processing_group_dates._get_kwargs()
@@ -478,19 +523,23 @@ def list_processing_group_dates_asyncio(*, client: StolonClient) -> ApiProcessin
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_processing_group_dates_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get processing group dates by UUID
 
     Args:
@@ -501,7 +550,7 @@ def get_processing_group_dates_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -511,7 +560,7 @@ def get_processing_group_dates_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
@@ -528,29 +577,39 @@ def get_processing_group_dates_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def get_processing_group_dates_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get processing group dates by UUID
 
     Args:
@@ -561,7 +620,7 @@ def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -571,7 +630,7 @@ def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
@@ -588,19 +647,23 @@ def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_processing_group_dates_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get processing group dates by UUID
 
     Args:
@@ -611,7 +674,7 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -621,7 +684,7 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
@@ -638,29 +701,39 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def get_processing_group_dates_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get processing group dates by UUID
 
     Args:
@@ -671,7 +744,7 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -681,7 +754,7 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
@@ -698,19 +771,23 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_posting_date_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
     Args:
@@ -723,7 +800,7 @@ def advance_posting_date_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -733,7 +810,7 @@ def advance_posting_date_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -750,29 +827,39 @@ def advance_posting_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_posting_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance posting date for a processing group
 
     Args:
@@ -785,7 +872,7 @@ def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -795,7 +882,7 @@ def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str)
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -812,19 +899,23 @@ def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_posting_date_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
     Args:
@@ -837,7 +928,7 @@ def advance_posting_date_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -847,7 +938,7 @@ def advance_posting_date_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -864,29 +955,39 @@ def advance_posting_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_posting_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance posting date for a processing group
 
     Args:
@@ -899,7 +1000,7 @@ def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -909,7 +1010,7 @@ def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -926,19 +1027,22 @@ def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -951,17 +1055,17 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
@@ -978,29 +1082,38 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClient) -> ApiProcessingGroupDates | None:
+
+
+def get_processing_group_dates_by_billing_entity_uuid_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1013,17 +1126,17 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClie
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
@@ -1040,19 +1153,22 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClie
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1065,17 +1181,17 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
@@ -1092,31 +1208,38 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_asyncio(
-    *, client: StolonClient
-) -> ApiProcessingGroupDates | None:
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1129,17 +1252,17 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs()
@@ -1156,17 +1279,22 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[ApiProcessingGroupDates]:
+
+
+def create_processing_group_dates_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create processing group dates
 
     Args:
@@ -1177,17 +1305,17 @@ def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_processing_group_dates._get_kwargs()
@@ -1204,29 +1332,38 @@ def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_processing_group_dates_sync(*, client: StolonClient) -> ApiProcessingGroupDates | None:
+
+
+def create_processing_group_dates_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create processing group dates
 
     Args:
@@ -1237,17 +1374,17 @@ def create_processing_group_dates_sync(*, client: StolonClient) -> ApiProcessing
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_processing_group_dates._get_kwargs()
@@ -1264,17 +1401,22 @@ def create_processing_group_dates_sync(*, client: StolonClient) -> ApiProcessing
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[ApiProcessingGroupDates]:
+
+
+def create_processing_group_dates_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create processing group dates
 
     Args:
@@ -1285,17 +1427,17 @@ def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_processing_group_dates._get_kwargs()
@@ -1312,29 +1454,38 @@ def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_processing_group_dates_asyncio(*, client: StolonClient) -> ApiProcessingGroupDates | None:
+
+
+def create_processing_group_dates_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create processing group dates
 
     Args:
@@ -1345,17 +1496,17 @@ def create_processing_group_dates_asyncio(*, client: StolonClient) -> ApiProcess
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_processing_group_dates._get_kwargs()
@@ -1372,19 +1523,23 @@ def create_processing_group_dates_asyncio(*, client: StolonClient) -> ApiProcess
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_billing_date_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
     Args:
@@ -1397,7 +1552,7 @@ def advance_billing_date_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1407,7 +1562,7 @@ def advance_billing_date_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1424,29 +1579,39 @@ def advance_billing_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_billing_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance billing date for a processing group
 
     Args:
@@ -1459,7 +1624,7 @@ def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1469,7 +1634,7 @@ def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str)
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1486,19 +1651,23 @@ def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_billing_date_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
     Args:
@@ -1511,7 +1680,7 @@ def advance_billing_date_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1521,7 +1690,7 @@ def advance_billing_date_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1538,29 +1707,39 @@ def advance_billing_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_billing_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance billing date for a processing group
 
     Args:
@@ -1573,7 +1752,7 @@ def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1583,7 +1762,7 @@ def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1600,19 +1779,23 @@ def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: s
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_settlement_date_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
     Args:
@@ -1625,7 +1808,7 @@ def advance_settlement_date_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1635,7 +1818,7 @@ def advance_settlement_date_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1652,29 +1835,39 @@ def advance_settlement_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_settlement_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance settlement date for a processing group
 
     Args:
@@ -1687,7 +1880,7 @@ def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1697,7 +1890,7 @@ def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: s
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1714,19 +1907,23 @@ def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: s
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_settlement_date_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
     Args:
@@ -1739,7 +1936,7 @@ def advance_settlement_date_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1749,7 +1946,7 @@ def advance_settlement_date_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1766,31 +1963,39 @@ def advance_settlement_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_settlement_date_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> ApiProcessingGroupDates | None:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance settlement date for a processing group
 
     Args:
@@ -1803,7 +2008,7 @@ def advance_settlement_date_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1813,7 +2018,7 @@ def advance_settlement_date_asyncio(
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1830,19 +2035,23 @@ def advance_settlement_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_cycle_date_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
     Args:
@@ -1855,7 +2064,7 @@ def advance_cycle_date_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1865,7 +2074,7 @@ def advance_cycle_date_sync_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1882,29 +2091,39 @@ def advance_cycle_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_cycle_date_sync(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance cycle date for a processing group
 
     Args:
@@ -1917,7 +2136,7 @@ def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1927,7 +2146,7 @@ def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1944,19 +2163,23 @@ def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_cycle_date_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
-) -> Response[ApiProcessingGroupDates]:
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
     Args:
@@ -1969,7 +2192,7 @@ def advance_cycle_date_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1979,7 +2202,7 @@ def advance_cycle_date_asyncio_detailed(
                 billing_entity_uuid: str
 
     Returns:
-        Response[ApiProcessingGroupDates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -1996,29 +2219,39 @@ def advance_cycle_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiProcessingGroupDates:
-        parsed = ApiProcessingGroupDates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ApiProcessingGroupDates | None:
+
+
+def advance_cycle_date_asyncio(
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
+) -> ResponseError | None:
     """Advance cycle date for a processing group
 
     Args:
@@ -2031,7 +2264,7 @@ def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiProcessingGroupDates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -2041,7 +2274,7 @@ def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str
                 billing_entity_uuid: str
 
     Returns:
-        ApiProcessingGroupDates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid)
@@ -2058,11 +2291,12 @@ def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiProcessingGroupDates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

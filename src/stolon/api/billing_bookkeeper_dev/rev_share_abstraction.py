@@ -6,30 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import (
-    create_update_rev_share_abstractions,
-    get_rev_share_abstraction_details,
-    get_rev_share_abstractions,
-    preview_rev_share_abstraction_for_create_or_update,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_rev_share_abstraction import (
-    ApiRevShareAbstraction,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_rev_share_abstraction_details import (
-    ApiRevShareAbstractionDetails,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_rev_share_abstraction_updates import (
-    ApiRevShareAbstractionUpdates,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import create_update_rev_share_abstractions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import get_rev_share_abstraction_details
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import get_rev_share_abstractions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import preview_rev_share_abstraction_for_create_or_update
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> Response[ApiRevShareAbstractionDetails]:
+def get_rev_share_abstraction_details_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
     Args:
@@ -44,17 +36,17 @@ def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstractionDetails]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstractionDetails]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstraction_details._get_kwargs()
@@ -71,29 +63,38 @@ def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstractionDetails:
-        parsed = ApiRevShareAbstractionDetails.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ApiRevShareAbstractionDetails | None:
+
+
+def get_rev_share_abstraction_details_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get details of a rev share abstractions
 
     Args:
@@ -108,17 +109,17 @@ def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ApiRevSha
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstractionDetails
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstractionDetails | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstraction_details._get_kwargs()
@@ -135,19 +136,22 @@ def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ApiRevSha
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstractionDetails.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_rev_share_abstraction_details_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiRevShareAbstractionDetails]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
     Args:
@@ -162,17 +166,17 @@ def get_rev_share_abstraction_details_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstractionDetails]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstractionDetails]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstraction_details._get_kwargs()
@@ -189,29 +193,38 @@ def get_rev_share_abstraction_details_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstractionDetails:
-        parsed = ApiRevShareAbstractionDetails.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> ApiRevShareAbstractionDetails | None:
+
+
+def get_rev_share_abstraction_details_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get details of a rev share abstractions
 
     Args:
@@ -226,17 +239,17 @@ def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> ApiRev
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstractionDetails
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstractionDetails | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstraction_details._get_kwargs()
@@ -253,19 +266,22 @@ def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> ApiRev
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstractionDetails.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
-    *, client: StolonClient
-) -> Response[ApiRevShareAbstractionUpdates]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -276,17 +292,17 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstractionUpdates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstractionUpdates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
@@ -303,31 +319,38 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstractionUpdates:
-        parsed = ApiRevShareAbstractionUpdates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_sync(
-    *, client: StolonClient
-) -> ApiRevShareAbstractionUpdates | None:
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -338,17 +361,17 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstractionUpdates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstractionUpdates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
@@ -365,19 +388,22 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstractionUpdates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
-    *, client: StolonClient
-) -> Response[ApiRevShareAbstractionUpdates]:
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -388,17 +414,17 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstractionUpdates]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstractionUpdates]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
@@ -415,31 +441,38 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstractionUpdates:
-        parsed = ApiRevShareAbstractionUpdates.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_asyncio(
-    *, client: StolonClient
-) -> ApiRevShareAbstractionUpdates | None:
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -450,17 +483,17 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstractionUpdates
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstractionUpdates | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs()
@@ -477,17 +510,22 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstractionUpdates.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Response[ApiRevShareAbstraction]:
+
+
+def create_update_rev_share_abstractions_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -498,17 +536,17 @@ def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs()
@@ -525,29 +563,38 @@ def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstraction:
-        parsed = ApiRevShareAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> ApiRevShareAbstraction | None:
+
+
+def create_update_rev_share_abstractions_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -558,17 +605,17 @@ def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> ApiRev
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs()
@@ -585,17 +632,22 @@ def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> ApiRev
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Response[ApiRevShareAbstraction]:
+
+
+def create_update_rev_share_abstractions_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -606,17 +658,17 @@ def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClien
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs()
@@ -633,29 +685,38 @@ def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClien
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstraction:
-        parsed = ApiRevShareAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> ApiRevShareAbstraction | None:
+
+
+def create_update_rev_share_abstractions_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -666,17 +727,17 @@ def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs()
@@ -693,17 +754,22 @@ def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Response[ApiRevShareAbstraction]:
+
+
+def get_rev_share_abstractions_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -718,17 +784,17 @@ def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Respons
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstractions._get_kwargs()
@@ -745,29 +811,38 @@ def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Respons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstraction:
-        parsed = ApiRevShareAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_rev_share_abstractions_sync(*, client: StolonClient) -> ApiRevShareAbstraction | None:
+
+
+def get_rev_share_abstractions_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get rev share abstractions
 
     Args:
@@ -782,17 +857,17 @@ def get_rev_share_abstractions_sync(*, client: StolonClient) -> ApiRevShareAbstr
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstractions._get_kwargs()
@@ -809,17 +884,22 @@ def get_rev_share_abstractions_sync(*, client: StolonClient) -> ApiRevShareAbstr
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Response[ApiRevShareAbstraction]:
+
+
+def get_rev_share_abstractions_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -834,17 +914,17 @@ def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstractions._get_kwargs()
@@ -861,29 +941,38 @@ def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiRevShareAbstraction:
-        parsed = ApiRevShareAbstraction.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_rev_share_abstractions_asyncio(*, client: StolonClient) -> ApiRevShareAbstraction | None:
+
+
+def get_rev_share_abstractions_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get rev share abstractions
 
     Args:
@@ -898,17 +987,17 @@ def get_rev_share_abstractions_asyncio(*, client: StolonClient) -> ApiRevShareAb
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstraction
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiRevShareAbstraction | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_rev_share_abstractions._get_kwargs()
@@ -925,11 +1014,12 @@ def get_rev_share_abstractions_asyncio(*, client: StolonClient) -> ApiRevShareAb
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiRevShareAbstraction.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

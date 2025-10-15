@@ -6,20 +6,20 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjustment import (
-    create_adjustment,
-    reseller_create_adjustment,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjustment import ApiAdjustment
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjustment import create_adjustment
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjustment import reseller_create_adjustment
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_adjustment_sync_detailed(*, client: StolonClient) -> Response[ApiAdjustment]:
+def create_adjustment_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create adjustment
 
     Args:
@@ -30,17 +30,17 @@ def create_adjustment_sync_detailed(*, client: StolonClient) -> Response[ApiAdju
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs()
@@ -57,29 +57,38 @@ def create_adjustment_sync_detailed(*, client: StolonClient) -> Response[ApiAdju
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustment:
-        parsed = ApiAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjustment_sync(*, client: StolonClient) -> ApiAdjustment | None:
+
+
+def create_adjustment_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create adjustment
 
     Args:
@@ -90,17 +99,17 @@ def create_adjustment_sync(*, client: StolonClient) -> ApiAdjustment | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustment
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAdjustment | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs()
@@ -117,17 +126,22 @@ def create_adjustment_sync(*, client: StolonClient) -> ApiAdjustment | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustment.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_adjustment_asyncio_detailed(*, client: StolonClient) -> Response[ApiAdjustment]:
+
+
+def create_adjustment_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create adjustment
 
     Args:
@@ -138,17 +152,17 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient) -> Response[ApiA
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs()
@@ -165,29 +179,38 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient) -> Response[ApiA
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustment:
-        parsed = ApiAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjustment_asyncio(*, client: StolonClient) -> ApiAdjustment | None:
+
+
+def create_adjustment_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create adjustment
 
     Args:
@@ -198,17 +221,17 @@ def create_adjustment_asyncio(*, client: StolonClient) -> ApiAdjustment | None:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustment
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiAdjustment | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs()
@@ -225,17 +248,23 @@ def create_adjustment_asyncio(*, client: StolonClient) -> ApiAdjustment | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustment.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiAdjustment]:
+
+
+def reseller_create_adjustment_sync_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ResponseError]:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -248,7 +277,7 @@ def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str)
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -258,7 +287,7 @@ def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str)
                 r_id: str
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
@@ -275,29 +304,39 @@ def reseller_create_adjustment_sync_detailed(*, client: StolonClient, r_id: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustment:
-        parsed = ApiAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> ApiAdjustment | None:
+
+
+def reseller_create_adjustment_sync(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ResponseError | None:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -310,7 +349,7 @@ def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> ApiAd
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustment
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -320,7 +359,7 @@ def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> ApiAd
                 r_id: str
 
     Returns:
-        ApiAdjustment | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
@@ -337,17 +376,23 @@ def reseller_create_adjustment_sync(*, client: StolonClient, r_id: str) -> ApiAd
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustment.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ApiAdjustment]:
+
+
+def reseller_create_adjustment_asyncio_detailed(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> Response[ResponseError]:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -360,7 +405,7 @@ def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -370,7 +415,7 @@ def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: s
                 r_id: str
 
     Returns:
-        Response[ApiAdjustment]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
@@ -387,29 +432,39 @@ def reseller_create_adjustment_asyncio_detailed(*, client: StolonClient, r_id: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAdjustment:
-        parsed = ApiAdjustment.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def reseller_create_adjustment_asyncio(*, client: StolonClient, r_id: str) -> ApiAdjustment | None:
+
+
+def reseller_create_adjustment_asyncio(
+    *,
+    client: StolonClient,
+    r_id: str
+) -> ResponseError | None:
     """Create adjustment for an entity that reseller can access
 
     Args:
@@ -422,7 +477,7 @@ def reseller_create_adjustment_asyncio(*, client: StolonClient, r_id: str) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAdjustment
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -432,7 +487,7 @@ def reseller_create_adjustment_asyncio(*, client: StolonClient, r_id: str) -> Ap
                 r_id: str
 
     Returns:
-        ApiAdjustment | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id)
@@ -449,11 +504,12 @@ def reseller_create_adjustment_asyncio(*, client: StolonClient, r_id: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiAdjustment.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -6,19 +6,20 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import (
-    compute_fee_estimate_for_merchant,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import compute_fee_estimate_for_merchant
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_estimate import ApiFeeEstimate
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def compute_fee_estimate_for_merchant_sync_detailed(*, client: StolonClient) -> Response[ApiFeeEstimate]:
+def compute_fee_estimate_for_merchant_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -29,17 +30,17 @@ def compute_fee_estimate_for_merchant_sync_detailed(*, client: StolonClient) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeEstimate]
+        Response[Union[ApiFeeEstimate, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeEstimate]
+        Response[ApiFeeEstimate | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs()
@@ -56,29 +57,38 @@ def compute_fee_estimate_for_merchant_sync_detailed(*, client: StolonClient) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeEstimate:
-        parsed = ApiFeeEstimate.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEstimate | None:
+
+
+def compute_fee_estimate_for_merchant_sync(
+    *,
+    client: StolonClient
+) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -89,17 +99,17 @@ def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEst
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeEstimate
+        Union[ApiFeeEstimate, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeEstimate | None
+        ApiFeeEstimate | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs()
@@ -115,18 +125,16 @@ def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEst
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeEstimate.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def compute_fee_estimate_for_merchant_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeEstimate]:
+
+
+def compute_fee_estimate_for_merchant_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -137,17 +145,17 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(*, client: StolonClient) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeEstimate]
+        Response[Union[ApiFeeEstimate, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiFeeEstimate]
+        Response[ApiFeeEstimate | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs()
@@ -164,29 +172,38 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(*, client: StolonClient) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeEstimate:
-        parsed = ApiFeeEstimate.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def compute_fee_estimate_for_merchant_asyncio(*, client: StolonClient) -> ApiFeeEstimate | None:
+
+
+def compute_fee_estimate_for_merchant_asyncio(
+    *,
+    client: StolonClient
+) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -197,17 +214,17 @@ def compute_fee_estimate_for_merchant_asyncio(*, client: StolonClient) -> ApiFee
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeEstimate
+        Union[ApiFeeEstimate, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiFeeEstimate | None
+        ApiFeeEstimate | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs()
@@ -223,12 +240,6 @@ def compute_fee_estimate_for_merchant_asyncio(*, client: StolonClient) -> ApiFee
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiFeeEstimate.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+

@@ -6,23 +6,20 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_action_fee_rate import (
-    get_fee_descriptions_for_merchant_plans,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_action_fee_code_detail import (
-    ApiPlanActionFeeCodeDetail,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_action_fee_rate import get_fee_descriptions_for_merchant_plans
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_fee_descriptions_for_merchant_plans_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiPlanActionFeeCodeDetail]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get fee descriptions for the provided plans
 
     Args:
@@ -37,7 +34,7 @@ def get_fee_descriptions_for_merchant_plans_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanActionFeeCodeDetail]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -47,7 +44,7 @@ def get_fee_descriptions_for_merchant_plans_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiPlanActionFeeCodeDetail]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_descriptions_for_merchant_plans._get_kwargs(uuid=uuid)
@@ -64,31 +61,39 @@ def get_fee_descriptions_for_merchant_plans_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanActionFeeCodeDetail:
-        parsed = ApiPlanActionFeeCodeDetail.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_descriptions_for_merchant_plans_sync(
-    *, client: StolonClient, uuid: str
-) -> ApiPlanActionFeeCodeDetail | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get fee descriptions for the provided plans
 
     Args:
@@ -103,7 +108,7 @@ def get_fee_descriptions_for_merchant_plans_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanActionFeeCodeDetail
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -113,7 +118,7 @@ def get_fee_descriptions_for_merchant_plans_sync(
                 uuid: str
 
     Returns:
-        ApiPlanActionFeeCodeDetail | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_descriptions_for_merchant_plans._get_kwargs(uuid=uuid)
@@ -130,19 +135,23 @@ def get_fee_descriptions_for_merchant_plans_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanActionFeeCodeDetail.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
+
+
 def get_fee_descriptions_for_merchant_plans_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiPlanActionFeeCodeDetail]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get fee descriptions for the provided plans
 
     Args:
@@ -157,7 +166,7 @@ def get_fee_descriptions_for_merchant_plans_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanActionFeeCodeDetail]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -167,7 +176,7 @@ def get_fee_descriptions_for_merchant_plans_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiPlanActionFeeCodeDetail]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_fee_descriptions_for_merchant_plans._get_kwargs(uuid=uuid)
@@ -184,31 +193,39 @@ def get_fee_descriptions_for_merchant_plans_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPlanActionFeeCodeDetail:
-        parsed = ApiPlanActionFeeCodeDetail.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_fee_descriptions_for_merchant_plans_asyncio(
-    *, client: StolonClient, uuid: str
-) -> ApiPlanActionFeeCodeDetail | None:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get fee descriptions for the provided plans
 
     Args:
@@ -223,7 +240,7 @@ def get_fee_descriptions_for_merchant_plans_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanActionFeeCodeDetail
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -233,7 +250,7 @@ def get_fee_descriptions_for_merchant_plans_asyncio(
                 uuid: str
 
     Returns:
-        ApiPlanActionFeeCodeDetail | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_fee_descriptions_for_merchant_plans._get_kwargs(uuid=uuid)
@@ -250,11 +267,12 @@ def get_fee_descriptions_for_merchant_plans_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiPlanActionFeeCodeDetail.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

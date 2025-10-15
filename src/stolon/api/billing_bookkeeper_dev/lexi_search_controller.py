@@ -6,25 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import (
-    get_lexicons_for_word,
-    get_rules_for_word,
-    get_word_attributes,
-    get_word_by_regex,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_lexicons_for_word
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_rules_for_word
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_word_attributes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_word_by_regex
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.all_rules import AllRules
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.get_word_by_regex_response200 import (
-    GetWordByRegexResponse200,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.get_word_by_regex_response200 import GetWordByRegexResponse200
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWordByRegexResponse200]:
+def get_word_by_regex_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[GetWordByRegexResponse200]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -43,7 +41,7 @@ def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWord
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[GetWordByRegexResponse200]
@@ -63,13 +61,17 @@ def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWord
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetWordByRegexResponse200:
@@ -79,13 +81,18 @@ def get_word_by_regex_sync_detailed(*, client: StolonClient) -> Response[GetWord
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200 | None:
+
+
+def get_word_by_regex_sync(
+    *,
+    client: StolonClient
+) -> GetWordByRegexResponse200 | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -104,7 +111,7 @@ def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         GetWordByRegexResponse200 | None
@@ -124,7 +131,7 @@ def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -134,7 +141,12 @@ def get_word_by_regex_sync(*, client: StolonClient) -> GetWordByRegexResponse200
     return None
 
 
-def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetWordByRegexResponse200]:
+
+
+def get_word_by_regex_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[GetWordByRegexResponse200]:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -153,7 +165,7 @@ def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetW
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[GetWordByRegexResponse200]
@@ -173,13 +185,17 @@ def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetW
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetWordByRegexResponse200:
@@ -189,13 +205,18 @@ def get_word_by_regex_asyncio_detailed(*, client: StolonClient) -> Response[GetW
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse200 | None:
+
+
+def get_word_by_regex_asyncio(
+    *,
+    client: StolonClient
+) -> GetWordByRegexResponse200 | None:
     """Args:
         page_size (Union[Unset, int]):
         page_number (Union[Unset, int]):
@@ -214,7 +235,7 @@ def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         GetWordByRegexResponse200 | None
@@ -234,7 +255,7 @@ def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -244,7 +265,12 @@ def get_word_by_regex_asyncio(*, client: StolonClient) -> GetWordByRegexResponse
     return None
 
 
-def get_word_attributes_sync_detailed(*, client: StolonClient) -> Response[list[str]]:
+
+
+def get_word_attributes_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[list[str]]:
     """Args:
         lexicon (str):
         word (str):
@@ -261,103 +287,7 @@ def get_word_attributes_sync_detailed(*, client: StolonClient) -> Response[list[
 
     Args:
         client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[list[str]]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_word_attributes_sync(*, client: StolonClient) -> list[str] | None:
-    """Args:
-        lexicon (str):
-        word (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        list[str]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        list[str] | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs()
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def get_word_attributes_asyncio_detailed(*, client: StolonClient) -> Response[list[str]]:
-    """Args:
-        lexicon (str):
-        word (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[list[str]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list[str]]
@@ -377,26 +307,38 @@ def get_word_attributes_asyncio_detailed(*, client: StolonClient) -> Response[li
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
+
+
+def get_word_attributes_sync(
+    *,
+    client: StolonClient
+) -> list[str] | None:
     """Args:
         lexicon (str):
         word (str):
@@ -413,7 +355,7 @@ def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list[str] | None
@@ -422,7 +364,7 @@ def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
     kwargs = get_word_attributes._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -436,7 +378,125 @@ def get_word_attributes_asyncio(*, client: StolonClient) -> list[str] | None:
     return None
 
 
-def get_rules_for_word_sync_detailed(*, client: StolonClient) -> Response[AllRules]:
+
+
+def get_word_attributes_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[list[str]]:
+    """Args:
+        lexicon (str):
+        word (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[list[str]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[list[str]]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_word_attributes._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_word_attributes_asyncio(
+    *,
+    client: StolonClient
+) -> list[str] | None:
+    """Args:
+        lexicon (str):
+        word (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        list[str]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        list[str] | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_word_attributes._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def get_rules_for_word_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[AllRules]:
     """Args:
         lexicon (str):
         word (str):
@@ -453,7 +513,7 @@ def get_rules_for_word_sync_detailed(*, client: StolonClient) -> Response[AllRul
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[AllRules]
@@ -473,26 +533,38 @@ def get_rules_for_word_sync_detailed(*, client: StolonClient) -> Response[AllRul
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = AllRules.from_dict(body_json) if body_json and proxy_response.status_code == 200 and AllRules else None
+    if body_json and proxy_response.status_code == 200 and AllRules:
+        parsed = AllRules.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
+
+
+def get_rules_for_word_sync(
+    *,
+    client: StolonClient
+) -> AllRules | None:
     """Args:
         lexicon (str):
         word (str):
@@ -509,7 +581,7 @@ def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         AllRules | None
@@ -529,7 +601,7 @@ def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -539,7 +611,12 @@ def get_rules_for_word_sync(*, client: StolonClient) -> AllRules | None:
     return None
 
 
-def get_rules_for_word_asyncio_detailed(*, client: StolonClient) -> Response[AllRules]:
+
+
+def get_rules_for_word_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[AllRules]:
     """Args:
         lexicon (str):
         word (str):
@@ -556,7 +633,7 @@ def get_rules_for_word_asyncio_detailed(*, client: StolonClient) -> Response[All
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[AllRules]
@@ -576,26 +653,38 @@ def get_rules_for_word_asyncio_detailed(*, client: StolonClient) -> Response[All
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = AllRules.from_dict(body_json) if body_json and proxy_response.status_code == 200 and AllRules else None
+    if body_json and proxy_response.status_code == 200 and AllRules:
+        parsed = AllRules.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
+
+
+def get_rules_for_word_asyncio(
+    *,
+    client: StolonClient
+) -> AllRules | None:
     """Args:
         lexicon (str):
         word (str):
@@ -612,7 +701,7 @@ def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         AllRules | None
@@ -632,7 +721,7 @@ def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -642,7 +731,12 @@ def get_rules_for_word_asyncio(*, client: StolonClient) -> AllRules | None:
     return None
 
 
-def get_lexicons_for_word_sync_detailed(*, client: StolonClient) -> Response[list[str]]:
+
+
+def get_lexicons_for_word_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[list[str]]:
     """Args:
         word (str):
 
@@ -658,101 +752,7 @@ def get_lexicons_for_word_sync_detailed(*, client: StolonClient) -> Response[lis
 
     Args:
         client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[list[str]]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_lexicons_for_word_sync(*, client: StolonClient) -> list[str] | None:
-    """Args:
-        word (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        list[str]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        list[str] | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs()
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient) -> Response[list[str]]:
-    """Args:
-        word (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[list[str]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[list[str]]
@@ -772,26 +772,38 @@ def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_lexicons_for_word_asyncio(*, client: StolonClient) -> list[str] | None:
+
+
+def get_lexicons_for_word_sync(
+    *,
+    client: StolonClient
+) -> list[str] | None:
     """Args:
         word (str):
 
@@ -807,7 +819,7 @@ def get_lexicons_for_word_asyncio(*, client: StolonClient) -> list[str] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         list[str] | None
@@ -816,7 +828,7 @@ def get_lexicons_for_word_asyncio(*, client: StolonClient) -> list[str] | None:
     kwargs = get_lexicons_for_word._get_kwargs()
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -828,3 +840,115 @@ def get_lexicons_for_word_asyncio(*, client: StolonClient) -> list[str] | None:
 
     # No response model, return None
     return None
+
+
+
+
+def get_lexicons_for_word_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[list[str]]:
+    """Args:
+        word (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[list[str]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[list[str]]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_lexicons_for_word._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_lexicons_for_word_asyncio(
+    *,
+    client: StolonClient
+) -> list[str] | None:
+    """Args:
+        word (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        list[str]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        list[str] | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_lexicons_for_word._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+

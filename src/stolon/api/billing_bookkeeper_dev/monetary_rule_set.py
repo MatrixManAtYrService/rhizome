@@ -6,35 +6,33 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-import contextlib
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import (
-    create_monetary_rule_set,
-    create_monetary_rule_set_rule,
-    delete_monetary_rule_set,
-    delete_monetary_rule_set_rule,
-    get_monetary_rule_set_by_uuid,
-    get_monetary_rule_set_rule_by_uuid,
-    get_monetary_rule_set_rules,
-    get_monetary_rule_set_with_rules,
-    get_monetary_rule_sets,
-    set_monetary_rule_set_status,
-    update_monetary_rule_set,
-    update_monetary_rule_set_rule,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set import (
-    ApiMonetaryRuleSet,
-)
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set_rule import (
-    ApiMonetaryRuleSetRule,
-)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import create_monetary_rule_set
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import create_monetary_rule_set_rule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import delete_monetary_rule_set
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import delete_monetary_rule_set_rule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_rule_by_uuid
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_rules
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_with_rules
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_sets
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import set_monetary_rule_set_status
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import update_monetary_rule_set
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import update_monetary_rule_set_rule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set import ApiMonetaryRuleSet
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set_rule import ApiMonetaryRuleSetRule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_monetary_rule_set_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSet]:
+def get_monetary_rule_set_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set by UUID
 
     Args:
@@ -45,7 +43,7 @@ def get_monetary_rule_set_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -55,7 +53,7 @@ def get_monetary_rule_set_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ApiMonetaryRuleSet | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
@@ -72,29 +70,39 @@ def get_monetary_rule_set_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | None:
+
+
+def get_monetary_rule_set_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set by UUID
 
     Args:
@@ -105,7 +113,7 @@ def get_monetary_rule_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        Union[ApiMonetaryRuleSet, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -115,7 +123,7 @@ def get_monetary_rule_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ApiMonetaryRuleSet | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
@@ -131,18 +139,17 @@ def get_monetary_rule_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_monetary_rule_set_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSet]:
+
+
+def get_monetary_rule_set_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set by UUID
 
     Args:
@@ -153,7 +160,7 @@ def get_monetary_rule_set_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -163,7 +170,7 @@ def get_monetary_rule_set_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ApiMonetaryRuleSet | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
@@ -180,29 +187,39 @@ def get_monetary_rule_set_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | None:
+
+
+def get_monetary_rule_set_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set by UUID
 
     Args:
@@ -213,7 +230,7 @@ def get_monetary_rule_set_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        Union[ApiMonetaryRuleSet, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -223,7 +240,7 @@ def get_monetary_rule_set_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ApiMonetaryRuleSet | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
@@ -239,18 +256,16 @@ def get_monetary_rule_set_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSet]:
+
+
+def get_monetary_rule_sets_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get monetary rule sets
 
     Args:
@@ -264,17 +279,17 @@ def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_sets._get_kwargs()
@@ -291,29 +306,38 @@ def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[Ap
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_sets_sync(*, client: StolonClient) -> ApiMonetaryRuleSet | None:
+
+
+def get_monetary_rule_sets_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get monetary rule sets
 
     Args:
@@ -327,17 +351,17 @@ def get_monetary_rule_sets_sync(*, client: StolonClient) -> ApiMonetaryRuleSet |
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_sets._get_kwargs()
@@ -354,17 +378,22 @@ def get_monetary_rule_sets_sync(*, client: StolonClient) -> ApiMonetaryRuleSet |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSet]:
+
+
+def get_monetary_rule_sets_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get monetary rule sets
 
     Args:
@@ -378,17 +407,17 @@ def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_sets._get_kwargs()
@@ -405,29 +434,38 @@ def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_sets_asyncio(*, client: StolonClient) -> ApiMonetaryRuleSet | None:
+
+
+def get_monetary_rule_sets_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get monetary rule sets
 
     Args:
@@ -441,17 +479,17 @@ def get_monetary_rule_sets_asyncio(*, client: StolonClient) -> ApiMonetaryRuleSe
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_sets._get_kwargs()
@@ -468,19 +506,23 @@ def get_monetary_rule_sets_asyncio(*, client: StolonClient) -> ApiMonetaryRuleSe
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_monetary_rule_set_rule_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiMonetaryRuleSetRule]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSetRule | ResponseError]:
     """Get monetary rule set rule by UUID
 
     Args:
@@ -491,7 +533,7 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[Union[ApiMonetaryRuleSetRule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -501,7 +543,7 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ApiMonetaryRuleSetRule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
@@ -518,29 +560,39 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSetRule | None:
+
+
+def get_monetary_rule_set_rule_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSetRule | ResponseError | None:
     """Get monetary rule set rule by UUID
 
     Args:
@@ -551,7 +603,7 @@ def get_monetary_rule_set_rule_by_uuid_sync(*, client: StolonClient, uuid: str) 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        Union[ApiMonetaryRuleSetRule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -561,7 +613,7 @@ def get_monetary_rule_set_rule_by_uuid_sync(*, client: StolonClient, uuid: str) 
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ApiMonetaryRuleSetRule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
@@ -577,20 +629,17 @@ def get_monetary_rule_set_rule_by_uuid_sync(*, client: StolonClient, uuid: str) 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiMonetaryRuleSetRule]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSetRule | ResponseError]:
     """Get monetary rule set rule by UUID
 
     Args:
@@ -601,7 +650,7 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[Union[ApiMonetaryRuleSetRule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -611,7 +660,7 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ApiMonetaryRuleSetRule | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
@@ -628,29 +677,39 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSetRule | None:
+
+
+def get_monetary_rule_set_rule_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSetRule | ResponseError | None:
     """Get monetary rule set rule by UUID
 
     Args:
@@ -661,7 +720,7 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        Union[ApiMonetaryRuleSetRule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -671,7 +730,7 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ApiMonetaryRuleSetRule | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
@@ -687,18 +746,17 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(*, client: StolonClient, uuid: st
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def set_monetary_rule_set_status_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSet]:
+
+
+def set_monetary_rule_set_status_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Set the status for the monetary rule set
 
     Args:
@@ -709,7 +767,7 @@ def set_monetary_rule_set_status_sync_detailed(*, client: StolonClient, uuid: st
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -719,7 +777,7 @@ def set_monetary_rule_set_status_sync_detailed(*, client: StolonClient, uuid: st
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ApiMonetaryRuleSet | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
@@ -736,29 +794,39 @@ def set_monetary_rule_set_status_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | None:
+
+
+def set_monetary_rule_set_status_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Set the status for the monetary rule set
 
     Args:
@@ -769,7 +837,7 @@ def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> Api
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        Union[ApiMonetaryRuleSet, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -779,7 +847,7 @@ def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> Api
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ApiMonetaryRuleSet | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
@@ -795,18 +863,17 @@ def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> Api
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def set_monetary_rule_set_status_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSet]:
+
+
+def set_monetary_rule_set_status_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Set the status for the monetary rule set
 
     Args:
@@ -817,7 +884,7 @@ def set_monetary_rule_set_status_asyncio_detailed(*, client: StolonClient, uuid:
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -827,7 +894,7 @@ def set_monetary_rule_set_status_asyncio_detailed(*, client: StolonClient, uuid:
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ApiMonetaryRuleSet | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
@@ -844,29 +911,39 @@ def set_monetary_rule_set_status_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_monetary_rule_set_status_asyncio(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | None:
+
+
+def set_monetary_rule_set_status_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Set the status for the monetary rule set
 
     Args:
@@ -877,7 +954,7 @@ def set_monetary_rule_set_status_asyncio(*, client: StolonClient, uuid: str) -> 
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        Union[ApiMonetaryRuleSet, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -887,7 +964,7 @@ def set_monetary_rule_set_status_asyncio(*, client: StolonClient, uuid: str) -> 
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ApiMonetaryRuleSet | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
@@ -903,20 +980,18 @@ def set_monetary_rule_set_status_asyncio(*, client: StolonClient, uuid: str) -> 
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_monetary_rule_set_with_rules_sync_detailed(
-    *, client: StolonClient, uuid: str, as_of_date: str
-) -> Response[ApiMonetaryRuleSet]:
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set, with rules, by UUID and as-of date
 
     Args:
@@ -928,7 +1003,7 @@ def get_monetary_rule_set_with_rules_sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -939,7 +1014,7 @@ def get_monetary_rule_set_with_rules_sync_detailed(
         as_of_date: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ApiMonetaryRuleSet | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
@@ -956,31 +1031,40 @@ def get_monetary_rule_set_with_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_set_with_rules_sync(
-    *, client: StolonClient, uuid: str, as_of_date: str
-) -> ApiMonetaryRuleSet | None:
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set, with rules, by UUID and as-of date
 
     Args:
@@ -992,7 +1076,7 @@ def get_monetary_rule_set_with_rules_sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        Union[ApiMonetaryRuleSet, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1003,7 +1087,7 @@ def get_monetary_rule_set_with_rules_sync(
         as_of_date: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ApiMonetaryRuleSet | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
@@ -1019,20 +1103,18 @@ def get_monetary_rule_set_with_rules_sync(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
+
+
 
 
 def get_monetary_rule_set_with_rules_asyncio_detailed(
-    *, client: StolonClient, uuid: str, as_of_date: str
-) -> Response[ApiMonetaryRuleSet]:
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set, with rules, by UUID and as-of date
 
     Args:
@@ -1044,7 +1126,7 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1055,7 +1137,7 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
         as_of_date: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ApiMonetaryRuleSet | ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
@@ -1072,31 +1154,40 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_set_with_rules_asyncio(
-    *, client: StolonClient, uuid: str, as_of_date: str
-) -> ApiMonetaryRuleSet | None:
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set, with rules, by UUID and as-of date
 
     Args:
@@ -1108,7 +1199,7 @@ def get_monetary_rule_set_with_rules_asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        Union[ApiMonetaryRuleSet, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1119,7 +1210,7 @@ def get_monetary_rule_set_with_rules_asyncio(
         as_of_date: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ApiMonetaryRuleSet | ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
@@ -1135,18 +1226,16 @@ def get_monetary_rule_set_with_rules_asyncio(
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSetRule]:
+
+
+def create_monetary_rule_set_rule_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create monetary rule set rule
 
     Args:
@@ -1157,17 +1246,17 @@ def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Resp
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set_rule._get_kwargs()
@@ -1184,29 +1273,38 @@ def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ApiMonetaryRuleSetRule | None:
+
+
+def create_monetary_rule_set_rule_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create monetary rule set rule
 
     Args:
@@ -1217,17 +1315,17 @@ def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ApiMonetaryRu
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set_rule._get_kwargs()
@@ -1244,17 +1342,22 @@ def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ApiMonetaryRu
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSetRule]:
+
+
+def create_monetary_rule_set_rule_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create monetary rule set rule
 
     Args:
@@ -1265,17 +1368,17 @@ def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> R
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set_rule._get_kwargs()
@@ -1292,29 +1395,38 @@ def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ApiMonetaryRuleSetRule | None:
+
+
+def create_monetary_rule_set_rule_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create monetary rule set rule
 
     Args:
@@ -1325,17 +1437,17 @@ def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ApiMonetar
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set_rule._get_kwargs()
@@ -1352,17 +1464,22 @@ def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ApiMonetar
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSetRule]:
+
+
+def get_monetary_rule_set_rules_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get monetary rule set rules
 
     Args:
@@ -1377,17 +1494,17 @@ def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rules._get_kwargs()
@@ -1404,29 +1521,38 @@ def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ApiMonetaryRuleSetRule | None:
+
+
+def get_monetary_rule_set_rules_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get monetary rule set rules
 
     Args:
@@ -1441,17 +1567,17 @@ def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ApiMonetaryRule
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rules._get_kwargs()
@@ -1468,17 +1594,22 @@ def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ApiMonetaryRule
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSetRule]:
+
+
+def get_monetary_rule_set_rules_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Get monetary rule set rules
 
     Args:
@@ -1493,17 +1624,17 @@ def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Res
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rules._get_kwargs()
@@ -1520,29 +1651,38 @@ def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_rules_asyncio(*, client: StolonClient) -> ApiMonetaryRuleSetRule | None:
+
+
+def get_monetary_rule_set_rules_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Get monetary rule set rules
 
     Args:
@@ -1557,17 +1697,17 @@ def get_monetary_rule_set_rules_asyncio(*, client: StolonClient) -> ApiMonetaryR
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rules._get_kwargs()
@@ -1584,17 +1724,23 @@ def get_monetary_rule_set_rules_asyncio(*, client: StolonClient) -> ApiMonetaryR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_monetary_rule_set_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete monetary rule set
 
     Args:
@@ -1632,26 +1778,39 @@ def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_monetary_rule_set_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete monetary rule set
 
     Args:
@@ -1678,7 +1837,7 @@ def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> Respons
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1692,7 +1851,13 @@ def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> Respons
     return None
 
 
-def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_monetary_rule_set_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete monetary rule set
 
     Args:
@@ -1730,26 +1895,39 @@ def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_monetary_rule_set_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete monetary rule set
 
     Args:
@@ -1776,7 +1954,7 @@ def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1790,7 +1968,13 @@ def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
     return None
 
 
-def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSet]:
+
+
+def update_monetary_rule_set_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Update monetary rule set
 
     Args:
@@ -1802,7 +1986,7 @@ def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1812,7 +1996,7 @@ def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
@@ -1829,29 +2013,39 @@ def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | None:
+
+
+def update_monetary_rule_set_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Update monetary rule set
 
     Args:
@@ -1863,7 +2057,7 @@ def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ApiMone
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1873,7 +2067,7 @@ def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ApiMone
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
@@ -1890,17 +2084,23 @@ def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ApiMone
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSet]:
+
+
+def update_monetary_rule_set_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Update monetary rule set
 
     Args:
@@ -1912,7 +2112,7 @@ def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1922,7 +2122,7 @@ def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
@@ -1939,29 +2139,39 @@ def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | None:
+
+
+def update_monetary_rule_set_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Update monetary rule set
 
     Args:
@@ -1973,7 +2183,7 @@ def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ApiM
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -1983,7 +2193,7 @@ def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ApiM
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid)
@@ -2000,17 +2210,22 @@ def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ApiM
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSet]:
+
+
+def create_monetary_rule_set_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create monetary rule set
 
     Args:
@@ -2021,17 +2236,17 @@ def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs()
@@ -2048,29 +2263,38 @@ def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_sync(*, client: StolonClient) -> ApiMonetaryRuleSet | None:
+
+
+def create_monetary_rule_set_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2081,17 +2305,17 @@ def create_monetary_rule_set_sync(*, client: StolonClient) -> ApiMonetaryRuleSet
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs()
@@ -2108,17 +2332,22 @@ def create_monetary_rule_set_sync(*, client: StolonClient) -> ApiMonetaryRuleSet
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Response[ApiMonetaryRuleSet]:
+
+
+def create_monetary_rule_set_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError]:
     """Create monetary rule set
 
     Args:
@@ -2129,17 +2358,17 @@ def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Respon
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        Response[ApiMonetaryRuleSet]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs()
@@ -2156,29 +2385,38 @@ def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Respon
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSet:
-        parsed = ApiMonetaryRuleSet.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_asyncio(*, client: StolonClient) -> ApiMonetaryRuleSet | None:
+
+
+def create_monetary_rule_set_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2189,17 +2427,17 @@ def create_monetary_rule_set_asyncio(*, client: StolonClient) -> ApiMonetaryRule
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSet
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
-        ApiMonetaryRuleSet | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs()
@@ -2216,116 +2454,22 @@ def create_monetary_rule_set_asyncio(*, client: StolonClient) -> ApiMonetaryRule
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSet.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
 
 
-def delete_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
-    """Delete monetary rule set rule
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ResponseError, bool]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ResponseError | bool]
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
-            body_json = json.loads(proxy_response.body)
-
-    # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
 
 
-def delete_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
-    """Delete monetary rule set rule
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ResponseError, bool]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ResponseError | bool | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def delete_monetary_rule_set_rule_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+def delete_monetary_rule_set_rule_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete monetary rule set rule
 
@@ -2364,26 +2508,39 @@ def delete_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    parsed = None.from_dict(body_json) if False else None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_monetary_rule_set_rule_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete monetary rule set rule
 
     Args:
@@ -2410,7 +2567,7 @@ def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2424,7 +2581,130 @@ def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     return None
 
 
-def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMonetaryRuleSetRule]:
+
+
+def delete_monetary_rule_set_rule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
+    """Delete monetary rule set rule
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ResponseError, bool]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError | bool]
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def delete_monetary_rule_set_rule_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
+    """Delete monetary rule set rule
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ResponseError, bool]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | bool | None
+    """
+    # Extract request parameters from generated function
+    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
+def update_monetary_rule_set_rule_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -2436,7 +2716,7 @@ def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: s
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -2446,7 +2726,7 @@ def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: s
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
@@ -2463,29 +2743,39 @@ def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSetRule | None:
+
+
+def update_monetary_rule_set_rule_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Update monetary rule set rule
 
     Args:
@@ -2497,7 +2787,7 @@ def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> Ap
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -2507,7 +2797,7 @@ def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> Ap
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
@@ -2524,19 +2814,23 @@ def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_monetary_rule_set_rule_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiMonetaryRuleSetRule]:
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -2548,7 +2842,7 @@ def update_monetary_rule_set_rule_asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -2558,7 +2852,7 @@ def update_monetary_rule_set_rule_asyncio_detailed(
                 uuid: str
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
@@ -2575,29 +2869,39 @@ def update_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        with contextlib.suppress(json.JSONDecodeError):
+        try:
             body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMonetaryRuleSetRule:
-        parsed = ApiMonetaryRuleSetRule.from_dict(body_json)
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSetRule | None:
+
+
+def update_monetary_rule_set_rule_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Update monetary rule set rule
 
     Args:
@@ -2609,7 +2913,7 @@ def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
@@ -2619,7 +2923,7 @@ def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
                 uuid: str
 
     Returns:
-        ApiMonetaryRuleSetRule | None
+        ResponseError | None
     """
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid)
@@ -2636,11 +2940,12 @@ def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
-            return ApiMonetaryRuleSetRule.from_dict(body_json)
+            return ResponseError.from_dict(body_json)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
