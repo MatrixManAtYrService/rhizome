@@ -130,13 +130,13 @@ def _generate_client_from_spec(spec_data: dict, service: str, env: str, output_p
             spec_file.unlink()
 
 
-def _generate_proxied_wrappers(service: str, env: str, output_path: Path) -> None:
+def _generate_proxied_wrappers(service: str, env: str, openapi_path: Path) -> None:
     """Generate proxied wrapper functions for the generated client.
 
     Args:
         service: Service name
         env: Environment name
-        output_path: Path to the generated client
+        openapi_path: Path to the OpenAPI-generated client
     """
     typer.echo("")
     typer.echo("🔧 Generating proxied wrapper functions...")
@@ -147,13 +147,13 @@ def _generate_proxied_wrappers(service: str, env: str, output_path: Path) -> Non
         generated_files = generate_wrappers_for_service(
             service=service,
             env=env,
-            generated_client_path=output_path,
+            generated_client_path=openapi_path,
         )
 
         if generated_files:
             write_wrappers(generated_files)
             typer.echo(f"✅ Generated {len(generated_files)} wrapper modules")
-            typer.echo(f"   Location: src/stolon/api/{service.replace('-', '_')}_{env}/")
+            typer.echo(f"   Location: src/stolon/generated/{service.replace('-', '_')}_{env}/")
         else:
             typer.echo("⚠️  No API functions found to wrap")
 
@@ -172,9 +172,17 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
 
     Args:
         env: Environment name (e.g., 'dev', 'demo', 'prod')
-        service: Service name (e.g., 'billing-bookkeeper')
+        service: Service name (e.g., 'billing-bookkeeper', 'agreement')
         overwrite: Whether to overwrite existing generated client
     """
+    # Service name aliases - allow shorter names that map to full service names
+    service_aliases = {
+        "agreement": "agreement-k8s",
+    }
+
+    # Resolve alias to actual service name
+    actual_service = service_aliases.get(service, service)
+
     # Map environment to domain
     domain_map = {
         "dev": "dev1.dev.clover.com",
@@ -192,33 +200,35 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
         ("dev", "agreement-k8s"): "apidev1.dev.clover.com",
     }
 
-    domain = custom_domain_map.get((env, service), domain_map[env])
-    spec_url = f"https://{domain}/{service}/v3/api-docs"
+    domain = custom_domain_map.get((env, actual_service), domain_map[env])
+    spec_url = f"https://{domain}/{actual_service}/v3/api-docs"
 
     typer.echo(f"📡 Fetching OpenAPI spec from {spec_url}")
 
     # Fetch the spec
-    spec_data = _fetch_openapi_spec(env, service, domain, spec_url)
+    spec_data = _fetch_openapi_spec(env, actual_service, domain, spec_url)
 
-    # Determine output path
-    # Store generated clients in src/stolon/generated/{service}_{env}
-    output_path = Path("src/stolon/generated") / f"{service.replace('-', '_')}_{env}"
+    # Determine output paths
+    # OpenAPI-generated client goes to openapi_generated (raw output, don't edit)
+    # Our proxied wrappers go to generated (higher-level, editable if needed)
+    openapi_output_path = Path("src/stolon/openapi_generated") / f"{actual_service.replace('-', '_')}_{env}"
+    wrappers_output_path = Path("src/stolon/generated") / f"{actual_service.replace('-', '_')}_{env}"
 
-    if output_path.exists() and not overwrite:
-        typer.echo(f"⚠️  Client already exists at {output_path}")
+    if openapi_output_path.exists() and not overwrite:
+        typer.echo(f"⚠️  OpenAPI client already exists at {openapi_output_path}")
         typer.echo("   Use --overwrite to regenerate")
         raise typer.Exit(1)
 
-    # Generate the client
-    _generate_client_from_spec(spec_data, service, env, output_path, overwrite)
+    # Generate the OpenAPI client
+    _generate_client_from_spec(spec_data, actual_service, env, openapi_output_path, overwrite)
 
     typer.echo("")
-    typer.echo(f"✅ Client generated at {output_path}")
+    typer.echo(f"✅ OpenAPI client generated at {openapi_output_path}")
 
     # Generate proxied wrappers
-    _generate_proxied_wrappers(service, env, output_path)
+    _generate_proxied_wrappers(actual_service, env, openapi_output_path)
 
     typer.echo("")
     typer.echo("🎉 Done! You can now:")
-    typer.echo(f"   - Use generated client: stolon.generated.{service.replace('-', '_')}_{env}")
-    typer.echo(f"   - Use proxied wrappers: stolon.api.{service.replace('-', '_')}_{env}")
+    typer.echo(f"   - Use raw OpenAPI client: stolon.openapi_generated.{actual_service.replace('-', '_')}_{env}")
+    typer.echo(f"   - Use proxied wrappers: stolon.generated.{actual_service.replace('-', '_')}_{env}")
