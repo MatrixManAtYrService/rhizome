@@ -56,6 +56,15 @@ def _handle_missing_data(
         )
         change_tracker.add_error(error_msg)
         typer.secho(error_msg, fg=typer.colors.YELLOW)
+    else:
+        warning_msg = (
+            f"Source data for {env_name}/{table_name} is empty.\n"
+            f"  Local data file exists at {json_file_path_str} but cannot be updated.\n"
+            f"  Suggestion: Update the existing dummy data to match the schema in {sql_file_path}.\n"
+            f"  Note: This dummy data will be overwritten by authentic data when it becomes available."
+        )
+        change_tracker.add_error(warning_msg)
+        typer.secho(warning_msg, fg=typer.colors.YELLOW)
 
 
 def _sync_single_table(
