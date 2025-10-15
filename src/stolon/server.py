@@ -5,6 +5,7 @@ from collections.abc import AsyncGenerator
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from functools import partial
+from typing import Any
 
 import httpx
 import structlog
@@ -125,6 +126,79 @@ async def delete_cached_token(domain: str) -> dict[str, str]:
     return {"message": f"Cached token for {domain} deleted successfully"}
 
 
+async def _make_http_request(
+    client: httpx.AsyncClient,
+    method: str,
+    url: str,
+    headers: dict[str, str],
+    request: ProxyRequest,
+) -> httpx.Response:
+    """Helper to make HTTP request with appropriate body type."""
+    if request.json_body is not None:
+        return await client.request(
+            method=method,
+            url=url,
+            headers=headers,
+            json=request.json_body,
+            params=request.params,
+            timeout=request.timeout or 30.0,
+        )
+    if request.content is not None:
+        return await client.request(
+            method=method,
+            url=url,
+            headers=headers,
+            content=request.content,
+            params=request.params,
+            timeout=request.timeout or 30.0,
+        )
+    return await client.request(
+        method=method,
+        url=url,
+        headers=headers,
+        params=request.params,
+        timeout=request.timeout or 30.0,
+    )
+
+
+def _prepare_proxy_log_data(request: ProxyRequest, full_url: str, status_code: int) -> dict[str, Any]:
+    """Helper to prepare log data for proxied requests."""
+    from typing import Any as TypingAny
+    from urllib.parse import urlparse
+
+    # Parse URL to extract hostname and path
+    parsed = urlparse(full_url)
+    hostname = parsed.netloc
+    path = parsed.path or "/"
+
+    # Prepare log data
+    log_data: dict[str, TypingAny] = {
+        "method": request.method,
+        "hostname": hostname,
+        "path": path,
+        "url": full_url,
+        "status_code": status_code,
+    }
+
+    # Handle request body - show up to 1028 chars with length indicator if longer
+    body_str: str | None = None
+    if request.json_body is not None:
+        import json as json_module
+
+        body_str = json_module.dumps(request.json_body, ensure_ascii=False)
+    elif request.content is not None:
+        body_str = request.content
+
+    if body_str is not None:
+        if len(body_str) <= 1028:
+            log_data["data"] = body_str
+        else:
+            log_data["data"] = body_str[:1028] + "..."
+            log_data["data_length"] = f"{len(body_str)} characters (showing first 1028)"
+
+    return log_data
+
+
 @app.post("/proxy")
 async def proxy_request(request: ProxyRequest) -> ProxyResponse:
     """
@@ -137,7 +211,6 @@ async def proxy_request(request: ProxyRequest) -> ProxyResponse:
     4. Returns response to client
 
     Benefits:
-    - Client doesn't need VPN access
     - Server handles all auth token management
     - Logging happens automatically server-side
     """
@@ -155,19 +228,20 @@ async def proxy_request(request: ProxyRequest) -> ProxyResponse:
     # Make the actual HTTP call
     headers = {
         "Cookie": f"internalSession={token}",
-        "Content-Type": "application/json",
         "X-Clover-Appenv": f"{request.environment_name}:{domain.split('.')[0]}",
     }
 
+    # Set Content-Type based on what's provided
+    if request.json_body is not None:
+        headers["Content-Type"] = "application/json"
+    elif request.content_type is not None:
+        headers["Content-Type"] = request.content_type
+    else:
+        headers["Content-Type"] = "application/json"  # Default
+
     async with httpx.AsyncClient() as client:
-        response = await client.request(
-            method=method,
-            url=full_url,
-            headers=headers,
-            json=request.json_body,
-            params=request.params,
-            timeout=request.timeout or 30.0,
-        )
+        # Make initial request
+        response = await _make_http_request(client, method, full_url, headers, request)
 
         # Handle 401 - token expired, refresh and retry
         if response.status_code == 401:
@@ -181,22 +255,11 @@ async def proxy_request(request: ProxyRequest) -> ProxyResponse:
             headers["Cookie"] = f"internalSession={token}"
 
             # Retry request
-            response = await client.request(
-                method=method,
-                url=full_url,
-                headers=headers,
-                json=request.json_body,
-                params=request.params,
-                timeout=request.timeout or 30.0,
-            )
+            response = await _make_http_request(client, method, full_url, headers, request)
 
         # Log request/response automatically
-        logger.info(
-            "Proxied HTTP request",
-            method=method,
-            url=full_url,
-            status_code=response.status_code,
-        )
+        log_data = _prepare_proxy_log_data(request, full_url, response.status_code)
+        logger.info("Proxied HTTP request", **log_data)
 
         # Return response to client
         return ProxyResponse(

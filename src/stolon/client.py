@@ -106,13 +106,15 @@ class StolonClient:
         path: str,
         environment_name: str,
         json_body: dict[str, Any] | None = None,
+        content: str | None = None,
+        content_type: str | None = None,
         params: dict[str, Any] | None = None,
         timeout: float | None = None,
     ) -> ProxyResponse:
         """
         Proxy an HTTP request through the stolon server.
 
-        This is the new primary method for making API calls when use_proxy=True.
+        This is the primary method for making API calls.
         The server handles:
         - Authentication token management
         - 401 retry logic
@@ -123,7 +125,9 @@ class StolonClient:
             method: HTTP method (GET, POST, DELETE, etc.)
             path: API path (e.g., "/v3/merchants/ABC123")
             environment_name: Environment name for headers
-            json_body: Optional JSON body for POST/PUT
+            json_body: Optional JSON body for POST/PUT (mutually exclusive with content)
+            content: Optional raw content (e.g., XML) (mutually exclusive with json_body)
+            content_type: Optional Content-Type header (e.g., "application/xml")
             params: Optional query parameters
             timeout: Optional timeout in seconds
 
@@ -135,6 +139,8 @@ class StolonClient:
             method=method,
             path=path,
             json_body=json_body,
+            content=content,
+            content_type=content_type,
             params=params,
             timeout=timeout,
             environment_name=environment_name,

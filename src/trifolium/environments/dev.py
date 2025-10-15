@@ -993,49 +993,41 @@ class DevResellersAPI(base.Environment):
   </ShipAddress>
 </CloverBoardingRequest>"""
 
-        # Make request to boarding endpoint
-        self.ensure_authenticated()
-        assert self.handle is not None
-
-        headers = {
-            "Cookie": f"internalSession={self.handle.token}",
-            "Content-Type": "application/xml",
-            "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
-        }
-
-        full_url = f"{self.handle.base_url}/cos/v1/partner/ipg/create_merchant"
-
+        # Make request to boarding endpoint via proxy
         import xml.etree.ElementTree as ET
 
-        with self._create_httpx_client() as client:
-            response = client.post(
-                full_url,
-                headers=headers,
-                content=xml_payload,
-                timeout=30.0,
-            )
+        proxy_response = self.client.proxy_request(
+            domain=self.domain,
+            method="POST",
+            path="/cos/v1/partner/ipg/create_merchant",
+            environment_name=self.name,
+            content=xml_payload,
+            content_type="application/xml",
+            timeout=30.0,
+        )
 
-            response.raise_for_status()
+        if proxy_response.status_code >= 400:
+            raise Exception(f"Merchant boarding failed: HTTP {proxy_response.status_code}\n{proxy_response.body}")
 
-            # Parse XML response
-            root = ET.fromstring(response.text)
+        # Parse XML response
+        root = ET.fromstring(proxy_response.body)
 
-            # Extract merchant UUID from response
-            # Response format: <CloverBoardingResponse><UUID>...</UUID>...</CloverBoardingResponse>
-            uuid_elem = root.find(".//{com.clover.boarding}UUID")
-            merchant_uuid = uuid_elem.text if uuid_elem is not None else None
+        # Extract merchant UUID from response
+        # Response format: <CloverBoardingResponse><UUID>...</UUID>...</CloverBoardingResponse>
+        uuid_elem = root.find(".//{com.clover.boarding}UUID")
+        merchant_uuid = uuid_elem.text if uuid_elem is not None else None
 
-            if not merchant_uuid:
-                raise Exception(f"No UUID found in boarding response: {response.text}")
+        if not merchant_uuid:
+            raise Exception(f"No UUID found in boarding response: {proxy_response.body}")
 
-            return {
-                "merchant_uuid": merchant_uuid,
-                "merchant_id": merchant_id,
-                "dba_name": dba_name,
-                "legal_name": legal_name,
-                "reseller_code": reseller_code,
-                "raw_response": response.text,
-            }
+        return {
+            "merchant_uuid": merchant_uuid,
+            "merchant_id": merchant_id,
+            "dba_name": dba_name,
+            "legal_name": legal_name,
+            "reseller_code": reseller_code,
+            "raw_response": proxy_response.body,
+        }
 
 
 class DevAgreementAPI(base.Environment):

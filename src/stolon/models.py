@@ -43,6 +43,8 @@ class ProxyRequest(BaseModel):
     method: str  # GET, POST, DELETE, etc.
     path: str  # e.g., "/v3/merchants/ABC123"
     json_body: dict[str, Any] | None = None
+    content: str | None = None  # Raw content (e.g., XML) - mutually exclusive with json_body
+    content_type: str | None = None  # Content-Type header (e.g., "application/xml")
     params: dict[str, Any] | None = None
     timeout: float | None = None
     environment_name: str  # For X-Clover-Appenv header

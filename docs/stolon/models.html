@@ -115,6 +115,12 @@
                                 <a class="variable" href="#ProxyRequest.json_body">json_body</a>
                         </li>
                         <li>
+                                <a class="variable" href="#ProxyRequest.content">content</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ProxyRequest.content_type">content_type</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#ProxyRequest.params">params</a>
                         </li>
                         <li>
@@ -215,17 +221,19 @@
 </span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># GET, POST, DELETE, etc.</span>
 </span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># e.g., &quot;/v3/merchants/ABC123&quot;</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">json_body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="n">environment_name</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># For X-Clover-Appenv header</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ProxyResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Response from proxied HTTP call.&quot;&quot;&quot;</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="n">status_code</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># JSON string or other response body</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Raw content (e.g., XML) - mutually exclusive with json_body</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Content-Type header (e.g., &quot;application/xml&quot;)</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="n">environment_name</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># For X-Clover-Appenv header</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ProxyResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Response from proxied HTTP call.&quot;&quot;&quot;</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">status_code</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># JSON string or other response body</span>
 </span></pre></div>
 
 
@@ -524,9 +532,11 @@
 </span><span id="ProxyRequest-44"><a href="#ProxyRequest-44"><span class="linenos">44</span></a>    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># GET, POST, DELETE, etc.</span>
 </span><span id="ProxyRequest-45"><a href="#ProxyRequest-45"><span class="linenos">45</span></a>    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># e.g., &quot;/v3/merchants/ABC123&quot;</span>
 </span><span id="ProxyRequest-46"><a href="#ProxyRequest-46"><span class="linenos">46</span></a>    <span class="n">json_body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="ProxyRequest-47"><a href="#ProxyRequest-47"><span class="linenos">47</span></a>    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="ProxyRequest-48"><a href="#ProxyRequest-48"><span class="linenos">48</span></a>    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="ProxyRequest-49"><a href="#ProxyRequest-49"><span class="linenos">49</span></a>    <span class="n">environment_name</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># For X-Clover-Appenv header</span>
+</span><span id="ProxyRequest-47"><a href="#ProxyRequest-47"><span class="linenos">47</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Raw content (e.g., XML) - mutually exclusive with json_body</span>
+</span><span id="ProxyRequest-48"><a href="#ProxyRequest-48"><span class="linenos">48</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Content-Type header (e.g., &quot;application/xml&quot;)</span>
+</span><span id="ProxyRequest-49"><a href="#ProxyRequest-49"><span class="linenos">49</span></a>    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="ProxyRequest-50"><a href="#ProxyRequest-50"><span class="linenos">50</span></a>    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="ProxyRequest-51"><a href="#ProxyRequest-51"><span class="linenos">51</span></a>    <span class="n">environment_name</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># For X-Clover-Appenv header</span>
 </span></pre></div>
 
 
@@ -574,6 +584,28 @@
         
     </div>
     <a class="headerlink" href="#ProxyRequest.json_body"></a>
+    
+    
+
+                            </div>
+                            <div id="ProxyRequest.content" class="classattr">
+                                <div class="attr variable">
+            <span class="name">content</span><span class="annotation">: str | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ProxyRequest.content"></a>
+    
+    
+
+                            </div>
+                            <div id="ProxyRequest.content_type" class="classattr">
+                                <div class="attr variable">
+            <span class="name">content_type</span><span class="annotation">: str | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ProxyRequest.content_type"></a>
     
     
 
@@ -637,12 +669,12 @@
 
     </div>
     <a class="headerlink" href="#ProxyResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ProxyResponse-52"><a href="#ProxyResponse-52"><span class="linenos">52</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ProxyResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="ProxyResponse-53"><a href="#ProxyResponse-53"><span class="linenos">53</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Response from proxied HTTP call.&quot;&quot;&quot;</span>
-</span><span id="ProxyResponse-54"><a href="#ProxyResponse-54"><span class="linenos">54</span></a>
-</span><span id="ProxyResponse-55"><a href="#ProxyResponse-55"><span class="linenos">55</span></a>    <span class="n">status_code</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="ProxyResponse-56"><a href="#ProxyResponse-56"><span class="linenos">56</span></a>    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-</span><span id="ProxyResponse-57"><a href="#ProxyResponse-57"><span class="linenos">57</span></a>    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># JSON string or other response body</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ProxyResponse-54"><a href="#ProxyResponse-54"><span class="linenos">54</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ProxyResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="ProxyResponse-55"><a href="#ProxyResponse-55"><span class="linenos">55</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Response from proxied HTTP call.&quot;&quot;&quot;</span>
+</span><span id="ProxyResponse-56"><a href="#ProxyResponse-56"><span class="linenos">56</span></a>
+</span><span id="ProxyResponse-57"><a href="#ProxyResponse-57"><span class="linenos">57</span></a>    <span class="n">status_code</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="ProxyResponse-58"><a href="#ProxyResponse-58"><span class="linenos">58</span></a>    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+</span><span id="ProxyResponse-59"><a href="#ProxyResponse-59"><span class="linenos">59</span></a>    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># JSON string or other response body</span>
 </span></pre></div>
 
 
