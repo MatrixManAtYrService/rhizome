@@ -13,6 +13,7 @@ dependencies = [
     "httpx>=0.28.1",
     "httpx-sse>=0.4.1",
     "jsondiff>=2.2.1",
+    "libcst>=1.8.5",
     "openapi-python-client>=0.26.1",
     "pybritive>=2.2.3",
     "pydantic>=2.0.0",
@@ -66,6 +67,7 @@ fixable = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E501"]
+"src/stolon/api/**/*.py" = ["E501"]  # Ignore line length in generated wrapper code
 
 [tool.ruff.lint.isort]
 known-first-party = ["rhizome", "stolon", "trifolium"]
@@ -105,6 +107,8 @@ exclude = [
     "tests/test_port.py",
     # Exclude generated code from type checking
     "src/stolon/generated/**",
+    # Exclude exploration scripts (temporary scripts for understanding the system)
+    "explorations/**",
 ]
 
 # Strict type checking for source code only
@@ -124,3 +128,7 @@ reportAny = "error"
 
 [tool.pytest.ini_options]
 addopts = "-sv --tb=short"
+# Ignore exploration scripts directory and nix build artifacts
+norecursedirs = "explorations .direnv result"
+# Only collect tests from the tests directory
+testpaths = ["tests"]
