@@ -29,6 +29,9 @@ from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.a
     has_previously_accepted_agreements,
 )
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.delete_acceptance_with_action_action import (
+    DeleteAcceptanceWithActionAction,
+)
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
 
