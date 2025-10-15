@@ -7,7 +7,6 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_settlement_export import ApiSettlementExport
-from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -42,9 +41,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ResponseError, list["ApiSettlementExport"]]]:
+) -> Optional[Union[ApiSettlementExport, list["ApiSettlementExport"]]]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiSettlementExport.from_dict(response.json())
 
         return response_200
 
@@ -66,7 +65,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ResponseError, list["ApiSettlementExport"]]]:
+) -> Response[Union[ApiSettlementExport, list["ApiSettlementExport"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -82,7 +81,7 @@ def sync_detailed(
     billing_entity_uuids: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ResponseError, list["ApiSettlementExport"]]]:
+) -> Response[Union[ApiSettlementExport, list["ApiSettlementExport"]]]:
     """Get export data for settlement requests
 
     Args:
@@ -96,7 +95,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ResponseError, list['ApiSettlementExport']]]
+        Response[Union[ApiSettlementExport, list['ApiSettlementExport']]]
     """
 
     kwargs = _get_kwargs(
@@ -120,7 +119,7 @@ def sync(
     billing_entity_uuids: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ResponseError, list["ApiSettlementExport"]]]:
+) -> Optional[Union[ApiSettlementExport, list["ApiSettlementExport"]]]:
     """Get export data for settlement requests
 
     Args:
@@ -134,7 +133,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ResponseError, list['ApiSettlementExport']]
+        Union[ApiSettlementExport, list['ApiSettlementExport']]
     """
 
     return sync_detailed(
@@ -153,7 +152,7 @@ async def asyncio_detailed(
     billing_entity_uuids: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ResponseError, list["ApiSettlementExport"]]]:
+) -> Response[Union[ApiSettlementExport, list["ApiSettlementExport"]]]:
     """Get export data for settlement requests
 
     Args:
@@ -167,7 +166,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ResponseError, list['ApiSettlementExport']]]
+        Response[Union[ApiSettlementExport, list['ApiSettlementExport']]]
     """
 
     kwargs = _get_kwargs(
@@ -189,7 +188,7 @@ async def asyncio(
     billing_entity_uuids: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ResponseError, list["ApiSettlementExport"]]]:
+) -> Optional[Union[ApiSettlementExport, list["ApiSettlementExport"]]]:
     """Get export data for settlement requests
 
     Args:
@@ -203,7 +202,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ResponseError, list['ApiSettlementExport']]
+        Union[ApiSettlementExport, list['ApiSettlementExport']]
     """
 
     return (

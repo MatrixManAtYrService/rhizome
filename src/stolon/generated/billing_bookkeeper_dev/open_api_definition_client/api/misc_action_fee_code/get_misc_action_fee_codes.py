@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.response_error import ResponseError
+from ...models.api_misc_action_fee_code import ApiMiscActionFeeCode
 from ...types import UNSET, Response, Unset
 
 
@@ -48,9 +48,11 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[ApiMiscActionFeeCode]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiMiscActionFeeCode.from_dict(response.json())
 
         return response_200
 
@@ -60,7 +62,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[ApiMiscActionFeeCode]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -79,7 +83,7 @@ def sync_detailed(
     misc_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ResponseError]:
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -96,7 +100,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
 
     kwargs = _get_kwargs(
@@ -126,7 +130,7 @@ def sync(
     misc_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ResponseError]:
+) -> Optional[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -143,7 +147,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
     """
 
     return sync_detailed(
@@ -168,7 +172,7 @@ async def asyncio_detailed(
     misc_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ResponseError]:
+) -> Response[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -185,7 +189,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiMiscActionFeeCode]
     """
 
     kwargs = _get_kwargs(
@@ -213,7 +217,7 @@ async def asyncio(
     misc_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ResponseError]:
+) -> Optional[ApiMiscActionFeeCode]:
     """Get miscellaneous action fee codes
 
     Args:
@@ -230,7 +234,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiMiscActionFeeCode
     """
 
     return (

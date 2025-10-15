@@ -1,11 +1,12 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_app_rates_params import ApiAppRatesParams
+from ...models.produce_app_rates_events_response_200 import ProduceAppRatesEventsResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -31,9 +32,12 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[str]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[ProduceAppRatesEventsResponse200]:
     if response.status_code == 200:
-        response_200 = cast(str, response.json())
+        response_200 = ProduceAppRatesEventsResponse200.from_dict(response.json())
+
         return response_200
 
     if client.raise_on_unexpected_status:
@@ -42,7 +46,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[str]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[ProduceAppRatesEventsResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -56,7 +62,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     body: ApiAppRatesParams,
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Response[str]:
+) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -69,7 +75,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[ProduceAppRatesEventsResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -89,7 +95,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     body: ApiAppRatesParams,
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Optional[str]:
+) -> Optional[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -102,7 +108,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        ProduceAppRatesEventsResponse200
     """
 
     return sync_detailed(
@@ -117,7 +123,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     body: ApiAppRatesParams,
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Response[str]:
+) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -130,7 +136,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[str]
+        Response[ProduceAppRatesEventsResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -148,7 +154,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     body: ApiAppRatesParams,
     x_clover_appenv: Union[Unset, str] = UNSET,
-) -> Optional[str]:
+) -> Optional[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -161,7 +167,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        str
+        ProduceAppRatesEventsResponse200
     """
 
     return (

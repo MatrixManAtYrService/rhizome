@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_rev_share_abstraction import ApiRevShareAbstraction
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -42,11 +42,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiRevShareAbstraction]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiRevShareAbstraction.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -56,9 +54,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiRevShareAbstraction]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -75,7 +71,7 @@ def sync_detailed(
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
-) -> Response[ApiRevShareAbstraction]:
+) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -90,7 +86,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -116,7 +112,7 @@ def sync(
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
-) -> Optional[ApiRevShareAbstraction]:
+) -> Optional[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -131,7 +127,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstraction
+        ResponseError
     """
 
     return sync_detailed(
@@ -152,7 +148,7 @@ async def asyncio_detailed(
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
-) -> Response[ApiRevShareAbstraction]:
+) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -167,7 +163,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevShareAbstraction]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -191,7 +187,7 @@ async def asyncio(
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
-) -> Optional[ApiRevShareAbstraction]:
+) -> Optional[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -206,7 +202,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevShareAbstraction
+        ResponseError
     """
 
     return (

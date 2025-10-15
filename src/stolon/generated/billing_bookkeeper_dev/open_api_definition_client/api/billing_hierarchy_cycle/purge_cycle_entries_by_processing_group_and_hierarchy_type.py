@@ -1,12 +1,11 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, cast
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -37,10 +36,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[int]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
-
+        response_200 = cast(int, response.json())
         return response_200
 
     if client.raise_on_unexpected_status:
@@ -49,7 +47,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[int]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -65,7 +63,7 @@ def sync_detailed(
     hierarchy_type: str,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-) -> Response[ResponseError]:
+) -> Response[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
 
@@ -80,7 +78,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[int]
     """
 
     kwargs = _get_kwargs(
@@ -104,7 +102,7 @@ def sync(
     hierarchy_type: str,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-) -> Optional[ResponseError]:
+) -> Optional[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
 
@@ -119,7 +117,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        int
     """
 
     return sync_detailed(
@@ -138,7 +136,7 @@ async def asyncio_detailed(
     hierarchy_type: str,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-) -> Response[ResponseError]:
+) -> Response[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
 
@@ -153,7 +151,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[int]
     """
 
     kwargs = _get_kwargs(
@@ -175,7 +173,7 @@ async def asyncio(
     hierarchy_type: str,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-) -> Optional[ResponseError]:
+) -> Optional[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
 
@@ -190,7 +188,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        int
     """
 
     return (

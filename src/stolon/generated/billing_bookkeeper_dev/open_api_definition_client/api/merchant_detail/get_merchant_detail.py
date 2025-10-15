@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_merchant_detail import ApiMerchantDetail
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -33,9 +34,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiMerchantDetail]:
+) -> Optional[Union[ApiMerchantDetail, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiMerchantDetail.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -52,7 +53,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiMerchantDetail]:
+) -> Response[Union[ApiMerchantDetail, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,7 +67,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-) -> Response[ApiMerchantDetail]:
+) -> Response[Union[ApiMerchantDetail, ResponseError]]:
     """Get merchant detail
 
     Args:
@@ -78,7 +79,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMerchantDetail]
+        Response[Union[ApiMerchantDetail, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -98,7 +99,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-) -> Optional[ApiMerchantDetail]:
+) -> Optional[Union[ApiMerchantDetail, ResponseError]]:
     """Get merchant detail
 
     Args:
@@ -110,7 +111,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMerchantDetail
+        Union[ApiMerchantDetail, ResponseError]
     """
 
     return sync_detailed(
@@ -125,7 +126,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-) -> Response[ApiMerchantDetail]:
+) -> Response[Union[ApiMerchantDetail, ResponseError]]:
     """Get merchant detail
 
     Args:
@@ -137,7 +138,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMerchantDetail]
+        Response[Union[ApiMerchantDetail, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -155,7 +156,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-) -> Optional[ApiMerchantDetail]:
+) -> Optional[Union[ApiMerchantDetail, ResponseError]]:
     """Get merchant detail
 
     Args:
@@ -167,7 +168,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMerchantDetail
+        Union[ApiMerchantDetail, ResponseError]
     """
 
     return (

@@ -7,6 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_consumer_failure import ApiConsumerFailure
+from ...models.get_consumer_failures_response_200 import GetConsumerFailuresResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -52,9 +53,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiConsumerFailure, list["ApiConsumerFailure"]]]:
+) -> Optional[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]:
     if response.status_code == 200:
-        response_200 = ApiConsumerFailure.from_dict(response.json())
+        response_200 = GetConsumerFailuresResponse200.from_dict(response.json())
 
         return response_200
 
@@ -76,7 +77,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiConsumerFailure, list["ApiConsumerFailure"]]]:
+) -> Response[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -94,7 +95,7 @@ def sync_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiConsumerFailure, list["ApiConsumerFailure"]]]:
+) -> Response[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]:
     """Get a consumer failures
 
     Args:
@@ -110,7 +111,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailure, list['ApiConsumerFailure']]]
+        Response[Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]]
     """
 
     kwargs = _get_kwargs(
@@ -138,7 +139,7 @@ def sync(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiConsumerFailure, list["ApiConsumerFailure"]]]:
+) -> Optional[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]:
     """Get a consumer failures
 
     Args:
@@ -154,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailure, list['ApiConsumerFailure']]
+        Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]
     """
 
     return sync_detailed(
@@ -177,7 +178,7 @@ async def asyncio_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiConsumerFailure, list["ApiConsumerFailure"]]]:
+) -> Response[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]:
     """Get a consumer failures
 
     Args:
@@ -193,7 +194,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailure, list['ApiConsumerFailure']]]
+        Response[Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]]
     """
 
     kwargs = _get_kwargs(
@@ -219,7 +220,7 @@ async def asyncio(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiConsumerFailure, list["ApiConsumerFailure"]]]:
+) -> Optional[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]:
     """Get a consumer failures
 
     Args:
@@ -235,7 +236,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailure, list['ApiConsumerFailure']]
+        Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]
     """
 
     return (

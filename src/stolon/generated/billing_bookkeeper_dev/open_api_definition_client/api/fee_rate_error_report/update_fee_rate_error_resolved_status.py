@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_fee_rate_error_report import ApiFeeRateErrorReport
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -31,9 +32,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiFeeRateErrorReport]:
+) -> Optional[Union[ApiFeeRateErrorReport, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiFeeRateErrorReport.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -55,7 +56,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiFeeRateErrorReport]:
+) -> Response[Union[ApiFeeRateErrorReport, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,7 +70,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     resolved_status: Union[Unset, bool] = UNSET,
-) -> Response[ApiFeeRateErrorReport]:
+) -> Response[Union[ApiFeeRateErrorReport, ResponseError]]:
     """Update the resolved status of a fee rate error report item
 
     Args:
@@ -81,7 +82,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeRateErrorReport]
+        Response[Union[ApiFeeRateErrorReport, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -101,7 +102,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     resolved_status: Union[Unset, bool] = UNSET,
-) -> Optional[ApiFeeRateErrorReport]:
+) -> Optional[Union[ApiFeeRateErrorReport, ResponseError]]:
     """Update the resolved status of a fee rate error report item
 
     Args:
@@ -113,7 +114,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeRateErrorReport
+        Union[ApiFeeRateErrorReport, ResponseError]
     """
 
     return sync_detailed(
@@ -128,7 +129,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     resolved_status: Union[Unset, bool] = UNSET,
-) -> Response[ApiFeeRateErrorReport]:
+) -> Response[Union[ApiFeeRateErrorReport, ResponseError]]:
     """Update the resolved status of a fee rate error report item
 
     Args:
@@ -140,7 +141,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeRateErrorReport]
+        Response[Union[ApiFeeRateErrorReport, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -158,7 +159,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     resolved_status: Union[Unset, bool] = UNSET,
-) -> Optional[ApiFeeRateErrorReport]:
+) -> Optional[Union[ApiFeeRateErrorReport, ResponseError]]:
     """Update the resolved status of a fee rate error report item
 
     Args:
@@ -170,7 +171,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeRateErrorReport
+        Union[ApiFeeRateErrorReport, ResponseError]
     """
 
     return (

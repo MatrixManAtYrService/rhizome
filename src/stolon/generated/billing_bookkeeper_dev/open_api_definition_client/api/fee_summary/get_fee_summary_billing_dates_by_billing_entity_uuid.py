@@ -7,6 +7,7 @@ from dateutil.parser import isoparse
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -35,9 +36,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[datetime.date, list[datetime.date]]]:
+) -> Optional[Union[ResponseError, list[datetime.date]]]:
     if response.status_code == 200:
-        response_200 = isoparse(response.json()).date()
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -69,7 +70,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[datetime.date, list[datetime.date]]]:
+) -> Response[Union[ResponseError, list[datetime.date]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -84,7 +85,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[datetime.date, list[datetime.date]]]:
+) -> Response[Union[ResponseError, list[datetime.date]]]:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -97,7 +98,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[datetime.date, list[datetime.date]]]
+        Response[Union[ResponseError, list[datetime.date]]]
     """
 
     kwargs = _get_kwargs(
@@ -119,7 +120,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[datetime.date, list[datetime.date]]]:
+) -> Optional[Union[ResponseError, list[datetime.date]]]:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -132,7 +133,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[datetime.date, list[datetime.date]]
+        Union[ResponseError, list[datetime.date]]
     """
 
     return sync_detailed(
@@ -149,7 +150,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[datetime.date, list[datetime.date]]]:
+) -> Response[Union[ResponseError, list[datetime.date]]]:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -162,7 +163,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[datetime.date, list[datetime.date]]]
+        Response[Union[ResponseError, list[datetime.date]]]
     """
 
     kwargs = _get_kwargs(
@@ -182,7 +183,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[datetime.date, list[datetime.date]]]:
+) -> Optional[Union[ResponseError, list[datetime.date]]]:
     """Get billing dates for the summarized fees for a billing entity UUID
 
     Args:
@@ -195,7 +196,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[datetime.date, list[datetime.date]]
+        Union[ResponseError, list[datetime.date]]
     """
 
     return (

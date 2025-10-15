@@ -7,6 +7,7 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_message_failure_update_response import ApiMessageFailureUpdateResponse
 from ...models.api_producer_failure_history import ApiProducerFailureHistory
+from ...models.retry_producer_failure_response_200 import RetryProducerFailureResponse200
 from ...types import Response
 
 
@@ -32,9 +33,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiMessageFailureUpdateResponse]:
+) -> Optional[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]:
     if response.status_code == 200:
-        response_200 = ApiMessageFailureUpdateResponse.from_dict(response.json())
+        response_200 = RetryProducerFailureResponse200.from_dict(response.json())
 
         return response_200
 
@@ -56,7 +57,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiMessageFailureUpdateResponse]:
+) -> Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -70,7 +71,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiProducerFailureHistory,
-) -> Response[ApiMessageFailureUpdateResponse]:
+) -> Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]:
     """Retry a single producer failure
 
     Args:
@@ -82,7 +83,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMessageFailureUpdateResponse]
+        Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]
     """
 
     kwargs = _get_kwargs(
@@ -102,7 +103,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiProducerFailureHistory,
-) -> Optional[ApiMessageFailureUpdateResponse]:
+) -> Optional[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]:
     """Retry a single producer failure
 
     Args:
@@ -114,7 +115,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMessageFailureUpdateResponse
+        Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]
     """
 
     return sync_detailed(
@@ -129,7 +130,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiProducerFailureHistory,
-) -> Response[ApiMessageFailureUpdateResponse]:
+) -> Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]:
     """Retry a single producer failure
 
     Args:
@@ -141,7 +142,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMessageFailureUpdateResponse]
+        Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]
     """
 
     kwargs = _get_kwargs(
@@ -159,7 +160,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiProducerFailureHistory,
-) -> Optional[ApiMessageFailureUpdateResponse]:
+) -> Optional[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]:
     """Retry a single producer failure
 
     Args:
@@ -171,7 +172,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMessageFailureUpdateResponse
+        Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]
     """
 
     return (

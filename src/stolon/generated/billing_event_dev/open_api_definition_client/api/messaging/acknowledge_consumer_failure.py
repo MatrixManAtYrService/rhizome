@@ -5,6 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.acknowledge_consumer_failure_response_200 import AcknowledgeConsumerFailureResponse200
 from ...models.api_message_failure_update_response import ApiMessageFailureUpdateResponse
 from ...types import UNSET, Response, Unset
 
@@ -31,9 +32,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiMessageFailureUpdateResponse]:
+) -> Optional[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]:
     if response.status_code == 200:
-        response_200 = ApiMessageFailureUpdateResponse.from_dict(response.json())
+        response_200 = AcknowledgeConsumerFailureResponse200.from_dict(response.json())
 
         return response_200
 
@@ -55,7 +56,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiMessageFailureUpdateResponse]:
+) -> Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,7 +70,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     comment: Union[Unset, str] = UNSET,
-) -> Response[ApiMessageFailureUpdateResponse]:
+) -> Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -81,7 +82,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMessageFailureUpdateResponse]
+        Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]
     """
 
     kwargs = _get_kwargs(
@@ -101,7 +102,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     comment: Union[Unset, str] = UNSET,
-) -> Optional[ApiMessageFailureUpdateResponse]:
+) -> Optional[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -113,7 +114,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMessageFailureUpdateResponse
+        Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]
     """
 
     return sync_detailed(
@@ -128,7 +129,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     comment: Union[Unset, str] = UNSET,
-) -> Response[ApiMessageFailureUpdateResponse]:
+) -> Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -140,7 +141,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMessageFailureUpdateResponse]
+        Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]
     """
 
     kwargs = _get_kwargs(
@@ -158,7 +159,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     comment: Union[Unset, str] = UNSET,
-) -> Optional[ApiMessageFailureUpdateResponse]:
+) -> Optional[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
     Args:
@@ -170,7 +171,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMessageFailureUpdateResponse
+        Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]
     """
 
     return (

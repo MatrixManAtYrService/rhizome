@@ -7,6 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_consumer_failure_history import ApiConsumerFailureHistory
+from ...models.get_consumer_failure_histories_response_200 import GetConsumerFailureHistoriesResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -52,9 +53,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiConsumerFailureHistory, list["ApiConsumerFailureHistory"]]]:
+) -> Optional[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]:
     if response.status_code == 200:
-        response_200 = ApiConsumerFailureHistory.from_dict(response.json())
+        response_200 = GetConsumerFailureHistoriesResponse200.from_dict(response.json())
 
         return response_200
 
@@ -76,7 +77,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiConsumerFailureHistory, list["ApiConsumerFailureHistory"]]]:
+) -> Response[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -94,7 +95,7 @@ def sync_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiConsumerFailureHistory, list["ApiConsumerFailureHistory"]]]:
+) -> Response[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]:
     """Get consumer failure histories
 
     Args:
@@ -110,7 +111,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureHistory, list['ApiConsumerFailureHistory']]]
+        Response[Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]]
     """
 
     kwargs = _get_kwargs(
@@ -138,7 +139,7 @@ def sync(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiConsumerFailureHistory, list["ApiConsumerFailureHistory"]]]:
+) -> Optional[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]:
     """Get consumer failure histories
 
     Args:
@@ -154,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureHistory, list['ApiConsumerFailureHistory']]
+        Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]
     """
 
     return sync_detailed(
@@ -177,7 +178,7 @@ async def asyncio_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiConsumerFailureHistory, list["ApiConsumerFailureHistory"]]]:
+) -> Response[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]:
     """Get consumer failure histories
 
     Args:
@@ -193,7 +194,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureHistory, list['ApiConsumerFailureHistory']]]
+        Response[Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]]
     """
 
     kwargs = _get_kwargs(
@@ -219,7 +220,7 @@ async def asyncio(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiConsumerFailureHistory, list["ApiConsumerFailureHistory"]]]:
+) -> Optional[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]:
     """Get consumer failure histories
 
     Args:
@@ -235,7 +236,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureHistory, list['ApiConsumerFailureHistory']]
+        Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]
     """
 
     return (

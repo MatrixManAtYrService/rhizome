@@ -21,9 +21,9 @@ class ApiSettlementFees:
 
     Attributes:
         tlement_fee_amount (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
-        tlement_tax_amount (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
-        tlement_uuid (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
         tlement_date (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
+        tlement_uuid (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
+        tlement_tax_amount (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
         settlement_uuid (Union[Unset, str]): 26-character UUID of the settlement request
         settlement_date (Union[Unset, datetime.date]): settlement date of the settlement request
         settlement_fee_amount (Union[Unset, float]): the total fee amount of the settlement request, does not include
@@ -47,9 +47,9 @@ class ApiSettlementFees:
     """
 
     tlement_fee_amount: Union[Unset, "ApiSettlementFees"] = UNSET
-    tlement_tax_amount: Union[Unset, "ApiSettlementFees"] = UNSET
-    tlement_uuid: Union[Unset, "ApiSettlementFees"] = UNSET
     tlement_date: Union[Unset, "ApiSettlementFees"] = UNSET
+    tlement_uuid: Union[Unset, "ApiSettlementFees"] = UNSET
+    tlement_tax_amount: Union[Unset, "ApiSettlementFees"] = UNSET
     settlement_uuid: Union[Unset, str] = UNSET
     settlement_date: Union[Unset, datetime.date] = UNSET
     settlement_fee_amount: Union[Unset, float] = UNSET
@@ -72,17 +72,17 @@ class ApiSettlementFees:
         if not isinstance(self.tlement_fee_amount, Unset):
             tlement_fee_amount = self.tlement_fee_amount.to_dict()
 
-        tlement_tax_amount: Union[Unset, dict[str, Any]] = UNSET
-        if not isinstance(self.tlement_tax_amount, Unset):
-            tlement_tax_amount = self.tlement_tax_amount.to_dict()
+        tlement_date: Union[Unset, dict[str, Any]] = UNSET
+        if not isinstance(self.tlement_date, Unset):
+            tlement_date = self.tlement_date.to_dict()
 
         tlement_uuid: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.tlement_uuid, Unset):
             tlement_uuid = self.tlement_uuid.to_dict()
 
-        tlement_date: Union[Unset, dict[str, Any]] = UNSET
-        if not isinstance(self.tlement_date, Unset):
-            tlement_date = self.tlement_date.to_dict()
+        tlement_tax_amount: Union[Unset, dict[str, Any]] = UNSET
+        if not isinstance(self.tlement_tax_amount, Unset):
+            tlement_tax_amount = self.tlement_tax_amount.to_dict()
 
         settlement_uuid = self.settlement_uuid
 
@@ -126,12 +126,12 @@ class ApiSettlementFees:
         field_dict.update({})
         if tlement_fee_amount is not UNSET:
             field_dict["tlementFeeAmount"] = tlement_fee_amount
-        if tlement_tax_amount is not UNSET:
-            field_dict["tlementTaxAmount"] = tlement_tax_amount
-        if tlement_uuid is not UNSET:
-            field_dict["tlementUuid"] = tlement_uuid
         if tlement_date is not UNSET:
             field_dict["tlementDate"] = tlement_date
+        if tlement_uuid is not UNSET:
+            field_dict["tlementUuid"] = tlement_uuid
+        if tlement_tax_amount is not UNSET:
+            field_dict["tlementTaxAmount"] = tlement_tax_amount
         if settlement_uuid is not UNSET:
             field_dict["settlementUuid"] = settlement_uuid
         if settlement_date is not UNSET:
@@ -178,13 +178,13 @@ class ApiSettlementFees:
         else:
             tlement_fee_amount = UNSET
 
-        _tlement_tax_amount = d.pop("tlementTaxAmount", UNSET)
-        tlement_tax_amount: Union[Unset, ApiSettlementFees]
-        if _tlement_tax_amount and not isinstance(_tlement_tax_amount, Unset):
-            tlement_tax_amount = ApiSettlementFees.from_dict(_tlement_tax_amount)
+        _tlement_date = d.pop("tlementDate", UNSET)
+        tlement_date: Union[Unset, ApiSettlementFees]
+        if _tlement_date and not isinstance(_tlement_date, Unset):
+            tlement_date = ApiSettlementFees.from_dict(_tlement_date)
 
         else:
-            tlement_tax_amount = UNSET
+            tlement_date = UNSET
 
         _tlement_uuid = d.pop("tlementUuid", UNSET)
         tlement_uuid: Union[Unset, ApiSettlementFees]
@@ -194,13 +194,13 @@ class ApiSettlementFees:
         else:
             tlement_uuid = UNSET
 
-        _tlement_date = d.pop("tlementDate", UNSET)
-        tlement_date: Union[Unset, ApiSettlementFees]
-        if _tlement_date and not isinstance(_tlement_date, Unset):
-            tlement_date = ApiSettlementFees.from_dict(_tlement_date)
+        _tlement_tax_amount = d.pop("tlementTaxAmount", UNSET)
+        tlement_tax_amount: Union[Unset, ApiSettlementFees]
+        if _tlement_tax_amount and not isinstance(_tlement_tax_amount, Unset):
+            tlement_tax_amount = ApiSettlementFees.from_dict(_tlement_tax_amount)
 
         else:
-            tlement_date = UNSET
+            tlement_tax_amount = UNSET
 
         settlement_uuid = d.pop("settlementUuid", UNSET)
 
@@ -245,9 +245,9 @@ class ApiSettlementFees:
 
         api_settlement_fees = cls(
             tlement_fee_amount=tlement_fee_amount,
-            tlement_tax_amount=tlement_tax_amount,
-            tlement_uuid=tlement_uuid,
             tlement_date=tlement_date,
+            tlement_uuid=tlement_uuid,
+            tlement_tax_amount=tlement_tax_amount,
             settlement_uuid=settlement_uuid,
             settlement_date=settlement_date,
             settlement_fee_amount=settlement_fee_amount,

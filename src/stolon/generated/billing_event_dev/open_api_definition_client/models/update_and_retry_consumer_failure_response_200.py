@@ -4,11 +4,11 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="GetProducerFailureHistoriesResponse200")
+T = TypeVar("T", bound="UpdateAndRetryConsumerFailureResponse200")
 
 
 @_attrs_define
-class GetProducerFailureHistoriesResponse200:
+class UpdateAndRetryConsumerFailureResponse200:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -22,10 +22,10 @@ class GetProducerFailureHistoriesResponse200:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        get_producer_failure_histories_response_200 = cls()
+        update_and_retry_consumer_failure_response_200 = cls()
 
-        get_producer_failure_histories_response_200.additional_properties = d
-        return get_producer_failure_histories_response_200
+        update_and_retry_consumer_failure_response_200.additional_properties = d
+        return update_and_retry_consumer_failure_response_200
 
     @property
     def additional_keys(self) -> list[str]:

@@ -6,7 +6,6 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_ledger_account_key_purpose import ApiLedgerAccountKeyPurpose
-from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -29,9 +28,11 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[ApiLedgerAccountKeyPurpose]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiLedgerAccountKeyPurpose.from_dict(response.json())
 
         return response_200
 
@@ -41,7 +42,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[ApiLedgerAccountKeyPurpose]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,7 +57,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiLedgerAccountKeyPurpose,
-) -> Response[ResponseError]:
+) -> Response[ApiLedgerAccountKeyPurpose]:
     """Create ledger account key purpose
 
     Args:
@@ -65,7 +68,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiLedgerAccountKeyPurpose]
     """
 
     kwargs = _get_kwargs(
@@ -83,7 +86,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiLedgerAccountKeyPurpose,
-) -> Optional[ResponseError]:
+) -> Optional[ApiLedgerAccountKeyPurpose]:
     """Create ledger account key purpose
 
     Args:
@@ -94,7 +97,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiLedgerAccountKeyPurpose
     """
 
     return sync_detailed(
@@ -107,7 +110,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiLedgerAccountKeyPurpose,
-) -> Response[ResponseError]:
+) -> Response[ApiLedgerAccountKeyPurpose]:
     """Create ledger account key purpose
 
     Args:
@@ -118,7 +121,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[ApiLedgerAccountKeyPurpose]
     """
 
     kwargs = _get_kwargs(
@@ -134,7 +137,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiLedgerAccountKeyPurpose,
-) -> Optional[ResponseError]:
+) -> Optional[ApiLedgerAccountKeyPurpose]:
     """Create ledger account key purpose
 
     Args:
@@ -145,7 +148,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        ApiLedgerAccountKeyPurpose
     """
 
     return (

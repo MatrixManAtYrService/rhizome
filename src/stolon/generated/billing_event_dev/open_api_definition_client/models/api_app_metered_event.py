@@ -8,31 +8,28 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ApiAppSubscriptionEvent")
+T = TypeVar("T", bound="ApiAppMeteredEvent")
 
 
 @_attrs_define
-class ApiAppSubscriptionEvent:
+class ApiAppMeteredEvent:
     """
     Attributes:
-        uuid (Union[Unset, str]): 26-character UUID of the app subscription event
+        uuid (Union[Unset, str]): 26-character UUID of the app metered event
         merchant_uuid (Union[Unset, str]): 13-character UUID from COS of the merchant
         developer_app_uuid (Union[Unset, str]): 13-character UUID from COS of the developer app
         environment (Union[Unset, str]): environment this event is from
-        action_type (Union[Unset, str]): the type of subscription action (INSTALL, UNINSTALL, SUBSCRIPTION_CHANGE)
-        app_subscription_uuid (Union[Unset, str]): 13-character UUID from COS of the app subscription
-        app_subscription_cost (Union[Unset, float]): The cost of the app used only for determining upgrades vs
-            downgrades and does not impact amounts billed
-        bundled_with_plan (Union[Unset, bool]): True if the app will not be billed because it was bundled with a plan
-        trial_end_date (Union[Unset, datetime.date]): The end date of the trial if the app has a trial period
-        is_hidden_or_sys_app (Union[Unset, bool]): True if the app is hidden or is a system app
+        app_metered_uuid (Union[Unset, str]): 13-character UUID from COS of the app metered
+        count (Union[Unset, int]): The number of metered actions that occurred for this event
+        basis_amount (Union[Unset, float]): the basis amount for the metered event
+        basis_currency (Union[Unset, str]): 3-letter currency code of the basis amount Example: USD.
+        action_timestamp (Union[Unset, datetime.datetime]): The date/time this event occurred
+        credit_for_trial (Union[Unset, bool]): True if this event was covered under a trial period
         cos_event_uuid (Union[Unset, str]): The 13 character UUID from COS of the merchant_app or merchant_app_history
             record driving this event
-        action_timestamp (Union[Unset, datetime.datetime]): The date/time this event occurred
-        processed_timestamp (Union[Unset, datetime.datetime]): The date/time this event was processed by the app
-            subscription daily job
-        app_subscription_daily_uuid (Union[Unset, str]): The UUID of the app subscription daily record that this event
-            was included on
+        processed_timestamp (Union[Unset, datetime.datetime]): The date/time this event was processed by the app metered
+            daily job
+        billing_event_uuid (Union[Unset, str]): The UUID of the billing event produced for this record
         created_timestamp (Union[Unset, datetime.datetime]): The date/time this event was created
     """
 
@@ -40,16 +37,15 @@ class ApiAppSubscriptionEvent:
     merchant_uuid: Union[Unset, str] = UNSET
     developer_app_uuid: Union[Unset, str] = UNSET
     environment: Union[Unset, str] = UNSET
-    action_type: Union[Unset, str] = UNSET
-    app_subscription_uuid: Union[Unset, str] = UNSET
-    app_subscription_cost: Union[Unset, float] = UNSET
-    bundled_with_plan: Union[Unset, bool] = UNSET
-    trial_end_date: Union[Unset, datetime.date] = UNSET
-    is_hidden_or_sys_app: Union[Unset, bool] = UNSET
-    cos_event_uuid: Union[Unset, str] = UNSET
+    app_metered_uuid: Union[Unset, str] = UNSET
+    count: Union[Unset, int] = UNSET
+    basis_amount: Union[Unset, float] = UNSET
+    basis_currency: Union[Unset, str] = UNSET
     action_timestamp: Union[Unset, datetime.datetime] = UNSET
+    credit_for_trial: Union[Unset, bool] = UNSET
+    cos_event_uuid: Union[Unset, str] = UNSET
     processed_timestamp: Union[Unset, datetime.datetime] = UNSET
-    app_subscription_daily_uuid: Union[Unset, str] = UNSET
+    billing_event_uuid: Union[Unset, str] = UNSET
     created_timestamp: Union[Unset, datetime.datetime] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -62,31 +58,27 @@ class ApiAppSubscriptionEvent:
 
         environment = self.environment
 
-        action_type = self.action_type
+        app_metered_uuid = self.app_metered_uuid
 
-        app_subscription_uuid = self.app_subscription_uuid
+        count = self.count
 
-        app_subscription_cost = self.app_subscription_cost
+        basis_amount = self.basis_amount
 
-        bundled_with_plan = self.bundled_with_plan
-
-        trial_end_date: Union[Unset, str] = UNSET
-        if not isinstance(self.trial_end_date, Unset):
-            trial_end_date = self.trial_end_date.isoformat()
-
-        is_hidden_or_sys_app = self.is_hidden_or_sys_app
-
-        cos_event_uuid = self.cos_event_uuid
+        basis_currency = self.basis_currency
 
         action_timestamp: Union[Unset, str] = UNSET
         if not isinstance(self.action_timestamp, Unset):
             action_timestamp = self.action_timestamp.isoformat()
 
+        credit_for_trial = self.credit_for_trial
+
+        cos_event_uuid = self.cos_event_uuid
+
         processed_timestamp: Union[Unset, str] = UNSET
         if not isinstance(self.processed_timestamp, Unset):
             processed_timestamp = self.processed_timestamp.isoformat()
 
-        app_subscription_daily_uuid = self.app_subscription_daily_uuid
+        billing_event_uuid = self.billing_event_uuid
 
         created_timestamp: Union[Unset, str] = UNSET
         if not isinstance(self.created_timestamp, Unset):
@@ -103,26 +95,24 @@ class ApiAppSubscriptionEvent:
             field_dict["developerAppUuid"] = developer_app_uuid
         if environment is not UNSET:
             field_dict["environment"] = environment
-        if action_type is not UNSET:
-            field_dict["actionType"] = action_type
-        if app_subscription_uuid is not UNSET:
-            field_dict["appSubscriptionUuid"] = app_subscription_uuid
-        if app_subscription_cost is not UNSET:
-            field_dict["appSubscriptionCost"] = app_subscription_cost
-        if bundled_with_plan is not UNSET:
-            field_dict["bundledWithPlan"] = bundled_with_plan
-        if trial_end_date is not UNSET:
-            field_dict["trialEndDate"] = trial_end_date
-        if is_hidden_or_sys_app is not UNSET:
-            field_dict["isHiddenOrSysApp"] = is_hidden_or_sys_app
-        if cos_event_uuid is not UNSET:
-            field_dict["cosEventUuid"] = cos_event_uuid
+        if app_metered_uuid is not UNSET:
+            field_dict["appMeteredUuid"] = app_metered_uuid
+        if count is not UNSET:
+            field_dict["count"] = count
+        if basis_amount is not UNSET:
+            field_dict["basisAmount"] = basis_amount
+        if basis_currency is not UNSET:
+            field_dict["basisCurrency"] = basis_currency
         if action_timestamp is not UNSET:
             field_dict["actionTimestamp"] = action_timestamp
+        if credit_for_trial is not UNSET:
+            field_dict["creditForTrial"] = credit_for_trial
+        if cos_event_uuid is not UNSET:
+            field_dict["cosEventUuid"] = cos_event_uuid
         if processed_timestamp is not UNSET:
             field_dict["processedTimestamp"] = processed_timestamp
-        if app_subscription_daily_uuid is not UNSET:
-            field_dict["appSubscriptionDailyUuid"] = app_subscription_daily_uuid
+        if billing_event_uuid is not UNSET:
+            field_dict["billingEventUuid"] = billing_event_uuid
         if created_timestamp is not UNSET:
             field_dict["createdTimestamp"] = created_timestamp
 
@@ -139,25 +129,13 @@ class ApiAppSubscriptionEvent:
 
         environment = d.pop("environment", UNSET)
 
-        action_type = d.pop("actionType", UNSET)
+        app_metered_uuid = d.pop("appMeteredUuid", UNSET)
 
-        app_subscription_uuid = d.pop("appSubscriptionUuid", UNSET)
+        count = d.pop("count", UNSET)
 
-        app_subscription_cost = d.pop("appSubscriptionCost", UNSET)
+        basis_amount = d.pop("basisAmount", UNSET)
 
-        bundled_with_plan = d.pop("bundledWithPlan", UNSET)
-
-        _trial_end_date = d.pop("trialEndDate", UNSET)
-        trial_end_date: Union[Unset, datetime.date]
-        if _trial_end_date and not isinstance(_trial_end_date, Unset):
-            trial_end_date = isoparse(_trial_end_date).date()
-
-        else:
-            trial_end_date = UNSET
-
-        is_hidden_or_sys_app = d.pop("isHiddenOrSysApp", UNSET)
-
-        cos_event_uuid = d.pop("cosEventUuid", UNSET)
+        basis_currency = d.pop("basisCurrency", UNSET)
 
         _action_timestamp = d.pop("actionTimestamp", UNSET)
         action_timestamp: Union[Unset, datetime.datetime]
@@ -167,6 +145,10 @@ class ApiAppSubscriptionEvent:
         else:
             action_timestamp = UNSET
 
+        credit_for_trial = d.pop("creditForTrial", UNSET)
+
+        cos_event_uuid = d.pop("cosEventUuid", UNSET)
+
         _processed_timestamp = d.pop("processedTimestamp", UNSET)
         processed_timestamp: Union[Unset, datetime.datetime]
         if _processed_timestamp and not isinstance(_processed_timestamp, Unset):
@@ -175,7 +157,7 @@ class ApiAppSubscriptionEvent:
         else:
             processed_timestamp = UNSET
 
-        app_subscription_daily_uuid = d.pop("appSubscriptionDailyUuid", UNSET)
+        billing_event_uuid = d.pop("billingEventUuid", UNSET)
 
         _created_timestamp = d.pop("createdTimestamp", UNSET)
         created_timestamp: Union[Unset, datetime.datetime]
@@ -185,26 +167,25 @@ class ApiAppSubscriptionEvent:
         else:
             created_timestamp = UNSET
 
-        api_app_subscription_event = cls(
+        api_app_metered_event = cls(
             uuid=uuid,
             merchant_uuid=merchant_uuid,
             developer_app_uuid=developer_app_uuid,
             environment=environment,
-            action_type=action_type,
-            app_subscription_uuid=app_subscription_uuid,
-            app_subscription_cost=app_subscription_cost,
-            bundled_with_plan=bundled_with_plan,
-            trial_end_date=trial_end_date,
-            is_hidden_or_sys_app=is_hidden_or_sys_app,
-            cos_event_uuid=cos_event_uuid,
+            app_metered_uuid=app_metered_uuid,
+            count=count,
+            basis_amount=basis_amount,
+            basis_currency=basis_currency,
             action_timestamp=action_timestamp,
+            credit_for_trial=credit_for_trial,
+            cos_event_uuid=cos_event_uuid,
             processed_timestamp=processed_timestamp,
-            app_subscription_daily_uuid=app_subscription_daily_uuid,
+            billing_event_uuid=billing_event_uuid,
             created_timestamp=created_timestamp,
         )
 
-        api_app_subscription_event.additional_properties = d
-        return api_app_subscription_event
+        api_app_metered_event.additional_properties = d
+        return api_app_metered_event
 
     @property
     def additional_keys(self) -> list[str]:

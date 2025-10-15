@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_cellular_action_fee_code import ApiCellularActionFeeCode
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -55,11 +55,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiCellularActionFeeCode]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiCellularActionFeeCode.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -69,9 +67,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiCellularActionFeeCode]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -91,7 +87,7 @@ def sync_detailed(
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiCellularActionFeeCode]:
+) -> Response[ResponseError]:
     """Get cellular action fee codes
 
     Args:
@@ -109,7 +105,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -141,7 +137,7 @@ def sync(
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiCellularActionFeeCode]:
+) -> Optional[ResponseError]:
     """Get cellular action fee codes
 
     Args:
@@ -159,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
     """
 
     return sync_detailed(
@@ -186,7 +182,7 @@ async def asyncio_detailed(
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiCellularActionFeeCode]:
+) -> Response[ResponseError]:
     """Get cellular action fee codes
 
     Args:
@@ -204,7 +200,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiCellularActionFeeCode]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -234,7 +230,7 @@ async def asyncio(
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiCellularActionFeeCode]:
+) -> Optional[ResponseError]:
     """Get cellular action fee codes
 
     Args:
@@ -252,7 +248,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiCellularActionFeeCode
+        ResponseError
     """
 
     return (
