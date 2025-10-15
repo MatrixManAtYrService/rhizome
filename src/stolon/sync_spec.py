@@ -135,4 +135,37 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
     spec_file.unlink()
 
     typer.echo("")
-    typer.echo(f"🎉 Done! You can now import the client from stolon.generated.{service.replace('-', '_')}_{env}")
+    typer.echo(f"✅ Client generated at {output_path}")
+
+    # Generate proxied wrappers
+    typer.echo("")
+    typer.echo("🔧 Generating proxied wrapper functions...")
+
+    try:
+        from stolon.generate_wrappers import generate_wrappers_for_service, write_wrappers
+
+        generated_files = generate_wrappers_for_service(
+            service=service,
+            env=env,
+            generated_client_path=output_path,
+        )
+
+        if generated_files:
+            write_wrappers(generated_files)
+            typer.echo(f"✅ Generated {len(generated_files)} wrapper modules")
+            typer.echo(f"   Location: src/stolon/api/{service.replace('-', '_')}_{env}/")
+        else:
+            typer.echo("⚠️  No API functions found to wrap")
+
+    except Exception as e:
+        typer.echo(f"⚠️  Wrapper generation failed: {e}")
+        typer.echo("   The OpenAPI client was generated successfully, but wrappers could not be created.")
+        if "--verbose" in typer.get_app_dir(""):  # Simple verbose check
+            import traceback
+
+            typer.echo(traceback.format_exc())
+
+    typer.echo("")
+    typer.echo(f"🎉 Done! You can now:")
+    typer.echo(f"   - Use generated client: stolon.generated.{service.replace('-', '_')}_{env}")
+    typer.echo(f"   - Use proxied wrappers: stolon.api.{service.replace('-', '_')}_{env}")
