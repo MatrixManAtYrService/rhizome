@@ -6,13 +6,21 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from functools import partial
 
+import httpx
 import structlog
 import uvicorn
 from fastapi import FastAPI, HTTPException
 
 from rhizome.logging import setup_logging
 from stolon.get_internal_token import get_internal_token
-from stolon.models import HttpRequestLog, HttpResponseLog, InternalTokenRequest, InternalTokenResponse
+from stolon.models import (
+    HttpRequestLog,
+    HttpResponseLog,
+    InternalTokenRequest,
+    InternalTokenResponse,
+    ProxyRequest,
+    ProxyResponse,
+)
 from trifolium.config import Home
 
 logger = structlog.get_logger()
@@ -115,6 +123,87 @@ async def delete_cached_token(domain: str) -> dict[str, str]:
     logger.info(f"Deleted cached token for {domain}")
 
     return {"message": f"Cached token for {domain} deleted successfully"}
+
+
+@app.post("/proxy")
+async def proxy_request(request: ProxyRequest) -> ProxyResponse:
+    """
+    Proxy an HTTP request through the stolon server.
+
+    This endpoint:
+    1. Receives request intent from client (method, path, body, params)
+    2. Retrieves/refreshes authentication token
+    3. Makes the actual HTTP call to target domain
+    4. Returns response to client
+
+    Benefits:
+    - Client doesn't need VPN access
+    - Server handles all auth token management
+    - Logging happens automatically server-side
+    """
+    domain = request.domain
+    method = request.method
+    path = request.path
+
+    # Get or refresh token (uses existing cache)
+    token_response = await internal_token(InternalTokenRequest(domain=domain))
+    token = token_response.token
+
+    # Build full URL
+    full_url = f"https://{domain}{path}"
+
+    # Make the actual HTTP call
+    headers = {
+        "Cookie": f"internalSession={token}",
+        "Content-Type": "application/json",
+        "X-Clover-Appenv": f"{request.environment_name}:{domain.split('.')[0]}",
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.request(
+            method=method,
+            url=full_url,
+            headers=headers,
+            json=request.json_body,
+            params=request.params,
+            timeout=request.timeout or 30.0,
+        )
+
+        # Handle 401 - token expired, refresh and retry
+        if response.status_code == 401:
+            logger.warning(f"Received 401 for {domain}, refreshing token and retrying")
+            # Invalidate cached token
+            if domain in _token_cache:
+                del _token_cache[domain]
+            # Get fresh token
+            token_response = await internal_token(InternalTokenRequest(domain=domain))
+            token = token_response.token
+            headers["Cookie"] = f"internalSession={token}"
+
+            # Retry request
+            response = await client.request(
+                method=method,
+                url=full_url,
+                headers=headers,
+                json=request.json_body,
+                params=request.params,
+                timeout=request.timeout or 30.0,
+            )
+
+        # Log request/response automatically
+        logger.info(
+            "Proxied HTTP request",
+            method=method,
+            url=full_url,
+            status_code=response.status_code,
+        )
+
+        # Return response to client
+        return ProxyResponse(
+            status_code=response.status_code,
+            headers=dict(response.headers),
+            body=response.text,
+        )
 
 
 @app.post("/log_request")

@@ -1,10 +1,12 @@
 """Stolon client for communicating with the stolon server to manage HTTP API access."""
 
 from dataclasses import dataclass
+from typing import Any
 
 import httpx
 import structlog
 
+from stolon.models import ProxyRequest, ProxyResponse
 from trifolium.config import Home
 
 
@@ -96,3 +98,54 @@ class StolonClient:
         domain = data["domain"]
 
         return HttpHandle(token=token, domain=domain, base_url=f"https://{domain}")
+
+    def proxy_request(
+        self,
+        domain: str,
+        method: str,
+        path: str,
+        environment_name: str,
+        json_body: dict[str, Any] | None = None,
+        params: dict[str, Any] | None = None,
+        timeout: float | None = None,
+    ) -> ProxyResponse:
+        """
+        Proxy an HTTP request through the stolon server.
+
+        This is the new primary method for making API calls when use_proxy=True.
+        The server handles:
+        - Authentication token management
+        - 401 retry logic
+        - Request/response logging
+
+        Args:
+            domain: Target domain (e.g., "dev1.dev.clover.com")
+            method: HTTP method (GET, POST, DELETE, etc.)
+            path: API path (e.g., "/v3/merchants/ABC123")
+            environment_name: Environment name for headers
+            json_body: Optional JSON body for POST/PUT
+            params: Optional query parameters
+            timeout: Optional timeout in seconds
+
+        Returns:
+            ProxyResponse with status code, headers, and body
+        """
+        request = ProxyRequest(
+            domain=domain,
+            method=method,
+            path=path,
+            json_body=json_body,
+            params=params,
+            timeout=timeout,
+            environment_name=environment_name,
+        )
+
+        with httpx.Client(timeout=timeout or 30.0) as client:
+            response = client.post(
+                f"{self.base_url}/proxy",
+                json=request.model_dump(),
+            )
+            response.raise_for_status()
+
+            proxy_response = ProxyResponse(**response.json())
+            return proxy_response

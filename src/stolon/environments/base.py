@@ -131,7 +131,12 @@ class Environment(ABC):
 
     def _request(self, method: str, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
-        Make an authenticated HTTP request with automatic 401 retry.
+        Make an authenticated HTTP request via stolon server proxy.
+
+        The stolon server handles:
+        - Authentication token management
+        - 401 retry logic
+        - Request/response logging
 
         Args:
             method: HTTP method (GET, POST, DELETE, etc.)
@@ -141,79 +146,46 @@ class Environment(ABC):
         Returns:
             Response data (JSON if available, None otherwise)
         """
-        self.ensure_authenticated()
-        assert self.handle is not None  # For type checker
+        import json as json_module
 
         logger = structlog.get_logger()
 
-        # Build headers dict, merging any provided headers with our auth headers
-        # Extract headers from kwargs to avoid conflict when passing **kwargs
-        provided_headers = kwargs.pop("headers", None)  # type: ignore[misc]
-        headers: dict[str, str] = provided_headers.copy() if provided_headers else {}
-        headers["Cookie"] = f"internalSession={self.handle.token}"
-        headers["Content-Type"] = "application/json"
-        headers["X-Clover-Appenv"] = f"{self.name}:{self.domain.split('.')[0]}"
+        # Extract kwargs
+        json_data: Any = kwargs.get("json")
+        params: dict[str, Any] | None = kwargs.get("params")
+        timeout_val: float | None = kwargs.get("timeout")
 
-        # Extract other common kwargs
-        json_data: Any = kwargs.pop("json", None)  # type: ignore[misc]
-        params: dict[str, Any] | None = kwargs.pop("params", None)  # type: ignore[misc]
-        timeout_val: float | None = kwargs.pop("timeout", None)  # type: ignore[misc]
+        # Call stolon server proxy endpoint
+        proxy_response = self.client.proxy_request(
+            domain=self.domain,
+            method=method,
+            path=path,
+            environment_name=self.name,
+            json_body=json_data,
+            params=params,
+            timeout=timeout_val,
+        )
 
-        # Build full URL
-        full_url = f"{self.handle.base_url}{path}"
-
-        with self._create_httpx_client() as client:
-            response: httpx.Response = client.request(
-                method,
-                full_url,
-                headers=headers,
-                json=json_data,  # type: ignore[arg-type]
-                params=params,
-                timeout=timeout_val,
+        # Parse response
+        if proxy_response.status_code >= 400:
+            logger.error(
+                "HTTP request failed",
+                method=method,
+                path=path,
+                status_code=proxy_response.status_code,
+                response_body=proxy_response.body[:500] if proxy_response.body else None,
+            )
+            raise httpx.HTTPStatusError(
+                message=f"HTTP {proxy_response.status_code}",
+                request=None,  # type: ignore[arg-type]
+                response=None,  # type: ignore[arg-type]
             )
 
-            # If we get a 401, the token is expired - invalidate cache and get fresh token
-            if response.status_code == 401:
-                logger.warning("Received 401, refreshing token and retrying")
-                self.handle = None
-                self.ensure_authenticated(force_refresh=True)
-                assert self.handle is not None
-
-                # Retry with the new token
-                headers["Cookie"] = f"internalSession={self.handle.token}"
-                response = client.request(
-                    method,
-                    full_url,
-                    headers=headers,
-                    json=json_data,  # type: ignore[arg-type]
-                    params=params,
-                    timeout=timeout_val,
-                )
-
-                logger.info(
-                    "Retry response after token refresh",
-                    method=method,
-                    url=full_url,
-                    status_code=response.status_code,
-                )
-
-            # Log error details before raising
-            if response.status_code >= 400:
-                logger.error(
-                    "HTTP request failed",
-                    method=method,
-                    url=full_url,
-                    status_code=response.status_code,
-                    response_text=response.text[:500] if response.text else None,  # First 500 chars
-                    response_headers=dict(response.headers),
-                )
-
-            response.raise_for_status()
-            # Return JSON if available, None otherwise
-            if response.text:
-                response_data: dict[str, Any] | list[Any] = response.json()
-                return response_data
-            return None
+        # Return JSON if available
+        if proxy_response.body:
+            response_data: dict[str, Any] | list[Any] = json_module.loads(proxy_response.body)
+            return response_data
+        return None
 
     def get(self, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
