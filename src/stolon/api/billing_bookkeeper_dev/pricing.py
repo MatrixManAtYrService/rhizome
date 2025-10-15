@@ -6,29 +6,31 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing_for_merchant
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing_for_reseller
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing_for_merchant
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing_for_reseller
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing_for_merchant
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing_for_reseller
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_pricing import ApiCellularPricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import (
+    get_cellular_pricing,
+    get_cellular_pricing_for_merchant,
+    get_cellular_pricing_for_reseller,
+    get_misc_pricing,
+    get_misc_pricing_for_merchant,
+    get_misc_pricing_for_reseller,
+    get_plan_pricing,
+    get_plan_pricing_for_merchant,
+    get_plan_pricing_for_reseller,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_pricing import (
+    ApiCellularPricing,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing import ApiPlanPricing
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_cellular_pricing_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -53,7 +55,7 @@ def get_cellular_pricing_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiCellularPricing]
@@ -73,17 +75,13 @@ def get_cellular_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -93,18 +91,13 @@ def get_cellular_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_pricing_sync(
-    *,
-    client: StolonClient
-) -> ApiCellularPricing | None:
+def get_cellular_pricing_sync(*, client: StolonClient) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -129,7 +122,7 @@ def get_cellular_pricing_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiCellularPricing | None
@@ -149,7 +142,7 @@ def get_cellular_pricing_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -159,12 +152,7 @@ def get_cellular_pricing_sync(
     return None
 
 
-
-
-def get_cellular_pricing_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -189,7 +177,7 @@ def get_cellular_pricing_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiCellularPricing]
@@ -209,17 +197,13 @@ def get_cellular_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -229,18 +213,13 @@ def get_cellular_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_pricing_asyncio(
-    *,
-    client: StolonClient
-) -> ApiCellularPricing | None:
+def get_cellular_pricing_asyncio(*, client: StolonClient) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
     Args:
@@ -265,7 +244,7 @@ def get_cellular_pricing_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiCellularPricing | None
@@ -285,7 +264,7 @@ def get_cellular_pricing_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -295,12 +274,7 @@ def get_cellular_pricing_asyncio(
     return None
 
 
-
-
-def get_misc_pricing_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_misc_pricing_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -324,7 +298,7 @@ def get_misc_pricing_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -344,17 +318,13 @@ def get_misc_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -364,18 +334,13 @@ def get_misc_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_misc_pricing_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_misc_pricing_sync(*, client: StolonClient) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -399,7 +364,7 @@ def get_misc_pricing_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -419,7 +384,7 @@ def get_misc_pricing_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -429,12 +394,7 @@ def get_misc_pricing_sync(
     return None
 
 
-
-
-def get_misc_pricing_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_misc_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -458,7 +418,7 @@ def get_misc_pricing_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -478,17 +438,13 @@ def get_misc_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -498,18 +454,13 @@ def get_misc_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_misc_pricing_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_misc_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -533,7 +484,7 @@ def get_misc_pricing_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -553,7 +504,7 @@ def get_misc_pricing_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -563,13 +514,7 @@ def get_misc_pricing_asyncio(
     return None
 
 
-
-
-def get_plan_pricing_for_merchant_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -614,17 +559,13 @@ def get_plan_pricing_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
@@ -634,19 +575,13 @@ def get_plan_pricing_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_pricing_for_merchant_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPlanPricing | None:
+def get_plan_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -691,7 +626,7 @@ def get_plan_pricing_for_merchant_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -701,13 +636,7 @@ def get_plan_pricing_for_merchant_sync(
     return None
 
 
-
-
-def get_plan_pricing_for_merchant_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -752,17 +681,13 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
@@ -772,19 +697,13 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_pricing_for_merchant_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPlanPricing | None:
+def get_plan_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
 
@@ -829,7 +748,7 @@ def get_plan_pricing_for_merchant_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -839,13 +758,7 @@ def get_plan_pricing_for_merchant_asyncio(
     return None
 
 
-
-
-def get_misc_pricing_for_merchant_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_misc_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -888,17 +801,13 @@ def get_misc_pricing_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -908,19 +817,13 @@ def get_misc_pricing_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_misc_pricing_for_merchant_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_misc_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -963,7 +866,7 @@ def get_misc_pricing_for_merchant_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -973,13 +876,7 @@ def get_misc_pricing_for_merchant_sync(
     return None
 
 
-
-
-def get_misc_pricing_for_merchant_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_misc_pricing_for_merchant_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1022,17 +919,13 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1042,19 +935,13 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_misc_pricing_for_merchant_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_misc_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1097,7 +984,7 @@ def get_misc_pricing_for_merchant_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1107,13 +994,7 @@ def get_misc_pricing_for_merchant_asyncio(
     return None
 
 
-
-
-def get_misc_pricing_for_reseller_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ResponseError]:
+def get_misc_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1156,17 +1037,13 @@ def get_misc_pricing_for_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1176,19 +1053,13 @@ def get_misc_pricing_for_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_misc_pricing_for_reseller_sync(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ResponseError | None:
+def get_misc_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1231,7 +1102,7 @@ def get_misc_pricing_for_reseller_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1241,13 +1112,7 @@ def get_misc_pricing_for_reseller_sync(
     return None
 
 
-
-
-def get_misc_pricing_for_reseller_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ResponseError]:
+def get_misc_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1290,17 +1155,13 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1310,19 +1171,13 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_misc_pricing_for_reseller_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ResponseError | None:
+def get_misc_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -1365,7 +1220,7 @@ def get_misc_pricing_for_reseller_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1375,13 +1230,7 @@ def get_misc_pricing_for_reseller_asyncio(
     return None
 
 
-
-
-def get_plan_pricing_for_reseller_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1426,17 +1275,13 @@ def get_plan_pricing_for_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
@@ -1446,19 +1291,13 @@ def get_plan_pricing_for_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_pricing_for_reseller_sync(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ApiPlanPricing | None:
+def get_plan_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ApiPlanPricing | None:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1503,7 +1342,7 @@ def get_plan_pricing_for_reseller_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1513,13 +1352,7 @@ def get_plan_pricing_for_reseller_sync(
     return None
 
 
-
-
-def get_plan_pricing_for_reseller_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ApiPlanPricing]:
+def get_plan_pricing_for_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1564,17 +1397,13 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
@@ -1584,19 +1413,13 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_pricing_for_reseller_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ApiPlanPricing | None:
+def get_plan_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ApiPlanPricing | None:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
 
@@ -1641,7 +1464,7 @@ def get_plan_pricing_for_reseller_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1651,12 +1474,7 @@ def get_plan_pricing_for_reseller_asyncio(
     return None
 
 
-
-
-def get_plan_pricing_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiPlanPricing]:
+def get_plan_pricing_sync_detailed(*, client: StolonClient) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1681,7 +1499,7 @@ def get_plan_pricing_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiPlanPricing]
@@ -1701,17 +1519,13 @@ def get_plan_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
@@ -1721,18 +1535,13 @@ def get_plan_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_pricing_sync(
-    *,
-    client: StolonClient
-) -> ApiPlanPricing | None:
+def get_plan_pricing_sync(*, client: StolonClient) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1757,7 +1566,7 @@ def get_plan_pricing_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiPlanPricing | None
@@ -1777,7 +1586,7 @@ def get_plan_pricing_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1787,12 +1596,7 @@ def get_plan_pricing_sync(
     return None
 
 
-
-
-def get_plan_pricing_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiPlanPricing]:
+def get_plan_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1817,7 +1621,7 @@ def get_plan_pricing_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiPlanPricing]
@@ -1837,17 +1641,13 @@ def get_plan_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
@@ -1857,18 +1657,13 @@ def get_plan_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_pricing_asyncio(
-    *,
-    client: StolonClient
-) -> ApiPlanPricing | None:
+def get_plan_pricing_asyncio(*, client: StolonClient) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
     Args:
@@ -1893,7 +1688,7 @@ def get_plan_pricing_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiPlanPricing | None
@@ -1913,7 +1708,7 @@ def get_plan_pricing_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1923,13 +1718,7 @@ def get_plan_pricing_asyncio(
     return None
 
 
-
-
-def get_cellular_pricing_for_merchant_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_for_merchant_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -1974,17 +1763,13 @@ def get_cellular_pricing_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -1994,19 +1779,13 @@ def get_cellular_pricing_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_pricing_for_merchant_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_merchant_sync(*, client: StolonClient, uuid: str) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2051,7 +1830,7 @@ def get_cellular_pricing_for_merchant_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2059,14 +1838,10 @@ def get_cellular_pricing_for_merchant_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_cellular_pricing_for_merchant_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -2112,17 +1887,13 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -2132,19 +1903,13 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_pricing_for_merchant_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_merchant_asyncio(*, client: StolonClient, uuid: str) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2189,7 +1954,7 @@ def get_cellular_pricing_for_merchant_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2199,13 +1964,7 @@ def get_cellular_pricing_for_merchant_asyncio(
     return None
 
 
-
-
-def get_cellular_pricing_for_reseller_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ApiCellularPricing]:
+def get_cellular_pricing_for_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2250,17 +2009,13 @@ def get_cellular_pricing_for_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -2270,19 +2025,13 @@ def get_cellular_pricing_for_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_pricing_for_reseller_sync(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_reseller_sync(*, client: StolonClient, r_id: str) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2327,7 +2076,7 @@ def get_cellular_pricing_for_reseller_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2335,14 +2084,10 @@ def get_cellular_pricing_for_reseller_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_cellular_pricing_for_reseller_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -2388,17 +2133,13 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
@@ -2408,19 +2149,13 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_pricing_for_reseller_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ApiCellularPricing | None:
+def get_cellular_pricing_for_reseller_asyncio(*, client: StolonClient, r_id: str) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
 
@@ -2465,7 +2200,7 @@ def get_cellular_pricing_for_reseller_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2473,4 +2208,3 @@ def get_cellular_pricing_for_reseller_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

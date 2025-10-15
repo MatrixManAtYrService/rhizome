@@ -6,24 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history_by_entity
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_developer_billing_event_history
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_merchant_billing_event_history
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_reseller_billing_event_history
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import (
+    get_billing_event_history,
+    get_billing_event_history_by_entity,
+    get_developer_billing_event_history,
+    get_merchant_billing_event_history,
+    get_reseller_billing_event_history,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_merchant_billing_event_history_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_merchant_billing_event_history_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
     Args:
@@ -63,17 +62,13 @@ def get_merchant_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -83,19 +78,13 @@ def get_merchant_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_billing_event_history_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_merchant_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for a merchant
 
     Args:
@@ -135,7 +124,7 @@ def get_merchant_billing_event_history_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -145,13 +134,7 @@ def get_merchant_billing_event_history_sync(
     return None
 
 
-
-
-def get_merchant_billing_event_history_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_merchant_billing_event_history_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
     Args:
@@ -191,17 +174,13 @@ def get_merchant_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -211,19 +190,13 @@ def get_merchant_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_billing_event_history_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_merchant_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for a merchant
 
     Args:
@@ -263,7 +236,7 @@ def get_merchant_billing_event_history_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -273,12 +246,7 @@ def get_merchant_billing_event_history_asyncio(
     return None
 
 
-
-
-def get_billing_event_history_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get billing event history records
 
     Args:
@@ -301,7 +269,7 @@ def get_billing_event_history_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -321,17 +289,13 @@ def get_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -341,18 +305,13 @@ def get_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_event_history_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_billing_event_history_sync(*, client: StolonClient) -> ResponseError | None:
     """Get billing event history records
 
     Args:
@@ -375,7 +334,7 @@ def get_billing_event_history_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -395,7 +354,7 @@ def get_billing_event_history_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -405,12 +364,7 @@ def get_billing_event_history_sync(
     return None
 
 
-
-
-def get_billing_event_history_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get billing event history records
 
     Args:
@@ -433,7 +387,7 @@ def get_billing_event_history_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -453,17 +407,13 @@ def get_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -473,18 +423,13 @@ def get_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_event_history_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_billing_event_history_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get billing event history records
 
     Args:
@@ -507,7 +452,7 @@ def get_billing_event_history_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -527,7 +472,7 @@ def get_billing_event_history_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -537,13 +482,7 @@ def get_billing_event_history_asyncio(
     return None
 
 
-
-
-def get_reseller_billing_event_history_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_reseller_billing_event_history_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
     Args:
@@ -583,17 +522,13 @@ def get_reseller_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -603,19 +538,13 @@ def get_reseller_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_reseller_billing_event_history_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_reseller_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for a reseller
 
     Args:
@@ -655,7 +584,7 @@ def get_reseller_billing_event_history_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -665,13 +594,7 @@ def get_reseller_billing_event_history_sync(
     return None
 
 
-
-
-def get_reseller_billing_event_history_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_reseller_billing_event_history_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
     Args:
@@ -711,17 +634,13 @@ def get_reseller_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -731,19 +650,13 @@ def get_reseller_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_reseller_billing_event_history_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_reseller_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for a reseller
 
     Args:
@@ -783,7 +696,7 @@ def get_reseller_billing_event_history_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -793,13 +706,7 @@ def get_reseller_billing_event_history_asyncio(
     return None
 
 
-
-
-def get_billing_event_history_by_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_billing_event_history_by_entity_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
     Args:
@@ -839,17 +746,13 @@ def get_billing_event_history_by_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -859,19 +762,13 @@ def get_billing_event_history_by_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_event_history_by_entity_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_billing_event_history_by_entity_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
     Args:
@@ -911,7 +808,7 @@ def get_billing_event_history_by_entity_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -921,13 +818,7 @@ def get_billing_event_history_by_entity_sync(
     return None
 
 
-
-
-def get_billing_event_history_by_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_billing_event_history_by_entity_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
     Args:
@@ -967,17 +858,13 @@ def get_billing_event_history_by_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -987,19 +874,13 @@ def get_billing_event_history_by_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_event_history_by_entity_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_billing_event_history_by_entity_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
     Args:
@@ -1039,7 +920,7 @@ def get_billing_event_history_by_entity_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1049,13 +930,7 @@ def get_billing_event_history_by_entity_asyncio(
     return None
 
 
-
-
-def get_developer_billing_event_history_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_developer_billing_event_history_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for a developer
 
     Args:
@@ -1095,17 +970,13 @@ def get_developer_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1115,19 +986,13 @@ def get_developer_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_developer_billing_event_history_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_developer_billing_event_history_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for a developer
 
     Args:
@@ -1167,7 +1032,7 @@ def get_developer_billing_event_history_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1177,13 +1042,7 @@ def get_developer_billing_event_history_sync(
     return None
 
 
-
-
-def get_developer_billing_event_history_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_developer_billing_event_history_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get billing event history for a developer
 
     Args:
@@ -1223,17 +1082,13 @@ def get_developer_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1243,19 +1098,13 @@ def get_developer_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_developer_billing_event_history_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_developer_billing_event_history_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get billing event history for a developer
 
     Args:
@@ -1295,7 +1144,7 @@ def get_developer_billing_event_history_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1303,4 +1152,3 @@ def get_developer_billing_event_history_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

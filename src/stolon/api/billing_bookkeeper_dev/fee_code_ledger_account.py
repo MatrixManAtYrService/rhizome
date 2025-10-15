@@ -6,29 +6,35 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import create_fee_code_ledger_account
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import delete_fee_code_ledger_account_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_account_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_date
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_fee_category_fee_code
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_ledger_account_key
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import resolve_fee_code_to_ledger_account_mapping
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import update_fee_code_ledger_account
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_ledger_account import ApiFeeCodeLedgerAccount
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account import ApiLedgerAccount
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import (
+    create_fee_code_ledger_account,
+    delete_fee_code_ledger_account_by_uuid,
+    get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date,
+    get_fee_code_ledger_account_by_uuid,
+    get_fee_code_ledger_accounts_by_date,
+    get_fee_code_ledger_accounts_by_fee_category_fee_code,
+    get_fee_code_ledger_accounts_by_ledger_account_key,
+    resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account,
+    resolve_fee_code_to_ledger_account_mapping,
+    update_fee_code_ledger_account,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_ledger_account import (
+    ApiFeeCodeLedgerAccount,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account import (
+    ApiLedgerAccount,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -49,7 +55,7 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
@@ -69,37 +75,27 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -120,7 +116,7 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
@@ -129,7 +125,7 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
     kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -141,13 +137,10 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -168,7 +161,7 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
@@ -188,37 +181,27 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -239,7 +222,7 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
@@ -248,7 +231,7 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
     kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -260,13 +243,10 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -288,7 +268,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
@@ -308,37 +288,27 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -360,7 +330,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
@@ -369,7 +339,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
     kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -381,13 +351,10 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -409,7 +376,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
@@ -429,37 +396,27 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -481,7 +438,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
@@ -490,7 +447,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
     kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -502,14 +459,10 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_account_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -548,38 +501,27 @@ def get_fee_code_ledger_account_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_account_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -607,7 +549,7 @@ def get_fee_code_ledger_account_by_uuid_sync(
     kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -619,14 +561,10 @@ def get_fee_code_ledger_account_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -665,38 +603,27 @@ def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_account_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -724,7 +651,7 @@ def get_fee_code_ledger_account_by_uuid_asyncio(
     kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -736,14 +663,10 @@ def get_fee_code_ledger_account_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_fee_code_ledger_account_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | str]:
     """Delete a fee-code-to-ledger-account mapping
 
@@ -782,39 +705,26 @@ def delete_fee_code_ledger_account_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_fee_code_ledger_account_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | str | None:
+def delete_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
     """Delete a fee-code-to-ledger-account mapping
 
     Args:
@@ -841,7 +751,7 @@ def delete_fee_code_ledger_account_by_uuid_sync(
     kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -853,14 +763,10 @@ def delete_fee_code_ledger_account_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | str]:
     """Delete a fee-code-to-ledger-account mapping
 
@@ -899,39 +805,26 @@ def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_fee_code_ledger_account_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | str | None:
+def delete_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
     """Delete a fee-code-to-ledger-account mapping
 
     Args:
@@ -958,7 +851,7 @@ def delete_fee_code_ledger_account_by_uuid_asyncio(
     kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -970,13 +863,10 @@ def delete_fee_code_ledger_account_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -997,7 +887,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
@@ -1017,37 +907,27 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1068,7 +948,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
@@ -1077,7 +957,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
     kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1089,13 +969,10 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1116,7 +993,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
@@ -1136,37 +1013,27 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1187,7 +1054,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
@@ -1196,7 +1063,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
     kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1208,14 +1075,10 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1244,7 +1107,9 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
         Response[ApiLedgerAccount]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1258,17 +1123,13 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccount:
@@ -1278,18 +1139,14 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1318,7 +1175,9 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
         ApiLedgerAccount | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1332,7 +1191,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1342,12 +1201,8 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     return None
 
 
-
-
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1376,7 +1231,9 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
         Response[ApiLedgerAccount]
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1390,17 +1247,13 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccount:
@@ -1410,18 +1263,14 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1450,7 +1299,9 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
         ApiLedgerAccount | None
     """
     # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(
+        billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1464,7 +1315,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1474,12 +1325,8 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     return None
 
 
-
-
 def update_fee_code_ledger_account_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1519,38 +1366,27 @@ def update_fee_code_ledger_account_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def update_fee_code_ledger_account_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1579,7 +1415,7 @@ def update_fee_code_ledger_account_sync(
     kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1591,14 +1427,10 @@ def update_fee_code_ledger_account_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def update_fee_code_ledger_account_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1638,38 +1470,27 @@ def update_fee_code_ledger_account_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def update_fee_code_ledger_account_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1698,7 +1519,7 @@ def update_fee_code_ledger_account_asyncio(
     kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1710,13 +1531,10 @@ def update_fee_code_ledger_account_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def create_fee_code_ledger_account_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
@@ -1735,7 +1553,7 @@ def create_fee_code_ledger_account_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
@@ -1755,38 +1573,26 @@ def create_fee_code_ledger_account_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_code_ledger_account_sync(
-    *,
-    client: StolonClient
-) -> ApiFeeCodeLedgerAccount | ResponseError | None:
+def create_fee_code_ledger_account_sync(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1804,7 +1610,7 @@ def create_fee_code_ledger_account_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
@@ -1813,7 +1619,7 @@ def create_fee_code_ledger_account_sync(
     kwargs = create_fee_code_ledger_account._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1825,13 +1631,10 @@ def create_fee_code_ledger_account_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def create_fee_code_ledger_account_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
@@ -1850,7 +1653,7 @@ def create_fee_code_ledger_account_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
@@ -1870,38 +1673,26 @@ def create_fee_code_ledger_account_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_code_ledger_account_asyncio(
-    *,
-    client: StolonClient
-) -> ApiFeeCodeLedgerAccount | ResponseError | None:
+def create_fee_code_ledger_account_asyncio(*, client: StolonClient) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
     Args:
@@ -1919,7 +1710,7 @@ def create_fee_code_ledger_account_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
@@ -1928,7 +1719,7 @@ def create_fee_code_ledger_account_asyncio(
     kwargs = create_fee_code_ledger_account._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1940,13 +1731,10 @@ def create_fee_code_ledger_account_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -1969,7 +1757,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
@@ -1989,37 +1777,27 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2042,7 +1820,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
@@ -2051,7 +1829,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
     kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2063,13 +1841,10 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2092,7 +1867,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
@@ -2112,37 +1887,27 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2165,7 +1930,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
@@ -2174,7 +1939,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
     kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2186,13 +1951,10 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_ledger_accounts_by_date_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2216,7 +1978,7 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
@@ -2236,37 +1998,27 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_fee_code_ledger_accounts_by_date_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2290,7 +2042,7 @@ def get_fee_code_ledger_accounts_by_date_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
@@ -2299,7 +2051,7 @@ def get_fee_code_ledger_accounts_by_date_sync(
     kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2313,11 +2065,8 @@ def get_fee_code_ledger_accounts_by_date_sync(
     return None
 
 
-
-
 def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2341,7 +2090,7 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
@@ -2361,37 +2110,27 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_fee_code_ledger_accounts_by_date_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2415,7 +2154,7 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
@@ -2424,7 +2163,7 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
     kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2436,4 +2175,3 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
 
     # No response model, return None
     return None
-

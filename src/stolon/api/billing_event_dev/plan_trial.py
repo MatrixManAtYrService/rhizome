@@ -6,26 +6,33 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_active_plan_trial_for_merchant
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_latest_plan_trial_for_merchant
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_latest_plan_trials_for_merchants
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_plan_trials
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_active_plan_trial_for_merchant_response200 import GetActivePlanTrialForMerchantResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trial_for_merchant_response200 import GetLatestPlanTrialForMerchantResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trials_for_merchants_response200 import GetLatestPlanTrialsForMerchantsResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response200 import GetPlanTrialsResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_trial import (
+    get_active_plan_trial_for_merchant,
+    get_latest_plan_trial_for_merchant,
+    get_latest_plan_trials_for_merchants,
+    get_plan_trials,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_active_plan_trial_for_merchant_response200 import (
+    GetActivePlanTrialForMerchantResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trial_for_merchant_response200 import (
+    GetLatestPlanTrialForMerchantResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trials_for_merchants_response200 import (
+    GetLatestPlanTrialsForMerchantsResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response200 import (
+    GetPlanTrialsResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_plan_trials_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> Response[GetPlanTrialsResponse200]:
+def get_plan_trials_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[GetPlanTrialsResponse200]:
     """Get plan trials
 
     Args:
@@ -66,17 +73,13 @@ def get_plan_trials_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetPlanTrialsResponse200:
@@ -86,19 +89,13 @@ def get_plan_trials_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_trials_sync(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> GetPlanTrialsResponse200 | None:
+def get_plan_trials_sync(*, client: StolonClient, merchant_uuid: str) -> GetPlanTrialsResponse200 | None:
     """Get plan trials
 
     Args:
@@ -139,7 +136,7 @@ def get_plan_trials_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -149,13 +146,7 @@ def get_plan_trials_sync(
     return None
 
 
-
-
-def get_plan_trials_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> Response[GetPlanTrialsResponse200]:
+def get_plan_trials_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[GetPlanTrialsResponse200]:
     """Get plan trials
 
     Args:
@@ -196,17 +187,13 @@ def get_plan_trials_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetPlanTrialsResponse200:
@@ -216,19 +203,13 @@ def get_plan_trials_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_trials_asyncio(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> GetPlanTrialsResponse200 | None:
+def get_plan_trials_asyncio(*, client: StolonClient, merchant_uuid: str) -> GetPlanTrialsResponse200 | None:
     """Get plan trials
 
     Args:
@@ -269,7 +250,7 @@ def get_plan_trials_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -277,14 +258,10 @@ def get_plan_trials_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_latest_plan_trial_for_merchant_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[GetLatestPlanTrialForMerchantResponse200]:
     """Get latest plan trial
 
@@ -324,17 +301,13 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialForMerchantResponse200:
@@ -344,18 +317,14 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_latest_plan_trial_for_merchant_sync(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> GetLatestPlanTrialForMerchantResponse200 | None:
     """Get latest plan trial
 
@@ -395,7 +364,7 @@ def get_latest_plan_trial_for_merchant_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -405,12 +374,8 @@ def get_latest_plan_trial_for_merchant_sync(
     return None
 
 
-
-
 def get_latest_plan_trial_for_merchant_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[GetLatestPlanTrialForMerchantResponse200]:
     """Get latest plan trial
 
@@ -450,17 +415,13 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialForMerchantResponse200:
@@ -470,18 +431,14 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_latest_plan_trial_for_merchant_asyncio(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> GetLatestPlanTrialForMerchantResponse200 | None:
     """Get latest plan trial
 
@@ -521,7 +478,7 @@ def get_latest_plan_trial_for_merchant_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -531,12 +488,8 @@ def get_latest_plan_trial_for_merchant_asyncio(
     return None
 
 
-
-
 def get_active_plan_trial_for_merchant_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[GetActivePlanTrialForMerchantResponse200]:
     """Get active merchant plan trial
 
@@ -576,17 +529,13 @@ def get_active_plan_trial_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetActivePlanTrialForMerchantResponse200:
@@ -596,18 +545,14 @@ def get_active_plan_trial_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_active_plan_trial_for_merchant_sync(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> GetActivePlanTrialForMerchantResponse200 | None:
     """Get active merchant plan trial
 
@@ -647,7 +592,7 @@ def get_active_plan_trial_for_merchant_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -657,12 +602,8 @@ def get_active_plan_trial_for_merchant_sync(
     return None
 
 
-
-
 def get_active_plan_trial_for_merchant_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[GetActivePlanTrialForMerchantResponse200]:
     """Get active merchant plan trial
 
@@ -702,17 +643,13 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetActivePlanTrialForMerchantResponse200:
@@ -722,18 +659,14 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_active_plan_trial_for_merchant_asyncio(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> GetActivePlanTrialForMerchantResponse200 | None:
     """Get active merchant plan trial
 
@@ -773,7 +706,7 @@ def get_active_plan_trial_for_merchant_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -783,11 +716,8 @@ def get_active_plan_trial_for_merchant_asyncio(
     return None
 
 
-
-
 def get_latest_plan_trials_for_merchants_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetLatestPlanTrialsForMerchantsResponse200]:
     """get Latest Trials for a List of Merchants
 
@@ -809,7 +739,7 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetLatestPlanTrialsForMerchantsResponse200]
@@ -829,17 +759,13 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialsForMerchantsResponse200:
@@ -849,17 +775,14 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_latest_plan_trials_for_merchants_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetLatestPlanTrialsForMerchantsResponse200 | None:
     """get Latest Trials for a List of Merchants
 
@@ -881,7 +804,7 @@ def get_latest_plan_trials_for_merchants_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetLatestPlanTrialsForMerchantsResponse200 | None
@@ -901,7 +824,7 @@ def get_latest_plan_trials_for_merchants_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -911,11 +834,8 @@ def get_latest_plan_trials_for_merchants_sync(
     return None
 
 
-
-
 def get_latest_plan_trials_for_merchants_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetLatestPlanTrialsForMerchantsResponse200]:
     """get Latest Trials for a List of Merchants
 
@@ -937,7 +857,7 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetLatestPlanTrialsForMerchantsResponse200]
@@ -957,17 +877,13 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialsForMerchantsResponse200:
@@ -977,17 +893,14 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_latest_plan_trials_for_merchants_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetLatestPlanTrialsForMerchantsResponse200 | None:
     """get Latest Trials for a List of Merchants
 
@@ -1009,7 +922,7 @@ def get_latest_plan_trials_for_merchants_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetLatestPlanTrialsForMerchantsResponse200 | None
@@ -1029,7 +942,7 @@ def get_latest_plan_trials_for_merchants_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1037,4 +950,3 @@ def get_latest_plan_trials_for_merchants_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

@@ -6,23 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.external_controller import get_bulk_acceptances
-from stolon.generated.billing_event_dev.open_api_definition_client.api.external_controller import get_merchant
-from stolon.generated.billing_event_dev.open_api_definition_client.api.external_controller import get_merchant_payments
-from stolon.generated.billing_event_dev.open_api_definition_client.api.external_controller import get_merchant_plan_history
-from stolon.generated.billing_event_dev.open_api_definition_client.api.external_controller import get_plan_meta_1
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+from typing import Any
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.external_controller import (
+    get_bulk_acceptances,
+    get_merchant,
+    get_merchant_payments,
+    get_merchant_plan_history,
+    get_plan_meta_1,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_merchant_plan_history_sync_detailed(
-    *,
-    client: StolonClient,
-    m_id: str
-) -> Response[Any]:
+def get_merchant_plan_history_sync_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -59,39 +59,26 @@ def get_merchant_plan_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_plan_history_asyncio_detailed(
-    *,
-    client: StolonClient,
-    m_id: str
-) -> Response[Any]:
+def get_merchant_plan_history_asyncio_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -128,38 +115,26 @@ def get_merchant_plan_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_bulk_acceptances_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_bulk_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         agreement_type (Union[Unset, str]):  Default: 'BILLING'.
         include_deleted (Union[Unset, bool]):  Default: False.
@@ -182,7 +157,7 @@ def get_bulk_acceptances_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -202,38 +177,26 @@ def get_bulk_acceptances_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_bulk_acceptances_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_bulk_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         agreement_type (Union[Unset, str]):  Default: 'BILLING'.
         include_deleted (Union[Unset, bool]):  Default: False.
@@ -256,7 +219,7 @@ def get_bulk_acceptances_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -276,39 +239,26 @@ def get_bulk_acceptances_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_sync_detailed(
-    *,
-    client: StolonClient,
-    m_id: str
-) -> Response[Any]:
+def get_merchant_sync_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -345,39 +295,26 @@ def get_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_asyncio_detailed(
-    *,
-    client: StolonClient,
-    m_id: str
-) -> Response[Any]:
+def get_merchant_asyncio_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -414,39 +351,26 @@ def get_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_payments_sync_detailed(
-    *,
-    client: StolonClient,
-    m_uuid: str
-) -> Response[Any]:
+def get_merchant_payments_sync_detailed(*, client: StolonClient, m_uuid: str) -> Response[Any]:
     """Args:
         m_uuid (str):
         start_date (Union[Unset, str]):
@@ -486,39 +410,26 @@ def get_merchant_payments_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_payments_asyncio_detailed(
-    *,
-    client: StolonClient,
-    m_uuid: str
-) -> Response[Any]:
+def get_merchant_payments_asyncio_detailed(*, client: StolonClient, m_uuid: str) -> Response[Any]:
     """Args:
         m_uuid (str):
         start_date (Union[Unset, str]):
@@ -558,39 +469,26 @@ def get_merchant_payments_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_meta_1_sync_detailed(
-    *,
-    client: StolonClient,
-    m_id: str
-) -> Response[Any]:
+def get_plan_meta_1_sync_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -627,39 +525,26 @@ def get_plan_meta_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_meta_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    m_id: str
-) -> Response[Any]:
+def get_plan_meta_1_asyncio_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -696,28 +581,20 @@ def get_plan_meta_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-

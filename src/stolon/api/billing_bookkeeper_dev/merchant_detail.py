@@ -6,21 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_detail import get_merchant_detail
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_detail import get_merchant_detail_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_detail import get_merchant_details_in_bulk
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_merchant_detail import ApiMerchantDetail
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_detail import (
+    get_merchant_detail,
+    get_merchant_detail_by_uuid,
+    get_merchant_details_in_bulk,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_merchant_detail import (
+    ApiMerchantDetail,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
 def get_merchant_details_in_bulk_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiMerchantDetail"]]:
     """Get merchant details
 
@@ -39,7 +43,7 @@ def get_merchant_details_in_bulk_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiMerchantDetail"]]
@@ -59,38 +63,26 @@ def get_merchant_details_in_bulk_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_details_in_bulk_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | list["ApiMerchantDetail"] | None:
+def get_merchant_details_in_bulk_sync(*, client: StolonClient) -> ResponseError | list["ApiMerchantDetail"] | None:
     """Get merchant details
 
     Args:
@@ -108,7 +100,7 @@ def get_merchant_details_in_bulk_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiMerchantDetail"] | None
@@ -117,7 +109,7 @@ def get_merchant_details_in_bulk_sync(
     kwargs = get_merchant_details_in_bulk._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -129,13 +121,10 @@ def get_merchant_details_in_bulk_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_details_in_bulk_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiMerchantDetail"]]:
     """Get merchant details
 
@@ -154,7 +143,7 @@ def get_merchant_details_in_bulk_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiMerchantDetail"]]
@@ -174,38 +163,26 @@ def get_merchant_details_in_bulk_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_details_in_bulk_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | list["ApiMerchantDetail"] | None:
+def get_merchant_details_in_bulk_asyncio(*, client: StolonClient) -> ResponseError | list["ApiMerchantDetail"] | None:
     """Get merchant details
 
     Args:
@@ -223,7 +200,7 @@ def get_merchant_details_in_bulk_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiMerchantDetail"] | None
@@ -232,7 +209,7 @@ def get_merchant_details_in_bulk_asyncio(
     kwargs = get_merchant_details_in_bulk._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -246,12 +223,7 @@ def get_merchant_details_in_bulk_asyncio(
     return None
 
 
-
-
-def get_merchant_detail_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantDetail | ResponseError]:
+def get_merchant_detail_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantDetail | ResponseError]:
     """Get merchant detail
 
     Args:
@@ -270,7 +242,7 @@ def get_merchant_detail_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantDetail | ResponseError]
@@ -290,38 +262,26 @@ def get_merchant_detail_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_detail_sync(
-    *,
-    client: StolonClient
-) -> ApiMerchantDetail | ResponseError | None:
+def get_merchant_detail_sync(*, client: StolonClient) -> ApiMerchantDetail | ResponseError | None:
     """Get merchant detail
 
     Args:
@@ -340,7 +300,7 @@ def get_merchant_detail_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantDetail | ResponseError | None
@@ -349,7 +309,7 @@ def get_merchant_detail_sync(
     kwargs = get_merchant_detail._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -363,12 +323,7 @@ def get_merchant_detail_sync(
     return None
 
 
-
-
-def get_merchant_detail_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantDetail | ResponseError]:
+def get_merchant_detail_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantDetail | ResponseError]:
     """Get merchant detail
 
     Args:
@@ -387,7 +342,7 @@ def get_merchant_detail_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantDetail | ResponseError]
@@ -407,38 +362,26 @@ def get_merchant_detail_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_detail_asyncio(
-    *,
-    client: StolonClient
-) -> ApiMerchantDetail | ResponseError | None:
+def get_merchant_detail_asyncio(*, client: StolonClient) -> ApiMerchantDetail | ResponseError | None:
     """Get merchant detail
 
     Args:
@@ -457,7 +400,7 @@ def get_merchant_detail_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantDetail | ResponseError | None
@@ -466,7 +409,7 @@ def get_merchant_detail_asyncio(
     kwargs = get_merchant_detail._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -478,14 +421,10 @@ def get_merchant_detail_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_detail_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMerchantDetail | ResponseError]:
     """Get merchant detail by UUID
 
@@ -524,39 +463,26 @@ def get_merchant_detail_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_detail_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiMerchantDetail | ResponseError | None:
+def get_merchant_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMerchantDetail | ResponseError | None:
     """Get merchant detail by UUID
 
     Args:
@@ -583,7 +509,7 @@ def get_merchant_detail_by_uuid_sync(
     kwargs = get_merchant_detail_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -595,14 +521,10 @@ def get_merchant_detail_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_detail_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMerchantDetail | ResponseError]:
     """Get merchant detail by UUID
 
@@ -641,39 +563,26 @@ def get_merchant_detail_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_detail_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiMerchantDetail | ResponseError | None:
+def get_merchant_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiMerchantDetail | ResponseError | None:
     """Get merchant detail by UUID
 
     Args:
@@ -700,7 +609,7 @@ def get_merchant_detail_by_uuid_asyncio(
     kwargs = get_merchant_detail_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -712,4 +621,3 @@ def get_merchant_detail_by_uuid_asyncio(
 
     # No response model, return None
     return None
-

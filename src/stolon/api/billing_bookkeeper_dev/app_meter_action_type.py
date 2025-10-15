@@ -6,23 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_type import create_app_meter_action_type
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_type import delete_app_meter_action_type_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_type import get_app_meter_action_type_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_type import get_app_meter_action_types_by_action_type
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_meter_action_type import ApiAppMeterActionType
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action_type import (
+    create_app_meter_action_type,
+    delete_app_meter_action_type_by_uuid,
+    get_app_meter_action_type_by_uuid,
+    get_app_meter_action_types_by_action_type,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_meter_action_type import (
+    ApiAppMeterActionType,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def create_app_meter_action_type_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppMeterActionType]:
+def create_app_meter_action_type_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeterActionType]:
     """Create app metered action type
 
     Args:
@@ -40,7 +42,7 @@ def create_app_meter_action_type_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppMeterActionType]
@@ -60,17 +62,13 @@ def create_app_meter_action_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppMeterActionType:
@@ -80,18 +78,13 @@ def create_app_meter_action_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_app_meter_action_type_sync(
-    *,
-    client: StolonClient
-) -> ApiAppMeterActionType | None:
+def create_app_meter_action_type_sync(*, client: StolonClient) -> ApiAppMeterActionType | None:
     """Create app metered action type
 
     Args:
@@ -109,7 +102,7 @@ def create_app_meter_action_type_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppMeterActionType | None
@@ -129,7 +122,7 @@ def create_app_meter_action_type_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -139,12 +132,7 @@ def create_app_meter_action_type_sync(
     return None
 
 
-
-
-def create_app_meter_action_type_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppMeterActionType]:
+def create_app_meter_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppMeterActionType]:
     """Create app metered action type
 
     Args:
@@ -162,7 +150,7 @@ def create_app_meter_action_type_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppMeterActionType]
@@ -182,17 +170,13 @@ def create_app_meter_action_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppMeterActionType:
@@ -202,18 +186,13 @@ def create_app_meter_action_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_app_meter_action_type_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAppMeterActionType | None:
+def create_app_meter_action_type_asyncio(*, client: StolonClient) -> ApiAppMeterActionType | None:
     """Create app metered action type
 
     Args:
@@ -231,7 +210,7 @@ def create_app_meter_action_type_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppMeterActionType | None
@@ -251,7 +230,7 @@ def create_app_meter_action_type_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -259,14 +238,10 @@ def create_app_meter_action_type_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_app_meter_action_type_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAppMeterActionType]:
     """Get app metered action type by UUID
 
@@ -305,17 +280,13 @@ def get_app_meter_action_type_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppMeterActionType:
@@ -325,19 +296,13 @@ def get_app_meter_action_type_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_meter_action_type_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAppMeterActionType | None:
+def get_app_meter_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppMeterActionType | None:
     """Get app metered action type by UUID
 
     Args:
@@ -375,7 +340,7 @@ def get_app_meter_action_type_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -383,14 +348,10 @@ def get_app_meter_action_type_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_app_meter_action_type_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAppMeterActionType]:
     """Get app metered action type by UUID
 
@@ -429,17 +390,13 @@ def get_app_meter_action_type_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppMeterActionType:
@@ -449,19 +406,13 @@ def get_app_meter_action_type_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_meter_action_type_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAppMeterActionType | None:
+def get_app_meter_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppMeterActionType | None:
     """Get app metered action type by UUID
 
     Args:
@@ -499,7 +450,7 @@ def get_app_meter_action_type_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -509,12 +460,7 @@ def get_app_meter_action_type_by_uuid_asyncio(
     return None
 
 
-
-
-def get_app_meter_action_types_by_action_type_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppMeterActionType]:
+def get_app_meter_action_types_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeterActionType]:
     """Get app metered action type by action type
 
     Args:
@@ -532,7 +478,7 @@ def get_app_meter_action_types_by_action_type_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppMeterActionType]
@@ -552,17 +498,13 @@ def get_app_meter_action_types_by_action_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppMeterActionType:
@@ -572,18 +514,13 @@ def get_app_meter_action_types_by_action_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_meter_action_types_by_action_type_sync(
-    *,
-    client: StolonClient
-) -> ApiAppMeterActionType | None:
+def get_app_meter_action_types_by_action_type_sync(*, client: StolonClient) -> ApiAppMeterActionType | None:
     """Get app metered action type by action type
 
     Args:
@@ -601,7 +538,7 @@ def get_app_meter_action_types_by_action_type_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppMeterActionType | None
@@ -621,7 +558,7 @@ def get_app_meter_action_types_by_action_type_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -629,13 +566,10 @@ def get_app_meter_action_types_by_action_type_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_app_meter_action_types_by_action_type_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiAppMeterActionType]:
     """Get app metered action type by action type
 
@@ -654,7 +588,7 @@ def get_app_meter_action_types_by_action_type_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppMeterActionType]
@@ -674,17 +608,13 @@ def get_app_meter_action_types_by_action_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAppMeterActionType:
@@ -694,18 +624,13 @@ def get_app_meter_action_types_by_action_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_meter_action_types_by_action_type_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAppMeterActionType | None:
+def get_app_meter_action_types_by_action_type_asyncio(*, client: StolonClient) -> ApiAppMeterActionType | None:
     """Get app metered action type by action type
 
     Args:
@@ -723,7 +648,7 @@ def get_app_meter_action_types_by_action_type_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppMeterActionType | None
@@ -743,7 +668,7 @@ def get_app_meter_action_types_by_action_type_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -753,13 +678,7 @@ def get_app_meter_action_types_by_action_type_asyncio(
     return None
 
 
-
-
-def delete_app_meter_action_type_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_app_meter_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete app metered action type
 
     Args:
@@ -797,17 +716,13 @@ def delete_app_meter_action_type_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -817,19 +732,13 @@ def delete_app_meter_action_type_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_app_meter_action_type_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_app_meter_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete app metered action type
 
     Args:
@@ -867,7 +776,7 @@ def delete_app_meter_action_type_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -875,14 +784,10 @@ def delete_app_meter_action_type_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def delete_app_meter_action_type_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError]:
     """Delete app metered action type
 
@@ -921,17 +826,13 @@ def delete_app_meter_action_type_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -941,19 +842,13 @@ def delete_app_meter_action_type_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_app_meter_action_type_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_app_meter_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete app metered action type
 
     Args:
@@ -991,7 +886,7 @@ def delete_app_meter_action_type_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -999,4 +894,3 @@ def delete_app_meter_action_type_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

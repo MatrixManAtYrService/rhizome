@@ -6,28 +6,29 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_meta import create_1
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_meta import delete_1
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_meta import get_1
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_meta import get_plan_meta
-from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_meta import update
+from stolon.generated.billing_event_dev.open_api_definition_client.api.plan_meta import (
+    create_1,
+    delete_1,
+    get_1,
+    get_plan_meta,
+    update,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.models.create1_response200 import Create1Response200
 from stolon.generated.billing_event_dev.open_api_definition_client.models.delete1_response200 import Delete1Response200
 from stolon.generated.billing_event_dev.open_api_definition_client.models.get1_response200 import Get1Response200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response200 import GetPlanMetaResponse200
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response200 import (
+    GetPlanMetaResponse200,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.models.update_response200 import UpdateResponse200
 from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def update_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[UpdateResponse200]:
+def update_sync_detailed(*, client: StolonClient, uuid: str) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -66,17 +67,13 @@ def update_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and UpdateResponse200:
@@ -86,19 +83,13 @@ def update_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> UpdateResponse200 | None:
+def update_sync(*, client: StolonClient, uuid: str) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -137,7 +128,7 @@ def update_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -147,13 +138,7 @@ def update_sync(
     return None
 
 
-
-
-def update_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[UpdateResponse200]:
+def update_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -192,17 +177,13 @@ def update_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and UpdateResponse200:
@@ -212,19 +193,13 @@ def update_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> UpdateResponse200 | None:
+def update_asyncio(*, client: StolonClient, uuid: str) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -263,7 +238,7 @@ def update_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -273,13 +248,7 @@ def update_asyncio(
     return None
 
 
-
-
-def get_1_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Get1Response200]:
+def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Response200]:
     """Get plan meta row by UUID
 
     Args:
@@ -317,17 +286,13 @@ def get_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Get1Response200:
@@ -337,19 +302,13 @@ def get_1_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_1_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Get1Response200 | None:
+def get_1_sync(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     """Get plan meta row by UUID
 
     Args:
@@ -387,7 +346,7 @@ def get_1_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -397,13 +356,7 @@ def get_1_sync(
     return None
 
 
-
-
-def get_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Get1Response200]:
+def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Response200]:
     """Get plan meta row by UUID
 
     Args:
@@ -441,17 +394,13 @@ def get_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Get1Response200:
@@ -461,19 +410,13 @@ def get_1_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_1_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Get1Response200 | None:
+def get_1_asyncio(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     """Get plan meta row by UUID
 
     Args:
@@ -511,7 +454,7 @@ def get_1_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -521,13 +464,7 @@ def get_1_asyncio(
     return None
 
 
-
-
-def delete_1_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete1Response200]:
+def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delete1Response200]:
     """Delete plan meta row by UUID
 
     Args:
@@ -565,17 +502,13 @@ def delete_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete1Response200:
@@ -585,19 +518,13 @@ def delete_1_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_1_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete1Response200 | None:
+def delete_1_sync(*, client: StolonClient, uuid: str) -> Delete1Response200 | None:
     """Delete plan meta row by UUID
 
     Args:
@@ -635,7 +562,7 @@ def delete_1_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -645,13 +572,7 @@ def delete_1_sync(
     return None
 
 
-
-
-def delete_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete1Response200]:
+def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Delete1Response200]:
     """Delete plan meta row by UUID
 
     Args:
@@ -689,17 +610,13 @@ def delete_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete1Response200:
@@ -709,19 +626,13 @@ def delete_1_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_1_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete1Response200 | None:
+def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 | None:
     """Delete plan meta row by UUID
 
     Args:
@@ -759,7 +670,7 @@ def delete_1_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -769,12 +680,7 @@ def delete_1_asyncio(
     return None
 
 
-
-
-def create_1_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Create1Response200]:
+def create_1_sync_detailed(*, client: StolonClient) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -792,7 +698,7 @@ def create_1_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Create1Response200]
@@ -812,17 +718,13 @@ def create_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Create1Response200:
@@ -832,18 +734,13 @@ def create_1_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_1_sync(
-    *,
-    client: StolonClient
-) -> Create1Response200 | None:
+def create_1_sync(*, client: StolonClient) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -861,7 +758,7 @@ def create_1_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Create1Response200 | None
@@ -881,7 +778,7 @@ def create_1_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -891,12 +788,7 @@ def create_1_sync(
     return None
 
 
-
-
-def create_1_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Create1Response200]:
+def create_1_asyncio_detailed(*, client: StolonClient) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -914,7 +806,7 @@ def create_1_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Create1Response200]
@@ -934,17 +826,13 @@ def create_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Create1Response200:
@@ -954,18 +842,13 @@ def create_1_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_1_asyncio(
-    *,
-    client: StolonClient
-) -> Create1Response200 | None:
+def create_1_asyncio(*, client: StolonClient) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -983,7 +866,7 @@ def create_1_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Create1Response200 | None
@@ -1003,7 +886,7 @@ def create_1_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1013,12 +896,7 @@ def create_1_asyncio(
     return None
 
 
-
-
-def get_plan_meta_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[GetPlanMetaResponse200]:
+def get_plan_meta_sync_detailed(*, client: StolonClient) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -1037,7 +915,7 @@ def get_plan_meta_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetPlanMetaResponse200]
@@ -1057,17 +935,13 @@ def get_plan_meta_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetPlanMetaResponse200:
@@ -1077,18 +951,13 @@ def get_plan_meta_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_meta_sync(
-    *,
-    client: StolonClient
-) -> GetPlanMetaResponse200 | None:
+def get_plan_meta_sync(*, client: StolonClient) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1107,7 +976,7 @@ def get_plan_meta_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetPlanMetaResponse200 | None
@@ -1127,7 +996,7 @@ def get_plan_meta_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1137,12 +1006,7 @@ def get_plan_meta_sync(
     return None
 
 
-
-
-def get_plan_meta_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[GetPlanMetaResponse200]:
+def get_plan_meta_asyncio_detailed(*, client: StolonClient) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -1161,7 +1025,7 @@ def get_plan_meta_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetPlanMetaResponse200]
@@ -1181,17 +1045,13 @@ def get_plan_meta_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetPlanMetaResponse200:
@@ -1201,18 +1061,13 @@ def get_plan_meta_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_plan_meta_asyncio(
-    *,
-    client: StolonClient
-) -> GetPlanMetaResponse200 | None:
+def get_plan_meta_asyncio(*, client: StolonClient) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1231,7 +1086,7 @@ def get_plan_meta_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetPlanMetaResponse200 | None
@@ -1251,7 +1106,7 @@ def get_plan_meta_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1259,4 +1114,3 @@ def get_plan_meta_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

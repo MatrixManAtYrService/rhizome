@@ -6,27 +6,28 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import create_2
-from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import delete_2
-from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import get_2
-from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import get_managed_items_by_criteria
-from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import get_reseller_managed_item
-from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import merchant_passes
+from stolon.generated.billing_event_dev.open_api_definition_client.api.managed_item import (
+    create_2,
+    delete_2,
+    get_2,
+    get_managed_items_by_criteria,
+    get_reseller_managed_item,
+    merchant_passes,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.models.api_managed_item import ApiManagedItem
 from stolon.generated.billing_event_dev.open_api_definition_client.models.delete2_response200 import Delete2Response200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response200 import MerchantPassesResponse200
+from stolon.generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response200 import (
+    MerchantPassesResponse200,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def merchant_passes_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[MerchantPassesResponse200]:
+def merchant_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPassesResponse200]:
     """Check if merchant meets criteria
 
     Args:
@@ -65,17 +66,13 @@ def merchant_passes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and MerchantPassesResponse200:
@@ -85,19 +82,13 @@ def merchant_passes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def merchant_passes_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> MerchantPassesResponse200 | None:
+def merchant_passes_sync(*, client: StolonClient, uuid: str) -> MerchantPassesResponse200 | None:
     """Check if merchant meets criteria
 
     Args:
@@ -136,7 +127,7 @@ def merchant_passes_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -146,13 +137,7 @@ def merchant_passes_sync(
     return None
 
 
-
-
-def merchant_passes_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[MerchantPassesResponse200]:
+def merchant_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPassesResponse200]:
     """Check if merchant meets criteria
 
     Args:
@@ -191,17 +176,13 @@ def merchant_passes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and MerchantPassesResponse200:
@@ -211,19 +192,13 @@ def merchant_passes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def merchant_passes_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> MerchantPassesResponse200 | None:
+def merchant_passes_asyncio(*, client: StolonClient, uuid: str) -> MerchantPassesResponse200 | None:
     """Check if merchant meets criteria
 
     Args:
@@ -262,7 +237,7 @@ def merchant_passes_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -272,13 +247,7 @@ def merchant_passes_asyncio(
     return None
 
 
-
-
-def get_reseller_managed_item_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiManagedItem]:
+def get_reseller_managed_item_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
     """Get managed item record for this reseller.
 
     Args:
@@ -316,17 +285,13 @@ def get_reseller_managed_item_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -336,19 +301,13 @@ def get_reseller_managed_item_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_reseller_managed_item_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiManagedItem | None:
+def get_reseller_managed_item_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     """Get managed item record for this reseller.
 
     Args:
@@ -386,7 +345,7 @@ def get_reseller_managed_item_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -396,13 +355,7 @@ def get_reseller_managed_item_sync(
     return None
 
 
-
-
-def get_reseller_managed_item_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiManagedItem]:
+def get_reseller_managed_item_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
     """Get managed item record for this reseller.
 
     Args:
@@ -440,17 +393,13 @@ def get_reseller_managed_item_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -460,19 +409,13 @@ def get_reseller_managed_item_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_reseller_managed_item_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiManagedItem | None:
+def get_reseller_managed_item_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     """Get managed item record for this reseller.
 
     Args:
@@ -510,7 +453,7 @@ def get_reseller_managed_item_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -520,12 +463,7 @@ def get_reseller_managed_item_asyncio(
     return None
 
 
-
-
-def create_2_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiManagedItem]:
+def create_2_sync_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
     """Create managed item
 
     Args:
@@ -543,7 +481,7 @@ def create_2_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiManagedItem]
@@ -563,17 +501,13 @@ def create_2_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -583,18 +517,13 @@ def create_2_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_2_sync(
-    *,
-    client: StolonClient
-) -> ApiManagedItem | None:
+def create_2_sync(*, client: StolonClient) -> ApiManagedItem | None:
     """Create managed item
 
     Args:
@@ -612,7 +541,7 @@ def create_2_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiManagedItem | None
@@ -632,7 +561,7 @@ def create_2_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -642,12 +571,7 @@ def create_2_sync(
     return None
 
 
-
-
-def create_2_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiManagedItem]:
+def create_2_asyncio_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
     """Create managed item
 
     Args:
@@ -665,7 +589,7 @@ def create_2_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiManagedItem]
@@ -685,17 +609,13 @@ def create_2_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -705,18 +625,13 @@ def create_2_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_2_asyncio(
-    *,
-    client: StolonClient
-) -> ApiManagedItem | None:
+def create_2_asyncio(*, client: StolonClient) -> ApiManagedItem | None:
     """Create managed item
 
     Args:
@@ -734,7 +649,7 @@ def create_2_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiManagedItem | None
@@ -754,7 +669,7 @@ def create_2_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -764,13 +679,7 @@ def create_2_asyncio(
     return None
 
 
-
-
-def get_2_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiManagedItem]:
+def get_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
     """Get managed item by UUID
 
     Args:
@@ -808,17 +717,13 @@ def get_2_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -828,19 +733,13 @@ def get_2_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_2_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiManagedItem | None:
+def get_2_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     """Get managed item by UUID
 
     Args:
@@ -878,7 +777,7 @@ def get_2_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -888,13 +787,7 @@ def get_2_sync(
     return None
 
 
-
-
-def get_2_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiManagedItem]:
+def get_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
     """Get managed item by UUID
 
     Args:
@@ -932,17 +825,13 @@ def get_2_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -952,19 +841,13 @@ def get_2_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_2_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiManagedItem | None:
+def get_2_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     """Get managed item by UUID
 
     Args:
@@ -1002,7 +885,7 @@ def get_2_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1012,13 +895,7 @@ def get_2_asyncio(
     return None
 
 
-
-
-def delete_2_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete2Response200]:
+def delete_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delete2Response200]:
     """Delete managed item by UUID
 
     Args:
@@ -1056,17 +933,13 @@ def delete_2_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete2Response200:
@@ -1076,19 +949,13 @@ def delete_2_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_2_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete2Response200 | None:
+def delete_2_sync(*, client: StolonClient, uuid: str) -> Delete2Response200 | None:
     """Delete managed item by UUID
 
     Args:
@@ -1126,7 +993,7 @@ def delete_2_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1136,13 +1003,7 @@ def delete_2_sync(
     return None
 
 
-
-
-def delete_2_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete2Response200]:
+def delete_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Delete2Response200]:
     """Delete managed item by UUID
 
     Args:
@@ -1180,17 +1041,13 @@ def delete_2_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete2Response200:
@@ -1200,19 +1057,13 @@ def delete_2_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_2_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete2Response200 | None:
+def delete_2_asyncio(*, client: StolonClient, uuid: str) -> Delete2Response200 | None:
     """Delete managed item by UUID
 
     Args:
@@ -1250,7 +1101,7 @@ def delete_2_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1260,12 +1111,7 @@ def delete_2_asyncio(
     return None
 
 
-
-
-def get_managed_items_by_criteria_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiManagedItem]:
+def get_managed_items_by_criteria_sync_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
     """Get managed items by criteria
 
     Raises:
@@ -1280,7 +1126,7 @@ def get_managed_items_by_criteria_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiManagedItem]
@@ -1300,17 +1146,13 @@ def get_managed_items_by_criteria_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -1320,18 +1162,13 @@ def get_managed_items_by_criteria_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_managed_items_by_criteria_sync(
-    *,
-    client: StolonClient
-) -> ApiManagedItem | None:
+def get_managed_items_by_criteria_sync(*, client: StolonClient) -> ApiManagedItem | None:
     """Get managed items by criteria
 
     Raises:
@@ -1346,7 +1183,7 @@ def get_managed_items_by_criteria_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiManagedItem | None
@@ -1366,7 +1203,7 @@ def get_managed_items_by_criteria_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1376,12 +1213,7 @@ def get_managed_items_by_criteria_sync(
     return None
 
 
-
-
-def get_managed_items_by_criteria_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiManagedItem]:
+def get_managed_items_by_criteria_asyncio_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
     """Get managed items by criteria
 
     Raises:
@@ -1396,7 +1228,7 @@ def get_managed_items_by_criteria_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiManagedItem]
@@ -1416,17 +1248,13 @@ def get_managed_items_by_criteria_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
@@ -1436,18 +1264,13 @@ def get_managed_items_by_criteria_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_managed_items_by_criteria_asyncio(
-    *,
-    client: StolonClient
-) -> ApiManagedItem | None:
+def get_managed_items_by_criteria_asyncio(*, client: StolonClient) -> ApiManagedItem | None:
     """Get managed items by criteria
 
     Raises:
@@ -1462,7 +1285,7 @@ def get_managed_items_by_criteria_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiManagedItem | None
@@ -1482,7 +1305,7 @@ def get_managed_items_by_criteria_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1490,4 +1313,3 @@ def get_managed_items_by_criteria_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

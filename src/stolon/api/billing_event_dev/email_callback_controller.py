@@ -6,18 +6,19 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.email_callback_controller import handle_notification_callback
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+from typing import Any
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.email_callback_controller import (
+    handle_notification_callback,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def handle_notification_callback_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def handle_notification_callback_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         callback_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -35,7 +36,7 @@ def handle_notification_callback_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -55,38 +56,26 @@ def handle_notification_callback_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def handle_notification_callback_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def handle_notification_callback_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         callback_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -104,7 +93,7 @@ def handle_notification_callback_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -124,28 +113,20 @@ def handle_notification_callback_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-

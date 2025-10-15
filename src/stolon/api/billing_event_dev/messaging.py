@@ -6,54 +6,87 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failure
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failures
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_producer_failure
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_producer_failures
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failure_by_uuid
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failure_histories
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failures
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_source_topics
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_event_source_topics
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_ignored_events
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failure_by_uuid
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failure_histories
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failures
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import play_manual_mlc_event
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import produce_app_rates_events
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import retry_consumer_failures
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import retry_producer_failure
-from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import update_and_retry_consumer_failure
-from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response200 import AcknowledgeConsumerFailureResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response200 import AcknowledgeConsumerFailuresResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response200 import AcknowledgeProducerFailureResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response200 import AcknowledgeProducerFailuresResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure import ApiConsumerFailure
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure_history import ApiConsumerFailureHistory
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_event_ignored import ApiEventIgnored
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_message_failure_update_response import ApiMessageFailureUpdateResponse
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_producer_failure import ApiProducerFailure
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import ApiProducerFailureHistory
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response200 import GetConsumerFailureByUuidResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response200 import GetConsumerFailureHistoriesResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response200 import GetConsumerFailuresResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response200 import GetProducerFailureByUuidResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response200 import GetProducerFailuresResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response200 import ProduceAppRatesEventsResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response200 import RetryConsumerFailuresResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response200 import RetryProducerFailureResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response200 import UpdateAndRetryConsumerFailureResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+from typing import Any
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.messaging import (
+    acknowledge_consumer_failure,
+    acknowledge_consumer_failures,
+    acknowledge_producer_failure,
+    acknowledge_producer_failures,
+    get_consumer_failure_by_uuid,
+    get_consumer_failure_histories,
+    get_consumer_failures,
+    get_consumer_source_topics,
+    get_event_source_topics,
+    get_ignored_events,
+    get_producer_failure_by_uuid,
+    get_producer_failure_histories,
+    get_producer_failures,
+    play_manual_mlc_event,
+    produce_app_rates_events,
+    retry_consumer_failures,
+    retry_producer_failure,
+    update_and_retry_consumer_failure,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response200 import (
+    AcknowledgeConsumerFailureResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response200 import (
+    AcknowledgeConsumerFailuresResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response200 import (
+    AcknowledgeProducerFailureResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response200 import (
+    AcknowledgeProducerFailuresResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure import ApiConsumerFailure
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure_history import (
+    ApiConsumerFailureHistory,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_event_ignored import ApiEventIgnored
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_message_failure_update_response import (
+    ApiMessageFailureUpdateResponse,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_producer_failure import ApiProducerFailure
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import (
+    ApiProducerFailureHistory,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response200 import (
+    GetConsumerFailureByUuidResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response200 import (
+    GetConsumerFailureHistoriesResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response200 import (
+    GetConsumerFailuresResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response200 import (
+    GetProducerFailureByUuidResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response200 import (
+    GetProducerFailuresResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response200 import (
+    ProduceAppRatesEventsResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response200 import (
+    RetryConsumerFailuresResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response200 import (
+    RetryProducerFailureResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response200 import (
+    UpdateAndRetryConsumerFailureResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_consumer_source_topics_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_consumer_source_topics_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
 
@@ -69,7 +102,7 @@ def get_consumer_source_topics_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -89,38 +122,26 @@ def get_consumer_source_topics_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_consumer_source_topics_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_consumer_source_topics_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
 
@@ -136,7 +157,7 @@ def get_consumer_source_topics_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -156,38 +177,26 @@ def get_consumer_source_topics_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def play_manual_mlc_event_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def play_manual_mlc_event_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         force (Union[Unset, bool]):
         x_clover_appenv (Union[Unset, str]):
@@ -205,7 +214,7 @@ def play_manual_mlc_event_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -225,38 +234,26 @@ def play_manual_mlc_event_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def play_manual_mlc_event_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def play_manual_mlc_event_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         force (Union[Unset, bool]):
         x_clover_appenv (Union[Unset, str]):
@@ -274,7 +271,7 @@ def play_manual_mlc_event_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -294,38 +291,27 @@ def play_manual_mlc_event_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def update_and_retry_consumer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]:
     """Retry a consumer failure with an edited payload
 
@@ -365,38 +351,27 @@ def update_and_retry_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def update_and_retry_consumer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None:
     """Retry a consumer failure with an edited payload
 
@@ -425,7 +400,7 @@ def update_and_retry_consumer_failure_sync(
     kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -439,12 +414,8 @@ def update_and_retry_consumer_failure_sync(
     return None
 
 
-
-
 def update_and_retry_consumer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]:
     """Retry a consumer failure with an edited payload
 
@@ -484,38 +455,27 @@ def update_and_retry_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def update_and_retry_consumer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None:
     """Retry a consumer failure with an edited payload
 
@@ -544,7 +504,7 @@ def update_and_retry_consumer_failure_asyncio(
     kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -556,14 +516,10 @@ def update_and_retry_consumer_failure_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def retry_producer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]:
     """Retry a single producer failure
 
@@ -603,38 +559,27 @@ def retry_producer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def retry_producer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None:
     """Retry a single producer failure
 
@@ -663,7 +608,7 @@ def retry_producer_failure_sync(
     kwargs = retry_producer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -677,12 +622,8 @@ def retry_producer_failure_sync(
     return None
 
 
-
-
 def retry_producer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]:
     """Retry a single producer failure
 
@@ -722,38 +663,27 @@ def retry_producer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def retry_producer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None:
     """Retry a single producer failure
 
@@ -782,7 +712,7 @@ def retry_producer_failure_asyncio(
     kwargs = retry_producer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -794,14 +724,10 @@ def retry_producer_failure_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def acknowledge_producer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -841,38 +767,27 @@ def acknowledge_producer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_producer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -901,7 +816,7 @@ def acknowledge_producer_failure_sync(
     kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -915,12 +830,8 @@ def acknowledge_producer_failure_sync(
     return None
 
 
-
-
 def acknowledge_producer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -960,38 +871,27 @@ def acknowledge_producer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def acknowledge_producer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -1020,7 +920,7 @@ def acknowledge_producer_failure_asyncio(
     kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1034,12 +934,7 @@ def acknowledge_producer_failure_asyncio(
     return None
 
 
-
-
-def get_event_source_topics_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_event_source_topics_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
 
@@ -1055,7 +950,7 @@ def get_event_source_topics_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -1075,38 +970,26 @@ def get_event_source_topics_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_event_source_topics_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_event_source_topics_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
 
@@ -1122,7 +1005,7 @@ def get_event_source_topics_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -1142,38 +1025,27 @@ def get_event_source_topics_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_consumer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1213,38 +1085,27 @@ def acknowledge_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_consumer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1273,7 +1134,7 @@ def acknowledge_consumer_failure_sync(
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1287,12 +1148,8 @@ def acknowledge_consumer_failure_sync(
     return None
 
 
-
-
 def acknowledge_consumer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1332,38 +1189,27 @@ def acknowledge_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def acknowledge_consumer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1392,7 +1238,7 @@ def acknowledge_consumer_failure_asyncio(
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1406,12 +1252,7 @@ def acknowledge_consumer_failure_asyncio(
     return None
 
 
-
-
-def get_ignored_events_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
+def get_ignored_events_sync_detailed(*, client: StolonClient) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
     """Get ignored events
 
     Args:
@@ -1434,7 +1275,7 @@ def get_ignored_events_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiEventIgnored | list["ApiEventIgnored"]]
@@ -1454,38 +1295,26 @@ def get_ignored_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_ignored_events_sync(
-    *,
-    client: StolonClient
-) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
+def get_ignored_events_sync(*, client: StolonClient) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
     """Get ignored events
 
     Args:
@@ -1508,7 +1337,7 @@ def get_ignored_events_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiEventIgnored | list["ApiEventIgnored"] | None
@@ -1517,7 +1346,7 @@ def get_ignored_events_sync(
     kwargs = get_ignored_events._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1531,12 +1360,7 @@ def get_ignored_events_sync(
     return None
 
 
-
-
-def get_ignored_events_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
+def get_ignored_events_asyncio_detailed(*, client: StolonClient) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
     """Get ignored events
 
     Args:
@@ -1559,7 +1383,7 @@ def get_ignored_events_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiEventIgnored | list["ApiEventIgnored"]]
@@ -1579,38 +1403,26 @@ def get_ignored_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_ignored_events_asyncio(
-    *,
-    client: StolonClient
-) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
+def get_ignored_events_asyncio(*, client: StolonClient) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
     """Get ignored events
 
     Args:
@@ -1633,7 +1445,7 @@ def get_ignored_events_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiEventIgnored | list["ApiEventIgnored"] | None
@@ -1642,7 +1454,7 @@ def get_ignored_events_asyncio(
     kwargs = get_ignored_events._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1654,13 +1466,10 @@ def get_ignored_events_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -1684,7 +1493,7 @@ def get_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]
@@ -1704,37 +1513,27 @@ def get_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_consumer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
@@ -1758,7 +1557,7 @@ def get_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None
@@ -1767,7 +1566,7 @@ def get_consumer_failures_sync(
     kwargs = get_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1781,11 +1580,8 @@ def get_consumer_failures_sync(
     return None
 
 
-
-
 def get_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -1809,7 +1605,7 @@ def get_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]
@@ -1829,37 +1625,27 @@ def get_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_consumer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
@@ -1883,7 +1669,7 @@ def get_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None
@@ -1892,7 +1678,7 @@ def get_consumer_failures_asyncio(
     kwargs = get_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1904,14 +1690,10 @@ def get_consumer_failures_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_producer_failure_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]:
     """Get a messaging producer failure by UUID
 
@@ -1950,38 +1732,27 @@ def get_producer_failure_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_producer_failure_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiProducerFailure | GetProducerFailureByUuidResponse200 | None:
     """Get a messaging producer failure by UUID
 
@@ -2009,7 +1780,7 @@ def get_producer_failure_by_uuid_sync(
     kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2023,12 +1794,8 @@ def get_producer_failure_by_uuid_sync(
     return None
 
 
-
-
 def get_producer_failure_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]:
     """Get a messaging producer failure by UUID
 
@@ -2067,38 +1834,27 @@ def get_producer_failure_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_producer_failure_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiProducerFailure | GetProducerFailureByUuidResponse200 | None:
     """Get a messaging producer failure by UUID
 
@@ -2126,7 +1882,7 @@ def get_producer_failure_by_uuid_asyncio(
     kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2138,14 +1894,10 @@ def get_producer_failure_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failure_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]:
     """Get a messaging consumer failure by UUID
 
@@ -2184,38 +1936,27 @@ def get_consumer_failure_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_consumer_failure_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None:
     """Get a messaging consumer failure by UUID
 
@@ -2243,7 +1984,7 @@ def get_consumer_failure_by_uuid_sync(
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2257,12 +1998,8 @@ def get_consumer_failure_by_uuid_sync(
     return None
 
 
-
-
 def get_consumer_failure_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]:
     """Get a messaging consumer failure by UUID
 
@@ -2301,38 +2038,27 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_consumer_failure_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None:
     """Get a messaging consumer failure by UUID
 
@@ -2360,7 +2086,7 @@ def get_consumer_failure_by_uuid_asyncio(
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2372,13 +2098,10 @@ def get_consumer_failure_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_producer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]:
     """Get a producer failures
 
@@ -2402,7 +2125,7 @@ def get_producer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]
@@ -2422,37 +2145,27 @@ def get_producer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_producer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None:
     """Get a producer failures
 
@@ -2476,7 +2189,7 @@ def get_producer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None
@@ -2485,7 +2198,7 @@ def get_producer_failures_sync(
     kwargs = get_producer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2499,11 +2212,8 @@ def get_producer_failures_sync(
     return None
 
 
-
-
 def get_producer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]:
     """Get a producer failures
 
@@ -2527,7 +2237,7 @@ def get_producer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]
@@ -2547,37 +2257,27 @@ def get_producer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_producer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None:
     """Get a producer failures
 
@@ -2601,7 +2301,7 @@ def get_producer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None
@@ -2610,7 +2310,7 @@ def get_producer_failures_asyncio(
     kwargs = get_producer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2622,13 +2322,10 @@ def get_producer_failures_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_producer_failure_histories_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]:
     """Get producer failure histories
 
@@ -2652,7 +2349,7 @@ def get_producer_failure_histories_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]
@@ -2672,37 +2369,27 @@ def get_producer_failure_histories_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_producer_failure_histories_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None:
     """Get producer failure histories
 
@@ -2726,7 +2413,7 @@ def get_producer_failure_histories_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None
@@ -2735,7 +2422,7 @@ def get_producer_failure_histories_sync(
     kwargs = get_producer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2749,11 +2436,8 @@ def get_producer_failure_histories_sync(
     return None
 
 
-
-
 def get_producer_failure_histories_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]:
     """Get producer failure histories
 
@@ -2777,7 +2461,7 @@ def get_producer_failure_histories_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]
@@ -2797,37 +2481,27 @@ def get_producer_failure_histories_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_producer_failure_histories_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None:
     """Get producer failure histories
 
@@ -2851,7 +2525,7 @@ def get_producer_failure_histories_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None
@@ -2860,7 +2534,7 @@ def get_producer_failure_histories_asyncio(
     kwargs = get_producer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2874,12 +2548,7 @@ def get_producer_failure_histories_asyncio(
     return None
 
 
-
-
-def produce_app_rates_events_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ProduceAppRatesEventsResponse200]:
+def produce_app_rates_events_sync_detailed(*, client: StolonClient) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -2899,7 +2568,7 @@ def produce_app_rates_events_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ProduceAppRatesEventsResponse200]
@@ -2919,17 +2588,13 @@ def produce_app_rates_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ProduceAppRatesEventsResponse200:
@@ -2939,18 +2604,13 @@ def produce_app_rates_events_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def produce_app_rates_events_sync(
-    *,
-    client: StolonClient
-) -> ProduceAppRatesEventsResponse200 | None:
+def produce_app_rates_events_sync(*, client: StolonClient) -> ProduceAppRatesEventsResponse200 | None:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -2970,7 +2630,7 @@ def produce_app_rates_events_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ProduceAppRatesEventsResponse200 | None
@@ -2990,7 +2650,7 @@ def produce_app_rates_events_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3000,12 +2660,7 @@ def produce_app_rates_events_sync(
     return None
 
 
-
-
-def produce_app_rates_events_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ProduceAppRatesEventsResponse200]:
+def produce_app_rates_events_asyncio_detailed(*, client: StolonClient) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -3025,7 +2680,7 @@ def produce_app_rates_events_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ProduceAppRatesEventsResponse200]
@@ -3045,17 +2700,13 @@ def produce_app_rates_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ProduceAppRatesEventsResponse200:
@@ -3065,18 +2716,13 @@ def produce_app_rates_events_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def produce_app_rates_events_asyncio(
-    *,
-    client: StolonClient
-) -> ProduceAppRatesEventsResponse200 | None:
+def produce_app_rates_events_asyncio(*, client: StolonClient) -> ProduceAppRatesEventsResponse200 | None:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
 
@@ -3096,7 +2742,7 @@ def produce_app_rates_events_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ProduceAppRatesEventsResponse200 | None
@@ -3116,7 +2762,7 @@ def produce_app_rates_events_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3124,13 +2770,10 @@ def produce_app_rates_events_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def retry_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -3149,7 +2792,7 @@ def retry_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
@@ -3169,37 +2812,27 @@ def retry_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def retry_consumer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -3218,7 +2851,7 @@ def retry_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
@@ -3227,7 +2860,7 @@ def retry_consumer_failures_sync(
     kwargs = retry_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3241,11 +2874,8 @@ def retry_consumer_failures_sync(
     return None
 
 
-
-
 def retry_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -3264,7 +2894,7 @@ def retry_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
@@ -3284,37 +2914,27 @@ def retry_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def retry_consumer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -3333,7 +2953,7 @@ def retry_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
@@ -3342,7 +2962,7 @@ def retry_consumer_failures_asyncio(
     kwargs = retry_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3354,13 +2974,10 @@ def retry_consumer_failures_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def acknowledge_producer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3380,7 +2997,7 @@ def acknowledge_producer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
@@ -3400,37 +3017,27 @@ def acknowledge_producer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_producer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3450,7 +3057,7 @@ def acknowledge_producer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
@@ -3459,7 +3066,7 @@ def acknowledge_producer_failures_sync(
     kwargs = acknowledge_producer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3473,11 +3080,8 @@ def acknowledge_producer_failures_sync(
     return None
 
 
-
-
 def acknowledge_producer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3497,7 +3101,7 @@ def acknowledge_producer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
@@ -3517,37 +3121,27 @@ def acknowledge_producer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def acknowledge_producer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3567,7 +3161,7 @@ def acknowledge_producer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
@@ -3576,7 +3170,7 @@ def acknowledge_producer_failures_asyncio(
     kwargs = acknowledge_producer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3588,13 +3182,10 @@ def acknowledge_producer_failures_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failure_histories_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -3618,7 +3209,7 @@ def get_consumer_failure_histories_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]
@@ -3638,37 +3229,27 @@ def get_consumer_failure_histories_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_consumer_failure_histories_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -3692,7 +3273,7 @@ def get_consumer_failure_histories_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None
@@ -3701,7 +3282,7 @@ def get_consumer_failure_histories_sync(
     kwargs = get_consumer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3715,11 +3296,8 @@ def get_consumer_failure_histories_sync(
     return None
 
 
-
-
 def get_consumer_failure_histories_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -3743,7 +3321,7 @@ def get_consumer_failure_histories_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]
@@ -3763,37 +3341,27 @@ def get_consumer_failure_histories_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_consumer_failure_histories_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -3817,7 +3385,7 @@ def get_consumer_failure_histories_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None
@@ -3826,7 +3394,7 @@ def get_consumer_failure_histories_asyncio(
     kwargs = get_consumer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3838,13 +3406,10 @@ def get_consumer_failure_histories_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def acknowledge_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -3864,7 +3429,7 @@ def acknowledge_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
@@ -3884,37 +3449,27 @@ def acknowledge_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_consumer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -3934,7 +3489,7 @@ def acknowledge_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
@@ -3943,7 +3498,7 @@ def acknowledge_consumer_failures_sync(
     kwargs = acknowledge_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -3957,11 +3512,8 @@ def acknowledge_consumer_failures_sync(
     return None
 
 
-
-
 def acknowledge_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -3981,7 +3533,7 @@ def acknowledge_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
@@ -4001,37 +3553,27 @@ def acknowledge_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def acknowledge_consumer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4051,7 +3593,7 @@ def acknowledge_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
@@ -4060,7 +3602,7 @@ def acknowledge_consumer_failures_asyncio(
     kwargs = acknowledge_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -4072,4 +3614,3 @@ def acknowledge_consumer_failures_asyncio(
 
     # No response model, return None
     return None
-

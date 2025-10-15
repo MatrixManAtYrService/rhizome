@@ -6,19 +6,21 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import compute_fee_estimate_for_merchant
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import (
+    compute_fee_estimate_for_merchant,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_estimate import ApiFeeEstimate
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
 def compute_fee_estimate_for_merchant_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -37,7 +39,7 @@ def compute_fee_estimate_for_merchant_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeEstimate | ResponseError]
@@ -57,38 +59,26 @@ def compute_fee_estimate_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def compute_fee_estimate_for_merchant_sync(
-    *,
-    client: StolonClient
-) -> ApiFeeEstimate | ResponseError | None:
+def compute_fee_estimate_for_merchant_sync(*, client: StolonClient) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -106,7 +96,7 @@ def compute_fee_estimate_for_merchant_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeEstimate | ResponseError | None
@@ -115,7 +105,7 @@ def compute_fee_estimate_for_merchant_sync(
     kwargs = compute_fee_estimate_for_merchant._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -127,13 +117,10 @@ def compute_fee_estimate_for_merchant_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def compute_fee_estimate_for_merchant_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -152,7 +139,7 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeEstimate | ResponseError]
@@ -172,38 +159,26 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def compute_fee_estimate_for_merchant_asyncio(
-    *,
-    client: StolonClient
-) -> ApiFeeEstimate | ResponseError | None:
+def compute_fee_estimate_for_merchant_asyncio(*, client: StolonClient) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -221,7 +196,7 @@ def compute_fee_estimate_for_merchant_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeEstimate | ResponseError | None
@@ -230,7 +205,7 @@ def compute_fee_estimate_for_merchant_asyncio(
     kwargs = compute_fee_estimate_for_merchant._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -242,4 +217,3 @@ def compute_fee_estimate_for_merchant_asyncio(
 
     # No response model, return None
     return None
-

@@ -6,28 +6,31 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import create_3
-from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import delete_3
-from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import get_3
-from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import get_event_filters_by_criteria
-from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import merchant_passes_1
-from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import reseller_passes
+from stolon.generated.billing_event_dev.open_api_definition_client.api.event_filter import (
+    create_3,
+    delete_3,
+    get_3,
+    get_event_filters_by_criteria,
+    merchant_passes_1,
+    reseller_passes,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.models.api_event_filter import ApiEventFilter
 from stolon.generated.billing_event_dev.open_api_definition_client.models.delete3_response200 import Delete3Response200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.merchant_passes1_response200 import MerchantPasses1Response200
-from stolon.generated.billing_event_dev.open_api_definition_client.models.reseller_passes_response200 import ResellerPassesResponse200
+from stolon.generated.billing_event_dev.open_api_definition_client.models.merchant_passes1_response200 import (
+    MerchantPasses1Response200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.reseller_passes_response200 import (
+    ResellerPassesResponse200,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def merchant_passes_1_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[MerchantPasses1Response200]:
+def merchant_passes_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPasses1Response200]:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -67,17 +70,13 @@ def merchant_passes_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and MerchantPasses1Response200:
@@ -87,19 +86,13 @@ def merchant_passes_1_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def merchant_passes_1_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> MerchantPasses1Response200 | None:
+def merchant_passes_1_sync(*, client: StolonClient, uuid: str) -> MerchantPasses1Response200 | None:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -139,7 +132,7 @@ def merchant_passes_1_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -149,13 +142,7 @@ def merchant_passes_1_sync(
     return None
 
 
-
-
-def merchant_passes_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[MerchantPasses1Response200]:
+def merchant_passes_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPasses1Response200]:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -195,17 +182,13 @@ def merchant_passes_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and MerchantPasses1Response200:
@@ -215,19 +198,13 @@ def merchant_passes_1_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def merchant_passes_1_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> MerchantPasses1Response200 | None:
+def merchant_passes_1_asyncio(*, client: StolonClient, uuid: str) -> MerchantPasses1Response200 | None:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -267,7 +244,7 @@ def merchant_passes_1_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -277,12 +254,7 @@ def merchant_passes_1_asyncio(
     return None
 
 
-
-
-def create_3_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiEventFilter]:
+def create_3_sync_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
     """Create event filter
 
     Args:
@@ -300,7 +272,7 @@ def create_3_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiEventFilter]
@@ -320,17 +292,13 @@ def create_3_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
@@ -340,18 +308,13 @@ def create_3_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_3_sync(
-    *,
-    client: StolonClient
-) -> ApiEventFilter | None:
+def create_3_sync(*, client: StolonClient) -> ApiEventFilter | None:
     """Create event filter
 
     Args:
@@ -369,7 +332,7 @@ def create_3_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiEventFilter | None
@@ -389,7 +352,7 @@ def create_3_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -399,12 +362,7 @@ def create_3_sync(
     return None
 
 
-
-
-def create_3_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiEventFilter]:
+def create_3_asyncio_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
     """Create event filter
 
     Args:
@@ -422,7 +380,7 @@ def create_3_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiEventFilter]
@@ -442,17 +400,13 @@ def create_3_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
@@ -462,18 +416,13 @@ def create_3_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_3_asyncio(
-    *,
-    client: StolonClient
-) -> ApiEventFilter | None:
+def create_3_asyncio(*, client: StolonClient) -> ApiEventFilter | None:
     """Create event filter
 
     Args:
@@ -491,7 +440,7 @@ def create_3_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiEventFilter | None
@@ -511,7 +460,7 @@ def create_3_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -521,13 +470,7 @@ def create_3_asyncio(
     return None
 
 
-
-
-def reseller_passes_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResellerPassesResponse200]:
+def reseller_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResellerPassesResponse200]:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -566,17 +509,13 @@ def reseller_passes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResellerPassesResponse200:
@@ -586,19 +525,13 @@ def reseller_passes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def reseller_passes_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResellerPassesResponse200 | None:
+def reseller_passes_sync(*, client: StolonClient, uuid: str) -> ResellerPassesResponse200 | None:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -637,7 +570,7 @@ def reseller_passes_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -647,13 +580,7 @@ def reseller_passes_sync(
     return None
 
 
-
-
-def reseller_passes_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResellerPassesResponse200]:
+def reseller_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResellerPassesResponse200]:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -692,17 +619,13 @@ def reseller_passes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResellerPassesResponse200:
@@ -712,19 +635,13 @@ def reseller_passes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def reseller_passes_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResellerPassesResponse200 | None:
+def reseller_passes_asyncio(*, client: StolonClient, uuid: str) -> ResellerPassesResponse200 | None:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -763,7 +680,7 @@ def reseller_passes_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -773,13 +690,7 @@ def reseller_passes_asyncio(
     return None
 
 
-
-
-def get_3_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiEventFilter]:
+def get_3_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiEventFilter]:
     """Get event filter by UUID
 
     Args:
@@ -817,17 +728,13 @@ def get_3_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
@@ -837,19 +744,13 @@ def get_3_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_3_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiEventFilter | None:
+def get_3_sync(*, client: StolonClient, uuid: str) -> ApiEventFilter | None:
     """Get event filter by UUID
 
     Args:
@@ -887,7 +788,7 @@ def get_3_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -897,13 +798,7 @@ def get_3_sync(
     return None
 
 
-
-
-def get_3_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiEventFilter]:
+def get_3_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiEventFilter]:
     """Get event filter by UUID
 
     Args:
@@ -941,17 +836,13 @@ def get_3_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
@@ -961,19 +852,13 @@ def get_3_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_3_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiEventFilter | None:
+def get_3_asyncio(*, client: StolonClient, uuid: str) -> ApiEventFilter | None:
     """Get event filter by UUID
 
     Args:
@@ -1011,7 +896,7 @@ def get_3_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1021,13 +906,7 @@ def get_3_asyncio(
     return None
 
 
-
-
-def delete_3_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete3Response200]:
+def delete_3_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delete3Response200]:
     """Delete event filter by UUID
 
     Args:
@@ -1065,17 +944,13 @@ def delete_3_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete3Response200:
@@ -1085,19 +960,13 @@ def delete_3_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_3_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete3Response200 | None:
+def delete_3_sync(*, client: StolonClient, uuid: str) -> Delete3Response200 | None:
     """Delete event filter by UUID
 
     Args:
@@ -1135,7 +1004,7 @@ def delete_3_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1145,13 +1014,7 @@ def delete_3_sync(
     return None
 
 
-
-
-def delete_3_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete3Response200]:
+def delete_3_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Delete3Response200]:
     """Delete event filter by UUID
 
     Args:
@@ -1189,17 +1052,13 @@ def delete_3_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete3Response200:
@@ -1209,19 +1068,13 @@ def delete_3_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_3_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete3Response200 | None:
+def delete_3_asyncio(*, client: StolonClient, uuid: str) -> Delete3Response200 | None:
     """Delete event filter by UUID
 
     Args:
@@ -1259,7 +1112,7 @@ def delete_3_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1269,12 +1122,7 @@ def delete_3_asyncio(
     return None
 
 
-
-
-def get_event_filters_by_criteria_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiEventFilter]:
+def get_event_filters_by_criteria_sync_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
     """Get event filters by criteria
 
     Raises:
@@ -1289,7 +1137,7 @@ def get_event_filters_by_criteria_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiEventFilter]
@@ -1309,17 +1157,13 @@ def get_event_filters_by_criteria_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
@@ -1329,18 +1173,13 @@ def get_event_filters_by_criteria_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_event_filters_by_criteria_sync(
-    *,
-    client: StolonClient
-) -> ApiEventFilter | None:
+def get_event_filters_by_criteria_sync(*, client: StolonClient) -> ApiEventFilter | None:
     """Get event filters by criteria
 
     Raises:
@@ -1355,7 +1194,7 @@ def get_event_filters_by_criteria_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiEventFilter | None
@@ -1375,7 +1214,7 @@ def get_event_filters_by_criteria_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1385,12 +1224,7 @@ def get_event_filters_by_criteria_sync(
     return None
 
 
-
-
-def get_event_filters_by_criteria_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiEventFilter]:
+def get_event_filters_by_criteria_asyncio_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
     """Get event filters by criteria
 
     Raises:
@@ -1405,7 +1239,7 @@ def get_event_filters_by_criteria_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiEventFilter]
@@ -1425,17 +1259,13 @@ def get_event_filters_by_criteria_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
@@ -1445,18 +1275,13 @@ def get_event_filters_by_criteria_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_event_filters_by_criteria_asyncio(
-    *,
-    client: StolonClient
-) -> ApiEventFilter | None:
+def get_event_filters_by_criteria_asyncio(*, client: StolonClient) -> ApiEventFilter | None:
     """Get event filters by criteria
 
     Raises:
@@ -1471,7 +1296,7 @@ def get_event_filters_by_criteria_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiEventFilter | None
@@ -1491,7 +1316,7 @@ def get_event_filters_by_criteria_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1499,4 +1324,3 @@ def get_event_filters_by_criteria_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

@@ -6,24 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import create_tiered_pricing
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import delete_tiered_pricing_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import get_tiered_pricing_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import get_tiered_pricings
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import update_tiered_pricing
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_pricing import ApiTieredPricing
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_pricing import (
+    create_tiered_pricing,
+    delete_tiered_pricing_by_uuid,
+    get_tiered_pricing_by_uuid,
+    get_tiered_pricings,
+    update_tiered_pricing,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_pricing import (
+    ApiTieredPricing,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def create_tiered_pricing_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_tiered_pricing_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create tiered pricing
 
     Args:
@@ -41,7 +43,7 @@ def create_tiered_pricing_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -61,17 +63,13 @@ def create_tiered_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -81,18 +79,13 @@ def create_tiered_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_tiered_pricing_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_tiered_pricing_sync(*, client: StolonClient) -> ResponseError | None:
     """Create tiered pricing
 
     Args:
@@ -110,7 +103,7 @@ def create_tiered_pricing_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -130,7 +123,7 @@ def create_tiered_pricing_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -140,12 +133,7 @@ def create_tiered_pricing_sync(
     return None
 
 
-
-
-def create_tiered_pricing_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_tiered_pricing_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create tiered pricing
 
     Args:
@@ -163,7 +151,7 @@ def create_tiered_pricing_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -183,17 +171,13 @@ def create_tiered_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -203,18 +187,13 @@ def create_tiered_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_tiered_pricing_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_tiered_pricing_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create tiered pricing
 
     Args:
@@ -232,7 +211,7 @@ def create_tiered_pricing_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -252,7 +231,7 @@ def create_tiered_pricing_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -260,14 +239,10 @@ def create_tiered_pricing_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_tiered_pricing_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiTieredPricing | ResponseError]:
     """Get tiered pricing by UUID
 
@@ -306,39 +281,26 @@ def get_tiered_pricing_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_pricing_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredPricing | ResponseError | None:
+def get_tiered_pricing_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTieredPricing | ResponseError | None:
     """Get tiered pricing by UUID
 
     Args:
@@ -365,7 +327,7 @@ def get_tiered_pricing_by_uuid_sync(
     kwargs = get_tiered_pricing_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -377,14 +339,10 @@ def get_tiered_pricing_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_tiered_pricing_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiTieredPricing | ResponseError]:
     """Get tiered pricing by UUID
 
@@ -423,39 +381,26 @@ def get_tiered_pricing_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_pricing_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredPricing | ResponseError | None:
+def get_tiered_pricing_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredPricing | ResponseError | None:
     """Get tiered pricing by UUID
 
     Args:
@@ -482,7 +427,7 @@ def get_tiered_pricing_by_uuid_asyncio(
     kwargs = get_tiered_pricing_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -496,13 +441,7 @@ def get_tiered_pricing_by_uuid_asyncio(
     return None
 
 
-
-
-def update_tiered_pricing_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_tiered_pricing_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update tiered pricing
 
     Args:
@@ -541,17 +480,13 @@ def update_tiered_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -561,19 +496,13 @@ def update_tiered_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_tiered_pricing_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_tiered_pricing_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update tiered pricing
 
     Args:
@@ -612,7 +541,7 @@ def update_tiered_pricing_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -622,13 +551,7 @@ def update_tiered_pricing_sync(
     return None
 
 
-
-
-def update_tiered_pricing_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_tiered_pricing_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update tiered pricing
 
     Args:
@@ -667,17 +590,13 @@ def update_tiered_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -687,19 +606,13 @@ def update_tiered_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_tiered_pricing_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_tiered_pricing_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update tiered pricing
 
     Args:
@@ -738,7 +651,7 @@ def update_tiered_pricing_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -748,13 +661,7 @@ def update_tiered_pricing_asyncio(
     return None
 
 
-
-
-def delete_tiered_pricing_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_tiered_pricing_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete tiered pricing
 
     Args:
@@ -792,39 +699,26 @@ def delete_tiered_pricing_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_tiered_pricing_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_tiered_pricing_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete tiered pricing
 
     Args:
@@ -851,7 +745,7 @@ def delete_tiered_pricing_by_uuid_sync(
     kwargs = delete_tiered_pricing_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -863,14 +757,10 @@ def delete_tiered_pricing_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_tiered_pricing_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete tiered pricing
 
@@ -909,39 +799,26 @@ def delete_tiered_pricing_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_tiered_pricing_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_tiered_pricing_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete tiered pricing
 
     Args:
@@ -968,7 +845,7 @@ def delete_tiered_pricing_by_uuid_asyncio(
     kwargs = delete_tiered_pricing_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -982,12 +859,7 @@ def delete_tiered_pricing_by_uuid_asyncio(
     return None
 
 
-
-
-def get_tiered_pricings_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_tiered_pricings_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get tiered pricings
 
     Args:
@@ -1009,7 +881,7 @@ def get_tiered_pricings_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1029,17 +901,13 @@ def get_tiered_pricings_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1049,18 +917,13 @@ def get_tiered_pricings_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_pricings_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_tiered_pricings_sync(*, client: StolonClient) -> ResponseError | None:
     """Get tiered pricings
 
     Args:
@@ -1082,7 +945,7 @@ def get_tiered_pricings_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1102,7 +965,7 @@ def get_tiered_pricings_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1112,12 +975,7 @@ def get_tiered_pricings_sync(
     return None
 
 
-
-
-def get_tiered_pricings_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_tiered_pricings_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get tiered pricings
 
     Args:
@@ -1139,7 +997,7 @@ def get_tiered_pricings_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1159,17 +1017,13 @@ def get_tiered_pricings_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1179,18 +1033,13 @@ def get_tiered_pricings_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_pricings_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_tiered_pricings_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get tiered pricings
 
     Args:
@@ -1212,7 +1061,7 @@ def get_tiered_pricings_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1232,7 +1081,7 @@ def get_tiered_pricings_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1240,4 +1089,3 @@ def get_tiered_pricings_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

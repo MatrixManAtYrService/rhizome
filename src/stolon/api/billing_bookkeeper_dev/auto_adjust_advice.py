@@ -6,24 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import create_auto_adjust_advice
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import delete_auto_adjust_advice_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import get_auto_adjust_advice_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import get_auto_adjust_advices
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import update_auto_adjust_advice
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_auto_adjust_advice import ApiAutoAdjustAdvice
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_advice import (
+    create_auto_adjust_advice,
+    delete_auto_adjust_advice_by_uuid,
+    get_auto_adjust_advice_by_uuid,
+    get_auto_adjust_advices,
+    update_auto_adjust_advice,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_auto_adjust_advice import (
+    ApiAutoAdjustAdvice,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def create_auto_adjust_advice_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustAdvice]:
+def create_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
     """Create auto-adjust advice
 
     Args:
@@ -41,7 +43,7 @@ def create_auto_adjust_advice_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAutoAdjustAdvice]
@@ -61,17 +63,13 @@ def create_auto_adjust_advice_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -81,18 +79,13 @@ def create_auto_adjust_advice_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_auto_adjust_advice_sync(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustAdvice | None:
+def create_auto_adjust_advice_sync(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
     """Create auto-adjust advice
 
     Args:
@@ -110,7 +103,7 @@ def create_auto_adjust_advice_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustAdvice | None
@@ -130,7 +123,7 @@ def create_auto_adjust_advice_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -140,12 +133,7 @@ def create_auto_adjust_advice_sync(
     return None
 
 
-
-
-def create_auto_adjust_advice_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustAdvice]:
+def create_auto_adjust_advice_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
     """Create auto-adjust advice
 
     Args:
@@ -163,7 +151,7 @@ def create_auto_adjust_advice_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAutoAdjustAdvice]
@@ -183,17 +171,13 @@ def create_auto_adjust_advice_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -203,18 +187,13 @@ def create_auto_adjust_advice_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_auto_adjust_advice_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustAdvice | None:
+def create_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
     """Create auto-adjust advice
 
     Args:
@@ -232,7 +211,7 @@ def create_auto_adjust_advice_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustAdvice | None
@@ -252,7 +231,7 @@ def create_auto_adjust_advice_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -262,12 +241,7 @@ def create_auto_adjust_advice_asyncio(
     return None
 
 
-
-
-def get_auto_adjust_advices_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustAdvice]:
+def get_auto_adjust_advices_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
     """Get auto-adjust advices
 
     Args:
@@ -289,7 +263,7 @@ def get_auto_adjust_advices_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAutoAdjustAdvice]
@@ -309,17 +283,13 @@ def get_auto_adjust_advices_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -329,18 +299,13 @@ def get_auto_adjust_advices_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_advices_sync(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustAdvice | None:
+def get_auto_adjust_advices_sync(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
     """Get auto-adjust advices
 
     Args:
@@ -362,7 +327,7 @@ def get_auto_adjust_advices_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustAdvice | None
@@ -382,7 +347,7 @@ def get_auto_adjust_advices_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -392,12 +357,7 @@ def get_auto_adjust_advices_sync(
     return None
 
 
-
-
-def get_auto_adjust_advices_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustAdvice]:
+def get_auto_adjust_advices_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustAdvice]:
     """Get auto-adjust advices
 
     Args:
@@ -419,7 +379,7 @@ def get_auto_adjust_advices_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAutoAdjustAdvice]
@@ -439,17 +399,13 @@ def get_auto_adjust_advices_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -459,18 +415,13 @@ def get_auto_adjust_advices_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_advices_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustAdvice | None:
+def get_auto_adjust_advices_asyncio(*, client: StolonClient) -> ApiAutoAdjustAdvice | None:
     """Get auto-adjust advices
 
     Args:
@@ -492,7 +443,7 @@ def get_auto_adjust_advices_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustAdvice | None
@@ -512,7 +463,7 @@ def get_auto_adjust_advices_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -522,13 +473,7 @@ def get_auto_adjust_advices_asyncio(
     return None
 
 
-
-
-def update_auto_adjust_advice_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiAutoAdjustAdvice]:
+def update_auto_adjust_advice_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAutoAdjustAdvice]:
     """Update auto-adjust advice
 
     Args:
@@ -567,17 +512,13 @@ def update_auto_adjust_advice_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -587,19 +528,13 @@ def update_auto_adjust_advice_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_auto_adjust_advice_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAutoAdjustAdvice | None:
+def update_auto_adjust_advice_sync(*, client: StolonClient, uuid: str) -> ApiAutoAdjustAdvice | None:
     """Update auto-adjust advice
 
     Args:
@@ -638,7 +573,7 @@ def update_auto_adjust_advice_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -648,13 +583,7 @@ def update_auto_adjust_advice_sync(
     return None
 
 
-
-
-def update_auto_adjust_advice_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiAutoAdjustAdvice]:
+def update_auto_adjust_advice_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAutoAdjustAdvice]:
     """Update auto-adjust advice
 
     Args:
@@ -693,17 +622,13 @@ def update_auto_adjust_advice_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -713,19 +638,13 @@ def update_auto_adjust_advice_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_auto_adjust_advice_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAutoAdjustAdvice | None:
+def update_auto_adjust_advice_asyncio(*, client: StolonClient, uuid: str) -> ApiAutoAdjustAdvice | None:
     """Update auto-adjust advice
 
     Args:
@@ -764,7 +683,7 @@ def update_auto_adjust_advice_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -774,13 +693,7 @@ def update_auto_adjust_advice_asyncio(
     return None
 
 
-
-
-def get_auto_adjust_advice_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiAutoAdjustAdvice]:
+def get_auto_adjust_advice_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAutoAdjustAdvice]:
     """Get auto-adjust advice by UUID
 
     Args:
@@ -818,17 +731,13 @@ def get_auto_adjust_advice_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -838,19 +747,13 @@ def get_auto_adjust_advice_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_advice_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAutoAdjustAdvice | None:
+def get_auto_adjust_advice_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAutoAdjustAdvice | None:
     """Get auto-adjust advice by UUID
 
     Args:
@@ -888,7 +791,7 @@ def get_auto_adjust_advice_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -896,14 +799,10 @@ def get_auto_adjust_advice_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_auto_adjust_advice_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAutoAdjustAdvice]:
     """Get auto-adjust advice by UUID
 
@@ -942,17 +841,13 @@ def get_auto_adjust_advice_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiAutoAdjustAdvice:
@@ -962,19 +857,13 @@ def get_auto_adjust_advice_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_advice_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAutoAdjustAdvice | None:
+def get_auto_adjust_advice_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAutoAdjustAdvice | None:
     """Get auto-adjust advice by UUID
 
     Args:
@@ -1012,7 +901,7 @@ def get_auto_adjust_advice_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1022,12 +911,8 @@ def get_auto_adjust_advice_by_uuid_asyncio(
     return None
 
 
-
-
 def delete_auto_adjust_advice_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete auto-adjust advice
 
@@ -1066,39 +951,26 @@ def delete_auto_adjust_advice_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_auto_adjust_advice_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_auto_adjust_advice_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete auto-adjust advice
 
     Args:
@@ -1125,7 +997,7 @@ def delete_auto_adjust_advice_by_uuid_sync(
     kwargs = delete_auto_adjust_advice_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1137,14 +1009,10 @@ def delete_auto_adjust_advice_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_auto_adjust_advice_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete auto-adjust advice
 
@@ -1183,39 +1051,26 @@ def delete_auto_adjust_advice_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_auto_adjust_advice_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_auto_adjust_advice_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete auto-adjust advice
 
     Args:
@@ -1242,7 +1097,7 @@ def delete_auto_adjust_advice_by_uuid_asyncio(
     kwargs = delete_auto_adjust_advice_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1254,4 +1109,3 @@ def delete_auto_adjust_advice_by_uuid_asyncio(
 
     # No response model, return None
     return None
-

@@ -6,19 +6,18 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.aggregator_job_controller import get_aggregator_status
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.aggregator_job_controller import (
+    get_aggregator_status,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_aggregator_status_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[str]:
+def get_aggregator_status_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -54,39 +53,26 @@ def get_aggregator_status_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_aggregator_status_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> str | None:
+def get_aggregator_status_sync(*, client: StolonClient, request_uuid: str) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -111,7 +97,7 @@ def get_aggregator_status_sync(
     kwargs = get_aggregator_status._get_kwargs(request_uuid=request_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -125,13 +111,7 @@ def get_aggregator_status_sync(
     return None
 
 
-
-
-def get_aggregator_status_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[str]:
+def get_aggregator_status_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -167,39 +147,26 @@ def get_aggregator_status_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_aggregator_status_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> str | None:
+def get_aggregator_status_asyncio(*, client: StolonClient, request_uuid: str) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -224,7 +191,7 @@ def get_aggregator_status_asyncio(
     kwargs = get_aggregator_status._get_kwargs(request_uuid=request_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -236,4 +203,3 @@ def get_aggregator_status_asyncio(
 
     # No response model, return None
     return None
-

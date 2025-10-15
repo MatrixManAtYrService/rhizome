@@ -6,19 +6,21 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history
-from stolon.generated.billing_event_dev.open_api_definition_client.models.get_billing_event_history_response200 import GetBillingEventHistoryResponse200
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.billing_event_history import (
+    get_billing_event_history,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.get_billing_event_history_response200 import (
+    GetBillingEventHistoryResponse200,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_billing_event_history_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[GetBillingEventHistoryResponse200]:
+def get_billing_event_history_sync_detailed(*, client: StolonClient) -> Response[GetBillingEventHistoryResponse200]:
     """Get billing event history
 
     Args:
@@ -41,7 +43,7 @@ def get_billing_event_history_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetBillingEventHistoryResponse200]
@@ -61,17 +63,13 @@ def get_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetBillingEventHistoryResponse200:
@@ -81,18 +79,13 @@ def get_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_event_history_sync(
-    *,
-    client: StolonClient
-) -> GetBillingEventHistoryResponse200 | None:
+def get_billing_event_history_sync(*, client: StolonClient) -> GetBillingEventHistoryResponse200 | None:
     """Get billing event history
 
     Args:
@@ -115,7 +108,7 @@ def get_billing_event_history_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetBillingEventHistoryResponse200 | None
@@ -135,7 +128,7 @@ def get_billing_event_history_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -145,12 +138,7 @@ def get_billing_event_history_sync(
     return None
 
 
-
-
-def get_billing_event_history_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[GetBillingEventHistoryResponse200]:
+def get_billing_event_history_asyncio_detailed(*, client: StolonClient) -> Response[GetBillingEventHistoryResponse200]:
     """Get billing event history
 
     Args:
@@ -173,7 +161,7 @@ def get_billing_event_history_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetBillingEventHistoryResponse200]
@@ -193,17 +181,13 @@ def get_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and GetBillingEventHistoryResponse200:
@@ -213,18 +197,13 @@ def get_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_event_history_asyncio(
-    *,
-    client: StolonClient
-) -> GetBillingEventHistoryResponse200 | None:
+def get_billing_event_history_asyncio(*, client: StolonClient) -> GetBillingEventHistoryResponse200 | None:
     """Get billing event history
 
     Args:
@@ -247,7 +226,7 @@ def get_billing_event_history_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetBillingEventHistoryResponse200 | None
@@ -267,7 +246,7 @@ def get_billing_event_history_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -275,4 +254,3 @@ def get_billing_event_history_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

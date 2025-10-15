@@ -6,27 +6,26 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import create_activation_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import create_conditional_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import create_simple_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import create_unit_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import delete_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import get_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import get_rules_by_lexicon
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_rule_controller import (
+    create_activation_rule,
+    create_conditional_rule,
+    create_simple_rule,
+    create_unit_rule,
+    delete_rule,
+    get_rule,
+    get_rules_by_lexicon,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.all_rules import AllRules
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.base_rule import BaseRule
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def delete_rule_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[int]:
+def delete_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[int]:
     """Args:
         uuid (str):
 
@@ -62,39 +61,26 @@ def delete_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_rule_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> int | None:
+def delete_rule_sync(*, client: StolonClient, uuid: str) -> int | None:
     """Args:
         uuid (str):
 
@@ -119,7 +105,7 @@ def delete_rule_sync(
     kwargs = delete_rule._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -133,13 +119,7 @@ def delete_rule_sync(
     return None
 
 
-
-
-def delete_rule_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[int]:
+def delete_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[int]:
     """Args:
         uuid (str):
 
@@ -175,39 +155,26 @@ def delete_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_rule_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> int | None:
+def delete_rule_asyncio(*, client: StolonClient, uuid: str) -> int | None:
     """Args:
         uuid (str):
 
@@ -232,7 +199,7 @@ def delete_rule_asyncio(
     kwargs = delete_rule._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -246,13 +213,7 @@ def delete_rule_asyncio(
     return None
 
 
-
-
-def get_rules_by_lexicon_sync_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str
-) -> Response[AllRules]:
+def get_rules_by_lexicon_sync_detailed(*, client: StolonClient, lexicon: str) -> Response[AllRules]:
     """Args:
         lexicon (str):
 
@@ -288,39 +249,26 @@ def get_rules_by_lexicon_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and AllRules:
-        parsed = AllRules.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = AllRules.from_dict(body_json) if body_json and proxy_response.status_code == 200 and AllRules else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rules_by_lexicon_sync(
-    *,
-    client: StolonClient,
-    lexicon: str
-) -> AllRules | None:
+def get_rules_by_lexicon_sync(*, client: StolonClient, lexicon: str) -> AllRules | None:
     """Args:
         lexicon (str):
 
@@ -356,7 +304,7 @@ def get_rules_by_lexicon_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -366,13 +314,7 @@ def get_rules_by_lexicon_sync(
     return None
 
 
-
-
-def get_rules_by_lexicon_asyncio_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str
-) -> Response[AllRules]:
+def get_rules_by_lexicon_asyncio_detailed(*, client: StolonClient, lexicon: str) -> Response[AllRules]:
     """Args:
         lexicon (str):
 
@@ -408,39 +350,26 @@ def get_rules_by_lexicon_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and AllRules:
-        parsed = AllRules.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = AllRules.from_dict(body_json) if body_json and proxy_response.status_code == 200 and AllRules else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rules_by_lexicon_asyncio(
-    *,
-    client: StolonClient,
-    lexicon: str
-) -> AllRules | None:
+def get_rules_by_lexicon_asyncio(*, client: StolonClient, lexicon: str) -> AllRules | None:
     """Args:
         lexicon (str):
 
@@ -476,7 +405,7 @@ def get_rules_by_lexicon_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -486,13 +415,7 @@ def get_rules_by_lexicon_asyncio(
     return None
 
 
-
-
-def get_rule_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[AllRules]:
+def get_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[AllRules]:
     """Args:
         uuid (str):
 
@@ -528,39 +451,26 @@ def get_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and AllRules:
-        parsed = AllRules.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = AllRules.from_dict(body_json) if body_json and proxy_response.status_code == 200 and AllRules else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rule_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> AllRules | None:
+def get_rule_sync(*, client: StolonClient, uuid: str) -> AllRules | None:
     """Args:
         uuid (str):
 
@@ -596,7 +506,7 @@ def get_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -606,13 +516,7 @@ def get_rule_sync(
     return None
 
 
-
-
-def get_rule_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[AllRules]:
+def get_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[AllRules]:
     """Args:
         uuid (str):
 
@@ -648,39 +552,26 @@ def get_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and AllRules:
-        parsed = AllRules.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = AllRules.from_dict(body_json) if body_json and proxy_response.status_code == 200 and AllRules else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rule_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> AllRules | None:
+def get_rule_asyncio(*, client: StolonClient, uuid: str) -> AllRules | None:
     """Args:
         uuid (str):
 
@@ -716,7 +607,7 @@ def get_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -726,12 +617,7 @@ def get_rule_asyncio(
     return None
 
 
-
-
-def create_simple_rule_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_simple_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (SimpleRule):
 
@@ -747,7 +633,7 @@ def create_simple_rule_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -767,38 +653,26 @@ def create_simple_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_simple_rule_sync(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_simple_rule_sync(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (SimpleRule):
 
@@ -814,7 +688,7 @@ def create_simple_rule_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -834,7 +708,7 @@ def create_simple_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -844,12 +718,7 @@ def create_simple_rule_sync(
     return None
 
 
-
-
-def create_simple_rule_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_simple_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (SimpleRule):
 
@@ -865,7 +734,7 @@ def create_simple_rule_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -885,38 +754,26 @@ def create_simple_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_simple_rule_asyncio(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_simple_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (SimpleRule):
 
@@ -932,7 +789,7 @@ def create_simple_rule_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -952,7 +809,7 @@ def create_simple_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -962,12 +819,7 @@ def create_simple_rule_asyncio(
     return None
 
 
-
-
-def create_activation_rule_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_activation_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (ActivationRule):
 
@@ -983,7 +835,7 @@ def create_activation_rule_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -1003,38 +855,26 @@ def create_activation_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_activation_rule_sync(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_activation_rule_sync(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (ActivationRule):
 
@@ -1050,7 +890,7 @@ def create_activation_rule_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -1070,7 +910,7 @@ def create_activation_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1080,12 +920,7 @@ def create_activation_rule_sync(
     return None
 
 
-
-
-def create_activation_rule_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_activation_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (ActivationRule):
 
@@ -1101,7 +936,7 @@ def create_activation_rule_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -1121,38 +956,26 @@ def create_activation_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_activation_rule_asyncio(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_activation_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (ActivationRule):
 
@@ -1168,7 +991,7 @@ def create_activation_rule_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -1188,7 +1011,7 @@ def create_activation_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1198,12 +1021,7 @@ def create_activation_rule_asyncio(
     return None
 
 
-
-
-def create_unit_rule_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_unit_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (UnitRule):
 
@@ -1219,7 +1037,7 @@ def create_unit_rule_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -1239,38 +1057,26 @@ def create_unit_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_unit_rule_sync(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_unit_rule_sync(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (UnitRule):
 
@@ -1286,7 +1092,7 @@ def create_unit_rule_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -1306,7 +1112,7 @@ def create_unit_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1316,12 +1122,7 @@ def create_unit_rule_sync(
     return None
 
 
-
-
-def create_unit_rule_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_unit_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (UnitRule):
 
@@ -1337,7 +1138,7 @@ def create_unit_rule_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -1357,38 +1158,26 @@ def create_unit_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_unit_rule_asyncio(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_unit_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (UnitRule):
 
@@ -1404,7 +1193,7 @@ def create_unit_rule_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -1424,7 +1213,7 @@ def create_unit_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1434,12 +1223,7 @@ def create_unit_rule_asyncio(
     return None
 
 
-
-
-def create_conditional_rule_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_conditional_rule_sync_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (ConditionalRule):
 
@@ -1455,7 +1239,7 @@ def create_conditional_rule_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -1475,38 +1259,26 @@ def create_conditional_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_conditional_rule_sync(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_conditional_rule_sync(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (ConditionalRule):
 
@@ -1522,7 +1294,7 @@ def create_conditional_rule_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -1542,7 +1314,7 @@ def create_conditional_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1552,12 +1324,7 @@ def create_conditional_rule_sync(
     return None
 
 
-
-
-def create_conditional_rule_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[BaseRule]:
+def create_conditional_rule_asyncio_detailed(*, client: StolonClient) -> Response[BaseRule]:
     """Args:
         body (ConditionalRule):
 
@@ -1573,7 +1340,7 @@ def create_conditional_rule_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[BaseRule]
@@ -1593,38 +1360,26 @@ def create_conditional_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and BaseRule:
-        parsed = BaseRule.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = BaseRule.from_dict(body_json) if body_json and proxy_response.status_code == 200 and BaseRule else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_conditional_rule_asyncio(
-    *,
-    client: StolonClient
-) -> BaseRule | None:
+def create_conditional_rule_asyncio(*, client: StolonClient) -> BaseRule | None:
     """Args:
         body (ConditionalRule):
 
@@ -1640,7 +1395,7 @@ def create_conditional_rule_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         BaseRule | None
@@ -1660,7 +1415,7 @@ def create_conditional_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1668,4 +1423,3 @@ def create_conditional_rule_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

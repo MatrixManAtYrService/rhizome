@@ -6,24 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import create_4
-from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import delete_4
-from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import get_4
+from stolon.generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import (
+    create_4,
+    delete_4,
+    get_4,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.models.create4_response200 import Create4Response200
 from stolon.generated.billing_event_dev.open_api_definition_client.models.delete4_response200 import Delete4Response200
 from stolon.generated.billing_event_dev.open_api_definition_client.models.get4_response200 import Get4Response200
 from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def delete_4_sync_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: str
-) -> Response[Delete4Response200]:
+def delete_4_sync_detailed(*, client: StolonClient, acceptance_id: str) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -62,17 +61,13 @@ def delete_4_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete4Response200:
@@ -82,19 +77,13 @@ def delete_4_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_4_sync(
-    *,
-    client: StolonClient,
-    acceptance_id: str
-) -> Delete4Response200 | None:
+def delete_4_sync(*, client: StolonClient, acceptance_id: str) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -133,7 +122,7 @@ def delete_4_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -143,13 +132,7 @@ def delete_4_sync(
     return None
 
 
-
-
-def delete_4_asyncio_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: str
-) -> Response[Delete4Response200]:
+def delete_4_asyncio_detailed(*, client: StolonClient, acceptance_id: str) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -188,17 +171,13 @@ def delete_4_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Delete4Response200:
@@ -208,19 +187,13 @@ def delete_4_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_4_asyncio(
-    *,
-    client: StolonClient,
-    acceptance_id: str
-) -> Delete4Response200 | None:
+def delete_4_asyncio(*, client: StolonClient, acceptance_id: str) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -259,7 +232,7 @@ def delete_4_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -269,12 +242,7 @@ def delete_4_asyncio(
     return None
 
 
-
-
-def get_4_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Get4Response200]:
+def get_4_sync_detailed(*, client: StolonClient) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -292,7 +260,7 @@ def get_4_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Get4Response200]
@@ -312,17 +280,13 @@ def get_4_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Get4Response200:
@@ -332,18 +296,13 @@ def get_4_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_4_sync(
-    *,
-    client: StolonClient
-) -> Get4Response200 | None:
+def get_4_sync(*, client: StolonClient) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -361,7 +320,7 @@ def get_4_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Get4Response200 | None
@@ -381,7 +340,7 @@ def get_4_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,12 +350,7 @@ def get_4_sync(
     return None
 
 
-
-
-def get_4_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Get4Response200]:
+def get_4_asyncio_detailed(*, client: StolonClient) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -414,7 +368,7 @@ def get_4_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Get4Response200]
@@ -434,17 +388,13 @@ def get_4_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Get4Response200:
@@ -454,18 +404,13 @@ def get_4_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_4_asyncio(
-    *,
-    client: StolonClient
-) -> Get4Response200 | None:
+def get_4_asyncio(*, client: StolonClient) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -483,7 +428,7 @@ def get_4_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Get4Response200 | None
@@ -503,7 +448,7 @@ def get_4_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -513,12 +458,7 @@ def get_4_asyncio(
     return None
 
 
-
-
-def create_4_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Create4Response200]:
+def create_4_sync_detailed(*, client: StolonClient) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -537,7 +477,7 @@ def create_4_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Create4Response200]
@@ -557,17 +497,13 @@ def create_4_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Create4Response200:
@@ -577,18 +513,13 @@ def create_4_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_4_sync(
-    *,
-    client: StolonClient
-) -> Create4Response200 | None:
+def create_4_sync(*, client: StolonClient) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -607,7 +538,7 @@ def create_4_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Create4Response200 | None
@@ -627,7 +558,7 @@ def create_4_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -637,12 +568,7 @@ def create_4_sync(
     return None
 
 
-
-
-def create_4_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Create4Response200]:
+def create_4_asyncio_detailed(*, client: StolonClient) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -661,7 +587,7 @@ def create_4_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Create4Response200]
@@ -681,17 +607,13 @@ def create_4_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and Create4Response200:
@@ -701,18 +623,13 @@ def create_4_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_4_asyncio(
-    *,
-    client: StolonClient
-) -> Create4Response200 | None:
+def create_4_asyncio(*, client: StolonClient) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -731,7 +648,7 @@ def create_4_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Create4Response200 | None
@@ -751,7 +668,7 @@ def create_4_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -759,4 +676,3 @@ def create_4_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

@@ -6,19 +6,17 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event import post_billing_event
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_handled_event import ApiHandledEvent
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def post_billing_event_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiHandledEvent]:
+def post_billing_event_sync_detailed(*, client: StolonClient) -> Response[ApiHandledEvent]:
     """Post a billing event
 
     Args:
@@ -36,7 +34,7 @@ def post_billing_event_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiHandledEvent]
@@ -56,17 +54,13 @@ def post_billing_event_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiHandledEvent:
@@ -76,18 +70,13 @@ def post_billing_event_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def post_billing_event_sync(
-    *,
-    client: StolonClient
-) -> ApiHandledEvent | None:
+def post_billing_event_sync(*, client: StolonClient) -> ApiHandledEvent | None:
     """Post a billing event
 
     Args:
@@ -105,7 +94,7 @@ def post_billing_event_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiHandledEvent | None
@@ -125,7 +114,7 @@ def post_billing_event_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -135,12 +124,7 @@ def post_billing_event_sync(
     return None
 
 
-
-
-def post_billing_event_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiHandledEvent]:
+def post_billing_event_asyncio_detailed(*, client: StolonClient) -> Response[ApiHandledEvent]:
     """Post a billing event
 
     Args:
@@ -158,7 +142,7 @@ def post_billing_event_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiHandledEvent]
@@ -178,17 +162,13 @@ def post_billing_event_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiHandledEvent:
@@ -198,18 +178,13 @@ def post_billing_event_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def post_billing_event_asyncio(
-    *,
-    client: StolonClient
-) -> ApiHandledEvent | None:
+def post_billing_event_asyncio(*, client: StolonClient) -> ApiHandledEvent | None:
     """Post a billing event
 
     Args:
@@ -227,7 +202,7 @@ def post_billing_event_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiHandledEvent | None
@@ -247,7 +222,7 @@ def post_billing_event_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -255,4 +230,3 @@ def post_billing_event_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

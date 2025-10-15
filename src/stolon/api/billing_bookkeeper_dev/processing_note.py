@@ -6,21 +6,20 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_note import get_processing_note_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_note import get_processing_notes
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_note import (
+    get_processing_note_by_uuid,
+    get_processing_notes,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_processing_note_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_processing_note_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get processing note by UUID
 
     Args:
@@ -58,17 +57,13 @@ def get_processing_note_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -78,19 +73,13 @@ def get_processing_note_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_note_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_processing_note_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get processing note by UUID
 
     Args:
@@ -128,7 +117,7 @@ def get_processing_note_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -138,13 +127,7 @@ def get_processing_note_by_uuid_sync(
     return None
 
 
-
-
-def get_processing_note_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_processing_note_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get processing note by UUID
 
     Args:
@@ -182,17 +165,13 @@ def get_processing_note_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -202,19 +181,13 @@ def get_processing_note_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_note_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_processing_note_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get processing note by UUID
 
     Args:
@@ -252,7 +225,7 @@ def get_processing_note_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -262,12 +235,7 @@ def get_processing_note_by_uuid_asyncio(
     return None
 
 
-
-
-def get_processing_notes_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_processing_notes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -289,7 +257,7 @@ def get_processing_notes_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -309,17 +277,13 @@ def get_processing_notes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -329,18 +293,13 @@ def get_processing_notes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_notes_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_processing_notes_sync(*, client: StolonClient) -> ResponseError | None:
     """Get processing notes using filter parameters
 
     Args:
@@ -362,7 +321,7 @@ def get_processing_notes_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -382,7 +341,7 @@ def get_processing_notes_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -392,12 +351,7 @@ def get_processing_notes_sync(
     return None
 
 
-
-
-def get_processing_notes_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_processing_notes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get processing notes using filter parameters
 
     Args:
@@ -419,7 +373,7 @@ def get_processing_notes_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -439,17 +393,13 @@ def get_processing_notes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -459,18 +409,13 @@ def get_processing_notes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_notes_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_processing_notes_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get processing notes using filter parameters
 
     Args:
@@ -492,7 +437,7 @@ def get_processing_notes_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -512,7 +457,7 @@ def get_processing_notes_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -520,4 +465,3 @@ def get_processing_notes_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

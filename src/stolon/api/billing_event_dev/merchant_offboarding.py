@@ -6,21 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.merchant_offboarding import create_offboarding
-from stolon.generated.billing_event_dev.open_api_definition_client.api.merchant_offboarding import get_all_offboardings_by_step
-from stolon.generated.billing_event_dev.open_api_definition_client.api.merchant_offboarding import get_offboarding_by_merchant_uuid
-from stolon.generated.billing_event_dev.open_api_definition_client.models.api_merchant_offboarding import ApiMerchantOffboarding
-from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.generated.billing_event_dev.open_api_definition_client.api.merchant_offboarding import (
+    create_offboarding,
+    get_all_offboardings_by_step,
+    get_offboarding_by_merchant_uuid,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.models.api_merchant_offboarding import (
+    ApiMerchantOffboarding,
+)
+from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_offboarding_by_merchant_uuid_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantOffboarding]:
+def get_offboarding_by_merchant_uuid_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
     """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
     explicit id
 
@@ -39,131 +41,7 @@ def get_offboarding_by_merchant_uuid_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
 
-    Returns:
-        Response[ApiMerchantOffboarding]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
-        parsed = ApiMerchantOffboarding.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-
-
-def get_offboarding_by_merchant_uuid_sync(
-    *,
-    client: StolonClient
-) -> ApiMerchantOffboarding | None:
-    """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
-    explicit id
-
-    Args:
-        merchant_uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiMerchantOffboarding
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
-
-    Returns:
-        ApiMerchantOffboarding | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiMerchantOffboarding.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-
-
-def get_offboarding_by_merchant_uuid_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantOffboarding]:
-    """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
-    explicit id
-
-    Args:
-        merchant_uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiMerchantOffboarding]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
 
     Returns:
         Response[ApiMerchantOffboarding]
@@ -183,17 +61,13 @@ def get_offboarding_by_merchant_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
@@ -203,18 +77,13 @@ def get_offboarding_by_merchant_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_offboarding_by_merchant_uuid_asyncio(
-    *,
-    client: StolonClient
-) -> ApiMerchantOffboarding | None:
+def get_offboarding_by_merchant_uuid_sync(*, client: StolonClient) -> ApiMerchantOffboarding | None:
     """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
     explicit id
 
@@ -233,7 +102,7 @@ def get_offboarding_by_merchant_uuid_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantOffboarding | None
@@ -253,7 +122,7 @@ def get_offboarding_by_merchant_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -263,12 +132,117 @@ def get_offboarding_by_merchant_uuid_asyncio(
     return None
 
 
+def get_offboarding_by_merchant_uuid_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+    """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
+    explicit id
+
+    Args:
+        merchant_uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiMerchantOffboarding]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
 
 
-def get_all_offboardings_by_step_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantOffboarding]:
+    Returns:
+        Response[ApiMerchantOffboarding]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        with contextlib.suppress(json.JSONDecodeError):
+            body_json = json.loads(proxy_response.body)
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
+        parsed = ApiMerchantOffboarding.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def get_offboarding_by_merchant_uuid_asyncio(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+    """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
+    explicit id
+
+    Args:
+        merchant_uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiMerchantOffboarding
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        ApiMerchantOffboarding | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiMerchantOffboarding.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+def get_all_offboardings_by_step_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -289,7 +263,7 @@ def get_all_offboardings_by_step_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantOffboarding]
@@ -309,17 +283,13 @@ def get_all_offboardings_by_step_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
@@ -329,18 +299,13 @@ def get_all_offboardings_by_step_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_all_offboardings_by_step_sync(
-    *,
-    client: StolonClient
-) -> ApiMerchantOffboarding | None:
+def get_all_offboardings_by_step_sync(*, client: StolonClient) -> ApiMerchantOffboarding | None:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -361,7 +326,7 @@ def get_all_offboardings_by_step_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantOffboarding | None
@@ -381,7 +346,7 @@ def get_all_offboardings_by_step_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,12 +356,7 @@ def get_all_offboardings_by_step_sync(
     return None
 
 
-
-
-def get_all_offboardings_by_step_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantOffboarding]:
+def get_all_offboardings_by_step_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -417,7 +377,7 @@ def get_all_offboardings_by_step_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantOffboarding]
@@ -437,17 +397,13 @@ def get_all_offboardings_by_step_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
@@ -457,18 +413,13 @@ def get_all_offboardings_by_step_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_all_offboardings_by_step_asyncio(
-    *,
-    client: StolonClient
-) -> ApiMerchantOffboarding | None:
+def get_all_offboardings_by_step_asyncio(*, client: StolonClient) -> ApiMerchantOffboarding | None:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -489,7 +440,7 @@ def get_all_offboardings_by_step_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantOffboarding | None
@@ -509,7 +460,7 @@ def get_all_offboardings_by_step_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -519,12 +470,7 @@ def get_all_offboardings_by_step_asyncio(
     return None
 
 
-
-
-def create_offboarding_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantOffboarding]:
+def create_offboarding_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
     """Create offboarding
 
     Args:
@@ -543,7 +489,7 @@ def create_offboarding_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantOffboarding]
@@ -563,17 +509,13 @@ def create_offboarding_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
@@ -583,18 +525,13 @@ def create_offboarding_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_offboarding_sync(
-    *,
-    client: StolonClient
-) -> ApiMerchantOffboarding | None:
+def create_offboarding_sync(*, client: StolonClient) -> ApiMerchantOffboarding | None:
     """Create offboarding
 
     Args:
@@ -613,7 +550,7 @@ def create_offboarding_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantOffboarding | None
@@ -633,7 +570,7 @@ def create_offboarding_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -643,12 +580,7 @@ def create_offboarding_sync(
     return None
 
 
-
-
-def create_offboarding_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiMerchantOffboarding]:
+def create_offboarding_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
     """Create offboarding
 
     Args:
@@ -667,7 +599,7 @@ def create_offboarding_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantOffboarding]
@@ -687,17 +619,13 @@ def create_offboarding_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
@@ -707,18 +635,13 @@ def create_offboarding_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_offboarding_asyncio(
-    *,
-    client: StolonClient
-) -> ApiMerchantOffboarding | None:
+def create_offboarding_asyncio(*, client: StolonClient) -> ApiMerchantOffboarding | None:
     """Create offboarding
 
     Args:
@@ -737,7 +660,7 @@ def create_offboarding_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantOffboarding | None
@@ -757,7 +680,7 @@ def create_offboarding_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -765,4 +688,3 @@ def create_offboarding_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

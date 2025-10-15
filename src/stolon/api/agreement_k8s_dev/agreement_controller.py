@@ -6,26 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import create_agreement
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import get_agreement
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import get_agreements
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import get_latest_agreement
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import get_latest_agreement_as_html
-from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import get_latest_agreement_as_text
+from stolon.generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import (
+    create_agreement,
+    get_agreement,
+    get_agreements,
+    get_latest_agreement,
+    get_latest_agreement_as_html,
+    get_latest_agreement_as_text,
+)
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.models.agreement import Agreement
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.models.agreements import Agreements
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_latest_agreement_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[Agreement]:
+def get_latest_agreement_sync_detailed(*, client: StolonClient, type_: str) -> Response[Agreement]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -62,39 +61,26 @@ def get_latest_agreement_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreement:
-        parsed = Agreement.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreement.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreement else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_latest_agreement_sync(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Agreement | None:
+def get_latest_agreement_sync(*, client: StolonClient, type_: str) -> Agreement | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -131,7 +117,7 @@ def get_latest_agreement_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -141,13 +127,7 @@ def get_latest_agreement_sync(
     return None
 
 
-
-
-def get_latest_agreement_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[Agreement]:
+def get_latest_agreement_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[Agreement]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -184,39 +164,26 @@ def get_latest_agreement_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreement:
-        parsed = Agreement.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreement.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreement else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_latest_agreement_asyncio(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Agreement | None:
+def get_latest_agreement_asyncio(*, client: StolonClient, type_: str) -> Agreement | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -253,7 +220,7 @@ def get_latest_agreement_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -263,12 +230,7 @@ def get_latest_agreement_asyncio(
     return None
 
 
-
-
-def create_agreement_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Agreement]:
+def create_agreement_sync_detailed(*, client: StolonClient) -> Response[Agreement]:
     """Args:
         body (Agreement):
 
@@ -284,7 +246,7 @@ def create_agreement_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Agreement]
@@ -304,38 +266,26 @@ def create_agreement_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreement:
-        parsed = Agreement.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreement.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreement else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_agreement_sync(
-    *,
-    client: StolonClient
-) -> Agreement | None:
+def create_agreement_sync(*, client: StolonClient) -> Agreement | None:
     """Args:
         body (Agreement):
 
@@ -351,7 +301,7 @@ def create_agreement_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Agreement | None
@@ -371,7 +321,7 @@ def create_agreement_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -381,12 +331,7 @@ def create_agreement_sync(
     return None
 
 
-
-
-def create_agreement_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Agreement]:
+def create_agreement_asyncio_detailed(*, client: StolonClient) -> Response[Agreement]:
     """Args:
         body (Agreement):
 
@@ -402,7 +347,7 @@ def create_agreement_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Agreement]
@@ -422,38 +367,26 @@ def create_agreement_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreement:
-        parsed = Agreement.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreement.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreement else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_agreement_asyncio(
-    *,
-    client: StolonClient
-) -> Agreement | None:
+def create_agreement_asyncio(*, client: StolonClient) -> Agreement | None:
     """Args:
         body (Agreement):
 
@@ -469,7 +402,7 @@ def create_agreement_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Agreement | None
@@ -489,7 +422,7 @@ def create_agreement_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -499,13 +432,7 @@ def create_agreement_asyncio(
     return None
 
 
-
-
-def get_latest_agreement_as_html_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[str]:
+def get_latest_agreement_as_html_sync_detailed(*, client: StolonClient, type_: str) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -542,39 +469,26 @@ def get_latest_agreement_as_html_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_latest_agreement_as_html_sync(
-    *,
-    client: StolonClient,
-    type_: str
-) -> str | None:
+def get_latest_agreement_as_html_sync(*, client: StolonClient, type_: str) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -600,7 +514,7 @@ def get_latest_agreement_as_html_sync(
     kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="apidev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -614,13 +528,7 @@ def get_latest_agreement_as_html_sync(
     return None
 
 
-
-
-def get_latest_agreement_as_html_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[str]:
+def get_latest_agreement_as_html_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -657,39 +565,26 @@ def get_latest_agreement_as_html_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_latest_agreement_as_html_asyncio(
-    *,
-    client: StolonClient,
-    type_: str
-) -> str | None:
+def get_latest_agreement_as_html_asyncio(*, client: StolonClient, type_: str) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -715,7 +610,7 @@ def get_latest_agreement_as_html_asyncio(
     kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="apidev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -729,13 +624,7 @@ def get_latest_agreement_as_html_asyncio(
     return None
 
 
-
-
-def get_latest_agreement_as_text_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[str]:
+def get_latest_agreement_as_text_sync_detailed(*, client: StolonClient, type_: str) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -772,39 +661,26 @@ def get_latest_agreement_as_text_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_latest_agreement_as_text_sync(
-    *,
-    client: StolonClient,
-    type_: str
-) -> str | None:
+def get_latest_agreement_as_text_sync(*, client: StolonClient, type_: str) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -830,7 +706,7 @@ def get_latest_agreement_as_text_sync(
     kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="apidev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -844,13 +720,7 @@ def get_latest_agreement_as_text_sync(
     return None
 
 
-
-
-def get_latest_agreement_as_text_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[str]:
+def get_latest_agreement_as_text_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -887,39 +757,26 @@ def get_latest_agreement_as_text_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_latest_agreement_as_text_asyncio(
-    *,
-    client: StolonClient,
-    type_: str
-) -> str | None:
+def get_latest_agreement_as_text_asyncio(*, client: StolonClient, type_: str) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -945,7 +802,7 @@ def get_latest_agreement_as_text_asyncio(
     kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="apidev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -959,13 +816,7 @@ def get_latest_agreement_as_text_asyncio(
     return None
 
 
-
-
-def get_agreement_sync_detailed(
-    *,
-    client: StolonClient,
-    agreement_id: UUID
-) -> Response[Agreement]:
+def get_agreement_sync_detailed(*, client: StolonClient, agreement_id: UUID) -> Response[Agreement]:
     """Args:
         agreement_id (UUID):
 
@@ -1001,39 +852,26 @@ def get_agreement_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreement:
-        parsed = Agreement.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreement.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreement else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_agreement_sync(
-    *,
-    client: StolonClient,
-    agreement_id: UUID
-) -> Agreement | None:
+def get_agreement_sync(*, client: StolonClient, agreement_id: UUID) -> Agreement | None:
     """Args:
         agreement_id (UUID):
 
@@ -1069,7 +907,7 @@ def get_agreement_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1079,13 +917,7 @@ def get_agreement_sync(
     return None
 
 
-
-
-def get_agreement_asyncio_detailed(
-    *,
-    client: StolonClient,
-    agreement_id: UUID
-) -> Response[Agreement]:
+def get_agreement_asyncio_detailed(*, client: StolonClient, agreement_id: UUID) -> Response[Agreement]:
     """Args:
         agreement_id (UUID):
 
@@ -1121,39 +953,26 @@ def get_agreement_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreement:
-        parsed = Agreement.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreement.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreement else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_agreement_asyncio(
-    *,
-    client: StolonClient,
-    agreement_id: UUID
-) -> Agreement | None:
+def get_agreement_asyncio(*, client: StolonClient, agreement_id: UUID) -> Agreement | None:
     """Args:
         agreement_id (UUID):
 
@@ -1189,7 +1008,7 @@ def get_agreement_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1199,13 +1018,7 @@ def get_agreement_asyncio(
     return None
 
 
-
-
-def get_agreements_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[Agreements]:
+def get_agreements_sync_detailed(*, client: StolonClient, type_: str) -> Response[Agreements]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1242,39 +1055,26 @@ def get_agreements_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreements:
-        parsed = Agreements.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreements.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreements else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_agreements_sync(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Agreements | None:
+def get_agreements_sync(*, client: StolonClient, type_: str) -> Agreements | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1311,7 +1111,7 @@ def get_agreements_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1321,13 +1121,7 @@ def get_agreements_sync(
     return None
 
 
-
-
-def get_agreements_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Response[Agreements]:
+def get_agreements_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[Agreements]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1364,39 +1158,26 @@ def get_agreements_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and Agreements:
-        parsed = Agreements.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = Agreements.from_dict(body_json) if body_json and proxy_response.status_code == 200 and Agreements else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_agreements_asyncio(
-    *,
-    client: StolonClient,
-    type_: str
-) -> Agreements | None:
+def get_agreements_asyncio(*, client: StolonClient, type_: str) -> Agreements | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1433,7 +1214,7 @@ def get_agreements_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1441,4 +1222,3 @@ def get_agreements_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

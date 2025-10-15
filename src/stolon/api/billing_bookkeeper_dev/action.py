@@ -6,20 +6,20 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.action import get_action_by_reseller
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.action import get_actions
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.action import (
+    get_action_by_reseller,
+    get_actions,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_actions_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get action
 
     Args:
@@ -39,7 +39,7 @@ def get_actions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -59,17 +59,13 @@ def get_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -79,18 +75,13 @@ def get_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_actions_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_actions_sync(*, client: StolonClient) -> ResponseError | None:
     """Get action
 
     Args:
@@ -110,7 +101,7 @@ def get_actions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -130,7 +121,7 @@ def get_actions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -140,12 +131,7 @@ def get_actions_sync(
     return None
 
 
-
-
-def get_actions_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get action
 
     Args:
@@ -165,7 +151,7 @@ def get_actions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -185,17 +171,13 @@ def get_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -205,18 +187,13 @@ def get_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_actions_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get action
 
     Args:
@@ -236,7 +213,7 @@ def get_actions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -256,7 +233,7 @@ def get_actions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -266,13 +243,7 @@ def get_actions_asyncio(
     return None
 
 
-
-
-def get_action_by_reseller_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ResponseError]:
+def get_action_by_reseller_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
     """Get action by reseller
 
     Args:
@@ -314,17 +285,13 @@ def get_action_by_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -334,19 +301,13 @@ def get_action_by_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_action_by_reseller_sync(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ResponseError | None:
+def get_action_by_reseller_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
     """Get action by reseller
 
     Args:
@@ -388,7 +349,7 @@ def get_action_by_reseller_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -398,13 +359,7 @@ def get_action_by_reseller_sync(
     return None
 
 
-
-
-def get_action_by_reseller_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ResponseError]:
+def get_action_by_reseller_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
     """Get action by reseller
 
     Args:
@@ -446,17 +401,13 @@ def get_action_by_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -466,19 +417,13 @@ def get_action_by_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_action_by_reseller_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ResponseError | None:
+def get_action_by_reseller_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
     """Get action by reseller
 
     Args:
@@ -520,7 +465,7 @@ def get_action_by_reseller_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -528,4 +473,3 @@ def get_action_by_reseller_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

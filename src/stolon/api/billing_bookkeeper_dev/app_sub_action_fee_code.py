@@ -6,24 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_fee_code import create_app_sub_action_fee_code
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_fee_code import delete_app_sub_action_fee_code_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_fee_code import get_app_sub_action_fee_code_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_fee_code import get_app_sub_action_fee_codes
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_fee_code import update_app_sub_action_fee_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action_fee_code import (
+    create_app_sub_action_fee_code,
+    delete_app_sub_action_fee_code_by_uuid,
+    get_app_sub_action_fee_code_by_uuid,
+    get_app_sub_action_fee_codes,
+    update_app_sub_action_fee_code,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def update_app_sub_action_fee_code_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_app_sub_action_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update app subscription action fee code mapping
 
     Args:
@@ -62,17 +61,13 @@ def update_app_sub_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -82,19 +77,13 @@ def update_app_sub_action_fee_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_app_sub_action_fee_code_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_app_sub_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update app subscription action fee code mapping
 
     Args:
@@ -133,7 +122,7 @@ def update_app_sub_action_fee_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -143,13 +132,7 @@ def update_app_sub_action_fee_code_sync(
     return None
 
 
-
-
-def update_app_sub_action_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_app_sub_action_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update app subscription action fee code mapping
 
     Args:
@@ -188,17 +171,13 @@ def update_app_sub_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -208,19 +187,13 @@ def update_app_sub_action_fee_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_app_sub_action_fee_code_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_app_sub_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update app subscription action fee code mapping
 
     Args:
@@ -259,7 +232,7 @@ def update_app_sub_action_fee_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -269,13 +242,7 @@ def update_app_sub_action_fee_code_asyncio(
     return None
 
 
-
-
-def delete_app_sub_action_fee_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_app_sub_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete app subscription action fee code mapping
 
     Args:
@@ -313,17 +280,13 @@ def delete_app_sub_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -333,19 +296,13 @@ def delete_app_sub_action_fee_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_app_sub_action_fee_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_app_sub_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete app subscription action fee code mapping
 
     Args:
@@ -383,7 +340,7 @@ def delete_app_sub_action_fee_code_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,14 +348,10 @@ def delete_app_sub_action_fee_code_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def delete_app_sub_action_fee_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError]:
     """Delete app subscription action fee code mapping
 
@@ -437,17 +390,13 @@ def delete_app_sub_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -457,19 +406,13 @@ def delete_app_sub_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_app_sub_action_fee_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_app_sub_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete app subscription action fee code mapping
 
     Args:
@@ -507,7 +450,7 @@ def delete_app_sub_action_fee_code_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -517,12 +460,7 @@ def delete_app_sub_action_fee_code_by_uuid_asyncio(
     return None
 
 
-
-
-def create_app_sub_action_fee_code_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_app_sub_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create app subscription action fee code mapping
 
     Args:
@@ -540,7 +478,7 @@ def create_app_sub_action_fee_code_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -560,17 +498,13 @@ def create_app_sub_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -580,18 +514,13 @@ def create_app_sub_action_fee_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_app_sub_action_fee_code_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_app_sub_action_fee_code_sync(*, client: StolonClient) -> ResponseError | None:
     """Create app subscription action fee code mapping
 
     Args:
@@ -609,7 +538,7 @@ def create_app_sub_action_fee_code_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -629,7 +558,7 @@ def create_app_sub_action_fee_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -639,12 +568,7 @@ def create_app_sub_action_fee_code_sync(
     return None
 
 
-
-
-def create_app_sub_action_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_app_sub_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create app subscription action fee code mapping
 
     Args:
@@ -662,7 +586,7 @@ def create_app_sub_action_fee_code_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -682,17 +606,13 @@ def create_app_sub_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -702,18 +622,13 @@ def create_app_sub_action_fee_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_app_sub_action_fee_code_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_app_sub_action_fee_code_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create app subscription action fee code mapping
 
     Args:
@@ -731,7 +646,7 @@ def create_app_sub_action_fee_code_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -751,7 +666,7 @@ def create_app_sub_action_fee_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -761,13 +676,7 @@ def create_app_sub_action_fee_code_asyncio(
     return None
 
 
-
-
-def get_app_sub_action_fee_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_app_sub_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get app subscription action fee code mapping by UUID
 
     Args:
@@ -805,17 +714,13 @@ def get_app_sub_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -825,19 +730,13 @@ def get_app_sub_action_fee_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_sub_action_fee_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_app_sub_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get app subscription action fee code mapping by UUID
 
     Args:
@@ -875,7 +774,7 @@ def get_app_sub_action_fee_code_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -885,13 +784,7 @@ def get_app_sub_action_fee_code_by_uuid_sync(
     return None
 
 
-
-
-def get_app_sub_action_fee_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_app_sub_action_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get app subscription action fee code mapping by UUID
 
     Args:
@@ -929,17 +822,13 @@ def get_app_sub_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -949,19 +838,13 @@ def get_app_sub_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_sub_action_fee_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_app_sub_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get app subscription action fee code mapping by UUID
 
     Args:
@@ -999,7 +882,7 @@ def get_app_sub_action_fee_code_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1009,12 +892,7 @@ def get_app_sub_action_fee_code_by_uuid_asyncio(
     return None
 
 
-
-
-def get_app_sub_action_fee_codes_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_app_sub_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get app subscription action fee codes
 
     Args:
@@ -1040,7 +918,7 @@ def get_app_sub_action_fee_codes_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1060,17 +938,13 @@ def get_app_sub_action_fee_codes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1080,18 +954,13 @@ def get_app_sub_action_fee_codes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_sub_action_fee_codes_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_app_sub_action_fee_codes_sync(*, client: StolonClient) -> ResponseError | None:
     """Get app subscription action fee codes
 
     Args:
@@ -1117,7 +986,7 @@ def get_app_sub_action_fee_codes_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1137,7 +1006,7 @@ def get_app_sub_action_fee_codes_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1147,12 +1016,7 @@ def get_app_sub_action_fee_codes_sync(
     return None
 
 
-
-
-def get_app_sub_action_fee_codes_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_app_sub_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get app subscription action fee codes
 
     Args:
@@ -1178,7 +1042,7 @@ def get_app_sub_action_fee_codes_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1198,17 +1062,13 @@ def get_app_sub_action_fee_codes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1218,18 +1078,13 @@ def get_app_sub_action_fee_codes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_sub_action_fee_codes_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_app_sub_action_fee_codes_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get app subscription action fee codes
 
     Args:
@@ -1255,7 +1110,7 @@ def get_app_sub_action_fee_codes_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1275,7 +1130,7 @@ def get_app_sub_action_fee_codes_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1283,4 +1138,3 @@ def get_app_sub_action_fee_codes_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

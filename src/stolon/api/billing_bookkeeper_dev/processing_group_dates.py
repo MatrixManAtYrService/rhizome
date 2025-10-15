@@ -6,27 +6,28 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_billing_date
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_cycle_date
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_posting_date
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_settlement_date
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import create_processing_group_dates
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import get_processing_group_dates_by_billing_entity_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import get_processing_group_dates_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import list_processing_group_dates
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import resolve_processing_group_dates_for_child
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
+    advance_billing_date,
+    advance_cycle_date,
+    advance_posting_date,
+    advance_settlement_date,
+    create_processing_group_dates,
+    get_processing_group_dates_by_billing_entity_uuid,
+    get_processing_group_dates_by_uuid,
+    list_processing_group_dates,
+    resolve_processing_group_dates_for_child,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
 def resolve_processing_group_dates_for_child_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -67,17 +68,13 @@ def resolve_processing_group_dates_for_child_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -87,18 +84,14 @@ def resolve_processing_group_dates_for_child_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def resolve_processing_group_dates_for_child_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -139,7 +132,7 @@ def resolve_processing_group_dates_for_child_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -147,14 +140,10 @@ def resolve_processing_group_dates_for_child_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def resolve_processing_group_dates_for_child_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -195,17 +184,13 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -215,18 +200,14 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def resolve_processing_group_dates_for_child_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -267,7 +248,7 @@ def resolve_processing_group_dates_for_child_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -277,12 +258,7 @@ def resolve_processing_group_dates_for_child_asyncio(
     return None
 
 
-
-
-def list_processing_group_dates_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def list_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Lists processing group dates
 
     Args:
@@ -303,7 +279,7 @@ def list_processing_group_dates_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -323,17 +299,13 @@ def list_processing_group_dates_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -343,18 +315,13 @@ def list_processing_group_dates_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def list_processing_group_dates_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def list_processing_group_dates_sync(*, client: StolonClient) -> ResponseError | None:
     """Lists processing group dates
 
     Args:
@@ -375,7 +342,7 @@ def list_processing_group_dates_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -395,7 +362,7 @@ def list_processing_group_dates_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -405,12 +372,7 @@ def list_processing_group_dates_sync(
     return None
 
 
-
-
-def list_processing_group_dates_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def list_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Lists processing group dates
 
     Args:
@@ -431,7 +393,7 @@ def list_processing_group_dates_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -451,17 +413,13 @@ def list_processing_group_dates_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -471,18 +429,13 @@ def list_processing_group_dates_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def list_processing_group_dates_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def list_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Lists processing group dates
 
     Args:
@@ -503,7 +456,7 @@ def list_processing_group_dates_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -523,7 +476,7 @@ def list_processing_group_dates_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -533,13 +486,7 @@ def list_processing_group_dates_asyncio(
     return None
 
 
-
-
-def get_processing_group_dates_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_processing_group_dates_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get processing group dates by UUID
 
     Args:
@@ -577,17 +524,13 @@ def get_processing_group_dates_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -597,19 +540,13 @@ def get_processing_group_dates_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_group_dates_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get processing group dates by UUID
 
     Args:
@@ -647,7 +584,7 @@ def get_processing_group_dates_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -657,13 +594,7 @@ def get_processing_group_dates_by_uuid_sync(
     return None
 
 
-
-
-def get_processing_group_dates_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_processing_group_dates_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get processing group dates by UUID
 
     Args:
@@ -701,17 +632,13 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -721,19 +648,13 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_group_dates_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get processing group dates by UUID
 
     Args:
@@ -771,7 +692,7 @@ def get_processing_group_dates_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -781,13 +702,7 @@ def get_processing_group_dates_by_uuid_asyncio(
     return None
 
 
-
-
-def advance_posting_date_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_posting_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
     Args:
@@ -827,17 +742,13 @@ def advance_posting_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -847,19 +758,13 @@ def advance_posting_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_posting_date_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_posting_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance posting date for a processing group
 
     Args:
@@ -899,7 +804,7 @@ def advance_posting_date_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -909,13 +814,7 @@ def advance_posting_date_sync(
     return None
 
 
-
-
-def advance_posting_date_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_posting_date_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
     Args:
@@ -955,17 +854,13 @@ def advance_posting_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -975,19 +870,13 @@ def advance_posting_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_posting_date_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_posting_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance posting date for a processing group
 
     Args:
@@ -1027,7 +916,7 @@ def advance_posting_date_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1037,12 +926,7 @@ def advance_posting_date_asyncio(
     return None
 
 
-
-
-def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1062,7 +946,7 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1082,17 +966,13 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1102,18 +982,13 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_group_dates_by_billing_entity_uuid_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_processing_group_dates_by_billing_entity_uuid_sync(*, client: StolonClient) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1133,7 +1008,7 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1153,7 +1028,7 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1161,13 +1036,10 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
@@ -1188,7 +1060,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1208,17 +1080,13 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1228,18 +1096,13 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_group_dates_by_billing_entity_uuid_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_processing_group_dates_by_billing_entity_uuid_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
     Args:
@@ -1259,7 +1122,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1279,7 +1142,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1289,12 +1152,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
     return None
 
 
-
-
-def create_processing_group_dates_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_processing_group_dates_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create processing group dates
 
     Args:
@@ -1312,7 +1170,7 @@ def create_processing_group_dates_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1332,17 +1190,13 @@ def create_processing_group_dates_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1352,18 +1206,13 @@ def create_processing_group_dates_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_processing_group_dates_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_processing_group_dates_sync(*, client: StolonClient) -> ResponseError | None:
     """Create processing group dates
 
     Args:
@@ -1381,7 +1230,7 @@ def create_processing_group_dates_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1401,7 +1250,7 @@ def create_processing_group_dates_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1411,12 +1260,7 @@ def create_processing_group_dates_sync(
     return None
 
 
-
-
-def create_processing_group_dates_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_processing_group_dates_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create processing group dates
 
     Args:
@@ -1434,7 +1278,7 @@ def create_processing_group_dates_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1454,17 +1298,13 @@ def create_processing_group_dates_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1474,18 +1314,13 @@ def create_processing_group_dates_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_processing_group_dates_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_processing_group_dates_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create processing group dates
 
     Args:
@@ -1503,7 +1338,7 @@ def create_processing_group_dates_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1523,7 +1358,7 @@ def create_processing_group_dates_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1533,13 +1368,7 @@ def create_processing_group_dates_asyncio(
     return None
 
 
-
-
-def advance_billing_date_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_billing_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
     Args:
@@ -1579,17 +1408,13 @@ def advance_billing_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1599,19 +1424,13 @@ def advance_billing_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_billing_date_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_billing_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance billing date for a processing group
 
     Args:
@@ -1651,7 +1470,7 @@ def advance_billing_date_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1661,13 +1480,7 @@ def advance_billing_date_sync(
     return None
 
 
-
-
-def advance_billing_date_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_billing_date_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
     Args:
@@ -1707,17 +1520,13 @@ def advance_billing_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1727,19 +1536,13 @@ def advance_billing_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_billing_date_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_billing_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance billing date for a processing group
 
     Args:
@@ -1779,7 +1582,7 @@ def advance_billing_date_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1789,13 +1592,7 @@ def advance_billing_date_asyncio(
     return None
 
 
-
-
-def advance_settlement_date_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_settlement_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
     Args:
@@ -1835,17 +1632,13 @@ def advance_settlement_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1855,19 +1648,13 @@ def advance_settlement_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_settlement_date_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_settlement_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance settlement date for a processing group
 
     Args:
@@ -1907,7 +1694,7 @@ def advance_settlement_date_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1915,14 +1702,10 @@ def advance_settlement_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def advance_settlement_date_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
@@ -1963,17 +1746,13 @@ def advance_settlement_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1983,19 +1762,13 @@ def advance_settlement_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_settlement_date_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_settlement_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance settlement date for a processing group
 
     Args:
@@ -2035,7 +1808,7 @@ def advance_settlement_date_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2045,13 +1818,7 @@ def advance_settlement_date_asyncio(
     return None
 
 
-
-
-def advance_cycle_date_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_cycle_date_sync_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
     Args:
@@ -2091,17 +1858,13 @@ def advance_cycle_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2111,19 +1874,13 @@ def advance_cycle_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_cycle_date_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_cycle_date_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance cycle date for a processing group
 
     Args:
@@ -2163,7 +1920,7 @@ def advance_cycle_date_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2173,13 +1930,7 @@ def advance_cycle_date_sync(
     return None
 
 
-
-
-def advance_cycle_date_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> Response[ResponseError]:
+def advance_cycle_date_asyncio_detailed(*, client: StolonClient, billing_entity_uuid: str) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
     Args:
@@ -2219,17 +1970,13 @@ def advance_cycle_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2239,19 +1986,13 @@ def advance_cycle_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def advance_cycle_date_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def advance_cycle_date_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Advance cycle date for a processing group
 
     Args:
@@ -2291,7 +2032,7 @@ def advance_cycle_date_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2299,4 +2040,3 @@ def advance_cycle_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

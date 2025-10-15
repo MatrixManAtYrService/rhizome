@@ -6,18 +6,20 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_removal_controller import update_merchant_with_no_terms_for_removal
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+from typing import Any
+
+from stolon.client import StolonClient
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.merchant_removal_controller import (
+    update_merchant_with_no_terms_for_removal,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def update_merchant_with_no_terms_for_removal_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_billing_entity_uuid: str
+    *, client: StolonClient, merchant_billing_entity_uuid: str
 ) -> Response[Any]:
     """Args:
         merchant_billing_entity_uuid (str):
@@ -40,7 +42,9 @@ def update_merchant_with_no_terms_for_removal_sync_detailed(
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = update_merchant_with_no_terms_for_removal._get_kwargs(merchant_billing_entity_uuid=merchant_billing_entity_uuid)
+    kwargs = update_merchant_with_no_terms_for_removal._get_kwargs(
+        merchant_billing_entity_uuid=merchant_billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -54,38 +58,27 @@ def update_merchant_with_no_terms_for_removal_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def update_merchant_with_no_terms_for_removal_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_billing_entity_uuid: str
+    *, client: StolonClient, merchant_billing_entity_uuid: str
 ) -> Response[Any]:
     """Args:
         merchant_billing_entity_uuid (str):
@@ -108,7 +101,9 @@ def update_merchant_with_no_terms_for_removal_asyncio_detailed(
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = update_merchant_with_no_terms_for_removal._get_kwargs(merchant_billing_entity_uuid=merchant_billing_entity_uuid)
+    kwargs = update_merchant_with_no_terms_for_removal._get_kwargs(
+        merchant_billing_entity_uuid=merchant_billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -122,28 +117,20 @@ def update_merchant_with_no_terms_for_removal_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-

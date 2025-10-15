@@ -6,23 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_event_dev.open_api_definition_client.api.flight_check_job_controller import check_job_execution_connection
-from stolon.generated.billing_event_dev.open_api_definition_client.api.flight_check_job_controller import job_exe_results
-from stolon.generated.billing_event_dev.open_api_definition_client.api.flight_check_job_controller import kill_job_1
-from stolon.generated.billing_event_dev.open_api_definition_client.api.flight_check_job_controller import query_job_1
+from stolon.generated.billing_event_dev.open_api_definition_client.api.flight_check_job_controller import (
+    check_job_execution_connection,
+    job_exe_results,
+    kill_job_1,
+    query_job_1,
+)
 from stolon.generated.billing_event_dev.open_api_definition_client.models.check_response import CheckResponse
 from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def job_exe_results_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[str]:
+def job_exe_results_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -58,39 +57,26 @@ def job_exe_results_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def job_exe_results_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> str | None:
+def job_exe_results_sync(*, client: StolonClient, request_uuid: str) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -115,7 +101,7 @@ def job_exe_results_sync(
     kwargs = job_exe_results._get_kwargs(request_uuid=request_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -129,13 +115,7 @@ def job_exe_results_sync(
     return None
 
 
-
-
-def job_exe_results_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[str]:
+def job_exe_results_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -171,39 +151,26 @@ def job_exe_results_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def job_exe_results_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> str | None:
+def job_exe_results_asyncio(*, client: StolonClient, request_uuid: str) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -228,7 +195,7 @@ def job_exe_results_asyncio(
     kwargs = job_exe_results._get_kwargs(request_uuid=request_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -242,13 +209,7 @@ def job_exe_results_asyncio(
     return None
 
 
-
-
-def query_job_1_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def query_job_1_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -284,17 +245,13 @@ def query_job_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and CheckResponse:
@@ -304,19 +261,13 @@ def query_job_1_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def query_job_1_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def query_job_1_sync(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -352,7 +303,7 @@ def query_job_1_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -362,13 +313,7 @@ def query_job_1_sync(
     return None
 
 
-
-
-def query_job_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def query_job_1_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -404,17 +349,13 @@ def query_job_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and CheckResponse:
@@ -424,19 +365,13 @@ def query_job_1_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def query_job_1_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def query_job_1_asyncio(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -472,7 +407,7 @@ def query_job_1_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -482,12 +417,7 @@ def query_job_1_asyncio(
     return None
 
 
-
-
-def check_job_execution_connection_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[CheckResponse]:
+def check_job_execution_connection_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -500,7 +430,7 @@ def check_job_execution_connection_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[CheckResponse]
@@ -520,17 +450,13 @@ def check_job_execution_connection_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and CheckResponse:
@@ -540,18 +466,13 @@ def check_job_execution_connection_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def check_job_execution_connection_sync(
-    *,
-    client: StolonClient
-) -> CheckResponse | None:
+def check_job_execution_connection_sync(*, client: StolonClient) -> CheckResponse | None:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -564,7 +485,7 @@ def check_job_execution_connection_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         CheckResponse | None
@@ -584,7 +505,7 @@ def check_job_execution_connection_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -594,12 +515,7 @@ def check_job_execution_connection_sync(
     return None
 
 
-
-
-def check_job_execution_connection_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[CheckResponse]:
+def check_job_execution_connection_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -612,7 +528,7 @@ def check_job_execution_connection_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[CheckResponse]
@@ -632,17 +548,13 @@ def check_job_execution_connection_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and CheckResponse:
@@ -652,18 +564,13 @@ def check_job_execution_connection_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def check_job_execution_connection_asyncio(
-    *,
-    client: StolonClient
-) -> CheckResponse | None:
+def check_job_execution_connection_asyncio(*, client: StolonClient) -> CheckResponse | None:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -676,7 +583,7 @@ def check_job_execution_connection_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         CheckResponse | None
@@ -696,7 +603,7 @@ def check_job_execution_connection_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -706,13 +613,7 @@ def check_job_execution_connection_asyncio(
     return None
 
 
-
-
-def kill_job_1_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def kill_job_1_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -748,17 +649,13 @@ def kill_job_1_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and CheckResponse:
@@ -768,19 +665,13 @@ def kill_job_1_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def kill_job_1_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def kill_job_1_sync(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -816,7 +707,7 @@ def kill_job_1_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -826,13 +717,7 @@ def kill_job_1_sync(
     return None
 
 
-
-
-def kill_job_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def kill_job_1_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -868,17 +753,13 @@ def kill_job_1_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and CheckResponse:
@@ -888,19 +769,13 @@ def kill_job_1_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def kill_job_1_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def kill_job_1_asyncio(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -936,7 +811,7 @@ def kill_job_1_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -944,4 +819,3 @@ def kill_job_1_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

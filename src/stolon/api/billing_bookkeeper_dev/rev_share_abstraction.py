@@ -6,22 +6,22 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import create_update_rev_share_abstractions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import get_rev_share_abstraction_details
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import get_rev_share_abstractions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import preview_rev_share_abstraction_for_create_or_update
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import (
+    create_update_rev_share_abstractions,
+    get_rev_share_abstraction_details,
+    get_rev_share_abstractions,
+    preview_rev_share_abstraction_for_create_or_update,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_rev_share_abstraction_details_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_rev_share_abstraction_details_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
     Args:
@@ -43,7 +43,7 @@ def get_rev_share_abstraction_details_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -63,17 +63,13 @@ def get_rev_share_abstraction_details_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -83,18 +79,13 @@ def get_rev_share_abstraction_details_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rev_share_abstraction_details_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_rev_share_abstraction_details_sync(*, client: StolonClient) -> ResponseError | None:
     """Get details of a rev share abstractions
 
     Args:
@@ -116,7 +107,7 @@ def get_rev_share_abstraction_details_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -136,7 +127,7 @@ def get_rev_share_abstraction_details_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -146,12 +137,7 @@ def get_rev_share_abstraction_details_sync(
     return None
 
 
-
-
-def get_rev_share_abstraction_details_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_rev_share_abstraction_details_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
     Args:
@@ -173,7 +159,7 @@ def get_rev_share_abstraction_details_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -193,17 +179,13 @@ def get_rev_share_abstraction_details_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -213,18 +195,13 @@ def get_rev_share_abstraction_details_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rev_share_abstraction_details_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_rev_share_abstraction_details_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get details of a rev share abstractions
 
     Args:
@@ -246,7 +223,7 @@ def get_rev_share_abstraction_details_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -266,7 +243,7 @@ def get_rev_share_abstraction_details_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -274,13 +251,10 @@ def get_rev_share_abstraction_details_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -299,7 +273,7 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -319,17 +293,13 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -339,18 +309,13 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def preview_rev_share_abstraction_for_create_or_update_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def preview_rev_share_abstraction_for_create_or_update_sync(*, client: StolonClient) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -368,7 +333,7 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -388,7 +353,7 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -396,13 +361,10 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -421,7 +383,7 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -441,17 +403,13 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -461,18 +419,13 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def preview_rev_share_abstraction_for_create_or_update_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def preview_rev_share_abstraction_for_create_or_update_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
     Args:
@@ -490,7 +443,7 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -510,7 +463,7 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -520,12 +473,7 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
     return None
 
 
-
-
-def create_update_rev_share_abstractions_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_update_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -543,7 +491,7 @@ def create_update_rev_share_abstractions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -563,17 +511,13 @@ def create_update_rev_share_abstractions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -583,18 +527,13 @@ def create_update_rev_share_abstractions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_update_rev_share_abstractions_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_update_rev_share_abstractions_sync(*, client: StolonClient) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -612,7 +551,7 @@ def create_update_rev_share_abstractions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -632,7 +571,7 @@ def create_update_rev_share_abstractions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -642,12 +581,7 @@ def create_update_rev_share_abstractions_sync(
     return None
 
 
-
-
-def create_update_rev_share_abstractions_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_update_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -665,7 +599,7 @@ def create_update_rev_share_abstractions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -685,17 +619,13 @@ def create_update_rev_share_abstractions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -705,18 +635,13 @@ def create_update_rev_share_abstractions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_update_rev_share_abstractions_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_update_rev_share_abstractions_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
     Args:
@@ -734,7 +659,7 @@ def create_update_rev_share_abstractions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -754,7 +679,7 @@ def create_update_rev_share_abstractions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -764,12 +689,7 @@ def create_update_rev_share_abstractions_asyncio(
     return None
 
 
-
-
-def get_rev_share_abstractions_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_rev_share_abstractions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -791,7 +711,7 @@ def get_rev_share_abstractions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -811,17 +731,13 @@ def get_rev_share_abstractions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -831,18 +747,13 @@ def get_rev_share_abstractions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rev_share_abstractions_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_rev_share_abstractions_sync(*, client: StolonClient) -> ResponseError | None:
     """Get rev share abstractions
 
     Args:
@@ -864,7 +775,7 @@ def get_rev_share_abstractions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -884,7 +795,7 @@ def get_rev_share_abstractions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -894,12 +805,7 @@ def get_rev_share_abstractions_sync(
     return None
 
 
-
-
-def get_rev_share_abstractions_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_rev_share_abstractions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get rev share abstractions
 
     Args:
@@ -921,7 +827,7 @@ def get_rev_share_abstractions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -941,17 +847,13 @@ def get_rev_share_abstractions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -961,18 +863,13 @@ def get_rev_share_abstractions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_rev_share_abstractions_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_rev_share_abstractions_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get rev share abstractions
 
     Args:
@@ -994,7 +891,7 @@ def get_rev_share_abstractions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1014,7 +911,7 @@ def get_rev_share_abstractions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1022,4 +919,3 @@ def get_rev_share_abstractions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

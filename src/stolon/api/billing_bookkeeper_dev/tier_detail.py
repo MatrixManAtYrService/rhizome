@@ -6,24 +6,23 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import create_tier_detail
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import delete_tier_detail_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import get_tier_detail_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import get_tier_details
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import (
+    create_tier_detail,
+    delete_tier_detail_by_uuid,
+    get_tier_detail_by_uuid,
+    get_tier_details,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tier_detail import ApiTierDetail
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def delete_tier_detail_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete tiered detail
 
     Args:
@@ -61,39 +60,26 @@ def delete_tier_detail_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_tier_detail_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete tiered detail
 
     Args:
@@ -120,7 +106,7 @@ def delete_tier_detail_by_uuid_sync(
     kwargs = delete_tier_detail_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -134,13 +120,7 @@ def delete_tier_detail_by_uuid_sync(
     return None
 
 
-
-
-def delete_tier_detail_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete tiered detail
 
     Args:
@@ -178,39 +158,26 @@ def delete_tier_detail_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_tier_detail_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete tiered detail
 
     Args:
@@ -237,7 +204,7 @@ def delete_tier_detail_by_uuid_asyncio(
     kwargs = delete_tier_detail_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -251,12 +218,7 @@ def delete_tier_detail_by_uuid_asyncio(
     return None
 
 
-
-
-def create_tier_detail_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTierDetail]:
+def create_tier_detail_sync_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
     """Create tier detail
 
     Args:
@@ -274,7 +236,7 @@ def create_tier_detail_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTierDetail]
@@ -294,17 +256,13 @@ def create_tier_detail_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
@@ -314,18 +272,13 @@ def create_tier_detail_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_tier_detail_sync(
-    *,
-    client: StolonClient
-) -> ApiTierDetail | None:
+def create_tier_detail_sync(*, client: StolonClient) -> ApiTierDetail | None:
     """Create tier detail
 
     Args:
@@ -343,7 +296,7 @@ def create_tier_detail_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTierDetail | None
@@ -363,7 +316,7 @@ def create_tier_detail_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -373,12 +326,7 @@ def create_tier_detail_sync(
     return None
 
 
-
-
-def create_tier_detail_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTierDetail]:
+def create_tier_detail_asyncio_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
     """Create tier detail
 
     Args:
@@ -396,7 +344,7 @@ def create_tier_detail_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTierDetail]
@@ -416,17 +364,13 @@ def create_tier_detail_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
@@ -436,18 +380,13 @@ def create_tier_detail_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_tier_detail_asyncio(
-    *,
-    client: StolonClient
-) -> ApiTierDetail | None:
+def create_tier_detail_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
     """Create tier detail
 
     Args:
@@ -465,7 +404,7 @@ def create_tier_detail_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTierDetail | None
@@ -485,7 +424,7 @@ def create_tier_detail_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -495,12 +434,7 @@ def create_tier_detail_asyncio(
     return None
 
 
-
-
-def get_tier_details_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTierDetail]:
+def get_tier_details_sync_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
     """Get tier details
 
     Args:
@@ -518,7 +452,7 @@ def get_tier_details_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTierDetail]
@@ -538,17 +472,13 @@ def get_tier_details_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
@@ -558,18 +488,13 @@ def get_tier_details_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tier_details_sync(
-    *,
-    client: StolonClient
-) -> ApiTierDetail | None:
+def get_tier_details_sync(*, client: StolonClient) -> ApiTierDetail | None:
     """Get tier details
 
     Args:
@@ -587,7 +512,7 @@ def get_tier_details_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTierDetail | None
@@ -607,7 +532,7 @@ def get_tier_details_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -617,12 +542,7 @@ def get_tier_details_sync(
     return None
 
 
-
-
-def get_tier_details_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTierDetail]:
+def get_tier_details_asyncio_detailed(*, client: StolonClient) -> Response[ApiTierDetail]:
     """Get tier details
 
     Args:
@@ -640,7 +560,7 @@ def get_tier_details_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTierDetail]
@@ -660,17 +580,13 @@ def get_tier_details_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
@@ -680,18 +596,13 @@ def get_tier_details_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tier_details_asyncio(
-    *,
-    client: StolonClient
-) -> ApiTierDetail | None:
+def get_tier_details_asyncio(*, client: StolonClient) -> ApiTierDetail | None:
     """Get tier details
 
     Args:
@@ -709,7 +620,7 @@ def get_tier_details_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTierDetail | None
@@ -729,7 +640,7 @@ def get_tier_details_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -739,13 +650,7 @@ def get_tier_details_asyncio(
     return None
 
 
-
-
-def get_tier_detail_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTierDetail]:
+def get_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTierDetail]:
     """Get tier detail by UUID
 
     Args:
@@ -783,17 +688,13 @@ def get_tier_detail_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
@@ -803,19 +704,13 @@ def get_tier_detail_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tier_detail_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTierDetail | None:
+def get_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTierDetail | None:
     """Get tier detail by UUID
 
     Args:
@@ -853,7 +748,7 @@ def get_tier_detail_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -863,13 +758,7 @@ def get_tier_detail_by_uuid_sync(
     return None
 
 
-
-
-def get_tier_detail_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTierDetail]:
+def get_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTierDetail]:
     """Get tier detail by UUID
 
     Args:
@@ -907,17 +796,13 @@ def get_tier_detail_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
@@ -927,19 +812,13 @@ def get_tier_detail_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tier_detail_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTierDetail | None:
+def get_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTierDetail | None:
     """Get tier detail by UUID
 
     Args:
@@ -977,7 +856,7 @@ def get_tier_detail_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -985,4 +864,3 @@ def get_tier_detail_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

@@ -6,25 +6,28 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_reseller_settlement_action_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_reseller_settlement_actions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_settlement_action_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_settlement_actions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_settlement_actions_by_settlement_uuids
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import perform_settlement_action
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import perform_settlement_actions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action import ApiSettlementAction
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
+import contextlib
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import (
+    get_reseller_settlement_action_by_uuid,
+    get_reseller_settlement_actions,
+    get_settlement_action_by_uuid,
+    get_settlement_actions,
+    get_settlement_actions_by_settlement_uuids,
+    perform_settlement_action,
+    perform_settlement_actions,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action import (
+    ApiSettlementAction,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def get_reseller_settlement_actions_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -65,38 +68,27 @@ def get_reseller_settlement_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_settlement_actions_sync(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -126,7 +118,7 @@ def get_reseller_settlement_actions_sync(
     kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -138,14 +130,10 @@ def get_reseller_settlement_actions_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_reseller_settlement_actions_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -186,38 +174,27 @@ def get_reseller_settlement_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_settlement_actions_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -247,7 +224,7 @@ def get_reseller_settlement_actions_asyncio(
     kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -261,13 +238,7 @@ def get_reseller_settlement_actions_asyncio(
     return None
 
 
-
-
-def get_settlement_action_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiSettlementAction]:
+def get_settlement_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
     Args:
@@ -305,17 +276,13 @@ def get_settlement_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -325,19 +292,13 @@ def get_settlement_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_settlement_action_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiSettlementAction | None:
+def get_settlement_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
     Args:
@@ -375,7 +336,7 @@ def get_settlement_action_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -385,13 +346,7 @@ def get_settlement_action_by_uuid_sync(
     return None
 
 
-
-
-def get_settlement_action_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiSettlementAction]:
+def get_settlement_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
     Args:
@@ -429,17 +384,13 @@ def get_settlement_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -449,19 +400,13 @@ def get_settlement_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_settlement_action_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiSettlementAction | None:
+def get_settlement_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
     Args:
@@ -499,7 +444,7 @@ def get_settlement_action_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -507,13 +452,10 @@ def get_settlement_action_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_settlement_actions_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -532,7 +474,7 @@ def get_settlement_actions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
@@ -552,38 +494,26 @@ def get_settlement_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_settlement_actions_sync(
-    *,
-    client: StolonClient
-) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
+def get_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
     Args:
@@ -601,7 +531,7 @@ def get_settlement_actions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
@@ -610,7 +540,7 @@ def get_settlement_actions_sync(
     kwargs = get_settlement_actions._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -622,13 +552,10 @@ def get_settlement_actions_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_settlement_actions_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -647,7 +574,7 @@ def get_settlement_actions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
@@ -667,38 +594,26 @@ def get_settlement_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_settlement_actions_asyncio(
-    *,
-    client: StolonClient
-) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
+def get_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
     Args:
@@ -716,7 +631,7 @@ def get_settlement_actions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
@@ -725,7 +640,7 @@ def get_settlement_actions_asyncio(
     kwargs = get_settlement_actions._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -739,12 +654,7 @@ def get_settlement_actions_asyncio(
     return None
 
 
-
-
-def perform_settlement_actions_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiSettlementAction]:
+def perform_settlement_actions_sync_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -763,7 +673,7 @@ def perform_settlement_actions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction]
@@ -783,17 +693,13 @@ def perform_settlement_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -803,18 +709,13 @@ def perform_settlement_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def perform_settlement_actions_sync(
-    *,
-    client: StolonClient
-) -> ApiSettlementAction | None:
+def perform_settlement_actions_sync(*, client: StolonClient) -> ApiSettlementAction | None:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -833,7 +734,7 @@ def perform_settlement_actions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | None
@@ -853,7 +754,7 @@ def perform_settlement_actions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -863,12 +764,7 @@ def perform_settlement_actions_sync(
     return None
 
 
-
-
-def perform_settlement_actions_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiSettlementAction]:
+def perform_settlement_actions_asyncio_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -887,7 +783,7 @@ def perform_settlement_actions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction]
@@ -907,17 +803,13 @@ def perform_settlement_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -927,18 +819,13 @@ def perform_settlement_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def perform_settlement_actions_asyncio(
-    *,
-    client: StolonClient
-) -> ApiSettlementAction | None:
+def perform_settlement_actions_asyncio(*, client: StolonClient) -> ApiSettlementAction | None:
     """Perform settlement actions for a collection of settlement requests
 
     Args:
@@ -957,7 +844,7 @@ def perform_settlement_actions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | None
@@ -977,7 +864,7 @@ def perform_settlement_actions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -985,15 +872,10 @@ def perform_settlement_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_reseller_settlement_action_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
+    *, client: StolonClient, r_id: str, uuid: str
 ) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
@@ -1035,17 +917,13 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -1055,19 +933,14 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_settlement_action_by_uuid_sync(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
+    *, client: StolonClient, r_id: str, uuid: str
 ) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
@@ -1109,7 +982,7 @@ def get_reseller_settlement_action_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1117,15 +990,10 @@ def get_reseller_settlement_action_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_reseller_settlement_action_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
+    *, client: StolonClient, r_id: str, uuid: str
 ) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
@@ -1167,17 +1035,13 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -1187,19 +1051,14 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_settlement_action_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
+    *, client: StolonClient, r_id: str, uuid: str
 ) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
@@ -1241,7 +1100,7 @@ def get_reseller_settlement_action_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1249,13 +1108,10 @@ def get_reseller_settlement_action_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_settlement_actions_by_settlement_uuids_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions by settlement UUIDs
 
@@ -1274,7 +1130,7 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
@@ -1294,37 +1150,27 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_settlement_actions_by_settlement_uuids_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions by settlement UUIDs
 
@@ -1343,7 +1189,7 @@ def get_settlement_actions_by_settlement_uuids_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
@@ -1352,7 +1198,7 @@ def get_settlement_actions_by_settlement_uuids_sync(
     kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1366,11 +1212,8 @@ def get_settlement_actions_by_settlement_uuids_sync(
     return None
 
 
-
-
 def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions by settlement UUIDs
 
@@ -1389,7 +1232,7 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
@@ -1409,37 +1252,27 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_settlement_actions_by_settlement_uuids_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions by settlement UUIDs
 
@@ -1458,7 +1291,7 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
@@ -1467,7 +1300,7 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
     kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1481,12 +1314,7 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
     return None
 
 
-
-
-def perform_settlement_action_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiSettlementAction]:
+def perform_settlement_action_sync_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
     """Perform a settlement action
 
     Args:
@@ -1505,7 +1333,7 @@ def perform_settlement_action_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction]
@@ -1525,17 +1353,13 @@ def perform_settlement_action_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -1545,18 +1369,13 @@ def perform_settlement_action_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def perform_settlement_action_sync(
-    *,
-    client: StolonClient
-) -> ApiSettlementAction | None:
+def perform_settlement_action_sync(*, client: StolonClient) -> ApiSettlementAction | None:
     """Perform a settlement action
 
     Args:
@@ -1575,7 +1394,7 @@ def perform_settlement_action_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | None
@@ -1595,7 +1414,7 @@ def perform_settlement_action_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1605,12 +1424,7 @@ def perform_settlement_action_sync(
     return None
 
 
-
-
-def perform_settlement_action_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiSettlementAction]:
+def perform_settlement_action_asyncio_detailed(*, client: StolonClient) -> Response[ApiSettlementAction]:
     """Perform a settlement action
 
     Args:
@@ -1629,7 +1443,7 @@ def perform_settlement_action_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiSettlementAction]
@@ -1649,17 +1463,13 @@ def perform_settlement_action_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
@@ -1669,18 +1479,13 @@ def perform_settlement_action_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def perform_settlement_action_asyncio(
-    *,
-    client: StolonClient
-) -> ApiSettlementAction | None:
+def perform_settlement_action_asyncio(*, client: StolonClient) -> ApiSettlementAction | None:
     """Perform a settlement action
 
     Args:
@@ -1699,7 +1504,7 @@ def perform_settlement_action_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiSettlementAction | None
@@ -1719,7 +1524,7 @@ def perform_settlement_action_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1727,4 +1532,3 @@ def perform_settlement_action_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

@@ -6,19 +6,19 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_metadata import get_invoice_fee_code_metadata
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_metadata import (
+    get_invoice_fee_code_metadata,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_invoice_fee_code_metadata_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError | list[str]]:
+def get_invoice_fee_code_metadata_sync_detailed(*, client: StolonClient) -> Response[ResponseError | list[str]]:
     """returns a fee code attributes for invoice
 
     Args:
@@ -37,7 +37,7 @@ def get_invoice_fee_code_metadata_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list[str]]
@@ -57,38 +57,26 @@ def get_invoice_fee_code_metadata_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_fee_code_metadata_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | list[str] | None:
+def get_invoice_fee_code_metadata_sync(*, client: StolonClient) -> ResponseError | list[str] | None:
     """returns a fee code attributes for invoice
 
     Args:
@@ -107,7 +95,7 @@ def get_invoice_fee_code_metadata_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list[str] | None
@@ -116,7 +104,7 @@ def get_invoice_fee_code_metadata_sync(
     kwargs = get_invoice_fee_code_metadata._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -130,12 +118,7 @@ def get_invoice_fee_code_metadata_sync(
     return None
 
 
-
-
-def get_invoice_fee_code_metadata_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError | list[str]]:
+def get_invoice_fee_code_metadata_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError | list[str]]:
     """returns a fee code attributes for invoice
 
     Args:
@@ -154,7 +137,7 @@ def get_invoice_fee_code_metadata_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list[str]]
@@ -174,38 +157,26 @@ def get_invoice_fee_code_metadata_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_fee_code_metadata_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | list[str] | None:
+def get_invoice_fee_code_metadata_asyncio(*, client: StolonClient) -> ResponseError | list[str] | None:
     """returns a fee code attributes for invoice
 
     Args:
@@ -224,7 +195,7 @@ def get_invoice_fee_code_metadata_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list[str] | None
@@ -233,7 +204,7 @@ def get_invoice_fee_code_metadata_asyncio(
     kwargs = get_invoice_fee_code_metadata._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -245,4 +216,3 @@ def get_invoice_fee_code_metadata_asyncio(
 
     # No response model, return None
     return None
-

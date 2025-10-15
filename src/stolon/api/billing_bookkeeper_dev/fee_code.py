@@ -6,24 +6,24 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import create_fee_code
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import delete_fee_code_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import get_fee_code_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import get_fee_codes_by_category_and_code_contains
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import update_fee_code
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code import (
+    create_fee_code,
+    delete_fee_code_by_uuid,
+    get_fee_code_by_uuid,
+    get_fee_codes_by_category_and_code_contains,
+    update_fee_code,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code import ApiFeeCode
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_fee_codes_by_category_and_code_contains_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiFeeCode]:
+def get_fee_codes_by_category_and_code_contains_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -44,7 +44,7 @@ def get_fee_codes_by_category_and_code_contains_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCode]
@@ -64,38 +64,26 @@ def get_fee_codes_by_category_and_code_contains_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_codes_by_category_and_code_contains_sync(
-    *,
-    client: StolonClient
-) -> ApiFeeCode | None:
+def get_fee_codes_by_category_and_code_contains_sync(*, client: StolonClient) -> ApiFeeCode | None:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -116,7 +104,7 @@ def get_fee_codes_by_category_and_code_contains_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCode | None
@@ -136,7 +124,7 @@ def get_fee_codes_by_category_and_code_contains_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -146,12 +134,7 @@ def get_fee_codes_by_category_and_code_contains_sync(
     return None
 
 
-
-
-def get_fee_codes_by_category_and_code_contains_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiFeeCode]:
+def get_fee_codes_by_category_and_code_contains_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -172,7 +155,7 @@ def get_fee_codes_by_category_and_code_contains_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCode]
@@ -192,38 +175,26 @@ def get_fee_codes_by_category_and_code_contains_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_codes_by_category_and_code_contains_asyncio(
-    *,
-    client: StolonClient
-) -> ApiFeeCode | None:
+def get_fee_codes_by_category_and_code_contains_asyncio(*, client: StolonClient) -> ApiFeeCode | None:
     """Get fee codes by fee category and fee code values
 
     Args:
@@ -244,7 +215,7 @@ def get_fee_codes_by_category_and_code_contains_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCode | None
@@ -264,7 +235,7 @@ def get_fee_codes_by_category_and_code_contains_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -274,13 +245,7 @@ def get_fee_codes_by_category_and_code_contains_asyncio(
     return None
 
 
-
-
-def get_fee_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeCode]:
+def get_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCode]:
     """Get fee code by UUID
 
     Args:
@@ -318,39 +283,26 @@ def get_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeCode | None:
+def get_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCode | None:
     """Get fee code by UUID
 
     Args:
@@ -388,7 +340,7 @@ def get_fee_code_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -398,13 +350,7 @@ def get_fee_code_by_uuid_sync(
     return None
 
 
-
-
-def get_fee_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeCode]:
+def get_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCode]:
     """Get fee code by UUID
 
     Args:
@@ -442,39 +388,26 @@ def get_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeCode | None:
+def get_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCode | None:
     """Get fee code by UUID
 
     Args:
@@ -512,7 +445,7 @@ def get_fee_code_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -522,12 +455,7 @@ def get_fee_code_by_uuid_asyncio(
     return None
 
 
-
-
-def create_fee_code_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiFeeCode]:
+def create_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
     """Create fee code
 
     Args:
@@ -545,7 +473,7 @@ def create_fee_code_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCode]
@@ -565,38 +493,26 @@ def create_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_code_sync(
-    *,
-    client: StolonClient
-) -> ApiFeeCode | None:
+def create_fee_code_sync(*, client: StolonClient) -> ApiFeeCode | None:
     """Create fee code
 
     Args:
@@ -614,7 +530,7 @@ def create_fee_code_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCode | None
@@ -634,7 +550,7 @@ def create_fee_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -644,12 +560,7 @@ def create_fee_code_sync(
     return None
 
 
-
-
-def create_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiFeeCode]:
+def create_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeCode]:
     """Create fee code
 
     Args:
@@ -667,7 +578,7 @@ def create_fee_code_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeCode]
@@ -687,38 +598,26 @@ def create_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_code_asyncio(
-    *,
-    client: StolonClient
-) -> ApiFeeCode | None:
+def create_fee_code_asyncio(*, client: StolonClient) -> ApiFeeCode | None:
     """Create fee code
 
     Args:
@@ -736,7 +635,7 @@ def create_fee_code_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeCode | None
@@ -756,7 +655,7 @@ def create_fee_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -766,13 +665,7 @@ def create_fee_code_asyncio(
     return None
 
 
-
-
-def update_fee_code_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeCode]:
+def update_fee_code_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCode]:
     """Update fee code
 
     Args:
@@ -811,39 +704,26 @@ def update_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_fee_code_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeCode | None:
+def update_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiFeeCode | None:
     """Update fee code
 
     Args:
@@ -882,7 +762,7 @@ def update_fee_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -892,13 +772,7 @@ def update_fee_code_sync(
     return None
 
 
-
-
-def update_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeCode]:
+def update_fee_code_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeCode]:
     """Update fee code
 
     Args:
@@ -937,39 +811,26 @@ def update_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiFeeCode:
-        parsed = ApiFeeCode.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = ApiFeeCode.from_dict(body_json) if body_json and proxy_response.status_code == 200 and ApiFeeCode else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_fee_code_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeCode | None:
+def update_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCode | None:
     """Update fee code
 
     Args:
@@ -1008,7 +869,7 @@ def update_fee_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1018,13 +879,7 @@ def update_fee_code_asyncio(
     return None
 
 
-
-
-def delete_fee_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete fee code
 
     Args:
@@ -1062,39 +917,26 @@ def delete_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_fee_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete fee code
 
     Args:
@@ -1121,7 +963,7 @@ def delete_fee_code_by_uuid_sync(
     kwargs = delete_fee_code_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1135,13 +977,7 @@ def delete_fee_code_by_uuid_sync(
     return None
 
 
-
-
-def delete_fee_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_fee_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete fee code
 
     Args:
@@ -1179,39 +1015,26 @@ def delete_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_fee_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete fee code
 
     Args:
@@ -1238,7 +1061,7 @@ def delete_fee_code_by_uuid_asyncio(
     kwargs = delete_fee_code_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1250,4 +1073,3 @@ def delete_fee_code_by_uuid_asyncio(
 
     # No response model, return None
     return None
-

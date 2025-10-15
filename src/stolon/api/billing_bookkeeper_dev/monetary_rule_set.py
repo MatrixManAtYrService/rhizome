@@ -6,32 +6,37 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import create_monetary_rule_set
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import create_monetary_rule_set_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import delete_monetary_rule_set
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import delete_monetary_rule_set_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_rule_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_rules
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_with_rules
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_sets
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import set_monetary_rule_set_status
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import update_monetary_rule_set
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import update_monetary_rule_set_rule
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set import ApiMonetaryRuleSet
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set_rule import ApiMonetaryRuleSetRule
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import (
+    create_monetary_rule_set,
+    create_monetary_rule_set_rule,
+    delete_monetary_rule_set,
+    delete_monetary_rule_set_rule,
+    get_monetary_rule_set_by_uuid,
+    get_monetary_rule_set_rule_by_uuid,
+    get_monetary_rule_set_rules,
+    get_monetary_rule_set_with_rules,
+    get_monetary_rule_sets,
+    set_monetary_rule_set_status,
+    update_monetary_rule_set,
+    update_monetary_rule_set_rule,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set import (
+    ApiMonetaryRuleSet,
+)
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set_rule import (
+    ApiMonetaryRuleSetRule,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
 def get_monetary_rule_set_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set by UUID
 
@@ -70,39 +75,26 @@ def get_monetary_rule_set_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_monetary_rule_set_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiMonetaryRuleSet | ResponseError | None:
+def get_monetary_rule_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set by UUID
 
     Args:
@@ -129,7 +121,7 @@ def get_monetary_rule_set_by_uuid_sync(
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -141,14 +133,10 @@ def get_monetary_rule_set_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_monetary_rule_set_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set by UUID
 
@@ -187,38 +175,27 @@ def get_monetary_rule_set_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_monetary_rule_set_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set by UUID
 
@@ -246,7 +223,7 @@ def get_monetary_rule_set_by_uuid_asyncio(
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -260,12 +237,7 @@ def get_monetary_rule_set_by_uuid_asyncio(
     return None
 
 
-
-
-def get_monetary_rule_sets_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_monetary_rule_sets_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get monetary rule sets
 
     Args:
@@ -286,7 +258,7 @@ def get_monetary_rule_sets_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -306,17 +278,13 @@ def get_monetary_rule_sets_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -326,18 +294,13 @@ def get_monetary_rule_sets_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_monetary_rule_sets_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_monetary_rule_sets_sync(*, client: StolonClient) -> ResponseError | None:
     """Get monetary rule sets
 
     Args:
@@ -358,7 +321,7 @@ def get_monetary_rule_sets_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -378,7 +341,7 @@ def get_monetary_rule_sets_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -388,12 +351,7 @@ def get_monetary_rule_sets_sync(
     return None
 
 
-
-
-def get_monetary_rule_sets_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_monetary_rule_sets_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get monetary rule sets
 
     Args:
@@ -414,7 +372,7 @@ def get_monetary_rule_sets_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -434,17 +392,13 @@ def get_monetary_rule_sets_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -454,18 +408,13 @@ def get_monetary_rule_sets_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_monetary_rule_sets_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_monetary_rule_sets_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get monetary rule sets
 
     Args:
@@ -486,7 +435,7 @@ def get_monetary_rule_sets_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -506,7 +455,7 @@ def get_monetary_rule_sets_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -514,14 +463,10 @@ def get_monetary_rule_sets_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_monetary_rule_set_rule_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMonetaryRuleSetRule | ResponseError]:
     """Get monetary rule set rule by UUID
 
@@ -560,38 +505,27 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_monetary_rule_set_rule_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMonetaryRuleSetRule | ResponseError | None:
     """Get monetary rule set rule by UUID
 
@@ -619,7 +553,7 @@ def get_monetary_rule_set_rule_by_uuid_sync(
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -633,12 +567,8 @@ def get_monetary_rule_set_rule_by_uuid_sync(
     return None
 
 
-
-
 def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMonetaryRuleSetRule | ResponseError]:
     """Get monetary rule set rule by UUID
 
@@ -677,38 +607,27 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_monetary_rule_set_rule_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMonetaryRuleSetRule | ResponseError | None:
     """Get monetary rule set rule by UUID
 
@@ -736,7 +655,7 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -748,14 +667,10 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def set_monetary_rule_set_status_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Set the status for the monetary rule set
 
@@ -794,39 +709,26 @@ def set_monetary_rule_set_status_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def set_monetary_rule_set_status_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiMonetaryRuleSet | ResponseError | None:
+def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | ResponseError | None:
     """Set the status for the monetary rule set
 
     Args:
@@ -853,7 +755,7 @@ def set_monetary_rule_set_status_sync(
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -865,14 +767,10 @@ def set_monetary_rule_set_status_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def set_monetary_rule_set_status_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Set the status for the monetary rule set
 
@@ -911,38 +809,27 @@ def set_monetary_rule_set_status_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def set_monetary_rule_set_status_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Set the status for the monetary rule set
 
@@ -970,7 +857,7 @@ def set_monetary_rule_set_status_asyncio(
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -982,15 +869,10 @@ def set_monetary_rule_set_status_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_monetary_rule_set_with_rules_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    as_of_date: str
+    *, client: StolonClient, uuid: str, as_of_date: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1031,39 +913,27 @@ def get_monetary_rule_set_with_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_monetary_rule_set_with_rules_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    as_of_date: str
+    *, client: StolonClient, uuid: str, as_of_date: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1093,7 +963,7 @@ def get_monetary_rule_set_with_rules_sync(
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1107,13 +977,8 @@ def get_monetary_rule_set_with_rules_sync(
     return None
 
 
-
-
 def get_monetary_rule_set_with_rules_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    as_of_date: str
+    *, client: StolonClient, uuid: str, as_of_date: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1154,39 +1019,27 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_monetary_rule_set_with_rules_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    as_of_date: str
+    *, client: StolonClient, uuid: str, as_of_date: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1216,7 +1069,7 @@ def get_monetary_rule_set_with_rules_asyncio(
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1230,12 +1083,7 @@ def get_monetary_rule_set_with_rules_asyncio(
     return None
 
 
-
-
-def create_monetary_rule_set_rule_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_monetary_rule_set_rule_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create monetary rule set rule
 
     Args:
@@ -1253,7 +1101,7 @@ def create_monetary_rule_set_rule_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1273,17 +1121,13 @@ def create_monetary_rule_set_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1293,18 +1137,13 @@ def create_monetary_rule_set_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_monetary_rule_set_rule_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_monetary_rule_set_rule_sync(*, client: StolonClient) -> ResponseError | None:
     """Create monetary rule set rule
 
     Args:
@@ -1322,7 +1161,7 @@ def create_monetary_rule_set_rule_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1342,7 +1181,7 @@ def create_monetary_rule_set_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1352,12 +1191,7 @@ def create_monetary_rule_set_rule_sync(
     return None
 
 
-
-
-def create_monetary_rule_set_rule_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create monetary rule set rule
 
     Args:
@@ -1375,7 +1209,7 @@ def create_monetary_rule_set_rule_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1395,17 +1229,13 @@ def create_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1415,18 +1245,13 @@ def create_monetary_rule_set_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_monetary_rule_set_rule_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_monetary_rule_set_rule_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create monetary rule set rule
 
     Args:
@@ -1444,7 +1269,7 @@ def create_monetary_rule_set_rule_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1464,7 +1289,7 @@ def create_monetary_rule_set_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1474,12 +1299,7 @@ def create_monetary_rule_set_rule_asyncio(
     return None
 
 
-
-
-def get_monetary_rule_set_rules_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_monetary_rule_set_rules_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get monetary rule set rules
 
     Args:
@@ -1501,7 +1321,7 @@ def get_monetary_rule_set_rules_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1521,17 +1341,13 @@ def get_monetary_rule_set_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1541,18 +1357,13 @@ def get_monetary_rule_set_rules_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_monetary_rule_set_rules_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_monetary_rule_set_rules_sync(*, client: StolonClient) -> ResponseError | None:
     """Get monetary rule set rules
 
     Args:
@@ -1574,7 +1385,7 @@ def get_monetary_rule_set_rules_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1594,7 +1405,7 @@ def get_monetary_rule_set_rules_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1604,12 +1415,7 @@ def get_monetary_rule_set_rules_sync(
     return None
 
 
-
-
-def get_monetary_rule_set_rules_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_monetary_rule_set_rules_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get monetary rule set rules
 
     Args:
@@ -1631,7 +1437,7 @@ def get_monetary_rule_set_rules_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1651,17 +1457,13 @@ def get_monetary_rule_set_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1671,18 +1473,13 @@ def get_monetary_rule_set_rules_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_monetary_rule_set_rules_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_monetary_rule_set_rules_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get monetary rule set rules
 
     Args:
@@ -1704,7 +1501,7 @@ def get_monetary_rule_set_rules_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1724,7 +1521,7 @@ def get_monetary_rule_set_rules_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1734,13 +1531,7 @@ def get_monetary_rule_set_rules_asyncio(
     return None
 
 
-
-
-def delete_monetary_rule_set_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete monetary rule set
 
     Args:
@@ -1778,39 +1569,26 @@ def delete_monetary_rule_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_monetary_rule_set_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete monetary rule set
 
     Args:
@@ -1837,7 +1615,7 @@ def delete_monetary_rule_set_sync(
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1851,13 +1629,7 @@ def delete_monetary_rule_set_sync(
     return None
 
 
-
-
-def delete_monetary_rule_set_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete monetary rule set
 
     Args:
@@ -1895,39 +1667,26 @@ def delete_monetary_rule_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_monetary_rule_set_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete monetary rule set
 
     Args:
@@ -1954,7 +1713,7 @@ def delete_monetary_rule_set_asyncio(
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1968,13 +1727,7 @@ def delete_monetary_rule_set_asyncio(
     return None
 
 
-
-
-def update_monetary_rule_set_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update monetary rule set
 
     Args:
@@ -2013,17 +1766,13 @@ def update_monetary_rule_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2033,19 +1782,13 @@ def update_monetary_rule_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_monetary_rule_set_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update monetary rule set
 
     Args:
@@ -2084,7 +1827,7 @@ def update_monetary_rule_set_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2094,13 +1837,7 @@ def update_monetary_rule_set_sync(
     return None
 
 
-
-
-def update_monetary_rule_set_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update monetary rule set
 
     Args:
@@ -2139,17 +1876,13 @@ def update_monetary_rule_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2159,19 +1892,13 @@ def update_monetary_rule_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_monetary_rule_set_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update monetary rule set
 
     Args:
@@ -2210,7 +1937,7 @@ def update_monetary_rule_set_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2220,12 +1947,7 @@ def update_monetary_rule_set_asyncio(
     return None
 
 
-
-
-def create_monetary_rule_set_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_monetary_rule_set_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create monetary rule set
 
     Args:
@@ -2243,7 +1965,7 @@ def create_monetary_rule_set_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -2263,17 +1985,13 @@ def create_monetary_rule_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2283,18 +2001,13 @@ def create_monetary_rule_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_monetary_rule_set_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_monetary_rule_set_sync(*, client: StolonClient) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2312,7 +2025,7 @@ def create_monetary_rule_set_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -2332,7 +2045,7 @@ def create_monetary_rule_set_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2342,12 +2055,7 @@ def create_monetary_rule_set_sync(
     return None
 
 
-
-
-def create_monetary_rule_set_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_monetary_rule_set_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create monetary rule set
 
     Args:
@@ -2365,7 +2073,7 @@ def create_monetary_rule_set_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -2385,17 +2093,13 @@ def create_monetary_rule_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2405,18 +2109,13 @@ def create_monetary_rule_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_monetary_rule_set_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_monetary_rule_set_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2434,7 +2133,7 @@ def create_monetary_rule_set_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -2454,7 +2153,7 @@ def create_monetary_rule_set_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2464,13 +2163,7 @@ def create_monetary_rule_set_asyncio(
     return None
 
 
-
-
-def delete_monetary_rule_set_rule_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete monetary rule set rule
 
     Args:
@@ -2508,39 +2201,26 @@ def delete_monetary_rule_set_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_monetary_rule_set_rule_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete monetary rule set rule
 
     Args:
@@ -2567,7 +2247,7 @@ def delete_monetary_rule_set_rule_sync(
     kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2579,14 +2259,10 @@ def delete_monetary_rule_set_rule_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_monetary_rule_set_rule_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete monetary rule set rule
 
@@ -2625,39 +2301,26 @@ def delete_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
+    parsed = None.from_dict(body_json) if False else None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_monetary_rule_set_rule_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete monetary rule set rule
 
     Args:
@@ -2684,7 +2347,7 @@ def delete_monetary_rule_set_rule_asyncio(
     kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -2698,13 +2361,7 @@ def delete_monetary_rule_set_rule_asyncio(
     return None
 
 
-
-
-def update_monetary_rule_set_rule_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -2743,17 +2400,13 @@ def update_monetary_rule_set_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2763,19 +2416,13 @@ def update_monetary_rule_set_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_monetary_rule_set_rule_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update monetary rule set rule
 
     Args:
@@ -2814,7 +2461,7 @@ def update_monetary_rule_set_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2824,13 +2471,7 @@ def update_monetary_rule_set_rule_sync(
     return None
 
 
-
-
-def update_monetary_rule_set_rule_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def update_monetary_rule_set_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -2869,17 +2510,13 @@ def update_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -2889,19 +2526,13 @@ def update_monetary_rule_set_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_monetary_rule_set_rule_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def update_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Update monetary rule set rule
 
     Args:
@@ -2940,7 +2571,7 @@ def update_monetary_rule_set_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2948,4 +2579,3 @@ def update_monetary_rule_set_rule_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

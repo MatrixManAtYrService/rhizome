@@ -6,25 +6,25 @@ These wrappers route requests through the stolon server for automatic
 token management, logging, and retry logic.
 """
 
+import contextlib
+import json
 from http import HTTPStatus
+
 from stolon.client import StolonClient
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import create_adjust_action
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_adjust_action_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_adjust_actions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_reseller_adjust_actions
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_reseller_unposted_adjust_actions_by_billing_entity
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_resellers_adjust_action_by_uuid
-from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_unposted_adjust_actions_by_billing_entity
+from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import (
+    create_adjust_action,
+    get_adjust_action_by_uuid,
+    get_adjust_actions,
+    get_reseller_adjust_actions,
+    get_reseller_unposted_adjust_actions_by_billing_entity,
+    get_resellers_adjust_action_by_uuid,
+    get_unposted_adjust_actions_by_billing_entity,
+)
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def get_adjust_actions_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_adjust_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get adjustment actions
 
     Args:
@@ -53,7 +53,7 @@ def get_adjust_actions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -73,17 +73,13 @@ def get_adjust_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -93,18 +89,13 @@ def get_adjust_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_adjust_actions_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_adjust_actions_sync(*, client: StolonClient) -> ResponseError | None:
     """Get adjustment actions
 
     Args:
@@ -133,7 +124,7 @@ def get_adjust_actions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -153,7 +144,7 @@ def get_adjust_actions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -163,12 +154,7 @@ def get_adjust_actions_sync(
     return None
 
 
-
-
-def get_adjust_actions_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_adjust_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get adjustment actions
 
     Args:
@@ -197,7 +183,7 @@ def get_adjust_actions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -217,17 +203,13 @@ def get_adjust_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -237,18 +219,13 @@ def get_adjust_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_adjust_actions_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_adjust_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get adjustment actions
 
     Args:
@@ -277,7 +254,7 @@ def get_adjust_actions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -297,7 +274,7 @@ def get_adjust_actions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -305,15 +282,10 @@ def get_adjust_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str,
-    billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -341,7 +313,9 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -355,17 +329,13 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -375,19 +345,14 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
-    *,
-    client: StolonClient,
-    r_id: str,
-    billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -415,7 +380,9 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -429,7 +396,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -437,15 +404,10 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str,
-    billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -473,7 +435,9 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
         Response[ResponseError]
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -487,17 +451,13 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -507,19 +467,14 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str,
-    billing_entity_uuid: str
+    *, client: StolonClient, r_id: str, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -547,7 +502,9 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
         ResponseError | None
     """
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid)
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
+        r_id=r_id, billing_entity_uuid=billing_entity_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -561,7 +518,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -571,12 +528,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
     return None
 
 
-
-
-def create_adjust_action_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_adjust_action_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create adjustment action
 
     Args:
@@ -594,7 +546,7 @@ def create_adjust_action_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -614,17 +566,13 @@ def create_adjust_action_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -634,18 +582,13 @@ def create_adjust_action_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_adjust_action_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_adjust_action_sync(*, client: StolonClient) -> ResponseError | None:
     """Create adjustment action
 
     Args:
@@ -663,7 +606,7 @@ def create_adjust_action_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -683,7 +626,7 @@ def create_adjust_action_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -693,12 +636,7 @@ def create_adjust_action_sync(
     return None
 
 
-
-
-def create_adjust_action_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_adjust_action_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create adjustment action
 
     Args:
@@ -716,7 +654,7 @@ def create_adjust_action_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -736,17 +674,13 @@ def create_adjust_action_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -756,18 +690,13 @@ def create_adjust_action_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_adjust_action_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_adjust_action_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create adjustment action
 
     Args:
@@ -785,7 +714,7 @@ def create_adjust_action_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -805,7 +734,7 @@ def create_adjust_action_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -813,14 +742,10 @@ def create_adjust_action_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity
 
@@ -859,17 +784,13 @@ def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -879,18 +800,14 @@ def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_unposted_adjust_actions_by_billing_entity_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity
 
@@ -929,7 +846,7 @@ def get_unposted_adjust_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -937,14 +854,10 @@ def get_unposted_adjust_actions_by_billing_entity_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity
 
@@ -983,17 +896,13 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1003,18 +912,14 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_unposted_adjust_actions_by_billing_entity_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity
 
@@ -1053,7 +958,7 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1063,13 +968,7 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio(
     return None
 
 
-
-
-def get_adjust_action_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_adjust_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get adjustment action by UUID
 
     Args:
@@ -1107,17 +1006,13 @@ def get_adjust_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1127,19 +1022,13 @@ def get_adjust_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_adjust_action_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_adjust_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get adjustment action by UUID
 
     Args:
@@ -1177,7 +1066,7 @@ def get_adjust_action_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1187,13 +1076,7 @@ def get_adjust_action_by_uuid_sync(
     return None
 
 
-
-
-def get_adjust_action_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_adjust_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get adjustment action by UUID
 
     Args:
@@ -1231,17 +1114,13 @@ def get_adjust_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1251,19 +1130,13 @@ def get_adjust_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_adjust_action_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_adjust_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get adjustment action by UUID
 
     Args:
@@ -1301,7 +1174,7 @@ def get_adjust_action_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1311,13 +1184,7 @@ def get_adjust_action_by_uuid_asyncio(
     return None
 
 
-
-
-def get_reseller_adjust_actions_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ResponseError]:
+def get_reseller_adjust_actions_sync_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
     """Get adjustment actions for resellers
 
     Args:
@@ -1368,17 +1235,13 @@ def get_reseller_adjust_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1388,19 +1251,13 @@ def get_reseller_adjust_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_reseller_adjust_actions_sync(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ResponseError | None:
+def get_reseller_adjust_actions_sync(*, client: StolonClient, r_id: str) -> ResponseError | None:
     """Get adjustment actions for resellers
 
     Args:
@@ -1451,7 +1308,7 @@ def get_reseller_adjust_actions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1461,13 +1318,7 @@ def get_reseller_adjust_actions_sync(
     return None
 
 
-
-
-def get_reseller_adjust_actions_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> Response[ResponseError]:
+def get_reseller_adjust_actions_asyncio_detailed(*, client: StolonClient, r_id: str) -> Response[ResponseError]:
     """Get adjustment actions for resellers
 
     Args:
@@ -1518,17 +1369,13 @@ def get_reseller_adjust_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1538,19 +1385,13 @@ def get_reseller_adjust_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_reseller_adjust_actions_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
-) -> ResponseError | None:
+def get_reseller_adjust_actions_asyncio(*, client: StolonClient, r_id: str) -> ResponseError | None:
     """Get adjustment actions for resellers
 
     Args:
@@ -1601,7 +1442,7 @@ def get_reseller_adjust_actions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1609,15 +1450,10 @@ def get_reseller_adjust_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_resellers_adjust_action_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
+    *, client: StolonClient, r_id: str, uuid: str
 ) -> Response[ResponseError]:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1659,17 +1495,13 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1679,20 +1511,13 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_resellers_adjust_action_by_uuid_sync(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
-) -> ResponseError | None:
+def get_resellers_adjust_action_by_uuid_sync(*, client: StolonClient, r_id: str, uuid: str) -> ResponseError | None:
     """Get adjustment action by UUID for entity that reseller can access
 
     Args:
@@ -1733,7 +1558,7 @@ def get_resellers_adjust_action_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1741,15 +1566,10 @@ def get_resellers_adjust_action_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_resellers_adjust_action_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
+    *, client: StolonClient, r_id: str, uuid: str
 ) -> Response[ResponseError]:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1791,17 +1611,13 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
     body_json = None
     if proxy_response.body:
-        try:
+        with contextlib.suppress(json.JSONDecodeError):
             body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
 
     # Parse response using generated function's parser
     if body_json and proxy_response.status_code == 200 and ResponseError:
@@ -1811,20 +1627,13 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_resellers_adjust_action_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str,
-    uuid: str
-) -> ResponseError | None:
+def get_resellers_adjust_action_by_uuid_asyncio(*, client: StolonClient, r_id: str, uuid: str) -> ResponseError | None:
     """Get adjustment action by UUID for entity that reseller can access
 
     Args:
@@ -1865,7 +1674,7 @@ def get_resellers_adjust_action_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1873,4 +1682,3 @@ def get_resellers_adjust_action_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
