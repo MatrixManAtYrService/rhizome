@@ -105,10 +105,11 @@ exclude = [
     "tests/mocked_subprocesses.py",
     "tests/test_environment_access.py",
     "tests/test_port.py",
-    # Exclude generated code from type checking
-    "src/stolon/generated/**",
     # Exclude exploration scripts (temporary scripts for understanding the system)
     "explorations/**",
+    # Exclude generated code - type hints are still available for consumers
+    "src/stolon/openapi_generated/**",
+    "src/stolon/generated/**",
 ]
 
 # Strict type checking for source code only

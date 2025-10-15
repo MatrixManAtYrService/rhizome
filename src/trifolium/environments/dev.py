@@ -11,37 +11,6 @@ from typing import TYPE_CHECKING, Any
 # 1. Move code to base.py (use the alias name instead of environment-specific name)
 # 2. Create demo.py (just change the alias target: BillingEvent = DemoBillingEvent)
 from rhizome.environments.dev.billing_event import DevBillingEvent as BillingEvent
-
-# Generated API imports - Billing Bookkeeper (using wrappers that proxy through stolon)
-from stolon.api.billing_bookkeeper_dev.alliance_code import (
-    create_invoice_alliance_code_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.billing_entity import (
-    create_billing_entity_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.billing_hierarchy import (
-    create_billing_hierarchy_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.billing_schedule import (
-    create_billing_schedule_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.cellular_action_fee_code import (
-    create_cellular_action_fee_code_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.fee_rate import create_fee_rate_sync_detailed
-from stolon.api.billing_bookkeeper_dev.partner_config import (
-    create_partner_config_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.plan_action_fee_code import (
-    create_plan_action_fee_code_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.processing_group_dates import (
-    create_processing_group_dates_sync_detailed,
-)
-from stolon.api.billing_bookkeeper_dev.revenue_share_group import (
-    create_revenue_share_group_sync_detailed,
-    delete_revenue_share_group_by_uuid_sync,
-)
 from stolon.environments import base
 
 # Generated API imports - Agreement K8s
@@ -56,6 +25,24 @@ from stolon.generated.agreement_k8s_dev.open_api_definition_client.models import
     get_bulk_acceptances_service_scope_body_request_body,
 )
 from stolon.generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+
+# Generated API imports - Billing Bookkeeper (using wrappers that proxy through stolon)
+from stolon.generated.billing_bookkeeper_dev.alliance_code import (
+    create_invoice_alliance_code_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.billing_entity import (
+    create_billing_entity_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.billing_hierarchy import (
+    create_billing_hierarchy_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.billing_schedule import (
+    create_billing_schedule_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.cellular_action_fee_code import (
+    create_cellular_action_fee_code_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.fee_rate import create_fee_rate_sync_detailed
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models import (
     api_billing_entity,
     api_billing_entity_entity_type,
@@ -72,6 +59,19 @@ from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.models i
     api_revenue_share_group,
 )
 from stolon.generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET
+from stolon.generated.billing_bookkeeper_dev.partner_config import (
+    create_partner_config_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.plan_action_fee_code import (
+    create_plan_action_fee_code_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.processing_group_dates import (
+    create_processing_group_dates_sync_detailed,
+)
+from stolon.generated.billing_bookkeeper_dev.revenue_share_group import (
+    create_revenue_share_group_sync_detailed,
+    delete_revenue_share_group_by_uuid_sync,
+)
 
 if TYPE_CHECKING:
     from rhizome.client import RhizomeClient

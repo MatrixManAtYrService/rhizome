@@ -95,7 +95,12 @@ class ApiFunctionExtractor(cst.CSTVisitor):
         """Extract parameter information from function definition."""
         parameters = []
 
-        for param in node.params.params:
+        # Extract both regular params and keyword-only params
+        # OpenAPI-generated functions use *, client: ..., body: ... syntax
+        # So parameters are in kwonlyparams, not params
+        all_params = list(node.params.params) + list(node.params.kwonlyparams)
+
+        for param in all_params:
             # Skip 'client' parameter as we'll replace it with StolonClient
             if isinstance(param.name, cst.Name) and param.name.value == "client":
                 continue
