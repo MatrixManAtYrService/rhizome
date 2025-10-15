@@ -9,37 +9,37 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import json
 from http import HTTPStatus
+from typing import Any
+
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_abbs_transition_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_app_sub_advance_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_cellular_arrears_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_create_backfill_acceptances_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_migrate_merchants_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_no_op_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_payment_transaction_sync_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_plan_advance_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_process_active_offboarding_records
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_process_app_meter_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_process_app_metered_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_process_app_rate_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_process_app_sub_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import enqueue_process_app_subscription_events_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import exec_pending_event_catchup_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import exec_pending_event_stale_cleanup_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import kill_job
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import memo
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import query_job
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.job_controller import (
+    enqueue_abbs_transition_job,
+    enqueue_app_sub_advance_events_job,
+    enqueue_cellular_arrears_job,
+    enqueue_create_backfill_acceptances_job,
+    enqueue_migrate_merchants_job,
+    enqueue_no_op_job,
+    enqueue_payment_transaction_sync_job,
+    enqueue_plan_advance_events_job,
+    enqueue_process_active_offboarding_records,
+    enqueue_process_app_meter_events_job,
+    enqueue_process_app_metered_events_job,
+    enqueue_process_app_rate_events_job,
+    enqueue_process_app_sub_events_job,
+    enqueue_process_app_subscription_events_job,
+    exec_pending_event_catchup_job,
+    exec_pending_event_stale_cleanup_job,
+    kill_job,
+    memo,
+    query_job,
+)
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_job_response import ApiJobResponse
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
 
 
-def enqueue_process_app_metered_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_app_metered_events_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -55,7 +55,7 @@ def enqueue_process_app_metered_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -75,8 +75,6 @@ def enqueue_process_app_metered_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -95,18 +93,13 @@ def enqueue_process_app_metered_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_metered_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_app_metered_events_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -122,7 +115,7 @@ def enqueue_process_app_metered_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -142,8 +135,6 @@ def enqueue_process_app_metered_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -162,18 +153,13 @@ def enqueue_process_app_metered_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_rate_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_app_rate_events_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -189,7 +175,7 @@ def enqueue_process_app_rate_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -209,8 +195,6 @@ def enqueue_process_app_rate_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -229,18 +213,13 @@ def enqueue_process_app_rate_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_rate_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_app_rate_events_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -256,7 +235,7 @@ def enqueue_process_app_rate_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -276,8 +255,6 @@ def enqueue_process_app_rate_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -296,18 +273,13 @@ def enqueue_process_app_rate_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_plan_advance_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_plan_advance_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -325,7 +297,7 @@ def enqueue_plan_advance_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -345,8 +317,6 @@ def enqueue_plan_advance_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -365,18 +335,13 @@ def enqueue_plan_advance_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_plan_advance_events_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_plan_advance_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -394,7 +359,7 @@ def enqueue_plan_advance_events_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -414,7 +379,7 @@ def enqueue_plan_advance_events_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -424,12 +389,7 @@ def enqueue_plan_advance_events_job_sync(
     return None
 
 
-
-
-def enqueue_plan_advance_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_plan_advance_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -447,7 +407,7 @@ def enqueue_plan_advance_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -467,8 +427,6 @@ def enqueue_plan_advance_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -487,18 +445,13 @@ def enqueue_plan_advance_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_plan_advance_events_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_plan_advance_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -516,7 +469,7 @@ def enqueue_plan_advance_events_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -536,7 +489,7 @@ def enqueue_plan_advance_events_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -546,12 +499,7 @@ def enqueue_plan_advance_events_job_asyncio(
     return None
 
 
-
-
-def enqueue_payment_transaction_sync_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_payment_transaction_sync_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -569,7 +517,7 @@ def enqueue_payment_transaction_sync_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -589,8 +537,6 @@ def enqueue_payment_transaction_sync_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -609,18 +555,13 @@ def enqueue_payment_transaction_sync_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_payment_transaction_sync_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_payment_transaction_sync_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -638,7 +579,7 @@ def enqueue_payment_transaction_sync_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -658,7 +599,7 @@ def enqueue_payment_transaction_sync_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -668,12 +609,7 @@ def enqueue_payment_transaction_sync_job_sync(
     return None
 
 
-
-
-def enqueue_payment_transaction_sync_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_payment_transaction_sync_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -691,7 +627,7 @@ def enqueue_payment_transaction_sync_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -711,8 +647,6 @@ def enqueue_payment_transaction_sync_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -731,18 +665,13 @@ def enqueue_payment_transaction_sync_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_payment_transaction_sync_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_payment_transaction_sync_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -760,7 +689,7 @@ def enqueue_payment_transaction_sync_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -780,7 +709,7 @@ def enqueue_payment_transaction_sync_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -790,13 +719,7 @@ def enqueue_payment_transaction_sync_job_asyncio(
     return None
 
 
-
-
-def kill_job_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[ApiJobResponse]:
+def kill_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
     """Requests that the job associated with the specified billing request UUID be marked for termination
     (be killed).
 
@@ -835,8 +758,6 @@ def kill_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -855,19 +776,13 @@ def kill_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def kill_job_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> ApiJobResponse | None:
+def kill_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
     """Requests that the job associated with the specified billing request UUID be marked for termination
     (be killed).
 
@@ -906,7 +821,7 @@ def kill_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -916,13 +831,7 @@ def kill_job_sync(
     return None
 
 
-
-
-def kill_job_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[ApiJobResponse]:
+def kill_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
     """Requests that the job associated with the specified billing request UUID be marked for termination
     (be killed).
 
@@ -961,8 +870,6 @@ def kill_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -981,19 +888,13 @@ def kill_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def kill_job_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> ApiJobResponse | None:
+def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
     """Requests that the job associated with the specified billing request UUID be marked for termination
     (be killed).
 
@@ -1032,7 +933,7 @@ def kill_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1042,13 +943,7 @@ def kill_job_asyncio(
     return None
 
 
-
-
-def memo_sync_detailed(
-    *,
-    client: StolonClient,
-    heading: str
-) -> Response[ApiJobResponse]:
+def memo_sync_detailed(*, client: StolonClient, heading: str) -> Response[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1087,8 +982,6 @@ def memo_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1107,19 +1000,13 @@ def memo_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def memo_sync(
-    *,
-    client: StolonClient,
-    heading: str
-) -> ApiJobResponse | None:
+def memo_sync(*, client: StolonClient, heading: str) -> ApiJobResponse | None:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1158,7 +1045,7 @@ def memo_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1168,13 +1055,7 @@ def memo_sync(
     return None
 
 
-
-
-def memo_asyncio_detailed(
-    *,
-    client: StolonClient,
-    heading: str
-) -> Response[ApiJobResponse]:
+def memo_asyncio_detailed(*, client: StolonClient, heading: str) -> Response[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1213,8 +1094,6 @@ def memo_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1233,19 +1112,13 @@ def memo_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def memo_asyncio(
-    *,
-    client: StolonClient,
-    heading: str
-) -> ApiJobResponse | None:
+def memo_asyncio(*, client: StolonClient, heading: str) -> ApiJobResponse | None:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1284,7 +1157,7 @@ def memo_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1294,12 +1167,7 @@ def memo_asyncio(
     return None
 
 
-
-
-def exec_pending_event_catchup_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def exec_pending_event_catchup_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Executes the pending event catchup job immediately.  This will catchup pending events in case where
     asynchronous event processing is behind.
 
@@ -1315,7 +1183,7 @@ def exec_pending_event_catchup_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -1335,8 +1203,6 @@ def exec_pending_event_catchup_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1355,18 +1221,13 @@ def exec_pending_event_catchup_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def exec_pending_event_catchup_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def exec_pending_event_catchup_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Executes the pending event catchup job immediately.  This will catchup pending events in case where
     asynchronous event processing is behind.
 
@@ -1382,7 +1243,7 @@ def exec_pending_event_catchup_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -1402,7 +1263,7 @@ def exec_pending_event_catchup_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1412,12 +1273,7 @@ def exec_pending_event_catchup_job_sync(
     return None
 
 
-
-
-def exec_pending_event_catchup_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def exec_pending_event_catchup_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Executes the pending event catchup job immediately.  This will catchup pending events in case where
     asynchronous event processing is behind.
 
@@ -1433,7 +1289,7 @@ def exec_pending_event_catchup_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -1453,8 +1309,6 @@ def exec_pending_event_catchup_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1473,18 +1327,13 @@ def exec_pending_event_catchup_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def exec_pending_event_catchup_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def exec_pending_event_catchup_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Executes the pending event catchup job immediately.  This will catchup pending events in case where
     asynchronous event processing is behind.
 
@@ -1500,7 +1349,7 @@ def exec_pending_event_catchup_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -1520,7 +1369,7 @@ def exec_pending_event_catchup_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1530,12 +1379,7 @@ def exec_pending_event_catchup_job_asyncio(
     return None
 
 
-
-
-def enqueue_process_app_sub_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_process_app_sub_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1553,7 +1397,7 @@ def enqueue_process_app_sub_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -1573,8 +1417,6 @@ def enqueue_process_app_sub_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1593,18 +1435,13 @@ def enqueue_process_app_sub_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_sub_events_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_process_app_sub_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1622,7 +1459,7 @@ def enqueue_process_app_sub_events_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -1642,7 +1479,7 @@ def enqueue_process_app_sub_events_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1652,12 +1489,7 @@ def enqueue_process_app_sub_events_job_sync(
     return None
 
 
-
-
-def enqueue_process_app_sub_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_process_app_sub_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1675,7 +1507,7 @@ def enqueue_process_app_sub_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -1695,8 +1527,6 @@ def enqueue_process_app_sub_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1715,18 +1545,13 @@ def enqueue_process_app_sub_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_sub_events_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_process_app_sub_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1744,7 +1569,7 @@ def enqueue_process_app_sub_events_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -1764,7 +1589,7 @@ def enqueue_process_app_sub_events_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1774,12 +1599,7 @@ def enqueue_process_app_sub_events_job_asyncio(
     return None
 
 
-
-
-def enqueue_process_app_subscription_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_app_subscription_events_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -1795,7 +1615,7 @@ def enqueue_process_app_subscription_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -1815,8 +1635,6 @@ def enqueue_process_app_subscription_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1835,18 +1653,13 @@ def enqueue_process_app_subscription_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_subscription_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_app_subscription_events_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -1862,7 +1675,7 @@ def enqueue_process_app_subscription_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -1882,8 +1695,6 @@ def enqueue_process_app_subscription_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1902,19 +1713,13 @@ def enqueue_process_app_subscription_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def query_job_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[ApiJobResponse]:
+def query_job_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -1952,8 +1757,6 @@ def query_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1972,19 +1775,13 @@ def query_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def query_job_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> ApiJobResponse | None:
+def query_job_sync(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -2022,7 +1819,7 @@ def query_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2032,13 +1829,7 @@ def query_job_sync(
     return None
 
 
-
-
-def query_job_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[ApiJobResponse]:
+def query_job_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[ApiJobResponse]:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -2076,8 +1867,6 @@ def query_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2096,19 +1885,13 @@ def query_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def query_job_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> ApiJobResponse | None:
+def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobResponse | None:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -2146,7 +1929,7 @@ def query_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2156,12 +1939,7 @@ def query_job_asyncio(
     return None
 
 
-
-
-def enqueue_process_active_offboarding_records_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_active_offboarding_records_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (ProcessOffboardingRecordsJobParams):
 
@@ -2177,7 +1955,7 @@ def enqueue_process_active_offboarding_records_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -2197,8 +1975,6 @@ def enqueue_process_active_offboarding_records_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2217,18 +1993,13 @@ def enqueue_process_active_offboarding_records_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_active_offboarding_records_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_process_active_offboarding_records_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         body (ProcessOffboardingRecordsJobParams):
 
@@ -2244,7 +2015,7 @@ def enqueue_process_active_offboarding_records_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -2264,8 +2035,6 @@ def enqueue_process_active_offboarding_records_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2284,18 +2053,13 @@ def enqueue_process_active_offboarding_records_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_no_op_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2313,7 +2077,7 @@ def enqueue_no_op_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -2333,8 +2097,6 @@ def enqueue_no_op_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2353,18 +2115,13 @@ def enqueue_no_op_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_no_op_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2382,7 +2139,7 @@ def enqueue_no_op_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -2402,7 +2159,7 @@ def enqueue_no_op_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2412,12 +2169,7 @@ def enqueue_no_op_job_sync(
     return None
 
 
-
-
-def enqueue_no_op_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2435,7 +2187,7 @@ def enqueue_no_op_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -2455,8 +2207,6 @@ def enqueue_no_op_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2475,18 +2225,13 @@ def enqueue_no_op_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_no_op_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2504,7 +2249,7 @@ def enqueue_no_op_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -2524,7 +2269,7 @@ def enqueue_no_op_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2534,12 +2279,7 @@ def enqueue_no_op_job_asyncio(
     return None
 
 
-
-
-def enqueue_cellular_arrears_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_cellular_arrears_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2557,7 +2297,7 @@ def enqueue_cellular_arrears_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -2577,8 +2317,6 @@ def enqueue_cellular_arrears_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2597,18 +2335,13 @@ def enqueue_cellular_arrears_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_cellular_arrears_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_cellular_arrears_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2626,7 +2359,7 @@ def enqueue_cellular_arrears_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -2646,7 +2379,7 @@ def enqueue_cellular_arrears_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2656,12 +2389,7 @@ def enqueue_cellular_arrears_job_sync(
     return None
 
 
-
-
-def enqueue_cellular_arrears_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_cellular_arrears_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2679,7 +2407,7 @@ def enqueue_cellular_arrears_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -2699,8 +2427,6 @@ def enqueue_cellular_arrears_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2719,18 +2445,13 @@ def enqueue_cellular_arrears_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_cellular_arrears_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_cellular_arrears_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2748,7 +2469,7 @@ def enqueue_cellular_arrears_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -2768,7 +2489,7 @@ def enqueue_cellular_arrears_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2778,12 +2499,7 @@ def enqueue_cellular_arrears_job_asyncio(
     return None
 
 
-
-
-def enqueue_create_backfill_acceptances_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_create_backfill_acceptances_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2801,7 +2517,7 @@ def enqueue_create_backfill_acceptances_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -2821,8 +2537,6 @@ def enqueue_create_backfill_acceptances_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2841,18 +2555,13 @@ def enqueue_create_backfill_acceptances_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_create_backfill_acceptances_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_create_backfill_acceptances_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2870,7 +2579,7 @@ def enqueue_create_backfill_acceptances_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -2890,7 +2599,7 @@ def enqueue_create_backfill_acceptances_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2900,12 +2609,7 @@ def enqueue_create_backfill_acceptances_job_sync(
     return None
 
 
-
-
-def enqueue_create_backfill_acceptances_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_create_backfill_acceptances_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2923,7 +2627,7 @@ def enqueue_create_backfill_acceptances_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -2943,8 +2647,6 @@ def enqueue_create_backfill_acceptances_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2963,18 +2665,13 @@ def enqueue_create_backfill_acceptances_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_create_backfill_acceptances_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_create_backfill_acceptances_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2992,7 +2689,7 @@ def enqueue_create_backfill_acceptances_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3012,7 +2709,7 @@ def enqueue_create_backfill_acceptances_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3022,12 +2719,7 @@ def enqueue_create_backfill_acceptances_job_asyncio(
     return None
 
 
-
-
-def enqueue_migrate_merchants_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_migrate_merchants_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Enqueues the job to migrate merchants.
 
     Args:
@@ -3045,7 +2737,7 @@ def enqueue_migrate_merchants_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -3065,8 +2757,6 @@ def enqueue_migrate_merchants_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3085,18 +2775,13 @@ def enqueue_migrate_merchants_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_migrate_merchants_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def enqueue_migrate_merchants_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Enqueues the job to migrate merchants.
 
     Args:
@@ -3114,7 +2799,7 @@ def enqueue_migrate_merchants_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -3134,8 +2819,6 @@ def enqueue_migrate_merchants_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3154,18 +2837,13 @@ def enqueue_migrate_merchants_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_abbs_transition_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_abbs_transition_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -3183,7 +2861,7 @@ def enqueue_abbs_transition_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3203,8 +2881,6 @@ def enqueue_abbs_transition_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3223,18 +2899,13 @@ def enqueue_abbs_transition_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_abbs_transition_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_abbs_transition_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -3252,7 +2923,7 @@ def enqueue_abbs_transition_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3272,7 +2943,7 @@ def enqueue_abbs_transition_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3282,12 +2953,7 @@ def enqueue_abbs_transition_job_sync(
     return None
 
 
-
-
-def enqueue_abbs_transition_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_abbs_transition_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -3305,7 +2971,7 @@ def enqueue_abbs_transition_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3325,8 +2991,6 @@ def enqueue_abbs_transition_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3345,18 +3009,13 @@ def enqueue_abbs_transition_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_abbs_transition_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_abbs_transition_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -3374,7 +3033,7 @@ def enqueue_abbs_transition_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3394,7 +3053,7 @@ def enqueue_abbs_transition_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3404,12 +3063,7 @@ def enqueue_abbs_transition_job_asyncio(
     return None
 
 
-
-
-def exec_pending_event_stale_cleanup_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def exec_pending_event_stale_cleanup_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -3425,7 +3079,7 @@ def exec_pending_event_stale_cleanup_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3445,8 +3099,6 @@ def exec_pending_event_stale_cleanup_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3465,18 +3117,13 @@ def exec_pending_event_stale_cleanup_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def exec_pending_event_stale_cleanup_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def exec_pending_event_stale_cleanup_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -3492,7 +3139,7 @@ def exec_pending_event_stale_cleanup_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3512,7 +3159,7 @@ def exec_pending_event_stale_cleanup_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3522,12 +3169,7 @@ def exec_pending_event_stale_cleanup_job_sync(
     return None
 
 
-
-
-def exec_pending_event_stale_cleanup_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def exec_pending_event_stale_cleanup_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -3543,7 +3185,7 @@ def exec_pending_event_stale_cleanup_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3563,8 +3205,6 @@ def exec_pending_event_stale_cleanup_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3583,18 +3223,13 @@ def exec_pending_event_stale_cleanup_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def exec_pending_event_stale_cleanup_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def exec_pending_event_stale_cleanup_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -3610,7 +3245,7 @@ def exec_pending_event_stale_cleanup_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3630,7 +3265,7 @@ def exec_pending_event_stale_cleanup_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3640,12 +3275,7 @@ def exec_pending_event_stale_cleanup_job_asyncio(
     return None
 
 
-
-
-def enqueue_app_sub_advance_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_app_sub_advance_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3663,7 +3293,7 @@ def enqueue_app_sub_advance_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3683,8 +3313,6 @@ def enqueue_app_sub_advance_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3703,18 +3331,13 @@ def enqueue_app_sub_advance_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_app_sub_advance_events_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_app_sub_advance_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3732,7 +3355,7 @@ def enqueue_app_sub_advance_events_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3752,7 +3375,7 @@ def enqueue_app_sub_advance_events_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3762,12 +3385,7 @@ def enqueue_app_sub_advance_events_job_sync(
     return None
 
 
-
-
-def enqueue_app_sub_advance_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_app_sub_advance_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3785,7 +3403,7 @@ def enqueue_app_sub_advance_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3805,8 +3423,6 @@ def enqueue_app_sub_advance_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3825,18 +3441,13 @@ def enqueue_app_sub_advance_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_app_sub_advance_events_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_app_sub_advance_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3854,7 +3465,7 @@ def enqueue_app_sub_advance_events_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3874,7 +3485,7 @@ def enqueue_app_sub_advance_events_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3884,12 +3495,7 @@ def enqueue_app_sub_advance_events_job_asyncio(
     return None
 
 
-
-
-def enqueue_process_app_meter_events_job_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_process_app_meter_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -3907,7 +3513,7 @@ def enqueue_process_app_meter_events_job_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -3927,8 +3533,6 @@ def enqueue_process_app_meter_events_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3947,18 +3551,13 @@ def enqueue_process_app_meter_events_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_meter_events_job_sync(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_process_app_meter_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -3976,7 +3575,7 @@ def enqueue_process_app_meter_events_job_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -3996,7 +3595,7 @@ def enqueue_process_app_meter_events_job_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -4006,12 +3605,7 @@ def enqueue_process_app_meter_events_job_sync(
     return None
 
 
-
-
-def enqueue_process_app_meter_events_job_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiJobResponse]:
+def enqueue_process_app_meter_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -4029,7 +3623,7 @@ def enqueue_process_app_meter_events_job_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiJobResponse]
@@ -4049,8 +3643,6 @@ def enqueue_process_app_meter_events_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -4069,18 +3661,13 @@ def enqueue_process_app_meter_events_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def enqueue_process_app_meter_events_job_asyncio(
-    *,
-    client: StolonClient
-) -> ApiJobResponse | None:
+def enqueue_process_app_meter_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -4098,7 +3685,7 @@ def enqueue_process_app_meter_events_job_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiJobResponse | None
@@ -4118,7 +3705,7 @@ def enqueue_process_app_meter_events_job_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -4126,4 +3713,3 @@ def enqueue_process_app_meter_events_job_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

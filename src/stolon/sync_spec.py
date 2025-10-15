@@ -212,7 +212,7 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
     # OpenAPI-generated client goes to openapi_generated (raw output, don't edit)
     # Our proxied wrappers go to generated (higher-level, editable if needed)
     openapi_output_path = Path("src/stolon/openapi_generated") / f"{actual_service.replace('-', '_')}_{env}"
-    wrappers_output_path = Path("src/stolon/generated") / f"{actual_service.replace('-', '_')}_{env}"
+    Path("src/stolon/generated") / f"{actual_service.replace('-', '_')}_{env}"
 
     if openapi_output_path.exists() and not overwrite:
         typer.echo(f"⚠️  OpenAPI client already exists at {openapi_output_path}")

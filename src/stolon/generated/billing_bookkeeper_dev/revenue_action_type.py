@@ -9,23 +9,23 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import create_revenue_action_type
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import delete_revenue_action_type_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import get_revenue_action_type_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import get_revenue_action_types_by_action_type
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import (
+    create_revenue_action_type,
+    delete_revenue_action_type_by_uuid,
+    get_revenue_action_type_by_uuid,
+    get_revenue_action_types_by_action_type,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def delete_revenue_action_type_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete revenue action type
 
     Args:
@@ -63,8 +63,6 @@ def delete_revenue_action_type_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -83,19 +81,13 @@ def delete_revenue_action_type_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_revenue_action_type_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete revenue action type
 
     Args:
@@ -133,7 +125,7 @@ def delete_revenue_action_type_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -143,13 +135,7 @@ def delete_revenue_action_type_by_uuid_sync(
     return None
 
 
-
-
-def delete_revenue_action_type_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete revenue action type
 
     Args:
@@ -187,8 +173,6 @@ def delete_revenue_action_type_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -207,19 +191,13 @@ def delete_revenue_action_type_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_revenue_action_type_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete revenue action type
 
     Args:
@@ -257,7 +235,7 @@ def delete_revenue_action_type_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -267,13 +245,7 @@ def delete_revenue_action_type_by_uuid_asyncio(
     return None
 
 
-
-
-def get_revenue_action_type_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get revenue action type by UUID
 
     Args:
@@ -311,8 +283,6 @@ def get_revenue_action_type_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -331,19 +301,13 @@ def get_revenue_action_type_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_type_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get revenue action type by UUID
 
     Args:
@@ -381,7 +345,7 @@ def get_revenue_action_type_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,13 +355,7 @@ def get_revenue_action_type_by_uuid_sync(
     return None
 
 
-
-
-def get_revenue_action_type_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get revenue action type by UUID
 
     Args:
@@ -435,8 +393,6 @@ def get_revenue_action_type_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -455,19 +411,13 @@ def get_revenue_action_type_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_type_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get revenue action type by UUID
 
     Args:
@@ -505,7 +455,7 @@ def get_revenue_action_type_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -515,12 +465,7 @@ def get_revenue_action_type_by_uuid_asyncio(
     return None
 
 
-
-
-def create_revenue_action_type_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_revenue_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create revenue action type
 
     Args:
@@ -538,7 +483,7 @@ def create_revenue_action_type_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -558,8 +503,6 @@ def create_revenue_action_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -578,18 +521,13 @@ def create_revenue_action_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_revenue_action_type_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_revenue_action_type_sync(*, client: StolonClient) -> ResponseError | None:
     """Create revenue action type
 
     Args:
@@ -607,7 +545,7 @@ def create_revenue_action_type_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -627,7 +565,7 @@ def create_revenue_action_type_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -637,12 +575,7 @@ def create_revenue_action_type_sync(
     return None
 
 
-
-
-def create_revenue_action_type_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_revenue_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create revenue action type
 
     Args:
@@ -660,7 +593,7 @@ def create_revenue_action_type_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -680,8 +613,6 @@ def create_revenue_action_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -700,18 +631,13 @@ def create_revenue_action_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_revenue_action_type_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_revenue_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create revenue action type
 
     Args:
@@ -729,7 +655,7 @@ def create_revenue_action_type_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -749,7 +675,7 @@ def create_revenue_action_type_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -759,12 +685,7 @@ def create_revenue_action_type_asyncio(
     return None
 
 
-
-
-def get_revenue_action_types_by_action_type_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_revenue_action_types_by_action_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get revenue action type by action type
 
     Args:
@@ -782,7 +703,7 @@ def get_revenue_action_types_by_action_type_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -802,8 +723,6 @@ def get_revenue_action_types_by_action_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -822,18 +741,13 @@ def get_revenue_action_types_by_action_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_types_by_action_type_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_revenue_action_types_by_action_type_sync(*, client: StolonClient) -> ResponseError | None:
     """Get revenue action type by action type
 
     Args:
@@ -851,7 +765,7 @@ def get_revenue_action_types_by_action_type_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -871,7 +785,7 @@ def get_revenue_action_types_by_action_type_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -881,12 +795,7 @@ def get_revenue_action_types_by_action_type_sync(
     return None
 
 
-
-
-def get_revenue_action_types_by_action_type_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_revenue_action_types_by_action_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get revenue action type by action type
 
     Args:
@@ -904,7 +813,7 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -924,8 +833,6 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -944,18 +851,13 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_types_by_action_type_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_revenue_action_types_by_action_type_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get revenue action type by action type
 
     Args:
@@ -973,7 +875,7 @@ def get_revenue_action_types_by_action_type_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -993,7 +895,7 @@ def get_revenue_action_types_by_action_type_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1001,4 +903,3 @@ def get_revenue_action_types_by_action_type_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

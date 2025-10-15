@@ -432,9 +432,14 @@ def generate_wrapper_code(
     if "datetime" in full_type_string:
         imports["datetime"] = "import datetime"
 
-    # Extract all model names from the return type and add their imports
+    # Extract all model names from return type AND parameter types
     # This handles models in various positions: Response[Model], Model | ResponseError, list["Model"], etc.
     model_names = extract_model_names_from_type(return_type)
+
+    # Also extract models from parameter types
+    for param in func_info.parameters:
+        model_names.update(extract_model_names_from_type(param.type_annotation))
+
     for model_name in model_names:
         # Convert model name to module path (CamelCase -> snake_case)
         # e.g., ApiMerchantDetail -> api_merchant_detail

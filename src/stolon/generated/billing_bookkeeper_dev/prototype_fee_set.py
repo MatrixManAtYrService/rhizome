@@ -9,24 +9,25 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import create_prototype_fee_set
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import get_prototype_fee_set_by_disposition
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import get_prototype_fee_set_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import promote_prototype_fee_set
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import remove_prototype_fee_set
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import update_prototype_fee_set
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_prototype_fee_set import ApiPrototypeFeeSet
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.prototype_fee_set import (
+    create_prototype_fee_set,
+    get_prototype_fee_set_by_disposition,
+    get_prototype_fee_set_by_uuid,
+    promote_prototype_fee_set,
+    remove_prototype_fee_set,
+    update_prototype_fee_set,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_prototype_fee_set import (
+    ApiPrototypeFeeSet,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_prototype_fee_set_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiPrototypeFeeSet]:
+def create_prototype_fee_set_sync_detailed(*, client: StolonClient) -> Response[ApiPrototypeFeeSet]:
     """Create prototype fee set
 
     Args:
@@ -44,129 +45,7 @@ def create_prototype_fee_set_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
 
-    Returns:
-        Response[ApiPrototypeFeeSet]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_prototype_fee_set._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPrototypeFeeSet:
-        parsed = ApiPrototypeFeeSet.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-
-
-def create_prototype_fee_set_sync(
-    *,
-    client: StolonClient
-) -> ApiPrototypeFeeSet | None:
-    """Create prototype fee set
-
-    Args:
-        body (ApiPrototypeFeeSet):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiPrototypeFeeSet
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
-
-    Returns:
-        ApiPrototypeFeeSet | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_prototype_fee_set._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiPrototypeFeeSet.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-
-
-def create_prototype_fee_set_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiPrototypeFeeSet]:
-    """Create prototype fee set
-
-    Args:
-        body (ApiPrototypeFeeSet):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiPrototypeFeeSet]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
 
     Returns:
         Response[ApiPrototypeFeeSet]
@@ -186,8 +65,6 @@ def create_prototype_fee_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -206,18 +83,13 @@ def create_prototype_fee_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_prototype_fee_set_asyncio(
-    *,
-    client: StolonClient
-) -> ApiPrototypeFeeSet | None:
+def create_prototype_fee_set_sync(*, client: StolonClient) -> ApiPrototypeFeeSet | None:
     """Create prototype fee set
 
     Args:
@@ -235,7 +107,7 @@ def create_prototype_fee_set_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiPrototypeFeeSet | None
@@ -255,7 +127,7 @@ def create_prototype_fee_set_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -265,13 +137,117 @@ def create_prototype_fee_set_asyncio(
     return None
 
 
+def create_prototype_fee_set_asyncio_detailed(*, client: StolonClient) -> Response[ApiPrototypeFeeSet]:
+    """Create prototype fee set
+
+    Args:
+        body (ApiPrototypeFeeSet):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPrototypeFeeSet]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
 
 
-def update_prototype_fee_set_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+    Returns:
+        Response[ApiPrototypeFeeSet]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_prototype_fee_set._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiPrototypeFeeSet:
+        parsed = ApiPrototypeFeeSet.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def create_prototype_fee_set_asyncio(*, client: StolonClient) -> ApiPrototypeFeeSet | None:
+    """Create prototype fee set
+
+    Args:
+        body (ApiPrototypeFeeSet):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPrototypeFeeSet
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        ApiPrototypeFeeSet | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_prototype_fee_set._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiPrototypeFeeSet.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+def update_prototype_fee_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Update prototype fee set
 
     Args:
@@ -310,8 +286,6 @@ def update_prototype_fee_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -330,19 +304,13 @@ def update_prototype_fee_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_prototype_fee_set_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def update_prototype_fee_set_sync(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Update prototype fee set
 
     Args:
@@ -381,7 +349,7 @@ def update_prototype_fee_set_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,13 +359,7 @@ def update_prototype_fee_set_sync(
     return None
 
 
-
-
-def update_prototype_fee_set_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def update_prototype_fee_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Update prototype fee set
 
     Args:
@@ -436,8 +398,6 @@ def update_prototype_fee_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -456,19 +416,13 @@ def update_prototype_fee_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_prototype_fee_set_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def update_prototype_fee_set_asyncio(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Update prototype fee set
 
     Args:
@@ -507,7 +461,7 @@ def update_prototype_fee_set_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -517,13 +471,7 @@ def update_prototype_fee_set_asyncio(
     return None
 
 
-
-
-def get_prototype_fee_set_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def get_prototype_fee_set_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Get a prototype fee set by UUID
 
     Args:
@@ -561,8 +509,6 @@ def get_prototype_fee_set_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -581,19 +527,13 @@ def get_prototype_fee_set_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_prototype_fee_set_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def get_prototype_fee_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Get a prototype fee set by UUID
 
     Args:
@@ -631,7 +571,7 @@ def get_prototype_fee_set_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -641,13 +581,7 @@ def get_prototype_fee_set_by_uuid_sync(
     return None
 
 
-
-
-def get_prototype_fee_set_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def get_prototype_fee_set_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Get a prototype fee set by UUID
 
     Args:
@@ -685,8 +619,6 @@ def get_prototype_fee_set_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -705,19 +637,13 @@ def get_prototype_fee_set_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_prototype_fee_set_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def get_prototype_fee_set_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Get a prototype fee set by UUID
 
     Args:
@@ -755,7 +681,7 @@ def get_prototype_fee_set_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -763,13 +689,10 @@ def get_prototype_fee_set_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_prototype_fee_set_by_disposition_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"]]:
     """Get a prototype fee set by disposition
 
@@ -785,7 +708,7 @@ def get_prototype_fee_set_by_disposition_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"]]
@@ -805,8 +728,6 @@ def get_prototype_fee_set_by_disposition_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -825,17 +746,14 @@ def get_prototype_fee_set_by_disposition_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_prototype_fee_set_by_disposition_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"] | None:
     """Get a prototype fee set by disposition
 
@@ -851,7 +769,7 @@ def get_prototype_fee_set_by_disposition_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"] | None
@@ -860,7 +778,7 @@ def get_prototype_fee_set_by_disposition_sync(
     kwargs = get_prototype_fee_set_by_disposition._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -874,11 +792,8 @@ def get_prototype_fee_set_by_disposition_sync(
     return None
 
 
-
-
 def get_prototype_fee_set_by_disposition_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"]]:
     """Get a prototype fee set by disposition
 
@@ -894,7 +809,7 @@ def get_prototype_fee_set_by_disposition_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"]]
@@ -914,8 +829,6 @@ def get_prototype_fee_set_by_disposition_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -934,17 +847,14 @@ def get_prototype_fee_set_by_disposition_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_prototype_fee_set_by_disposition_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"] | None:
     """Get a prototype fee set by disposition
 
@@ -960,7 +870,7 @@ def get_prototype_fee_set_by_disposition_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiPrototypeFeeSet | list["ApiPrototypeFeeSet"] | None
@@ -969,7 +879,7 @@ def get_prototype_fee_set_by_disposition_asyncio(
     kwargs = get_prototype_fee_set_by_disposition._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -983,13 +893,7 @@ def get_prototype_fee_set_by_disposition_asyncio(
     return None
 
 
-
-
-def remove_prototype_fee_set_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def remove_prototype_fee_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Remove the prototype fee set
 
     Args:
@@ -1027,8 +931,6 @@ def remove_prototype_fee_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1047,19 +949,13 @@ def remove_prototype_fee_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def remove_prototype_fee_set_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def remove_prototype_fee_set_sync(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Remove the prototype fee set
 
     Args:
@@ -1097,7 +993,7 @@ def remove_prototype_fee_set_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1107,13 +1003,7 @@ def remove_prototype_fee_set_sync(
     return None
 
 
-
-
-def remove_prototype_fee_set_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def remove_prototype_fee_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Remove the prototype fee set
 
     Args:
@@ -1151,8 +1041,6 @@ def remove_prototype_fee_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1171,19 +1059,13 @@ def remove_prototype_fee_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def remove_prototype_fee_set_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def remove_prototype_fee_set_asyncio(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Remove the prototype fee set
 
     Args:
@@ -1221,7 +1103,7 @@ def remove_prototype_fee_set_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1231,13 +1113,7 @@ def remove_prototype_fee_set_asyncio(
     return None
 
 
-
-
-def promote_prototype_fee_set_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def promote_prototype_fee_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Promote the prototype fee set
 
     Args:
@@ -1275,8 +1151,6 @@ def promote_prototype_fee_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1295,19 +1169,13 @@ def promote_prototype_fee_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def promote_prototype_fee_set_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def promote_prototype_fee_set_sync(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Promote the prototype fee set
 
     Args:
@@ -1345,7 +1213,7 @@ def promote_prototype_fee_set_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1355,13 +1223,7 @@ def promote_prototype_fee_set_sync(
     return None
 
 
-
-
-def promote_prototype_fee_set_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiPrototypeFeeSet]:
+def promote_prototype_fee_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPrototypeFeeSet]:
     """Promote the prototype fee set
 
     Args:
@@ -1399,8 +1261,6 @@ def promote_prototype_fee_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1419,19 +1279,13 @@ def promote_prototype_fee_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def promote_prototype_fee_set_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiPrototypeFeeSet | None:
+def promote_prototype_fee_set_asyncio(*, client: StolonClient, uuid: str) -> ApiPrototypeFeeSet | None:
     """Promote the prototype fee set
 
     Args:
@@ -1469,7 +1323,7 @@ def promote_prototype_fee_set_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1477,4 +1331,3 @@ def promote_prototype_fee_set_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

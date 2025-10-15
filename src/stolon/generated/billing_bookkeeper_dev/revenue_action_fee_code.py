@@ -9,24 +9,28 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import create_revenue_action_fee_code
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import delete_revenue_action_fee_code_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import get_revenue_action_fee_code_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import get_revenue_action_fee_codes
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import update_revenue_action_fee_code
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action_fee_code import ApiRevenueActionFeeCode
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_fee_code import (
+    create_revenue_action_fee_code,
+    delete_revenue_action_fee_code_by_uuid,
+    get_revenue_action_fee_code_by_uuid,
+    get_revenue_action_fee_codes,
+    update_revenue_action_fee_code,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action_fee_code import (
+    ApiRevenueActionFeeCode,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def update_revenue_action_fee_code_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiRevenueActionFeeCode]:
     """Update revenue-action-to-fee-code mapping
 
@@ -67,8 +71,6 @@ def update_revenue_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -87,19 +89,13 @@ def update_revenue_action_fee_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_revenue_action_fee_code_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiRevenueActionFeeCode | None:
+def update_revenue_action_fee_code_sync(*, client: StolonClient, uuid: str) -> ApiRevenueActionFeeCode | None:
     """Update revenue-action-to-fee-code mapping
 
     Args:
@@ -139,7 +135,7 @@ def update_revenue_action_fee_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -147,14 +143,10 @@ def update_revenue_action_fee_code_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def update_revenue_action_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiRevenueActionFeeCode]:
     """Update revenue-action-to-fee-code mapping
 
@@ -195,8 +187,6 @@ def update_revenue_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -215,19 +205,13 @@ def update_revenue_action_fee_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_revenue_action_fee_code_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiRevenueActionFeeCode | None:
+def update_revenue_action_fee_code_asyncio(*, client: StolonClient, uuid: str) -> ApiRevenueActionFeeCode | None:
     """Update revenue-action-to-fee-code mapping
 
     Args:
@@ -267,7 +251,7 @@ def update_revenue_action_fee_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -277,12 +261,7 @@ def update_revenue_action_fee_code_asyncio(
     return None
 
 
-
-
-def create_revenue_action_fee_code_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiRevenueActionFeeCode]:
+def create_revenue_action_fee_code_sync_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -301,7 +280,7 @@ def create_revenue_action_fee_code_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiRevenueActionFeeCode]
@@ -321,8 +300,6 @@ def create_revenue_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -341,18 +318,13 @@ def create_revenue_action_fee_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_revenue_action_fee_code_sync(
-    *,
-    client: StolonClient
-) -> ApiRevenueActionFeeCode | None:
+def create_revenue_action_fee_code_sync(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -371,7 +343,7 @@ def create_revenue_action_fee_code_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiRevenueActionFeeCode | None
@@ -391,7 +363,7 @@ def create_revenue_action_fee_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -401,12 +373,7 @@ def create_revenue_action_fee_code_sync(
     return None
 
 
-
-
-def create_revenue_action_fee_code_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiRevenueActionFeeCode]:
+def create_revenue_action_fee_code_asyncio_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -425,7 +392,7 @@ def create_revenue_action_fee_code_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiRevenueActionFeeCode]
@@ -445,8 +412,6 @@ def create_revenue_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -465,18 +430,13 @@ def create_revenue_action_fee_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_revenue_action_fee_code_asyncio(
-    *,
-    client: StolonClient
-) -> ApiRevenueActionFeeCode | None:
+def create_revenue_action_fee_code_asyncio(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -495,7 +455,7 @@ def create_revenue_action_fee_code_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiRevenueActionFeeCode | None
@@ -515,7 +475,7 @@ def create_revenue_action_fee_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -523,14 +483,10 @@ def create_revenue_action_fee_code_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_revenue_action_fee_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiRevenueActionFeeCode]:
     """Get revenue-action-to-fee-code mapping by UUID
 
@@ -569,8 +525,6 @@ def get_revenue_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -589,19 +543,13 @@ def get_revenue_action_fee_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_fee_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiRevenueActionFeeCode | None:
+def get_revenue_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiRevenueActionFeeCode | None:
     """Get revenue-action-to-fee-code mapping by UUID
 
     Args:
@@ -639,7 +587,7 @@ def get_revenue_action_fee_code_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -647,14 +595,10 @@ def get_revenue_action_fee_code_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_revenue_action_fee_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiRevenueActionFeeCode]:
     """Get revenue-action-to-fee-code mapping by UUID
 
@@ -693,8 +637,6 @@ def get_revenue_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -713,19 +655,13 @@ def get_revenue_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_fee_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiRevenueActionFeeCode | None:
+def get_revenue_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiRevenueActionFeeCode | None:
     """Get revenue-action-to-fee-code mapping by UUID
 
     Args:
@@ -763,7 +699,7 @@ def get_revenue_action_fee_code_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -773,12 +709,7 @@ def get_revenue_action_fee_code_by_uuid_asyncio(
     return None
 
 
-
-
-def get_revenue_action_fee_codes_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiRevenueActionFeeCode]:
+def get_revenue_action_fee_codes_sync_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -809,7 +740,7 @@ def get_revenue_action_fee_codes_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiRevenueActionFeeCode]
@@ -829,8 +760,6 @@ def get_revenue_action_fee_codes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -849,18 +778,13 @@ def get_revenue_action_fee_codes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_fee_codes_sync(
-    *,
-    client: StolonClient
-) -> ApiRevenueActionFeeCode | None:
+def get_revenue_action_fee_codes_sync(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -891,7 +815,7 @@ def get_revenue_action_fee_codes_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiRevenueActionFeeCode | None
@@ -911,7 +835,7 @@ def get_revenue_action_fee_codes_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -921,12 +845,7 @@ def get_revenue_action_fee_codes_sync(
     return None
 
 
-
-
-def get_revenue_action_fee_codes_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiRevenueActionFeeCode]:
+def get_revenue_action_fee_codes_asyncio_detailed(*, client: StolonClient) -> Response[ApiRevenueActionFeeCode]:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -957,7 +876,7 @@ def get_revenue_action_fee_codes_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiRevenueActionFeeCode]
@@ -977,8 +896,6 @@ def get_revenue_action_fee_codes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -997,18 +914,13 @@ def get_revenue_action_fee_codes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_revenue_action_fee_codes_asyncio(
-    *,
-    client: StolonClient
-) -> ApiRevenueActionFeeCode | None:
+def get_revenue_action_fee_codes_asyncio(*, client: StolonClient) -> ApiRevenueActionFeeCode | None:
     """Get revenue-action-to-fee-code mappings
 
     Args:
@@ -1039,7 +951,7 @@ def get_revenue_action_fee_codes_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiRevenueActionFeeCode | None
@@ -1059,7 +971,7 @@ def get_revenue_action_fee_codes_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1069,13 +981,7 @@ def get_revenue_action_fee_codes_asyncio(
     return None
 
 
-
-
-def delete_revenue_action_fee_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_revenue_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete revenue-action-to-fee-code mapping
 
     Args:
@@ -1113,8 +1019,6 @@ def delete_revenue_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1133,19 +1037,13 @@ def delete_revenue_action_fee_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_revenue_action_fee_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_revenue_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete revenue-action-to-fee-code mapping
 
     Args:
@@ -1183,7 +1081,7 @@ def delete_revenue_action_fee_code_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1191,14 +1089,10 @@ def delete_revenue_action_fee_code_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def delete_revenue_action_fee_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError]:
     """Delete revenue-action-to-fee-code mapping
 
@@ -1237,8 +1131,6 @@ def delete_revenue_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1257,19 +1149,13 @@ def delete_revenue_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_revenue_action_fee_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_revenue_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete revenue-action-to-fee-code mapping
 
     Args:
@@ -1307,7 +1193,7 @@ def delete_revenue_action_fee_code_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1315,4 +1201,3 @@ def delete_revenue_action_fee_code_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

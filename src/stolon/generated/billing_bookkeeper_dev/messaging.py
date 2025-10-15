@@ -9,28 +9,36 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failure
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failures
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import get_consumer_failure_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import get_consumer_failure_histories
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import get_consumer_failures
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import retry_consumer_failure
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import retry_consumer_failures
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure import ApiConsumerFailure
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_history import ApiConsumerFailureHistory
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_update_response import ApiConsumerFailureUpdateResponse
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.messaging import (
+    acknowledge_consumer_failure,
+    acknowledge_consumer_failures,
+    get_consumer_failure_by_uuid,
+    get_consumer_failure_histories,
+    get_consumer_failures,
+    retry_consumer_failure,
+    retry_consumer_failures,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure import (
+    ApiConsumerFailure,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_history import (
+    ApiConsumerFailureHistory,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_consumer_failure_update_response import (
+    ApiConsumerFailureUpdateResponse,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def acknowledge_consumer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -70,8 +78,6 @@ def acknowledge_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -90,18 +96,14 @@ def acknowledge_consumer_failure_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_consumer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -130,7 +132,7 @@ def acknowledge_consumer_failure_sync(
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -142,14 +144,10 @@ def acknowledge_consumer_failure_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def acknowledge_consumer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -189,8 +187,6 @@ def acknowledge_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -209,18 +205,14 @@ def acknowledge_consumer_failure_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_consumer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -249,7 +241,7 @@ def acknowledge_consumer_failure_asyncio(
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -261,14 +253,10 @@ def acknowledge_consumer_failure_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def retry_consumer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Retry a consumer failure
 
@@ -308,8 +296,6 @@ def retry_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -328,18 +314,14 @@ def retry_consumer_failure_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def retry_consumer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Retry a consumer failure
 
@@ -368,7 +350,7 @@ def retry_consumer_failure_sync(
     kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -382,12 +364,8 @@ def retry_consumer_failure_sync(
     return None
 
 
-
-
 def retry_consumer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailureUpdateResponse | ResponseError]:
     """Retry a consumer failure
 
@@ -427,8 +405,6 @@ def retry_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -447,18 +423,14 @@ def retry_consumer_failure_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def retry_consumer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailureUpdateResponse | ResponseError | None:
     """Retry a consumer failure
 
@@ -487,7 +459,7 @@ def retry_consumer_failure_asyncio(
     kwargs = retry_consumer_failure._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -499,13 +471,10 @@ def retry_consumer_failure_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -529,7 +498,7 @@ def get_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailure"]]
@@ -549,8 +518,6 @@ def get_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -569,18 +536,13 @@ def get_consumer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_consumer_failures_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | list["ApiConsumerFailure"] | None:
+def get_consumer_failures_sync(*, client: StolonClient) -> ResponseError | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
     Args:
@@ -603,7 +565,7 @@ def get_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiConsumerFailure"] | None
@@ -612,7 +574,7 @@ def get_consumer_failures_sync(
     kwargs = get_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -624,13 +586,10 @@ def get_consumer_failures_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -654,7 +613,7 @@ def get_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailure"]]
@@ -674,8 +633,6 @@ def get_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -694,18 +651,13 @@ def get_consumer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_consumer_failures_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | list["ApiConsumerFailure"] | None:
+def get_consumer_failures_asyncio(*, client: StolonClient) -> ResponseError | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
     Args:
@@ -728,7 +680,7 @@ def get_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiConsumerFailure"] | None
@@ -737,7 +689,7 @@ def get_consumer_failures_asyncio(
     kwargs = get_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -749,14 +701,10 @@ def get_consumer_failures_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failure_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailure | ResponseError]:
     """Get a messaging consumer failure by UUID
 
@@ -795,8 +743,6 @@ def get_consumer_failure_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -815,19 +761,13 @@ def get_consumer_failure_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_consumer_failure_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiConsumerFailure | ResponseError | None:
+def get_consumer_failure_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiConsumerFailure | ResponseError | None:
     """Get a messaging consumer failure by UUID
 
     Args:
@@ -854,7 +794,7 @@ def get_consumer_failure_by_uuid_sync(
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -866,14 +806,10 @@ def get_consumer_failure_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failure_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailure | ResponseError]:
     """Get a messaging consumer failure by UUID
 
@@ -912,8 +848,6 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -932,18 +866,14 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_consumer_failure_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailure | ResponseError | None:
     """Get a messaging consumer failure by UUID
 
@@ -971,7 +901,7 @@ def get_consumer_failure_by_uuid_asyncio(
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -983,13 +913,10 @@ def get_consumer_failure_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def retry_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -1008,7 +935,7 @@ def retry_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
@@ -1028,8 +955,6 @@ def retry_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1048,17 +973,14 @@ def retry_consumer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def retry_consumer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -1077,7 +999,7 @@ def retry_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
@@ -1086,7 +1008,7 @@ def retry_consumer_failures_sync(
     kwargs = retry_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1098,13 +1020,10 @@ def retry_consumer_failures_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def retry_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -1123,7 +1042,7 @@ def retry_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
@@ -1143,8 +1062,6 @@ def retry_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1163,17 +1080,14 @@ def retry_consumer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def retry_consumer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -1192,7 +1106,7 @@ def retry_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
@@ -1201,7 +1115,7 @@ def retry_consumer_failures_asyncio(
     kwargs = retry_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1213,13 +1127,10 @@ def retry_consumer_failures_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_consumer_failure_histories_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -1243,7 +1154,7 @@ def get_consumer_failure_histories_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]
@@ -1263,8 +1174,6 @@ def get_consumer_failure_histories_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1283,17 +1192,14 @@ def get_consumer_failure_histories_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_consumer_failure_histories_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -1317,7 +1223,7 @@ def get_consumer_failure_histories_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None
@@ -1326,7 +1232,7 @@ def get_consumer_failure_histories_sync(
     kwargs = get_consumer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1340,11 +1246,8 @@ def get_consumer_failure_histories_sync(
     return None
 
 
-
-
 def get_consumer_failure_histories_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -1368,7 +1271,7 @@ def get_consumer_failure_histories_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"]]
@@ -1388,8 +1291,6 @@ def get_consumer_failure_histories_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1408,17 +1309,14 @@ def get_consumer_failure_histories_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_consumer_failure_histories_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -1442,7 +1340,7 @@ def get_consumer_failure_histories_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiConsumerFailureHistory | list["ApiConsumerFailureHistory"] | None
@@ -1451,7 +1349,7 @@ def get_consumer_failure_histories_asyncio(
     kwargs = get_consumer_failure_histories._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1463,13 +1361,10 @@ def get_consumer_failure_histories_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def acknowledge_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1489,7 +1384,7 @@ def acknowledge_consumer_failures_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
@@ -1509,8 +1404,6 @@ def acknowledge_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1529,17 +1422,14 @@ def acknowledge_consumer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def acknowledge_consumer_failures_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1559,7 +1449,7 @@ def acknowledge_consumer_failures_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
@@ -1568,7 +1458,7 @@ def acknowledge_consumer_failures_sync(
     kwargs = acknowledge_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1582,11 +1472,8 @@ def acknowledge_consumer_failures_sync(
     return None
 
 
-
-
 def acknowledge_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1606,7 +1493,7 @@ def acknowledge_consumer_failures_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError | list["ApiConsumerFailureUpdateResponse"]]
@@ -1626,8 +1513,6 @@ def acknowledge_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1646,17 +1531,14 @@ def acknowledge_consumer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def acknowledge_consumer_failures_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ResponseError | list["ApiConsumerFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -1676,7 +1558,7 @@ def acknowledge_consumer_failures_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | list["ApiConsumerFailureUpdateResponse"] | None
@@ -1685,7 +1567,7 @@ def acknowledge_consumer_failures_asyncio(
     kwargs = acknowledge_consumer_failures._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1697,4 +1579,3 @@ def acknowledge_consumer_failures_asyncio(
 
     # No response model, return None
     return None
-

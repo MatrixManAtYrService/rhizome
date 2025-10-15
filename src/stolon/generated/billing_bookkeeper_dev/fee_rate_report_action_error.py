@@ -9,18 +9,21 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_rate_report_action_error import get_fee_rate_report_action_errors_by_error_report_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_rate_report_action_error import (
+    get_fee_rate_report_action_errors_by_error_report_uuid,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def get_fee_rate_report_action_errors_by_error_report_uuid_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError]:
     """Get fee rate report action errors by error report uuid
 
@@ -41,7 +44,7 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -61,8 +64,6 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -81,18 +82,13 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_rate_report_action_errors_by_error_report_uuid_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_fee_rate_report_action_errors_by_error_report_uuid_sync(*, client: StolonClient) -> ResponseError | None:
     """Get fee rate report action errors by error report uuid
 
     Args:
@@ -112,7 +108,7 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -132,7 +128,7 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -140,13 +136,10 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ResponseError]:
     """Get fee rate report action errors by error report uuid
 
@@ -167,7 +160,7 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -187,8 +180,6 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -207,18 +198,13 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get fee rate report action errors by error report uuid
 
     Args:
@@ -238,7 +224,7 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -258,7 +244,7 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -266,4 +252,3 @@ def get_fee_rate_report_action_errors_by_error_report_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

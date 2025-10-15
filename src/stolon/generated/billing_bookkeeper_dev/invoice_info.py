@@ -9,25 +9,29 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import get_developer_invoice_infos
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import get_invoice_info_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import get_invoice_info_extended
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import get_invoice_infos
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import get_merchant_invoice_infos
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import get_reseller_invoice_infos
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_info import ApiInvoiceInfo
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_info_extended import ApiInvoiceInfoExtended
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.invoice_info import (
+    get_developer_invoice_infos,
+    get_invoice_info_by_uuid,
+    get_invoice_info_extended,
+    get_invoice_infos,
+    get_merchant_invoice_infos,
+    get_reseller_invoice_infos,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_info import (
+    ApiInvoiceInfo,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_info_extended import (
+    ApiInvoiceInfoExtended,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def get_reseller_invoice_infos_sync_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for reseller
 
@@ -73,8 +77,6 @@ def get_reseller_invoice_infos_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -93,18 +95,14 @@ def get_reseller_invoice_infos_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_invoice_infos_sync(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for reseller
 
@@ -139,7 +137,7 @@ def get_reseller_invoice_infos_sync(
     kwargs = get_reseller_invoice_infos._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -151,14 +149,10 @@ def get_reseller_invoice_infos_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_reseller_invoice_infos_asyncio_detailed(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for reseller
 
@@ -204,8 +198,6 @@ def get_reseller_invoice_infos_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -224,18 +216,14 @@ def get_reseller_invoice_infos_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_reseller_invoice_infos_asyncio(
-    *,
-    client: StolonClient,
-    r_id: str
+    *, client: StolonClient, r_id: str
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for reseller
 
@@ -270,7 +258,7 @@ def get_reseller_invoice_infos_asyncio(
     kwargs = get_reseller_invoice_infos._get_kwargs(r_id=r_id)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -284,13 +272,7 @@ def get_reseller_invoice_infos_asyncio(
     return None
 
 
-
-
-def get_invoice_info_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiInvoiceInfo]:
+def get_invoice_info_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiInvoiceInfo]:
     """Get invoice info by UUID
 
     Args:
@@ -328,8 +310,6 @@ def get_invoice_info_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -348,19 +328,13 @@ def get_invoice_info_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_info_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiInvoiceInfo | None:
+def get_invoice_info_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiInvoiceInfo | None:
     """Get invoice info by UUID
 
     Args:
@@ -398,7 +372,7 @@ def get_invoice_info_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -408,13 +382,7 @@ def get_invoice_info_by_uuid_sync(
     return None
 
 
-
-
-def get_invoice_info_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiInvoiceInfo]:
+def get_invoice_info_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiInvoiceInfo]:
     """Get invoice info by UUID
 
     Args:
@@ -452,8 +420,6 @@ def get_invoice_info_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -472,19 +438,13 @@ def get_invoice_info_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_info_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiInvoiceInfo | None:
+def get_invoice_info_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiInvoiceInfo | None:
     """Get invoice info by UUID
 
     Args:
@@ -522,7 +482,7 @@ def get_invoice_info_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -530,14 +490,10 @@ def get_invoice_info_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_developer_invoice_infos_sync_detailed(
-    *,
-    client: StolonClient,
-    developer_uuid: str
+    *, client: StolonClient, developer_uuid: str
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for developer
 
@@ -581,8 +537,6 @@ def get_developer_invoice_infos_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -601,18 +555,14 @@ def get_developer_invoice_infos_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_developer_invoice_infos_sync(
-    *,
-    client: StolonClient,
-    developer_uuid: str
+    *, client: StolonClient, developer_uuid: str
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for developer
 
@@ -645,7 +595,7 @@ def get_developer_invoice_infos_sync(
     kwargs = get_developer_invoice_infos._get_kwargs(developer_uuid=developer_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -657,14 +607,10 @@ def get_developer_invoice_infos_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_developer_invoice_infos_asyncio_detailed(
-    *,
-    client: StolonClient,
-    developer_uuid: str
+    *, client: StolonClient, developer_uuid: str
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for developer
 
@@ -708,8 +654,6 @@ def get_developer_invoice_infos_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -728,18 +672,14 @@ def get_developer_invoice_infos_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_developer_invoice_infos_asyncio(
-    *,
-    client: StolonClient,
-    developer_uuid: str
+    *, client: StolonClient, developer_uuid: str
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for developer
 
@@ -772,7 +712,7 @@ def get_developer_invoice_infos_asyncio(
     kwargs = get_developer_invoice_infos._get_kwargs(developer_uuid=developer_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -784,13 +724,10 @@ def get_developer_invoice_infos_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_invoice_info_extended_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]:
     """Return Extended Invoice Information per Location
 
@@ -813,7 +750,7 @@ def get_invoice_info_extended_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]
@@ -833,8 +770,6 @@ def get_invoice_info_extended_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -853,17 +788,14 @@ def get_invoice_info_extended_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_invoice_info_extended_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None:
     """Return Extended Invoice Information per Location
 
@@ -886,7 +818,7 @@ def get_invoice_info_extended_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None
@@ -895,7 +827,7 @@ def get_invoice_info_extended_sync(
     kwargs = get_invoice_info_extended._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -909,11 +841,8 @@ def get_invoice_info_extended_sync(
     return None
 
 
-
-
 def get_invoice_info_extended_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]:
     """Return Extended Invoice Information per Location
 
@@ -936,7 +865,7 @@ def get_invoice_info_extended_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"]]
@@ -956,8 +885,6 @@ def get_invoice_info_extended_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -976,17 +903,14 @@ def get_invoice_info_extended_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_invoice_info_extended_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None:
     """Return Extended Invoice Information per Location
 
@@ -1009,7 +933,7 @@ def get_invoice_info_extended_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiInvoiceInfoExtended | list["ApiInvoiceInfoExtended"] | None
@@ -1018,7 +942,7 @@ def get_invoice_info_extended_asyncio(
     kwargs = get_invoice_info_extended._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1030,14 +954,10 @@ def get_invoice_info_extended_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_invoice_infos_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for merchant
 
@@ -1081,8 +1001,6 @@ def get_merchant_invoice_infos_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1101,18 +1019,14 @@ def get_merchant_invoice_infos_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_merchant_invoice_infos_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for merchant
 
@@ -1145,7 +1059,7 @@ def get_merchant_invoice_infos_sync(
     kwargs = get_merchant_invoice_infos._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1157,14 +1071,10 @@ def get_merchant_invoice_infos_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_invoice_infos_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information for merchant
 
@@ -1208,8 +1118,6 @@ def get_merchant_invoice_infos_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1228,18 +1136,14 @@ def get_merchant_invoice_infos_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_merchant_invoice_infos_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information for merchant
 
@@ -1272,7 +1176,7 @@ def get_merchant_invoice_infos_asyncio(
     kwargs = get_merchant_invoice_infos._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1286,12 +1190,7 @@ def get_merchant_invoice_infos_asyncio(
     return None
 
 
-
-
-def get_invoice_infos_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
+def get_invoice_infos_sync_detailed(*, client: StolonClient) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information
 
     Args:
@@ -1314,7 +1213,7 @@ def get_invoice_infos_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
@@ -1334,8 +1233,6 @@ def get_invoice_infos_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1354,18 +1251,13 @@ def get_invoice_infos_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_infos_sync(
-    *,
-    client: StolonClient
-) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
+def get_invoice_infos_sync(*, client: StolonClient) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information
 
     Args:
@@ -1388,7 +1280,7 @@ def get_invoice_infos_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
@@ -1397,7 +1289,7 @@ def get_invoice_infos_sync(
     kwargs = get_invoice_infos._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1411,12 +1303,7 @@ def get_invoice_infos_sync(
     return None
 
 
-
-
-def get_invoice_infos_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
+def get_invoice_infos_asyncio_detailed(*, client: StolonClient) -> Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]:
     """Get invoice information
 
     Args:
@@ -1439,7 +1326,7 @@ def get_invoice_infos_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiInvoiceInfo | list["ApiInvoiceInfo"]]
@@ -1459,8 +1346,6 @@ def get_invoice_infos_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1479,18 +1364,13 @@ def get_invoice_infos_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_infos_asyncio(
-    *,
-    client: StolonClient
-) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
+def get_invoice_infos_asyncio(*, client: StolonClient) -> ApiInvoiceInfo | list["ApiInvoiceInfo"] | None:
     """Get invoice information
 
     Args:
@@ -1513,7 +1393,7 @@ def get_invoice_infos_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiInvoiceInfo | list["ApiInvoiceInfo"] | None
@@ -1522,7 +1402,7 @@ def get_invoice_infos_asyncio(
     kwargs = get_invoice_infos._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1534,4 +1414,3 @@ def get_invoice_infos_asyncio(
 
     # No response model, return None
     return None
-

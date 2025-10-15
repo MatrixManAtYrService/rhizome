@@ -9,26 +9,30 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import create
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import delete
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import get
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import get_test_merchant_criteria
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response200 import CreateResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_response200 import DeleteResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_response200 import GetResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_test_merchant_criteria_response200 import GetTestMerchantCriteriaResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import (
+    create,
+    delete,
+    get,
+    get_test_merchant_criteria,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response200 import (
+    CreateResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_response200 import (
+    DeleteResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_response200 import GetResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_test_merchant_criteria_response200 import (
+    GetTestMerchantCriteriaResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def delete_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[DeleteResponse200]:
+def delete_sync_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteResponse200]:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -66,8 +70,6 @@ def delete_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -86,19 +88,13 @@ def delete_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> DeleteResponse200 | None:
+def delete_sync(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -136,7 +132,7 @@ def delete_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -146,13 +142,7 @@ def delete_sync(
     return None
 
 
-
-
-def delete_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[DeleteResponse200]:
+def delete_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteResponse200]:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -190,8 +180,6 @@ def delete_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -210,19 +198,13 @@ def delete_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> DeleteResponse200 | None:
+def delete_asyncio(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -260,7 +242,7 @@ def delete_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -270,12 +252,7 @@ def delete_asyncio(
     return None
 
 
-
-
-def create_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[CreateResponse200]:
+def create_sync_detailed(*, client: StolonClient) -> Response[CreateResponse200]:
     """Create test merchant criteria
 
     Args:
@@ -293,7 +270,7 @@ def create_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[CreateResponse200]
@@ -313,8 +290,6 @@ def create_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -333,18 +308,13 @@ def create_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_sync(
-    *,
-    client: StolonClient
-) -> CreateResponse200 | None:
+def create_sync(*, client: StolonClient) -> CreateResponse200 | None:
     """Create test merchant criteria
 
     Args:
@@ -362,7 +332,7 @@ def create_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         CreateResponse200 | None
@@ -382,7 +352,7 @@ def create_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -392,12 +362,7 @@ def create_sync(
     return None
 
 
-
-
-def create_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[CreateResponse200]:
+def create_asyncio_detailed(*, client: StolonClient) -> Response[CreateResponse200]:
     """Create test merchant criteria
 
     Args:
@@ -415,7 +380,7 @@ def create_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[CreateResponse200]
@@ -435,8 +400,6 @@ def create_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -455,18 +418,13 @@ def create_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_asyncio(
-    *,
-    client: StolonClient
-) -> CreateResponse200 | None:
+def create_asyncio(*, client: StolonClient) -> CreateResponse200 | None:
     """Create test merchant criteria
 
     Args:
@@ -484,7 +442,7 @@ def create_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         CreateResponse200 | None
@@ -504,7 +462,7 @@ def create_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -514,12 +472,7 @@ def create_asyncio(
     return None
 
 
-
-
-def get_test_merchant_criteria_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[GetTestMerchantCriteriaResponse200]:
+def get_test_merchant_criteria_sync_detailed(*, client: StolonClient) -> Response[GetTestMerchantCriteriaResponse200]:
     """Get test merchant criteria
 
     Raises:
@@ -534,7 +487,7 @@ def get_test_merchant_criteria_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetTestMerchantCriteriaResponse200]
@@ -554,8 +507,6 @@ def get_test_merchant_criteria_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -574,18 +525,13 @@ def get_test_merchant_criteria_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_test_merchant_criteria_sync(
-    *,
-    client: StolonClient
-) -> GetTestMerchantCriteriaResponse200 | None:
+def get_test_merchant_criteria_sync(*, client: StolonClient) -> GetTestMerchantCriteriaResponse200 | None:
     """Get test merchant criteria
 
     Raises:
@@ -600,7 +546,7 @@ def get_test_merchant_criteria_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetTestMerchantCriteriaResponse200 | None
@@ -620,7 +566,7 @@ def get_test_merchant_criteria_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -628,13 +574,10 @@ def get_test_merchant_criteria_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_test_merchant_criteria_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetTestMerchantCriteriaResponse200]:
     """Get test merchant criteria
 
@@ -650,7 +593,7 @@ def get_test_merchant_criteria_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetTestMerchantCriteriaResponse200]
@@ -670,8 +613,6 @@ def get_test_merchant_criteria_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -690,18 +631,13 @@ def get_test_merchant_criteria_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_test_merchant_criteria_asyncio(
-    *,
-    client: StolonClient
-) -> GetTestMerchantCriteriaResponse200 | None:
+def get_test_merchant_criteria_asyncio(*, client: StolonClient) -> GetTestMerchantCriteriaResponse200 | None:
     """Get test merchant criteria
 
     Raises:
@@ -716,7 +652,7 @@ def get_test_merchant_criteria_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetTestMerchantCriteriaResponse200 | None
@@ -736,7 +672,7 @@ def get_test_merchant_criteria_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -746,13 +682,7 @@ def get_test_merchant_criteria_asyncio(
     return None
 
 
-
-
-def get_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[GetResponse200]:
+def get_sync_detailed(*, client: StolonClient, uuid: str) -> Response[GetResponse200]:
     """Get test merchant criteria by UUID
 
     Args:
@@ -790,8 +720,6 @@ def get_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -810,19 +738,13 @@ def get_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> GetResponse200 | None:
+def get_sync(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     """Get test merchant criteria by UUID
 
     Args:
@@ -860,7 +782,7 @@ def get_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -870,13 +792,7 @@ def get_sync(
     return None
 
 
-
-
-def get_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[GetResponse200]:
+def get_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[GetResponse200]:
     """Get test merchant criteria by UUID
 
     Args:
@@ -914,8 +830,6 @@ def get_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -934,19 +848,13 @@ def get_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> GetResponse200 | None:
+def get_asyncio(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     """Get test merchant criteria by UUID
 
     Args:
@@ -984,7 +892,7 @@ def get_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -992,4 +900,3 @@ def get_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

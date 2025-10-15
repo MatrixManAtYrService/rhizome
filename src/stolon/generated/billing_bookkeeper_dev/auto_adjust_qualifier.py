@@ -9,23 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_qualifier import create_auto_adjust_qualifier
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_qualifier import delete_auto_adjust_qualifier_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_qualifier import get_auto_adjust_qualifier_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_qualifier import get_auto_adjust_rule_qualifiers
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_auto_adjust_qualifier import ApiAutoAdjustQualifier
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.auto_adjust_qualifier import (
+    create_auto_adjust_qualifier,
+    delete_auto_adjust_qualifier_by_uuid,
+    get_auto_adjust_qualifier_by_uuid,
+    get_auto_adjust_rule_qualifiers,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_auto_adjust_qualifier import (
+    ApiAutoAdjustQualifier,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def get_auto_adjust_rule_qualifiers_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustQualifier]:
+def get_auto_adjust_rule_qualifiers_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
     """Get auto-adjust qualifiers for an auto-adjust rule
 
     Args:
@@ -45,133 +48,7 @@ def get_auto_adjust_rule_qualifiers_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
 
-    Returns:
-        Response[ApiAutoAdjustQualifier]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiAutoAdjustQualifier:
-        parsed = ApiAutoAdjustQualifier.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-
-
-def get_auto_adjust_rule_qualifiers_sync(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustQualifier | None:
-    """Get auto-adjust qualifiers for an auto-adjust rule
-
-    Args:
-        rule_uuid (str):
-        fee_category (Union[Unset, str]):
-        fee_code (Union[Unset, str]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiAutoAdjustQualifier
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
-
-    Returns:
-        ApiAutoAdjustQualifier | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAutoAdjustQualifier.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-
-
-def get_auto_adjust_rule_qualifiers_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustQualifier]:
-    """Get auto-adjust qualifiers for an auto-adjust rule
-
-    Args:
-        rule_uuid (str):
-        fee_category (Union[Unset, str]):
-        fee_code (Union[Unset, str]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiAutoAdjustQualifier]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
 
     Returns:
         Response[ApiAutoAdjustQualifier]
@@ -191,8 +68,6 @@ def get_auto_adjust_rule_qualifiers_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -211,18 +86,13 @@ def get_auto_adjust_rule_qualifiers_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_rule_qualifiers_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustQualifier | None:
+def get_auto_adjust_rule_qualifiers_sync(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
     """Get auto-adjust qualifiers for an auto-adjust rule
 
     Args:
@@ -242,7 +112,7 @@ def get_auto_adjust_rule_qualifiers_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustQualifier | None
@@ -262,7 +132,7 @@ def get_auto_adjust_rule_qualifiers_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -272,12 +142,122 @@ def get_auto_adjust_rule_qualifiers_asyncio(
     return None
 
 
+def get_auto_adjust_rule_qualifiers_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
+    """Get auto-adjust qualifiers for an auto-adjust rule
+
+    Args:
+        rule_uuid (str):
+        fee_category (Union[Unset, str]):
+        fee_code (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiAutoAdjustQualifier]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        Response[ApiAutoAdjustQualifier]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ApiAutoAdjustQualifier:
+        parsed = ApiAutoAdjustQualifier.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def get_auto_adjust_rule_qualifiers_asyncio(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
+    """Get auto-adjust qualifiers for an auto-adjust rule
+
+    Args:
+        rule_uuid (str):
+        fee_category (Union[Unset, str]):
+        fee_code (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiAutoAdjustQualifier
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        ApiAutoAdjustQualifier | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_auto_adjust_rule_qualifiers._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiAutoAdjustQualifier.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
 
 
 def delete_auto_adjust_qualifier_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete auto-adjust qualifier
 
@@ -316,8 +296,6 @@ def delete_auto_adjust_qualifier_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -336,19 +314,13 @@ def delete_auto_adjust_qualifier_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_auto_adjust_qualifier_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_auto_adjust_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete auto-adjust qualifier
 
     Args:
@@ -375,7 +347,7 @@ def delete_auto_adjust_qualifier_by_uuid_sync(
     kwargs = delete_auto_adjust_qualifier_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -387,14 +359,10 @@ def delete_auto_adjust_qualifier_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_auto_adjust_qualifier_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete auto-adjust qualifier
 
@@ -433,8 +401,6 @@ def delete_auto_adjust_qualifier_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -453,19 +419,13 @@ def delete_auto_adjust_qualifier_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_auto_adjust_qualifier_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_auto_adjust_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete auto-adjust qualifier
 
     Args:
@@ -492,7 +452,7 @@ def delete_auto_adjust_qualifier_by_uuid_asyncio(
     kwargs = delete_auto_adjust_qualifier_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -506,12 +466,7 @@ def delete_auto_adjust_qualifier_by_uuid_asyncio(
     return None
 
 
-
-
-def create_auto_adjust_qualifier_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustQualifier]:
+def create_auto_adjust_qualifier_sync_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
     """Create auto-adjust qualifier
 
     Args:
@@ -529,7 +484,7 @@ def create_auto_adjust_qualifier_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAutoAdjustQualifier]
@@ -549,8 +504,6 @@ def create_auto_adjust_qualifier_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -569,18 +522,13 @@ def create_auto_adjust_qualifier_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_auto_adjust_qualifier_sync(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustQualifier | None:
+def create_auto_adjust_qualifier_sync(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
     """Create auto-adjust qualifier
 
     Args:
@@ -598,7 +546,7 @@ def create_auto_adjust_qualifier_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustQualifier | None
@@ -618,7 +566,7 @@ def create_auto_adjust_qualifier_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -628,12 +576,7 @@ def create_auto_adjust_qualifier_sync(
     return None
 
 
-
-
-def create_auto_adjust_qualifier_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAutoAdjustQualifier]:
+def create_auto_adjust_qualifier_asyncio_detailed(*, client: StolonClient) -> Response[ApiAutoAdjustQualifier]:
     """Create auto-adjust qualifier
 
     Args:
@@ -651,7 +594,7 @@ def create_auto_adjust_qualifier_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAutoAdjustQualifier]
@@ -671,8 +614,6 @@ def create_auto_adjust_qualifier_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -691,18 +632,13 @@ def create_auto_adjust_qualifier_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_auto_adjust_qualifier_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAutoAdjustQualifier | None:
+def create_auto_adjust_qualifier_asyncio(*, client: StolonClient) -> ApiAutoAdjustQualifier | None:
     """Create auto-adjust qualifier
 
     Args:
@@ -720,7 +656,7 @@ def create_auto_adjust_qualifier_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAutoAdjustQualifier | None
@@ -740,7 +676,7 @@ def create_auto_adjust_qualifier_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -748,14 +684,10 @@ def create_auto_adjust_qualifier_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_auto_adjust_qualifier_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAutoAdjustQualifier]:
     """Get auto-adjust qualifier by UUID
 
@@ -794,8 +726,6 @@ def get_auto_adjust_qualifier_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -814,19 +744,13 @@ def get_auto_adjust_qualifier_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_qualifier_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAutoAdjustQualifier | None:
+def get_auto_adjust_qualifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAutoAdjustQualifier | None:
     """Get auto-adjust qualifier by UUID
 
     Args:
@@ -864,7 +788,7 @@ def get_auto_adjust_qualifier_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -872,14 +796,10 @@ def get_auto_adjust_qualifier_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_auto_adjust_qualifier_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAutoAdjustQualifier]:
     """Get auto-adjust qualifier by UUID
 
@@ -918,8 +838,6 @@ def get_auto_adjust_qualifier_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -938,19 +856,13 @@ def get_auto_adjust_qualifier_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_auto_adjust_qualifier_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAutoAdjustQualifier | None:
+def get_auto_adjust_qualifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAutoAdjustQualifier | None:
     """Get auto-adjust qualifier by UUID
 
     Args:
@@ -988,7 +900,7 @@ def get_auto_adjust_qualifier_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -996,4 +908,3 @@ def get_auto_adjust_qualifier_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

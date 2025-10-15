@@ -9,25 +9,29 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import create_ledger_account_key
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import delete_ledger_account_key_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import get_ledger_account_key_by_key
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import get_ledger_account_key_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import list_ledger_account_keys
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import update_ledger_account_key
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_key import ApiLedgerAccountKey
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_key import (
+    create_ledger_account_key,
+    delete_ledger_account_key_by_uuid,
+    get_ledger_account_key_by_key,
+    get_ledger_account_key_by_uuid,
+    list_ledger_account_keys,
+    update_ledger_account_key,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_key import (
+    ApiLedgerAccountKey,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def delete_ledger_account_key_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | str]:
     """Delete ledger account key
 
@@ -66,8 +70,6 @@ def delete_ledger_account_key_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -86,19 +88,13 @@ def delete_ledger_account_key_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_ledger_account_key_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | str | None:
+def delete_ledger_account_key_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
     """Delete ledger account key
 
     Args:
@@ -125,7 +121,7 @@ def delete_ledger_account_key_by_uuid_sync(
     kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -137,14 +133,10 @@ def delete_ledger_account_key_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_ledger_account_key_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | str]:
     """Delete ledger account key
 
@@ -183,8 +175,6 @@ def delete_ledger_account_key_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -203,19 +193,13 @@ def delete_ledger_account_key_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_ledger_account_key_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | str | None:
+def delete_ledger_account_key_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
     """Delete ledger account key
 
     Args:
@@ -242,7 +226,7 @@ def delete_ledger_account_key_by_uuid_asyncio(
     kwargs = delete_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -254,14 +238,10 @@ def delete_ledger_account_key_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_ledger_account_key_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key by UUID
 
@@ -300,8 +280,6 @@ def get_ledger_account_key_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -320,18 +298,14 @@ def get_ledger_account_key_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_ledger_account_key_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key by UUID
 
@@ -359,7 +333,7 @@ def get_ledger_account_key_by_uuid_sync(
     kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -371,14 +345,10 @@ def get_ledger_account_key_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_ledger_account_key_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key by UUID
 
@@ -417,8 +387,6 @@ def get_ledger_account_key_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -437,18 +405,14 @@ def get_ledger_account_key_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_ledger_account_key_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key by UUID
 
@@ -476,7 +440,7 @@ def get_ledger_account_key_by_uuid_asyncio(
     kwargs = get_ledger_account_key_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -490,12 +454,7 @@ def get_ledger_account_key_by_uuid_asyncio(
     return None
 
 
-
-
-def create_ledger_account_key_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_ledger_account_key_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create ledger account key
 
     Args:
@@ -513,7 +472,7 @@ def create_ledger_account_key_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -533,8 +492,6 @@ def create_ledger_account_key_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -553,18 +510,13 @@ def create_ledger_account_key_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_ledger_account_key_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_ledger_account_key_sync(*, client: StolonClient) -> ResponseError | None:
     """Create ledger account key
 
     Args:
@@ -582,7 +534,7 @@ def create_ledger_account_key_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -602,7 +554,7 @@ def create_ledger_account_key_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -612,12 +564,7 @@ def create_ledger_account_key_sync(
     return None
 
 
-
-
-def create_ledger_account_key_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_ledger_account_key_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create ledger account key
 
     Args:
@@ -635,7 +582,7 @@ def create_ledger_account_key_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -655,8 +602,6 @@ def create_ledger_account_key_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -675,18 +620,13 @@ def create_ledger_account_key_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_ledger_account_key_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_ledger_account_key_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create ledger account key
 
     Args:
@@ -704,7 +644,7 @@ def create_ledger_account_key_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -724,7 +664,7 @@ def create_ledger_account_key_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -732,14 +672,10 @@ def create_ledger_account_key_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def update_ledger_account_key_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Update ledger account key
 
@@ -779,8 +715,6 @@ def update_ledger_account_key_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -799,19 +733,13 @@ def update_ledger_account_key_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_ledger_account_key_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiLedgerAccountKey | ResponseError | None:
+def update_ledger_account_key_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountKey | ResponseError | None:
     """Update ledger account key
 
     Args:
@@ -839,7 +767,7 @@ def update_ledger_account_key_sync(
     kwargs = update_ledger_account_key._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -851,14 +779,10 @@ def update_ledger_account_key_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def update_ledger_account_key_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Update ledger account key
 
@@ -898,8 +822,6 @@ def update_ledger_account_key_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -918,19 +840,13 @@ def update_ledger_account_key_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_ledger_account_key_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiLedgerAccountKey | ResponseError | None:
+def update_ledger_account_key_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerAccountKey | ResponseError | None:
     """Update ledger account key
 
     Args:
@@ -958,7 +874,7 @@ def update_ledger_account_key_asyncio(
     kwargs = update_ledger_account_key._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -972,12 +888,7 @@ def update_ledger_account_key_asyncio(
     return None
 
 
-
-
-def list_ledger_account_keys_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def list_ledger_account_keys_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Lists ledger account keys
 
     Args:
@@ -998,7 +909,7 @@ def list_ledger_account_keys_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1018,8 +929,6 @@ def list_ledger_account_keys_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1038,18 +947,13 @@ def list_ledger_account_keys_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def list_ledger_account_keys_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def list_ledger_account_keys_sync(*, client: StolonClient) -> ResponseError | None:
     """Lists ledger account keys
 
     Args:
@@ -1070,7 +974,7 @@ def list_ledger_account_keys_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1090,7 +994,7 @@ def list_ledger_account_keys_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1100,12 +1004,7 @@ def list_ledger_account_keys_sync(
     return None
 
 
-
-
-def list_ledger_account_keys_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def list_ledger_account_keys_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Lists ledger account keys
 
     Args:
@@ -1126,7 +1025,7 @@ def list_ledger_account_keys_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1146,8 +1045,6 @@ def list_ledger_account_keys_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1166,18 +1063,13 @@ def list_ledger_account_keys_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def list_ledger_account_keys_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def list_ledger_account_keys_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Lists ledger account keys
 
     Args:
@@ -1198,7 +1090,7 @@ def list_ledger_account_keys_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1218,7 +1110,7 @@ def list_ledger_account_keys_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1226,13 +1118,10 @@ def list_ledger_account_keys_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_ledger_account_key_by_key_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key using the key value
 
@@ -1251,7 +1140,7 @@ def get_ledger_account_key_by_key_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiLedgerAccountKey | ResponseError]
@@ -1271,8 +1160,6 @@ def get_ledger_account_key_by_key_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1291,18 +1178,13 @@ def get_ledger_account_key_by_key_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_ledger_account_key_by_key_sync(
-    *,
-    client: StolonClient
-) -> ApiLedgerAccountKey | ResponseError | None:
+def get_ledger_account_key_by_key_sync(*, client: StolonClient) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key using the key value
 
     Args:
@@ -1320,7 +1202,7 @@ def get_ledger_account_key_by_key_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiLedgerAccountKey | ResponseError | None
@@ -1329,7 +1211,7 @@ def get_ledger_account_key_by_key_sync(
     kwargs = get_ledger_account_key_by_key._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1341,13 +1223,10 @@ def get_ledger_account_key_by_key_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_ledger_account_key_by_key_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiLedgerAccountKey | ResponseError]:
     """Get ledger account key using the key value
 
@@ -1366,7 +1245,7 @@ def get_ledger_account_key_by_key_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiLedgerAccountKey | ResponseError]
@@ -1386,8 +1265,6 @@ def get_ledger_account_key_by_key_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1406,18 +1283,13 @@ def get_ledger_account_key_by_key_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_ledger_account_key_by_key_asyncio(
-    *,
-    client: StolonClient
-) -> ApiLedgerAccountKey | ResponseError | None:
+def get_ledger_account_key_by_key_asyncio(*, client: StolonClient) -> ApiLedgerAccountKey | ResponseError | None:
     """Get ledger account key using the key value
 
     Args:
@@ -1435,7 +1307,7 @@ def get_ledger_account_key_by_key_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiLedgerAccountKey | ResponseError | None
@@ -1444,7 +1316,7 @@ def get_ledger_account_key_by_key_asyncio(
     kwargs = get_ledger_account_key_by_key._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1456,4 +1328,3 @@ def get_ledger_account_key_by_key_asyncio(
 
     # No response model, return None
     return None
-

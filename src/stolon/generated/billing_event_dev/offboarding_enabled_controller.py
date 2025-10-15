@@ -9,18 +9,18 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.offboarding_enabled_controller import get_offboarding_enabled
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+from typing import Any
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.offboarding_enabled_controller import (
+    get_offboarding_enabled,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_offboarding_enabled_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_offboarding_enabled_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -33,7 +33,7 @@ def get_offboarding_enabled_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -53,8 +53,6 @@ def get_offboarding_enabled_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -73,18 +71,13 @@ def get_offboarding_enabled_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_offboarding_enabled_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_offboarding_enabled_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -97,7 +90,7 @@ def get_offboarding_enabled_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -117,8 +110,6 @@ def get_offboarding_enabled_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -137,8 +128,7 @@ def get_offboarding_enabled_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-

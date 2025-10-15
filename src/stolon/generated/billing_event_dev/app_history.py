@@ -9,26 +9,33 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_metered_events
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_currents
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_dailies
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_daily_by_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_events
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_metered_event import ApiAppMeteredEvent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_current import ApiAppSubscriptionCurrent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_daily import ApiAppSubscriptionDaily
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response200 import GetAppSubscriptionEventsResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import (
+    get_app_metered_events,
+    get_app_subscription_currents,
+    get_app_subscription_dailies,
+    get_app_subscription_daily_by_uuid,
+    get_app_subscription_events,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_metered_event import (
+    ApiAppMeteredEvent,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_current import (
+    ApiAppSubscriptionCurrent,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_daily import (
+    ApiAppSubscriptionDaily,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response200 import (
+    GetAppSubscriptionEventsResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def get_app_subscription_dailies_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppSubscriptionDaily]:
+def get_app_subscription_dailies_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription dailies
 
     Args:
@@ -52,7 +59,7 @@ def get_app_subscription_dailies_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppSubscriptionDaily]
@@ -72,8 +79,6 @@ def get_app_subscription_dailies_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -92,18 +97,13 @@ def get_app_subscription_dailies_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_dailies_sync(
-    *,
-    client: StolonClient
-) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_dailies_sync(*, client: StolonClient) -> ApiAppSubscriptionDaily | None:
     """Get app subscription dailies
 
     Args:
@@ -127,7 +127,7 @@ def get_app_subscription_dailies_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppSubscriptionDaily | None
@@ -147,7 +147,7 @@ def get_app_subscription_dailies_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -157,12 +157,7 @@ def get_app_subscription_dailies_sync(
     return None
 
 
-
-
-def get_app_subscription_dailies_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppSubscriptionDaily]:
+def get_app_subscription_dailies_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription dailies
 
     Args:
@@ -186,7 +181,7 @@ def get_app_subscription_dailies_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppSubscriptionDaily]
@@ -206,8 +201,6 @@ def get_app_subscription_dailies_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -226,18 +219,13 @@ def get_app_subscription_dailies_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_dailies_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_dailies_asyncio(*, client: StolonClient) -> ApiAppSubscriptionDaily | None:
     """Get app subscription dailies
 
     Args:
@@ -261,7 +249,7 @@ def get_app_subscription_dailies_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppSubscriptionDaily | None
@@ -281,7 +269,7 @@ def get_app_subscription_dailies_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -291,12 +279,7 @@ def get_app_subscription_dailies_asyncio(
     return None
 
 
-
-
-def get_app_subscription_currents_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppSubscriptionCurrent]:
+def get_app_subscription_currents_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionCurrent]:
     """Get app subscription currents
 
     Args:
@@ -317,7 +300,7 @@ def get_app_subscription_currents_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppSubscriptionCurrent]
@@ -337,8 +320,6 @@ def get_app_subscription_currents_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -357,18 +338,13 @@ def get_app_subscription_currents_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_currents_sync(
-    *,
-    client: StolonClient
-) -> ApiAppSubscriptionCurrent | None:
+def get_app_subscription_currents_sync(*, client: StolonClient) -> ApiAppSubscriptionCurrent | None:
     """Get app subscription currents
 
     Args:
@@ -389,7 +365,7 @@ def get_app_subscription_currents_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppSubscriptionCurrent | None
@@ -409,7 +385,7 @@ def get_app_subscription_currents_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -419,12 +395,7 @@ def get_app_subscription_currents_sync(
     return None
 
 
-
-
-def get_app_subscription_currents_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppSubscriptionCurrent]:
+def get_app_subscription_currents_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionCurrent]:
     """Get app subscription currents
 
     Args:
@@ -445,7 +416,7 @@ def get_app_subscription_currents_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppSubscriptionCurrent]
@@ -465,8 +436,6 @@ def get_app_subscription_currents_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -485,18 +454,13 @@ def get_app_subscription_currents_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_currents_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAppSubscriptionCurrent | None:
+def get_app_subscription_currents_asyncio(*, client: StolonClient) -> ApiAppSubscriptionCurrent | None:
     """Get app subscription currents
 
     Args:
@@ -517,7 +481,7 @@ def get_app_subscription_currents_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppSubscriptionCurrent | None
@@ -537,7 +501,7 @@ def get_app_subscription_currents_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -547,12 +511,7 @@ def get_app_subscription_currents_asyncio(
     return None
 
 
-
-
-def get_app_subscription_events_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[GetAppSubscriptionEventsResponse200]:
+def get_app_subscription_events_sync_detailed(*, client: StolonClient) -> Response[GetAppSubscriptionEventsResponse200]:
     """Get app subscription events
 
     Args:
@@ -576,7 +535,7 @@ def get_app_subscription_events_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
@@ -596,8 +555,6 @@ def get_app_subscription_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -616,18 +573,13 @@ def get_app_subscription_events_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_events_sync(
-    *,
-    client: StolonClient
-) -> GetAppSubscriptionEventsResponse200 | None:
+def get_app_subscription_events_sync(*, client: StolonClient) -> GetAppSubscriptionEventsResponse200 | None:
     """Get app subscription events
 
     Args:
@@ -651,7 +603,7 @@ def get_app_subscription_events_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetAppSubscriptionEventsResponse200 | None
@@ -671,7 +623,7 @@ def get_app_subscription_events_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -679,13 +631,10 @@ def get_app_subscription_events_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_app_subscription_events_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[GetAppSubscriptionEventsResponse200]:
     """Get app subscription events
 
@@ -710,7 +659,7 @@ def get_app_subscription_events_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
@@ -730,8 +679,6 @@ def get_app_subscription_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -750,18 +697,13 @@ def get_app_subscription_events_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_events_asyncio(
-    *,
-    client: StolonClient
-) -> GetAppSubscriptionEventsResponse200 | None:
+def get_app_subscription_events_asyncio(*, client: StolonClient) -> GetAppSubscriptionEventsResponse200 | None:
     """Get app subscription events
 
     Args:
@@ -785,7 +727,7 @@ def get_app_subscription_events_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         GetAppSubscriptionEventsResponse200 | None
@@ -805,7 +747,7 @@ def get_app_subscription_events_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -815,12 +757,7 @@ def get_app_subscription_events_asyncio(
     return None
 
 
-
-
-def get_app_metered_events_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppMeteredEvent]:
+def get_app_metered_events_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeteredEvent]:
     """Get app metered events
 
     Args:
@@ -844,7 +781,7 @@ def get_app_metered_events_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppMeteredEvent]
@@ -864,8 +801,6 @@ def get_app_metered_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -884,18 +819,13 @@ def get_app_metered_events_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_metered_events_sync(
-    *,
-    client: StolonClient
-) -> ApiAppMeteredEvent | None:
+def get_app_metered_events_sync(*, client: StolonClient) -> ApiAppMeteredEvent | None:
     """Get app metered events
 
     Args:
@@ -919,7 +849,7 @@ def get_app_metered_events_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppMeteredEvent | None
@@ -939,7 +869,7 @@ def get_app_metered_events_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -949,12 +879,7 @@ def get_app_metered_events_sync(
     return None
 
 
-
-
-def get_app_metered_events_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiAppMeteredEvent]:
+def get_app_metered_events_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppMeteredEvent]:
     """Get app metered events
 
     Args:
@@ -978,7 +903,7 @@ def get_app_metered_events_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiAppMeteredEvent]
@@ -998,8 +923,6 @@ def get_app_metered_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1018,18 +941,13 @@ def get_app_metered_events_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_metered_events_asyncio(
-    *,
-    client: StolonClient
-) -> ApiAppMeteredEvent | None:
+def get_app_metered_events_asyncio(*, client: StolonClient) -> ApiAppMeteredEvent | None:
     """Get app metered events
 
     Args:
@@ -1053,7 +971,7 @@ def get_app_metered_events_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiAppMeteredEvent | None
@@ -1073,7 +991,7 @@ def get_app_metered_events_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1081,14 +999,10 @@ def get_app_metered_events_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_app_subscription_daily_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription daily by UUID
 
@@ -1127,8 +1041,6 @@ def get_app_subscription_daily_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1147,19 +1059,13 @@ def get_app_subscription_daily_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_daily_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_daily_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppSubscriptionDaily | None:
     """Get app subscription daily by UUID
 
     Args:
@@ -1197,7 +1103,7 @@ def get_app_subscription_daily_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1205,14 +1111,10 @@ def get_app_subscription_daily_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_app_subscription_daily_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription daily by UUID
 
@@ -1251,8 +1153,6 @@ def get_app_subscription_daily_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1271,19 +1171,13 @@ def get_app_subscription_daily_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_app_subscription_daily_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_daily_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppSubscriptionDaily | None:
     """Get app subscription daily by UUID
 
     Args:
@@ -1321,7 +1215,7 @@ def get_app_subscription_daily_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1329,4 +1223,3 @@ def get_app_subscription_daily_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

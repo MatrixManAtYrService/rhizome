@@ -9,24 +9,23 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_enqueued_jobs
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_failed_jobs
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_job
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_processing_jobs
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_scheduled_jobs
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_succeeded_jobs
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+from typing import Any
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import (
+    get_enqueued_jobs,
+    get_failed_jobs,
+    get_job,
+    get_processing_jobs,
+    get_scheduled_jobs,
+    get_succeeded_jobs,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def get_job_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Any]:
+def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
     """Args:
         uuid (str):
 
@@ -62,8 +61,6 @@ def get_job_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -82,19 +79,13 @@ def get_job_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_job_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Any]:
+def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
     """Args:
         uuid (str):
 
@@ -130,8 +121,6 @@ def get_job_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -150,18 +139,13 @@ def get_job_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_failed_jobs_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_failed_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -179,7 +163,7 @@ def get_failed_jobs_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -199,8 +183,6 @@ def get_failed_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -219,18 +201,13 @@ def get_failed_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_failed_jobs_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_failed_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -248,7 +225,7 @@ def get_failed_jobs_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -268,8 +245,6 @@ def get_failed_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -288,18 +263,13 @@ def get_failed_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_succeeded_jobs_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_succeeded_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -317,7 +287,7 @@ def get_succeeded_jobs_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -337,8 +307,6 @@ def get_succeeded_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -357,18 +325,13 @@ def get_succeeded_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_succeeded_jobs_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_succeeded_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -386,7 +349,7 @@ def get_succeeded_jobs_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -406,8 +369,6 @@ def get_succeeded_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -426,18 +387,13 @@ def get_succeeded_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_jobs_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_processing_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -455,7 +411,7 @@ def get_processing_jobs_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -475,8 +431,6 @@ def get_processing_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -495,18 +449,13 @@ def get_processing_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_processing_jobs_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_processing_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -524,7 +473,7 @@ def get_processing_jobs_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -544,8 +493,6 @@ def get_processing_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -564,18 +511,13 @@ def get_processing_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_enqueued_jobs_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_enqueued_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -593,7 +535,7 @@ def get_enqueued_jobs_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -613,8 +555,6 @@ def get_enqueued_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -633,18 +573,13 @@ def get_enqueued_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_enqueued_jobs_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_enqueued_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -662,7 +597,7 @@ def get_enqueued_jobs_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -682,8 +617,6 @@ def get_enqueued_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -702,18 +635,13 @@ def get_enqueued_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_scheduled_jobs_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_scheduled_jobs_sync_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -731,7 +659,7 @@ def get_scheduled_jobs_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -751,8 +679,6 @@ def get_scheduled_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -771,18 +697,13 @@ def get_scheduled_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_scheduled_jobs_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[Any]:
+def get_scheduled_jobs_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
         page_size (Union[Unset, int]):
@@ -800,7 +721,7 @@ def get_scheduled_jobs_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[Any]
@@ -820,8 +741,6 @@ def get_scheduled_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -840,8 +759,7 @@ def get_scheduled_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-

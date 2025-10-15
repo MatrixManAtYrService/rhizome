@@ -9,23 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_archetype import create_billing_archetype
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_archetype import delete_billing_archetype_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_archetype import get_billing_archetype_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_archetype import get_billing_archetypes_by_archetype_type
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_archetype import ApiBillingArchetype
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_archetype import (
+    create_billing_archetype,
+    delete_billing_archetype_by_uuid,
+    get_billing_archetype_by_uuid,
+    get_billing_archetypes_by_archetype_type,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_archetype import (
+    ApiBillingArchetype,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_billing_archetype_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_billing_archetype_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create billing archetype
 
     Args:
@@ -43,129 +46,7 @@ def create_billing_archetype_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
 
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_billing_archetype._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-
-
-def create_billing_archetype_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
-    """Create billing archetype
-
-    Args:
-        body (ApiBillingArchetype):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_billing_archetype._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-
-
-def create_billing_archetype_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
-    """Create billing archetype
-
-    Args:
-        body (ApiBillingArchetype):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
 
     Returns:
         Response[ResponseError]
@@ -185,8 +66,6 @@ def create_billing_archetype_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -205,18 +84,13 @@ def create_billing_archetype_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_billing_archetype_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_billing_archetype_sync(*, client: StolonClient) -> ResponseError | None:
     """Create billing archetype
 
     Args:
@@ -234,7 +108,7 @@ def create_billing_archetype_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -254,7 +128,7 @@ def create_billing_archetype_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -264,12 +138,118 @@ def create_billing_archetype_asyncio(
     return None
 
 
+def create_billing_archetype_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+    """Create billing archetype
+
+    Args:
+        body (ApiBillingArchetype):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_billing_archetype._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def create_billing_archetype_asyncio(*, client: StolonClient) -> ResponseError | None:
+    """Create billing archetype
+
+    Args:
+        body (ApiBillingArchetype):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_billing_archetype._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
 
 
 def delete_billing_archetype_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete billing archetype
 
@@ -308,8 +288,6 @@ def delete_billing_archetype_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -328,19 +306,13 @@ def delete_billing_archetype_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_billing_archetype_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_billing_archetype_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete billing archetype
 
     Args:
@@ -367,7 +339,7 @@ def delete_billing_archetype_by_uuid_sync(
     kwargs = delete_billing_archetype_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -379,14 +351,10 @@ def delete_billing_archetype_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def delete_billing_archetype_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete billing archetype
 
@@ -425,8 +393,6 @@ def delete_billing_archetype_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -445,19 +411,13 @@ def delete_billing_archetype_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_billing_archetype_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_billing_archetype_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete billing archetype
 
     Args:
@@ -484,7 +444,7 @@ def delete_billing_archetype_by_uuid_asyncio(
     kwargs = delete_billing_archetype_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -496,14 +456,10 @@ def delete_billing_archetype_by_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_billing_archetype_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiBillingArchetype | ResponseError]:
     """Get a billing archetype by UUID
 
@@ -542,8 +498,6 @@ def get_billing_archetype_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -562,18 +516,14 @@ def get_billing_archetype_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_billing_archetype_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiBillingArchetype | ResponseError | None:
     """Get a billing archetype by UUID
 
@@ -601,7 +551,7 @@ def get_billing_archetype_by_uuid_sync(
     kwargs = get_billing_archetype_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -615,12 +565,8 @@ def get_billing_archetype_by_uuid_sync(
     return None
 
 
-
-
 def get_billing_archetype_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiBillingArchetype | ResponseError]:
     """Get a billing archetype by UUID
 
@@ -659,8 +605,6 @@ def get_billing_archetype_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -679,18 +623,14 @@ def get_billing_archetype_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_billing_archetype_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiBillingArchetype | ResponseError | None:
     """Get a billing archetype by UUID
 
@@ -718,7 +658,7 @@ def get_billing_archetype_by_uuid_asyncio(
     kwargs = get_billing_archetype_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -732,12 +672,7 @@ def get_billing_archetype_by_uuid_asyncio(
     return None
 
 
-
-
-def get_billing_archetypes_by_archetype_type_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_billing_archetypes_by_archetype_type_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get billing archetype by archetype type
 
     Args:
@@ -756,7 +691,7 @@ def get_billing_archetypes_by_archetype_type_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -776,8 +711,6 @@ def get_billing_archetypes_by_archetype_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -796,18 +729,13 @@ def get_billing_archetypes_by_archetype_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_archetypes_by_archetype_type_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_billing_archetypes_by_archetype_type_sync(*, client: StolonClient) -> ResponseError | None:
     """Get billing archetype by archetype type
 
     Args:
@@ -826,7 +754,7 @@ def get_billing_archetypes_by_archetype_type_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -846,7 +774,7 @@ def get_billing_archetypes_by_archetype_type_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -856,12 +784,7 @@ def get_billing_archetypes_by_archetype_type_sync(
     return None
 
 
-
-
-def get_billing_archetypes_by_archetype_type_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_billing_archetypes_by_archetype_type_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get billing archetype by archetype type
 
     Args:
@@ -880,7 +803,7 @@ def get_billing_archetypes_by_archetype_type_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -900,8 +823,6 @@ def get_billing_archetypes_by_archetype_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -920,18 +841,13 @@ def get_billing_archetypes_by_archetype_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_billing_archetypes_by_archetype_type_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_billing_archetypes_by_archetype_type_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get billing archetype by archetype type
 
     Args:
@@ -950,7 +866,7 @@ def get_billing_archetypes_by_archetype_type_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -970,7 +886,7 @@ def get_billing_archetypes_by_archetype_type_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -978,4 +894,3 @@ def get_billing_archetypes_by_archetype_type_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

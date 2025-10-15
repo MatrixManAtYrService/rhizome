@@ -9,24 +9,31 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import get_as_of_merchant_data_by_merchant_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import get_merchant_acceptances
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import get_merchant_evolution_by_merchant_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import get_merchant_evolutions
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import get_resellers_merchant_evolution_by_merchant_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_as_of_merchant import ApiAsOfMerchant
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_merchant_acceptance import ApiMerchantAcceptance
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_merchant_evolution import ApiMerchantEvolution
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import (
+    get_as_of_merchant_data_by_merchant_uuid,
+    get_merchant_acceptances,
+    get_merchant_evolution_by_merchant_uuid,
+    get_merchant_evolutions,
+    get_resellers_merchant_evolution_by_merchant_uuid,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_as_of_merchant import (
+    ApiAsOfMerchant,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_merchant_acceptance import (
+    ApiMerchantAcceptance,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_merchant_evolution import (
+    ApiMerchantEvolution,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
 def get_merchant_acceptances_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]:
     """Get merchant acceptances
 
@@ -50,7 +57,7 @@ def get_merchant_acceptances_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]
@@ -70,8 +77,6 @@ def get_merchant_acceptances_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -90,17 +95,14 @@ def get_merchant_acceptances_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_merchant_acceptances_sync(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None:
     """Get merchant acceptances
 
@@ -124,7 +126,7 @@ def get_merchant_acceptances_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None
@@ -133,7 +135,7 @@ def get_merchant_acceptances_sync(
     kwargs = get_merchant_acceptances._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -147,11 +149,8 @@ def get_merchant_acceptances_sync(
     return None
 
 
-
-
 def get_merchant_acceptances_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]:
     """Get merchant acceptances
 
@@ -175,7 +174,7 @@ def get_merchant_acceptances_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]
@@ -195,8 +194,6 @@ def get_merchant_acceptances_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -215,17 +212,14 @@ def get_merchant_acceptances_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_merchant_acceptances_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None:
     """Get merchant acceptances
 
@@ -249,7 +243,7 @@ def get_merchant_acceptances_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None
@@ -258,7 +252,7 @@ def get_merchant_acceptances_asyncio(
     kwargs = get_merchant_acceptances._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -270,14 +264,10 @@ def get_merchant_acceptances_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_as_of_merchant_data_by_merchant_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[ApiAsOfMerchant | list["ApiAsOfMerchant"]]:
     """Get as-of data for the specified merchant UUID
 
@@ -320,8 +310,6 @@ def get_as_of_merchant_data_by_merchant_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -340,18 +328,14 @@ def get_as_of_merchant_data_by_merchant_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_as_of_merchant_data_by_merchant_uuid_sync(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> ApiAsOfMerchant | list["ApiAsOfMerchant"] | None:
     """Get as-of data for the specified merchant UUID
 
@@ -383,7 +367,7 @@ def get_as_of_merchant_data_by_merchant_uuid_sync(
     kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -397,12 +381,8 @@ def get_as_of_merchant_data_by_merchant_uuid_sync(
     return None
 
 
-
-
 def get_as_of_merchant_data_by_merchant_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[ApiAsOfMerchant | list["ApiAsOfMerchant"]]:
     """Get as-of data for the specified merchant UUID
 
@@ -445,8 +425,6 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -465,18 +443,14 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_as_of_merchant_data_by_merchant_uuid_asyncio(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> ApiAsOfMerchant | list["ApiAsOfMerchant"] | None:
     """Get as-of data for the specified merchant UUID
 
@@ -508,7 +482,7 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio(
     kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -520,13 +494,10 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_evolutions_sync_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]:
     """Get merchant evolution data
 
@@ -549,7 +520,7 @@ def get_merchant_evolutions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]
@@ -569,8 +540,6 @@ def get_merchant_evolutions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -589,18 +558,13 @@ def get_merchant_evolutions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_merchant_evolutions_sync(
-    *,
-    client: StolonClient
-) -> ApiMerchantEvolution | list["ApiMerchantEvolution"] | None:
+def get_merchant_evolutions_sync(*, client: StolonClient) -> ApiMerchantEvolution | list["ApiMerchantEvolution"] | None:
     """Get merchant evolution data
 
     Args:
@@ -622,7 +586,7 @@ def get_merchant_evolutions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantEvolution | list["ApiMerchantEvolution"] | None
@@ -631,7 +595,7 @@ def get_merchant_evolutions_sync(
     kwargs = get_merchant_evolutions._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -643,13 +607,10 @@ def get_merchant_evolutions_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_merchant_evolutions_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]:
     """Get merchant evolution data
 
@@ -672,7 +633,7 @@ def get_merchant_evolutions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]
@@ -692,8 +653,6 @@ def get_merchant_evolutions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -712,17 +671,14 @@ def get_merchant_evolutions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_merchant_evolutions_asyncio(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> ApiMerchantEvolution | list["ApiMerchantEvolution"] | None:
     """Get merchant evolution data
 
@@ -745,7 +701,7 @@ def get_merchant_evolutions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiMerchantEvolution | list["ApiMerchantEvolution"] | None
@@ -754,7 +710,7 @@ def get_merchant_evolutions_asyncio(
     kwargs = get_merchant_evolutions._get_kwargs()
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -768,12 +724,8 @@ def get_merchant_evolutions_asyncio(
     return None
 
 
-
-
 def get_merchant_evolution_by_merchant_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[ApiMerchantEvolution]:
     """Get merchant evolution data for the specified merchant UUID
 
@@ -812,8 +764,6 @@ def get_merchant_evolution_by_merchant_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -832,18 +782,14 @@ def get_merchant_evolution_by_merchant_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_merchant_evolution_by_merchant_uuid_sync(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> ApiMerchantEvolution | None:
     """Get merchant evolution data for the specified merchant UUID
 
@@ -882,7 +828,7 @@ def get_merchant_evolution_by_merchant_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -890,14 +836,10 @@ def get_merchant_evolution_by_merchant_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_merchant_evolution_by_merchant_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> Response[ApiMerchantEvolution]:
     """Get merchant evolution data for the specified merchant UUID
 
@@ -936,8 +878,6 @@ def get_merchant_evolution_by_merchant_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -956,18 +896,14 @@ def get_merchant_evolution_by_merchant_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_merchant_evolution_by_merchant_uuid_asyncio(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str
 ) -> ApiMerchantEvolution | None:
     """Get merchant evolution data for the specified merchant UUID
 
@@ -1006,7 +942,7 @@ def get_merchant_evolution_by_merchant_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1014,15 +950,10 @@ def get_merchant_evolution_by_merchant_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    reseller_uuid: str,
-    merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
 ) -> Response[ApiMerchantEvolution]:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1050,7 +981,9 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
         Response[ApiMerchantEvolution]
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid)
+    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1064,8 +997,6 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1084,19 +1015,14 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_resellers_merchant_evolution_by_merchant_uuid_sync(
-    *,
-    client: StolonClient,
-    reseller_uuid: str,
-    merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
 ) -> ApiMerchantEvolution | None:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1124,7 +1050,9 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync(
         ApiMerchantEvolution | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid)
+    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1138,7 +1066,7 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1148,13 +1076,8 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync(
     return None
 
 
-
-
 def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    reseller_uuid: str,
-    merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
 ) -> Response[ApiMerchantEvolution]:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1182,7 +1105,9 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
         Response[ApiMerchantEvolution]
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid)
+    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1196,8 +1121,6 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1216,19 +1139,14 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_resellers_merchant_evolution_by_merchant_uuid_asyncio(
-    *,
-    client: StolonClient,
-    reseller_uuid: str,
-    merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
 ) -> ApiMerchantEvolution | None:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1256,7 +1174,9 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio(
         ApiMerchantEvolution | None
     """
     # Extract request parameters from generated function
-    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid)
+    kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1270,7 +1190,7 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1278,4 +1198,3 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

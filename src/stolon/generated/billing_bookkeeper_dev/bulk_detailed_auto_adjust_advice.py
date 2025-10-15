@@ -9,19 +9,20 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.bulk_detailed_auto_adjust_advice import create_detailed_bulk_auto_adjust_advice
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import ApiBulkAutoAdjustAdvice
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.bulk_detailed_auto_adjust_advice import (
+    create_detailed_bulk_auto_adjust_advice,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import (
+    ApiBulkAutoAdjustAdvice,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_detailed_bulk_auto_adjust_advice_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiBulkAutoAdjustAdvice]:
+def create_detailed_bulk_auto_adjust_advice_sync_detailed(*, client: StolonClient) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -43,7 +44,7 @@ def create_detailed_bulk_auto_adjust_advice_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
@@ -63,8 +64,6 @@ def create_detailed_bulk_auto_adjust_advice_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -83,18 +82,13 @@ def create_detailed_bulk_auto_adjust_advice_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_detailed_bulk_auto_adjust_advice_sync(
-    *,
-    client: StolonClient
-) -> ApiBulkAutoAdjustAdvice | None:
+def create_detailed_bulk_auto_adjust_advice_sync(*, client: StolonClient) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -116,7 +110,7 @@ def create_detailed_bulk_auto_adjust_advice_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiBulkAutoAdjustAdvice | None
@@ -136,7 +130,7 @@ def create_detailed_bulk_auto_adjust_advice_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -144,13 +138,10 @@ def create_detailed_bulk_auto_adjust_advice_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
-    *,
-    client: StolonClient
+    *, client: StolonClient
 ) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk detailed auto-adjust advice
 
@@ -173,7 +164,7 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
@@ -193,8 +184,6 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -213,18 +202,13 @@ def create_detailed_bulk_auto_adjust_advice_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_detailed_bulk_auto_adjust_advice_asyncio(
-    *,
-    client: StolonClient
-) -> ApiBulkAutoAdjustAdvice | None:
+def create_detailed_bulk_auto_adjust_advice_asyncio(*, client: StolonClient) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk detailed auto-adjust advice
 
     Args:
@@ -246,7 +230,7 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiBulkAutoAdjustAdvice | None
@@ -266,7 +250,7 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -274,4 +258,3 @@ def create_detailed_bulk_auto_adjust_advice_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

@@ -9,22 +9,23 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import create_invoice_alliance_code
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import get_invoice_alliance_code_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import get_invoice_alliance_codes
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import resolve_invoice_alliance_code
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
+    create_invoice_alliance_code,
+    get_invoice_alliance_code_by_uuid,
+    get_invoice_alliance_codes,
+    resolve_invoice_alliance_code,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_invoice_alliance_code_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_invoice_alliance_code_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create invoice alliance codes
 
     Args:
@@ -42,129 +43,7 @@ def create_invoice_alliance_code_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
 
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_invoice_alliance_code._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-
-
-def create_invoice_alliance_code_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
-    """Create invoice alliance codes
-
-    Args:
-        body (ApiInvoiceAllianceCode):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_invoice_alliance_code._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-
-
-def create_invoice_alliance_code_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
-    """Create invoice alliance codes
-
-    Args:
-        body (ApiInvoiceAllianceCode):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-        
 
     Returns:
         Response[ResponseError]
@@ -184,8 +63,6 @@ def create_invoice_alliance_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -204,18 +81,13 @@ def create_invoice_alliance_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_invoice_alliance_code_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_invoice_alliance_code_sync(*, client: StolonClient) -> ResponseError | None:
     """Create invoice alliance codes
 
     Args:
@@ -233,7 +105,7 @@ def create_invoice_alliance_code_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -253,7 +125,7 @@ def create_invoice_alliance_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -263,13 +135,117 @@ def create_invoice_alliance_code_asyncio(
     return None
 
 
+def create_invoice_alliance_code_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
+    """Create invoice alliance codes
+
+    Args:
+        body (ApiInvoiceAllianceCode):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
 
 
-def get_invoice_alliance_code_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+    Returns:
+        Response[ResponseError]
+    """
+    # Extract request parameters from generated function
+    kwargs = create_invoice_alliance_code._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def create_invoice_alliance_code_asyncio(*, client: StolonClient) -> ResponseError | None:
+    """Create invoice alliance codes
+
+    Args:
+        body (ApiInvoiceAllianceCode):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+
+
+    Returns:
+        ResponseError | None
+    """
+    # Extract request parameters from generated function
+    kwargs = create_invoice_alliance_code._get_kwargs()
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+def get_invoice_alliance_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -307,8 +283,6 @@ def get_invoice_alliance_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -327,19 +301,13 @@ def get_invoice_alliance_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_alliance_code_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_invoice_alliance_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -377,7 +345,7 @@ def get_invoice_alliance_code_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -387,13 +355,7 @@ def get_invoice_alliance_code_by_uuid_sync(
     return None
 
 
-
-
-def get_invoice_alliance_code_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_invoice_alliance_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -431,8 +393,6 @@ def get_invoice_alliance_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -451,19 +411,13 @@ def get_invoice_alliance_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_alliance_code_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_invoice_alliance_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -501,7 +455,7 @@ def get_invoice_alliance_code_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -511,12 +465,7 @@ def get_invoice_alliance_code_by_uuid_asyncio(
     return None
 
 
-
-
-def get_invoice_alliance_codes_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_invoice_alliance_codes_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get invoice alliance codes
 
     Args:
@@ -537,7 +486,7 @@ def get_invoice_alliance_codes_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -557,8 +506,6 @@ def get_invoice_alliance_codes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -577,18 +524,13 @@ def get_invoice_alliance_codes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_alliance_codes_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_invoice_alliance_codes_sync(*, client: StolonClient) -> ResponseError | None:
     """Get invoice alliance codes
 
     Args:
@@ -609,7 +551,7 @@ def get_invoice_alliance_codes_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -629,7 +571,7 @@ def get_invoice_alliance_codes_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -639,12 +581,7 @@ def get_invoice_alliance_codes_sync(
     return None
 
 
-
-
-def get_invoice_alliance_codes_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_invoice_alliance_codes_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get invoice alliance codes
 
     Args:
@@ -665,7 +602,7 @@ def get_invoice_alliance_codes_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -685,8 +622,6 @@ def get_invoice_alliance_codes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -705,18 +640,13 @@ def get_invoice_alliance_codes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_invoice_alliance_codes_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_invoice_alliance_codes_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get invoice alliance codes
 
     Args:
@@ -737,7 +667,7 @@ def get_invoice_alliance_codes_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -757,7 +687,7 @@ def get_invoice_alliance_codes_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -765,14 +695,10 @@ def get_invoice_alliance_codes_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def resolve_invoice_alliance_code_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -812,8 +738,6 @@ def resolve_invoice_alliance_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -832,19 +756,13 @@ def resolve_invoice_alliance_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def resolve_invoice_alliance_code_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def resolve_invoice_alliance_code_sync(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
     Args:
@@ -883,7 +801,7 @@ def resolve_invoice_alliance_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -891,14 +809,10 @@ def resolve_invoice_alliance_code_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def resolve_invoice_alliance_code_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -938,8 +852,6 @@ def resolve_invoice_alliance_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -958,19 +870,13 @@ def resolve_invoice_alliance_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def resolve_invoice_alliance_code_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
-) -> ResponseError | None:
+def resolve_invoice_alliance_code_asyncio(*, client: StolonClient, billing_entity_uuid: str) -> ResponseError | None:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
     Args:
@@ -1009,7 +915,7 @@ def resolve_invoice_alliance_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1017,4 +923,3 @@ def resolve_invoice_alliance_code_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

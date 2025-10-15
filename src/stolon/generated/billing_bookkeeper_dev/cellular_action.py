@@ -9,23 +9,23 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import create_cellular_action
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import get_cellular_action_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import get_cellular_actions
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import get_unposted_cellular_actions_by_billing_entity
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action import (
+    create_cellular_action,
+    get_cellular_action_by_uuid,
+    get_cellular_actions,
+    get_unposted_cellular_actions_by_billing_entity,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def get_cellular_action_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_cellular_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get cellular action by UUID
 
     Args:
@@ -63,8 +63,6 @@ def get_cellular_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -83,19 +81,13 @@ def get_cellular_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_action_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_cellular_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get cellular action by UUID
 
     Args:
@@ -133,7 +125,7 @@ def get_cellular_action_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -143,13 +135,7 @@ def get_cellular_action_by_uuid_sync(
     return None
 
 
-
-
-def get_cellular_action_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_cellular_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get cellular action by UUID
 
     Args:
@@ -187,8 +173,6 @@ def get_cellular_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -207,19 +191,13 @@ def get_cellular_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_action_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_cellular_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get cellular action by UUID
 
     Args:
@@ -257,7 +235,7 @@ def get_cellular_action_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -265,14 +243,10 @@ def get_cellular_action_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted cellular actions for billing entity
 
@@ -311,8 +285,6 @@ def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -331,18 +303,14 @@ def get_unposted_cellular_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_unposted_cellular_actions_by_billing_entity_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted cellular actions for billing entity
 
@@ -381,7 +349,7 @@ def get_unposted_cellular_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -389,14 +357,10 @@ def get_unposted_cellular_actions_by_billing_entity_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted cellular actions for billing entity
 
@@ -435,8 +399,6 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -455,18 +417,14 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_unposted_cellular_actions_by_billing_entity_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted cellular actions for billing entity
 
@@ -505,7 +463,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -515,12 +473,7 @@ def get_unposted_cellular_actions_by_billing_entity_asyncio(
     return None
 
 
-
-
-def create_cellular_action_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_cellular_action_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create cellular action
 
     Args:
@@ -538,7 +491,7 @@ def create_cellular_action_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -558,8 +511,6 @@ def create_cellular_action_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -578,18 +529,13 @@ def create_cellular_action_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_cellular_action_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_cellular_action_sync(*, client: StolonClient) -> ResponseError | None:
     """Create cellular action
 
     Args:
@@ -607,7 +553,7 @@ def create_cellular_action_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -627,7 +573,7 @@ def create_cellular_action_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -637,12 +583,7 @@ def create_cellular_action_sync(
     return None
 
 
-
-
-def create_cellular_action_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_cellular_action_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create cellular action
 
     Args:
@@ -660,7 +601,7 @@ def create_cellular_action_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -680,8 +621,6 @@ def create_cellular_action_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -700,18 +639,13 @@ def create_cellular_action_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_cellular_action_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_cellular_action_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create cellular action
 
     Args:
@@ -729,7 +663,7 @@ def create_cellular_action_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -749,7 +683,7 @@ def create_cellular_action_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -759,12 +693,7 @@ def create_cellular_action_asyncio(
     return None
 
 
-
-
-def get_cellular_actions_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_cellular_actions_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get cellular actions
 
     Args:
@@ -791,7 +720,7 @@ def get_cellular_actions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -811,8 +740,6 @@ def get_cellular_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -831,18 +758,13 @@ def get_cellular_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_actions_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_cellular_actions_sync(*, client: StolonClient) -> ResponseError | None:
     """Get cellular actions
 
     Args:
@@ -869,7 +791,7 @@ def get_cellular_actions_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -889,7 +811,7 @@ def get_cellular_actions_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -899,12 +821,7 @@ def get_cellular_actions_sync(
     return None
 
 
-
-
-def get_cellular_actions_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_cellular_actions_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get cellular actions
 
     Args:
@@ -931,7 +848,7 @@ def get_cellular_actions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -951,8 +868,6 @@ def get_cellular_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -971,18 +886,13 @@ def get_cellular_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_cellular_actions_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_cellular_actions_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get cellular actions
 
     Args:
@@ -1009,7 +919,7 @@ def get_cellular_actions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1029,7 +939,7 @@ def get_cellular_actions_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1037,4 +947,3 @@ def get_cellular_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

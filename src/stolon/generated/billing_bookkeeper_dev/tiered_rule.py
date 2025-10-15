@@ -9,26 +9,31 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import create_tiered_rule
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import delete_tiered_rule_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import get_tiered_rule_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import get_tiered_rules
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import set_tiered_rule_status
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import update_tiered_rule
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule import ApiTieredRule
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule_set import ApiTieredRuleSet
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import (
+    create_tiered_rule,
+    delete_tiered_rule_by_uuid,
+    get_tiered_rule_by_uuid,
+    get_tiered_rules,
+    set_tiered_rule_status,
+    update_tiered_rule,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule import (
+    ApiTieredRule,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule_set import (
+    ApiTieredRuleSet,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def create_tiered_rule_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTieredRuleSet]:
+def create_tiered_rule_sync_detailed(*, client: StolonClient) -> Response[ApiTieredRuleSet]:
     """Create tiered rule
 
     Args:
@@ -46,7 +51,7 @@ def create_tiered_rule_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTieredRuleSet]
@@ -66,8 +71,6 @@ def create_tiered_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -86,18 +89,13 @@ def create_tiered_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_tiered_rule_sync(
-    *,
-    client: StolonClient
-) -> ApiTieredRuleSet | None:
+def create_tiered_rule_sync(*, client: StolonClient) -> ApiTieredRuleSet | None:
     """Create tiered rule
 
     Args:
@@ -115,7 +113,7 @@ def create_tiered_rule_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTieredRuleSet | None
@@ -135,7 +133,7 @@ def create_tiered_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -145,12 +143,7 @@ def create_tiered_rule_sync(
     return None
 
 
-
-
-def create_tiered_rule_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTieredRuleSet]:
+def create_tiered_rule_asyncio_detailed(*, client: StolonClient) -> Response[ApiTieredRuleSet]:
     """Create tiered rule
 
     Args:
@@ -168,7 +161,7 @@ def create_tiered_rule_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTieredRuleSet]
@@ -188,8 +181,6 @@ def create_tiered_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -208,18 +199,13 @@ def create_tiered_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_tiered_rule_asyncio(
-    *,
-    client: StolonClient
-) -> ApiTieredRuleSet | None:
+def create_tiered_rule_asyncio(*, client: StolonClient) -> ApiTieredRuleSet | None:
     """Create tiered rule
 
     Args:
@@ -237,7 +223,7 @@ def create_tiered_rule_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTieredRuleSet | None
@@ -257,7 +243,7 @@ def create_tiered_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -267,12 +253,7 @@ def create_tiered_rule_asyncio(
     return None
 
 
-
-
-def get_tiered_rules_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTieredRule]:
+def get_tiered_rules_sync_detailed(*, client: StolonClient) -> Response[ApiTieredRule]:
     """Get tiered rules
 
     Args:
@@ -291,7 +272,7 @@ def get_tiered_rules_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTieredRule]
@@ -311,8 +292,6 @@ def get_tiered_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -331,18 +310,13 @@ def get_tiered_rules_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_rules_sync(
-    *,
-    client: StolonClient
-) -> ApiTieredRule | None:
+def get_tiered_rules_sync(*, client: StolonClient) -> ApiTieredRule | None:
     """Get tiered rules
 
     Args:
@@ -361,7 +335,7 @@ def get_tiered_rules_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTieredRule | None
@@ -381,7 +355,7 @@ def get_tiered_rules_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,12 +365,7 @@ def get_tiered_rules_sync(
     return None
 
 
-
-
-def get_tiered_rules_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiTieredRule]:
+def get_tiered_rules_asyncio_detailed(*, client: StolonClient) -> Response[ApiTieredRule]:
     """Get tiered rules
 
     Args:
@@ -415,7 +384,7 @@ def get_tiered_rules_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiTieredRule]
@@ -435,8 +404,6 @@ def get_tiered_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -455,18 +422,13 @@ def get_tiered_rules_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_rules_asyncio(
-    *,
-    client: StolonClient
-) -> ApiTieredRule | None:
+def get_tiered_rules_asyncio(*, client: StolonClient) -> ApiTieredRule | None:
     """Get tiered rules
 
     Args:
@@ -485,7 +447,7 @@ def get_tiered_rules_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiTieredRule | None
@@ -505,7 +467,7 @@ def get_tiered_rules_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -515,13 +477,7 @@ def get_tiered_rules_asyncio(
     return None
 
 
-
-
-def set_tiered_rule_status_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTieredRule]:
+def set_tiered_rule_status_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRule]:
     """Set the status for the tiered rule
 
     Args:
@@ -559,8 +515,6 @@ def set_tiered_rule_status_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -579,19 +533,13 @@ def set_tiered_rule_status_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def set_tiered_rule_status_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredRule | None:
+def set_tiered_rule_status_sync(*, client: StolonClient, uuid: str) -> ApiTieredRule | None:
     """Set the status for the tiered rule
 
     Args:
@@ -629,7 +577,7 @@ def set_tiered_rule_status_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -639,13 +587,7 @@ def set_tiered_rule_status_sync(
     return None
 
 
-
-
-def set_tiered_rule_status_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTieredRule]:
+def set_tiered_rule_status_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRule]:
     """Set the status for the tiered rule
 
     Args:
@@ -683,8 +625,6 @@ def set_tiered_rule_status_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -703,19 +643,13 @@ def set_tiered_rule_status_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def set_tiered_rule_status_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredRule | None:
+def set_tiered_rule_status_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredRule | None:
     """Set the status for the tiered rule
 
     Args:
@@ -753,7 +687,7 @@ def set_tiered_rule_status_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -763,13 +697,7 @@ def set_tiered_rule_status_asyncio(
     return None
 
 
-
-
-def delete_tiered_rule_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete tiered rule
 
     Args:
@@ -807,8 +735,6 @@ def delete_tiered_rule_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -827,19 +753,13 @@ def delete_tiered_rule_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_tiered_rule_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete tiered rule
 
     Args:
@@ -866,7 +786,7 @@ def delete_tiered_rule_by_uuid_sync(
     kwargs = delete_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -880,13 +800,7 @@ def delete_tiered_rule_by_uuid_sync(
     return None
 
 
-
-
-def delete_tiered_rule_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError | bool]:
+def delete_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
     """Delete tiered rule
 
     Args:
@@ -924,8 +838,6 @@ def delete_tiered_rule_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -944,19 +856,13 @@ def delete_tiered_rule_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def delete_tiered_rule_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | bool | None:
+def delete_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
     """Delete tiered rule
 
     Args:
@@ -983,7 +889,7 @@ def delete_tiered_rule_by_uuid_asyncio(
     kwargs = delete_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -997,13 +903,7 @@ def delete_tiered_rule_by_uuid_asyncio(
     return None
 
 
-
-
-def get_tiered_rule_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTieredRuleSet]:
+def get_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
     """Get tiered rule by UUID
 
     Args:
@@ -1041,8 +941,6 @@ def get_tiered_rule_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1061,19 +959,13 @@ def get_tiered_rule_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_rule_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredRuleSet | None:
+def get_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
     """Get tiered rule by UUID
 
     Args:
@@ -1111,7 +1003,7 @@ def get_tiered_rule_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1121,13 +1013,7 @@ def get_tiered_rule_by_uuid_sync(
     return None
 
 
-
-
-def get_tiered_rule_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTieredRuleSet]:
+def get_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
     """Get tiered rule by UUID
 
     Args:
@@ -1165,8 +1051,6 @@ def get_tiered_rule_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1185,19 +1069,13 @@ def get_tiered_rule_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_tiered_rule_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredRuleSet | None:
+def get_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
     """Get tiered rule by UUID
 
     Args:
@@ -1235,7 +1113,7 @@ def get_tiered_rule_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1245,13 +1123,7 @@ def get_tiered_rule_by_uuid_asyncio(
     return None
 
 
-
-
-def update_tiered_rule_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTieredRuleSet]:
+def update_tiered_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
     """Update tiered rule
 
     Args:
@@ -1290,8 +1162,6 @@ def update_tiered_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1310,19 +1180,13 @@ def update_tiered_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_tiered_rule_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredRuleSet | None:
+def update_tiered_rule_sync(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
     """Update tiered rule
 
     Args:
@@ -1361,7 +1225,7 @@ def update_tiered_rule_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1371,13 +1235,7 @@ def update_tiered_rule_sync(
     return None
 
 
-
-
-def update_tiered_rule_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiTieredRuleSet]:
+def update_tiered_rule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
     """Update tiered rule
 
     Args:
@@ -1416,8 +1274,6 @@ def update_tiered_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1436,19 +1292,13 @@ def update_tiered_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_tiered_rule_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiTieredRuleSet | None:
+def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
     """Update tiered rule
 
     Args:
@@ -1487,7 +1337,7 @@ def update_tiered_rule_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1495,4 +1345,3 @@ def update_tiered_rule_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

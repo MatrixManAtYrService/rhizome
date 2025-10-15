@@ -9,24 +9,28 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import create_fee_code_app
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app_by_category
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app_by_code
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import get_fee_code_app_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_app import ApiFeeCodeApp
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_app import (
+    create_fee_code_app,
+    get_fee_code_app,
+    get_fee_code_app_by_category,
+    get_fee_code_app_by_code,
+    get_fee_code_app_by_uuid,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_app import (
+    ApiFeeCodeApp,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
 def get_fee_code_app_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeApp | ResponseError]:
     """Get fee-code-to-app mapping by UUID
 
@@ -65,8 +69,6 @@ def get_fee_code_app_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -85,19 +87,13 @@ def get_fee_code_app_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeCodeApp | ResponseError | None:
+def get_fee_code_app_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCodeApp | ResponseError | None:
     """Get fee-code-to-app mapping by UUID
 
     Args:
@@ -124,7 +120,7 @@ def get_fee_code_app_by_uuid_sync(
     kwargs = get_fee_code_app_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -136,14 +132,10 @@ def get_fee_code_app_by_uuid_sync(
 
     # No response model, return None
     return None
-
-
 
 
 def get_fee_code_app_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeApp | ResponseError]:
     """Get fee-code-to-app mapping by UUID
 
@@ -182,8 +174,6 @@ def get_fee_code_app_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -202,19 +192,13 @@ def get_fee_code_app_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeCodeApp | ResponseError | None:
+def get_fee_code_app_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCodeApp | ResponseError | None:
     """Get fee-code-to-app mapping by UUID
 
     Args:
@@ -241,7 +225,7 @@ def get_fee_code_app_by_uuid_asyncio(
     kwargs = get_fee_code_app_by_uuid._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -255,13 +239,7 @@ def get_fee_code_app_by_uuid_asyncio(
     return None
 
 
-
-
-def get_fee_code_app_by_category_sync_detailed(
-    *,
-    client: StolonClient,
-    fee_category: str
-) -> Response[ResponseError]:
+def get_fee_code_app_by_category_sync_detailed(*, client: StolonClient, fee_category: str) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -301,8 +279,6 @@ def get_fee_code_app_by_category_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -321,19 +297,13 @@ def get_fee_code_app_by_category_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_by_category_sync(
-    *,
-    client: StolonClient,
-    fee_category: str
-) -> ResponseError | None:
+def get_fee_code_app_by_category_sync(*, client: StolonClient, fee_category: str) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -373,7 +343,7 @@ def get_fee_code_app_by_category_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -381,14 +351,10 @@ def get_fee_code_app_by_category_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_fee_code_app_by_category_asyncio_detailed(
-    *,
-    client: StolonClient,
-    fee_category: str
+    *, client: StolonClient, fee_category: str
 ) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
@@ -429,8 +395,6 @@ def get_fee_code_app_by_category_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -449,19 +413,13 @@ def get_fee_code_app_by_category_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_by_category_asyncio(
-    *,
-    client: StolonClient,
-    fee_category: str
-) -> ResponseError | None:
+def get_fee_code_app_by_category_asyncio(*, client: StolonClient, fee_category: str) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -501,7 +459,7 @@ def get_fee_code_app_by_category_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -511,13 +469,7 @@ def get_fee_code_app_by_category_asyncio(
     return None
 
 
-
-
-def get_fee_code_app_by_code_sync_detailed(
-    *,
-    client: StolonClient,
-    fee_code: str
-) -> Response[ResponseError]:
+def get_fee_code_app_by_code_sync_detailed(*, client: StolonClient, fee_code: str) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -557,8 +509,6 @@ def get_fee_code_app_by_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -577,19 +527,13 @@ def get_fee_code_app_by_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_by_code_sync(
-    *,
-    client: StolonClient,
-    fee_code: str
-) -> ResponseError | None:
+def get_fee_code_app_by_code_sync(*, client: StolonClient, fee_code: str) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -629,7 +573,7 @@ def get_fee_code_app_by_code_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -639,13 +583,7 @@ def get_fee_code_app_by_code_sync(
     return None
 
 
-
-
-def get_fee_code_app_by_code_asyncio_detailed(
-    *,
-    client: StolonClient,
-    fee_code: str
-) -> Response[ResponseError]:
+def get_fee_code_app_by_code_asyncio_detailed(*, client: StolonClient, fee_code: str) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -685,8 +623,6 @@ def get_fee_code_app_by_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -705,19 +641,13 @@ def get_fee_code_app_by_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_by_code_asyncio(
-    *,
-    client: StolonClient,
-    fee_code: str
-) -> ResponseError | None:
+def get_fee_code_app_by_code_asyncio(*, client: StolonClient, fee_code: str) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category
 
     Args:
@@ -757,7 +687,7 @@ def get_fee_code_app_by_code_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -767,12 +697,7 @@ def get_fee_code_app_by_code_asyncio(
     return None
 
 
-
-
-def get_fee_code_app_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -796,7 +721,7 @@ def get_fee_code_app_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -816,8 +741,6 @@ def get_fee_code_app_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -836,18 +759,13 @@ def get_fee_code_app_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_fee_code_app_sync(*, client: StolonClient) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -871,7 +789,7 @@ def get_fee_code_app_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -891,7 +809,7 @@ def get_fee_code_app_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -901,12 +819,7 @@ def get_fee_code_app_sync(
     return None
 
 
-
-
-def get_fee_code_app_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def get_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -930,7 +843,7 @@ def get_fee_code_app_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -950,8 +863,6 @@ def get_fee_code_app_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -970,18 +881,13 @@ def get_fee_code_app_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_code_app_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def get_fee_code_app_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -1005,7 +911,7 @@ def get_fee_code_app_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1025,7 +931,7 @@ def get_fee_code_app_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1035,12 +941,7 @@ def get_fee_code_app_asyncio(
     return None
 
 
-
-
-def create_fee_code_app_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_fee_code_app_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create fee-code-to-app mapping
 
     Args:
@@ -1058,7 +959,7 @@ def create_fee_code_app_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1078,8 +979,6 @@ def create_fee_code_app_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1098,18 +997,13 @@ def create_fee_code_app_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_code_app_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_fee_code_app_sync(*, client: StolonClient) -> ResponseError | None:
     """Create fee-code-to-app mapping
 
     Args:
@@ -1127,7 +1021,7 @@ def create_fee_code_app_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1147,7 +1041,7 @@ def create_fee_code_app_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1157,12 +1051,7 @@ def create_fee_code_app_sync(
     return None
 
 
-
-
-def create_fee_code_app_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_fee_code_app_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create fee-code-to-app mapping
 
     Args:
@@ -1180,7 +1069,7 @@ def create_fee_code_app_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -1200,8 +1089,6 @@ def create_fee_code_app_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1220,18 +1107,13 @@ def create_fee_code_app_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_code_app_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_fee_code_app_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create fee-code-to-app mapping
 
     Args:
@@ -1249,7 +1131,7 @@ def create_fee_code_app_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -1269,7 +1151,7 @@ def create_fee_code_app_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1277,4 +1159,3 @@ def create_fee_code_app_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-

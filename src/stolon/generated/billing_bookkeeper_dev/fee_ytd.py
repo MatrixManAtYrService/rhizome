@@ -9,25 +9,28 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import create_fee_ytd
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import get_fee_ytd_by_billing_entity_and_year
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import get_fee_ytd_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import get_years_fee_ytd_by_billing_entity_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import update_fee_ytd
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ytd import ApiFeeYtd
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ytd_extended import ApiFeeYtdExtended
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import json
+from http import HTTPStatus
+
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ytd import (
+    create_fee_ytd,
+    get_fee_ytd_by_billing_entity_and_year,
+    get_fee_ytd_by_uuid,
+    get_years_fee_ytd_by_billing_entity_uuid,
+    update_fee_ytd,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ytd import ApiFeeYtd
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ytd_extended import (
+    ApiFeeYtdExtended,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
 
-def get_fee_ytd_by_billing_entity_and_year_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiFeeYtdExtended]:
+def get_fee_ytd_by_billing_entity_and_year_sync_detailed(*, client: StolonClient) -> Response[ApiFeeYtdExtended]:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -49,7 +52,7 @@ def get_fee_ytd_by_billing_entity_and_year_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeYtdExtended]
@@ -69,8 +72,6 @@ def get_fee_ytd_by_billing_entity_and_year_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -89,18 +90,13 @@ def get_fee_ytd_by_billing_entity_and_year_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_ytd_by_billing_entity_and_year_sync(
-    *,
-    client: StolonClient
-) -> ApiFeeYtdExtended | None:
+def get_fee_ytd_by_billing_entity_and_year_sync(*, client: StolonClient) -> ApiFeeYtdExtended | None:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -122,7 +118,7 @@ def get_fee_ytd_by_billing_entity_and_year_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeYtdExtended | None
@@ -142,7 +138,7 @@ def get_fee_ytd_by_billing_entity_and_year_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -152,12 +148,7 @@ def get_fee_ytd_by_billing_entity_and_year_sync(
     return None
 
 
-
-
-def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ApiFeeYtdExtended]:
+def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(*, client: StolonClient) -> Response[ApiFeeYtdExtended]:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -179,7 +170,7 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ApiFeeYtdExtended]
@@ -199,8 +190,6 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -219,18 +208,13 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_ytd_by_billing_entity_and_year_asyncio(
-    *,
-    client: StolonClient
-) -> ApiFeeYtdExtended | None:
+def get_fee_ytd_by_billing_entity_and_year_asyncio(*, client: StolonClient) -> ApiFeeYtdExtended | None:
     """Get year-to-date fee(s) for a billing entity
 
     Args:
@@ -252,7 +236,7 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ApiFeeYtdExtended | None
@@ -272,7 +256,7 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -282,12 +266,7 @@ def get_fee_ytd_by_billing_entity_and_year_asyncio(
     return None
 
 
-
-
-def create_fee_ytd_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_fee_ytd_sync_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -305,7 +284,7 @@ def create_fee_ytd_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -325,8 +304,6 @@ def create_fee_ytd_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -345,18 +322,13 @@ def create_fee_ytd_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_ytd_sync(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_fee_ytd_sync(*, client: StolonClient) -> ResponseError | None:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -374,7 +346,7 @@ def create_fee_ytd_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -394,7 +366,7 @@ def create_fee_ytd_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -404,12 +376,7 @@ def create_fee_ytd_sync(
     return None
 
 
-
-
-def create_fee_ytd_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[ResponseError]:
+def create_fee_ytd_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError]:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -427,7 +394,7 @@ def create_fee_ytd_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         Response[ResponseError]
@@ -447,8 +414,6 @@ def create_fee_ytd_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -467,18 +432,13 @@ def create_fee_ytd_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def create_fee_ytd_asyncio(
-    *,
-    client: StolonClient
-) -> ResponseError | None:
+def create_fee_ytd_asyncio(*, client: StolonClient) -> ResponseError | None:
     """Create year-to-date (YTD) fee
 
     Args:
@@ -496,7 +456,7 @@ def create_fee_ytd_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-        
+
 
     Returns:
         ResponseError | None
@@ -516,7 +476,7 @@ def create_fee_ytd_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -526,13 +486,7 @@ def create_fee_ytd_asyncio(
     return None
 
 
-
-
-def update_fee_ytd_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeYtd | ResponseError]:
+def update_fee_ytd_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeYtd | ResponseError]:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -571,8 +525,6 @@ def update_fee_ytd_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -591,19 +543,13 @@ def update_fee_ytd_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_fee_ytd_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeYtd | ResponseError | None:
+def update_fee_ytd_sync(*, client: StolonClient, uuid: str) -> ApiFeeYtd | ResponseError | None:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -631,7 +577,7 @@ def update_fee_ytd_sync(
     kwargs = update_fee_ytd._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -645,13 +591,7 @@ def update_fee_ytd_sync(
     return None
 
 
-
-
-def update_fee_ytd_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeYtd | ResponseError]:
+def update_fee_ytd_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeYtd | ResponseError]:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -690,8 +630,6 @@ def update_fee_ytd_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -710,19 +648,13 @@ def update_fee_ytd_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def update_fee_ytd_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeYtd | ResponseError | None:
+def update_fee_ytd_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeYtd | ResponseError | None:
     """Update year-to-date (YTD) fee
 
     Args:
@@ -750,7 +682,7 @@ def update_fee_ytd_asyncio(
     kwargs = update_fee_ytd._get_kwargs(uuid=uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -764,13 +696,7 @@ def update_fee_ytd_asyncio(
     return None
 
 
-
-
-def get_fee_ytd_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeYtdExtended]:
+def get_fee_ytd_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeYtdExtended]:
     """Get year-to-date (YTD) fee by UUID
 
     Args:
@@ -808,8 +734,6 @@ def get_fee_ytd_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -828,19 +752,13 @@ def get_fee_ytd_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_ytd_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeYtdExtended | None:
+def get_fee_ytd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeYtdExtended | None:
     """Get year-to-date (YTD) fee by UUID
 
     Args:
@@ -878,7 +796,7 @@ def get_fee_ytd_by_uuid_sync(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -888,13 +806,7 @@ def get_fee_ytd_by_uuid_sync(
     return None
 
 
-
-
-def get_fee_ytd_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiFeeYtdExtended]:
+def get_fee_ytd_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiFeeYtdExtended]:
     """Get year-to-date (YTD) fee by UUID
 
     Args:
@@ -932,8 +844,6 @@ def get_fee_ytd_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -952,19 +862,13 @@ def get_fee_ytd_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
-def get_fee_ytd_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiFeeYtdExtended | None:
+def get_fee_ytd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeYtdExtended | None:
     """Get year-to-date (YTD) fee by UUID
 
     Args:
@@ -1002,7 +906,7 @@ def get_fee_ytd_by_uuid_asyncio(
     )
 
     # Parse response body
-    import json
+
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1010,14 +914,10 @@ def get_fee_ytd_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
-
-
 
 
 def get_years_fee_ytd_by_billing_entity_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError | list[int]]:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
@@ -1056,8 +956,6 @@ def get_years_fee_ytd_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1076,18 +974,14 @@ def get_years_fee_ytd_by_billing_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
-
-
 
 
 def get_years_fee_ytd_by_billing_entity_uuid_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | list[int] | None:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
@@ -1115,7 +1009,7 @@ def get_years_fee_ytd_by_billing_entity_uuid_sync(
     kwargs = get_years_fee_ytd_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1129,12 +1023,8 @@ def get_years_fee_ytd_by_billing_entity_uuid_sync(
     return None
 
 
-
-
 def get_years_fee_ytd_by_billing_entity_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ResponseError | list[int]]:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
@@ -1173,8 +1063,6 @@ def get_years_fee_ytd_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1193,18 +1081,14 @@ def get_years_fee_ytd_by_billing_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-
-
 def get_years_fee_ytd_by_billing_entity_uuid_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ResponseError | list[int] | None:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
@@ -1232,7 +1116,7 @@ def get_years_fee_ytd_by_billing_entity_uuid_asyncio(
     kwargs = get_years_fee_ytd_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
     # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
@@ -1244,4 +1128,3 @@ def get_years_fee_ytd_by_billing_entity_uuid_asyncio(
 
     # No response model, return None
     return None
-
