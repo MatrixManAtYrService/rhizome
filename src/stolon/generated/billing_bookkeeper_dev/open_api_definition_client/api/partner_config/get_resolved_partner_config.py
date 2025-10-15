@@ -7,7 +7,6 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_resolved_partner_config import ApiResolvedPartnerConfig
-from ...models.response_error import ResponseError
 from ...types import UNSET, Response
 
 
@@ -39,9 +38,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiResolvedPartnerConfig, ResponseError]]:
+) -> Optional[ApiResolvedPartnerConfig]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiResolvedPartnerConfig.from_dict(response.json())
 
         return response_200
 
@@ -63,7 +62,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiResolvedPartnerConfig, ResponseError]]:
+) -> Response[ApiResolvedPartnerConfig]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -78,7 +77,7 @@ def sync_detailed(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-) -> Response[Union[ApiResolvedPartnerConfig, ResponseError]]:
+) -> Response[ApiResolvedPartnerConfig]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
 
@@ -92,7 +91,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiResolvedPartnerConfig, ResponseError]]
+        Response[ApiResolvedPartnerConfig]
     """
 
     kwargs = _get_kwargs(
@@ -114,7 +113,7 @@ def sync(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-) -> Optional[Union[ApiResolvedPartnerConfig, ResponseError]]:
+) -> Optional[ApiResolvedPartnerConfig]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
 
@@ -128,7 +127,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiResolvedPartnerConfig, ResponseError]
+        ApiResolvedPartnerConfig
     """
 
     return sync_detailed(
@@ -145,7 +144,7 @@ async def asyncio_detailed(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-) -> Response[Union[ApiResolvedPartnerConfig, ResponseError]]:
+) -> Response[ApiResolvedPartnerConfig]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
 
@@ -159,7 +158,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiResolvedPartnerConfig, ResponseError]]
+        Response[ApiResolvedPartnerConfig]
     """
 
     kwargs = _get_kwargs(
@@ -179,7 +178,7 @@ async def asyncio(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-) -> Optional[Union[ApiResolvedPartnerConfig, ResponseError]]:
+) -> Optional[ApiResolvedPartnerConfig]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
 
@@ -193,7 +192,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiResolvedPartnerConfig, ResponseError]
+        ApiResolvedPartnerConfig
     """
 
     return (

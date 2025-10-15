@@ -7,6 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_ledger_journal_projection import ApiLedgerJournalProjection
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -52,9 +53,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiLedgerJournalProjection, list["ApiLedgerJournalProjection"]]]:
+) -> Optional[Union[ResponseError, list["ApiLedgerJournalProjection"]]]:
     if response.status_code == 200:
-        response_200 = ApiLedgerJournalProjection.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -76,7 +77,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiLedgerJournalProjection, list["ApiLedgerJournalProjection"]]]:
+) -> Response[Union[ResponseError, list["ApiLedgerJournalProjection"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -94,7 +95,7 @@ def sync_detailed(
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiLedgerJournalProjection, list["ApiLedgerJournalProjection"]]]:
+) -> Response[Union[ResponseError, list["ApiLedgerJournalProjection"]]]:
     """Get ledger journal entries for the specified journal date range
 
     Args:
@@ -110,7 +111,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiLedgerJournalProjection, list['ApiLedgerJournalProjection']]]
+        Response[Union[ResponseError, list['ApiLedgerJournalProjection']]]
     """
 
     kwargs = _get_kwargs(
@@ -138,7 +139,7 @@ def sync(
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiLedgerJournalProjection, list["ApiLedgerJournalProjection"]]]:
+) -> Optional[Union[ResponseError, list["ApiLedgerJournalProjection"]]]:
     """Get ledger journal entries for the specified journal date range
 
     Args:
@@ -154,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiLedgerJournalProjection, list['ApiLedgerJournalProjection']]
+        Union[ResponseError, list['ApiLedgerJournalProjection']]
     """
 
     return sync_detailed(
@@ -177,7 +178,7 @@ async def asyncio_detailed(
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[Union[ApiLedgerJournalProjection, list["ApiLedgerJournalProjection"]]]:
+) -> Response[Union[ResponseError, list["ApiLedgerJournalProjection"]]]:
     """Get ledger journal entries for the specified journal date range
 
     Args:
@@ -193,7 +194,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiLedgerJournalProjection, list['ApiLedgerJournalProjection']]]
+        Response[Union[ResponseError, list['ApiLedgerJournalProjection']]]
     """
 
     kwargs = _get_kwargs(
@@ -219,7 +220,7 @@ async def asyncio(
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[Union[ApiLedgerJournalProjection, list["ApiLedgerJournalProjection"]]]:
+) -> Optional[Union[ResponseError, list["ApiLedgerJournalProjection"]]]:
     """Get ledger journal entries for the specified journal date range
 
     Args:
@@ -235,7 +236,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiLedgerJournalProjection, list['ApiLedgerJournalProjection']]
+        Union[ResponseError, list['ApiLedgerJournalProjection']]
     """
 
     return (

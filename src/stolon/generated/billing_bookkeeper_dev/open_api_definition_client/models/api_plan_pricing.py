@@ -9,29 +9,27 @@ from dateutil.parser import isoparse
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.api_specifier_price import ApiSpecifierPrice
+    from ..models.api_plan_price import ApiPlanPrice
     from ..models.api_tax_rates import ApiTaxRates
 
 
-T = TypeVar("T", bound="ApiMiscPricing")
+T = TypeVar("T", bound="ApiPlanPricing")
 
 
 @_attrs_define
-class ApiMiscPricing:
+class ApiPlanPricing:
     """
     Attributes:
-        billing_entity_uuid (Union[Unset, str]): 26-character UUID of the billing entity that the miscellaneous pricing
-            applies for
-        reseller_uuid (Union[Unset, str]): optional 13-character UUID of the reseller that the miscellaneous pricing is
+        billing_entity_uuid (Union[Unset, str]): 26-character UUID of the billing entity that the plan pricing applies
             for
-        merchant_uuid (Union[Unset, str]): optional 13-character UUID of the merchant that the miscellaneous pricing is
-            for
-        currency (Union[Unset, str]): 3-letter currency code for the currency that applies to all miscellaneous pricing
-            monetary amounts Example: USD.
+        reseller_uuid (Union[Unset, str]): optional 13-character UUID of the reseller that the plan pricing is for
+        merchant_uuid (Union[Unset, str]): optional 13-character UUID of the merchant that the plan pricing is for
+        currency (Union[Unset, str]): 3-letter currency code for the currency that applies to all plan pricing monetary
+            amounts Example: USD.
         as_of_date (Union[Unset, datetime.date]): the as-of date for the pricing quotes
         tax_rates (Union[Unset, ApiTaxRates]):
-        misc_specifiers (Union[Unset, list['ApiSpecifierPrice']]): collection of pricing quotes by miscellaneous
-            specifier
+        plan_billing_method (Union[Unset, str]): method used to bill for plan SaaS fees
+        plans (Union[Unset, list['ApiPlanPrice']]): collection of plans and their pricing quotes
     """
 
     billing_entity_uuid: Union[Unset, str] = UNSET
@@ -40,7 +38,8 @@ class ApiMiscPricing:
     currency: Union[Unset, str] = UNSET
     as_of_date: Union[Unset, datetime.date] = UNSET
     tax_rates: Union[Unset, "ApiTaxRates"] = UNSET
-    misc_specifiers: Union[Unset, list["ApiSpecifierPrice"]] = UNSET
+    plan_billing_method: Union[Unset, str] = UNSET
+    plans: Union[Unset, list["ApiPlanPrice"]] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -60,12 +59,14 @@ class ApiMiscPricing:
         if not isinstance(self.tax_rates, Unset):
             tax_rates = self.tax_rates.to_dict()
 
-        misc_specifiers: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.misc_specifiers, Unset):
-            misc_specifiers = []
-            for misc_specifiers_item_data in self.misc_specifiers:
-                misc_specifiers_item = misc_specifiers_item_data.to_dict()
-                misc_specifiers.append(misc_specifiers_item)
+        plan_billing_method = self.plan_billing_method
+
+        plans: Union[Unset, list[dict[str, Any]]] = UNSET
+        if not isinstance(self.plans, Unset):
+            plans = []
+            for plans_item_data in self.plans:
+                plans_item = plans_item_data.to_dict()
+                plans.append(plans_item)
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -82,14 +83,16 @@ class ApiMiscPricing:
             field_dict["asOfDate"] = as_of_date
         if tax_rates is not UNSET:
             field_dict["taxRates"] = tax_rates
-        if misc_specifiers is not UNSET:
-            field_dict["miscSpecifiers"] = misc_specifiers
+        if plan_billing_method is not UNSET:
+            field_dict["planBillingMethod"] = plan_billing_method
+        if plans is not UNSET:
+            field_dict["plans"] = plans
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.api_specifier_price import ApiSpecifierPrice
+        from ..models.api_plan_price import ApiPlanPrice
         from ..models.api_tax_rates import ApiTaxRates
 
         d = dict(src_dict)
@@ -117,25 +120,28 @@ class ApiMiscPricing:
         else:
             tax_rates = UNSET
 
-        misc_specifiers = []
-        _misc_specifiers = d.pop("miscSpecifiers", UNSET)
-        for misc_specifiers_item_data in _misc_specifiers or []:
-            misc_specifiers_item = ApiSpecifierPrice.from_dict(misc_specifiers_item_data)
+        plan_billing_method = d.pop("planBillingMethod", UNSET)
 
-            misc_specifiers.append(misc_specifiers_item)
+        plans = []
+        _plans = d.pop("plans", UNSET)
+        for plans_item_data in _plans or []:
+            plans_item = ApiPlanPrice.from_dict(plans_item_data)
 
-        api_misc_pricing = cls(
+            plans.append(plans_item)
+
+        api_plan_pricing = cls(
             billing_entity_uuid=billing_entity_uuid,
             reseller_uuid=reseller_uuid,
             merchant_uuid=merchant_uuid,
             currency=currency,
             as_of_date=as_of_date,
             tax_rates=tax_rates,
-            misc_specifiers=misc_specifiers,
+            plan_billing_method=plan_billing_method,
+            plans=plans,
         )
 
-        api_misc_pricing.additional_properties = d
-        return api_misc_pricing
+        api_plan_pricing.additional_properties = d
+        return api_plan_pricing
 
     @property
     def additional_keys(self) -> list[str]:

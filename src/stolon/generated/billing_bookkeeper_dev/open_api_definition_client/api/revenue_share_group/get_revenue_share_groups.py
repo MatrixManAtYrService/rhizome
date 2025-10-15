@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_revenue_share_group import ApiRevenueShareGroup
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -28,11 +28,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiRevenueShareGroup]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiRevenueShareGroup.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -42,9 +40,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiRevenueShareGroup]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,7 +53,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     revenue_share_group: Union[Unset, str] = UNSET,
-) -> Response[ApiRevenueShareGroup]:
+) -> Response[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -68,7 +64,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevenueShareGroup]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -86,7 +82,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     revenue_share_group: Union[Unset, str] = UNSET,
-) -> Optional[ApiRevenueShareGroup]:
+) -> Optional[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -97,7 +93,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevenueShareGroup
+        ResponseError
     """
 
     return sync_detailed(
@@ -110,7 +106,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     revenue_share_group: Union[Unset, str] = UNSET,
-) -> Response[ApiRevenueShareGroup]:
+) -> Response[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -121,7 +117,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevenueShareGroup]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -137,7 +133,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     revenue_share_group: Union[Unset, str] = UNSET,
-) -> Optional[ApiRevenueShareGroup]:
+) -> Optional[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
     Args:
@@ -148,7 +144,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevenueShareGroup
+        ResponseError
     """
 
     return (

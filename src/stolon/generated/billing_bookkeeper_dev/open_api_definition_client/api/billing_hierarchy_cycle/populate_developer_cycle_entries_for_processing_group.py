@@ -1,10 +1,11 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -33,9 +34,10 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[int]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = cast(int, response.json())
+        response_200 = ResponseError.from_dict(response.json())
+
         return response_200
 
     if client.raise_on_unexpected_status:
@@ -44,7 +46,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[int]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -59,7 +61,7 @@ def sync_detailed(
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
     chunk_number: Union[Unset, int] = UNSET,
-) -> Response[int]:
+) -> Response[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
     Args:
@@ -72,7 +74,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[int]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -94,7 +96,7 @@ def sync(
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
     chunk_number: Union[Unset, int] = UNSET,
-) -> Optional[int]:
+) -> Optional[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
     Args:
@@ -107,7 +109,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        int
+        ResponseError
     """
 
     return sync_detailed(
@@ -124,7 +126,7 @@ async def asyncio_detailed(
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
     chunk_number: Union[Unset, int] = UNSET,
-) -> Response[int]:
+) -> Response[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
     Args:
@@ -137,7 +139,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[int]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -157,7 +159,7 @@ async def asyncio(
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
     chunk_number: Union[Unset, int] = UNSET,
-) -> Optional[int]:
+) -> Optional[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
     Args:
@@ -170,7 +172,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        int
+        ResponseError
     """
 
     return (

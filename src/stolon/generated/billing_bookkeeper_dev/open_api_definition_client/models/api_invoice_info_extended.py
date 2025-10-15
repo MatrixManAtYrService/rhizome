@@ -10,6 +10,7 @@ from ..models.api_invoice_info_extended_entity_type import ApiInvoiceInfoExtende
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.api_fee_tax import ApiFeeTax
     from ..models.api_invoice_info_amount import ApiInvoiceInfoAmount
 
 
@@ -38,6 +39,7 @@ class ApiInvoiceInfoExtended:
             created Example: 2020-12-31T23:59:59.123456Z.
         invoice_info_amounts (Union[Unset, list['ApiInvoiceInfoAmount']]): Array of associated invoice_info_amount
             entries
+        fee_taxes (Union[Unset, list['ApiFeeTax']]): Array of associated fee_tax entries
     """
 
     id: Union[Unset, int] = UNSET
@@ -55,6 +57,7 @@ class ApiInvoiceInfoExtended:
     request_uuid: Union[Unset, str] = UNSET
     created_timestamp: Union[Unset, datetime.datetime] = UNSET
     invoice_info_amounts: Union[Unset, list["ApiInvoiceInfoAmount"]] = UNSET
+    fee_taxes: Union[Unset, list["ApiFeeTax"]] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -99,6 +102,13 @@ class ApiInvoiceInfoExtended:
                 invoice_info_amounts_item = invoice_info_amounts_item_data.to_dict()
                 invoice_info_amounts.append(invoice_info_amounts_item)
 
+        fee_taxes: Union[Unset, list[dict[str, Any]]] = UNSET
+        if not isinstance(self.fee_taxes, Unset):
+            fee_taxes = []
+            for fee_taxes_item_data in self.fee_taxes:
+                fee_taxes_item = fee_taxes_item_data.to_dict()
+                fee_taxes.append(fee_taxes_item)
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -132,11 +142,14 @@ class ApiInvoiceInfoExtended:
             field_dict["createdTimestamp"] = created_timestamp
         if invoice_info_amounts is not UNSET:
             field_dict["invoiceInfoAmounts"] = invoice_info_amounts
+        if fee_taxes is not UNSET:
+            field_dict["feeTaxes"] = fee_taxes
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.api_fee_tax import ApiFeeTax
         from ..models.api_invoice_info_amount import ApiInvoiceInfoAmount
 
         d = dict(src_dict)
@@ -193,6 +206,13 @@ class ApiInvoiceInfoExtended:
 
             invoice_info_amounts.append(invoice_info_amounts_item)
 
+        fee_taxes = []
+        _fee_taxes = d.pop("feeTaxes", UNSET)
+        for fee_taxes_item_data in _fee_taxes or []:
+            fee_taxes_item = ApiFeeTax.from_dict(fee_taxes_item_data)
+
+            fee_taxes.append(fee_taxes_item)
+
         api_invoice_info_extended = cls(
             id=id,
             uuid=uuid,
@@ -209,6 +229,7 @@ class ApiInvoiceInfoExtended:
             request_uuid=request_uuid,
             created_timestamp=created_timestamp,
             invoice_info_amounts=invoice_info_amounts,
+            fee_taxes=fee_taxes,
         )
 
         api_invoice_info_extended.additional_properties = d

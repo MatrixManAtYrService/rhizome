@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_fee_rate_report_action_error import ApiFeeRateReportActionError
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -34,11 +34,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiFeeRateReportActionError]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiFeeRateReportActionError.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -48,9 +46,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiFeeRateReportActionError]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -65,7 +61,7 @@ def sync_detailed(
     fee_rate_error_report_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiFeeRateReportActionError]:
+) -> Response[ResponseError]:
     """Get fee rate report action errors by error report uuid
 
     Args:
@@ -78,7 +74,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeRateReportActionError]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -100,7 +96,7 @@ def sync(
     fee_rate_error_report_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiFeeRateReportActionError]:
+) -> Optional[ResponseError]:
     """Get fee rate report action errors by error report uuid
 
     Args:
@@ -113,7 +109,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeRateReportActionError
+        ResponseError
     """
 
     return sync_detailed(
@@ -130,7 +126,7 @@ async def asyncio_detailed(
     fee_rate_error_report_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiFeeRateReportActionError]:
+) -> Response[ResponseError]:
     """Get fee rate report action errors by error report uuid
 
     Args:
@@ -143,7 +139,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeRateReportActionError]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -163,7 +159,7 @@ async def asyncio(
     fee_rate_error_report_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiFeeRateReportActionError]:
+) -> Optional[ResponseError]:
     """Get fee rate report action errors by error report uuid
 
     Args:
@@ -176,7 +172,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeRateReportActionError
+        ResponseError
     """
 
     return (

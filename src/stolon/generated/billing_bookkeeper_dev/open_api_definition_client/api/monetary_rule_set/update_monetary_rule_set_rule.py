@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_monetary_rule_set_rule import ApiMonetaryRuleSetRule
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -29,11 +30,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiMonetaryRuleSetRule]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiMonetaryRuleSetRule.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -43,9 +42,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiMonetaryRuleSetRule]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -59,7 +56,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiMonetaryRuleSetRule,
-) -> Response[ApiMonetaryRuleSetRule]:
+) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -71,7 +68,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -91,7 +88,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiMonetaryRuleSetRule,
-) -> Optional[ApiMonetaryRuleSetRule]:
+) -> Optional[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -103,7 +100,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
     """
 
     return sync_detailed(
@@ -118,7 +115,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiMonetaryRuleSetRule,
-) -> Response[ApiMonetaryRuleSetRule]:
+) -> Response[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -130,7 +127,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMonetaryRuleSetRule]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -148,7 +145,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiMonetaryRuleSetRule,
-) -> Optional[ApiMonetaryRuleSetRule]:
+) -> Optional[ResponseError]:
     """Update monetary rule set rule
 
     Args:
@@ -160,7 +157,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMonetaryRuleSetRule
+        ResponseError
     """
 
     return (

@@ -7,6 +7,7 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_billing_event import ApiBillingEvent
 from ...models.api_fee_estimate import ApiFeeEstimate
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -31,9 +32,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiFeeEstimate]:
+) -> Optional[Union[ApiFeeEstimate, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiFeeEstimate.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -50,7 +51,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiFeeEstimate]:
+) -> Response[Union[ApiFeeEstimate, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -63,7 +64,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBillingEvent,
-) -> Response[ApiFeeEstimate]:
+) -> Response[Union[ApiFeeEstimate, ResponseError]]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -74,7 +75,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeEstimate]
+        Response[Union[ApiFeeEstimate, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -92,7 +93,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBillingEvent,
-) -> Optional[ApiFeeEstimate]:
+) -> Optional[Union[ApiFeeEstimate, ResponseError]]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -103,7 +104,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeEstimate
+        Union[ApiFeeEstimate, ResponseError]
     """
 
     return sync_detailed(
@@ -116,7 +117,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBillingEvent,
-) -> Response[ApiFeeEstimate]:
+) -> Response[Union[ApiFeeEstimate, ResponseError]]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -127,7 +128,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeEstimate]
+        Response[Union[ApiFeeEstimate, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -143,7 +144,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBillingEvent,
-) -> Optional[ApiFeeEstimate]:
+) -> Optional[Union[ApiFeeEstimate, ResponseError]]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
     Args:
@@ -154,7 +155,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeEstimate
+        Union[ApiFeeEstimate, ResponseError]
     """
 
     return (

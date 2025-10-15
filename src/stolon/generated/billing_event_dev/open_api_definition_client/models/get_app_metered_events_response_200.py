@@ -4,11 +4,11 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="MemoResponse200")
+T = TypeVar("T", bound="GetAppMeteredEventsResponse200")
 
 
 @_attrs_define
-class MemoResponse200:
+class GetAppMeteredEventsResponse200:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -22,10 +22,10 @@ class MemoResponse200:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        memo_response_200 = cls()
+        get_app_metered_events_response_200 = cls()
 
-        memo_response_200.additional_properties = d
-        return memo_response_200
+        get_app_metered_events_response_200.additional_properties = d
+        return get_app_metered_events_response_200
 
     @property
     def additional_keys(self) -> list[str]:

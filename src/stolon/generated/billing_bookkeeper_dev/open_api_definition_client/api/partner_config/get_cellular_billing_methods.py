@@ -6,7 +6,6 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_cellular_billing_method import ApiCellularBillingMethod
-from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -21,9 +20,9 @@ def _get_kwargs() -> dict[str, Any]:
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ResponseError, list["ApiCellularBillingMethod"]]]:
+) -> Optional[Union[ApiCellularBillingMethod, list["ApiCellularBillingMethod"]]]:
     if response.status_code == 200:
-        response_200 = ResponseError.from_dict(response.json())
+        response_200 = ApiCellularBillingMethod.from_dict(response.json())
 
         return response_200
 
@@ -55,7 +54,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ResponseError, list["ApiCellularBillingMethod"]]]:
+) -> Response[Union[ApiCellularBillingMethod, list["ApiCellularBillingMethod"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -67,7 +66,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[Union[ResponseError, list["ApiCellularBillingMethod"]]]:
+) -> Response[Union[ApiCellularBillingMethod, list["ApiCellularBillingMethod"]]]:
     """Get the valid cellular billing method values that can be configured.
 
     Raises:
@@ -75,7 +74,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ResponseError, list['ApiCellularBillingMethod']]]
+        Response[Union[ApiCellularBillingMethod, list['ApiCellularBillingMethod']]]
     """
 
     kwargs = _get_kwargs()
@@ -90,7 +89,7 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[ResponseError, list["ApiCellularBillingMethod"]]]:
+) -> Optional[Union[ApiCellularBillingMethod, list["ApiCellularBillingMethod"]]]:
     """Get the valid cellular billing method values that can be configured.
 
     Raises:
@@ -98,7 +97,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ResponseError, list['ApiCellularBillingMethod']]
+        Union[ApiCellularBillingMethod, list['ApiCellularBillingMethod']]
     """
 
     return sync_detailed(
@@ -109,7 +108,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[Union[ResponseError, list["ApiCellularBillingMethod"]]]:
+) -> Response[Union[ApiCellularBillingMethod, list["ApiCellularBillingMethod"]]]:
     """Get the valid cellular billing method values that can be configured.
 
     Raises:
@@ -117,7 +116,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ResponseError, list['ApiCellularBillingMethod']]]
+        Response[Union[ApiCellularBillingMethod, list['ApiCellularBillingMethod']]]
     """
 
     kwargs = _get_kwargs()
@@ -130,7 +129,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[ResponseError, list["ApiCellularBillingMethod"]]]:
+) -> Optional[Union[ApiCellularBillingMethod, list["ApiCellularBillingMethod"]]]:
     """Get the valid cellular billing method values that can be configured.
 
     Raises:
@@ -138,7 +137,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ResponseError, list['ApiCellularBillingMethod']]
+        Union[ApiCellularBillingMethod, list['ApiCellularBillingMethod']]
     """
 
     return (

@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_consumer_failure_update_response import ApiConsumerFailureUpdateResponse
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -30,9 +31,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiConsumerFailureUpdateResponse, list["ApiConsumerFailureUpdateResponse"]]]:
+) -> Optional[Union[ResponseError, list["ApiConsumerFailureUpdateResponse"]]]:
     if response.status_code == 200:
-        response_200 = ApiConsumerFailureUpdateResponse.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -64,7 +65,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiConsumerFailureUpdateResponse, list["ApiConsumerFailureUpdateResponse"]]]:
+) -> Response[Union[ResponseError, list["ApiConsumerFailureUpdateResponse"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -77,7 +78,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: list[str],
-) -> Response[Union[ApiConsumerFailureUpdateResponse, list["ApiConsumerFailureUpdateResponse"]]]:
+) -> Response[Union[ResponseError, list["ApiConsumerFailureUpdateResponse"]]]:
     """Retry consumer failures
 
     Args:
@@ -88,7 +89,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]]
+        Response[Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]]
     """
 
     kwargs = _get_kwargs(
@@ -106,7 +107,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: list[str],
-) -> Optional[Union[ApiConsumerFailureUpdateResponse, list["ApiConsumerFailureUpdateResponse"]]]:
+) -> Optional[Union[ResponseError, list["ApiConsumerFailureUpdateResponse"]]]:
     """Retry consumer failures
 
     Args:
@@ -117,7 +118,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]
+        Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]
     """
 
     return sync_detailed(
@@ -130,7 +131,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: list[str],
-) -> Response[Union[ApiConsumerFailureUpdateResponse, list["ApiConsumerFailureUpdateResponse"]]]:
+) -> Response[Union[ResponseError, list["ApiConsumerFailureUpdateResponse"]]]:
     """Retry consumer failures
 
     Args:
@@ -141,7 +142,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]]
+        Response[Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]]
     """
 
     kwargs = _get_kwargs(
@@ -157,7 +158,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: list[str],
-) -> Optional[Union[ApiConsumerFailureUpdateResponse, list["ApiConsumerFailureUpdateResponse"]]]:
+) -> Optional[Union[ResponseError, list["ApiConsumerFailureUpdateResponse"]]]:
     """Retry consumer failures
 
     Args:
@@ -168,7 +169,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiConsumerFailureUpdateResponse, list['ApiConsumerFailureUpdateResponse']]
+        Union[ResponseError, list['ApiConsumerFailureUpdateResponse']]
     """
 
     return (

@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.query_job_response_200 import QueryJobResponse200
+from ...models.api_job_response import ApiJobResponse
 from ...types import Response
 
 
@@ -22,9 +22,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[QueryJobResponse200]:
+) -> Optional[ApiJobResponse]:
     if response.status_code == 200:
-        response_200 = QueryJobResponse200.from_dict(response.json())
+        response_200 = ApiJobResponse.from_dict(response.json())
 
         return response_200
 
@@ -36,7 +36,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[QueryJobResponse200]:
+) -> Response[ApiJobResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -49,7 +49,7 @@ def sync_detailed(
     request_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[QueryJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -60,7 +60,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[QueryJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -78,7 +78,7 @@ def sync(
     request_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[QueryJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -89,7 +89,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        QueryJobResponse200
+        ApiJobResponse
     """
 
     return sync_detailed(
@@ -102,7 +102,7 @@ async def asyncio_detailed(
     request_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[QueryJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -113,7 +113,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[QueryJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -129,7 +129,7 @@ async def asyncio(
     request_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[QueryJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Queries for the status of the job associated with the specified billing request.
 
     Args:
@@ -140,7 +140,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        QueryJobResponse200
+        ApiJobResponse
     """
 
     return (

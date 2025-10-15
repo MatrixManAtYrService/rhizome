@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.exec_pending_event_stale_cleanup_job_response_200 import ExecPendingEventStaleCleanupJobResponse200
+from ...models.api_job_response import ApiJobResponse
 from ...types import Response
 
 
@@ -20,9 +20,9 @@ def _get_kwargs() -> dict[str, Any]:
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ExecPendingEventStaleCleanupJobResponse200]:
+) -> Optional[ApiJobResponse]:
     if response.status_code == 200:
-        response_200 = ExecPendingEventStaleCleanupJobResponse200.from_dict(response.json())
+        response_200 = ApiJobResponse.from_dict(response.json())
 
         return response_200
 
@@ -34,7 +34,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ExecPendingEventStaleCleanupJobResponse200]:
+) -> Response[ApiJobResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -46,7 +46,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[ExecPendingEventStaleCleanupJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -55,7 +55,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ExecPendingEventStaleCleanupJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs()
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[ExecPendingEventStaleCleanupJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -79,7 +79,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ExecPendingEventStaleCleanupJobResponse200
+        ApiJobResponse
     """
 
     return sync_detailed(
@@ -90,7 +90,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[ExecPendingEventStaleCleanupJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -99,7 +99,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ExecPendingEventStaleCleanupJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs()
@@ -112,7 +112,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[ExecPendingEventStaleCleanupJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Executes the pending event stale cleanup job immediately.  This will cleanup any stale pending
     events and produce consumer failures from those.
 
@@ -121,7 +121,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ExecPendingEventStaleCleanupJobResponse200
+        ApiJobResponse
     """
 
     return (

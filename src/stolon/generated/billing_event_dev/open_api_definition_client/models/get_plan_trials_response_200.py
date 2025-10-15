@@ -4,11 +4,11 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="EnqueueAppSubAdvanceEventsJobResponse200")
+T = TypeVar("T", bound="GetPlanTrialsResponse200")
 
 
 @_attrs_define
-class EnqueueAppSubAdvanceEventsJobResponse200:
+class GetPlanTrialsResponse200:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -22,10 +22,10 @@ class EnqueueAppSubAdvanceEventsJobResponse200:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        enqueue_app_sub_advance_events_job_response_200 = cls()
+        get_plan_trials_response_200 = cls()
 
-        enqueue_app_sub_advance_events_job_response_200.additional_properties = d
-        return enqueue_app_sub_advance_events_job_response_200
+        get_plan_trials_response_200.additional_properties = d
+        return get_plan_trials_response_200
 
     @property
     def additional_keys(self) -> list[str]:

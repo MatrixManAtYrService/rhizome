@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_misc_pricing import ApiMiscPricing
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -58,11 +58,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiMiscPricing]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiMiscPricing.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -72,9 +70,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiMiscPricing]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -93,7 +89,7 @@ def sync_detailed(
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     x_clover_appenv: str,
-) -> Response[ApiMiscPricing]:
+) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -110,7 +106,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscPricing]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -140,7 +136,7 @@ def sync(
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     x_clover_appenv: str,
-) -> Optional[ApiMiscPricing]:
+) -> Optional[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -157,7 +153,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscPricing
+        ResponseError
     """
 
     return sync_detailed(
@@ -182,7 +178,7 @@ async def asyncio_detailed(
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     x_clover_appenv: str,
-) -> Response[ApiMiscPricing]:
+) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -199,7 +195,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiMiscPricing]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -227,7 +223,7 @@ async def asyncio(
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     x_clover_appenv: str,
-) -> Optional[ApiMiscPricing]:
+) -> Optional[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
     Args:
@@ -244,7 +240,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiMiscPricing
+        ResponseError
     """
 
     return (

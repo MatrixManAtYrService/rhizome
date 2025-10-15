@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.get_4_response_200 import Get4Response200
+from ...models.api_backfill_acceptance import ApiBackfillAcceptance
 from ...types import UNSET, Response
 
 
@@ -30,9 +30,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Get4Response200]:
+) -> Optional[ApiBackfillAcceptance]:
     if response.status_code == 200:
-        response_200 = Get4Response200.from_dict(response.json())
+        response_200 = ApiBackfillAcceptance.from_dict(response.json())
 
         return response_200
 
@@ -44,7 +44,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Get4Response200]:
+) -> Response[ApiBackfillAcceptance]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,7 +57,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     merchant_uuid: str,
-) -> Response[Get4Response200]:
+) -> Response[ApiBackfillAcceptance]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -68,7 +68,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Get4Response200]
+        Response[ApiBackfillAcceptance]
     """
 
     kwargs = _get_kwargs(
@@ -86,7 +86,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     merchant_uuid: str,
-) -> Optional[Get4Response200]:
+) -> Optional[ApiBackfillAcceptance]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -97,7 +97,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Get4Response200
+        ApiBackfillAcceptance
     """
 
     return sync_detailed(
@@ -110,7 +110,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     merchant_uuid: str,
-) -> Response[Get4Response200]:
+) -> Response[ApiBackfillAcceptance]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -121,7 +121,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Get4Response200]
+        Response[ApiBackfillAcceptance]
     """
 
     kwargs = _get_kwargs(
@@ -137,7 +137,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     merchant_uuid: str,
-) -> Optional[Get4Response200]:
+) -> Optional[ApiBackfillAcceptance]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -148,7 +148,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Get4Response200
+        ApiBackfillAcceptance
     """
 
     return (

@@ -6,7 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_base_job_params import ApiBaseJobParams
-from ...models.enqueue_app_sub_advance_events_job_response_200 import EnqueueAppSubAdvanceEventsJobResponse200
+from ...models.api_job_response import ApiJobResponse
 from ...types import Response
 
 
@@ -31,9 +31,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[EnqueueAppSubAdvanceEventsJobResponse200]:
+) -> Optional[ApiJobResponse]:
     if response.status_code == 200:
-        response_200 = EnqueueAppSubAdvanceEventsJobResponse200.from_dict(response.json())
+        response_200 = ApiJobResponse.from_dict(response.json())
 
         return response_200
 
@@ -45,7 +45,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[EnqueueAppSubAdvanceEventsJobResponse200]:
+) -> Response[ApiJobResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,7 +58,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Response[EnqueueAppSubAdvanceEventsJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -69,7 +69,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[EnqueueAppSubAdvanceEventsJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -87,7 +87,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Optional[EnqueueAppSubAdvanceEventsJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -98,7 +98,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        EnqueueAppSubAdvanceEventsJobResponse200
+        ApiJobResponse
     """
 
     return sync_detailed(
@@ -111,7 +111,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Response[EnqueueAppSubAdvanceEventsJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -122,7 +122,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[EnqueueAppSubAdvanceEventsJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -138,7 +138,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Optional[EnqueueAppSubAdvanceEventsJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -149,7 +149,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        EnqueueAppSubAdvanceEventsJobResponse200
+        ApiJobResponse
     """
 
     return (

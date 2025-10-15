@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_fee_code_app import ApiFeeCodeApp
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -43,9 +43,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ApiFeeCodeApp]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiFeeCodeApp.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -55,7 +55,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ApiFeeCodeApp]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -73,7 +73,7 @@ def sync_detailed(
     developer_app_uuid: Union[Unset, str] = UNSET,
     app_subscription_uuid: Union[Unset, str] = UNSET,
     app_metered_uuid: Union[Unset, str] = UNSET,
-) -> Response[ApiFeeCodeApp]:
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -90,7 +90,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -118,7 +118,7 @@ def sync(
     developer_app_uuid: Union[Unset, str] = UNSET,
     app_subscription_uuid: Union[Unset, str] = UNSET,
     app_metered_uuid: Union[Unset, str] = UNSET,
-) -> Optional[ApiFeeCodeApp]:
+) -> Optional[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -135,7 +135,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
     """
 
     return sync_detailed(
@@ -158,7 +158,7 @@ async def asyncio_detailed(
     developer_app_uuid: Union[Unset, str] = UNSET,
     app_subscription_uuid: Union[Unset, str] = UNSET,
     app_metered_uuid: Union[Unset, str] = UNSET,
-) -> Response[ApiFeeCodeApp]:
+) -> Response[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -175,7 +175,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiFeeCodeApp]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -201,7 +201,7 @@ async def asyncio(
     developer_app_uuid: Union[Unset, str] = UNSET,
     app_subscription_uuid: Union[Unset, str] = UNSET,
     app_metered_uuid: Union[Unset, str] = UNSET,
-) -> Optional[ApiFeeCodeApp]:
+) -> Optional[ResponseError]:
     """Get fee-code-to-app mappings by fee category and fee code, or by developer app UUID and either app
     subscription UUID or app metered UUID
 
@@ -218,7 +218,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiFeeCodeApp
+        ResponseError
     """
 
     return (

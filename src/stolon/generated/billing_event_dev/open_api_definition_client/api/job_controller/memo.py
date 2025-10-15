@@ -6,7 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_base_job_params import ApiBaseJobParams
-from ...models.memo_response_200 import MemoResponse200
+from ...models.api_job_response import ApiJobResponse
 from ...types import Response
 
 
@@ -32,9 +32,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[MemoResponse200]:
+) -> Optional[ApiJobResponse]:
     if response.status_code == 200:
-        response_200 = MemoResponse200.from_dict(response.json())
+        response_200 = ApiJobResponse.from_dict(response.json())
 
         return response_200
 
@@ -46,7 +46,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[MemoResponse200]:
+) -> Response[ApiJobResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -60,7 +60,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Response[MemoResponse200]:
+) -> Response[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -72,7 +72,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[MemoResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -92,7 +92,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Optional[MemoResponse200]:
+) -> Optional[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -104,7 +104,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        MemoResponse200
+        ApiJobResponse
     """
 
     return sync_detailed(
@@ -119,7 +119,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Response[MemoResponse200]:
+) -> Response[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -131,7 +131,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[MemoResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -149,7 +149,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiBaseJobParams,
-) -> Optional[MemoResponse200]:
+) -> Optional[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -161,7 +161,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        MemoResponse200
+        ApiJobResponse
     """
 
     return (

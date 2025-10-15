@@ -5,6 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -21,9 +22,10 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[int, list[int]]]:
+) -> Optional[Union[ResponseError, list[int]]]:
     if response.status_code == 200:
-        response_200 = cast(int, response.json())
+        response_200 = ResponseError.from_dict(response.json())
+
         return response_200
 
     if response.status_code == 400:
@@ -44,7 +46,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[int, list[int]]]:
+) -> Response[Union[ResponseError, list[int]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,7 +59,7 @@ def sync_detailed(
     billing_entity_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[Union[int, list[int]]]:
+) -> Response[Union[ResponseError, list[int]]]:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
     Args:
@@ -68,7 +70,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[int, list[int]]]
+        Response[Union[ResponseError, list[int]]]
     """
 
     kwargs = _get_kwargs(
@@ -86,7 +88,7 @@ def sync(
     billing_entity_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[int, list[int]]]:
+) -> Optional[Union[ResponseError, list[int]]]:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
     Args:
@@ -97,7 +99,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[int, list[int]]
+        Union[ResponseError, list[int]]
     """
 
     return sync_detailed(
@@ -110,7 +112,7 @@ async def asyncio_detailed(
     billing_entity_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[Union[int, list[int]]]:
+) -> Response[Union[ResponseError, list[int]]]:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
     Args:
@@ -121,7 +123,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[int, list[int]]]
+        Response[Union[ResponseError, list[int]]]
     """
 
     kwargs = _get_kwargs(
@@ -137,7 +139,7 @@ async def asyncio(
     billing_entity_uuid: str,
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[int, list[int]]]:
+) -> Optional[Union[ResponseError, list[int]]]:
     """Get List of years from year-to-date (YTD) fees by billing entity UUID
 
     Args:
@@ -148,7 +150,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[int, list[int]]
+        Union[ResponseError, list[int]]
     """
 
     return (

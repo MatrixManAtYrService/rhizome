@@ -6,7 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_app_metered_event import ApiAppMeteredEvent
+from ...models.get_app_metered_events_response_200 import GetAppMeteredEventsResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -55,9 +55,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiAppMeteredEvent]:
+) -> Optional[GetAppMeteredEventsResponse200]:
     if response.status_code == 200:
-        response_200 = ApiAppMeteredEvent.from_dict(response.json())
+        response_200 = GetAppMeteredEventsResponse200.from_dict(response.json())
 
         return response_200
 
@@ -69,7 +69,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiAppMeteredEvent]:
+) -> Response[GetAppMeteredEventsResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -88,7 +88,7 @@ def sync_detailed(
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiAppMeteredEvent]:
+) -> Response[GetAppMeteredEventsResponse200]:
     """Get app metered events
 
     Args:
@@ -105,7 +105,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeteredEvent]
+        Response[GetAppMeteredEventsResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -135,7 +135,7 @@ def sync(
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiAppMeteredEvent]:
+) -> Optional[GetAppMeteredEventsResponse200]:
     """Get app metered events
 
     Args:
@@ -152,7 +152,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeteredEvent
+        GetAppMeteredEventsResponse200
     """
 
     return sync_detailed(
@@ -177,7 +177,7 @@ async def asyncio_detailed(
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Response[ApiAppMeteredEvent]:
+) -> Response[GetAppMeteredEventsResponse200]:
     """Get app metered events
 
     Args:
@@ -194,7 +194,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiAppMeteredEvent]
+        Response[GetAppMeteredEventsResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -222,7 +222,7 @@ async def asyncio(
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-) -> Optional[ApiAppMeteredEvent]:
+) -> Optional[GetAppMeteredEventsResponse200]:
     """Get app metered events
 
     Args:
@@ -239,7 +239,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiAppMeteredEvent
+        GetAppMeteredEventsResponse200
     """
 
     return (

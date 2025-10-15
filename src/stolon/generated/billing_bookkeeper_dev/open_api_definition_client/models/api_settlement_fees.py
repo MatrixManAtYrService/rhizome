@@ -20,8 +20,8 @@ class ApiSettlementFees:
     """settlement requests for the billing entity
 
     Attributes:
-        tlement_tax_amount (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
         tlement_fee_amount (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
+        tlement_tax_amount (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
         tlement_uuid (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
         tlement_date (Union[Unset, ApiSettlementFees]): settlement requests for the billing entity
         settlement_uuid (Union[Unset, str]): 26-character UUID of the settlement request
@@ -46,8 +46,8 @@ class ApiSettlementFees:
             settlement total
     """
 
-    tlement_tax_amount: Union[Unset, "ApiSettlementFees"] = UNSET
     tlement_fee_amount: Union[Unset, "ApiSettlementFees"] = UNSET
+    tlement_tax_amount: Union[Unset, "ApiSettlementFees"] = UNSET
     tlement_uuid: Union[Unset, "ApiSettlementFees"] = UNSET
     tlement_date: Union[Unset, "ApiSettlementFees"] = UNSET
     settlement_uuid: Union[Unset, str] = UNSET
@@ -68,13 +68,13 @@ class ApiSettlementFees:
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        tlement_tax_amount: Union[Unset, dict[str, Any]] = UNSET
-        if not isinstance(self.tlement_tax_amount, Unset):
-            tlement_tax_amount = self.tlement_tax_amount.to_dict()
-
         tlement_fee_amount: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.tlement_fee_amount, Unset):
             tlement_fee_amount = self.tlement_fee_amount.to_dict()
+
+        tlement_tax_amount: Union[Unset, dict[str, Any]] = UNSET
+        if not isinstance(self.tlement_tax_amount, Unset):
+            tlement_tax_amount = self.tlement_tax_amount.to_dict()
 
         tlement_uuid: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.tlement_uuid, Unset):
@@ -124,10 +124,10 @@ class ApiSettlementFees:
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if tlement_tax_amount is not UNSET:
-            field_dict["tlementTaxAmount"] = tlement_tax_amount
         if tlement_fee_amount is not UNSET:
             field_dict["tlementFeeAmount"] = tlement_fee_amount
+        if tlement_tax_amount is not UNSET:
+            field_dict["tlementTaxAmount"] = tlement_tax_amount
         if tlement_uuid is not UNSET:
             field_dict["tlementUuid"] = tlement_uuid
         if tlement_date is not UNSET:
@@ -170,14 +170,6 @@ class ApiSettlementFees:
         from ..models.api_settlement_fee_summary import ApiSettlementFeeSummary
 
         d = dict(src_dict)
-        _tlement_tax_amount = d.pop("tlementTaxAmount", UNSET)
-        tlement_tax_amount: Union[Unset, ApiSettlementFees]
-        if _tlement_tax_amount and not isinstance(_tlement_tax_amount, Unset):
-            tlement_tax_amount = ApiSettlementFees.from_dict(_tlement_tax_amount)
-
-        else:
-            tlement_tax_amount = UNSET
-
         _tlement_fee_amount = d.pop("tlementFeeAmount", UNSET)
         tlement_fee_amount: Union[Unset, ApiSettlementFees]
         if _tlement_fee_amount and not isinstance(_tlement_fee_amount, Unset):
@@ -185,6 +177,14 @@ class ApiSettlementFees:
 
         else:
             tlement_fee_amount = UNSET
+
+        _tlement_tax_amount = d.pop("tlementTaxAmount", UNSET)
+        tlement_tax_amount: Union[Unset, ApiSettlementFees]
+        if _tlement_tax_amount and not isinstance(_tlement_tax_amount, Unset):
+            tlement_tax_amount = ApiSettlementFees.from_dict(_tlement_tax_amount)
+
+        else:
+            tlement_tax_amount = UNSET
 
         _tlement_uuid = d.pop("tlementUuid", UNSET)
         tlement_uuid: Union[Unset, ApiSettlementFees]
@@ -244,8 +244,8 @@ class ApiSettlementFees:
             fee_summaries.append(fee_summaries_item)
 
         api_settlement_fees = cls(
-            tlement_tax_amount=tlement_tax_amount,
             tlement_fee_amount=tlement_fee_amount,
+            tlement_tax_amount=tlement_tax_amount,
             tlement_uuid=tlement_uuid,
             tlement_date=tlement_date,
             settlement_uuid=settlement_uuid,

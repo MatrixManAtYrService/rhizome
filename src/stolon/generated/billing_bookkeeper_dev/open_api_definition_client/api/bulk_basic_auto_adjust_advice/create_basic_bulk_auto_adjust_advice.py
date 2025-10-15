@@ -8,6 +8,7 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_bulk_auto_adjust_advice import ApiBulkAutoAdjustAdvice
 from ...models.create_basic_bulk_auto_adjust_advice_body import CreateBasicBulkAutoAdjustAdviceBody
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response
 
 
@@ -60,9 +61,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiBulkAutoAdjustAdvice]:
+) -> Optional[Union[ApiBulkAutoAdjustAdvice, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiBulkAutoAdjustAdvice.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -89,7 +90,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiBulkAutoAdjustAdvice]:
+) -> Response[Union[ApiBulkAutoAdjustAdvice, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -110,7 +111,7 @@ def sync_detailed(
     currency: str,
     reference: str,
     email_address: str,
-) -> Response[ApiBulkAutoAdjustAdvice]:
+) -> Response[Union[ApiBulkAutoAdjustAdvice, ResponseError]]:
     """Create bulk basic auto-adjust advice
 
     Args:
@@ -129,7 +130,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBulkAutoAdjustAdvice]
+        Response[Union[ApiBulkAutoAdjustAdvice, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -163,7 +164,7 @@ def sync(
     currency: str,
     reference: str,
     email_address: str,
-) -> Optional[ApiBulkAutoAdjustAdvice]:
+) -> Optional[Union[ApiBulkAutoAdjustAdvice, ResponseError]]:
     """Create bulk basic auto-adjust advice
 
     Args:
@@ -182,7 +183,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBulkAutoAdjustAdvice
+        Union[ApiBulkAutoAdjustAdvice, ResponseError]
     """
 
     return sync_detailed(
@@ -211,7 +212,7 @@ async def asyncio_detailed(
     currency: str,
     reference: str,
     email_address: str,
-) -> Response[ApiBulkAutoAdjustAdvice]:
+) -> Response[Union[ApiBulkAutoAdjustAdvice, ResponseError]]:
     """Create bulk basic auto-adjust advice
 
     Args:
@@ -230,7 +231,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBulkAutoAdjustAdvice]
+        Response[Union[ApiBulkAutoAdjustAdvice, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -262,7 +263,7 @@ async def asyncio(
     currency: str,
     reference: str,
     email_address: str,
-) -> Optional[ApiBulkAutoAdjustAdvice]:
+) -> Optional[Union[ApiBulkAutoAdjustAdvice, ResponseError]]:
     """Create bulk basic auto-adjust advice
 
     Args:
@@ -281,7 +282,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBulkAutoAdjustAdvice
+        Union[ApiBulkAutoAdjustAdvice, ResponseError]
     """
 
     return (

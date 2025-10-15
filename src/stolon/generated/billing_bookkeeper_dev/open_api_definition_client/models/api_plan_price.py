@@ -7,44 +7,43 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.api_device_price import ApiDevicePrice
     from ..models.api_price_adjustment import ApiPriceAdjustment
     from ..models.api_price_detail import ApiPriceDetail
-    from ..models.api_tier_pricing import ApiTierPricing
 
 
-T = TypeVar("T", bound="ApiSpecifierPrice")
+T = TypeVar("T", bound="ApiPlanPrice")
 
 
 @_attrs_define
-class ApiSpecifierPrice:
-    """collection of pricing quotes by miscellaneous specifier
+class ApiPlanPrice:
+    """collection of plans and their pricing quotes
 
     Attributes:
-        specifier (Union[Unset, str]): miscellaneous specifier that identifies the misc fee that pricing is for
+        merchant_plan_uuid (Union[Unset, str]): 13-character UUID of the merchant plan that the pricing is for
         base_price (Union[Unset, ApiPriceDetail]):
-        tier_pricing (Union[Unset, list['ApiTierPricing']]): tiered pricing for the current carrier's SIMs
-        adjustments (Union[Unset, list['ApiPriceAdjustment']]): potential adjustments to the cellular base price
+        trial_price (Union[Unset, ApiPriceDetail]):
+        adjustments (Union[Unset, list['ApiPriceAdjustment']]): potential adjustments to the base price of the plan
+        devices (Union[Unset, list['ApiDevicePrice']]): qualifiers for the tiered rule
     """
 
-    specifier: Union[Unset, str] = UNSET
+    merchant_plan_uuid: Union[Unset, str] = UNSET
     base_price: Union[Unset, "ApiPriceDetail"] = UNSET
-    tier_pricing: Union[Unset, list["ApiTierPricing"]] = UNSET
+    trial_price: Union[Unset, "ApiPriceDetail"] = UNSET
     adjustments: Union[Unset, list["ApiPriceAdjustment"]] = UNSET
+    devices: Union[Unset, list["ApiDevicePrice"]] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        specifier = self.specifier
+        merchant_plan_uuid = self.merchant_plan_uuid
 
         base_price: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.base_price, Unset):
             base_price = self.base_price.to_dict()
 
-        tier_pricing: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.tier_pricing, Unset):
-            tier_pricing = []
-            for tier_pricing_item_data in self.tier_pricing:
-                tier_pricing_item = tier_pricing_item_data.to_dict()
-                tier_pricing.append(tier_pricing_item)
+        trial_price: Union[Unset, dict[str, Any]] = UNSET
+        if not isinstance(self.trial_price, Unset):
+            trial_price = self.trial_price.to_dict()
 
         adjustments: Union[Unset, list[dict[str, Any]]] = UNSET
         if not isinstance(self.adjustments, Unset):
@@ -53,28 +52,37 @@ class ApiSpecifierPrice:
                 adjustments_item = adjustments_item_data.to_dict()
                 adjustments.append(adjustments_item)
 
+        devices: Union[Unset, list[dict[str, Any]]] = UNSET
+        if not isinstance(self.devices, Unset):
+            devices = []
+            for devices_item_data in self.devices:
+                devices_item = devices_item_data.to_dict()
+                devices.append(devices_item)
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if specifier is not UNSET:
-            field_dict["specifier"] = specifier
+        if merchant_plan_uuid is not UNSET:
+            field_dict["merchantPlanUuid"] = merchant_plan_uuid
         if base_price is not UNSET:
             field_dict["basePrice"] = base_price
-        if tier_pricing is not UNSET:
-            field_dict["tierPricing"] = tier_pricing
+        if trial_price is not UNSET:
+            field_dict["trialPrice"] = trial_price
         if adjustments is not UNSET:
             field_dict["adjustments"] = adjustments
+        if devices is not UNSET:
+            field_dict["devices"] = devices
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.api_device_price import ApiDevicePrice
         from ..models.api_price_adjustment import ApiPriceAdjustment
         from ..models.api_price_detail import ApiPriceDetail
-        from ..models.api_tier_pricing import ApiTierPricing
 
         d = dict(src_dict)
-        specifier = d.pop("specifier", UNSET)
+        merchant_plan_uuid = d.pop("merchantPlanUuid", UNSET)
 
         _base_price = d.pop("basePrice", UNSET)
         base_price: Union[Unset, ApiPriceDetail]
@@ -84,12 +92,13 @@ class ApiSpecifierPrice:
         else:
             base_price = UNSET
 
-        tier_pricing = []
-        _tier_pricing = d.pop("tierPricing", UNSET)
-        for tier_pricing_item_data in _tier_pricing or []:
-            tier_pricing_item = ApiTierPricing.from_dict(tier_pricing_item_data)
+        _trial_price = d.pop("trialPrice", UNSET)
+        trial_price: Union[Unset, ApiPriceDetail]
+        if _trial_price and not isinstance(_trial_price, Unset):
+            trial_price = ApiPriceDetail.from_dict(_trial_price)
 
-            tier_pricing.append(tier_pricing_item)
+        else:
+            trial_price = UNSET
 
         adjustments = []
         _adjustments = d.pop("adjustments", UNSET)
@@ -98,15 +107,23 @@ class ApiSpecifierPrice:
 
             adjustments.append(adjustments_item)
 
-        api_specifier_price = cls(
-            specifier=specifier,
+        devices = []
+        _devices = d.pop("devices", UNSET)
+        for devices_item_data in _devices or []:
+            devices_item = ApiDevicePrice.from_dict(devices_item_data)
+
+            devices.append(devices_item)
+
+        api_plan_price = cls(
+            merchant_plan_uuid=merchant_plan_uuid,
             base_price=base_price,
-            tier_pricing=tier_pricing,
+            trial_price=trial_price,
             adjustments=adjustments,
+            devices=devices,
         )
 
-        api_specifier_price.additional_properties = d
-        return api_specifier_price
+        api_plan_price.additional_properties = d
+        return api_plan_price
 
     @property
     def additional_keys(self) -> list[str]:

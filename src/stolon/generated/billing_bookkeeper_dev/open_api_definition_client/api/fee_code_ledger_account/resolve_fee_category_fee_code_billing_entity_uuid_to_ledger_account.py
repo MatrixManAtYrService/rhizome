@@ -7,6 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_ledger_account import ApiLedgerAccount
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -41,9 +42,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiLedgerAccount]:
+) -> Optional[Union[ApiLedgerAccount, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiLedgerAccount.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -60,7 +61,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiLedgerAccount]:
+) -> Response[Union[ApiLedgerAccount, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -76,7 +77,7 @@ def sync_detailed(
     fee_category: str,
     fee_code: str,
     date: Union[Unset, datetime.date] = UNSET,
-) -> Response[ApiLedgerAccount]:
+) -> Response[Union[ApiLedgerAccount, ResponseError]]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
 
@@ -91,7 +92,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccount]
+        Response[Union[ApiLedgerAccount, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -115,7 +116,7 @@ def sync(
     fee_category: str,
     fee_code: str,
     date: Union[Unset, datetime.date] = UNSET,
-) -> Optional[ApiLedgerAccount]:
+) -> Optional[Union[ApiLedgerAccount, ResponseError]]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
 
@@ -130,7 +131,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccount
+        Union[ApiLedgerAccount, ResponseError]
     """
 
     return sync_detailed(
@@ -149,7 +150,7 @@ async def asyncio_detailed(
     fee_category: str,
     fee_code: str,
     date: Union[Unset, datetime.date] = UNSET,
-) -> Response[ApiLedgerAccount]:
+) -> Response[Union[ApiLedgerAccount, ResponseError]]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
 
@@ -164,7 +165,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccount]
+        Response[Union[ApiLedgerAccount, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -186,7 +187,7 @@ async def asyncio(
     fee_category: str,
     fee_code: str,
     date: Union[Unset, datetime.date] = UNSET,
-) -> Optional[ApiLedgerAccount]:
+) -> Optional[Union[ApiLedgerAccount, ResponseError]]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
 
@@ -201,7 +202,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccount
+        Union[ApiLedgerAccount, ResponseError]
     """
 
     return (

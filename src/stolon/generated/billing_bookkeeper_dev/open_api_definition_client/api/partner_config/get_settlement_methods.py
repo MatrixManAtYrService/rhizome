@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_settlement_method import ApiSettlementMethod
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -20,9 +21,9 @@ def _get_kwargs() -> dict[str, Any]:
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[ApiSettlementMethod, list["ApiSettlementMethod"]]]:
+) -> Optional[Union[ResponseError, list["ApiSettlementMethod"]]]:
     if response.status_code == 200:
-        response_200 = ApiSettlementMethod.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -54,7 +55,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[ApiSettlementMethod, list["ApiSettlementMethod"]]]:
+) -> Response[Union[ResponseError, list["ApiSettlementMethod"]]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,7 +67,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[Union[ApiSettlementMethod, list["ApiSettlementMethod"]]]:
+) -> Response[Union[ResponseError, list["ApiSettlementMethod"]]]:
     """Get the valid settlement method values that can be configured.
 
     Raises:
@@ -74,7 +75,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiSettlementMethod, list['ApiSettlementMethod']]]
+        Response[Union[ResponseError, list['ApiSettlementMethod']]]
     """
 
     kwargs = _get_kwargs()
@@ -89,7 +90,7 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[ApiSettlementMethod, list["ApiSettlementMethod"]]]:
+) -> Optional[Union[ResponseError, list["ApiSettlementMethod"]]]:
     """Get the valid settlement method values that can be configured.
 
     Raises:
@@ -97,7 +98,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiSettlementMethod, list['ApiSettlementMethod']]
+        Union[ResponseError, list['ApiSettlementMethod']]
     """
 
     return sync_detailed(
@@ -108,7 +109,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Response[Union[ApiSettlementMethod, list["ApiSettlementMethod"]]]:
+) -> Response[Union[ResponseError, list["ApiSettlementMethod"]]]:
     """Get the valid settlement method values that can be configured.
 
     Raises:
@@ -116,7 +117,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ApiSettlementMethod, list['ApiSettlementMethod']]]
+        Response[Union[ResponseError, list['ApiSettlementMethod']]]
     """
 
     kwargs = _get_kwargs()
@@ -129,7 +130,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[ApiSettlementMethod, list["ApiSettlementMethod"]]]:
+) -> Optional[Union[ResponseError, list["ApiSettlementMethod"]]]:
     """Get the valid settlement method values that can be configured.
 
     Raises:
@@ -137,7 +138,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ApiSettlementMethod, list['ApiSettlementMethod']]
+        Union[ResponseError, list['ApiSettlementMethod']]
     """
 
     return (

@@ -6,8 +6,8 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_billing_hierarchy_level_node import ApiBillingHierarchyLevelNode
 from ...models.get_billing_hierarchy_child_nodes_entity_types_item import GetBillingHierarchyChildNodesEntityTypesItem
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response, Unset
 
 
@@ -45,11 +45,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiBillingHierarchyLevelNode]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiBillingHierarchyLevelNode.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -59,9 +57,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiBillingHierarchyLevelNode]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -77,7 +73,7 @@ def sync_detailed(
     hierarchy_type: str,
     date: datetime.date,
     entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
-) -> Response[ApiBillingHierarchyLevelNode]:
+) -> Response[ResponseError]:
     """Get child nodes of billing entity for specified hierarchy type
 
     Args:
@@ -91,7 +87,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchyLevelNode]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -115,7 +111,7 @@ def sync(
     hierarchy_type: str,
     date: datetime.date,
     entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
-) -> Optional[ApiBillingHierarchyLevelNode]:
+) -> Optional[ResponseError]:
     """Get child nodes of billing entity for specified hierarchy type
 
     Args:
@@ -129,7 +125,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchyLevelNode
+        ResponseError
     """
 
     return sync_detailed(
@@ -148,7 +144,7 @@ async def asyncio_detailed(
     hierarchy_type: str,
     date: datetime.date,
     entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
-) -> Response[ApiBillingHierarchyLevelNode]:
+) -> Response[ResponseError]:
     """Get child nodes of billing entity for specified hierarchy type
 
     Args:
@@ -162,7 +158,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingHierarchyLevelNode]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -184,7 +180,7 @@ async def asyncio(
     hierarchy_type: str,
     date: datetime.date,
     entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
-) -> Optional[ApiBillingHierarchyLevelNode]:
+) -> Optional[ResponseError]:
     """Get child nodes of billing entity for specified hierarchy type
 
     Args:
@@ -198,7 +194,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingHierarchyLevelNode
+        ResponseError
     """
 
     return (

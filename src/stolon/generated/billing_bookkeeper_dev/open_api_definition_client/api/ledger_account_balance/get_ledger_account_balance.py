@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_ledger_account_balance import ApiLedgerAccountBalance
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response
 
 
@@ -33,9 +34,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiLedgerAccountBalance]:
+) -> Optional[Union[ApiLedgerAccountBalance, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiLedgerAccountBalance.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -57,7 +58,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiLedgerAccountBalance]:
+) -> Response[Union[ApiLedgerAccountBalance, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -71,7 +72,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     ledger_acct_uuid: str,
     currency: str,
-) -> Response[ApiLedgerAccountBalance]:
+) -> Response[Union[ApiLedgerAccountBalance, ResponseError]]:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
 
@@ -84,7 +85,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountBalance]
+        Response[Union[ApiLedgerAccountBalance, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -104,7 +105,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     ledger_acct_uuid: str,
     currency: str,
-) -> Optional[ApiLedgerAccountBalance]:
+) -> Optional[Union[ApiLedgerAccountBalance, ResponseError]]:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
 
@@ -117,7 +118,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountBalance
+        Union[ApiLedgerAccountBalance, ResponseError]
     """
 
     return sync_detailed(
@@ -132,7 +133,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     ledger_acct_uuid: str,
     currency: str,
-) -> Response[ApiLedgerAccountBalance]:
+) -> Response[Union[ApiLedgerAccountBalance, ResponseError]]:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
 
@@ -145,7 +146,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiLedgerAccountBalance]
+        Response[Union[ApiLedgerAccountBalance, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -163,7 +164,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     ledger_acct_uuid: str,
     currency: str,
-) -> Optional[ApiLedgerAccountBalance]:
+) -> Optional[Union[ApiLedgerAccountBalance, ResponseError]]:
     """Get ledger account balance using the UUID of the ledger account the balance is for along with the
     currency
 
@@ -176,7 +177,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiLedgerAccountBalance
+        Union[ApiLedgerAccountBalance, ResponseError]
     """
 
     return (

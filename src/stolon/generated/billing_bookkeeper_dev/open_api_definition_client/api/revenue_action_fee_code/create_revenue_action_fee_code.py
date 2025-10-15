@@ -6,6 +6,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_revenue_action_fee_code import ApiRevenueActionFeeCode
+from ...models.response_error import ResponseError
 from ...types import Response
 
 
@@ -28,11 +29,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiRevenueActionFeeCode]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ResponseError]:
     if response.status_code == 200:
-        response_200 = ApiRevenueActionFeeCode.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -42,9 +41,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiRevenueActionFeeCode]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ResponseError]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,7 +54,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiRevenueActionFeeCode,
-) -> Response[ApiRevenueActionFeeCode]:
+) -> Response[ResponseError]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -69,7 +66,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevenueActionFeeCode]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -87,7 +84,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiRevenueActionFeeCode,
-) -> Optional[ApiRevenueActionFeeCode]:
+) -> Optional[ResponseError]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -99,7 +96,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevenueActionFeeCode
+        ResponseError
     """
 
     return sync_detailed(
@@ -112,7 +109,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiRevenueActionFeeCode,
-) -> Response[ApiRevenueActionFeeCode]:
+) -> Response[ResponseError]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -124,7 +121,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiRevenueActionFeeCode]
+        Response[ResponseError]
     """
 
     kwargs = _get_kwargs(
@@ -140,7 +137,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiRevenueActionFeeCode,
-) -> Optional[ApiRevenueActionFeeCode]:
+) -> Optional[ResponseError]:
     """Create revenue-action-to-fee-code mapping
 
     Args:
@@ -152,7 +149,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiRevenueActionFeeCode
+        ResponseError
     """
 
     return (

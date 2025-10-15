@@ -5,7 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.api_plan_meta import ApiPlanMeta
+from ...models.get_plan_meta_response_200 import GetPlanMetaResponse200
 from ...types import UNSET, Response
 
 
@@ -31,9 +31,11 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ApiPlanMeta]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[GetPlanMetaResponse200]:
     if response.status_code == 200:
-        response_200 = ApiPlanMeta.from_dict(response.json())
+        response_200 = GetPlanMetaResponse200.from_dict(response.json())
 
         return response_200
 
@@ -43,7 +45,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ApiPlanMeta]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[GetPlanMetaResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,7 +61,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     country: str,
     plan_uuid: str,
-) -> Response[ApiPlanMeta]:
+) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -69,7 +73,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanMeta]
+        Response[GetPlanMetaResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -89,7 +93,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     country: str,
     plan_uuid: str,
-) -> Optional[ApiPlanMeta]:
+) -> Optional[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -101,7 +105,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanMeta
+        GetPlanMetaResponse200
     """
 
     return sync_detailed(
@@ -116,7 +120,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     country: str,
     plan_uuid: str,
-) -> Response[ApiPlanMeta]:
+) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -128,7 +132,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiPlanMeta]
+        Response[GetPlanMetaResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -146,7 +150,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     country: str,
     plan_uuid: str,
-) -> Optional[ApiPlanMeta]:
+) -> Optional[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -158,7 +162,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiPlanMeta
+        GetPlanMetaResponse200
     """
 
     return (

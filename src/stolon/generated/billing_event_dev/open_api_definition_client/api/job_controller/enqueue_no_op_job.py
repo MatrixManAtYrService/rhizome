@@ -5,8 +5,8 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.api_job_response import ApiJobResponse
 from ...models.api_no_op_job_params import ApiNoOpJobParams
-from ...models.enqueue_no_op_job_response_200 import EnqueueNoOpJobResponse200
 from ...types import Response
 
 
@@ -31,9 +31,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[EnqueueNoOpJobResponse200]:
+) -> Optional[ApiJobResponse]:
     if response.status_code == 200:
-        response_200 = EnqueueNoOpJobResponse200.from_dict(response.json())
+        response_200 = ApiJobResponse.from_dict(response.json())
 
         return response_200
 
@@ -45,7 +45,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[EnqueueNoOpJobResponse200]:
+) -> Response[ApiJobResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,7 +58,7 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiNoOpJobParams,
-) -> Response[EnqueueNoOpJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -69,7 +69,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[EnqueueNoOpJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -87,7 +87,7 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiNoOpJobParams,
-) -> Optional[EnqueueNoOpJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -98,7 +98,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        EnqueueNoOpJobResponse200
+        ApiJobResponse
     """
 
     return sync_detailed(
@@ -111,7 +111,7 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiNoOpJobParams,
-) -> Response[EnqueueNoOpJobResponse200]:
+) -> Response[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -122,7 +122,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[EnqueueNoOpJobResponse200]
+        Response[ApiJobResponse]
     """
 
     kwargs = _get_kwargs(
@@ -138,7 +138,7 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: ApiNoOpJobParams,
-) -> Optional[EnqueueNoOpJobResponse200]:
+) -> Optional[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -149,7 +149,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        EnqueueNoOpJobResponse200
+        ApiJobResponse
     """
 
     return (

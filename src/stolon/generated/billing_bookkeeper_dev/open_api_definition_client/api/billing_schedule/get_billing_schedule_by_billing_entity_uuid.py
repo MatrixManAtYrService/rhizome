@@ -7,6 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.api_billing_schedule import ApiBillingSchedule
+from ...models.response_error import ResponseError
 from ...types import UNSET, Response
 
 
@@ -35,9 +36,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[ApiBillingSchedule]:
+) -> Optional[Union[ApiBillingSchedule, ResponseError]]:
     if response.status_code == 200:
-        response_200 = ApiBillingSchedule.from_dict(response.json())
+        response_200 = ResponseError.from_dict(response.json())
 
         return response_200
 
@@ -59,7 +60,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[ApiBillingSchedule]:
+) -> Response[Union[ApiBillingSchedule, ResponseError]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -73,7 +74,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: str,
     date: datetime.date,
-) -> Response[ApiBillingSchedule]:
+) -> Response[Union[ApiBillingSchedule, ResponseError]]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -85,7 +86,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -105,7 +106,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: str,
     date: datetime.date,
-) -> Optional[ApiBillingSchedule]:
+) -> Optional[Union[ApiBillingSchedule, ResponseError]]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -117,7 +118,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
     """
 
     return sync_detailed(
@@ -132,7 +133,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: str,
     date: datetime.date,
-) -> Response[ApiBillingSchedule]:
+) -> Response[Union[ApiBillingSchedule, ResponseError]]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -144,7 +145,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ApiBillingSchedule]
+        Response[Union[ApiBillingSchedule, ResponseError]]
     """
 
     kwargs = _get_kwargs(
@@ -162,7 +163,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     billing_entity_uuid: str,
     date: datetime.date,
-) -> Optional[ApiBillingSchedule]:
+) -> Optional[Union[ApiBillingSchedule, ResponseError]]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
     Args:
@@ -174,7 +175,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ApiBillingSchedule
+        Union[ApiBillingSchedule, ResponseError]
     """
 
     return (
