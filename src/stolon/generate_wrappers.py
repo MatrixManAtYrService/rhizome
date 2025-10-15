@@ -138,7 +138,12 @@ class ApiFunctionExtractor(cst.CSTVisitor):
                     # Remove quotes and clean up
                     docstring = expr_stmt.value.value
                     # Remove triple quotes if present
-                    if docstring.startswith('"""') and docstring.endswith('"""') or docstring.startswith("'''") and docstring.endswith("'''"):
+                    if (
+                        docstring.startswith('"""')
+                        and docstring.endswith('"""')
+                        or docstring.startswith("'''")
+                        and docstring.endswith("'''")
+                    ):
                         docstring = docstring[3:-3]
                     return docstring.strip()
         return ""
@@ -319,6 +324,48 @@ def convert_to_pipe_union(type_annotation: str) -> str:
     return type_annotation
 
 
+def extract_model_names_from_type(type_annotation: str) -> set[str]:
+    """Extract all model class names from a type annotation.
+
+    Handles various formats like:
+    - Response[Model]
+    - Model | ResponseError
+    - list["Model"]
+    - Response[Model | list["Model"]]
+
+    Args:
+        type_annotation: Type annotation string
+
+    Returns:
+        Set of model class names found in the type annotation
+    """
+    import re
+
+    models = set()
+
+    # Pattern to match capitalized identifiers (potential model names)
+    # This will match things like ApiModel, ResponseError, etc.
+    # Ignore built-in types and generic types
+    builtins = {"None", "Any", "Response", "HTTPStatus"}
+
+    # Find all quoted strings (forward references like list["ModelName"])
+    quoted_pattern = r'["\']([A-Z][a-zA-Z0-9_]*)["\']'
+    for match in re.finditer(quoted_pattern, type_annotation):
+        model_name = match.group(1)
+        if model_name not in builtins:
+            models.add(model_name)
+
+    # Find all unquoted capitalized identifiers
+    # Match word boundaries to avoid partial matches
+    word_pattern = r"\b([A-Z][a-zA-Z0-9_]*)\b"
+    for match in re.finditer(word_pattern, type_annotation):
+        model_name = match.group(1)
+        if model_name not in builtins:
+            models.add(model_name)
+
+    return models
+
+
 def generate_wrapper_code(
     func_info: FunctionInfo,
     service: str,
@@ -368,22 +415,17 @@ def generate_wrapper_code(
     # Add JSON import (always needed)
     imports["json"] = "import json"
 
-    # Add ResponseError import for delete endpoints that return bool | ResponseError
-    if "ResponseError" in return_type:
-        model_module = "response_error"
-        imports["model_ResponseError"] = (
-            f"from stolon.generated.{service_underscore}_{env}."
-            f"open_api_definition_client.models.{model_module} import ResponseError"
-        )
-
-    # Add response model import if available
-    if func_info.response_model:
-        # Guess model module path (lowercase with underscores)
-        model_module = "".join(["_" + c.lower() if c.isupper() else c for c in func_info.response_model]).lstrip("_")
-        imports[f"model_{func_info.response_model}"] = (
+    # Extract all model names from the return type and add their imports
+    # This handles models in various positions: Response[Model], Model | ResponseError, list["Model"], etc.
+    model_names = extract_model_names_from_type(return_type)
+    for model_name in model_names:
+        # Convert model name to module path (CamelCase -> snake_case)
+        # e.g., ApiMerchantDetail -> api_merchant_detail
+        model_module = "".join(["_" + c.lower() if c.isupper() else c for c in model_name]).lstrip("_")
+        imports[f"model_{model_name}"] = (
             f"from stolon.generated.{service_underscore}_{env}."
             f"open_api_definition_client.models.{model_module} "
-            f"import {func_info.response_model}"
+            f"import {model_name}"
         )
 
     # Build function parameters
