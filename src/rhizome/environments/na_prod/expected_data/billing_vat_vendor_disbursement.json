@@ -1,9 +1,14 @@
 {
   "id": 1,
-  "vendor_id": "dummy_vendor_id",
-  "disbursement_id": 1,
-  "vat_amount": 200,
-  "vat_rate": "0.20",
+  "uuid": "dummyUUID001",
+  "request_uuid": "dummyReq0001",
+  "combined_disbursement_id": 1,
+  "vat_base_currency": "EUR",
+  "vat_base_amount": 1000,
+  "state_date": "2024-01-01",
+  "vat_pay_out_currency": "USD",
+  "vat_pay_out_amount": 1100,
+  "vat_pay_out_exchange_rate": "1.1000",
   "created_time": "2024-01-01T00:00:00",
   "modified_time": "2024-01-01T00:00:00"
 }

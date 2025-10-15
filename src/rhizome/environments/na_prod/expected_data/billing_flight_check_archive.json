@@ -1,8 +1,9 @@
 {
   "id": 1,
-  "flight_check_id": 1,
-  "execution_id": 1,
-  "archive_data": "{}",
-  "created_time": "2024-01-01T00:00:00",
-  "modified_time": "2024-01-01T00:00:00"
+  "executor_id": 1,
+  "status": "COMPLETED",
+  "output": "dummy output",
+  "payload": "dummy payload",
+  "completed_time": "2024-01-01T00:00:00",
+  "created_time": "2024-01-01T00:00:00"
 }

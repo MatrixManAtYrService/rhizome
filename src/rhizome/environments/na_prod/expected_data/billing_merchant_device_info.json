@@ -1,8 +1,6 @@
 {
-  "id": 1,
-  "merchant_id": "dummy_merchant_id",
-  "device_id": "dummy_device_id",
-  "device_info": "{}",
-  "created_time": "2024-01-01T00:00:00",
+  "merchant_id": 1,
+  "device_id": 1,
+  "terminal_id": "DUMMY_TERM_001",
   "modified_time": "2024-01-01T00:00:00"
 }

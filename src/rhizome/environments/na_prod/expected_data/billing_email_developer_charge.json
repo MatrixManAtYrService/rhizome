@@ -1,8 +1,17 @@
 {
   "id": 1,
-  "developer_id": "dummy_dev_id",
+  "developer_id": 1,
   "charge_id": 1,
-  "email_sent": false,
+  "app_uuid": "dummyApp0001",
+  "merchant_uuid": "dummyMer0001",
+  "app_name": "Dummy App",
+  "merchant_name": "Dummy Merchant",
+  "charge_status": "PENDING",
+  "charge_amount": 1000,
+  "currency": "USD",
+  "developer_portion_amount": 700,
+  "charge_created_time": "2024-01-01T00:00:00",
+  "done_time": null,
   "created_time": "2024-01-01T00:00:00",
   "modified_time": "2024-01-01T00:00:00"
 }

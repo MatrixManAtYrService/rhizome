@@ -31,10 +31,70 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
+                    <a class="variable" href="#billing_registry">billing_registry</a>
+            </li>
+            <li>
+                    <a class="variable" href="#billing_event_registry">billing_event_registry</a>
+            </li>
+            <li>
+                    <a class="variable" href="#billing_bookkeeper_registry">billing_bookkeeper_registry</a>
+            </li>
+            <li>
+                    <a class="variable" href="#meta_registry">meta_registry</a>
+            </li>
+            <li>
                     <a class="variable" href="#na_prod_registry">na_prod_registry</a>
             </li>
             <li>
                     <a class="variable" href="#dev_demo_registry">dev_demo_registry</a>
+            </li>
+            <li>
+                    <a class="class" href="#BillingSQLModel">BillingSQLModel</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#BillingSQLModel.metadata">metadata</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BillingSQLModel.model_config">model_config</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#BillingEventSQLModel">BillingEventSQLModel</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#BillingEventSQLModel.metadata">metadata</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BillingEventSQLModel.model_config">model_config</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#BillingBookkeeperSQLModel">BillingBookkeeperSQLModel</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#BillingBookkeeperSQLModel.metadata">metadata</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BillingBookkeeperSQLModel.model_config">model_config</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#MetaSQLModel">MetaSQLModel</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#MetaSQLModel.metadata">metadata</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MetaSQLModel.model_config">model_config</a>
+                        </li>
+                </ul>
+
             </li>
             <li>
                     <a class="class" href="#NaProdSQLModel">NaProdSQLModel</a>
@@ -76,11 +136,12 @@
                     <h1 class="modulename">
 <a href="./../../rhizome.html">rhizome</a><wbr>.<a href="./../models.html">models</a><wbr>.metadata_registry    </h1>
 
-                        <div class="docstring"><p>MetaData registry for environment-specific model isolation.</p>
+                        <div class="docstring"><p>MetaData registry for database and environment-specific model isolation.</p>
 
 <p>This module provides separate SQLModel registries for different
-environment types to avoid table name conflicts when V1 and V2 models
-use the same __tablename__.</p>
+databases and environment types to avoid table name conflicts when
+different databases have tables with the same name, or when V1 and V2
+models use the same __tablename__.</p>
 </div>
 
                         <input id="mod-metadata_registry-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -88,37 +149,116 @@ use the same __tablename__.</p>
                         <label class="view-source-button" for="mod-metadata_registry-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">MetaData registry for environment-specific model isolation.</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">MetaData registry for database and environment-specific model isolation.</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">This module provides separate SQLModel registries for different</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">environment types to avoid table name conflicts when V1 and V2 models</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">use the same __tablename__.</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">registry</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLModel</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="c1"># Create separate registries for each environment type</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="n">na_prod_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="n">dev_demo_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NaProdSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">na_prod_registry</span><span class="p">):</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for na_prod environment models (V1).&quot;&quot;&quot;</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">pass</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">databases and environment types to avoid table name conflicts when</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">different databases have tables with the same name, or when V1 and V2</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">models use the same __tablename__.</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">registry</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLModel</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="c1"># Create separate registries for each database</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="n">billing_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="n">billing_event_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="n">billing_bookkeeper_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="n">meta_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="c1"># Environment-specific registries for schema versioning</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="n">na_prod_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="n">dev_demo_registry</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DevDemoSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">dev_demo_registry</span><span class="p">):</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for dev/demo environment models (V2).&quot;&quot;&quot;</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="k">pass</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BillingSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">billing_registry</span><span class="p">):</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for billing database models.&quot;&quot;&quot;</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">pass</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BillingEventSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">billing_event_registry</span><span class="p">):</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for billing_event database models.&quot;&quot;&quot;</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="k">pass</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BillingBookkeeperSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">billing_bookkeeper_registry</span><span class="p">):</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for billing_bookkeeper database models.&quot;&quot;&quot;</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="k">pass</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="k">class</span><span class="w"> </span><span class="nc">MetaSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">meta_registry</span><span class="p">):</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for meta database models.&quot;&quot;&quot;</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="k">pass</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NaProdSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">na_prod_registry</span><span class="p">):</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for na_prod environment models (V1).&quot;&quot;&quot;</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="k">pass</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DevDemoSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">dev_demo_registry</span><span class="p">):</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for dev/demo environment models (V2).&quot;&quot;&quot;</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
             </section>
+                <section id="billing_registry">
+                    <div class="attr variable">
+            <span class="name">billing_registry</span>        =
+<span class="default_value">&lt;sqlalchemy.orm.decl_api.registry object&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#billing_registry"></a>
+    
+    
+
+                </section>
+                <section id="billing_event_registry">
+                    <div class="attr variable">
+            <span class="name">billing_event_registry</span>        =
+<span class="default_value">&lt;sqlalchemy.orm.decl_api.registry object&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#billing_event_registry"></a>
+    
+    
+
+                </section>
+                <section id="billing_bookkeeper_registry">
+                    <div class="attr variable">
+            <span class="name">billing_bookkeeper_registry</span>        =
+<span class="default_value">&lt;sqlalchemy.orm.decl_api.registry object&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#billing_bookkeeper_registry"></a>
+    
+    
+
+                </section>
+                <section id="meta_registry">
+                    <div class="attr variable">
+            <span class="name">meta_registry</span>        =
+<span class="default_value">&lt;sqlalchemy.orm.decl_api.registry object&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#meta_registry"></a>
+    
+    
+
+                </section>
                 <section id="na_prod_registry">
                     <div class="attr variable">
             <span class="name">na_prod_registry</span>        =
@@ -143,6 +283,202 @@ use the same __tablename__.</p>
     
 
                 </section>
+                <section id="BillingSQLModel">
+                            <input id="BillingSQLModel-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">BillingSQLModel</span><wbr>(<span class="base">sqlalchemy.orm.decl_api._DynamicAttributesType</span>, <span class="base">sqlalchemy.inspection.Inspectable[sqlalchemy.orm.mapper.Mapper[typing.Any]]</span>):
+
+                <label class="view-source-button" for="BillingSQLModel-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BillingSQLModel"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BillingSQLModel-27"><a href="#BillingSQLModel-27"><span class="linenos">27</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BillingSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">billing_registry</span><span class="p">):</span>
+</span><span id="BillingSQLModel-28"><a href="#BillingSQLModel-28"><span class="linenos">28</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for billing database models.&quot;&quot;&quot;</span>
+</span><span id="BillingSQLModel-29"><a href="#BillingSQLModel-29"><span class="linenos">29</span></a>
+</span><span id="BillingSQLModel-30"><a href="#BillingSQLModel-30"><span class="linenos">30</span></a>    <span class="k">pass</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>SQLModel base for billing database models.</p>
+</div>
+
+
+                            <div id="BillingSQLModel.metadata" class="classattr">
+                                <div class="attr variable">
+            <span class="name">metadata</span><span class="annotation">: ClassVar[sqlalchemy.sql.schema.MetaData]</span>        =
+<span class="default_value">MetaData()</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingSQLModel.metadata"></a>
+    
+    
+
+                            </div>
+                            <div id="BillingSQLModel.model_config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
+<span class="default_value">{&#39;from_attributes&#39;: True, &#39;registry&#39;: PydanticUndefined}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingSQLModel.model_config"></a>
+    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
+
+
+                            </div>
+                </section>
+                <section id="BillingEventSQLModel">
+                            <input id="BillingEventSQLModel-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">BillingEventSQLModel</span><wbr>(<span class="base">sqlalchemy.orm.decl_api._DynamicAttributesType</span>, <span class="base">sqlalchemy.inspection.Inspectable[sqlalchemy.orm.mapper.Mapper[typing.Any]]</span>):
+
+                <label class="view-source-button" for="BillingEventSQLModel-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BillingEventSQLModel"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BillingEventSQLModel-33"><a href="#BillingEventSQLModel-33"><span class="linenos">33</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BillingEventSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">billing_event_registry</span><span class="p">):</span>
+</span><span id="BillingEventSQLModel-34"><a href="#BillingEventSQLModel-34"><span class="linenos">34</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for billing_event database models.&quot;&quot;&quot;</span>
+</span><span id="BillingEventSQLModel-35"><a href="#BillingEventSQLModel-35"><span class="linenos">35</span></a>
+</span><span id="BillingEventSQLModel-36"><a href="#BillingEventSQLModel-36"><span class="linenos">36</span></a>    <span class="k">pass</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>SQLModel base for billing_event database models.</p>
+</div>
+
+
+                            <div id="BillingEventSQLModel.metadata" class="classattr">
+                                <div class="attr variable">
+            <span class="name">metadata</span><span class="annotation">: ClassVar[sqlalchemy.sql.schema.MetaData]</span>        =
+<span class="default_value">MetaData()</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingEventSQLModel.metadata"></a>
+    
+    
+
+                            </div>
+                            <div id="BillingEventSQLModel.model_config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
+<span class="default_value">{&#39;from_attributes&#39;: True, &#39;registry&#39;: PydanticUndefined}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingEventSQLModel.model_config"></a>
+    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
+
+
+                            </div>
+                </section>
+                <section id="BillingBookkeeperSQLModel">
+                            <input id="BillingBookkeeperSQLModel-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">BillingBookkeeperSQLModel</span><wbr>(<span class="base">sqlalchemy.orm.decl_api._DynamicAttributesType</span>, <span class="base">sqlalchemy.inspection.Inspectable[sqlalchemy.orm.mapper.Mapper[typing.Any]]</span>):
+
+                <label class="view-source-button" for="BillingBookkeeperSQLModel-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BillingBookkeeperSQLModel"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BillingBookkeeperSQLModel-39"><a href="#BillingBookkeeperSQLModel-39"><span class="linenos">39</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BillingBookkeeperSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">billing_bookkeeper_registry</span><span class="p">):</span>
+</span><span id="BillingBookkeeperSQLModel-40"><a href="#BillingBookkeeperSQLModel-40"><span class="linenos">40</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for billing_bookkeeper database models.&quot;&quot;&quot;</span>
+</span><span id="BillingBookkeeperSQLModel-41"><a href="#BillingBookkeeperSQLModel-41"><span class="linenos">41</span></a>
+</span><span id="BillingBookkeeperSQLModel-42"><a href="#BillingBookkeeperSQLModel-42"><span class="linenos">42</span></a>    <span class="k">pass</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>SQLModel base for billing_bookkeeper database models.</p>
+</div>
+
+
+                            <div id="BillingBookkeeperSQLModel.metadata" class="classattr">
+                                <div class="attr variable">
+            <span class="name">metadata</span><span class="annotation">: ClassVar[sqlalchemy.sql.schema.MetaData]</span>        =
+<span class="default_value">MetaData()</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingBookkeeperSQLModel.metadata"></a>
+    
+    
+
+                            </div>
+                            <div id="BillingBookkeeperSQLModel.model_config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
+<span class="default_value">{&#39;from_attributes&#39;: True, &#39;registry&#39;: PydanticUndefined}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingBookkeeperSQLModel.model_config"></a>
+    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
+
+
+                            </div>
+                </section>
+                <section id="MetaSQLModel">
+                            <input id="MetaSQLModel-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">MetaSQLModel</span><wbr>(<span class="base">sqlalchemy.orm.decl_api._DynamicAttributesType</span>, <span class="base">sqlalchemy.inspection.Inspectable[sqlalchemy.orm.mapper.Mapper[typing.Any]]</span>):
+
+                <label class="view-source-button" for="MetaSQLModel-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#MetaSQLModel"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MetaSQLModel-45"><a href="#MetaSQLModel-45"><span class="linenos">45</span></a><span class="k">class</span><span class="w"> </span><span class="nc">MetaSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">meta_registry</span><span class="p">):</span>
+</span><span id="MetaSQLModel-46"><a href="#MetaSQLModel-46"><span class="linenos">46</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for meta database models.&quot;&quot;&quot;</span>
+</span><span id="MetaSQLModel-47"><a href="#MetaSQLModel-47"><span class="linenos">47</span></a>
+</span><span id="MetaSQLModel-48"><a href="#MetaSQLModel-48"><span class="linenos">48</span></a>    <span class="k">pass</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>SQLModel base for meta database models.</p>
+</div>
+
+
+                            <div id="MetaSQLModel.metadata" class="classattr">
+                                <div class="attr variable">
+            <span class="name">metadata</span><span class="annotation">: ClassVar[sqlalchemy.sql.schema.MetaData]</span>        =
+<span class="default_value">MetaData()</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MetaSQLModel.metadata"></a>
+    
+    
+
+                            </div>
+                            <div id="MetaSQLModel.model_config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
+<span class="default_value">{&#39;from_attributes&#39;: True, &#39;registry&#39;: PydanticUndefined}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MetaSQLModel.model_config"></a>
+    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
+
+
+                            </div>
+                </section>
                 <section id="NaProdSQLModel">
                             <input id="NaProdSQLModel-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
@@ -154,10 +490,10 @@ use the same __tablename__.</p>
 
     </div>
     <a class="headerlink" href="#NaProdSQLModel"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="NaProdSQLModel-20"><a href="#NaProdSQLModel-20"><span class="linenos">20</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NaProdSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">na_prod_registry</span><span class="p">):</span>
-</span><span id="NaProdSQLModel-21"><a href="#NaProdSQLModel-21"><span class="linenos">21</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for na_prod environment models (V1).&quot;&quot;&quot;</span>
-</span><span id="NaProdSQLModel-22"><a href="#NaProdSQLModel-22"><span class="linenos">22</span></a>
-</span><span id="NaProdSQLModel-23"><a href="#NaProdSQLModel-23"><span class="linenos">23</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="NaProdSQLModel-51"><a href="#NaProdSQLModel-51"><span class="linenos">51</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NaProdSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">na_prod_registry</span><span class="p">):</span>
+</span><span id="NaProdSQLModel-52"><a href="#NaProdSQLModel-52"><span class="linenos">52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for na_prod environment models (V1).&quot;&quot;&quot;</span>
+</span><span id="NaProdSQLModel-53"><a href="#NaProdSQLModel-53"><span class="linenos">53</span></a>
+</span><span id="NaProdSQLModel-54"><a href="#NaProdSQLModel-54"><span class="linenos">54</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -203,10 +539,10 @@ use the same __tablename__.</p>
 
     </div>
     <a class="headerlink" href="#DevDemoSQLModel"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DevDemoSQLModel-26"><a href="#DevDemoSQLModel-26"><span class="linenos">26</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DevDemoSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">dev_demo_registry</span><span class="p">):</span>
-</span><span id="DevDemoSQLModel-27"><a href="#DevDemoSQLModel-27"><span class="linenos">27</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for dev/demo environment models (V2).&quot;&quot;&quot;</span>
-</span><span id="DevDemoSQLModel-28"><a href="#DevDemoSQLModel-28"><span class="linenos">28</span></a>
-</span><span id="DevDemoSQLModel-29"><a href="#DevDemoSQLModel-29"><span class="linenos">29</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DevDemoSQLModel-57"><a href="#DevDemoSQLModel-57"><span class="linenos">57</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DevDemoSQLModel</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">dev_demo_registry</span><span class="p">):</span>
+</span><span id="DevDemoSQLModel-58"><a href="#DevDemoSQLModel-58"><span class="linenos">58</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;SQLModel base for dev/demo environment models (V2).&quot;&quot;&quot;</span>
+</span><span id="DevDemoSQLModel-59"><a href="#DevDemoSQLModel-59"><span class="linenos">59</span></a>
+</span><span id="DevDemoSQLModel-60"><a href="#DevDemoSQLModel-60"><span class="linenos">60</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 

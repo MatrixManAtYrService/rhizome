@@ -39,7 +39,7 @@ class Environment(ABC):
     def __init__(self, client: StolonClient) -> None:
         """Initialize the environment with a stolon client."""
         self.client = client
-        self._handle: HttpHandle | None = None
+        self.handle: HttpHandle | None = None
 
     def _create_httpx_client(self) -> httpx.Client:
         """
@@ -119,15 +119,15 @@ class Environment(ABC):
 
         return httpx.Client(event_hooks=event_hooks)
 
-    def _ensure_authenticated(self, *, force_refresh: bool = False) -> None:
+    def ensure_authenticated(self, *, force_refresh: bool = False) -> None:
         """
         Ensure we have a valid authentication token.
 
         Args:
             force_refresh: If True, force getting a fresh token even if one is cached
         """
-        if self._handle is None or force_refresh:
-            self._handle = self.client.request_internal_token(self.domain, force_refresh=force_refresh)
+        if self.handle is None or force_refresh:
+            self.handle = self.client.request_internal_token(self.domain, force_refresh=force_refresh)
 
     def _request(self, method: str, path: str, **kwargs: Unpack[HttpxKwargs]) -> dict[str, Any] | list[Any] | None:
         """
@@ -141,8 +141,8 @@ class Environment(ABC):
         Returns:
             Response data (JSON if available, None otherwise)
         """
-        self._ensure_authenticated()
-        assert self._handle is not None  # For type checker
+        self.ensure_authenticated()
+        assert self.handle is not None  # For type checker
 
         logger = structlog.get_logger()
 
@@ -150,7 +150,7 @@ class Environment(ABC):
         # Extract headers from kwargs to avoid conflict when passing **kwargs
         provided_headers = kwargs.pop("headers", None)  # type: ignore[misc]
         headers: dict[str, str] = provided_headers.copy() if provided_headers else {}
-        headers["Cookie"] = f"internalSession={self._handle.token}"
+        headers["Cookie"] = f"internalSession={self.handle.token}"
         headers["Content-Type"] = "application/json"
         headers["X-Clover-Appenv"] = f"{self.name}:{self.domain.split('.')[0]}"
 
@@ -160,7 +160,7 @@ class Environment(ABC):
         timeout_val: float | None = kwargs.pop("timeout", None)  # type: ignore[misc]
 
         # Build full URL
-        full_url = f"{self._handle.base_url}{path}"
+        full_url = f"{self.handle.base_url}{path}"
 
         with self._create_httpx_client() as client:
             response: httpx.Response = client.request(
@@ -175,12 +175,12 @@ class Environment(ABC):
             # If we get a 401, the token is expired - invalidate cache and get fresh token
             if response.status_code == 401:
                 logger.warning("Received 401, refreshing token and retrying")
-                self._handle = None
-                self._ensure_authenticated(force_refresh=True)
-                assert self._handle is not None
+                self.handle = None
+                self.ensure_authenticated(force_refresh=True)
+                assert self.handle is not None
 
                 # Retry with the new token
-                headers["Cookie"] = f"internalSession={self._handle.token}"
+                headers["Cookie"] = f"internalSession={self.handle.token}"
                 response = client.request(
                     method,
                     full_url,

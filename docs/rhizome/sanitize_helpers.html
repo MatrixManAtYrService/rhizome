@@ -70,63 +70,78 @@ sensitive information with deterministic hashes.</p>
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">base58</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">overload</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">base58</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="k">def</span><span class="w"> </span><span class="nf">hash_uuid_to_base58</span><span class="p">(</span><span class="n">uuid_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">    Convert a UUID string to a deterministic base58 hash of the specified length.</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    The output will be prefixed with &quot;Hash&quot; to clearly indicate it&#39;s not a real UUID.</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">    Args:</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">        uuid_str: The UUID string to hash</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">        target_length: The target length for the output string</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    Returns:</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">        str: A base58-encoded hash prefixed with &quot;Hash&quot; and truncated/padded to target_length</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="c1"># Create SHA256 hash of the UUID</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="n">hash_bytes</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">uuid_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="c1"># Encode to base58</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">base58_hash</span> <span class="o">=</span> <span class="n">base58</span><span class="o">.</span><span class="n">b58encode</span><span class="p">(</span><span class="n">hash_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="c1"># Prefix with &quot;Hash&quot; to make it clear this is not a real UUID</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;Hash&quot;</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">available_length</span> <span class="o">=</span> <span class="n">target_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">if</span> <span class="n">available_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>        <span class="c1"># If target length is too small for prefix, just return truncated hash</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="k">return</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">target_length</span><span class="p">]</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="c1"># Truncate or pad the hash portion to fit remaining space</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">available_length</span><span class="p">:</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">available_length</span><span class="p">]</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>        <span class="c1"># If shorter, pad with repeated pattern</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>        <span class="n">padding_needed</span> <span class="o">=</span> <span class="n">available_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">base58_hash</span> <span class="o">*</span> <span class="p">((</span><span class="n">padding_needed</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))[:</span><span class="n">padding_needed</span><span class="p">]</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span> <span class="o">+</span> <span class="n">padding</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">hash_portion</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">def</span><span class="w"> </span><span class="nf">hash_uuid_to_base58</span><span class="p">(</span><span class="n">uuid_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    Convert a UUID string to a deterministic base58 hash of the specified length.</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="sd">    The output will be prefixed with &quot;Hash&quot; to clearly indicate it&#39;s not a real UUID.</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">    Args:</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">        uuid_str: The UUID string to hash</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">        target_length: The target length for the output string</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">    Returns:</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">        str: A base58-encoded hash prefixed with &quot;Hash&quot; and truncated/padded to target_length</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="c1"># Create SHA256 hash of the UUID</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="n">hash_bytes</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">uuid_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="c1"># Encode to base58</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">base58_hash</span> <span class="o">=</span> <span class="n">base58</span><span class="o">.</span><span class="n">b58encode</span><span class="p">(</span><span class="n">hash_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="c1"># Prefix with &quot;Hash&quot; to make it clear this is not a real UUID</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;Hash&quot;</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="n">available_length</span> <span class="o">=</span> <span class="n">target_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="k">if</span> <span class="n">available_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="c1"># If target length is too small for prefix, just return truncated hash</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="k">return</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">target_length</span><span class="p">]</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="c1"># Truncate or pad the hash portion to fit remaining space</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">available_length</span><span class="p">:</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">available_length</span><span class="p">]</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>        <span class="c1"># If shorter, pad with repeated pattern</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>        <span class="n">padding_needed</span> <span class="o">=</span> <span class="n">available_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">base58_hash</span> <span class="o">*</span> <span class="p">((</span><span class="n">padding_needed</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))[:</span><span class="n">padding_needed</span><span class="p">]</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span> <span class="o">+</span> <span class="n">padding</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">hash_portion</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_uuid_field</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">    Sanitize a UUID field, handling None values.</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="nd">@overload</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_uuid_field</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="sd">    Args:</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="sd">        value: The value to sanitize (str or None)</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="sd">        field_length: The expected length of the field</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="nd">@overload</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_uuid_field</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a><span class="sd">    Returns:</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="sd">        The sanitized value or None if input was None</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="k">return</span> <span class="n">hash_uuid_to_base58</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">field_length</span><span class="p">)</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_uuid_field</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a><span class="sd">    Sanitize a UUID field, handling None values and binary data.</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="sd">    Args:</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a><span class="sd">        value: The value to sanitize (str, bytes, or None)</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="sd">        field_length: The expected length of the field</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="sd">    Returns:</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="sd">        The sanitized value or None if input was None</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>        <span class="k">return</span> <span class="kc">None</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    <span class="c1"># Handle binary data by converting to string representation</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>        <span class="c1"># Convert bytes to a string representation for hashing</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>    <span class="k">return</span> <span class="n">hash_uuid_to_base58</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">field_length</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -142,43 +157,43 @@ sensitive information with deterministic hashes.</p>
 
     </div>
     <a class="headerlink" href="#hash_uuid_to_base58"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="hash_uuid_to_base58-14"><a href="#hash_uuid_to_base58-14"><span class="linenos">14</span></a><span class="k">def</span><span class="w"> </span><span class="nf">hash_uuid_to_base58</span><span class="p">(</span><span class="n">uuid_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="hash_uuid_to_base58-15"><a href="#hash_uuid_to_base58-15"><span class="linenos">15</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="hash_uuid_to_base58-16"><a href="#hash_uuid_to_base58-16"><span class="linenos">16</span></a><span class="sd">    Convert a UUID string to a deterministic base58 hash of the specified length.</span>
-</span><span id="hash_uuid_to_base58-17"><a href="#hash_uuid_to_base58-17"><span class="linenos">17</span></a>
-</span><span id="hash_uuid_to_base58-18"><a href="#hash_uuid_to_base58-18"><span class="linenos">18</span></a><span class="sd">    The output will be prefixed with &quot;Hash&quot; to clearly indicate it&#39;s not a real UUID.</span>
-</span><span id="hash_uuid_to_base58-19"><a href="#hash_uuid_to_base58-19"><span class="linenos">19</span></a>
-</span><span id="hash_uuid_to_base58-20"><a href="#hash_uuid_to_base58-20"><span class="linenos">20</span></a><span class="sd">    Args:</span>
-</span><span id="hash_uuid_to_base58-21"><a href="#hash_uuid_to_base58-21"><span class="linenos">21</span></a><span class="sd">        uuid_str: The UUID string to hash</span>
-</span><span id="hash_uuid_to_base58-22"><a href="#hash_uuid_to_base58-22"><span class="linenos">22</span></a><span class="sd">        target_length: The target length for the output string</span>
-</span><span id="hash_uuid_to_base58-23"><a href="#hash_uuid_to_base58-23"><span class="linenos">23</span></a>
-</span><span id="hash_uuid_to_base58-24"><a href="#hash_uuid_to_base58-24"><span class="linenos">24</span></a><span class="sd">    Returns:</span>
-</span><span id="hash_uuid_to_base58-25"><a href="#hash_uuid_to_base58-25"><span class="linenos">25</span></a><span class="sd">        str: A base58-encoded hash prefixed with &quot;Hash&quot; and truncated/padded to target_length</span>
-</span><span id="hash_uuid_to_base58-26"><a href="#hash_uuid_to_base58-26"><span class="linenos">26</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="hash_uuid_to_base58-27"><a href="#hash_uuid_to_base58-27"><span class="linenos">27</span></a>    <span class="c1"># Create SHA256 hash of the UUID</span>
-</span><span id="hash_uuid_to_base58-28"><a href="#hash_uuid_to_base58-28"><span class="linenos">28</span></a>    <span class="n">hash_bytes</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">uuid_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-</span><span id="hash_uuid_to_base58-29"><a href="#hash_uuid_to_base58-29"><span class="linenos">29</span></a>
-</span><span id="hash_uuid_to_base58-30"><a href="#hash_uuid_to_base58-30"><span class="linenos">30</span></a>    <span class="c1"># Encode to base58</span>
-</span><span id="hash_uuid_to_base58-31"><a href="#hash_uuid_to_base58-31"><span class="linenos">31</span></a>    <span class="n">base58_hash</span> <span class="o">=</span> <span class="n">base58</span><span class="o">.</span><span class="n">b58encode</span><span class="p">(</span><span class="n">hash_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
-</span><span id="hash_uuid_to_base58-32"><a href="#hash_uuid_to_base58-32"><span class="linenos">32</span></a>
-</span><span id="hash_uuid_to_base58-33"><a href="#hash_uuid_to_base58-33"><span class="linenos">33</span></a>    <span class="c1"># Prefix with &quot;Hash&quot; to make it clear this is not a real UUID</span>
-</span><span id="hash_uuid_to_base58-34"><a href="#hash_uuid_to_base58-34"><span class="linenos">34</span></a>    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;Hash&quot;</span>
-</span><span id="hash_uuid_to_base58-35"><a href="#hash_uuid_to_base58-35"><span class="linenos">35</span></a>    <span class="n">available_length</span> <span class="o">=</span> <span class="n">target_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
-</span><span id="hash_uuid_to_base58-36"><a href="#hash_uuid_to_base58-36"><span class="linenos">36</span></a>
-</span><span id="hash_uuid_to_base58-37"><a href="#hash_uuid_to_base58-37"><span class="linenos">37</span></a>    <span class="k">if</span> <span class="n">available_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="hash_uuid_to_base58-38"><a href="#hash_uuid_to_base58-38"><span class="linenos">38</span></a>        <span class="c1"># If target length is too small for prefix, just return truncated hash</span>
-</span><span id="hash_uuid_to_base58-39"><a href="#hash_uuid_to_base58-39"><span class="linenos">39</span></a>        <span class="k">return</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">target_length</span><span class="p">]</span>
-</span><span id="hash_uuid_to_base58-40"><a href="#hash_uuid_to_base58-40"><span class="linenos">40</span></a>
-</span><span id="hash_uuid_to_base58-41"><a href="#hash_uuid_to_base58-41"><span class="linenos">41</span></a>    <span class="c1"># Truncate or pad the hash portion to fit remaining space</span>
-</span><span id="hash_uuid_to_base58-42"><a href="#hash_uuid_to_base58-42"><span class="linenos">42</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">available_length</span><span class="p">:</span>
-</span><span id="hash_uuid_to_base58-43"><a href="#hash_uuid_to_base58-43"><span class="linenos">43</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">available_length</span><span class="p">]</span>
-</span><span id="hash_uuid_to_base58-44"><a href="#hash_uuid_to_base58-44"><span class="linenos">44</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="hash_uuid_to_base58-45"><a href="#hash_uuid_to_base58-45"><span class="linenos">45</span></a>        <span class="c1"># If shorter, pad with repeated pattern</span>
-</span><span id="hash_uuid_to_base58-46"><a href="#hash_uuid_to_base58-46"><span class="linenos">46</span></a>        <span class="n">padding_needed</span> <span class="o">=</span> <span class="n">available_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span>
-</span><span id="hash_uuid_to_base58-47"><a href="#hash_uuid_to_base58-47"><span class="linenos">47</span></a>        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">base58_hash</span> <span class="o">*</span> <span class="p">((</span><span class="n">padding_needed</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))[:</span><span class="n">padding_needed</span><span class="p">]</span>
-</span><span id="hash_uuid_to_base58-48"><a href="#hash_uuid_to_base58-48"><span class="linenos">48</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span> <span class="o">+</span> <span class="n">padding</span>
-</span><span id="hash_uuid_to_base58-49"><a href="#hash_uuid_to_base58-49"><span class="linenos">49</span></a>
-</span><span id="hash_uuid_to_base58-50"><a href="#hash_uuid_to_base58-50"><span class="linenos">50</span></a>    <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">hash_portion</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="hash_uuid_to_base58-15"><a href="#hash_uuid_to_base58-15"><span class="linenos">15</span></a><span class="k">def</span><span class="w"> </span><span class="nf">hash_uuid_to_base58</span><span class="p">(</span><span class="n">uuid_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="hash_uuid_to_base58-16"><a href="#hash_uuid_to_base58-16"><span class="linenos">16</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="hash_uuid_to_base58-17"><a href="#hash_uuid_to_base58-17"><span class="linenos">17</span></a><span class="sd">    Convert a UUID string to a deterministic base58 hash of the specified length.</span>
+</span><span id="hash_uuid_to_base58-18"><a href="#hash_uuid_to_base58-18"><span class="linenos">18</span></a>
+</span><span id="hash_uuid_to_base58-19"><a href="#hash_uuid_to_base58-19"><span class="linenos">19</span></a><span class="sd">    The output will be prefixed with &quot;Hash&quot; to clearly indicate it&#39;s not a real UUID.</span>
+</span><span id="hash_uuid_to_base58-20"><a href="#hash_uuid_to_base58-20"><span class="linenos">20</span></a>
+</span><span id="hash_uuid_to_base58-21"><a href="#hash_uuid_to_base58-21"><span class="linenos">21</span></a><span class="sd">    Args:</span>
+</span><span id="hash_uuid_to_base58-22"><a href="#hash_uuid_to_base58-22"><span class="linenos">22</span></a><span class="sd">        uuid_str: The UUID string to hash</span>
+</span><span id="hash_uuid_to_base58-23"><a href="#hash_uuid_to_base58-23"><span class="linenos">23</span></a><span class="sd">        target_length: The target length for the output string</span>
+</span><span id="hash_uuid_to_base58-24"><a href="#hash_uuid_to_base58-24"><span class="linenos">24</span></a>
+</span><span id="hash_uuid_to_base58-25"><a href="#hash_uuid_to_base58-25"><span class="linenos">25</span></a><span class="sd">    Returns:</span>
+</span><span id="hash_uuid_to_base58-26"><a href="#hash_uuid_to_base58-26"><span class="linenos">26</span></a><span class="sd">        str: A base58-encoded hash prefixed with &quot;Hash&quot; and truncated/padded to target_length</span>
+</span><span id="hash_uuid_to_base58-27"><a href="#hash_uuid_to_base58-27"><span class="linenos">27</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="hash_uuid_to_base58-28"><a href="#hash_uuid_to_base58-28"><span class="linenos">28</span></a>    <span class="c1"># Create SHA256 hash of the UUID</span>
+</span><span id="hash_uuid_to_base58-29"><a href="#hash_uuid_to_base58-29"><span class="linenos">29</span></a>    <span class="n">hash_bytes</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">uuid_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+</span><span id="hash_uuid_to_base58-30"><a href="#hash_uuid_to_base58-30"><span class="linenos">30</span></a>
+</span><span id="hash_uuid_to_base58-31"><a href="#hash_uuid_to_base58-31"><span class="linenos">31</span></a>    <span class="c1"># Encode to base58</span>
+</span><span id="hash_uuid_to_base58-32"><a href="#hash_uuid_to_base58-32"><span class="linenos">32</span></a>    <span class="n">base58_hash</span> <span class="o">=</span> <span class="n">base58</span><span class="o">.</span><span class="n">b58encode</span><span class="p">(</span><span class="n">hash_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
+</span><span id="hash_uuid_to_base58-33"><a href="#hash_uuid_to_base58-33"><span class="linenos">33</span></a>
+</span><span id="hash_uuid_to_base58-34"><a href="#hash_uuid_to_base58-34"><span class="linenos">34</span></a>    <span class="c1"># Prefix with &quot;Hash&quot; to make it clear this is not a real UUID</span>
+</span><span id="hash_uuid_to_base58-35"><a href="#hash_uuid_to_base58-35"><span class="linenos">35</span></a>    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;Hash&quot;</span>
+</span><span id="hash_uuid_to_base58-36"><a href="#hash_uuid_to_base58-36"><span class="linenos">36</span></a>    <span class="n">available_length</span> <span class="o">=</span> <span class="n">target_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+</span><span id="hash_uuid_to_base58-37"><a href="#hash_uuid_to_base58-37"><span class="linenos">37</span></a>
+</span><span id="hash_uuid_to_base58-38"><a href="#hash_uuid_to_base58-38"><span class="linenos">38</span></a>    <span class="k">if</span> <span class="n">available_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="hash_uuid_to_base58-39"><a href="#hash_uuid_to_base58-39"><span class="linenos">39</span></a>        <span class="c1"># If target length is too small for prefix, just return truncated hash</span>
+</span><span id="hash_uuid_to_base58-40"><a href="#hash_uuid_to_base58-40"><span class="linenos">40</span></a>        <span class="k">return</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">target_length</span><span class="p">]</span>
+</span><span id="hash_uuid_to_base58-41"><a href="#hash_uuid_to_base58-41"><span class="linenos">41</span></a>
+</span><span id="hash_uuid_to_base58-42"><a href="#hash_uuid_to_base58-42"><span class="linenos">42</span></a>    <span class="c1"># Truncate or pad the hash portion to fit remaining space</span>
+</span><span id="hash_uuid_to_base58-43"><a href="#hash_uuid_to_base58-43"><span class="linenos">43</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">available_length</span><span class="p">:</span>
+</span><span id="hash_uuid_to_base58-44"><a href="#hash_uuid_to_base58-44"><span class="linenos">44</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span><span class="p">[:</span><span class="n">available_length</span><span class="p">]</span>
+</span><span id="hash_uuid_to_base58-45"><a href="#hash_uuid_to_base58-45"><span class="linenos">45</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="hash_uuid_to_base58-46"><a href="#hash_uuid_to_base58-46"><span class="linenos">46</span></a>        <span class="c1"># If shorter, pad with repeated pattern</span>
+</span><span id="hash_uuid_to_base58-47"><a href="#hash_uuid_to_base58-47"><span class="linenos">47</span></a>        <span class="n">padding_needed</span> <span class="o">=</span> <span class="n">available_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">)</span>
+</span><span id="hash_uuid_to_base58-48"><a href="#hash_uuid_to_base58-48"><span class="linenos">48</span></a>        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">base58_hash</span> <span class="o">*</span> <span class="p">((</span><span class="n">padding_needed</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">base58_hash</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))[:</span><span class="n">padding_needed</span><span class="p">]</span>
+</span><span id="hash_uuid_to_base58-49"><a href="#hash_uuid_to_base58-49"><span class="linenos">49</span></a>        <span class="n">hash_portion</span> <span class="o">=</span> <span class="n">base58_hash</span> <span class="o">+</span> <span class="n">padding</span>
+</span><span id="hash_uuid_to_base58-50"><a href="#hash_uuid_to_base58-50"><span class="linenos">50</span></a>
+</span><span id="hash_uuid_to_base58-51"><a href="#hash_uuid_to_base58-51"><span class="linenos">51</span></a>    <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">hash_portion</span>
 </span></pre></div>
 
 
@@ -201,33 +216,39 @@ sensitive information with deterministic hashes.</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">sanitize_uuid_field</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>, </span><span class="param"><span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">) -> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>:</span></span>
+        <span class="name">sanitize_uuid_field</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span>, </span><span class="param"><span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">) -> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>:</span></span>
 
                 <label class="view-source-button" for="sanitize_uuid_field-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#sanitize_uuid_field"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="sanitize_uuid_field-53"><a href="#sanitize_uuid_field-53"><span class="linenos">53</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_uuid_field</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="sanitize_uuid_field-54"><a href="#sanitize_uuid_field-54"><span class="linenos">54</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="sanitize_uuid_field-55"><a href="#sanitize_uuid_field-55"><span class="linenos">55</span></a><span class="sd">    Sanitize a UUID field, handling None values.</span>
-</span><span id="sanitize_uuid_field-56"><a href="#sanitize_uuid_field-56"><span class="linenos">56</span></a>
-</span><span id="sanitize_uuid_field-57"><a href="#sanitize_uuid_field-57"><span class="linenos">57</span></a><span class="sd">    Args:</span>
-</span><span id="sanitize_uuid_field-58"><a href="#sanitize_uuid_field-58"><span class="linenos">58</span></a><span class="sd">        value: The value to sanitize (str or None)</span>
-</span><span id="sanitize_uuid_field-59"><a href="#sanitize_uuid_field-59"><span class="linenos">59</span></a><span class="sd">        field_length: The expected length of the field</span>
-</span><span id="sanitize_uuid_field-60"><a href="#sanitize_uuid_field-60"><span class="linenos">60</span></a>
-</span><span id="sanitize_uuid_field-61"><a href="#sanitize_uuid_field-61"><span class="linenos">61</span></a><span class="sd">    Returns:</span>
-</span><span id="sanitize_uuid_field-62"><a href="#sanitize_uuid_field-62"><span class="linenos">62</span></a><span class="sd">        The sanitized value or None if input was None</span>
-</span><span id="sanitize_uuid_field-63"><a href="#sanitize_uuid_field-63"><span class="linenos">63</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="sanitize_uuid_field-64"><a href="#sanitize_uuid_field-64"><span class="linenos">64</span></a>    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="sanitize_uuid_field-65"><a href="#sanitize_uuid_field-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="kc">None</span>
-</span><span id="sanitize_uuid_field-66"><a href="#sanitize_uuid_field-66"><span class="linenos">66</span></a>    <span class="k">return</span> <span class="n">hash_uuid_to_base58</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">field_length</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="sanitize_uuid_field-62"><a href="#sanitize_uuid_field-62"><span class="linenos">62</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_uuid_field</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">field_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="sanitize_uuid_field-63"><a href="#sanitize_uuid_field-63"><span class="linenos">63</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="sanitize_uuid_field-64"><a href="#sanitize_uuid_field-64"><span class="linenos">64</span></a><span class="sd">    Sanitize a UUID field, handling None values and binary data.</span>
+</span><span id="sanitize_uuid_field-65"><a href="#sanitize_uuid_field-65"><span class="linenos">65</span></a>
+</span><span id="sanitize_uuid_field-66"><a href="#sanitize_uuid_field-66"><span class="linenos">66</span></a><span class="sd">    Args:</span>
+</span><span id="sanitize_uuid_field-67"><a href="#sanitize_uuid_field-67"><span class="linenos">67</span></a><span class="sd">        value: The value to sanitize (str, bytes, or None)</span>
+</span><span id="sanitize_uuid_field-68"><a href="#sanitize_uuid_field-68"><span class="linenos">68</span></a><span class="sd">        field_length: The expected length of the field</span>
+</span><span id="sanitize_uuid_field-69"><a href="#sanitize_uuid_field-69"><span class="linenos">69</span></a>
+</span><span id="sanitize_uuid_field-70"><a href="#sanitize_uuid_field-70"><span class="linenos">70</span></a><span class="sd">    Returns:</span>
+</span><span id="sanitize_uuid_field-71"><a href="#sanitize_uuid_field-71"><span class="linenos">71</span></a><span class="sd">        The sanitized value or None if input was None</span>
+</span><span id="sanitize_uuid_field-72"><a href="#sanitize_uuid_field-72"><span class="linenos">72</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="sanitize_uuid_field-73"><a href="#sanitize_uuid_field-73"><span class="linenos">73</span></a>    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="sanitize_uuid_field-74"><a href="#sanitize_uuid_field-74"><span class="linenos">74</span></a>        <span class="k">return</span> <span class="kc">None</span>
+</span><span id="sanitize_uuid_field-75"><a href="#sanitize_uuid_field-75"><span class="linenos">75</span></a>
+</span><span id="sanitize_uuid_field-76"><a href="#sanitize_uuid_field-76"><span class="linenos">76</span></a>    <span class="c1"># Handle binary data by converting to string representation</span>
+</span><span id="sanitize_uuid_field-77"><a href="#sanitize_uuid_field-77"><span class="linenos">77</span></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+</span><span id="sanitize_uuid_field-78"><a href="#sanitize_uuid_field-78"><span class="linenos">78</span></a>        <span class="c1"># Convert bytes to a string representation for hashing</span>
+</span><span id="sanitize_uuid_field-79"><a href="#sanitize_uuid_field-79"><span class="linenos">79</span></a>        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+</span><span id="sanitize_uuid_field-80"><a href="#sanitize_uuid_field-80"><span class="linenos">80</span></a>
+</span><span id="sanitize_uuid_field-81"><a href="#sanitize_uuid_field-81"><span class="linenos">81</span></a>    <span class="k">return</span> <span class="n">hash_uuid_to_base58</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">field_length</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Sanitize a UUID field, handling None values.</p>
+            <div class="docstring"><p>Sanitize a UUID field, handling None values and binary data.</p>
 
 <p>Args:
-    value: The value to sanitize (str or None)
+    value: The value to sanitize (str, bytes, or None)
     field_length: The expected length of the field</p>
 
 <p>Returns:

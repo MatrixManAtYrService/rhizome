@@ -1,7 +1,15 @@
 {
   "id": 1,
-  "country_code": "US",
-  "suppression_type": "dummy",
+  "uuid": "dummyUUID001",
+  "reference_id": 1,
+  "plan_billable": true,
+  "app_billable": true,
+  "plan_exportable": true,
+  "app_exportable": true,
+  "context": "PILOT",
+  "detail": "dummy suppression detail",
+  "start_time": "2024-01-01T00:00:00",
   "created_time": "2024-01-01T00:00:00",
-  "modified_time": "2024-01-01T00:00:00"
+  "modified_time": "2024-01-01T00:00:00",
+  "finalization_time": null
 }

@@ -237,14 +237,14 @@ class DevBillingBookkeeperAPI(base.Environment):
         """
         if self._authenticated_client is None:
             # Get authentication token via parent's method
-            self._ensure_authenticated()
-            assert self._handle is not None
+            self.ensure_authenticated()
+            assert self.handle is not None
 
             # Import generated client
             from stolon.generated.billing_bookkeeper_dev.open_api_definition_client import AuthenticatedClient
 
             # Add /billing-bookkeeper path prefix to base URL
-            billing_bookkeeper_base_url = f"{self._handle.base_url}/billing-bookkeeper"
+            billing_bookkeeper_base_url = f"{self.handle.base_url}/billing-bookkeeper"
 
             # Create event hooks for logging (same as parent's _create_httpx_client)
             from collections.abc import Callable
@@ -302,13 +302,13 @@ class DevBillingBookkeeperAPI(base.Environment):
             # Create authenticated client with logging hooks
             self._authenticated_client = AuthenticatedClient(
                 base_url=billing_bookkeeper_base_url,
-                token=self._handle.token,
+                token=self.handle.token,
                 prefix="",  # Token goes in Cookie header
                 headers={
                     "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
                 },
                 cookies={
-                    "internalSession": self._handle.token,
+                    "internalSession": self.handle.token,
                 },
                 httpx_args={"event_hooks": event_hooks},
             )
@@ -994,16 +994,16 @@ class DevResellersAPI(base.Environment):
 </CloverBoardingRequest>"""
 
         # Make request to boarding endpoint
-        self._ensure_authenticated()
-        assert self._handle is not None
+        self.ensure_authenticated()
+        assert self.handle is not None
 
         headers = {
-            "Cookie": f"internalSession={self._handle.token}",
+            "Cookie": f"internalSession={self.handle.token}",
             "Content-Type": "application/xml",
             "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
         }
 
-        full_url = f"{self._handle.base_url}/cos/v1/partner/ipg/create_merchant"
+        full_url = f"{self.handle.base_url}/cos/v1/partner/ipg/create_merchant"
 
         import xml.etree.ElementTree as ET
 
@@ -1075,14 +1075,14 @@ class DevAgreementAPI(base.Environment):
         """
         if self._authenticated_client is None:
             # Get authentication token via parent's method
-            self._ensure_authenticated()
-            assert self._handle is not None
+            self.ensure_authenticated()
+            assert self.handle is not None
 
             # Import generated client
             from stolon.generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
 
             # Add /agreement path prefix to base URL
-            agreement_base_url = f"{self._handle.base_url}/agreement"
+            agreement_base_url = f"{self.handle.base_url}/agreement"
 
             # Create event hooks using parent's _create_httpx_client infrastructure
             # We need to extract the event_hooks from the parent's client
@@ -1092,13 +1092,13 @@ class DevAgreementAPI(base.Environment):
             # Create authenticated client with logging hooks and proper auth
             self._authenticated_client = AuthenticatedClient(
                 base_url=agreement_base_url,
-                token=self._handle.token,
+                token=self.handle.token,
                 prefix="",  # Token goes in Cookie header
                 headers={
                     "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
                 },
                 cookies={
-                    "internalSession": self._handle.token,
+                    "internalSession": self.handle.token,
                 },
                 httpx_args={"event_hooks": event_hooks},
             )
@@ -1114,14 +1114,14 @@ class DevAgreementAPI(base.Environment):
         """
         if self._billing_event_client is None:
             # Get authentication token via parent's method
-            self._ensure_authenticated()
-            assert self._handle is not None
+            self.ensure_authenticated()
+            assert self.handle is not None
 
             # Import generated client
             from stolon.generated.billing_event_dev.open_api_definition_client import AuthenticatedClient
 
             # Add /billing-event path prefix to base URL
-            billing_event_base_url = f"{self._handle.base_url}/billing-event"
+            billing_event_base_url = f"{self.handle.base_url}/billing-event"
 
             # Create event hooks using parent's _create_httpx_client infrastructure
             parent_client = self._create_httpx_client()
@@ -1130,13 +1130,13 @@ class DevAgreementAPI(base.Environment):
             # Create authenticated client with logging hooks and proper auth
             self._billing_event_client = AuthenticatedClient(
                 base_url=billing_event_base_url,
-                token=self._handle.token,
+                token=self.handle.token,
                 prefix="",  # Token goes in Cookie header
                 headers={
                     "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
                 },
                 cookies={
-                    "internalSession": self._handle.token,
+                    "internalSession": self.handle.token,
                 },
                 httpx_args={"event_hooks": event_hooks},
             )

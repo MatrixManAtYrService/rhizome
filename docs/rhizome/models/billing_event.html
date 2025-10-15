@@ -633,6 +633,18 @@
                         <li>
                                 <a class="variable" href="#BillingEventHistoryV1.model_config">model_config</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#BillingEventHistoryV1.entity_uuid">entity_uuid</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BillingEventHistoryV1.entity_type">entity_type</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BillingEventHistoryV1.event_uuid">event_uuid</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BillingEventHistoryV1.message">message</a>
+                        </li>
                 </ul>
 
             </li>
@@ -3709,17 +3721,17 @@ containing usage data for metered applications.</p>
 
     </div>
     <a class="headerlink" href="#AppMeteredEventV1"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AppMeteredEventV1-16"><a href="#AppMeteredEventV1-16"><span class="linenos">16</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AppMeteredEventV1</span><span class="p">(</span><span class="n">AppMeteredEvent</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-</span><span id="AppMeteredEventV1-17"><a href="#AppMeteredEventV1-17"><span class="linenos">17</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="AppMeteredEventV1-18"><a href="#AppMeteredEventV1-18"><span class="linenos">18</span></a><span class="sd">    Version 1 of the AppMeteredEvent model.</span>
-</span><span id="AppMeteredEventV1-19"><a href="#AppMeteredEventV1-19"><span class="linenos">19</span></a>
-</span><span id="AppMeteredEventV1-20"><a href="#AppMeteredEventV1-20"><span class="linenos">20</span></a><span class="sd">    Currently a name-only inheritance from the base AppMeteredEvent class.</span>
-</span><span id="AppMeteredEventV1-21"><a href="#AppMeteredEventV1-21"><span class="linenos">21</span></a><span class="sd">    As schema changes are introduced in different environments, subsequent</span>
-</span><span id="AppMeteredEventV1-22"><a href="#AppMeteredEventV1-22"><span class="linenos">22</span></a><span class="sd">    versions (V2, V3, etc.) will not be so trivial and will contain</span>
-</span><span id="AppMeteredEventV1-23"><a href="#AppMeteredEventV1-23"><span class="linenos">23</span></a><span class="sd">    actual field modifications, additions, or removals.</span>
-</span><span id="AppMeteredEventV1-24"><a href="#AppMeteredEventV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="AppMeteredEventV1-25"><a href="#AppMeteredEventV1-25"><span class="linenos">25</span></a>
-</span><span id="AppMeteredEventV1-26"><a href="#AppMeteredEventV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;app_metered_event&quot;</span>  <span class="c1"># type: ignore</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AppMeteredEventV1-17"><a href="#AppMeteredEventV1-17"><span class="linenos">17</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AppMeteredEventV1</span><span class="p">(</span><span class="n">AppMeteredEvent</span><span class="p">,</span> <span class="n">BillingEventSQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span id="AppMeteredEventV1-18"><a href="#AppMeteredEventV1-18"><span class="linenos">18</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AppMeteredEventV1-19"><a href="#AppMeteredEventV1-19"><span class="linenos">19</span></a><span class="sd">    Version 1 of the AppMeteredEvent model.</span>
+</span><span id="AppMeteredEventV1-20"><a href="#AppMeteredEventV1-20"><span class="linenos">20</span></a>
+</span><span id="AppMeteredEventV1-21"><a href="#AppMeteredEventV1-21"><span class="linenos">21</span></a><span class="sd">    Currently a name-only inheritance from the base AppMeteredEvent class.</span>
+</span><span id="AppMeteredEventV1-22"><a href="#AppMeteredEventV1-22"><span class="linenos">22</span></a><span class="sd">    As schema changes are introduced in different environments, subsequent</span>
+</span><span id="AppMeteredEventV1-23"><a href="#AppMeteredEventV1-23"><span class="linenos">23</span></a><span class="sd">    versions (V2, V3, etc.) will not be so trivial and will contain</span>
+</span><span id="AppMeteredEventV1-24"><a href="#AppMeteredEventV1-24"><span class="linenos">24</span></a><span class="sd">    actual field modifications, additions, or removals.</span>
+</span><span id="AppMeteredEventV1-25"><a href="#AppMeteredEventV1-25"><span class="linenos">25</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AppMeteredEventV1-26"><a href="#AppMeteredEventV1-26"><span class="linenos">26</span></a>
+</span><span id="AppMeteredEventV1-27"><a href="#AppMeteredEventV1-27"><span class="linenos">27</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;app_metered_event&quot;</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -3930,6 +3942,15 @@ validated to form a valid model.</p>
 </div>
 
 
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="metadata_registry.html#BillingEventSQLModel">rhizome.models.metadata_registry.BillingEventSQLModel</a></dt>
+                                <dd id="AppMeteredEventV1.metadata" class="variable"><a href="metadata_registry.html#BillingEventSQLModel.metadata">metadata</a></dd>
+
+            </div>
+                                </dl>
                             </div>
                 </section>
                 <section id="AppSubscriptionCurrent">
@@ -6075,6 +6096,7 @@ for various event sources along with associated context and metadata.</p>
 </span><span id="BillingEventHistoryV1-24"><a href="#BillingEventHistoryV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="BillingEventHistoryV1-25"><a href="#BillingEventHistoryV1-25"><span class="linenos">25</span></a>
 </span><span id="BillingEventHistoryV1-26"><a href="#BillingEventHistoryV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;billing_event_history&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="BillingEventHistoryV1-27"><a href="#BillingEventHistoryV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -6229,6 +6251,50 @@ validated to form a valid model.</p>
             <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
 </div>
 
+
+                            </div>
+                            <div id="BillingEventHistoryV1.entity_uuid" class="classattr">
+                                <div class="attr variable">
+            <span class="name">entity_uuid</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingEventHistoryV1.entity_uuid"></a>
+    
+    
+
+                            </div>
+                            <div id="BillingEventHistoryV1.entity_type" class="classattr">
+                                <div class="attr variable">
+            <span class="name">entity_type</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingEventHistoryV1.entity_type"></a>
+    
+    
+
+                            </div>
+                            <div id="BillingEventHistoryV1.event_uuid" class="classattr">
+                                <div class="attr variable">
+            <span class="name">event_uuid</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingEventHistoryV1.event_uuid"></a>
+    
+    
+
+                            </div>
+                            <div id="BillingEventHistoryV1.message" class="classattr">
+                                <div class="attr variable">
+            <span class="name">message</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BillingEventHistoryV1.message"></a>
+    
+    
 
                             </div>
                 </section>
@@ -7337,6 +7403,7 @@ containing information about failed consumer operations.</p>
 </span><span id="ConsumerFailureV1-24"><a href="#ConsumerFailureV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="ConsumerFailureV1-25"><a href="#ConsumerFailureV1-25"><span class="linenos">25</span></a>
 </span><span id="ConsumerFailureV1-26"><a href="#ConsumerFailureV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;consumer_failure&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="ConsumerFailureV1-27"><a href="#ConsumerFailureV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -7767,6 +7834,7 @@ containing archived information about failed consumer operations.</p>
 </span><span id="ConsumerFailureHistoryV1-24"><a href="#ConsumerFailureHistoryV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="ConsumerFailureHistoryV1-25"><a href="#ConsumerFailureHistoryV1-25"><span class="linenos">25</span></a>
 </span><span id="ConsumerFailureHistoryV1-26"><a href="#ConsumerFailureHistoryV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;consumer_failure_history&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="ConsumerFailureHistoryV1-27"><a href="#ConsumerFailureHistoryV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -8152,6 +8220,7 @@ containing information about failed deserialization operations.</p>
 </span><span id="DeserializableFailureV1-25"><a href="#DeserializableFailureV1-25"><span class="linenos">25</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="DeserializableFailureV1-26"><a href="#DeserializableFailureV1-26"><span class="linenos">26</span></a>
 </span><span id="DeserializableFailureV1-27"><a href="#DeserializableFailureV1-27"><span class="linenos">27</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;deserializable_failure&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="DeserializableFailureV1-28"><a href="#DeserializableFailureV1-28"><span class="linenos">28</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -9474,6 +9543,7 @@ containing information about jobs that need to be terminated.</p>
 </span><span id="JobAssassinationContractV1-24"><a href="#JobAssassinationContractV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="JobAssassinationContractV1-25"><a href="#JobAssassinationContractV1-25"><span class="linenos">25</span></a>
 </span><span id="JobAssassinationContractV1-26"><a href="#JobAssassinationContractV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;job_assassination_contract&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="JobAssassinationContractV1-27"><a href="#JobAssassinationContractV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -9886,6 +9956,7 @@ containing information about server status, performance metrics, and configurati
 </span><span id="JobrunrBackgroundjobserversV1-25"><a href="#JobrunrBackgroundjobserversV1-25"><span class="linenos">25</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="JobrunrBackgroundjobserversV1-26"><a href="#JobrunrBackgroundjobserversV1-26"><span class="linenos">26</span></a>
 </span><span id="JobrunrBackgroundjobserversV1-27"><a href="#JobrunrBackgroundjobserversV1-27"><span class="linenos">27</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;jobrunr_backgroundjobservers&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="JobrunrBackgroundjobserversV1-28"><a href="#JobrunrBackgroundjobserversV1-28"><span class="linenos">28</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -10322,6 +10393,7 @@ containing job definitions, state, and scheduling information.</p>
 </span><span id="JobrunrJobsV1-24"><a href="#JobrunrJobsV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="JobrunrJobsV1-25"><a href="#JobrunrJobsV1-25"><span class="linenos">25</span></a>
 </span><span id="JobrunrJobsV1-26"><a href="#JobrunrJobsV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;jobrunr_jobs&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="JobrunrJobsV1-27"><a href="#JobrunrJobsV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -10648,6 +10720,7 @@ containing key-value pairs for system configuration and state.</p>
 </span><span id="JobrunrMetadataV1-24"><a href="#JobrunrMetadataV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="JobrunrMetadataV1-25"><a href="#JobrunrMetadataV1-25"><span class="linenos">25</span></a>
 </span><span id="JobrunrMetadataV1-26"><a href="#JobrunrMetadataV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;jobrunr_metadata&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="JobrunrMetadataV1-27"><a href="#JobrunrMetadataV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -10899,6 +10972,7 @@ tracking which migration scripts have been executed.</p>
 </span><span id="JobrunrMigrationsV1-24"><a href="#JobrunrMigrationsV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="JobrunrMigrationsV1-25"><a href="#JobrunrMigrationsV1-25"><span class="linenos">25</span></a>
 </span><span id="JobrunrMigrationsV1-26"><a href="#JobrunrMigrationsV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;jobrunr_migrations&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="JobrunrMigrationsV1-27"><a href="#JobrunrMigrationsV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -11131,6 +11205,7 @@ containing jobs that are scheduled to run repeatedly.</p>
 </span><span id="JobrunrRecurringJobsV1-24"><a href="#JobrunrRecurringJobsV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="JobrunrRecurringJobsV1-25"><a href="#JobrunrRecurringJobsV1-25"><span class="linenos">25</span></a>
 </span><span id="JobrunrRecurringJobsV1-26"><a href="#JobrunrRecurringJobsV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;jobrunr_recurring_jobs&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="JobrunrRecurringJobsV1-27"><a href="#JobrunrRecurringJobsV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -11420,6 +11495,7 @@ containing hash-based references with namespace organization.</p>
 </span><span id="LookV1-24"><a href="#LookV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="LookV1-25"><a href="#LookV1-25"><span class="linenos">25</span></a>
 </span><span id="LookV1-26"><a href="#LookV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;look&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="LookV1-27"><a href="#LookV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -11696,6 +11772,7 @@ containing the actual content referenced by look table entries.</p>
 </span><span id="LookDataV1-24"><a href="#LookDataV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="LookDataV1-25"><a href="#LookDataV1-25"><span class="linenos">25</span></a>
 </span><span id="LookDataV1-26"><a href="#LookDataV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;look_data&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="LookDataV1-27"><a href="#LookDataV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 
@@ -17676,6 +17753,7 @@ containing key-value pairs for system configuration.</p>
 </span><span id="ServerConfigV1-24"><a href="#ServerConfigV1-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="ServerConfigV1-25"><a href="#ServerConfigV1-25"><span class="linenos">25</span></a>
 </span><span id="ServerConfigV1-26"><a href="#ServerConfigV1-26"><span class="linenos">26</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;server_config&quot;</span>  <span class="c1"># type: ignore</span>
+</span><span id="ServerConfigV1-27"><a href="#ServerConfigV1-27"><span class="linenos">27</span></a>    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extend_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 </span></pre></div>
 
 

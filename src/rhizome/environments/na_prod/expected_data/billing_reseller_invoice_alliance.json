@@ -1,8 +1,5 @@
 {
   "id": 1,
-  "reseller_id": "dummy_reseller_id",
-  "invoice_id": 1,
-  "alliance_data": "{}",
-  "created_time": "2024-01-01T00:00:00",
-  "modified_time": "2024-01-01T00:00:00"
+  "reseller_id": 1,
+  "alliance": "USA"
 }
