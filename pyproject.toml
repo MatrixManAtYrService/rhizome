@@ -105,6 +105,9 @@ exclude = [
     "tests/mocked_subprocesses.py",
     "tests/test_environment_access.py",
     "tests/test_port.py",
+    # Exclude tests with SQLAlchemy dynamic typing (column accessors, query compilation)
+    "tests/test_query_serialization.py",
+    "tests/test_result_serialization.py",
     # Exclude exploration scripts (temporary scripts for understanding the system)
     "explorations/**",
     # Exclude generated code - type hints are still available for consumers

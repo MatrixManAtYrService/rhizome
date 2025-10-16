@@ -96,6 +96,72 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#GetMode">GetMode</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#GetMode.FIRST">FIRST</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GetMode.ALL">ALL</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GetMode.ONE">ONE</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#ExecuteQueryRequest">ExecuteQueryRequest</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.environment_name">environment_name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.sql">sql</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.parameters">parameters</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.model_module">model_module</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.model_class">model_class</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.mode">mode</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.sanitize">sanitize</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryRequest.model_config">model_config</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#ExecuteQueryResponse">ExecuteQueryResponse</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#ExecuteQueryResponse.success">success</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryResponse.result">result</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryResponse.error">error</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryResponse.row_count">row_count</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExecuteQueryResponse.model_config">model_config</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -121,37 +187,76 @@
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&quot;&quot;&quot;Pydantic models for rhizome server.&quot;&quot;&quot;</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span><span class="p">,</span> <span class="n">auto</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query logging.&quot;&quot;&quot;</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="n">statement</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">connection_string</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query logging.&quot;&quot;&quot;</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="n">statement</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="n">connection_string</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryResultLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query result logging.&quot;&quot;&quot;</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">duration_ms</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">row_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryResultLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query result logging.&quot;&quot;&quot;</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">duration_ms</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="n">row_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DatabaseConnectionLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for database connection logging.&quot;&quot;&quot;</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">mysql_command</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DatabaseConnectionLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for database connection logging.&quot;&quot;&quot;</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">mysql_command</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GetMode</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Mode for query execution.&quot;&quot;&quot;</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="n">FIRST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Return first result or None</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="n">ALL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Return all results as list</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="n">ONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Return exactly one result (raises if 0 or &gt;1)</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExecuteQueryRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for server-side query execution.&quot;&quot;&quot;</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="c1"># Environment name (e.g., &quot;DevMeta&quot;, &quot;DevBillingBookkeeper&quot;)</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="n">environment_name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="c1"># Query details</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Compiled SQL string</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>  <span class="c1"># Query parameters</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="c1"># Model information for result deserialization</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">model_module</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># e.g., &quot;rhizome.models.meta.reseller&quot;</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="n">model_class</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># e.g., &quot;Reseller&quot;</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="c1"># Query execution mode</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="n">mode</span><span class="p">:</span> <span class="n">GetMode</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>    <span class="c1"># Whether to sanitize results</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="n">sanitize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExecuteQueryResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Response model for server-side query execution.&quot;&quot;&quot;</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>    <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>    <span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span>  <span class="c1"># Serialized result(s)</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>    <span class="n">row_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># For ALL mode, number of results returned</span>
 </span></pre></div>
 
 
@@ -167,14 +272,14 @@
 
     </div>
     <a class="headerlink" href="#SqlQueryLog"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SqlQueryLog-9"><a href="#SqlQueryLog-9"><span class="linenos"> 9</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="SqlQueryLog-10"><a href="#SqlQueryLog-10"><span class="linenos">10</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query logging.&quot;&quot;&quot;</span>
-</span><span id="SqlQueryLog-11"><a href="#SqlQueryLog-11"><span class="linenos">11</span></a>
-</span><span id="SqlQueryLog-12"><a href="#SqlQueryLog-12"><span class="linenos">12</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SqlQueryLog-13"><a href="#SqlQueryLog-13"><span class="linenos">13</span></a>    <span class="n">statement</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SqlQueryLog-14"><a href="#SqlQueryLog-14"><span class="linenos">14</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="SqlQueryLog-15"><a href="#SqlQueryLog-15"><span class="linenos">15</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SqlQueryLog-16"><a href="#SqlQueryLog-16"><span class="linenos">16</span></a>    <span class="n">connection_string</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SqlQueryLog-10"><a href="#SqlQueryLog-10"><span class="linenos">10</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="SqlQueryLog-11"><a href="#SqlQueryLog-11"><span class="linenos">11</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query logging.&quot;&quot;&quot;</span>
+</span><span id="SqlQueryLog-12"><a href="#SqlQueryLog-12"><span class="linenos">12</span></a>
+</span><span id="SqlQueryLog-13"><a href="#SqlQueryLog-13"><span class="linenos">13</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SqlQueryLog-14"><a href="#SqlQueryLog-14"><span class="linenos">14</span></a>    <span class="n">statement</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SqlQueryLog-15"><a href="#SqlQueryLog-15"><span class="linenos">15</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="SqlQueryLog-16"><a href="#SqlQueryLog-16"><span class="linenos">16</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SqlQueryLog-17"><a href="#SqlQueryLog-17"><span class="linenos">17</span></a>    <span class="n">connection_string</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -263,12 +368,12 @@
 
     </div>
     <a class="headerlink" href="#SqlQueryResultLog"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SqlQueryResultLog-19"><a href="#SqlQueryResultLog-19"><span class="linenos">19</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryResultLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="SqlQueryResultLog-20"><a href="#SqlQueryResultLog-20"><span class="linenos">20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query result logging.&quot;&quot;&quot;</span>
-</span><span id="SqlQueryResultLog-21"><a href="#SqlQueryResultLog-21"><span class="linenos">21</span></a>
-</span><span id="SqlQueryResultLog-22"><a href="#SqlQueryResultLog-22"><span class="linenos">22</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SqlQueryResultLog-23"><a href="#SqlQueryResultLog-23"><span class="linenos">23</span></a>    <span class="n">duration_ms</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="SqlQueryResultLog-24"><a href="#SqlQueryResultLog-24"><span class="linenos">24</span></a>    <span class="n">row_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SqlQueryResultLog-20"><a href="#SqlQueryResultLog-20"><span class="linenos">20</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SqlQueryResultLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="SqlQueryResultLog-21"><a href="#SqlQueryResultLog-21"><span class="linenos">21</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for SQL query result logging.&quot;&quot;&quot;</span>
+</span><span id="SqlQueryResultLog-22"><a href="#SqlQueryResultLog-22"><span class="linenos">22</span></a>
+</span><span id="SqlQueryResultLog-23"><a href="#SqlQueryResultLog-23"><span class="linenos">23</span></a>    <span class="n">query_id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SqlQueryResultLog-24"><a href="#SqlQueryResultLog-24"><span class="linenos">24</span></a>    <span class="n">duration_ms</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="SqlQueryResultLog-25"><a href="#SqlQueryResultLog-25"><span class="linenos">25</span></a>    <span class="n">row_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 </span></pre></div>
 
 
@@ -335,14 +440,14 @@
 
     </div>
     <a class="headerlink" href="#DatabaseConnectionLog"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DatabaseConnectionLog-27"><a href="#DatabaseConnectionLog-27"><span class="linenos">27</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DatabaseConnectionLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="DatabaseConnectionLog-28"><a href="#DatabaseConnectionLog-28"><span class="linenos">28</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for database connection logging.&quot;&quot;&quot;</span>
-</span><span id="DatabaseConnectionLog-29"><a href="#DatabaseConnectionLog-29"><span class="linenos">29</span></a>
-</span><span id="DatabaseConnectionLog-30"><a href="#DatabaseConnectionLog-30"><span class="linenos">30</span></a>    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DatabaseConnectionLog-31"><a href="#DatabaseConnectionLog-31"><span class="linenos">31</span></a>    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span>
-</span><span id="DatabaseConnectionLog-32"><a href="#DatabaseConnectionLog-32"><span class="linenos">32</span></a>    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DatabaseConnectionLog-33"><a href="#DatabaseConnectionLog-33"><span class="linenos">33</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DatabaseConnectionLog-34"><a href="#DatabaseConnectionLog-34"><span class="linenos">34</span></a>    <span class="n">mysql_command</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DatabaseConnectionLog-28"><a href="#DatabaseConnectionLog-28"><span class="linenos">28</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DatabaseConnectionLog</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="DatabaseConnectionLog-29"><a href="#DatabaseConnectionLog-29"><span class="linenos">29</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for database connection logging.&quot;&quot;&quot;</span>
+</span><span id="DatabaseConnectionLog-30"><a href="#DatabaseConnectionLog-30"><span class="linenos">30</span></a>
+</span><span id="DatabaseConnectionLog-31"><a href="#DatabaseConnectionLog-31"><span class="linenos">31</span></a>    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DatabaseConnectionLog-32"><a href="#DatabaseConnectionLog-32"><span class="linenos">32</span></a>    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="DatabaseConnectionLog-33"><a href="#DatabaseConnectionLog-33"><span class="linenos">33</span></a>    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DatabaseConnectionLog-34"><a href="#DatabaseConnectionLog-34"><span class="linenos">34</span></a>    <span class="n">database</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DatabaseConnectionLog-35"><a href="#DatabaseConnectionLog-35"><span class="linenos">35</span></a>    <span class="n">mysql_command</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -413,6 +518,280 @@
         
     </div>
     <a class="headerlink" href="#DatabaseConnectionLog.model_config"></a>
+    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
+
+
+                            </div>
+                </section>
+                <section id="GetMode">
+                            <input id="GetMode-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">GetMode</span><wbr>(<span class="base">enum.StrEnum</span>):
+
+                <label class="view-source-button" for="GetMode-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#GetMode"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GetMode-38"><a href="#GetMode-38"><span class="linenos">38</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GetMode</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="GetMode-39"><a href="#GetMode-39"><span class="linenos">39</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Mode for query execution.&quot;&quot;&quot;</span>
+</span><span id="GetMode-40"><a href="#GetMode-40"><span class="linenos">40</span></a>
+</span><span id="GetMode-41"><a href="#GetMode-41"><span class="linenos">41</span></a>    <span class="n">FIRST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Return first result or None</span>
+</span><span id="GetMode-42"><a href="#GetMode-42"><span class="linenos">42</span></a>    <span class="n">ALL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Return all results as list</span>
+</span><span id="GetMode-43"><a href="#GetMode-43"><span class="linenos">43</span></a>    <span class="n">ONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Return exactly one result (raises if 0 or &gt;1)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Mode for query execution.</p>
+</div>
+
+
+                            <div id="GetMode.FIRST" class="classattr">
+                                <div class="attr variable">
+            <span class="name">FIRST</span>        =
+<span class="default_value">&lt;<a href="#GetMode.FIRST">GetMode.FIRST</a>: &#39;first&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GetMode.FIRST"></a>
+    
+    
+
+                            </div>
+                            <div id="GetMode.ALL" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ALL</span>        =
+<span class="default_value">&lt;<a href="#GetMode.ALL">GetMode.ALL</a>: &#39;all&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GetMode.ALL"></a>
+    
+    
+
+                            </div>
+                            <div id="GetMode.ONE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ONE</span>        =
+<span class="default_value">&lt;<a href="#GetMode.ONE">GetMode.ONE</a>: &#39;one&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GetMode.ONE"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="ExecuteQueryRequest">
+                            <input id="ExecuteQueryRequest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ExecuteQueryRequest</span><wbr>(<span class="base">pydantic.main.BaseModel</span>):
+
+                <label class="view-source-button" for="ExecuteQueryRequest-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ExecuteQueryRequest-46"><a href="#ExecuteQueryRequest-46"><span class="linenos">46</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExecuteQueryRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="ExecuteQueryRequest-47"><a href="#ExecuteQueryRequest-47"><span class="linenos">47</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Request model for server-side query execution.&quot;&quot;&quot;</span>
+</span><span id="ExecuteQueryRequest-48"><a href="#ExecuteQueryRequest-48"><span class="linenos">48</span></a>
+</span><span id="ExecuteQueryRequest-49"><a href="#ExecuteQueryRequest-49"><span class="linenos">49</span></a>    <span class="c1"># Environment name (e.g., &quot;DevMeta&quot;, &quot;DevBillingBookkeeper&quot;)</span>
+</span><span id="ExecuteQueryRequest-50"><a href="#ExecuteQueryRequest-50"><span class="linenos">50</span></a>    <span class="n">environment_name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="ExecuteQueryRequest-51"><a href="#ExecuteQueryRequest-51"><span class="linenos">51</span></a>
+</span><span id="ExecuteQueryRequest-52"><a href="#ExecuteQueryRequest-52"><span class="linenos">52</span></a>    <span class="c1"># Query details</span>
+</span><span id="ExecuteQueryRequest-53"><a href="#ExecuteQueryRequest-53"><span class="linenos">53</span></a>    <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Compiled SQL string</span>
+</span><span id="ExecuteQueryRequest-54"><a href="#ExecuteQueryRequest-54"><span class="linenos">54</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>  <span class="c1"># Query parameters</span>
+</span><span id="ExecuteQueryRequest-55"><a href="#ExecuteQueryRequest-55"><span class="linenos">55</span></a>
+</span><span id="ExecuteQueryRequest-56"><a href="#ExecuteQueryRequest-56"><span class="linenos">56</span></a>    <span class="c1"># Model information for result deserialization</span>
+</span><span id="ExecuteQueryRequest-57"><a href="#ExecuteQueryRequest-57"><span class="linenos">57</span></a>    <span class="n">model_module</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># e.g., &quot;rhizome.models.meta.reseller&quot;</span>
+</span><span id="ExecuteQueryRequest-58"><a href="#ExecuteQueryRequest-58"><span class="linenos">58</span></a>    <span class="n">model_class</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># e.g., &quot;Reseller&quot;</span>
+</span><span id="ExecuteQueryRequest-59"><a href="#ExecuteQueryRequest-59"><span class="linenos">59</span></a>
+</span><span id="ExecuteQueryRequest-60"><a href="#ExecuteQueryRequest-60"><span class="linenos">60</span></a>    <span class="c1"># Query execution mode</span>
+</span><span id="ExecuteQueryRequest-61"><a href="#ExecuteQueryRequest-61"><span class="linenos">61</span></a>    <span class="n">mode</span><span class="p">:</span> <span class="n">GetMode</span>
+</span><span id="ExecuteQueryRequest-62"><a href="#ExecuteQueryRequest-62"><span class="linenos">62</span></a>
+</span><span id="ExecuteQueryRequest-63"><a href="#ExecuteQueryRequest-63"><span class="linenos">63</span></a>    <span class="c1"># Whether to sanitize results</span>
+</span><span id="ExecuteQueryRequest-64"><a href="#ExecuteQueryRequest-64"><span class="linenos">64</span></a>    <span class="n">sanitize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Request model for server-side query execution.</p>
+</div>
+
+
+                            <div id="ExecuteQueryRequest.environment_name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">environment_name</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.environment_name"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.sql" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sql</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.sql"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.parameters" class="classattr">
+                                <div class="attr variable">
+            <span class="name">parameters</span><span class="annotation">: dict[str, typing.Any]</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.parameters"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.model_module" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_module</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.model_module"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.model_class" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_class</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.model_class"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.mode" class="classattr">
+                                <div class="attr variable">
+            <span class="name">mode</span><span class="annotation">: <a href="#GetMode">GetMode</a></span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.mode"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.sanitize" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sanitize</span><span class="annotation">: bool</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.sanitize"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryRequest.model_config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
+<span class="default_value">{}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryRequest.model_config"></a>
+    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
+
+
+                            </div>
+                </section>
+                <section id="ExecuteQueryResponse">
+                            <input id="ExecuteQueryResponse-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ExecuteQueryResponse</span><wbr>(<span class="base">pydantic.main.BaseModel</span>):
+
+                <label class="view-source-button" for="ExecuteQueryResponse-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ExecuteQueryResponse"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ExecuteQueryResponse-67"><a href="#ExecuteQueryResponse-67"><span class="linenos">67</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExecuteQueryResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="ExecuteQueryResponse-68"><a href="#ExecuteQueryResponse-68"><span class="linenos">68</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Response model for server-side query execution.&quot;&quot;&quot;</span>
+</span><span id="ExecuteQueryResponse-69"><a href="#ExecuteQueryResponse-69"><span class="linenos">69</span></a>
+</span><span id="ExecuteQueryResponse-70"><a href="#ExecuteQueryResponse-70"><span class="linenos">70</span></a>    <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+</span><span id="ExecuteQueryResponse-71"><a href="#ExecuteQueryResponse-71"><span class="linenos">71</span></a>    <span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span>  <span class="c1"># Serialized result(s)</span>
+</span><span id="ExecuteQueryResponse-72"><a href="#ExecuteQueryResponse-72"><span class="linenos">72</span></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="ExecuteQueryResponse-73"><a href="#ExecuteQueryResponse-73"><span class="linenos">73</span></a>    <span class="n">row_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># For ALL mode, number of results returned</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Response model for server-side query execution.</p>
+</div>
+
+
+                            <div id="ExecuteQueryResponse.success" class="classattr">
+                                <div class="attr variable">
+            <span class="name">success</span><span class="annotation">: bool</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryResponse.success"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryResponse.result" class="classattr">
+                                <div class="attr variable">
+            <span class="name">result</span><span class="annotation">: dict[str, typing.Any] | list[dict[str, typing.Any]] | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryResponse.result"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryResponse.error" class="classattr">
+                                <div class="attr variable">
+            <span class="name">error</span><span class="annotation">: str | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryResponse.error"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryResponse.row_count" class="classattr">
+                                <div class="attr variable">
+            <span class="name">row_count</span><span class="annotation">: int | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryResponse.row_count"></a>
+    
+    
+
+                            </div>
+                            <div id="ExecuteQueryResponse.model_config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
+<span class="default_value">{}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExecuteQueryResponse.model_config"></a>
     
             <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
 </div>

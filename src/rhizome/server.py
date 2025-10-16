@@ -2,6 +2,7 @@ import asyncio
 import json
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import Any
 
 import structlog
 import uvicorn
@@ -12,7 +13,14 @@ from pydantic import BaseModel
 from rhizome.logging import setup_logging
 from rhizome.portforward import start_portforward
 from rhizome.proc import NewProcessResponse, ProcessListResponse, process_manager
-from rhizome.server_models import DatabaseConnectionLog, SqlQueryLog, SqlQueryResultLog
+from rhizome.server_models import (
+    DatabaseConnectionLog,
+    ExecuteQueryRequest,
+    ExecuteQueryResponse,
+    GetMode,
+    SqlQueryLog,
+    SqlQueryResultLog,
+)
 from rhizome.sleeper import start_sleeper
 from trifolium.config import Home
 
@@ -307,6 +315,179 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         console.print(f"[red]✗ Error: {error_msg}[/red]")
         console.print()
         return WriteQueryResponse(approved=False, executed=False, error=error_msg)
+
+
+def _execute_query_first(
+    session: Any,  # noqa: ANN401
+    request: ExecuteQueryRequest,
+    model_class: type[Any],  # noqa: ANN401
+) -> ExecuteQueryResponse:
+    """Execute query and return first result or None."""
+    import sqlalchemy
+
+    from rhizome.serialization import deserialize_result, serialize_result
+
+    # Use execute() for raw SQL (exec() is for ORM queries)
+    result_proxy = session.execute(sqlalchemy.text(request.sql), request.parameters)  # type: ignore[call-overload]
+    row = result_proxy.first()
+
+    if row is None:
+        return ExecuteQueryResponse(success=True, result=None, row_count=0)
+
+    # Convert row to dict then to model instance
+    # Type ignore: row._mapping is a private SQLAlchemy API with incomplete typing
+    row_dict: dict[str, Any] = dict(row._mapping)  # type: ignore[attr-defined, var-annotated]
+    result = deserialize_result(row_dict, model_class)  # type: ignore[arg-type]
+
+    # Serialize result (handles sanitization)
+    serialized = serialize_result(result, sanitize=request.sanitize)
+    return ExecuteQueryResponse(success=True, result=serialized, row_count=1)
+
+
+def _execute_query_all(
+    session: Any,  # noqa: ANN401
+    request: ExecuteQueryRequest,
+    model_class: type[Any],  # noqa: ANN401
+) -> ExecuteQueryResponse:
+    """Execute query and return all results."""
+    import sqlalchemy
+    from sqlmodel import SQLModel
+
+    from rhizome.serialization import deserialize_result, serialize_result_list
+
+    # Use execute() for raw SQL (exec() is for ORM queries)
+    result_proxy = session.execute(sqlalchemy.text(request.sql), request.parameters)  # type: ignore[call-overload]
+    rows = result_proxy.fetchall()
+
+    if not rows:
+        return ExecuteQueryResponse(success=True, result=[], row_count=0)
+
+    # Convert rows to model instances
+    model_results: list[SQLModel] = []
+    for row in rows:
+        # Type ignore: row._mapping is a private SQLAlchemy API with incomplete typing
+        row_dict: dict[str, Any] = dict(row._mapping)  # type: ignore[attr-defined, var-annotated]
+        deserialized = deserialize_result(row_dict, model_class)  # type: ignore[arg-type]
+        if deserialized is not None:
+            model_results.append(deserialized)
+
+    # Serialize results
+    serialized = serialize_result_list(model_results, sanitize=request.sanitize)
+    return ExecuteQueryResponse(success=True, result=serialized, row_count=len(serialized))
+
+
+def _execute_query_one(
+    session: Any,  # noqa: ANN401
+    request: ExecuteQueryRequest,
+    model_class: type[Any],  # noqa: ANN401
+) -> ExecuteQueryResponse:
+    """Execute query and return exactly one result (error if 0 or >1)."""
+    import sqlalchemy
+
+    from rhizome.serialization import deserialize_result, serialize_result
+
+    # Use execute() for raw SQL (exec() is for ORM queries)
+    result_proxy = session.execute(sqlalchemy.text(request.sql), request.parameters)  # type: ignore[call-overload]
+    rows = result_proxy.fetchall()
+
+    if len(rows) == 0:
+        return ExecuteQueryResponse(
+            success=False,
+            result=None,
+            error="Query returned no results (expected exactly one)",
+        )
+    elif len(rows) > 1:
+        return ExecuteQueryResponse(
+            success=False,
+            result=None,
+            error=f"Query returned {len(rows)} results (expected exactly one)",
+        )
+
+    # Exactly one result
+    # Type ignore: row._mapping is a private SQLAlchemy API with incomplete typing
+    row_dict: dict[str, Any] = dict(rows[0]._mapping)  # type: ignore[attr-defined, var-annotated]
+    result = deserialize_result(row_dict, model_class)  # type: ignore[arg-type]
+
+    # Serialize result
+    serialized = serialize_result(result, sanitize=request.sanitize)
+    return ExecuteQueryResponse(success=True, result=serialized, row_count=1)
+
+
+@app.post("/execute_query")
+def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
+    """
+    Execute a query server-side and return serialized results.
+
+    This endpoint:
+    1. Gets the environment and database config
+    2. Creates a database connection
+    3. Executes the SQL query with parameters
+    4. Deserializes results into model instances
+    5. Applies sanitization if requested
+    6. Serializes results for transmission
+
+    Args:
+        request: Query execution request with SQL, parameters, model info
+
+    Returns:
+        ExecuteQueryResponse with serialized results or error
+    """
+    from urllib.parse import quote_plus
+
+    from sqlmodel import Session, create_engine
+
+    from rhizome.environments.environment_list import environment_type
+    from rhizome.serialization import import_model_class
+
+    try:
+        # Get the environment class
+        env_class = environment_type.get(request.environment_name)  # type: ignore[arg-type]
+        if not env_class:
+            return ExecuteQueryResponse(
+                success=False,
+                result=None,
+                error=f"Unknown environment: {request.environment_name}",
+            )
+
+        # Create environment instance (needs a dummy client)
+        from rhizome.client import RhizomeClient
+
+        env = env_class(RhizomeClient(data_in_logs=False))
+
+        # Get database config (read-only)
+        db_config = env.get_database_config()
+
+        # Build connection string
+        encoded_password = quote_plus(db_config.password)
+        connection_string = (
+            f"mysql+pymysql://{db_config.username}:{encoded_password}"
+            f"@{db_config.host}:{db_config.port}/{db_config.database}"
+        )
+
+        # Import the model class for result deserialization
+        model_class = import_model_class(request.model_module, request.model_class)
+
+        # Create engine and execute query
+        engine = create_engine(connection_string)
+
+        with Session(engine) as session:
+            if request.mode == GetMode.FIRST:
+                return _execute_query_first(session, request, model_class)
+            elif request.mode == GetMode.ALL:
+                return _execute_query_all(session, request, model_class)
+            elif request.mode == GetMode.ONE:
+                return _execute_query_one(session, request, model_class)
+            else:
+                return ExecuteQueryResponse(
+                    success=False,
+                    result=None,
+                    error=f"Unknown query mode: {request.mode}",
+                )
+
+    except Exception as e:
+        error_msg = f"{type(e).__name__}: {e}"
+        logger.error("Query execution failed", error=error_msg, environment=request.environment_name)
+        return ExecuteQueryResponse(success=False, result=None, error=error_msg)
 
 
 @app.post("/log_query")

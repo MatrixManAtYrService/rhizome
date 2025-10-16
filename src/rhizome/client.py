@@ -15,7 +15,7 @@ import httpx
 import sqlalchemy
 import structlog
 from httpx_sse import connect_sse
-from sqlmodel import Session, create_engine
+from sqlmodel import create_engine
 from sqlmodel.sql._expression_select_cls import SelectOfScalar
 
 from rhizome.models.base import RhizomeModel
@@ -335,80 +335,124 @@ class RhizomeClient:
         return engine
 
     def select_first(
-        self, connection_string: str, query: SelectOfScalar[TFirst], sanitize: bool = True
+        self, environment_name: str, query: SelectOfScalar[TFirst], sanitize: bool = True
     ) -> TFirst | None:
         """
-        Execute a query and return the first result or None.
+        Execute a query server-side and return the first result or None.
 
         Args:
-            connection_string: Database connection string
+            environment_name: Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
             query: SQLModel query to execute
             sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
         Returns:
             First model instance (sanitized or raw) or None
         """
-        engine = self._create_instrumented_engine(connection_string)
-        with Session(engine) as session:
-            result = session.exec(query).first()
+        from rhizome.serialization import deserialize_result, get_model_info, serialize_query
+        from rhizome.server_models import ExecuteQueryRequest, GetMode
 
-            # Log the raw result before sanitization for debugging
-            self._log_query_result(query, result, "select_first")
+        # Serialize query
+        sql, parameters = serialize_query(query)
+        model_info = get_model_info(query)
 
-            if result is None:
-                return None
+        # Send to server
+        request = ExecuteQueryRequest(
+            environment_name=environment_name,
+            sql=sql,
+            parameters=parameters,
+            model_module=model_info["model_module"],
+            model_class=model_info["model_class"],
+            mode=GetMode.FIRST,
+            sanitize=sanitize,
+        )
 
-            if not sanitize:
-                return result
+        with httpx.Client() as client:
+            response = client.post(
+                f"{self.base_url}/execute_query",
+                json=request.model_dump(),
+            )
+            response.raise_for_status()
 
-            if not hasattr(result, "sanitize"):
-                raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
-            sanitized_result = result.sanitize()
+        # Parse response
+        from rhizome.server_models import ExecuteQueryResponse
 
-            # Log the sanitized result as well
-            self._log_query_result(query, sanitized_result, "select_first_sanitized")
+        result = ExecuteQueryResponse.model_validate(response.json())
 
-            return sanitized_result
+        if not result.success:
+            raise RuntimeError(f"Query execution failed: {result.error}")
 
-    def select_all(self, connection_string: str, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
+        if result.result is None:
+            return None
+
+        # Deserialize result
+        # Import the model class to deserialize
+        from rhizome.serialization import import_model_class
+
+        model_class = import_model_class(model_info["model_module"], model_info["model_class"])
+        # Type assertion: we know result.result is a dict here, not a list
+        assert isinstance(result.result, dict)
+        return deserialize_result(result.result, model_class)  # type: ignore[return-value]
+
+    def select_all(self, environment_name: str, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
         """
-        Execute a query and return all results.
+        Execute a query server-side and return all results.
 
         Args:
-            connection_string: Database connection string
+            environment_name: Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
             query: SQLModel query to execute
             sanitize: If True, return sanitized results. If False, return raw results. Default: True
 
         Returns:
             List of model instances (sanitized or raw)
         """
-        engine = self._create_instrumented_engine(connection_string)
-        with Session(engine) as session:
-            results = list(session.exec(query).all())
+        from rhizome.serialization import deserialize_result_list, get_model_info, serialize_query
+        from rhizome.server_models import ExecuteQueryRequest, GetMode
 
-            # Log the raw results before sanitization for debugging
-            self._log_query_result(query, results, "select_all")
+        # Serialize query
+        sql, parameters = serialize_query(query)
+        model_info = get_model_info(query)
 
-            if not sanitize:
-                return results
+        # Send to server
+        request = ExecuteQueryRequest(
+            environment_name=environment_name,
+            sql=sql,
+            parameters=parameters,
+            model_module=model_info["model_module"],
+            model_class=model_info["model_class"],
+            mode=GetMode.ALL,
+            sanitize=sanitize,
+        )
 
-            sanitized_results: list[TAll] = []
-            for result in results:
-                if not hasattr(result, "sanitize"):
-                    raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
-                sanitized_results.append(result.sanitize())
+        with httpx.Client() as client:
+            response = client.post(
+                f"{self.base_url}/execute_query",
+                json=request.model_dump(),
+            )
+            response.raise_for_status()
 
-            # Log the sanitized results as well
-            self._log_query_result(query, sanitized_results, "select_all_sanitized")
+        # Parse response
+        from rhizome.server_models import ExecuteQueryResponse
 
-            return sanitized_results
+        result = ExecuteQueryResponse.model_validate(response.json())
 
-    def select_one(self, connection_string: str, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
+        if not result.success:
+            raise RuntimeError(f"Query execution failed: {result.error}")
+
+        if result.result is None or result.result == []:
+            return []
+
+        # Deserialize results
+        from rhizome.serialization import import_model_class
+
+        model_class = import_model_class(model_info["model_module"], model_info["model_class"])
+        return deserialize_result_list(result.result, model_class)  # type: ignore[arg-type]
+
+    def select_one(self, environment_name: str, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
         """
-        Execute a query and return exactly one result.
+        Execute a query server-side and return exactly one result.
 
         Args:
-            connection_string: Database connection string
+            environment_name: Environment name (e.g., "DevMeta", "DevBillingBookkeeper")
             query: SQLModel query to execute
             sanitize: If True, return sanitized result. If False, return raw result. Default: True
 
@@ -416,26 +460,56 @@ class RhizomeClient:
             Single model instance (sanitized or raw)
 
         Raises:
-            Exception: If zero or more than one results found
+            RuntimeError: If zero or more than one results found
         """
-        engine = self._create_instrumented_engine(connection_string)
-        with Session(engine) as session:
-            result = session.exec(query).one()
+        from rhizome.serialization import deserialize_result, get_model_info, serialize_query
+        from rhizome.server_models import ExecuteQueryRequest, GetMode
 
-            # Log the raw result before sanitization for debugging
-            self._log_query_result(query, result, "select_one")
+        # Serialize query
+        sql, parameters = serialize_query(query)
+        model_info = get_model_info(query)
 
-            if not sanitize:
-                return result
+        # Send to server
+        request = ExecuteQueryRequest(
+            environment_name=environment_name,
+            sql=sql,
+            parameters=parameters,
+            model_module=model_info["model_module"],
+            model_class=model_info["model_class"],
+            mode=GetMode.ONE,
+            sanitize=sanitize,
+        )
 
-            if not hasattr(result, "sanitize"):
-                raise AttributeError(f"Result of type {type(result)} does not have a sanitize method")
-            sanitized_result = result.sanitize()
+        with httpx.Client() as client:
+            response = client.post(
+                f"{self.base_url}/execute_query",
+                json=request.model_dump(),
+            )
+            response.raise_for_status()
 
-            # Log the sanitized result as well
-            self._log_query_result(query, sanitized_result, "select_one_sanitized")
+        # Parse response
+        from rhizome.server_models import ExecuteQueryResponse
 
-            return sanitized_result
+        result = ExecuteQueryResponse.model_validate(response.json())
+
+        if not result.success:
+            raise RuntimeError(f"Query execution failed: {result.error}")
+
+        if result.result is None:
+            raise RuntimeError("Query returned no results (expected exactly one)")
+
+        # Deserialize result
+        from rhizome.serialization import import_model_class
+
+        model_class = import_model_class(model_info["model_module"], model_info["model_class"])
+        # Type assertion: we know result.result is a dict here, not a list
+        assert isinstance(result.result, dict)
+        deserialized = deserialize_result(result.result, model_class)
+
+        if deserialized is None:
+            raise RuntimeError("Failed to deserialize result")
+
+        return deserialized  # type: ignore[return-value]
 
     def execute_raw_query(self, connection_string: str, query: str) -> object | None:
         """

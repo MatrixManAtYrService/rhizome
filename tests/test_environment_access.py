@@ -192,28 +192,41 @@ def test_mocked_environment_database_access(
     except NotImplementedError:
         pytest.skip(f"Test data not yet implemented for {environment_class.__name__}/{table_name}")
 
-    # Create mocks for this specific table
-    mock_session = MagicMock()
-    mock_exec_result = MagicMock()
-    mock_exec_result.first.return_value = expected_data
-    mock_session.exec.return_value = mock_exec_result
+    # Mock the server port so the client can construct the base URL
+    import tempfile
+    from pathlib import Path
 
-    class MockSessionContext:
-        def __enter__(self) -> object:
-            return mock_session
+    temp_dir = Path(tempfile.mkdtemp())
+    port_file = temp_dir / "rhizome_port"
+    port_file.write_text("12345")  # Use a dummy port number
+    monkeypatch.setattr(env_instance.client.home, "state", temp_dir)
 
-        def __exit__(self, *args: object) -> None:
-            pass
+    # Mock the server-side query execution to return expected data
+    # Since the refactor moved query execution to the server, we need to mock the HTTP request
+    def mock_post(self: object, url: str, **kwargs: object) -> MagicMock:
+        """Mock HTTP POST to the server's execute_query endpoint."""
+        from rhizome.serialization import serialize_result
+        from rhizome.server_models import ExecuteQueryResponse
 
-    def mock_session_context_factory(engine: object) -> object:
-        return MockSessionContext()
+        # Only mock the execute_query endpoint
+        if "/execute_query" in url:
+            # Serialize the expected data as the server would
+            serialized = serialize_result(expected_data, sanitize=True)
+            response_data = ExecuteQueryResponse(success=True, result=serialized, row_count=1)
 
-    def mock_create_instrumented_engine(self: object, cs: str) -> MagicMock:
-        """Mock the instrumented engine to bypass SQLAlchemy event listeners."""
-        return MagicMock()
+            # Create a mock response object
+            mock_response = MagicMock()
+            mock_response.json.return_value = response_data.model_dump()
+            mock_response.raise_for_status = MagicMock()
+            return mock_response
 
-    monkeypatch.setattr("rhizome.client.RhizomeClient._create_instrumented_engine", mock_create_instrumented_engine)
-    monkeypatch.setattr("rhizome.client.Session", mock_session_context_factory)
+        # For other endpoints, return a generic mock
+        mock_response = MagicMock()
+        mock_response.raise_for_status = MagicMock()
+        return mock_response
+
+    # Mock the HTTP POST to the execute_query endpoint
+    monkeypatch.setattr("httpx.Client.post", mock_post)
 
     # Build query - handle models with composite primary keys vs single id field
     if hasattr(model_class, "id"):

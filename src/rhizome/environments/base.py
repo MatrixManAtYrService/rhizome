@@ -390,7 +390,7 @@ class Environment(ABC):
         Returns:
             First model instance (sanitized or raw) or None
         """
-        return self.client.select_first(self.get_connection_string(), query, sanitize=sanitize)
+        return self.client.select_first(self.name, query, sanitize=sanitize)
 
     def select_all(self, query: SelectOfScalar[TAll], sanitize: bool = True) -> list[TAll]:
         """Execute a query and return all results.
@@ -402,7 +402,7 @@ class Environment(ABC):
         Returns:
             List of model instances (sanitized or raw)
         """
-        return self.client.select_all(self.get_connection_string(), query, sanitize=sanitize)
+        return self.client.select_all(self.name, query, sanitize=sanitize)
 
     def select_one(self, query: SelectOfScalar[TOne], sanitize: bool = True) -> TOne:
         """Execute a query and return exactly one result.
@@ -414,4 +414,4 @@ class Environment(ABC):
         Returns:
             Single model instance (sanitized or raw)
         """
-        return self.client.select_one(self.get_connection_string(), query, sanitize=sanitize)
+        return self.client.select_one(self.name, query, sanitize=sanitize)
