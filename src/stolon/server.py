@@ -309,14 +309,14 @@ def _create_authenticated_client(
 
     client_module_path = f"stolon.openapi_generated.{service.value}.open_api_definition_client"
     client_module = importlib.import_module(client_module_path)
-    AuthenticatedClient = client_module.AuthenticatedClient
+    # Use Client (not AuthenticatedClient) since Clover uses cookie auth, not Bearer tokens
+    Client = client_module.Client
 
     base_url = f"https://{domain}{base_path}"
 
-    return AuthenticatedClient(
+    return Client(
         base_url=base_url,
-        token=token,
-        prefix="",
+        cookies={"internalSession": token},
         headers={"X-Clover-Appenv": f"{environment_name}:{domain.split('.')[0]}"},
     )
 
@@ -460,8 +460,18 @@ async def invoke_openapi(request: OpenAPIInvokeRequest) -> OpenAPIInvokeResponse
         # Call the function
         response = await _execute_openapi_call(func, auth_client, request.kwargs, request)
 
-        # If it failed with 401, retry with fresh token
-        if not response.success and response.error and _is_auth_error(Exception(response.error)):
+        # Check if we got a 401 (either as exception or status code)
+        needs_retry = False
+        if (
+            not response.success
+            and response.error
+            and _is_auth_error(Exception(response.error))
+            or response.success
+            and response.status_code == 401
+        ):
+            needs_retry = True
+
+        if needs_retry:
             logger.warning(
                 f"Received 401 for {request.domain}, refreshing token and retrying",
                 service=request.service,
