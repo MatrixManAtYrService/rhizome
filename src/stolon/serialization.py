@@ -37,6 +37,14 @@ def _is_model_with_to_dict(obj: object) -> TypeGuard[OpenAPIModel]:
     return hasattr(obj, "to_dict") and callable(obj.to_dict)  # type: ignore[arg-type]
 
 
+def _is_unset(obj: object) -> bool:
+    """Check if object is an UNSET sentinel value."""
+    # UNSET is a singleton class instance used by OpenAPI clients
+    # Check both class name and module to identify it
+    obj_type = type(obj)
+    return obj_type.__name__ == "Unset" and "types" in obj_type.__module__
+
+
 def _serialize_list(items: list[object]) -> list[JsonValue]:
     """Serialize a list of items."""
     return [serialize_argument(item) for item in items]
@@ -56,6 +64,7 @@ def serialize_argument(arg: object) -> JsonValue:
     - Lists of models
     - Dicts with model values
     - Primitive types (str, int, bool, None, etc.)
+    - UNSET sentinel values from OpenAPI clients
 
     Args:
         arg: Argument to serialize
@@ -67,14 +76,17 @@ def serialize_argument(arg: object) -> JsonValue:
         return None
     if isinstance(arg, str | int | float | bool):
         return arg
+    # Handle UNSET before checking for to_dict (UNSET has to_dict but shouldn't use it)
+    if _is_unset(arg):
+        return "__UNSET__"  # Sentinel string that can be JSON-serialized
     if _is_model_with_to_dict(arg):
         return arg.to_dict()  # type: ignore[union-attr]
     if isinstance(arg, list):
         return _serialize_list(arg)  # type: ignore[arg-type]
     if isinstance(arg, dict):
         return _serialize_dict(arg)  # type: ignore[arg-type]
-    # For types like UNSET, return as-is (will be handled by Pydantic serialization)
-    return arg  # type: ignore[return-value]
+    # Fallback for unknown types - try to convert to string
+    return str(arg)
 
 
 def _is_primitive_type(type_hint: str) -> bool:
@@ -86,7 +98,8 @@ def _handle_unset_type(data: JsonValue, type_hint: str, service: str) -> object:
     """Handle UNSET types from OpenAPI generated code."""
     types_module = importlib.import_module(f"stolon.openapi_generated.{service}.open_api_definition_client.types")
     UNSET = types_module.UNSET
-    if data == "UNSET" or data is UNSET:
+    # Check for our sentinel string that was used during serialization
+    if data == "__UNSET__" or data == "UNSET" or data is UNSET:
         return UNSET
     return data
 
