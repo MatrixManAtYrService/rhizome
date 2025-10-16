@@ -9,32 +9,27 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
+from typing import Union
+
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import apply_rules
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import apply_rules_from_input
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_activation_rule_intent
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_conditional_rule_intent
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_simple_rule_intent
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import create_unit_rule_intent
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_intent_controller import delete_rule_intent
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.activation_rule import ActivationRule
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.conditional_rule import ConditionalRule
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.lexi_attr_intent import LexiAttrIntent
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.activation_rule import (
+    ActivationRule,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.conditional_rule import (
+    ConditionalRule,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.lexi_attr_intent import (
+    LexiAttrIntent,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.simple_rule import SimpleRule
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.unit_rule import UnitRule
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
-import json
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def apply_rules_sync_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    dry_run: Union[Unset, bool] = UNSET
+    *, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET
 ) -> Response[int]:
     """Args:
         lexicon (str):
@@ -47,72 +42,45 @@ def apply_rules_sync_detailed(
     Returns:
         Response[int]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         dry_run: Union[Unset, bool]
 
     Returns:
         Response[int]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "dry_run": serialize_argument(dry_run)}
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[int]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def apply_rules_sync(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    dry_run: Union[Unset, bool] = UNSET
-) -> int | None:
+def apply_rules_sync(*, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -124,46 +92,46 @@ def apply_rules_sync(
     Returns:
         int
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         dry_run: Union[Unset, bool]
 
     Returns:
         int | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "dry_run": serialize_argument(dry_run)}
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[int]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def apply_rules_asyncio_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    dry_run: Union[Unset, bool] = UNSET
+    *, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET
 ) -> Response[int]:
     """Args:
         lexicon (str):
@@ -176,72 +144,45 @@ def apply_rules_asyncio_detailed(
     Returns:
         Response[int]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         dry_run: Union[Unset, bool]
 
     Returns:
         Response[int]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "dry_run": serialize_argument(dry_run)}
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[int]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def apply_rules_asyncio(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    dry_run: Union[Unset, bool] = UNSET
-) -> int | None:
+def apply_rules_asyncio(*, client: StolonClient, lexicon: str, dry_run: Union[Unset, bool] = UNSET) -> int | None:
     """Args:
         lexicon (str):
         dry_run (Union[Unset, bool]):
@@ -253,47 +194,46 @@ def apply_rules_asyncio(
     Returns:
         int
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         dry_run: Union[Unset, bool]
 
     Returns:
         int | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "dry_run": serialize_argument(dry_run)}
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules._get_kwargs(lexicon=lexicon, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[int]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def apply_rules_from_input_sync_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    body: list[str],
-    dry_run: Union[Unset, bool] = UNSET
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
 ) -> Response[int]:
     """Args:
         lexicon (str):
@@ -307,11 +247,11 @@ def apply_rules_from_input_sync_detailed(
     Returns:
         Response[int]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         body: list[str]
         dry_run: Union[Unset, bool]
@@ -319,61 +259,39 @@ def apply_rules_from_input_sync_detailed(
     Returns:
         Response[int]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "lexicon": serialize_argument(lexicon),
+        "body": serialize_argument(body),
+        "dry_run": serialize_argument(dry_run),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules_from_input",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[int]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def apply_rules_from_input_sync(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    body: list[str],
-    dry_run: Union[Unset, bool] = UNSET
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
 ) -> int | None:
     """Args:
         lexicon (str):
@@ -387,11 +305,11 @@ def apply_rules_from_input_sync(
     Returns:
         int
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         body: list[str]
         dry_run: Union[Unset, bool]
@@ -399,36 +317,39 @@ def apply_rules_from_input_sync(
     Returns:
         int | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "lexicon": serialize_argument(lexicon),
+        "body": serialize_argument(body),
+        "dry_run": serialize_argument(dry_run),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules_from_input",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[int]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def apply_rules_from_input_asyncio_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    body: list[str],
-    dry_run: Union[Unset, bool] = UNSET
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
 ) -> Response[int]:
     """Args:
         lexicon (str):
@@ -442,11 +363,11 @@ def apply_rules_from_input_asyncio_detailed(
     Returns:
         Response[int]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         body: list[str]
         dry_run: Union[Unset, bool]
@@ -454,61 +375,39 @@ def apply_rules_from_input_asyncio_detailed(
     Returns:
         Response[int]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "lexicon": serialize_argument(lexicon),
+        "body": serialize_argument(body),
+        "dry_run": serialize_argument(dry_run),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules_from_input",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[int]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def apply_rules_from_input_asyncio(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    body: list[str],
-    dry_run: Union[Unset, bool] = UNSET
+    *, client: StolonClient, lexicon: str, body: list[str], dry_run: Union[Unset, bool] = UNSET
 ) -> int | None:
     """Args:
         lexicon (str):
@@ -522,11 +421,11 @@ def apply_rules_from_input_asyncio(
     Returns:
         int
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         body: list[str]
         dry_run: Union[Unset, bool]
@@ -534,28 +433,35 @@ def apply_rules_from_input_asyncio(
     Returns:
         int | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "lexicon": serialize_argument(lexicon),
+        "body": serialize_argument(body),
+        "dry_run": serialize_argument(dry_run),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = apply_rules_from_input._get_kwargs(lexicon=lexicon, body=body, dry_run=dry_run)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.apply_rules_from_input",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[int]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_conditional_rule_intent_sync_detailed(
@@ -563,7 +469,7 @@ def create_conditional_rule_intent_sync_detailed(
     client: StolonClient,
     body: ConditionalRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -577,11 +483,11 @@ def create_conditional_rule_intent_sync_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ConditionalRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -589,53 +495,35 @@ def create_conditional_rule_intent_sync_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_conditional_rule_intent",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_conditional_rule_intent_sync(
@@ -643,7 +531,7 @@ def create_conditional_rule_intent_sync(
     client: StolonClient,
     body: ConditionalRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -657,11 +545,11 @@ def create_conditional_rule_intent_sync(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ConditionalRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -669,28 +557,35 @@ def create_conditional_rule_intent_sync(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_conditional_rule_intent",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_conditional_rule_intent_asyncio_detailed(
@@ -698,7 +593,7 @@ def create_conditional_rule_intent_asyncio_detailed(
     client: StolonClient,
     body: ConditionalRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -712,11 +607,11 @@ def create_conditional_rule_intent_asyncio_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ConditionalRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -724,53 +619,35 @@ def create_conditional_rule_intent_asyncio_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_conditional_rule_intent",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_conditional_rule_intent_asyncio(
@@ -778,7 +655,7 @@ def create_conditional_rule_intent_asyncio(
     client: StolonClient,
     body: ConditionalRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -792,11 +669,11 @@ def create_conditional_rule_intent_asyncio(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ConditionalRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -804,36 +681,39 @@ def create_conditional_rule_intent_asyncio(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_conditional_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_conditional_rule_intent",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_rule_intent_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         uuid (str):
@@ -847,11 +727,11 @@ def delete_rule_intent_sync_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -859,61 +739,39 @@ def delete_rule_intent_sync_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.delete_rule_intent",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_rule_intent_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         uuid (str):
@@ -927,11 +785,11 @@ def delete_rule_intent_sync(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -939,36 +797,39 @@ def delete_rule_intent_sync(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.delete_rule_intent",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_rule_intent_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         uuid (str):
@@ -982,11 +843,11 @@ def delete_rule_intent_asyncio_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -994,61 +855,39 @@ def delete_rule_intent_asyncio_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.delete_rule_intent",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_rule_intent_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         uuid (str):
@@ -1062,11 +901,11 @@ def delete_rule_intent_asyncio(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1074,28 +913,35 @@ def delete_rule_intent_asyncio(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_rule_intent._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.delete_rule_intent",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_unit_rule_intent_sync_detailed(
@@ -1103,7 +949,7 @@ def create_unit_rule_intent_sync_detailed(
     client: StolonClient,
     body: UnitRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -1117,11 +963,11 @@ def create_unit_rule_intent_sync_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: UnitRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1129,53 +975,35 @@ def create_unit_rule_intent_sync_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_unit_rule_intent",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_unit_rule_intent_sync(
@@ -1183,7 +1011,7 @@ def create_unit_rule_intent_sync(
     client: StolonClient,
     body: UnitRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -1197,11 +1025,11 @@ def create_unit_rule_intent_sync(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: UnitRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1209,28 +1037,35 @@ def create_unit_rule_intent_sync(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_unit_rule_intent",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_unit_rule_intent_asyncio_detailed(
@@ -1238,7 +1073,7 @@ def create_unit_rule_intent_asyncio_detailed(
     client: StolonClient,
     body: UnitRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -1252,11 +1087,11 @@ def create_unit_rule_intent_asyncio_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: UnitRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1264,53 +1099,35 @@ def create_unit_rule_intent_asyncio_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_unit_rule_intent",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_unit_rule_intent_asyncio(
@@ -1318,7 +1135,7 @@ def create_unit_rule_intent_asyncio(
     client: StolonClient,
     body: UnitRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -1332,11 +1149,11 @@ def create_unit_rule_intent_asyncio(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: UnitRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1344,28 +1161,35 @@ def create_unit_rule_intent_asyncio(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_unit_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_unit_rule_intent",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_activation_rule_intent_sync_detailed(
@@ -1373,7 +1197,7 @@ def create_activation_rule_intent_sync_detailed(
     client: StolonClient,
     body: ActivationRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -1387,11 +1211,11 @@ def create_activation_rule_intent_sync_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ActivationRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1399,53 +1223,35 @@ def create_activation_rule_intent_sync_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_activation_rule_intent",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_activation_rule_intent_sync(
@@ -1453,7 +1259,7 @@ def create_activation_rule_intent_sync(
     client: StolonClient,
     body: ActivationRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -1467,11 +1273,11 @@ def create_activation_rule_intent_sync(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ActivationRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1479,28 +1285,35 @@ def create_activation_rule_intent_sync(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_activation_rule_intent",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_activation_rule_intent_asyncio_detailed(
@@ -1508,7 +1321,7 @@ def create_activation_rule_intent_asyncio_detailed(
     client: StolonClient,
     body: ActivationRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -1522,11 +1335,11 @@ def create_activation_rule_intent_asyncio_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ActivationRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1534,53 +1347,35 @@ def create_activation_rule_intent_asyncio_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_activation_rule_intent",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_activation_rule_intent_asyncio(
@@ -1588,7 +1383,7 @@ def create_activation_rule_intent_asyncio(
     client: StolonClient,
     body: ActivationRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -1602,11 +1397,11 @@ def create_activation_rule_intent_asyncio(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ActivationRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1614,28 +1409,35 @@ def create_activation_rule_intent_asyncio(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_activation_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_activation_rule_intent",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_simple_rule_intent_sync_detailed(
@@ -1643,7 +1445,7 @@ def create_simple_rule_intent_sync_detailed(
     client: StolonClient,
     body: SimpleRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -1657,11 +1459,11 @@ def create_simple_rule_intent_sync_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: SimpleRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1669,53 +1471,35 @@ def create_simple_rule_intent_sync_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_simple_rule_intent",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_simple_rule_intent_sync(
@@ -1723,7 +1507,7 @@ def create_simple_rule_intent_sync(
     client: StolonClient,
     body: SimpleRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -1737,11 +1521,11 @@ def create_simple_rule_intent_sync(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: SimpleRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1749,28 +1533,35 @@ def create_simple_rule_intent_sync(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_simple_rule_intent",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_simple_rule_intent_asyncio_detailed(
@@ -1778,7 +1569,7 @@ def create_simple_rule_intent_asyncio_detailed(
     client: StolonClient,
     body: SimpleRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[list["LexiAttrIntent"]]:
     """Args:
         page_size (Union[Unset, int]):
@@ -1792,11 +1583,11 @@ def create_simple_rule_intent_asyncio_detailed(
     Returns:
         Response[list['LexiAttrIntent']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: SimpleRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1804,53 +1595,35 @@ def create_simple_rule_intent_asyncio_detailed(
     Returns:
         Response[list["LexiAttrIntent"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_simple_rule_intent",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_simple_rule_intent_asyncio(
@@ -1858,7 +1631,7 @@ def create_simple_rule_intent_asyncio(
     client: StolonClient,
     body: SimpleRule,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> list["LexiAttrIntent"] | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -1872,11 +1645,11 @@ def create_simple_rule_intent_asyncio(
     Returns:
         list['LexiAttrIntent']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: SimpleRule
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -1884,24 +1657,32 @@ def create_simple_rule_intent_asyncio(
     Returns:
         list["LexiAttrIntent"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_simple_rule_intent._get_kwargs(body=body, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_intent_controller.create_simple_rule_intent",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["LexiAttrIntent"]]',
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

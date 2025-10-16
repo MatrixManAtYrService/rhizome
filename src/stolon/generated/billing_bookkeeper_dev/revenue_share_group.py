@@ -9,26 +9,22 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import create_revenue_share_group
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import delete_revenue_share_group_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import get_revenue_share_group_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import get_revenue_share_groups
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_share_group import update_revenue_share_group
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_share_group import ApiRevenueShareGroup
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
 from typing import Union
-import json
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_share_group import (
+    ApiRevenueShareGroup,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def create_revenue_share_group_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiRevenueShareGroup
+    *, client: StolonClient, body: ApiRevenueShareGroup
 ) -> Response[ResponseError]:
     """Create revenue share group
 
@@ -42,70 +38,44 @@ def create_revenue_share_group_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.create_revenue_share_group",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_revenue_share_group_sync(
-    *,
-    client: StolonClient,
-    body: ApiRevenueShareGroup
-) -> ResponseError | None:
+def create_revenue_share_group_sync(*, client: StolonClient, body: ApiRevenueShareGroup) -> ResponseError | None:
     """Create revenue share group
 
     Args:
@@ -118,51 +88,45 @@ def create_revenue_share_group_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.create_revenue_share_group",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_revenue_share_group_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiRevenueShareGroup
+    *, client: StolonClient, body: ApiRevenueShareGroup
 ) -> Response[ResponseError]:
     """Create revenue share group
 
@@ -176,70 +140,44 @@ def create_revenue_share_group_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.create_revenue_share_group",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_revenue_share_group_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiRevenueShareGroup
-) -> ResponseError | None:
+def create_revenue_share_group_asyncio(*, client: StolonClient, body: ApiRevenueShareGroup) -> ResponseError | None:
     """Create revenue share group
 
     Args:
@@ -252,52 +190,44 @@ def create_revenue_share_group_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_share_group._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.create_revenue_share_group",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_revenue_share_group_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_revenue_share_group_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get revenue share group by UUID
 
     Args:
@@ -310,70 +240,44 @@ def get_revenue_share_group_by_uuid_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_group_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_revenue_share_group_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_revenue_share_group_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get revenue share group by UUID
 
     Args:
@@ -386,52 +290,44 @@ def get_revenue_share_group_by_uuid_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_group_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_revenue_share_group_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def get_revenue_share_group_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Get revenue share group by UUID
 
     Args:
@@ -444,70 +340,44 @@ def get_revenue_share_group_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_group_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_revenue_share_group_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def get_revenue_share_group_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Get revenue share group by UUID
 
     Args:
@@ -520,52 +390,45 @@ def get_revenue_share_group_by_uuid_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_group_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def update_revenue_share_group_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiRevenueShareGroup
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
 ) -> Response[ResponseError]:
     """Update revenue share group
 
@@ -580,71 +443,46 @@ def update_revenue_share_group_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.update_revenue_share_group",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_revenue_share_group_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiRevenueShareGroup
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
 ) -> ResponseError | None:
     """Update revenue share group
 
@@ -659,53 +497,46 @@ def update_revenue_share_group_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.update_revenue_share_group",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def update_revenue_share_group_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiRevenueShareGroup
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
 ) -> Response[ResponseError]:
     """Update revenue share group
 
@@ -720,71 +551,46 @@ def update_revenue_share_group_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiRevenueShareGroup
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.update_revenue_share_group",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_revenue_share_group_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiRevenueShareGroup
+    *, client: StolonClient, uuid: str, body: ApiRevenueShareGroup
 ) -> ResponseError | None:
     """Update revenue share group
 
@@ -799,53 +605,45 @@ def update_revenue_share_group_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiRevenueShareGroup
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_revenue_share_group._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.update_revenue_share_group",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def delete_revenue_share_group_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_revenue_share_group_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete revenue share group
 
     Args:
@@ -858,70 +656,44 @@ def delete_revenue_share_group_by_uuid_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.delete_revenue_share_group_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def delete_revenue_share_group_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_revenue_share_group_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete revenue share group
 
     Args:
@@ -934,52 +706,44 @@ def delete_revenue_share_group_by_uuid_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.delete_revenue_share_group_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def delete_revenue_share_group_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ResponseError]:
+def delete_revenue_share_group_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
     """Delete revenue share group
 
     Args:
@@ -992,70 +756,44 @@ def delete_revenue_share_group_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.delete_revenue_share_group_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def delete_revenue_share_group_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | None:
+def delete_revenue_share_group_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
     """Delete revenue share group
 
     Args:
@@ -1068,51 +806,45 @@ def delete_revenue_share_group_by_uuid_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_revenue_share_group_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.delete_revenue_share_group_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_share_groups_sync_detailed(
-    *,
-    client: StolonClient,
-    revenue_share_group: Union[Unset, str] = UNSET
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
@@ -1126,69 +858,45 @@ def get_revenue_share_groups_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_share_group: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"revenue_share_group": serialize_argument(revenue_share_group)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_groups",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_share_groups_sync(
-    *,
-    client: StolonClient,
-    revenue_share_group: Union[Unset, str] = UNSET
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get revenue share groups, optionally filtering by revenue share group value
 
@@ -1202,51 +910,45 @@ def get_revenue_share_groups_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_share_group: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"revenue_share_group": serialize_argument(revenue_share_group)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_groups",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_share_groups_asyncio_detailed(
-    *,
-    client: StolonClient,
-    revenue_share_group: Union[Unset, str] = UNSET
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get revenue share groups, optionally filtering by revenue share group value
 
@@ -1260,69 +962,45 @@ def get_revenue_share_groups_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_share_group: Union[Unset, str]
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"revenue_share_group": serialize_argument(revenue_share_group)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_groups",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_share_groups_asyncio(
-    *,
-    client: StolonClient,
-    revenue_share_group: Union[Unset, str] = UNSET
+    *, client: StolonClient, revenue_share_group: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get revenue share groups, optionally filtering by revenue share group value
 
@@ -1336,41 +1014,38 @@ def get_revenue_share_groups_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_share_group: Union[Unset, str]
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"revenue_share_group": serialize_argument(revenue_share_group)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_share_groups._get_kwargs(revenue_share_group=revenue_share_group)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_share_group.get_revenue_share_groups",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

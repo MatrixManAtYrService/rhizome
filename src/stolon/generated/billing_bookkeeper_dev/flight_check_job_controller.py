@@ -9,35 +9,35 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_db_relational_integrity
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_db_relational_integrity_2
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_developer_entities_exist
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_fee_category_names
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_fee_code_missing_lexi_attribute
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_job_execution_connection
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_missing_hidden_system_apps
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import check_processing_group_dates
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import job_exe_results
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import kill_job_1
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.flight_check_job_controller import query_job_1
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_date_params import CheckDateParams
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_db_relational_integrity_params import CheckDbRelationalIntegrityParams
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_developer_entities_exist_params import CheckDeveloperEntitiesExistParams
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_fee_category_names_params import CheckFeeCategoryNamesParams
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_fee_code_missing_lexi_attribute_params import CheckFeeCodeMissingLexiAttributeParams
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_hidden_system_apps_exist_params import CheckHiddenSystemAppsExistParams
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_response import CheckResponse
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_date_params import (
+    CheckDateParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_db_relational_integrity_params import (
+    CheckDbRelationalIntegrityParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_developer_entities_exist_params import (
+    CheckDeveloperEntitiesExistParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_fee_category_names_params import (
+    CheckFeeCategoryNamesParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_fee_code_missing_lexi_attribute_params import (
+    CheckFeeCodeMissingLexiAttributeParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_hidden_system_apps_exist_params import (
+    CheckHiddenSystemAppsExistParams,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.check_response import (
+    CheckResponse,
+)
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def check_fee_category_names_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckFeeCategoryNamesParams
+    *, client: StolonClient, body: CheckFeeCategoryNamesParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCategoryNamesParams):
@@ -49,70 +49,44 @@ def check_fee_category_names_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCategoryNamesParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_category_names",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def check_fee_category_names_sync(
-    *,
-    client: StolonClient,
-    body: CheckFeeCategoryNamesParams
-) -> CheckResponse | None:
+def check_fee_category_names_sync(*, client: StolonClient, body: CheckFeeCategoryNamesParams) -> CheckResponse | None:
     """Args:
         body (CheckFeeCategoryNamesParams):
 
@@ -123,51 +97,45 @@ def check_fee_category_names_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCategoryNamesParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_category_names",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_fee_category_names_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckFeeCategoryNamesParams
+    *, client: StolonClient, body: CheckFeeCategoryNamesParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCategoryNamesParams):
@@ -179,69 +147,45 @@ def check_fee_category_names_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCategoryNamesParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_category_names",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_fee_category_names_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckFeeCategoryNamesParams
+    *, client: StolonClient, body: CheckFeeCategoryNamesParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckFeeCategoryNamesParams):
@@ -253,52 +197,44 @@ def check_fee_category_names_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCategoryNamesParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_category_names._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_category_names",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def job_exe_results_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[str]:
+def job_exe_results_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -309,70 +245,44 @@ def job_exe_results_sync_detailed(
     Returns:
         Response[str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         Response[str]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = job_exe_results._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.job_exe_results",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[str]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def job_exe_results_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> str | None:
+def job_exe_results_sync(*, client: StolonClient, request_uuid: str) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -383,45 +293,44 @@ def job_exe_results_sync(
     Returns:
         str
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         str | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = job_exe_results._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.job_exe_results",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[str]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def job_exe_results_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[str]:
+def job_exe_results_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -432,70 +341,44 @@ def job_exe_results_asyncio_detailed(
     Returns:
         Response[str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         Response[str]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = job_exe_results._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.job_exe_results",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[str]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def job_exe_results_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> str | None:
+def job_exe_results_asyncio(*, client: StolonClient, request_uuid: str) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -506,44 +389,45 @@ def job_exe_results_asyncio(
     Returns:
         str
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         str | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = job_exe_results._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.job_exe_results",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[str]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_processing_group_dates_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDateParams
+    *, client: StolonClient, body: CheckDateParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDateParams):
@@ -555,70 +439,44 @@ def check_processing_group_dates_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDateParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_processing_group_dates",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def check_processing_group_dates_sync(
-    *,
-    client: StolonClient,
-    body: CheckDateParams
-) -> CheckResponse | None:
+def check_processing_group_dates_sync(*, client: StolonClient, body: CheckDateParams) -> CheckResponse | None:
     """Args:
         body (CheckDateParams):
 
@@ -629,51 +487,45 @@ def check_processing_group_dates_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDateParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_processing_group_dates",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_processing_group_dates_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDateParams
+    *, client: StolonClient, body: CheckDateParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDateParams):
@@ -685,70 +537,44 @@ def check_processing_group_dates_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDateParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_processing_group_dates",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def check_processing_group_dates_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckDateParams
-) -> CheckResponse | None:
+def check_processing_group_dates_asyncio(*, client: StolonClient, body: CheckDateParams) -> CheckResponse | None:
     """Args:
         body (CheckDateParams):
 
@@ -759,51 +585,45 @@ def check_processing_group_dates_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDateParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_processing_group_dates._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_processing_group_dates",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_developer_entities_exist_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDeveloperEntitiesExistParams
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
@@ -815,69 +635,45 @@ def check_developer_entities_exist_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDeveloperEntitiesExistParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_developer_entities_exist",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_developer_entities_exist_sync(
-    *,
-    client: StolonClient,
-    body: CheckDeveloperEntitiesExistParams
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
@@ -889,51 +685,45 @@ def check_developer_entities_exist_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDeveloperEntitiesExistParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_developer_entities_exist",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_developer_entities_exist_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDeveloperEntitiesExistParams
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
@@ -945,69 +735,45 @@ def check_developer_entities_exist_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDeveloperEntitiesExistParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_developer_entities_exist",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_developer_entities_exist_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckDeveloperEntitiesExistParams
+    *, client: StolonClient, body: CheckDeveloperEntitiesExistParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckDeveloperEntitiesExistParams):
@@ -1019,51 +785,45 @@ def check_developer_entities_exist_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDeveloperEntitiesExistParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_developer_entities_exist._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_developer_entities_exist",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1075,69 +835,45 @@ def check_db_relational_integrity_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_sync(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1149,51 +885,45 @@ def check_db_relational_integrity_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1205,69 +935,45 @@ def check_db_relational_integrity_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1279,52 +985,44 @@ def check_db_relational_integrity_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def query_job_1_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def query_job_1_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -1335,70 +1033,44 @@ def query_job_1_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = query_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.query_job_1",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def query_job_1_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def query_job_1_sync(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -1409,52 +1081,44 @@ def query_job_1_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = query_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.query_job_1",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def query_job_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def query_job_1_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -1465,70 +1129,44 @@ def query_job_1_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = query_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.query_job_1",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def query_job_1_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def query_job_1_asyncio(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -1539,51 +1177,45 @@ def query_job_1_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = query_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.query_job_1",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_missing_hidden_system_apps_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckHiddenSystemAppsExistParams
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
@@ -1595,69 +1227,45 @@ def check_missing_hidden_system_apps_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckHiddenSystemAppsExistParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_missing_hidden_system_apps",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_missing_hidden_system_apps_sync(
-    *,
-    client: StolonClient,
-    body: CheckHiddenSystemAppsExistParams
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
@@ -1669,51 +1277,45 @@ def check_missing_hidden_system_apps_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckHiddenSystemAppsExistParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_missing_hidden_system_apps",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_missing_hidden_system_apps_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckHiddenSystemAppsExistParams
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
@@ -1725,69 +1327,45 @@ def check_missing_hidden_system_apps_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckHiddenSystemAppsExistParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_missing_hidden_system_apps",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_missing_hidden_system_apps_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckHiddenSystemAppsExistParams
+    *, client: StolonClient, body: CheckHiddenSystemAppsExistParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckHiddenSystemAppsExistParams):
@@ -1799,51 +1377,45 @@ def check_missing_hidden_system_apps_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckHiddenSystemAppsExistParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_missing_hidden_system_apps._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_missing_hidden_system_apps",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_2_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1855,69 +1427,45 @@ def check_db_relational_integrity_2_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity_2",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_2_sync(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1929,51 +1477,45 @@ def check_db_relational_integrity_2_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity_2",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_2_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -1985,69 +1527,45 @@ def check_db_relational_integrity_2_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity_2",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_db_relational_integrity_2_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckDbRelationalIntegrityParams
+    *, client: StolonClient, body: CheckDbRelationalIntegrityParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckDbRelationalIntegrityParams):
@@ -2059,51 +1577,44 @@ def check_db_relational_integrity_2_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckDbRelationalIntegrityParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_db_relational_integrity_2._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_db_relational_integrity_2",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def check_job_execution_connection_sync_detailed(
-    *,
-    client: StolonClient
-) -> Response[CheckResponse]:
+def check_job_execution_connection_sync_detailed(*, client: StolonClient) -> Response[CheckResponse]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -2111,69 +1622,44 @@ def check_job_execution_connection_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
-        
+        client: StolonClient instance for invoking server-side functions
+
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {}
 
-    # Extract request parameters from generated function
-    kwargs = check_job_execution_connection._get_kwargs()
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_job_execution_connection",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def check_job_execution_connection_sync(
-    *,
-    client: StolonClient
-) -> CheckResponse | None:
+def check_job_execution_connection_sync(*, client: StolonClient) -> CheckResponse | None:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -2181,51 +1667,44 @@ def check_job_execution_connection_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
-        
+        client: StolonClient instance for invoking server-side functions
+
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {}
 
-    # Extract request parameters from generated function
-    kwargs = check_job_execution_connection._get_kwargs()
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_job_execution_connection",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def check_job_execution_connection_asyncio_detailed(
-    *,
-    client: StolonClient
-) -> Response[CheckResponse]:
+def check_job_execution_connection_asyncio_detailed(*, client: StolonClient) -> Response[CheckResponse]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -2233,69 +1712,44 @@ def check_job_execution_connection_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
-        
+        client: StolonClient instance for invoking server-side functions
+
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {}
 
-    # Extract request parameters from generated function
-    kwargs = check_job_execution_connection._get_kwargs()
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_job_execution_connection",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def check_job_execution_connection_asyncio(
-    *,
-    client: StolonClient
-) -> CheckResponse | None:
+def check_job_execution_connection_asyncio(*, client: StolonClient) -> CheckResponse | None:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -2303,52 +1757,44 @@ def check_job_execution_connection_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
-        
+        client: StolonClient instance for invoking server-side functions
+
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {}
 
-    # Extract request parameters from generated function
-    kwargs = check_job_execution_connection._get_kwargs()
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_job_execution_connection",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def kill_job_1_sync_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def kill_job_1_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -2359,70 +1805,44 @@ def kill_job_1_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = kill_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.kill_job_1",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def kill_job_1_sync(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def kill_job_1_sync(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -2433,52 +1853,44 @@ def kill_job_1_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = kill_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.kill_job_1",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def kill_job_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> Response[CheckResponse]:
+def kill_job_1_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[CheckResponse]:
     """Args:
         request_uuid (str):
 
@@ -2489,70 +1901,44 @@ def kill_job_1_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = kill_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.kill_job_1",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def kill_job_1_asyncio(
-    *,
-    client: StolonClient,
-    request_uuid: str
-) -> CheckResponse | None:
+def kill_job_1_asyncio(*, client: StolonClient, request_uuid: str) -> CheckResponse | None:
     """Args:
         request_uuid (str):
 
@@ -2563,51 +1949,45 @@ def kill_job_1_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 request_uuid: str
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"request_uuid": serialize_argument(request_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = kill_job_1._get_kwargs(request_uuid=request_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.kill_job_1",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_fee_code_missing_lexi_attribute_sync_detailed(
-    *,
-    client: StolonClient,
-    body: CheckFeeCodeMissingLexiAttributeParams
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
@@ -2619,69 +1999,45 @@ def check_fee_code_missing_lexi_attribute_sync_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_code_missing_lexi_attribute",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_fee_code_missing_lexi_attribute_sync(
-    *,
-    client: StolonClient,
-    body: CheckFeeCodeMissingLexiAttributeParams
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
@@ -2693,51 +2049,45 @@ def check_fee_code_missing_lexi_attribute_sync(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_code_missing_lexi_attribute",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def check_fee_code_missing_lexi_attribute_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: CheckFeeCodeMissingLexiAttributeParams
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
 ) -> Response[CheckResponse]:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
@@ -2749,69 +2099,45 @@ def check_fee_code_missing_lexi_attribute_asyncio_detailed(
     Returns:
         Response[CheckResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         Response[CheckResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_code_missing_lexi_attribute",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: CheckResponse | None
-    if body_json and proxy_response.status_code == 200 and CheckResponse:
-        parsed = CheckResponse.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[CheckResponse]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def check_fee_code_missing_lexi_attribute_asyncio(
-    *,
-    client: StolonClient,
-    body: CheckFeeCodeMissingLexiAttributeParams
+    *, client: StolonClient, body: CheckFeeCodeMissingLexiAttributeParams
 ) -> CheckResponse | None:
     """Args:
         body (CheckFeeCodeMissingLexiAttributeParams):
@@ -2823,41 +2149,38 @@ def check_fee_code_missing_lexi_attribute_asyncio(
     Returns:
         CheckResponse
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CheckFeeCodeMissingLexiAttributeParams
 
     Returns:
         CheckResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = check_fee_code_missing_lexi_attribute._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="flight_check_job_controller.check_fee_code_missing_lexi_attribute",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return CheckResponse.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[CheckResponse]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

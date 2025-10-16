@@ -1,8 +1,30 @@
 """Pydantic models for stolon server."""
 
+from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
+
+
+class OpenAPIService(StrEnum):
+    """
+    Enumeration of available OpenAPI services.
+
+    These values match the directory names in stolon/openapi_generated/.
+    """
+
+    AGREEMENT_K8S_DEV = "agreement_k8s_dev"
+    BILLING_BOOKKEEPER_DEV = "billing_bookkeeper_dev"
+    BILLING_EVENT_DEV = "billing_event_dev"
+
+
+# Service base path mapping for services that need context path prefixes
+# These are the URL path prefixes needed for certain services
+SERVICE_BASE_PATHS: dict[OpenAPIService, str] = {
+    OpenAPIService.AGREEMENT_K8S_DEV: "/agreement",
+    OpenAPIService.BILLING_BOOKKEEPER_DEV: "/billing-bookkeeper",
+    OpenAPIService.BILLING_EVENT_DEV: "/billing-event",
+}
 
 
 class InternalTokenRequest(BaseModel):
@@ -56,3 +78,23 @@ class ProxyResponse(BaseModel):
     status_code: int
     headers: dict[str, str]
     body: str  # JSON string or other response body
+
+
+class OpenAPIInvokeRequest(BaseModel):
+    """Request to invoke an OpenAPI-generated function on the server."""
+
+    service: OpenAPIService  # e.g., OpenAPIService.BILLING_BOOKKEEPER_DEV
+    function_path: str  # e.g., "acceptance_controller_impl.get_bulk_acceptances_service_scope"
+    variant: str  # "sync", "sync_detailed", "asyncio", "asyncio_detailed"
+    kwargs: dict[str, Any]  # Serialized function arguments
+    domain: str  # e.g., "dev1.dev.clover.com"
+    environment_name: str  # For X-Clover-Appenv header
+
+
+class OpenAPIInvokeResponse(BaseModel):
+    """Response from OpenAPI function invocation."""
+
+    success: bool
+    result: Any = None  # Serialized result from the function
+    error: str | None = None  # Error message if success=False
+    status_code: int | None = None  # HTTP status code if available

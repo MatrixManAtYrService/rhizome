@@ -9,16 +9,16 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_billing_event_history_response_200 import GetBillingEventHistoryResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_billing_event_history_response_200 import (
+    GetBillingEventHistoryResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_billing_event_history_sync_detailed(
@@ -29,7 +29,7 @@ def get_billing_event_history_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetBillingEventHistoryResponse200]:
     """Get billing event history
 
@@ -48,11 +48,11 @@ def get_billing_event_history_sync_detailed(
     Returns:
         Response[GetBillingEventHistoryResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entity_uuid: Union[Unset, str]
         event_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -63,53 +63,38 @@ def get_billing_event_history_sync_detailed(
     Returns:
         Response[GetBillingEventHistoryResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entity_uuid": serialize_argument(entity_uuid),
+        "event_uuid": serialize_argument(event_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="billing_event_history.get_billing_event_history",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetBillingEventHistoryResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetBillingEventHistoryResponse200:
-        parsed = GetBillingEventHistoryResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetBillingEventHistoryResponse200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_event_history_sync(
@@ -120,7 +105,7 @@ def get_billing_event_history_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetBillingEventHistoryResponse200 | None:
     """Get billing event history
 
@@ -139,11 +124,11 @@ def get_billing_event_history_sync(
     Returns:
         GetBillingEventHistoryResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entity_uuid: Union[Unset, str]
         event_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -154,35 +139,38 @@ def get_billing_event_history_sync(
     Returns:
         GetBillingEventHistoryResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entity_uuid": serialize_argument(entity_uuid),
+        "event_uuid": serialize_argument(event_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="billing_event_history.get_billing_event_history",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetBillingEventHistoryResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetBillingEventHistoryResponse200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_event_history_asyncio_detailed(
@@ -193,7 +181,7 @@ def get_billing_event_history_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetBillingEventHistoryResponse200]:
     """Get billing event history
 
@@ -212,11 +200,11 @@ def get_billing_event_history_asyncio_detailed(
     Returns:
         Response[GetBillingEventHistoryResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entity_uuid: Union[Unset, str]
         event_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -227,53 +215,38 @@ def get_billing_event_history_asyncio_detailed(
     Returns:
         Response[GetBillingEventHistoryResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entity_uuid": serialize_argument(entity_uuid),
+        "event_uuid": serialize_argument(event_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="billing_event_history.get_billing_event_history",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetBillingEventHistoryResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetBillingEventHistoryResponse200:
-        parsed = GetBillingEventHistoryResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetBillingEventHistoryResponse200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_event_history_asyncio(
@@ -284,7 +257,7 @@ def get_billing_event_history_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetBillingEventHistoryResponse200 | None:
     """Get billing event history
 
@@ -303,11 +276,11 @@ def get_billing_event_history_asyncio(
     Returns:
         GetBillingEventHistoryResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entity_uuid: Union[Unset, str]
         event_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -318,31 +291,35 @@ def get_billing_event_history_asyncio(
     Returns:
         GetBillingEventHistoryResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entity_uuid": serialize_argument(entity_uuid),
+        "event_uuid": serialize_argument(event_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="billing_event_history.get_billing_event_history",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetBillingEventHistoryResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetBillingEventHistoryResponse200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]

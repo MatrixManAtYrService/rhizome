@@ -9,35 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import create_fee_code_ledger_account
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import delete_fee_code_ledger_account_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_account_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_date
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_fee_category_fee_code
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import get_fee_code_ledger_accounts_by_ledger_account_key
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import resolve_fee_code_to_ledger_account_mapping
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_code_ledger_account import update_fee_code_ledger_account
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_ledger_account import ApiFeeCodeLedgerAccount
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account import ApiLedgerAccount
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_code_ledger_account import (
+    ApiFeeCodeLedgerAccount,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account import (
+    ApiLedgerAccount,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
-    *,
-    client: StolonClient,
-    fee_category: str,
-    fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -53,11 +44,11 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: str
         date: Union[Unset, datetime.date]
@@ -65,61 +56,39 @@ def resolve_fee_code_to_ledger_account_mapping_sync_detailed(
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_code_to_ledger_account_mapping",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_code_to_ledger_account_mapping_sync(
-    *,
-    client: StolonClient,
-    fee_category: str,
-    fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -135,11 +104,11 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: str
         date: Union[Unset, datetime.date]
@@ -147,36 +116,39 @@ def resolve_fee_code_to_ledger_account_mapping_sync(
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_code_to_ledger_account_mapping",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
-    *,
-    client: StolonClient,
-    fee_category: str,
-    fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -192,11 +164,11 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: str
         date: Union[Unset, datetime.date]
@@ -204,61 +176,39 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio_detailed(
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_code_to_ledger_account_mapping",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_code_to_ledger_account_mapping_asyncio(
-    *,
-    client: StolonClient,
-    fee_category: str,
-    fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    *, client: StolonClient, fee_category: str, fee_code: str, date: Union[Unset, datetime.date] = UNSET
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping
 
@@ -274,11 +224,11 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: str
         date: Union[Unset, datetime.date]
@@ -286,28 +236,35 @@ def resolve_fee_code_to_ledger_account_mapping_asyncio(
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_code_to_ledger_account_mapping._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_code_to_ledger_account_mapping",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
@@ -316,7 +273,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
     ledger_account_key: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -333,11 +290,11 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_account_key: str
         date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -346,53 +303,36 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync_detailed(
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "date": serialize_argument(date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_ledger_account_key",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
@@ -401,7 +341,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
     ledger_account_key: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -418,11 +358,11 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
     Returns:
         Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_account_key: str
         date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -431,28 +371,36 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_sync(
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "date": serialize_argument(date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_ledger_account_key",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
@@ -461,7 +409,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
     ledger_account_key: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -478,11 +426,11 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_account_key: str
         date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -491,53 +439,36 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio_detailed(
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "date": serialize_argument(date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_ledger_account_key",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
@@ -546,7 +477,7 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
     ledger_account_key: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -563,11 +494,11 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
     Returns:
         Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_account_key: str
         date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -576,34 +507,40 @@ def get_fee_code_ledger_accounts_by_ledger_account_key_asyncio(
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "date": serialize_argument(date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_ledger_account_key._get_kwargs(ledger_account_key=ledger_account_key, date=date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_ledger_account_key",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -617,69 +554,45 @@ def get_fee_code_ledger_account_by_uuid_sync_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -693,44 +606,45 @@ def get_fee_code_ledger_account_by_uuid_sync(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -744,69 +658,45 @@ def get_fee_code_ledger_account_by_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping by UUID
 
@@ -820,44 +710,45 @@ def get_fee_code_ledger_account_by_uuid_asyncio(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_fee_code_ledger_account_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | str]:
     """Delete a fee-code-to-ledger-account mapping
 
@@ -871,70 +762,44 @@ def delete_fee_code_ledger_account_by_uuid_sync_detailed(
     Returns:
         Response[Union[ResponseError, str]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ResponseError | str]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.delete_fee_code_ledger_account_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ResponseError, str]]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def delete_fee_code_ledger_account_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | str | None:
+def delete_fee_code_ledger_account_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
     """Delete a fee-code-to-ledger-account mapping
 
     Args:
@@ -947,44 +812,45 @@ def delete_fee_code_ledger_account_by_uuid_sync(
     Returns:
         Union[ResponseError, str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ResponseError | str | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.delete_fee_code_ledger_account_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ResponseError, str]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ResponseError | str]:
     """Delete a fee-code-to-ledger-account mapping
 
@@ -998,70 +864,44 @@ def delete_fee_code_ledger_account_by_uuid_asyncio_detailed(
     Returns:
         Response[Union[ResponseError, str]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ResponseError | str]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.delete_fee_code_ledger_account_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ResponseError, str]]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def delete_fee_code_ledger_account_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ResponseError | str | None:
+def delete_fee_code_ledger_account_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
     """Delete a fee-code-to-ledger-account mapping
 
     Args:
@@ -1074,38 +914,41 @@ def delete_fee_code_ledger_account_by_uuid_asyncio(
     Returns:
         Union[ResponseError, str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ResponseError | str | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_fee_code_ledger_account_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.delete_fee_code_ledger_account_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ResponseError, str]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detailed(
@@ -1113,7 +956,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
     client: StolonClient,
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1129,11 +972,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         date: Union[Unset, datetime.date]
@@ -1141,53 +984,35 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync_detaile
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
@@ -1195,7 +1020,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
     client: StolonClient,
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1211,11 +1036,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         date: Union[Unset, datetime.date]
@@ -1223,28 +1048,35 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_sync(
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_detailed(
@@ -1252,7 +1084,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
     client: StolonClient,
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1268,11 +1100,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         date: Union[Unset, datetime.date]
@@ -1280,53 +1112,35 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio_deta
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
@@ -1334,7 +1148,7 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
     client: StolonClient,
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Get a fee-code-to-ledger-account mapping using the fee category, fee code, and as-of date
 
@@ -1350,11 +1164,11 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         date: Union[Unset, datetime.date]
@@ -1362,28 +1176,35 @@ def get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date_asyncio(
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date._get_kwargs(fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_account_by_fee_category_fee_code_as_of_date",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_detailed(
@@ -1392,7 +1213,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
     billing_entity_uuid: str,
     fee_category: str,
     fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1410,11 +1231,11 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
     Returns:
         Response[ApiLedgerAccount]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         fee_category: str
         fee_code: str
@@ -1423,53 +1244,36 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync_det
     Returns:
         Response[ApiLedgerAccount]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiLedgerAccount | None
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccount:
-        parsed = ApiLedgerAccount.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiLedgerAccount]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
@@ -1478,7 +1282,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     billing_entity_uuid: str,
     fee_category: str,
     fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1496,11 +1300,11 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     Returns:
         ApiLedgerAccount
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         fee_category: str
         fee_code: str
@@ -1509,35 +1313,36 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_sync(
     Returns:
         ApiLedgerAccount | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiLedgerAccount]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_detailed(
@@ -1546,7 +1351,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
     billing_entity_uuid: str,
     fee_category: str,
     fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> Response[ApiLedgerAccount]:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1564,11 +1369,11 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
     Returns:
         Response[ApiLedgerAccount]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         fee_category: str
         fee_code: str
@@ -1577,53 +1382,36 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio_
     Returns:
         Response[ApiLedgerAccount]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiLedgerAccount | None
-    if body_json and proxy_response.status_code == 200 and ApiLedgerAccount:
-        parsed = ApiLedgerAccount.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiLedgerAccount]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
@@ -1632,7 +1420,7 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     billing_entity_uuid: str,
     fee_category: str,
     fee_code: str,
-    date: Union[Unset, datetime.date] = UNSET
+    date: Union[Unset, datetime.date] = UNSET,
 ) -> ApiLedgerAccount | None:
     """Resolves a fee category and fee code pair to the fee-code-to-ledger-account mapping for a billing
     entity
@@ -1650,11 +1438,11 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     Returns:
         ApiLedgerAccount
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         fee_category: str
         fee_code: str
@@ -1663,42 +1451,40 @@ def resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account_asyncio(
     Returns:
         ApiLedgerAccount | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.resolve_fee_category_fee_code_billing_entity_uuid_to_ledger_account",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerAccount.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiLedgerAccount]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def update_fee_code_ledger_account_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1713,71 +1499,46 @@ def update_fee_code_ledger_account_sync_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.update_fee_code_ledger_account",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_fee_code_ledger_account_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1792,46 +1553,46 @@ def update_fee_code_ledger_account_sync(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.update_fee_code_ledger_account",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def update_fee_code_ledger_account_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1846,71 +1607,46 @@ def update_fee_code_ledger_account_asyncio_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.update_fee_code_ledger_account",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_fee_code_ledger_account_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, uuid: str, body: ApiFeeCodeLedgerAccount
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Update a fee-code-to-ledger-account mapping
 
@@ -1925,45 +1661,46 @@ def update_fee_code_ledger_account_asyncio(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_fee_code_ledger_account._get_kwargs(uuid=uuid, body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.update_fee_code_ledger_account",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_fee_code_ledger_account_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
@@ -1977,69 +1714,45 @@ def create_fee_code_ledger_account_sync_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.create_fee_code_ledger_account",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_fee_code_ledger_account_sync(
-    *,
-    client: StolonClient,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
@@ -2053,44 +1766,45 @@ def create_fee_code_ledger_account_sync(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.create_fee_code_ledger_account",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_fee_code_ledger_account_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
 ) -> Response[ApiFeeCodeLedgerAccount | ResponseError]:
     """Create a fee-code-to-ledger-account mapping
 
@@ -2104,69 +1818,45 @@ def create_fee_code_ledger_account_asyncio_detailed(
     Returns:
         Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiFeeCodeLedgerAccount
 
     Returns:
         Response[ApiFeeCodeLedgerAccount | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.create_fee_code_ledger_account",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_fee_code_ledger_account_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiFeeCodeLedgerAccount
+    *, client: StolonClient, body: ApiFeeCodeLedgerAccount
 ) -> ApiFeeCodeLedgerAccount | ResponseError | None:
     """Create a fee-code-to-ledger-account mapping
 
@@ -2180,38 +1870,41 @@ def create_fee_code_ledger_account_asyncio(
     Returns:
         Union[ApiFeeCodeLedgerAccount, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiFeeCodeLedgerAccount
 
     Returns:
         ApiFeeCodeLedgerAccount | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_fee_code_ledger_account._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.create_fee_code_ledger_account",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiFeeCodeLedgerAccount, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
@@ -2220,7 +1913,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2238,11 +1931,11 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -2251,53 +1944,36 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync_detailed(
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_fee_category_fee_code",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
@@ -2306,7 +1982,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2324,11 +2000,11 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
     Returns:
         Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -2337,28 +2013,36 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_sync(
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_fee_category_fee_code",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
@@ -2367,7 +2051,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2385,11 +2069,11 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -2398,53 +2082,36 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio_detailed(
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_fee_category_fee_code",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
@@ -2453,7 +2120,7 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
     fee_category: str,
     fee_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings using the from fee category and fee code, returning the
     mappings across effective dates
@@ -2471,11 +2138,11 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
     Returns:
         Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 fee_category: str
         fee_code: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -2484,28 +2151,36 @@ def get_fee_code_ledger_accounts_by_fee_category_fee_code_asyncio(
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_fee_category_fee_code._get_kwargs(fee_category=fee_category, fee_code=fee_code, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_fee_category_fee_code",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_date_sync_detailed(
@@ -2516,7 +2191,7 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
     fee_code: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2535,11 +2210,11 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 date: datetime.date
         fee_category: Union[Unset, str]
         fee_code: Union[Unset, str]
@@ -2550,53 +2225,38 @@ def get_fee_code_ledger_accounts_by_date_sync_detailed(
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "date": serialize_argument(date),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(date=date, fee_category=fee_category, fee_code=fee_code, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_date",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_date_sync(
@@ -2607,7 +2267,7 @@ def get_fee_code_ledger_accounts_by_date_sync(
     fee_code: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2626,11 +2286,11 @@ def get_fee_code_ledger_accounts_by_date_sync(
     Returns:
         Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 date: datetime.date
         fee_category: Union[Unset, str]
         fee_code: Union[Unset, str]
@@ -2641,28 +2301,38 @@ def get_fee_code_ledger_accounts_by_date_sync(
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "date": serialize_argument(date),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(date=date, fee_category=fee_category, fee_code=fee_code, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_date",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
@@ -2673,7 +2343,7 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
     fee_code: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2692,11 +2362,11 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiFeeCodeLedgerAccount']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 date: datetime.date
         fee_category: Union[Unset, str]
         fee_code: Union[Unset, str]
@@ -2707,53 +2377,38 @@ def get_fee_code_ledger_accounts_by_date_asyncio_detailed(
     Returns:
         Response[ResponseError | list["ApiFeeCodeLedgerAccount"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "date": serialize_argument(date),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(date=date, fee_category=fee_category, fee_code=fee_code, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_date",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_fee_code_ledger_accounts_by_date_asyncio(
@@ -2764,7 +2419,7 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
     fee_code: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiFeeCodeLedgerAccount"] | None:
     """Get fee-code-to-ledger-account mappings that map to a ledger account key value
 
@@ -2783,11 +2438,11 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
     Returns:
         Union[ResponseError, list['ApiFeeCodeLedgerAccount']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 date: datetime.date
         fee_category: Union[Unset, str]
         fee_code: Union[Unset, str]
@@ -2798,24 +2453,35 @@ def get_fee_code_ledger_accounts_by_date_asyncio(
     Returns:
         ResponseError | list["ApiFeeCodeLedgerAccount"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "date": serialize_argument(date),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "ledger_account_key": serialize_argument(ledger_account_key),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_fee_code_ledger_accounts_by_date._get_kwargs(date=date, fee_category=fee_category, fee_code=fee_code, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="fee_code_ledger_account.get_fee_code_ledger_accounts_by_date",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiFeeCodeLedgerAccount"]]]',
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

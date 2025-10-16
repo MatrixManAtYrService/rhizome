@@ -9,15 +9,18 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.bulk_basic_auto_adjust_advice import create_basic_bulk_auto_adjust_advice
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import ApiBulkAutoAdjustAdvice
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.create_basic_bulk_auto_adjust_advice_body import CreateBasicBulkAutoAdjustAdviceBody
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from typing import Any
 import datetime
-import json
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_bulk_auto_adjust_advice import (
+    ApiBulkAutoAdjustAdvice,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.create_basic_bulk_auto_adjust_advice_body import (
+    CreateBasicBulkAutoAdjustAdviceBody,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def create_basic_bulk_auto_adjust_advice_sync_detailed(
@@ -31,7 +34,7 @@ def create_basic_bulk_auto_adjust_advice_sync_detailed(
     max_amount: float,
     currency: str,
     reference: str,
-    email_address: str
+    email_address: str,
 ) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk basic auto-adjust advice
 
@@ -53,11 +56,11 @@ def create_basic_bulk_auto_adjust_advice_sync_detailed(
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CreateBasicBulkAutoAdjustAdviceBody
         rule_uuid: str
         start_date: datetime.date
@@ -71,53 +74,41 @@ def create_basic_bulk_auto_adjust_advice_sync_detailed(
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "rule_uuid": serialize_argument(rule_uuid),
+        "start_date": serialize_argument(start_date),
+        "total_periods": serialize_argument(total_periods),
+        "max_units": serialize_argument(max_units),
+        "max_amount": serialize_argument(max_amount),
+        "currency": serialize_argument(currency),
+        "reference": serialize_argument(reference),
+        "email_address": serialize_argument(email_address),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_basic_bulk_auto_adjust_advice._get_kwargs(body=body, rule_uuid=rule_uuid, start_date=start_date, total_periods=total_periods, max_units=max_units, max_amount=max_amount, currency=currency, reference=reference, email_address=email_address)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="bulk_basic_auto_adjust_advice.create_basic_bulk_auto_adjust_advice",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBulkAutoAdjustAdvice | None
-    if body_json and proxy_response.status_code == 200 and ApiBulkAutoAdjustAdvice:
-        parsed = ApiBulkAutoAdjustAdvice.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBulkAutoAdjustAdvice]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_basic_bulk_auto_adjust_advice_sync(
@@ -131,7 +122,7 @@ def create_basic_bulk_auto_adjust_advice_sync(
     max_amount: float,
     currency: str,
     reference: str,
-    email_address: str
+    email_address: str,
 ) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk basic auto-adjust advice
 
@@ -153,11 +144,11 @@ def create_basic_bulk_auto_adjust_advice_sync(
     Returns:
         ApiBulkAutoAdjustAdvice
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CreateBasicBulkAutoAdjustAdviceBody
         rule_uuid: str
         start_date: datetime.date
@@ -171,35 +162,41 @@ def create_basic_bulk_auto_adjust_advice_sync(
     Returns:
         ApiBulkAutoAdjustAdvice | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "rule_uuid": serialize_argument(rule_uuid),
+        "start_date": serialize_argument(start_date),
+        "total_periods": serialize_argument(total_periods),
+        "max_units": serialize_argument(max_units),
+        "max_amount": serialize_argument(max_amount),
+        "currency": serialize_argument(currency),
+        "reference": serialize_argument(reference),
+        "email_address": serialize_argument(email_address),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_basic_bulk_auto_adjust_advice._get_kwargs(body=body, rule_uuid=rule_uuid, start_date=start_date, total_periods=total_periods, max_units=max_units, max_amount=max_amount, currency=currency, reference=reference, email_address=email_address)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="bulk_basic_auto_adjust_advice.create_basic_bulk_auto_adjust_advice",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBulkAutoAdjustAdvice.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBulkAutoAdjustAdvice]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_basic_bulk_auto_adjust_advice_asyncio_detailed(
@@ -213,7 +210,7 @@ def create_basic_bulk_auto_adjust_advice_asyncio_detailed(
     max_amount: float,
     currency: str,
     reference: str,
-    email_address: str
+    email_address: str,
 ) -> Response[ApiBulkAutoAdjustAdvice]:
     """Create bulk basic auto-adjust advice
 
@@ -235,11 +232,11 @@ def create_basic_bulk_auto_adjust_advice_asyncio_detailed(
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CreateBasicBulkAutoAdjustAdviceBody
         rule_uuid: str
         start_date: datetime.date
@@ -253,53 +250,41 @@ def create_basic_bulk_auto_adjust_advice_asyncio_detailed(
     Returns:
         Response[ApiBulkAutoAdjustAdvice]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "rule_uuid": serialize_argument(rule_uuid),
+        "start_date": serialize_argument(start_date),
+        "total_periods": serialize_argument(total_periods),
+        "max_units": serialize_argument(max_units),
+        "max_amount": serialize_argument(max_amount),
+        "currency": serialize_argument(currency),
+        "reference": serialize_argument(reference),
+        "email_address": serialize_argument(email_address),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_basic_bulk_auto_adjust_advice._get_kwargs(body=body, rule_uuid=rule_uuid, start_date=start_date, total_periods=total_periods, max_units=max_units, max_amount=max_amount, currency=currency, reference=reference, email_address=email_address)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="bulk_basic_auto_adjust_advice.create_basic_bulk_auto_adjust_advice",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBulkAutoAdjustAdvice | None
-    if body_json and proxy_response.status_code == 200 and ApiBulkAutoAdjustAdvice:
-        parsed = ApiBulkAutoAdjustAdvice.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBulkAutoAdjustAdvice]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_basic_bulk_auto_adjust_advice_asyncio(
@@ -313,7 +298,7 @@ def create_basic_bulk_auto_adjust_advice_asyncio(
     max_amount: float,
     currency: str,
     reference: str,
-    email_address: str
+    email_address: str,
 ) -> ApiBulkAutoAdjustAdvice | None:
     """Create bulk basic auto-adjust advice
 
@@ -335,11 +320,11 @@ def create_basic_bulk_auto_adjust_advice_asyncio(
     Returns:
         ApiBulkAutoAdjustAdvice
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: CreateBasicBulkAutoAdjustAdviceBody
         rule_uuid: str
         start_date: datetime.date
@@ -353,31 +338,38 @@ def create_basic_bulk_auto_adjust_advice_asyncio(
     Returns:
         ApiBulkAutoAdjustAdvice | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "rule_uuid": serialize_argument(rule_uuid),
+        "start_date": serialize_argument(start_date),
+        "total_periods": serialize_argument(total_periods),
+        "max_units": serialize_argument(max_units),
+        "max_amount": serialize_argument(max_amount),
+        "currency": serialize_argument(currency),
+        "reference": serialize_argument(reference),
+        "email_address": serialize_argument(email_address),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_basic_bulk_auto_adjust_advice._get_kwargs(body=body, rule_uuid=rule_uuid, start_date=start_date, total_periods=total_periods, max_units=max_units, max_amount=max_amount, currency=currency, reference=reference, email_address=email_address)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="bulk_basic_auto_adjust_advice.create_basic_bulk_auto_adjust_advice",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBulkAutoAdjustAdvice.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBulkAutoAdjustAdvice]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

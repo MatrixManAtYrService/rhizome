@@ -9,21 +9,22 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journal_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journals_by_journal_date
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journals_by_ledger_account_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journals_by_ref_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal import ApiLedgerJournal
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal_projection import ApiLedgerJournalProjection
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal import (
+    ApiLedgerJournal,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal_projection import (
+    ApiLedgerJournalProjection,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_ledger_journals_by_journal_date_sync_detailed(
@@ -34,7 +35,7 @@ def get_ledger_journals_by_journal_date_sync_detailed(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerJournalProjection"]]:
     """Get ledger journal entries for the specified journal date range
 
@@ -53,11 +54,11 @@ def get_ledger_journals_by_journal_date_sync_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiLedgerJournalProjection']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 min_date: Union[Unset, datetime.date]
         max_date: Union[Unset, datetime.date]
         ledger_account_uuid: Union[Unset, str]
@@ -68,53 +69,38 @@ def get_ledger_journals_by_journal_date_sync_detailed(
     Returns:
         Response[ResponseError | list["ApiLedgerJournalProjection"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "min_date": serialize_argument(min_date),
+        "max_date": serialize_argument(max_date),
+        "ledger_account_uuid": serialize_argument(ledger_account_uuid),
+        "currency": serialize_argument(currency),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_journal_date",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiLedgerJournalProjection"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_journal_date_sync(
@@ -125,7 +111,7 @@ def get_ledger_journals_by_journal_date_sync(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerJournalProjection"] | None:
     """Get ledger journal entries for the specified journal date range
 
@@ -144,11 +130,11 @@ def get_ledger_journals_by_journal_date_sync(
     Returns:
         Union[ResponseError, list['ApiLedgerJournalProjection']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 min_date: Union[Unset, datetime.date]
         max_date: Union[Unset, datetime.date]
         ledger_account_uuid: Union[Unset, str]
@@ -159,28 +145,38 @@ def get_ledger_journals_by_journal_date_sync(
     Returns:
         ResponseError | list["ApiLedgerJournalProjection"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "min_date": serialize_argument(min_date),
+        "max_date": serialize_argument(max_date),
+        "ledger_account_uuid": serialize_argument(ledger_account_uuid),
+        "currency": serialize_argument(currency),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_journal_date",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiLedgerJournalProjection"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_journal_date_asyncio_detailed(
@@ -191,7 +187,7 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError | list["ApiLedgerJournalProjection"]]:
     """Get ledger journal entries for the specified journal date range
 
@@ -210,11 +206,11 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
     Returns:
         Response[Union[ResponseError, list['ApiLedgerJournalProjection']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 min_date: Union[Unset, datetime.date]
         max_date: Union[Unset, datetime.date]
         ledger_account_uuid: Union[Unset, str]
@@ -225,53 +221,38 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
     Returns:
         Response[ResponseError | list["ApiLedgerJournalProjection"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "min_date": serialize_argument(min_date),
+        "max_date": serialize_argument(max_date),
+        "ledger_account_uuid": serialize_argument(ledger_account_uuid),
+        "currency": serialize_argument(currency),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_journal_date",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ResponseError, list["ApiLedgerJournalProjection"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_journal_date_asyncio(
@@ -282,7 +263,7 @@ def get_ledger_journals_by_journal_date_asyncio(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | list["ApiLedgerJournalProjection"] | None:
     """Get ledger journal entries for the specified journal date range
 
@@ -301,11 +282,11 @@ def get_ledger_journals_by_journal_date_asyncio(
     Returns:
         Union[ResponseError, list['ApiLedgerJournalProjection']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 min_date: Union[Unset, datetime.date]
         max_date: Union[Unset, datetime.date]
         ledger_account_uuid: Union[Unset, str]
@@ -316,28 +297,38 @@ def get_ledger_journals_by_journal_date_asyncio(
     Returns:
         ResponseError | list["ApiLedgerJournalProjection"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "min_date": serialize_argument(min_date),
+        "max_date": serialize_argument(max_date),
+        "ledger_account_uuid": serialize_argument(ledger_account_uuid),
+        "currency": serialize_argument(currency),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_journal_date",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ResponseError, list["ApiLedgerJournalProjection"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
@@ -346,7 +337,7 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -364,11 +355,11 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
     Returns:
         Response[Union[ApiLedgerJournal, list['ApiLedgerJournal']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_acct_uuid: str
         journal_date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -377,53 +368,36 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_acct_uuid": serialize_argument(ledger_acct_uuid),
+        "journal_date": serialize_argument(journal_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ledger_account_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ledger_account_uuid_sync(
@@ -432,7 +406,7 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -450,11 +424,11 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
     Returns:
         Union[ApiLedgerJournal, list['ApiLedgerJournal']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_acct_uuid: str
         journal_date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -463,28 +437,36 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_acct_uuid": serialize_argument(ledger_acct_uuid),
+        "journal_date": serialize_argument(journal_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ledger_account_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
@@ -493,7 +475,7 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -511,11 +493,11 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiLedgerJournal, list['ApiLedgerJournal']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_acct_uuid: str
         journal_date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -524,53 +506,36 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_acct_uuid": serialize_argument(ledger_acct_uuid),
+        "journal_date": serialize_argument(journal_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ledger_account_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ledger_account_uuid_asyncio(
@@ -579,7 +544,7 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -597,11 +562,11 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
     Returns:
         Union[ApiLedgerJournal, list['ApiLedgerJournal']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ledger_acct_uuid: str
         journal_date: Union[Unset, datetime.date]
         page_size: Union[Unset, int]
@@ -610,36 +575,40 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ledger_acct_uuid": serialize_argument(ledger_acct_uuid),
+        "journal_date": serialize_argument(journal_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ledger_account_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ref_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    ref_uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries for the specified reference UUID
 
@@ -655,11 +624,11 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
     Returns:
         Response[Union[ApiLedgerJournal, list['ApiLedgerJournal']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ref_uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -667,61 +636,39 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ref_uuid": serialize_argument(ref_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ref_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ref_uuid_sync(
-    *,
-    client: StolonClient,
-    ref_uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries for the specified reference UUID
 
@@ -737,11 +684,11 @@ def get_ledger_journals_by_ref_uuid_sync(
     Returns:
         Union[ApiLedgerJournal, list['ApiLedgerJournal']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ref_uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -749,36 +696,39 @@ def get_ledger_journals_by_ref_uuid_sync(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ref_uuid": serialize_argument(ref_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ref_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ref_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    ref_uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries for the specified reference UUID
 
@@ -794,11 +744,11 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiLedgerJournal, list['ApiLedgerJournal']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ref_uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -806,61 +756,39 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ref_uuid": serialize_argument(ref_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ref_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ledger_journals_by_ref_uuid_asyncio(
-    *,
-    client: StolonClient,
-    ref_uuid: str,
-    page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries for the specified reference UUID
 
@@ -876,11 +804,11 @@ def get_ledger_journals_by_ref_uuid_asyncio(
     Returns:
         Union[ApiLedgerJournal, list['ApiLedgerJournal']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 ref_uuid: str
         page_size: Union[Unset, int]
         page_number: Union[Unset, int]
@@ -888,35 +816,38 @@ def get_ledger_journals_by_ref_uuid_asyncio(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "ref_uuid": serialize_argument(ref_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journals_by_ref_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiLedgerJournal, list["ApiLedgerJournal"]]]',
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_ledger_journal_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiLedgerJournal]:
+def get_ledger_journal_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerJournal]:
     """Get ledger journal entry by UUID
 
     Args:
@@ -929,70 +860,44 @@ def get_ledger_journal_by_uuid_sync_detailed(
     Returns:
         Response[ApiLedgerJournal]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiLedgerJournal]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journal_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiLedgerJournal | None
-    if body_json and proxy_response.status_code == 200 and ApiLedgerJournal:
-        parsed = ApiLedgerJournal.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiLedgerJournal]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_ledger_journal_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiLedgerJournal | None:
+def get_ledger_journal_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLedgerJournal | None:
     """Get ledger journal entry by UUID
 
     Args:
@@ -1005,52 +910,44 @@ def get_ledger_journal_by_uuid_sync(
     Returns:
         ApiLedgerJournal
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiLedgerJournal | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journal_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerJournal.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiLedgerJournal]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_ledger_journal_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiLedgerJournal]:
+def get_ledger_journal_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerJournal]:
     """Get ledger journal entry by UUID
 
     Args:
@@ -1063,70 +960,44 @@ def get_ledger_journal_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiLedgerJournal]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiLedgerJournal]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journal_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiLedgerJournal | None
-    if body_json and proxy_response.status_code == 200 and ApiLedgerJournal:
-        parsed = ApiLedgerJournal.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiLedgerJournal]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_ledger_journal_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiLedgerJournal | None:
+def get_ledger_journal_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerJournal | None:
     """Get ledger journal entry by UUID
 
     Args:
@@ -1139,41 +1010,38 @@ def get_ledger_journal_by_uuid_asyncio(
     Returns:
         ApiLedgerJournal
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiLedgerJournal | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="ledger_journal.get_ledger_journal_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiLedgerJournal.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiLedgerJournal]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

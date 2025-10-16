@@ -15,10 +15,14 @@ from fastapi import FastAPI, HTTPException
 from rhizome.logging import setup_logging
 from stolon.get_internal_token import get_internal_token
 from stolon.models import (
+    SERVICE_BASE_PATHS,
     HttpRequestLog,
     HttpResponseLog,
     InternalTokenRequest,
     InternalTokenResponse,
+    OpenAPIInvokeRequest,
+    OpenAPIInvokeResponse,
+    OpenAPIService,
     ProxyRequest,
     ProxyResponse,
 )
@@ -266,6 +270,194 @@ async def proxy_request(request: ProxyRequest) -> ProxyResponse:
             status_code=response.status_code,
             headers=dict(response.headers),
             body=response.text,
+        )
+
+
+def _get_service_base_path(service: OpenAPIService) -> str:
+    """
+    Get the base path for services that need context path prefixes.
+
+    Args:
+        service: The OpenAPI service
+
+    Returns:
+        Base path string (empty string if service doesn't need a prefix)
+
+    Raises:
+        NotImplementedError: If the service is not recognized
+    """
+    try:
+        return SERVICE_BASE_PATHS.get(service, "")
+    except KeyError as e:
+        raise NotImplementedError(f"Service {service} is not supported") from e
+
+
+def _import_openapi_function(service: OpenAPIService, function_path: str, variant: str) -> object:
+    """Import an OpenAPI-generated function dynamically."""
+    import importlib
+
+    module_path = f"stolon.openapi_generated.{service.value}.open_api_definition_client.api.{function_path}"
+    module = importlib.import_module(module_path)
+    return getattr(module, variant)
+
+
+def _create_authenticated_client(
+    service: OpenAPIService, domain: str, token: str, environment_name: str, base_path: str
+) -> object:
+    """Create an authenticated OpenAPI client."""
+    import importlib
+
+    client_module_path = f"stolon.openapi_generated.{service.value}.open_api_definition_client"
+    client_module = importlib.import_module(client_module_path)
+    AuthenticatedClient = client_module.AuthenticatedClient
+
+    base_url = f"https://{domain}{base_path}"
+
+    return AuthenticatedClient(
+        base_url=base_url,
+        token=token,
+        prefix="",
+        headers={"X-Clover-Appenv": f"{environment_name}:{domain.split('.')[0]}"},
+    )
+
+
+def _extract_status_code(result: object) -> int | None:
+    """Extract status code from a result object if it has one."""
+    from stolon.serialization import ResponseObject
+
+    if hasattr(result, "status_code") and hasattr(result, "parsed"):
+        # Type narrow to ResponseObject
+        response: ResponseObject = result  # type: ignore[assignment]
+        return response.status_code.value
+    return None
+
+
+async def _execute_openapi_call(
+    func: object, auth_client: object, kwargs: dict[str, object], request: OpenAPIInvokeRequest
+) -> OpenAPIInvokeResponse:
+    """Execute OpenAPI function call and serialize result."""
+    from stolon.serialization import serialize_result
+
+    try:
+        result = func(client=auth_client, **kwargs)  # type: ignore[operator]
+
+        if asyncio.iscoroutine(result):  # type: ignore[arg-type]
+            result = await result
+
+        serialized_result = serialize_result(result)  # type: ignore[arg-type]
+        status_code = _extract_status_code(result)  # type: ignore[arg-type]
+
+        logger.info(
+            "OpenAPI function succeeded",
+            service=request.service,
+            function_path=request.function_path,
+            status_code=status_code,
+        )
+
+        return OpenAPIInvokeResponse(
+            success=True,
+            result=serialized_result,
+            status_code=status_code,
+        )
+    except Exception as e:
+        logger.error(
+            "OpenAPI function failed",
+            service=request.service,
+            function_path=request.function_path,
+            error=str(e),
+        )
+        return OpenAPIInvokeResponse(
+            success=False,
+            error=str(e),
+        )
+
+
+def _is_auth_error(error: Exception) -> bool:
+    """Check if an error is a 401 authentication error."""
+    error_str = str(error)
+    return "401" in error_str or "Unauthorized" in error_str
+
+
+@app.post("/invoke_openapi")
+async def invoke_openapi(request: OpenAPIInvokeRequest) -> OpenAPIInvokeResponse:
+    """
+    Invoke an OpenAPI-generated function on the server.
+
+    This endpoint:
+    1. Receives function path and serialized arguments
+    2. Dynamically imports the OpenAPI function
+    3. Creates an authenticated client with cached token
+    4. Calls the function and handles auth retries
+    5. Returns serialized result
+
+    Benefits:
+    - Server executes the full OpenAPI client (no parsing bugs)
+    - Auth token management stays on server
+    - Client code is simpler (just serialize/deserialize)
+    """
+    try:
+        # Import the OpenAPI function
+        logger.info(
+            "Invoking OpenAPI function",
+            service=request.service,
+            function_path=request.function_path,
+            variant=request.variant,
+        )
+
+        try:
+            func = _import_openapi_function(request.service, request.function_path, request.variant)
+        except (ImportError, AttributeError) as e:
+            logger.error("Failed to import OpenAPI function", error=str(e))
+            return OpenAPIInvokeResponse(success=False, error=f"Failed to import function: {e}")
+
+        # Get token and create client
+        token_response = await internal_token(InternalTokenRequest(domain=request.domain))
+        token = token_response.token
+
+        base_path = _get_service_base_path(request.service)
+        auth_client = _create_authenticated_client(
+            request.service, request.domain, token, request.environment_name, base_path
+        )
+
+        # Call the function
+        response = await _execute_openapi_call(func, auth_client, request.kwargs, request)
+
+        # If it failed with 401, retry with fresh token
+        if not response.success and response.error and _is_auth_error(Exception(response.error)):
+            logger.warning(
+                f"Received 401 for {request.domain}, refreshing token and retrying",
+                service=request.service,
+            )
+
+            # Invalidate cached token
+            if request.domain in _token_cache:
+                del _token_cache[request.domain]
+
+            # Get fresh token and create new client
+            token_response = await internal_token(InternalTokenRequest(domain=request.domain))
+            token = token_response.token
+            auth_client = _create_authenticated_client(
+                request.service, request.domain, token, request.environment_name, base_path
+            )
+
+            # Retry the function call
+            response = await _execute_openapi_call(func, auth_client, request.kwargs, request)
+
+            if response.success:
+                logger.info(
+                    "OpenAPI function succeeded after retry",
+                    service=request.service,
+                    function_path=request.function_path,
+                    status_code=response.status_code,
+                )
+
+        return response
+
+    except Exception as e:
+        logger.error("invoke_openapi failed", error=str(e))
+        return OpenAPIInvokeResponse(
+            success=False,
+            error=f"Server error: {e}",
         )
 
 

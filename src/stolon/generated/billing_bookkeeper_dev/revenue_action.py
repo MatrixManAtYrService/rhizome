@@ -9,25 +9,20 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action import create_revenue_action
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action import get_revenue_action_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action import get_revenue_actions
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action import get_unposted_revenue_actions_by_billing_entity
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action import ApiRevenueAction
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action import (
+    ApiRevenueAction,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_unposted_revenue_actions_by_billing_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ApiRevenueAction]:
     """Get unposted revenue actions for billing entity
 
@@ -41,69 +36,45 @@ def get_unposted_revenue_actions_by_billing_entity_sync_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
 
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"billing_entity_uuid": serialize_argument(billing_entity_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_unposted_revenue_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_unposted_revenue_actions_by_billing_entity",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_unposted_revenue_actions_by_billing_entity_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ApiRevenueAction | None:
     """Get unposted revenue actions for billing entity
 
@@ -117,51 +88,45 @@ def get_unposted_revenue_actions_by_billing_entity_sync(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
 
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"billing_entity_uuid": serialize_argument(billing_entity_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_unposted_revenue_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_unposted_revenue_actions_by_billing_entity",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_unposted_revenue_actions_by_billing_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> Response[ApiRevenueAction]:
     """Get unposted revenue actions for billing entity
 
@@ -175,69 +140,45 @@ def get_unposted_revenue_actions_by_billing_entity_asyncio_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
 
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"billing_entity_uuid": serialize_argument(billing_entity_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_unposted_revenue_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_unposted_revenue_actions_by_billing_entity",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_unposted_revenue_actions_by_billing_entity_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str
+    *, client: StolonClient, billing_entity_uuid: str
 ) -> ApiRevenueAction | None:
     """Get unposted revenue actions for billing entity
 
@@ -251,45 +192,41 @@ def get_unposted_revenue_actions_by_billing_entity_asyncio(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
 
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"billing_entity_uuid": serialize_argument(billing_entity_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_unposted_revenue_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_unposted_revenue_actions_by_billing_entity",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_actions_sync_detailed(
@@ -309,7 +246,7 @@ def get_revenue_actions_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiRevenueAction]:
     """Get revenue actions
 
@@ -337,11 +274,11 @@ def get_revenue_actions_sync_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_action_type: Union[Unset, str]
         billing_entity_uuid: Union[Unset, str]
         fee_category_group: Union[Unset, str]
@@ -361,53 +298,47 @@ def get_revenue_actions_sync_detailed(
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "revenue_action_type": serialize_argument(revenue_action_type),
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category_group": serialize_argument(fee_category_group),
+        "revenue_group": serialize_argument(revenue_group),
+        "developer_uuid": serialize_argument(developer_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "app_subscription_uuid": serialize_argument(app_subscription_uuid),
+        "app_metered_uuid": serialize_argument(app_metered_uuid),
+        "plan_uuid": serialize_argument(plan_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_actions._get_kwargs(revenue_action_type=revenue_action_type, billing_entity_uuid=billing_entity_uuid, fee_category_group=fee_category_group, revenue_group=revenue_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_metered_uuid=app_metered_uuid, plan_uuid=plan_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_actions",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_actions_sync(
@@ -427,7 +358,7 @@ def get_revenue_actions_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiRevenueAction | None:
     """Get revenue actions
 
@@ -455,11 +386,11 @@ def get_revenue_actions_sync(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_action_type: Union[Unset, str]
         billing_entity_uuid: Union[Unset, str]
         fee_category_group: Union[Unset, str]
@@ -479,35 +410,47 @@ def get_revenue_actions_sync(
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "revenue_action_type": serialize_argument(revenue_action_type),
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category_group": serialize_argument(fee_category_group),
+        "revenue_group": serialize_argument(revenue_group),
+        "developer_uuid": serialize_argument(developer_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "app_subscription_uuid": serialize_argument(app_subscription_uuid),
+        "app_metered_uuid": serialize_argument(app_metered_uuid),
+        "plan_uuid": serialize_argument(plan_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_actions._get_kwargs(revenue_action_type=revenue_action_type, billing_entity_uuid=billing_entity_uuid, fee_category_group=fee_category_group, revenue_group=revenue_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_metered_uuid=app_metered_uuid, plan_uuid=plan_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_actions",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_actions_asyncio_detailed(
@@ -527,7 +470,7 @@ def get_revenue_actions_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiRevenueAction]:
     """Get revenue actions
 
@@ -555,11 +498,11 @@ def get_revenue_actions_asyncio_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_action_type: Union[Unset, str]
         billing_entity_uuid: Union[Unset, str]
         fee_category_group: Union[Unset, str]
@@ -579,53 +522,47 @@ def get_revenue_actions_asyncio_detailed(
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "revenue_action_type": serialize_argument(revenue_action_type),
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category_group": serialize_argument(fee_category_group),
+        "revenue_group": serialize_argument(revenue_group),
+        "developer_uuid": serialize_argument(developer_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "app_subscription_uuid": serialize_argument(app_subscription_uuid),
+        "app_metered_uuid": serialize_argument(app_metered_uuid),
+        "plan_uuid": serialize_argument(plan_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_actions._get_kwargs(revenue_action_type=revenue_action_type, billing_entity_uuid=billing_entity_uuid, fee_category_group=fee_category_group, revenue_group=revenue_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_metered_uuid=app_metered_uuid, plan_uuid=plan_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_actions",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_revenue_actions_asyncio(
@@ -645,7 +582,7 @@ def get_revenue_actions_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiRevenueAction | None:
     """Get revenue actions
 
@@ -673,11 +610,11 @@ def get_revenue_actions_asyncio(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 revenue_action_type: Union[Unset, str]
         billing_entity_uuid: Union[Unset, str]
         fee_category_group: Union[Unset, str]
@@ -697,42 +634,50 @@ def get_revenue_actions_asyncio(
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "revenue_action_type": serialize_argument(revenue_action_type),
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "fee_category_group": serialize_argument(fee_category_group),
+        "revenue_group": serialize_argument(revenue_group),
+        "developer_uuid": serialize_argument(developer_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "app_subscription_uuid": serialize_argument(app_subscription_uuid),
+        "app_metered_uuid": serialize_argument(app_metered_uuid),
+        "plan_uuid": serialize_argument(plan_uuid),
+        "fee_category": serialize_argument(fee_category),
+        "fee_code": serialize_argument(fee_code),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_actions._get_kwargs(revenue_action_type=revenue_action_type, billing_entity_uuid=billing_entity_uuid, fee_category_group=fee_category_group, revenue_group=revenue_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_metered_uuid=app_metered_uuid, plan_uuid=plan_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_actions",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def create_revenue_action_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiRevenueAction
-) -> Response[ApiRevenueAction]:
+def create_revenue_action_sync_detailed(*, client: StolonClient, body: ApiRevenueAction) -> Response[ApiRevenueAction]:
     """Create revenue action
 
     Args:
@@ -745,70 +690,44 @@ def create_revenue_action_sync_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueAction
 
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_action._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.create_revenue_action",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_revenue_action_sync(
-    *,
-    client: StolonClient,
-    body: ApiRevenueAction
-) -> ApiRevenueAction | None:
+def create_revenue_action_sync(*, client: StolonClient, body: ApiRevenueAction) -> ApiRevenueAction | None:
     """Create revenue action
 
     Args:
@@ -821,51 +740,45 @@ def create_revenue_action_sync(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueAction
 
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_action._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.create_revenue_action",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_revenue_action_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiRevenueAction
+    *, client: StolonClient, body: ApiRevenueAction
 ) -> Response[ApiRevenueAction]:
     """Create revenue action
 
@@ -879,70 +792,44 @@ def create_revenue_action_asyncio_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueAction
 
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_action._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.create_revenue_action",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_revenue_action_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiRevenueAction
-) -> ApiRevenueAction | None:
+def create_revenue_action_asyncio(*, client: StolonClient, body: ApiRevenueAction) -> ApiRevenueAction | None:
     """Create revenue action
 
     Args:
@@ -955,52 +842,44 @@ def create_revenue_action_asyncio(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiRevenueAction
 
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_revenue_action._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.create_revenue_action",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_revenue_action_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiRevenueAction]:
+def get_revenue_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiRevenueAction]:
     """Get revenue action by UUID
 
     Args:
@@ -1013,70 +892,44 @@ def get_revenue_action_by_uuid_sync_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_action_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_action_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_revenue_action_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiRevenueAction | None:
+def get_revenue_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiRevenueAction | None:
     """Get revenue action by UUID
 
     Args:
@@ -1089,52 +942,44 @@ def get_revenue_action_by_uuid_sync(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_action_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_action_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_revenue_action_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[ApiRevenueAction]:
+def get_revenue_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiRevenueAction]:
     """Get revenue action by UUID
 
     Args:
@@ -1147,70 +992,44 @@ def get_revenue_action_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiRevenueAction]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiRevenueAction]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_action_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_action_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiRevenueAction | None
-    if body_json and proxy_response.status_code == 200 and ApiRevenueAction:
-        parsed = ApiRevenueAction.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_revenue_action_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiRevenueAction | None:
+def get_revenue_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiRevenueAction | None:
     """Get revenue action by UUID
 
     Args:
@@ -1223,41 +1042,38 @@ def get_revenue_action_by_uuid_asyncio(
     Returns:
         ApiRevenueAction
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiRevenueAction | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_revenue_action_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="revenue_action.get_revenue_action_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiRevenueAction.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiRevenueAction]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

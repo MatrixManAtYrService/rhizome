@@ -9,59 +9,78 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failure
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failures
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_producer_failure
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_producer_failures
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failure_by_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failure_histories
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failures
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_source_topics
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_event_source_topics
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_ignored_events
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failure_by_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failure_histories
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failures
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import play_manual_mlc_event
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import produce_app_rates_events
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import retry_consumer_failures
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import retry_producer_failure
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import update_and_retry_consumer_failure
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response_200 import AcknowledgeConsumerFailureResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response_200 import AcknowledgeConsumerFailuresResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response_200 import AcknowledgeProducerFailureResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response_200 import AcknowledgeProducerFailuresResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_rates_params import ApiAppRatesParams
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure import ApiConsumerFailure
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure_history import ApiConsumerFailureHistory
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_event_ignored import ApiEventIgnored
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_message_failure_update_response import ApiMessageFailureUpdateResponse
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure import ApiProducerFailure
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import ApiProducerFailureHistory
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response_200 import GetConsumerFailureByUuidResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response_200 import GetConsumerFailureHistoriesResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response_200 import GetConsumerFailuresResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response_200 import GetProducerFailureByUuidResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response_200 import GetProducerFailuresResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.mlc_event import MlcEvent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response_200 import ProduceAppRatesEventsResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response_200 import RetryConsumerFailuresResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response_200 import RetryProducerFailureResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response_200 import UpdateAndRetryConsumerFailureResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Any, Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response_200 import (
+    AcknowledgeConsumerFailureResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response_200 import (
+    AcknowledgeConsumerFailuresResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response_200 import (
+    AcknowledgeProducerFailureResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response_200 import (
+    AcknowledgeProducerFailuresResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_rates_params import (
+    ApiAppRatesParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure import (
+    ApiConsumerFailure,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure_history import (
+    ApiConsumerFailureHistory,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_event_ignored import (
+    ApiEventIgnored,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_message_failure_update_response import (
+    ApiMessageFailureUpdateResponse,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure import (
+    ApiProducerFailure,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import (
+    ApiProducerFailureHistory,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response_200 import (
+    GetConsumerFailureByUuidResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response_200 import (
+    GetConsumerFailureHistoriesResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response_200 import (
+    GetConsumerFailuresResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response_200 import (
+    GetProducerFailureByUuidResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response_200 import (
+    GetProducerFailuresResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.mlc_event import MlcEvent
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response_200 import (
+    ProduceAppRatesEventsResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response_200 import (
+    RetryConsumerFailuresResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response_200 import (
+    RetryProducerFailureResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response_200 import (
+    UpdateAndRetryConsumerFailureResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_consumer_source_topics_sync_detailed(
-    *,
-    client: StolonClient,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -73,69 +92,45 @@ def get_consumer_source_topics_sync_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_source_topics",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_source_topics_asyncio_detailed(
-    *,
-    client: StolonClient,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -147,63 +142,41 @@ def get_consumer_source_topics_asyncio_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_source_topics",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def play_manual_mlc_event_sync_detailed(
@@ -211,7 +184,7 @@ def play_manual_mlc_event_sync_detailed(
     client: StolonClient,
     body: MlcEvent,
     force: Union[Unset, bool] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         force (Union[Unset, bool]):
@@ -225,11 +198,11 @@ def play_manual_mlc_event_sync_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: MlcEvent
         force: Union[Unset, bool]
         x_clover_appenv: Union[Unset, str]
@@ -237,53 +210,35 @@ def play_manual_mlc_event_sync_detailed(
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "force": serialize_argument(force),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = play_manual_mlc_event._get_kwargs(body=body, force=force, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.play_manual_mlc_event",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def play_manual_mlc_event_asyncio_detailed(
@@ -291,7 +246,7 @@ def play_manual_mlc_event_asyncio_detailed(
     client: StolonClient,
     body: MlcEvent,
     force: Union[Unset, bool] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         force (Union[Unset, bool]):
@@ -305,11 +260,11 @@ def play_manual_mlc_event_asyncio_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: MlcEvent
         force: Union[Unset, bool]
         x_clover_appenv: Union[Unset, str]
@@ -317,60 +272,39 @@ def play_manual_mlc_event_asyncio_detailed(
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "force": serialize_argument(force),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = play_manual_mlc_event._get_kwargs(body=body, force=force, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.play_manual_mlc_event",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_and_retry_consumer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiConsumerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]:
     """Retry a consumer failure with an edited payload
 
@@ -385,71 +319,46 @@ def update_and_retry_consumer_failure_sync_detailed(
     Returns:
         Response[Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiConsumerFailureHistory
 
     Returns:
         Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.update_and_retry_consumer_failure",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_and_retry_consumer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiConsumerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None:
     """Retry a consumer failure with an edited payload
 
@@ -464,46 +373,46 @@ def update_and_retry_consumer_failure_sync(
     Returns:
         Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiConsumerFailureHistory
 
     Returns:
         ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.update_and_retry_consumer_failure",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def update_and_retry_consumer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiConsumerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]:
     """Retry a consumer failure with an edited payload
 
@@ -518,71 +427,46 @@ def update_and_retry_consumer_failure_asyncio_detailed(
     Returns:
         Response[Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiConsumerFailureHistory
 
     Returns:
         Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.update_and_retry_consumer_failure",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def update_and_retry_consumer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiConsumerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None:
     """Retry a consumer failure with an edited payload
 
@@ -597,46 +481,46 @@ def update_and_retry_consumer_failure_asyncio(
     Returns:
         Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiConsumerFailureHistory
 
     Returns:
         ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.update_and_retry_consumer_failure",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiMessageFailureUpdateResponse, UpdateAndRetryConsumerFailureResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def retry_producer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiProducerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]:
     """Retry a single producer failure
 
@@ -651,71 +535,46 @@ def retry_producer_failure_sync_detailed(
     Returns:
         Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiProducerFailureHistory
 
     Returns:
         Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_producer_failure",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def retry_producer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiProducerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None:
     """Retry a single producer failure
 
@@ -730,46 +589,46 @@ def retry_producer_failure_sync(
     Returns:
         Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiProducerFailureHistory
 
     Returns:
         ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_producer_failure",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def retry_producer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiProducerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]:
     """Retry a single producer failure
 
@@ -784,71 +643,46 @@ def retry_producer_failure_asyncio_detailed(
     Returns:
         Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiProducerFailureHistory
 
     Returns:
         Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_producer_failure",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def retry_producer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiProducerFailureHistory
+    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None:
     """Retry a single producer failure
 
@@ -863,46 +697,46 @@ def retry_producer_failure_asyncio(
     Returns:
         Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiProducerFailureHistory
 
     Returns:
         ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_producer_failure",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiMessageFailureUpdateResponse, RetryProducerFailureResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -917,71 +751,46 @@ def acknowledge_producer_failure_sync_detailed(
     Returns:
         Response[Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failure",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -996,46 +805,46 @@ def acknowledge_producer_failure_sync(
     Returns:
         Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failure",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -1050,71 +859,46 @@ def acknowledge_producer_failure_asyncio_detailed(
     Returns:
         Response[Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failure",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -1129,45 +913,46 @@ def acknowledge_producer_failure_asyncio(
     Returns:
         Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failure",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[AcknowledgeProducerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_event_source_topics_sync_detailed(
-    *,
-    client: StolonClient,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -1179,69 +964,45 @@ def get_event_source_topics_sync_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = get_event_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_event_source_topics",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_event_source_topics_asyncio_detailed(
-    *,
-    client: StolonClient,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -1253,70 +1014,45 @@ def get_event_source_topics_asyncio_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = get_event_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_event_source_topics",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failure_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1331,71 +1067,46 @@ def acknowledge_consumer_failure_sync_detailed(
     Returns:
         Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failure",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failure_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1410,46 +1121,46 @@ def acknowledge_consumer_failure_sync(
     Returns:
         Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failure",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failure_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1464,71 +1175,46 @@ def acknowledge_consumer_failure_asyncio_detailed(
     Returns:
         Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failure",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failure_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1543,39 +1229,42 @@ def acknowledge_consumer_failure_asyncio(
     Returns:
         Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failure",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[AcknowledgeConsumerFailureResponse200, ApiMessageFailureUpdateResponse]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ignored_events_sync_detailed(
@@ -1586,7 +1275,7 @@ def get_ignored_events_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
     """Get ignored events
 
@@ -1605,11 +1294,11 @@ def get_ignored_events_sync_detailed(
     Returns:
         Response[Union[ApiEventIgnored, list['ApiEventIgnored']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1620,53 +1309,38 @@ def get_ignored_events_sync_detailed(
     Returns:
         Response[ApiEventIgnored | list["ApiEventIgnored"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_ignored_events",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiEventIgnored, list["ApiEventIgnored"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ignored_events_sync(
@@ -1677,7 +1351,7 @@ def get_ignored_events_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
     """Get ignored events
 
@@ -1696,11 +1370,11 @@ def get_ignored_events_sync(
     Returns:
         Union[ApiEventIgnored, list['ApiEventIgnored']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1711,28 +1385,38 @@ def get_ignored_events_sync(
     Returns:
         ApiEventIgnored | list["ApiEventIgnored"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_ignored_events",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiEventIgnored, list["ApiEventIgnored"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_ignored_events_asyncio_detailed(
@@ -1743,7 +1427,7 @@ def get_ignored_events_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
     """Get ignored events
 
@@ -1762,11 +1446,11 @@ def get_ignored_events_asyncio_detailed(
     Returns:
         Response[Union[ApiEventIgnored, list['ApiEventIgnored']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1777,53 +1461,38 @@ def get_ignored_events_asyncio_detailed(
     Returns:
         Response[ApiEventIgnored | list["ApiEventIgnored"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_ignored_events",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiEventIgnored, list["ApiEventIgnored"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_ignored_events_asyncio(
@@ -1834,7 +1503,7 @@ def get_ignored_events_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
     """Get ignored events
 
@@ -1853,11 +1522,11 @@ def get_ignored_events_asyncio(
     Returns:
         Union[ApiEventIgnored, list['ApiEventIgnored']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1868,28 +1537,38 @@ def get_ignored_events_asyncio(
     Returns:
         ApiEventIgnored | list["ApiEventIgnored"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_ignored_events",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiEventIgnored, list["ApiEventIgnored"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failures_sync_detailed(
@@ -1900,7 +1579,7 @@ def get_consumer_failures_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -1919,11 +1598,11 @@ def get_consumer_failures_sync_detailed(
     Returns:
         Response[Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1934,53 +1613,38 @@ def get_consumer_failures_sync_detailed(
     Returns:
         Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failures",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failures_sync(
@@ -1991,7 +1655,7 @@ def get_consumer_failures_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
@@ -2010,11 +1674,11 @@ def get_consumer_failures_sync(
     Returns:
         Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -2025,28 +1689,38 @@ def get_consumer_failures_sync(
     Returns:
         GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failures",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failures_asyncio_detailed(
@@ -2057,7 +1731,7 @@ def get_consumer_failures_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -2076,11 +1750,11 @@ def get_consumer_failures_asyncio_detailed(
     Returns:
         Response[Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -2091,53 +1765,38 @@ def get_consumer_failures_asyncio_detailed(
     Returns:
         Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failures",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failures_asyncio(
@@ -2148,7 +1807,7 @@ def get_consumer_failures_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
@@ -2167,11 +1826,11 @@ def get_consumer_failures_asyncio(
     Returns:
         Union[GetConsumerFailuresResponse200, list['ApiConsumerFailure']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -2182,34 +1841,42 @@ def get_consumer_failures_asyncio(
     Returns:
         GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failures",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[GetConsumerFailuresResponse200, list["ApiConsumerFailure"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]:
     """Get a messaging producer failure by UUID
 
@@ -2223,69 +1890,45 @@ def get_producer_failure_by_uuid_sync_detailed(
     Returns:
         Response[Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiProducerFailure | GetProducerFailureByUuidResponse200 | None:
     """Get a messaging producer failure by UUID
 
@@ -2299,44 +1942,45 @@ def get_producer_failure_by_uuid_sync(
     Returns:
         Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiProducerFailure | GetProducerFailureByUuidResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]:
     """Get a messaging producer failure by UUID
 
@@ -2350,69 +1994,45 @@ def get_producer_failure_by_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiProducerFailure | GetProducerFailureByUuidResponse200 | None:
     """Get a messaging producer failure by UUID
 
@@ -2426,44 +2046,45 @@ def get_producer_failure_by_uuid_asyncio(
     Returns:
         Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiProducerFailure | GetProducerFailureByUuidResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiProducerFailure, GetProducerFailureByUuidResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]:
     """Get a messaging consumer failure by UUID
 
@@ -2477,69 +2098,45 @@ def get_consumer_failure_by_uuid_sync_detailed(
     Returns:
         Response[Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None:
     """Get a messaging consumer failure by UUID
 
@@ -2553,44 +2150,45 @@ def get_consumer_failure_by_uuid_sync(
     Returns:
         Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]:
     """Get a messaging consumer failure by UUID
 
@@ -2604,69 +2202,45 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None:
     """Get a messaging consumer failure by UUID
 
@@ -2680,38 +2254,41 @@ def get_consumer_failure_by_uuid_asyncio(
     Returns:
         Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiConsumerFailure, GetConsumerFailureByUuidResponse200]]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failures_sync_detailed(
@@ -2722,7 +2299,7 @@ def get_producer_failures_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]:
     """Get a producer failures
 
@@ -2741,11 +2318,11 @@ def get_producer_failures_sync_detailed(
     Returns:
         Response[Union[GetProducerFailuresResponse200, list['ApiProducerFailure']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -2756,53 +2333,38 @@ def get_producer_failures_sync_detailed(
     Returns:
         Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failures",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[GetProducerFailuresResponse200, list["ApiProducerFailure"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failures_sync(
@@ -2813,7 +2375,7 @@ def get_producer_failures_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None:
     """Get a producer failures
 
@@ -2832,11 +2394,11 @@ def get_producer_failures_sync(
     Returns:
         Union[GetProducerFailuresResponse200, list['ApiProducerFailure']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -2847,28 +2409,38 @@ def get_producer_failures_sync(
     Returns:
         GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failures",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[GetProducerFailuresResponse200, list["ApiProducerFailure"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failures_asyncio_detailed(
@@ -2879,7 +2451,7 @@ def get_producer_failures_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]:
     """Get a producer failures
 
@@ -2898,11 +2470,11 @@ def get_producer_failures_asyncio_detailed(
     Returns:
         Response[Union[GetProducerFailuresResponse200, list['ApiProducerFailure']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -2913,53 +2485,38 @@ def get_producer_failures_asyncio_detailed(
     Returns:
         Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failures",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[GetProducerFailuresResponse200, list["ApiProducerFailure"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failures_asyncio(
@@ -2970,7 +2527,7 @@ def get_producer_failures_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None:
     """Get a producer failures
 
@@ -2989,11 +2546,11 @@ def get_producer_failures_asyncio(
     Returns:
         Union[GetProducerFailuresResponse200, list['ApiProducerFailure']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -3004,28 +2561,38 @@ def get_producer_failures_asyncio(
     Returns:
         GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failures",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[GetProducerFailuresResponse200, list["ApiProducerFailure"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_histories_sync_detailed(
@@ -3036,7 +2603,7 @@ def get_producer_failure_histories_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]:
     """Get producer failure histories
 
@@ -3055,11 +2622,11 @@ def get_producer_failure_histories_sync_detailed(
     Returns:
         Response[Union[ApiProducerFailureHistory, list['ApiProducerFailureHistory']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -3070,53 +2637,38 @@ def get_producer_failure_histories_sync_detailed(
     Returns:
         Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_histories",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiProducerFailureHistory, list["ApiProducerFailureHistory"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_histories_sync(
@@ -3127,7 +2679,7 @@ def get_producer_failure_histories_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None:
     """Get producer failure histories
 
@@ -3146,11 +2698,11 @@ def get_producer_failure_histories_sync(
     Returns:
         Union[ApiProducerFailureHistory, list['ApiProducerFailureHistory']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -3161,28 +2713,38 @@ def get_producer_failure_histories_sync(
     Returns:
         ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_histories",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiProducerFailureHistory, list["ApiProducerFailureHistory"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_histories_asyncio_detailed(
@@ -3193,7 +2755,7 @@ def get_producer_failure_histories_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]:
     """Get producer failure histories
 
@@ -3212,11 +2774,11 @@ def get_producer_failure_histories_asyncio_detailed(
     Returns:
         Response[Union[ApiProducerFailureHistory, list['ApiProducerFailureHistory']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -3227,53 +2789,38 @@ def get_producer_failure_histories_asyncio_detailed(
     Returns:
         Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_histories",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[ApiProducerFailureHistory, list["ApiProducerFailureHistory"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_producer_failure_histories_asyncio(
@@ -3284,7 +2831,7 @@ def get_producer_failure_histories_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None:
     """Get producer failure histories
 
@@ -3303,11 +2850,11 @@ def get_producer_failure_histories_asyncio(
     Returns:
         Union[ApiProducerFailureHistory, list['ApiProducerFailureHistory']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -3318,35 +2865,42 @@ def get_producer_failure_histories_asyncio(
     Returns:
         ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_producer_failure_histories",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[ApiProducerFailureHistory, list["ApiProducerFailureHistory"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def produce_app_rates_events_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiAppRatesParams,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3362,71 +2916,46 @@ def produce_app_rates_events_sync_detailed(
     Returns:
         Response[ProduceAppRatesEventsResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiAppRatesParams
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ProduceAppRatesEventsResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.produce_app_rates_events",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ProduceAppRatesEventsResponse200 | None
-    if body_json and proxy_response.status_code == 200 and ProduceAppRatesEventsResponse200:
-        parsed = ProduceAppRatesEventsResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ProduceAppRatesEventsResponse200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def produce_app_rates_events_sync(
-    *,
-    client: StolonClient,
-    body: ApiAppRatesParams,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> ProduceAppRatesEventsResponse200 | None:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3442,53 +2971,46 @@ def produce_app_rates_events_sync(
     Returns:
         ProduceAppRatesEventsResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiAppRatesParams
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         ProduceAppRatesEventsResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.produce_app_rates_events",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ProduceAppRatesEventsResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ProduceAppRatesEventsResponse200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def produce_app_rates_events_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiAppRatesParams,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3504,71 +3026,46 @@ def produce_app_rates_events_asyncio_detailed(
     Returns:
         Response[ProduceAppRatesEventsResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiAppRatesParams
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ProduceAppRatesEventsResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.produce_app_rates_events",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ProduceAppRatesEventsResponse200 | None
-    if body_json and proxy_response.status_code == 200 and ProduceAppRatesEventsResponse200:
-        parsed = ProduceAppRatesEventsResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ProduceAppRatesEventsResponse200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def produce_app_rates_events_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiAppRatesParams,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> ProduceAppRatesEventsResponse200 | None:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3584,52 +3081,46 @@ def produce_app_rates_events_asyncio(
     Returns:
         ProduceAppRatesEventsResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiAppRatesParams
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         ProduceAppRatesEventsResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.produce_app_rates_events",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ProduceAppRatesEventsResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ProduceAppRatesEventsResponse200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def retry_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient,
-    body: list[str]
+    *, client: StolonClient, body: list[str]
 ) -> Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -3643,69 +3134,45 @@ def retry_consumer_failures_sync_detailed(
     Returns:
         Response[Union[RetryConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
 
     Returns:
         Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_consumer_failures",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[RetryConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def retry_consumer_failures_sync(
-    *,
-    client: StolonClient,
-    body: list[str]
+    *, client: StolonClient, body: list[str]
 ) -> RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -3719,44 +3186,45 @@ def retry_consumer_failures_sync(
     Returns:
         Union[RetryConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
 
     Returns:
         RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_consumer_failures",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[RetryConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def retry_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: list[str]
+    *, client: StolonClient, body: list[str]
 ) -> Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -3770,69 +3238,45 @@ def retry_consumer_failures_asyncio_detailed(
     Returns:
         Response[Union[RetryConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
 
     Returns:
         Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_consumer_failures",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[RetryConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def retry_consumer_failures_asyncio(
-    *,
-    client: StolonClient,
-    body: list[str]
+    *, client: StolonClient, body: list[str]
 ) -> RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -3846,45 +3290,45 @@ def retry_consumer_failures_asyncio(
     Returns:
         Union[RetryConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
 
     Returns:
         RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = retry_consumer_failures._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.retry_consumer_failures",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[RetryConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failures_sync_detailed(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3899,71 +3343,46 @@ def acknowledge_producer_failures_sync_detailed(
     Returns:
         Response[Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failures",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failures_sync(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3978,46 +3397,46 @@ def acknowledge_producer_failures_sync(
     Returns:
         Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failures",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failures_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -4032,71 +3451,46 @@ def acknowledge_producer_failures_asyncio_detailed(
     Returns:
         Response[Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failures",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_producer_failures_asyncio(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -4111,39 +3505,42 @@ def acknowledge_producer_failures_asyncio(
     Returns:
         Union[AcknowledgeProducerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_producer_failures",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[AcknowledgeProducerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_histories_sync_detailed(
@@ -4154,7 +3551,7 @@ def get_consumer_failure_histories_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -4173,11 +3570,11 @@ def get_consumer_failure_histories_sync_detailed(
     Returns:
         Response[Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -4188,53 +3585,38 @@ def get_consumer_failure_histories_sync_detailed(
     Returns:
         Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_histories",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_histories_sync(
@@ -4245,7 +3627,7 @@ def get_consumer_failure_histories_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -4264,11 +3646,11 @@ def get_consumer_failure_histories_sync(
     Returns:
         Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -4279,28 +3661,38 @@ def get_consumer_failure_histories_sync(
     Returns:
         GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_histories",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_histories_asyncio_detailed(
@@ -4311,7 +3703,7 @@ def get_consumer_failure_histories_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -4330,11 +3722,11 @@ def get_consumer_failure_histories_asyncio_detailed(
     Returns:
         Response[Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -4345,53 +3737,38 @@ def get_consumer_failure_histories_asyncio_detailed(
     Returns:
         Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_histories",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_consumer_failure_histories_asyncio(
@@ -4402,7 +3779,7 @@ def get_consumer_failure_histories_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -4421,11 +3798,11 @@ def get_consumer_failure_histories_asyncio(
     Returns:
         Union[GetConsumerFailureHistoriesResponse200, list['ApiConsumerFailureHistory']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 topic: Union[Unset, str]
         reference_id: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -4436,35 +3813,42 @@ def get_consumer_failure_histories_asyncio(
     Returns:
         GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "topic": serialize_argument(topic),
+        "reference_id": serialize_argument(reference_id),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.get_consumer_failure_histories",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[GetConsumerFailureHistoriesResponse200, list["ApiConsumerFailureHistory"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failures_sync_detailed(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4479,71 +3863,46 @@ def acknowledge_consumer_failures_sync_detailed(
     Returns:
         Response[Union[AcknowledgeConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failures",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[AcknowledgeConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failures_sync(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4558,46 +3917,46 @@ def acknowledge_consumer_failures_sync(
     Returns:
         Union[AcknowledgeConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failures",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[AcknowledgeConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failures_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4612,71 +3971,46 @@ def acknowledge_consumer_failures_asyncio_detailed(
     Returns:
         Response[Union[AcknowledgeConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failures",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[Union[AcknowledgeConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def acknowledge_consumer_failures_asyncio(
-    *,
-    client: StolonClient,
-    body: list[str],
-    comment: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4691,35 +4025,39 @@ def acknowledge_consumer_failures_asyncio(
     Returns:
         Union[AcknowledgeConsumerFailuresResponse200, list['ApiMessageFailureUpdateResponse']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         comment: Union[Unset, str]
 
     Returns:
         AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "comment": serialize_argument(comment)}
 
-    # Extract request parameters from generated function
-    kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="messaging.acknowledge_consumer_failures",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[Union[AcknowledgeConsumerFailuresResponse200, list["ApiMessageFailureUpdateResponse"]]]',
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]

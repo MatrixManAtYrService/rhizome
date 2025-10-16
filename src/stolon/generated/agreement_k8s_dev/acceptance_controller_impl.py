@@ -9,40 +9,32 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import create_acceptance
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import create_bulk_acceptances
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import delete_acceptance
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import delete_acceptance_with_action
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_acceptance
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_acceptances
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_acceptances_multiple_types
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_bulk_acceptances_by_type_for_account_id_client_scope
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_bulk_acceptances_service_scope
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_latest_acceptance
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import has_previously_accepted_agreements
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import AcceptanceQuery
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query_v2 import AcceptanceQueryV2
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_sort import AcceptanceSort
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.delete_acceptance_with_action_action import DeleteAcceptanceWithActionAction
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.get_bulk_acceptances_service_scope_body import GetBulkAcceptancesServiceScopeBody
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.pagination import Pagination
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
+from typing import Any, Union
 from uuid import UUID
-import json
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import (
+    AcceptanceQuery,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query_v2 import (
+    AcceptanceQueryV2,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_sort import AcceptanceSort
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.delete_acceptance_with_action_action import (
+    DeleteAcceptanceWithActionAction,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.get_bulk_acceptances_service_scope_body import (
+    GetBulkAcceptancesServiceScopeBody,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.pagination import Pagination
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def create_bulk_acceptances_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str,
-    body: list["Acceptance"],
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -56,11 +48,11 @@ def create_bulk_acceptances_sync_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         body: list["Acceptance"]
         x_clover_appenv: Union[Unset, str]
@@ -68,61 +60,39 @@ def create_bulk_acceptances_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "body": serialize_argument(body),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_bulk_acceptances",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_bulk_acceptances_sync(
-    *,
-    client: StolonClient,
-    type_: str,
-    body: list["Acceptance"],
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -136,11 +106,11 @@ def create_bulk_acceptances_sync(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         body: list["Acceptance"]
         x_clover_appenv: Union[Unset, str]
@@ -148,36 +118,39 @@ def create_bulk_acceptances_sync(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "body": serialize_argument(body),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_bulk_acceptances",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_bulk_acceptances_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str,
-    body: list["Acceptance"],
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -191,11 +164,11 @@ def create_bulk_acceptances_asyncio_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         body: list["Acceptance"]
         x_clover_appenv: Union[Unset, str]
@@ -203,61 +176,39 @@ def create_bulk_acceptances_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "body": serialize_argument(body),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_bulk_acceptances",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_bulk_acceptances_asyncio(
-    *,
-    client: StolonClient,
-    type_: str,
-    body: list["Acceptance"],
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -271,11 +222,11 @@ def create_bulk_acceptances_asyncio(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         body: list["Acceptance"]
         x_clover_appenv: Union[Unset, str]
@@ -283,35 +234,39 @@ def create_bulk_acceptances_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "body": serialize_argument(body),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_bulk_acceptances",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_acceptance_sync_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: UUID,
-    include_template_parameters: Union[Unset, bool] = UNSET
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         acceptance_id (UUID):
@@ -324,71 +279,49 @@ def get_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         include_template_parameters: Union[Unset, bool]
 
     Returns:
         Response[Acceptance]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "include_template_parameters": serialize_argument(include_template_parameters),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptance",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Acceptance | None
-    if body_json and proxy_response.status_code == 200 and Acceptance:
-        parsed = Acceptance.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Acceptance]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_acceptance_sync(
-    *,
-    client: StolonClient,
-    acceptance_id: UUID,
-    include_template_parameters: Union[Unset, bool] = UNSET
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Acceptance | None:
     """Args:
         acceptance_id (UUID):
@@ -401,53 +334,49 @@ def get_acceptance_sync(
     Returns:
         Acceptance
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         include_template_parameters: Union[Unset, bool]
 
     Returns:
         Acceptance | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "include_template_parameters": serialize_argument(include_template_parameters),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptance",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Acceptance.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Acceptance]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_acceptance_asyncio_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: UUID,
-    include_template_parameters: Union[Unset, bool] = UNSET
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         acceptance_id (UUID):
@@ -460,71 +389,49 @@ def get_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         include_template_parameters: Union[Unset, bool]
 
     Returns:
         Response[Acceptance]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "include_template_parameters": serialize_argument(include_template_parameters),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptance",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Acceptance | None
-    if body_json and proxy_response.status_code == 200 and Acceptance:
-        parsed = Acceptance.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Acceptance]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_acceptance_asyncio(
-    *,
-    client: StolonClient,
-    acceptance_id: UUID,
-    include_template_parameters: Union[Unset, bool] = UNSET
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Acceptance | None:
     """Args:
         acceptance_id (UUID):
@@ -537,54 +444,49 @@ def get_acceptance_asyncio(
     Returns:
         Acceptance
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         include_template_parameters: Union[Unset, bool]
 
     Returns:
         Acceptance | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "include_template_parameters": serialize_argument(include_template_parameters),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptance",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Acceptance.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Acceptance]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def has_previously_accepted_agreements_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str,
-    x_clover_merchant_id: str,
-    x_clover_account_id: str
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
 ) -> Response[bool]:
     """Args:
         type_ (str):
@@ -598,11 +500,11 @@ def has_previously_accepted_agreements_sync_detailed(
     Returns:
         Response[bool]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: str
         x_clover_account_id: str
@@ -610,61 +512,39 @@ def has_previously_accepted_agreements_sync_detailed(
     Returns:
         Response[bool]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.has_previously_accepted_agreements",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[bool]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def has_previously_accepted_agreements_sync(
-    *,
-    client: StolonClient,
-    type_: str,
-    x_clover_merchant_id: str,
-    x_clover_account_id: str
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
 ) -> bool | None:
     """Args:
         type_ (str):
@@ -678,11 +558,11 @@ def has_previously_accepted_agreements_sync(
     Returns:
         bool
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: str
         x_clover_account_id: str
@@ -690,36 +570,39 @@ def has_previously_accepted_agreements_sync(
     Returns:
         bool | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.has_previously_accepted_agreements",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[bool]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def has_previously_accepted_agreements_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str,
-    x_clover_merchant_id: str,
-    x_clover_account_id: str
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
 ) -> Response[bool]:
     """Args:
         type_ (str):
@@ -733,11 +616,11 @@ def has_previously_accepted_agreements_asyncio_detailed(
     Returns:
         Response[bool]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: str
         x_clover_account_id: str
@@ -745,61 +628,39 @@ def has_previously_accepted_agreements_asyncio_detailed(
     Returns:
         Response[bool]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.has_previously_accepted_agreements",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[bool]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def has_previously_accepted_agreements_asyncio(
-    *,
-    client: StolonClient,
-    type_: str,
-    x_clover_merchant_id: str,
-    x_clover_account_id: str
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
 ) -> bool | None:
     """Args:
         type_ (str):
@@ -813,11 +674,11 @@ def has_previously_accepted_agreements_asyncio(
     Returns:
         bool
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: str
         x_clover_account_id: str
@@ -825,28 +686,35 @@ def has_previously_accepted_agreements_asyncio(
     Returns:
         bool | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.has_previously_accepted_agreements",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[bool]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_acceptance_with_action_sync_detailed(
@@ -854,7 +722,7 @@ def delete_acceptance_with_action_sync_detailed(
     client: StolonClient,
     acceptance_id: UUID,
     action: DeleteAcceptanceWithActionAction,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -868,11 +736,11 @@ def delete_acceptance_with_action_sync_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         action: DeleteAcceptanceWithActionAction
         x_clover_appenv: Union[Unset, str]
@@ -880,53 +748,35 @@ def delete_acceptance_with_action_sync_detailed(
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "action": serialize_argument(action),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.delete_acceptance_with_action",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_acceptance_with_action_asyncio_detailed(
@@ -934,7 +784,7 @@ def delete_acceptance_with_action_asyncio_detailed(
     client: StolonClient,
     acceptance_id: UUID,
     action: DeleteAcceptanceWithActionAction,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -948,11 +798,11 @@ def delete_acceptance_with_action_asyncio_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         action: DeleteAcceptanceWithActionAction
         x_clover_appenv: Union[Unset, str]
@@ -960,53 +810,35 @@ def delete_acceptance_with_action_asyncio_detailed(
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "action": serialize_argument(action),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.delete_acceptance_with_action",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_latest_acceptance_sync_detailed(
@@ -1014,7 +846,7 @@ def get_latest_acceptance_sync_detailed(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> Response[Acceptance]:
     """Args:
         type_ (str):
@@ -1028,11 +860,11 @@ def get_latest_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -1040,53 +872,35 @@ def get_latest_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_latest_acceptance",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Acceptance | None
-    if body_json and proxy_response.status_code == 200 and Acceptance:
-        parsed = Acceptance.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Acceptance]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_latest_acceptance_sync(
@@ -1094,7 +908,7 @@ def get_latest_acceptance_sync(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> Acceptance | None:
     """Args:
         type_ (str):
@@ -1108,11 +922,11 @@ def get_latest_acceptance_sync(
     Returns:
         Acceptance
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -1120,35 +934,35 @@ def get_latest_acceptance_sync(
     Returns:
         Acceptance | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_latest_acceptance",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Acceptance.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Acceptance]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_latest_acceptance_asyncio_detailed(
@@ -1156,7 +970,7 @@ def get_latest_acceptance_asyncio_detailed(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> Response[Acceptance]:
     """Args:
         type_ (str):
@@ -1170,11 +984,11 @@ def get_latest_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -1182,53 +996,35 @@ def get_latest_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_latest_acceptance",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Acceptance | None
-    if body_json and proxy_response.status_code == 200 and Acceptance:
-        parsed = Acceptance.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Acceptance]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_latest_acceptance_asyncio(
@@ -1236,7 +1032,7 @@ def get_latest_acceptance_asyncio(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> Acceptance | None:
     """Args:
         type_ (str):
@@ -1250,11 +1046,11 @@ def get_latest_acceptance_asyncio(
     Returns:
         Acceptance
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -1262,35 +1058,35 @@ def get_latest_acceptance_asyncio(
     Returns:
         Acceptance | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_latest_acceptance",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Acceptance.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Acceptance]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_multiple_types_sync_detailed(
@@ -1300,7 +1096,7 @@ def get_acceptances_multiple_types_sync_detailed(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> Response[list["Acceptance"]]:
     """Args:
         query (AcceptanceQueryV2):
@@ -1316,11 +1112,11 @@ def get_acceptances_multiple_types_sync_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 query: "AcceptanceQueryV2"
         sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -1330,53 +1126,37 @@ def get_acceptances_multiple_types_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "query": serialize_argument(query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances_multiple_types",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_multiple_types_sync(
@@ -1386,7 +1166,7 @@ def get_acceptances_multiple_types_sync(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> list["Acceptance"] | None:
     """Args:
         query (AcceptanceQueryV2):
@@ -1402,11 +1182,11 @@ def get_acceptances_multiple_types_sync(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 query: "AcceptanceQueryV2"
         sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -1416,28 +1196,37 @@ def get_acceptances_multiple_types_sync(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "query": serialize_argument(query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances_multiple_types",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_multiple_types_asyncio_detailed(
@@ -1447,7 +1236,7 @@ def get_acceptances_multiple_types_asyncio_detailed(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> Response[list["Acceptance"]]:
     """Args:
         query (AcceptanceQueryV2):
@@ -1463,11 +1252,11 @@ def get_acceptances_multiple_types_asyncio_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 query: "AcceptanceQueryV2"
         sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -1477,53 +1266,37 @@ def get_acceptances_multiple_types_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "query": serialize_argument(query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances_multiple_types",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_multiple_types_asyncio(
@@ -1533,7 +1306,7 @@ def get_acceptances_multiple_types_asyncio(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET
+    x_clover_account_id: Union[Unset, str] = UNSET,
 ) -> list["Acceptance"] | None:
     """Args:
         query (AcceptanceQueryV2):
@@ -1549,11 +1322,11 @@ def get_acceptances_multiple_types_asyncio(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 query: "AcceptanceQueryV2"
         sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -1563,34 +1336,41 @@ def get_acceptances_multiple_types_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "query": serialize_argument(query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances_multiple_types",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_service_scope_sync_detailed(
-    *,
-    client: StolonClient,
-    body: GetBulkAcceptancesServiceScopeBody
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
 ) -> Response[list["Acceptance"]]:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1602,69 +1382,45 @@ def get_bulk_acceptances_service_scope_sync_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_service_scope",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_service_scope_sync(
-    *,
-    client: StolonClient,
-    body: GetBulkAcceptancesServiceScopeBody
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
 ) -> list["Acceptance"] | None:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1676,44 +1432,45 @@ def get_bulk_acceptances_service_scope_sync(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_service_scope",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_service_scope_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: GetBulkAcceptancesServiceScopeBody
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
 ) -> Response[list["Acceptance"]]:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1725,69 +1482,45 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_service_scope",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_service_scope_asyncio(
-    *,
-    client: StolonClient,
-    body: GetBulkAcceptancesServiceScopeBody
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
 ) -> list["Acceptance"] | None:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1799,45 +1532,45 @@ def get_bulk_acceptances_service_scope_asyncio(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_service_scope",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_acceptance_sync_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: UUID,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, acceptance_id: UUID, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -1850,71 +1583,49 @@ def delete_acceptance_sync_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.delete_acceptance",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_acceptance_asyncio_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: UUID,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, acceptance_id: UUID, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -1927,64 +1638,45 @@ def delete_acceptance_asyncio_detailed(
     Returns:
         Response[Any]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: UUID
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.delete_acceptance",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Any]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
@@ -1994,7 +1686,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -2010,11 +1702,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         account_id: str
         acceptance_query: "AcceptanceQuery"
@@ -2024,53 +1716,37 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "account_id": serialize_argument(account_id),
+        "acceptance_query": serialize_argument(acceptance_query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_by_type_for_account_id_client_scope",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
@@ -2080,7 +1756,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -2096,11 +1772,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         account_id: str
         acceptance_query: "AcceptanceQuery"
@@ -2110,28 +1786,37 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "account_id": serialize_argument(account_id),
+        "acceptance_query": serialize_argument(acceptance_query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_by_type_for_account_id_client_scope",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
@@ -2141,7 +1826,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -2157,11 +1842,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         account_id: str
         acceptance_query: "AcceptanceQuery"
@@ -2171,53 +1856,37 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "account_id": serialize_argument(account_id),
+        "acceptance_query": serialize_argument(acceptance_query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_by_type_for_account_id_client_scope",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
@@ -2227,7 +1896,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -2243,11 +1912,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         account_id: str
         acceptance_query: "AcceptanceQuery"
@@ -2257,28 +1926,37 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "account_id": serialize_argument(account_id),
+        "acceptance_query": serialize_argument(acceptance_query),
+        "sort": serialize_argument(sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_bulk_acceptances_by_type_for_account_id_client_scope",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_acceptance_sync_detailed(
@@ -2287,7 +1965,7 @@ def create_acceptance_sync_detailed(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Acceptance]:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2302,11 +1980,11 @@ def create_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: Acceptance
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -2315,53 +1993,36 @@ def create_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_acceptance",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Acceptance | None
-    if body_json and proxy_response.status_code == 200 and Acceptance:
-        parsed = Acceptance.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Acceptance]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_acceptance_sync(
@@ -2370,7 +2031,7 @@ def create_acceptance_sync(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Acceptance | None:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2385,11 +2046,11 @@ def create_acceptance_sync(
     Returns:
         Acceptance
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: Acceptance
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -2398,35 +2059,36 @@ def create_acceptance_sync(
     Returns:
         Acceptance | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_acceptance",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Acceptance.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Acceptance]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_acceptance_asyncio_detailed(
@@ -2435,7 +2097,7 @@ def create_acceptance_asyncio_detailed(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Acceptance]:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2450,11 +2112,11 @@ def create_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: Acceptance
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -2463,53 +2125,36 @@ def create_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_acceptance",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Acceptance | None
-    if body_json and proxy_response.status_code == 200 and Acceptance:
-        parsed = Acceptance.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Acceptance]",
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_acceptance_asyncio(
@@ -2518,7 +2163,7 @@ def create_acceptance_asyncio(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Acceptance | None:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2533,11 +2178,11 @@ def create_acceptance_asyncio(
     Returns:
         Acceptance
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: Acceptance
         x_clover_merchant_id: Union[Unset, str]
         x_clover_account_id: Union[Unset, str]
@@ -2546,35 +2191,36 @@ def create_acceptance_asyncio(
     Returns:
         Acceptance | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "x_clover_merchant_id": serialize_argument(x_clover_merchant_id),
+        "x_clover_account_id": serialize_argument(x_clover_account_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.create_acceptance",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Acceptance.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Acceptance]",
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_sync_detailed(
@@ -2582,7 +2228,7 @@ def get_acceptances_sync_detailed(
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> Response[list["Acceptance"]]:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2596,11 +2242,11 @@ def get_acceptances_sync_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_query: "AcceptanceQuery"
         acceptance_sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -2608,53 +2254,35 @@ def get_acceptances_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_query": serialize_argument(acceptance_query),
+        "acceptance_sort": serialize_argument(acceptance_sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_sync(
@@ -2662,7 +2290,7 @@ def get_acceptances_sync(
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> list["Acceptance"] | None:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2676,11 +2304,11 @@ def get_acceptances_sync(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_query: "AcceptanceQuery"
         acceptance_sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -2688,28 +2316,35 @@ def get_acceptances_sync(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_query": serialize_argument(acceptance_query),
+        "acceptance_sort": serialize_argument(acceptance_sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_asyncio_detailed(
@@ -2717,7 +2352,7 @@ def get_acceptances_asyncio_detailed(
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> Response[list["Acceptance"]]:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2731,11 +2366,11 @@ def get_acceptances_asyncio_detailed(
     Returns:
         Response[list['Acceptance']]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_query: "AcceptanceQuery"
         acceptance_sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -2743,53 +2378,35 @@ def get_acceptances_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_query": serialize_argument(acceptance_query),
+        "acceptance_sort": serialize_argument(acceptance_sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Response[list["Acceptance"]]',
+        "agreement_k8s_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_acceptances_asyncio(
@@ -2797,7 +2414,7 @@ def get_acceptances_asyncio(
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination"
+    pagination: "Pagination",
 ) -> list["Acceptance"] | None:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2811,11 +2428,11 @@ def get_acceptances_asyncio(
     Returns:
         list['Acceptance']
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_query: "AcceptanceQuery"
         acceptance_sort: "AcceptanceSort"
         pagination: "Pagination"
@@ -2823,24 +2440,32 @@ def get_acceptances_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_query": serialize_argument(acceptance_query),
+        "acceptance_sort": serialize_argument(acceptance_sort),
+        "pagination": serialize_argument(pagination),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
-
-    # Prepend base path to URL
-    path = "/agreement" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.AGREEMENT_K8S_DEV,
+        function_path="acceptance_controller_impl.get_acceptances",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        'Optional[list["Acceptance"]]',
+        "agreement_k8s_dev",
+    )
+
+    return result  # type: ignore[return-value]

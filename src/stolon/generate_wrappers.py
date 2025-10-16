@@ -164,6 +164,42 @@ class ApiFunctionExtractor(cst.CSTVisitor):
                 return docstring.strip()
         return ""
 
+    def _extract_inner_type_from_wrapper(self, return_type: str, wrapper: str) -> str | None:
+        """Extract inner type from a wrapper type like Response[...] or Optional[...].
+
+        Args:
+            return_type: The full return type annotation
+            wrapper: The wrapper to extract from (e.g., "Response[", "Optional[")
+
+        Returns:
+            Inner type string if found, None otherwise
+        """
+        if not return_type.startswith(wrapper) or not return_type.endswith("]"):
+            return None
+
+        start = return_type.find("[") + 1
+        end = return_type.rfind("]")
+        if start > 0 and end > start:
+            return return_type[start:end].strip()
+        return None
+
+    def _model_from_inner_type(self, inner_type: str) -> str | None:
+        """Extract model name from an inner type (handles list[Model] or Model).
+
+        Args:
+            inner_type: Inner type string (e.g., "list[Model]" or "Model")
+
+        Returns:
+            Model string ("list[Model]" or "Model") if found, None otherwise
+        """
+        if inner_type.startswith("list["):
+            list_element = self._extract_list_element_type(inner_type)
+            if list_element:
+                return f"list[{list_element}]"
+        elif self._is_simple_model_type(inner_type):
+            return inner_type
+        return None
+
     def _extract_response_model(self, return_type: str, variant: str) -> str | None:
         """Extract the response model class name from return type.
 
@@ -172,34 +208,55 @@ class ApiFunctionExtractor(cst.CSTVisitor):
             variant: Function variant (sync, sync_detailed, etc.)
 
         Returns:
-            Simple model class name if found (e.g., "ApiBillingEntity"), None otherwise.
-            Returns None for complex types like Union, list, etc.
+            Simple model class name if found (e.g., "ApiBillingEntity"),
+            or "list[ModelName]" for list returns, None otherwise.
         """
-        # For detailed variants, return type is Response[Model]
+        # For detailed variants, extract from Response[...]
         if "detailed" in variant and "Response[" in return_type:
-            # Extract: Response[ApiBillingEntity] -> ApiBillingEntity
-            start = return_type.find("[") + 1
-            end = return_type.rfind("]")
-            if start > 0 and end > start:
-                inner_type = return_type[start:end].strip()
-                # Only return if it's a simple type (starts with capital, no special characters)
-                if self._is_simple_model_type(inner_type):
-                    return inner_type
+            inner_type = self._extract_inner_type_from_wrapper(return_type, "Response[")
+            if inner_type:
+                model = self._model_from_inner_type(inner_type)
+                if model:
+                    return model
 
-        # For non-detailed variants, return type is Optional[Model] or Model
+        # For non-detailed variants, extract from Optional[...]
         if "Optional[" in return_type:
-            # Extract: Optional[ApiBillingEntity] -> ApiBillingEntity
-            start = return_type.find("[") + 1
-            end = return_type.rfind("]")
-            if start > 0 and end > start:
-                inner_type = return_type[start:end].strip()
-                # Only return if it's a simple type
-                if self._is_simple_model_type(inner_type):
-                    return inner_type
+            inner_type = self._extract_inner_type_from_wrapper(return_type, "Optional[")
+            if inner_type:
+                model = self._model_from_inner_type(inner_type)
+                if model:
+                    return model
 
-        # If no Optional/Response wrapper, check if it's a simple model
-        if self._is_simple_model_type(return_type):
-            return return_type
+        # Check top-level list or simple model
+        model = self._model_from_inner_type(return_type)
+        if model:
+            return model
+
+        return None
+
+    def _extract_list_element_type(self, list_type: str) -> str | None:
+        """Extract the element type from a list type annotation.
+
+        Args:
+            list_type: Type annotation like "list[Model]" or "list['Model']"
+
+        Returns:
+            Model name if found (e.g., "Model"), None otherwise
+        """
+        if not list_type.startswith("list[") or not list_type.endswith("]"):
+            return None
+
+        element_type = list_type[5:-1].strip()  # Extract "Model" from "list[Model]"
+
+        # Remove quotes if present: list["Model"] -> Model
+        if (element_type.startswith('"') and element_type.endswith('"')) or (
+            element_type.startswith("'") and element_type.endswith("'")
+        ):
+            element_type = element_type[1:-1]
+
+        # Check if it's a valid model name
+        if element_type and element_type[0].isupper() and element_type.isalnum() or "_" in element_type:
+            return element_type
 
         return None
 
@@ -418,6 +475,8 @@ def _add_stdlib_imports(imports: dict[str, str], full_type_string: str, service_
         service_underscore: Service name with underscores
         env: Environment name
     """
+    if "Any" in full_type_string:
+        imports["typing_Any"] = "from typing import Any"
     if "UUID" in full_type_string:
         imports["uuid_UUID"] = "from uuid import UUID"
     if "datetime" in full_type_string:
@@ -467,59 +526,6 @@ def _add_model_imports(
         )
 
 
-def _build_imports(
-    func_info: FunctionInfo,
-    service: str,
-    env: str,
-    return_type: str,
-    module_dir: str,
-) -> dict[str, str]:
-    """Build import statements for a wrapper function.
-
-    Args:
-        func_info: Function metadata
-        service: Service name
-        env: Environment name
-        return_type: Converted return type annotation
-        module_dir: Module directory name
-
-    Returns:
-        Dictionary mapping import keys to import statements
-    """
-    service_underscore = service.replace("-", "_")
-
-    # Build base imports
-    imports = {
-        "typing_Any": "from typing import Any",
-        "stolon_client": "from stolon.client import StolonClient",
-        f"api_{func_info.api_function_name}": (
-            f"from stolon.openapi_generated.{service_underscore}_{env}."
-            f"open_api_definition_client.api.{module_dir} "
-            f"import {func_info.api_function_name}"
-        ),
-        "json": "import json",
-    }
-
-    # Add Response and HTTPStatus imports for detailed variants
-    if "detailed" in func_info.variant:
-        imports["http_HTTPStatus"] = "from http import HTTPStatus"
-        imports["types_Response"] = (
-            f"from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types import Response"
-        )
-
-    # Collect all type annotations and default values
-    all_type_annotations = [return_type]
-    all_type_annotations.extend(param.type_annotation for param in func_info.parameters)
-    all_type_annotations.extend(param.default for param in func_info.parameters if param.default)
-    full_type_string = " ".join(all_type_annotations)
-
-    # Add standard library and model imports
-    _add_stdlib_imports(imports, full_type_string, service_underscore, env)
-    _add_model_imports(imports, func_info, return_type, service_underscore, env)
-
-    return imports
-
-
 def _build_function_params(func_info: FunctionInfo) -> tuple[str, str]:
     """Build function parameter strings.
 
@@ -545,71 +551,6 @@ def _build_function_params(func_info: FunctionInfo) -> tuple[str, str]:
     return param_str, call_param_str
 
 
-def _build_response_parsing(func_info: FunctionInfo, service: str, env: str) -> str:
-    """Build response parsing logic for a wrapper function.
-
-    Args:
-        func_info: Function metadata
-        service: Service name
-        env: Environment name
-
-    Returns:
-        Response parsing code as a string
-    """
-    service_underscore = service.replace("-", "_")
-
-    if "detailed" in func_info.variant:
-        # Detailed variants return Response objects
-        return f"""
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: {func_info.response_model} | None
-    if body_json and proxy_response.status_code == 200 and {func_info.response_model}:
-        parsed = {func_info.response_model}.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-"""
-    elif func_info.response_model:
-        # Non-detailed variants with a response model
-        return f"""
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return {func_info.response_model}.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-"""
-    else:
-        # No response model
-        return """
-    # No response model, return None
-    return None
-"""
-
-
 def generate_wrapper_code(
     func_info: FunctionInfo,
     service: str,
@@ -617,14 +558,19 @@ def generate_wrapper_code(
     domain: str,
     base_path: str = "",
 ) -> tuple[dict[str, str], str]:
-    """Generate wrapper function code for a single API function.
+    """Generate thin stub function code that invokes OpenAPI client on server.
+
+    This generates a simple stub that:
+    1. Serializes arguments
+    2. Calls StolonClient.invoke_openapi() to execute function on server
+    3. Deserializes and returns the result
 
     Args:
         func_info: Function metadata
         service: Service name (e.g., "billing_bookkeeper")
         env: Environment name (e.g., "dev")
         domain: Domain for the environment (e.g., "dev1.dev.clover.com")
-        base_path: Base path to prepend to all API paths (e.g., "/agreement")
+        base_path: Base path (unused in new approach, kept for compatibility)
 
     Returns:
         Tuple of (imports_dict, function_code)
@@ -634,60 +580,88 @@ def generate_wrapper_code(
     # Convert return type to pipe union syntax
     return_type = convert_to_pipe_union(func_info.return_type)
 
-    # Extract module directory name
-    module_dir = func_info.module_path.split(".")[0]
+    # Build imports - simpler now, just need stolon client and serialization
+    service_underscore = service.replace("-", "_")
+    imports = {
+        "stolon_client": "from stolon.client import StolonClient",
+        "stolon_models": "from stolon.models import OpenAPIService",
+        "stolon_serialization": "from stolon.serialization import serialize_argument, deserialize_result",
+    }
 
-    # Build all components using helper functions
-    imports = _build_imports(func_info, service, env, return_type, module_dir)
-    param_str, call_param_str = _build_function_params(func_info)
-    response_parsing = _build_response_parsing(func_info, service, env)
+    # Add Response import for detailed variants
+    if "detailed" in func_info.variant:
+        imports["types_Response"] = (
+            f"from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types import Response"
+        )
 
-    # Build path construction logic
-    if base_path:
-        path_construction = f'''
-    # Extract request parameters from generated function
-    kwargs = {func_info.api_function_name}._get_kwargs({call_param_str})
+    # Add model imports for type annotations
+    _add_model_imports(imports, func_info, return_type, service_underscore, env)
 
-    # Prepend base path to URL
-    path = "{base_path}" + kwargs["url"]'''
-    else:
-        path_construction = f'''
-    # Extract request parameters from generated function
-    kwargs = {func_info.api_function_name}._get_kwargs({call_param_str})
+    # Add stdlib imports
+    all_type_annotations = [return_type]
+    all_type_annotations.extend(param.type_annotation for param in func_info.parameters)
+    all_type_annotations.extend(param.default for param in func_info.parameters if param.default)
+    full_type_string = " ".join(all_type_annotations)
+    _add_stdlib_imports(imports, full_type_string, service_underscore, env)
 
-    # Use path directly from generated function
-    path = kwargs["url"]'''
+    # Build function parameters
+    param_str, _ = _build_function_params(func_info)
+
+    # Build kwargs serialization
+    kwarg_serializations: list[str] = []
+    for param in func_info.parameters:
+        kwarg_serializations.append(f'        "{param.name}": serialize_argument({param.name})')
+
+    kwargs_dict = ",\n".join(kwarg_serializations)
+
+    # Escape the return type string for use in generated code
+    # Replace " with \" to safely embed in a double-quoted string
+    escaped_return_type = func_info.return_type.replace('"', '\\"')
 
     # Build complete function code
     function_code = f'''
 def {func_info.api_function_name}_{func_info.variant}(
     {param_str}
 ) -> {return_type}:
-    """{func_info.docstring or f"{func_info.api_function_name} - proxied through stolon server"}
+    """{func_info.docstring or f"{func_info.api_function_name} - invoked through stolon server"}
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
         {chr(10).join(f"        {p.name}: {p.type_annotation}" for p in func_info.parameters)}
 
     Returns:
         {return_type}
     """
-{path_construction}
+    # Serialize arguments for transport
+    serialized_kwargs = {{
+{kwargs_dict}
+    }}
 
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.{service_underscore.upper()}_{env.upper()},
+        function_path="{func_info.module_path}",
+        variant="{func_info.variant}",
         domain="{domain}",
-        method=kwargs["method"],
-        path=path,
         environment_name="{env}",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
-{response_parsing}
+
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {{response.error}}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "{escaped_return_type}",
+        "{service_underscore}_{env}",
+    )
+
+    return result  # type: ignore[return-value]
 '''
 
     return imports, function_code

@@ -9,19 +9,16 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_lexicons_for_word
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_rules_for_word
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_word_attributes
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.lexi_search_controller import get_word_by_regex
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.all_rules import AllRules
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.get_word_by_regex_response_200 import GetWordByRegexResponse200
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
 from typing import Union
-import json
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.all_rules import AllRules
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.get_word_by_regex_response_200 import (
+    GetWordByRegexResponse200,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_word_by_regex_sync_detailed(
@@ -30,7 +27,7 @@ def get_word_by_regex_sync_detailed(
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
     lexicon: str,
-    regex: str
+    regex: str,
 ) -> Response[GetWordByRegexResponse200]:
     """Args:
         page_size (Union[Unset, int]):
@@ -45,11 +42,11 @@ def get_word_by_regex_sync_detailed(
     Returns:
         Response[GetWordByRegexResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 page_size: Union[Unset, int]
         page_number: Union[Unset, int]
         lexicon: str
@@ -58,53 +55,36 @@ def get_word_by_regex_sync_detailed(
     Returns:
         Response[GetWordByRegexResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+        "lexicon": serialize_argument(lexicon),
+        "regex": serialize_argument(regex),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_by_regex",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetWordByRegexResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetWordByRegexResponse200:
-        parsed = GetWordByRegexResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetWordByRegexResponse200]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_word_by_regex_sync(
@@ -113,7 +93,7 @@ def get_word_by_regex_sync(
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
     lexicon: str,
-    regex: str
+    regex: str,
 ) -> GetWordByRegexResponse200 | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -128,11 +108,11 @@ def get_word_by_regex_sync(
     Returns:
         GetWordByRegexResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 page_size: Union[Unset, int]
         page_number: Union[Unset, int]
         lexicon: str
@@ -141,35 +121,36 @@ def get_word_by_regex_sync(
     Returns:
         GetWordByRegexResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+        "lexicon": serialize_argument(lexicon),
+        "regex": serialize_argument(regex),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_by_regex",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetWordByRegexResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetWordByRegexResponse200]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_word_by_regex_asyncio_detailed(
@@ -178,7 +159,7 @@ def get_word_by_regex_asyncio_detailed(
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
     lexicon: str,
-    regex: str
+    regex: str,
 ) -> Response[GetWordByRegexResponse200]:
     """Args:
         page_size (Union[Unset, int]):
@@ -193,11 +174,11 @@ def get_word_by_regex_asyncio_detailed(
     Returns:
         Response[GetWordByRegexResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 page_size: Union[Unset, int]
         page_number: Union[Unset, int]
         lexicon: str
@@ -206,53 +187,36 @@ def get_word_by_regex_asyncio_detailed(
     Returns:
         Response[GetWordByRegexResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+        "lexicon": serialize_argument(lexicon),
+        "regex": serialize_argument(regex),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_by_regex",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetWordByRegexResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetWordByRegexResponse200:
-        parsed = GetWordByRegexResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetWordByRegexResponse200]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_word_by_regex_asyncio(
@@ -261,7 +225,7 @@ def get_word_by_regex_asyncio(
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
     lexicon: str,
-    regex: str
+    regex: str,
 ) -> GetWordByRegexResponse200 | None:
     """Args:
         page_size (Union[Unset, int]):
@@ -276,11 +240,11 @@ def get_word_by_regex_asyncio(
     Returns:
         GetWordByRegexResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 page_size: Union[Unset, int]
         page_number: Union[Unset, int]
         lexicon: str
@@ -289,43 +253,39 @@ def get_word_by_regex_asyncio(
     Returns:
         GetWordByRegexResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+        "lexicon": serialize_argument(lexicon),
+        "regex": serialize_argument(regex),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_word_by_regex._get_kwargs(page_size=page_size, page_number=page_number, lexicon=lexicon, regex=regex)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_by_regex",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetWordByRegexResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetWordByRegexResponse200]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_word_attributes_sync_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> Response[list[str]]:
+def get_word_attributes_sync_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[list[str]]:
     """Args:
         lexicon (str):
         word (str):
@@ -337,72 +297,45 @@ def get_word_attributes_sync_detailed(
     Returns:
         Response[list[str]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         Response[list[str]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_attributes",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[list[str]]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_word_attributes_sync(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> list[str] | None:
+def get_word_attributes_sync(*, client: StolonClient, lexicon: str, word: str) -> list[str] | None:
     """Args:
         lexicon (str):
         word (str):
@@ -414,47 +347,45 @@ def get_word_attributes_sync(
     Returns:
         list[str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         list[str] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_attributes",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[list[str]]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_word_attributes_asyncio_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> Response[list[str]]:
+def get_word_attributes_asyncio_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[list[str]]:
     """Args:
         lexicon (str):
         word (str):
@@ -466,72 +397,45 @@ def get_word_attributes_asyncio_detailed(
     Returns:
         Response[list[str]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         Response[list[str]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_attributes",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[list[str]]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_word_attributes_asyncio(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> list[str] | None:
+def get_word_attributes_asyncio(*, client: StolonClient, lexicon: str, word: str) -> list[str] | None:
     """Args:
         lexicon (str):
         word (str):
@@ -543,47 +447,45 @@ def get_word_attributes_asyncio(
     Returns:
         list[str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         list[str] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_word_attributes._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_word_attributes",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[list[str]]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_rules_for_word_sync_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> Response[AllRules]:
+def get_rules_for_word_sync_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[AllRules]:
     """Args:
         lexicon (str):
         word (str):
@@ -595,72 +497,45 @@ def get_rules_for_word_sync_detailed(
     Returns:
         Response[AllRules]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         Response[AllRules]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_rules_for_word",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: AllRules | None
-    if body_json and proxy_response.status_code == 200 and AllRules:
-        parsed = AllRules.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[AllRules]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_rules_for_word_sync(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> AllRules | None:
+def get_rules_for_word_sync(*, client: StolonClient, lexicon: str, word: str) -> AllRules | None:
     """Args:
         lexicon (str):
         word (str):
@@ -672,54 +547,45 @@ def get_rules_for_word_sync(
     Returns:
         AllRules
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         AllRules | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_rules_for_word",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return AllRules.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[AllRules]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_rules_for_word_asyncio_detailed(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> Response[AllRules]:
+def get_rules_for_word_asyncio_detailed(*, client: StolonClient, lexicon: str, word: str) -> Response[AllRules]:
     """Args:
         lexicon (str):
         word (str):
@@ -731,72 +597,45 @@ def get_rules_for_word_asyncio_detailed(
     Returns:
         Response[AllRules]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         Response[AllRules]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_rules_for_word",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: AllRules | None
-    if body_json and proxy_response.status_code == 200 and AllRules:
-        parsed = AllRules.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[AllRules]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_rules_for_word_asyncio(
-    *,
-    client: StolonClient,
-    lexicon: str,
-    word: str
-) -> AllRules | None:
+def get_rules_for_word_asyncio(*, client: StolonClient, lexicon: str, word: str) -> AllRules | None:
     """Args:
         lexicon (str):
         word (str):
@@ -808,53 +647,45 @@ def get_rules_for_word_asyncio(
     Returns:
         AllRules
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 lexicon: str
         word: str
 
     Returns:
         AllRules | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"lexicon": serialize_argument(lexicon), "word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_rules_for_word._get_kwargs(lexicon=lexicon, word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_rules_for_word",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return AllRules.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[AllRules]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_lexicons_for_word_sync_detailed(
-    *,
-    client: StolonClient,
-    word: str
-) -> Response[list[str]]:
+def get_lexicons_for_word_sync_detailed(*, client: StolonClient, word: str) -> Response[list[str]]:
     """Args:
         word (str):
 
@@ -865,70 +696,44 @@ def get_lexicons_for_word_sync_detailed(
     Returns:
         Response[list[str]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 word: str
 
     Returns:
         Response[list[str]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs(word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_lexicons_for_word",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[list[str]]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_lexicons_for_word_sync(
-    *,
-    client: StolonClient,
-    word: str
-) -> list[str] | None:
+def get_lexicons_for_word_sync(*, client: StolonClient, word: str) -> list[str] | None:
     """Args:
         word (str):
 
@@ -939,45 +744,44 @@ def get_lexicons_for_word_sync(
     Returns:
         list[str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 word: str
 
     Returns:
         list[str] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs(word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_lexicons_for_word",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[list[str]]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_lexicons_for_word_asyncio_detailed(
-    *,
-    client: StolonClient,
-    word: str
-) -> Response[list[str]]:
+def get_lexicons_for_word_asyncio_detailed(*, client: StolonClient, word: str) -> Response[list[str]]:
     """Args:
         word (str):
 
@@ -988,70 +792,44 @@ def get_lexicons_for_word_asyncio_detailed(
     Returns:
         Response[list[str]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 word: str
 
     Returns:
         Response[list[str]]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs(word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_lexicons_for_word",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[list[str]]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_lexicons_for_word_asyncio(
-    *,
-    client: StolonClient,
-    word: str
-) -> list[str] | None:
+def get_lexicons_for_word_asyncio(*, client: StolonClient, word: str) -> list[str] | None:
     """Args:
         word (str):
 
@@ -1062,34 +840,38 @@ def get_lexicons_for_word_asyncio(
     Returns:
         list[str]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 word: str
 
     Returns:
         list[str] | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"word": serialize_argument(word)}
 
-    # Extract request parameters from generated function
-    kwargs = get_lexicons_for_word._get_kwargs(word=word)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="lexi_search_controller.get_lexicons_for_word",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[list[str]]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]

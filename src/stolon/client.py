@@ -6,7 +6,7 @@ from typing import Any
 import httpx
 import structlog
 
-from stolon.models import ProxyRequest, ProxyResponse
+from stolon.models import OpenAPIInvokeRequest, OpenAPIInvokeResponse, OpenAPIService, ProxyRequest, ProxyResponse
 from trifolium.config import Home
 
 
@@ -155,3 +155,53 @@ class StolonClient:
 
             proxy_response = ProxyResponse(**response.json())
             return proxy_response
+
+    def invoke_openapi(
+        self,
+        service: OpenAPIService,
+        function_path: str,
+        variant: str,
+        domain: str,
+        environment_name: str,
+        kwargs: dict[str, Any],
+        timeout: float | None = None,
+    ) -> OpenAPIInvokeResponse:
+        """
+        Invoke an OpenAPI-generated function on the stolon server.
+
+        The server handles:
+        - Dynamic function import
+        - Authentication token management
+        - 401 retry logic
+        - Request/response serialization
+
+        Args:
+            service: OpenAPI service to invoke (e.g., OpenAPIService.BILLING_BOOKKEEPER_DEV)
+            function_path: Function path (e.g., "acceptance_controller_impl.get_bulk_acceptances_service_scope")
+            variant: Function variant ("sync", "sync_detailed", "asyncio", "asyncio_detailed")
+            domain: Target domain (e.g., "dev1.dev.clover.com")
+            environment_name: Environment name for headers
+            kwargs: Serialized function arguments
+            timeout: Optional timeout in seconds
+
+        Returns:
+            OpenAPIInvokeResponse with success status, result data, and optional error
+        """
+        request = OpenAPIInvokeRequest(
+            service=service,
+            function_path=function_path,
+            variant=variant,
+            kwargs=kwargs,
+            domain=domain,
+            environment_name=environment_name,
+        )
+
+        with httpx.Client(timeout=timeout or 30.0) as client:
+            response = client.post(
+                f"{self.base_url}/invoke_openapi",
+                json=request.model_dump(),
+            )
+            response.raise_for_status()
+
+            invoke_response = OpenAPIInvokeResponse(**response.json())
+            return invoke_response

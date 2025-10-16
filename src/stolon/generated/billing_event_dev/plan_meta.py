@@ -9,30 +9,31 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import create_1
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import delete_1
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import get_1
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import get_plan_meta
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import update
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_plan_meta_row import ApiPlanMetaRow
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_1_response_200 import Create1Response200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_1_response_200 import Delete1Response200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_1_response_200 import Get1Response200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response_200 import GetPlanMetaResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_response_200 import UpdateResponse200
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_plan_meta_row import (
+    ApiPlanMetaRow,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_1_response_200 import (
+    Create1Response200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_1_response_200 import (
+    Delete1Response200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_1_response_200 import (
+    Get1Response200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response_200 import (
+    GetPlanMetaResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_response_200 import (
+    UpdateResponse200,
+)
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from typing import Any
-import json
+from stolon.serialization import deserialize_result, serialize_argument
 
 
-def update_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiPlanMetaRow
-) -> Response[UpdateResponse200]:
+def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -46,72 +47,45 @@ def update_sync_detailed(
     Returns:
         Response[UpdateResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiPlanMetaRow
 
     Returns:
         Response[UpdateResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.update",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: UpdateResponse200 | None
-    if body_json and proxy_response.status_code == 200 and UpdateResponse200:
-        parsed = UpdateResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[UpdateResponse200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def update_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiPlanMetaRow
-) -> UpdateResponse200 | None:
+def update_sync(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -125,54 +99,45 @@ def update_sync(
     Returns:
         UpdateResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiPlanMetaRow
 
     Returns:
         UpdateResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.update",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return UpdateResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[UpdateResponse200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def update_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiPlanMetaRow
-) -> Response[UpdateResponse200]:
+def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -186,72 +151,45 @@ def update_asyncio_detailed(
     Returns:
         Response[UpdateResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiPlanMetaRow
 
     Returns:
         Response[UpdateResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.update",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: UpdateResponse200 | None
-    if body_json and proxy_response.status_code == 200 and UpdateResponse200:
-        parsed = UpdateResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[UpdateResponse200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def update_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    body: ApiPlanMetaRow
-) -> UpdateResponse200 | None:
+def update_asyncio(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -265,53 +203,45 @@ def update_asyncio(
     Returns:
         UpdateResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         body: ApiPlanMetaRow
 
     Returns:
         UpdateResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid, body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.update",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return UpdateResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[UpdateResponse200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_1_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Get1Response200]:
+def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Response200]:
     """Get plan meta row by UUID
 
     Args:
@@ -324,70 +254,44 @@ def get_1_sync_detailed(
     Returns:
         Response[Get1Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[Get1Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_1",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Get1Response200 | None
-    if body_json and proxy_response.status_code == 200 and Get1Response200:
-        parsed = Get1Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Get1Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_1_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Get1Response200 | None:
+def get_1_sync(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     """Get plan meta row by UUID
 
     Args:
@@ -400,52 +304,44 @@ def get_1_sync(
     Returns:
         Get1Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Get1Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_1",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Get1Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Get1Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Get1Response200]:
+def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Response200]:
     """Get plan meta row by UUID
 
     Args:
@@ -458,70 +354,44 @@ def get_1_asyncio_detailed(
     Returns:
         Response[Get1Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[Get1Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_1",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Get1Response200 | None
-    if body_json and proxy_response.status_code == 200 and Get1Response200:
-        parsed = Get1Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Get1Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_1_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Get1Response200 | None:
+def get_1_asyncio(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     """Get plan meta row by UUID
 
     Args:
@@ -534,52 +404,44 @@ def get_1_asyncio(
     Returns:
         Get1Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Get1Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_1",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Get1Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Get1Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def delete_1_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete1Response200]:
+def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delete1Response200]:
     """Delete plan meta row by UUID
 
     Args:
@@ -592,70 +454,44 @@ def delete_1_sync_detailed(
     Returns:
         Response[Delete1Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[Delete1Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.delete_1",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Delete1Response200 | None
-    if body_json and proxy_response.status_code == 200 and Delete1Response200:
-        parsed = Delete1Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Delete1Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def delete_1_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete1Response200 | None:
+def delete_1_sync(*, client: StolonClient, uuid: str) -> Delete1Response200 | None:
     """Delete plan meta row by UUID
 
     Args:
@@ -668,52 +504,44 @@ def delete_1_sync(
     Returns:
         Delete1Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Delete1Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.delete_1",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Delete1Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Delete1Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def delete_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Response[Delete1Response200]:
+def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Delete1Response200]:
     """Delete plan meta row by UUID
 
     Args:
@@ -726,70 +554,44 @@ def delete_1_asyncio_detailed(
     Returns:
         Response[Delete1Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[Delete1Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.delete_1",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Delete1Response200 | None
-    if body_json and proxy_response.status_code == 200 and Delete1Response200:
-        parsed = Delete1Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Delete1Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def delete_1_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> Delete1Response200 | None:
+def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 | None:
     """Delete plan meta row by UUID
 
     Args:
@@ -802,52 +604,44 @@ def delete_1_asyncio(
     Returns:
         Delete1Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Delete1Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_1._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.delete_1",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Delete1Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Delete1Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def create_1_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiPlanMetaRow
-) -> Response[Create1Response200]:
+def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -860,70 +654,44 @@ def create_1_sync_detailed(
     Returns:
         Response[Create1Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiPlanMetaRow
 
     Returns:
         Response[Create1Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.create_1",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Create1Response200 | None
-    if body_json and proxy_response.status_code == 200 and Create1Response200:
-        parsed = Create1Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Create1Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_1_sync(
-    *,
-    client: StolonClient,
-    body: ApiPlanMetaRow
-) -> Create1Response200 | None:
+def create_1_sync(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -936,52 +704,44 @@ def create_1_sync(
     Returns:
         Create1Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiPlanMetaRow
 
     Returns:
         Create1Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.create_1",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Create1Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Create1Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def create_1_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiPlanMetaRow
-) -> Response[Create1Response200]:
+def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -994,70 +754,44 @@ def create_1_asyncio_detailed(
     Returns:
         Response[Create1Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiPlanMetaRow
 
     Returns:
         Response[Create1Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.create_1",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Create1Response200 | None
-    if body_json and proxy_response.status_code == 200 and Create1Response200:
-        parsed = Create1Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Create1Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_1_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiPlanMetaRow
-) -> Create1Response200 | None:
+def create_1_asyncio(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -1070,52 +804,45 @@ def create_1_asyncio(
     Returns:
         Create1Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiPlanMetaRow
 
     Returns:
         Create1Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs(body=body)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.create_1",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Create1Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Create1Response200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_plan_meta_sync_detailed(
-    *,
-    client: StolonClient,
-    country: str,
-    plan_uuid: str
+    *, client: StolonClient, country: str, plan_uuid: str
 ) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
@@ -1130,72 +857,45 @@ def get_plan_meta_sync_detailed(
     Returns:
         Response[GetPlanMetaResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 country: str
         plan_uuid: str
 
     Returns:
         Response[GetPlanMetaResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"country": serialize_argument(country), "plan_uuid": serialize_argument(plan_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_plan_meta",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetPlanMetaResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetPlanMetaResponse200:
-        parsed = GetPlanMetaResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetPlanMetaResponse200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_plan_meta_sync(
-    *,
-    client: StolonClient,
-    country: str,
-    plan_uuid: str
-) -> GetPlanMetaResponse200 | None:
+def get_plan_meta_sync(*, client: StolonClient, country: str, plan_uuid: str) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1209,53 +909,46 @@ def get_plan_meta_sync(
     Returns:
         GetPlanMetaResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 country: str
         plan_uuid: str
 
     Returns:
         GetPlanMetaResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"country": serialize_argument(country), "plan_uuid": serialize_argument(plan_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_plan_meta",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetPlanMetaResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetPlanMetaResponse200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_plan_meta_asyncio_detailed(
-    *,
-    client: StolonClient,
-    country: str,
-    plan_uuid: str
+    *, client: StolonClient, country: str, plan_uuid: str
 ) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
@@ -1270,72 +963,45 @@ def get_plan_meta_asyncio_detailed(
     Returns:
         Response[GetPlanMetaResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 country: str
         plan_uuid: str
 
     Returns:
         Response[GetPlanMetaResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"country": serialize_argument(country), "plan_uuid": serialize_argument(plan_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_plan_meta",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetPlanMetaResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetPlanMetaResponse200:
-        parsed = GetPlanMetaResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetPlanMetaResponse200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_plan_meta_asyncio(
-    *,
-    client: StolonClient,
-    country: str,
-    plan_uuid: str
-) -> GetPlanMetaResponse200 | None:
+def get_plan_meta_asyncio(*, client: StolonClient, country: str, plan_uuid: str) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1349,42 +1015,39 @@ def get_plan_meta_asyncio(
     Returns:
         GetPlanMetaResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 country: str
         plan_uuid: str
 
     Returns:
         GetPlanMetaResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"country": serialize_argument(country), "plan_uuid": serialize_argument(plan_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="plan_meta.get_plan_meta",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetPlanMetaResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetPlanMetaResponse200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]

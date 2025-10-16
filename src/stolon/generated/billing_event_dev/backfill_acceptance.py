@@ -9,27 +9,28 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import create_4
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import delete_4
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import get_4
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import ApiBackfillAcceptance
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_4_response_200 import Create4Response200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_4_response_200 import Delete4Response200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_4_response_200 import Get4Response200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
 from typing import Union
-import json
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
+    ApiBackfillAcceptance,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_4_response_200 import (
+    Create4Response200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_4_response_200 import (
+    Delete4Response200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_4_response_200 import (
+    Get4Response200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def delete_4_sync_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: str,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -44,71 +45,49 @@ def delete_4_sync_detailed(
     Returns:
         Response[Delete4Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: str
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Delete4Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.delete_4",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Delete4Response200 | None
-    if body_json and proxy_response.status_code == 200 and Delete4Response200:
-        parsed = Delete4Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Delete4Response200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_4_sync(
-    *,
-    client: StolonClient,
-    acceptance_id: str,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -123,53 +102,49 @@ def delete_4_sync(
     Returns:
         Delete4Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: str
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Delete4Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.delete_4",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Delete4Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Delete4Response200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_4_asyncio_detailed(
-    *,
-    client: StolonClient,
-    acceptance_id: str,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -184,71 +159,49 @@ def delete_4_asyncio_detailed(
     Returns:
         Response[Delete4Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: str
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Delete4Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.delete_4",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Delete4Response200 | None
-    if body_json and proxy_response.status_code == 200 and Delete4Response200:
-        parsed = Delete4Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Delete4Response200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_4_asyncio(
-    *,
-    client: StolonClient,
-    acceptance_id: str,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -263,53 +216,48 @@ def delete_4_asyncio(
     Returns:
         Delete4Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 acceptance_id: str
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Delete4Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "acceptance_id": serialize_argument(acceptance_id),
+        "x_clover_appenv": serialize_argument(x_clover_appenv),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.delete_4",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Delete4Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Delete4Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_4_sync_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> Response[Get4Response200]:
+def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -322,70 +270,44 @@ def get_4_sync_detailed(
     Returns:
         Response[Get4Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: str
 
     Returns:
         Response[Get4Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"merchant_uuid": serialize_argument(merchant_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.get_4",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Get4Response200 | None
-    if body_json and proxy_response.status_code == 200 and Get4Response200:
-        parsed = Get4Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Get4Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_4_sync(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> Get4Response200 | None:
+def get_4_sync(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -398,52 +320,44 @@ def get_4_sync(
     Returns:
         Get4Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: str
 
     Returns:
         Get4Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"merchant_uuid": serialize_argument(merchant_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.get_4",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Get4Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
+
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Get4Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]
 
 
-
-
-def get_4_asyncio_detailed(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> Response[Get4Response200]:
+def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -456,70 +370,44 @@ def get_4_asyncio_detailed(
     Returns:
         Response[Get4Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: str
 
     Returns:
         Response[Get4Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"merchant_uuid": serialize_argument(merchant_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.get_4",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Get4Response200 | None
-    if body_json and proxy_response.status_code == 200 and Get4Response200:
-        parsed = Get4Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Get4Response200]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_4_asyncio(
-    *,
-    client: StolonClient,
-    merchant_uuid: str
-) -> Get4Response200 | None:
+def get_4_asyncio(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -532,52 +420,45 @@ def get_4_asyncio(
     Returns:
         Get4Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: str
 
     Returns:
         Get4Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"merchant_uuid": serialize_argument(merchant_uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.get_4",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Get4Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Get4Response200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_4_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiBackfillAcceptance,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
@@ -592,71 +473,46 @@ def create_4_sync_detailed(
     Returns:
         Response[Create4Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBackfillAcceptance
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Create4Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.create_4",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Create4Response200 | None
-    if body_json and proxy_response.status_code == 200 and Create4Response200:
-        parsed = Create4Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Create4Response200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_4_sync(
-    *,
-    client: StolonClient,
-    body: ApiBackfillAcceptance,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
@@ -671,53 +527,46 @@ def create_4_sync(
     Returns:
         Create4Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBackfillAcceptance
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Create4Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.create_4",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Create4Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Create4Response200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_4_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiBackfillAcceptance,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
@@ -732,71 +581,46 @@ def create_4_asyncio_detailed(
     Returns:
         Response[Create4Response200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBackfillAcceptance
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Create4Response200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.create_4",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: Create4Response200 | None
-    if body_json and proxy_response.status_code == 200 and Create4Response200:
-        parsed = Create4Response200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Create4Response200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def create_4_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiBackfillAcceptance,
-    x_clover_appenv: Union[Unset, str] = UNSET
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
@@ -811,42 +635,39 @@ def create_4_asyncio(
     Returns:
         Create4Response200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBackfillAcceptance
         x_clover_appenv: Union[Unset, str]
 
     Returns:
         Create4Response200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body), "x_clover_appenv": serialize_argument(x_clover_appenv)}
 
-    # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="backfill_acceptance.create_4",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return Create4Response200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Create4Response200]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]

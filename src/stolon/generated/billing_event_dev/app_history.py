@@ -9,23 +9,25 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_metered_events
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_currents
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_dailies
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_daily_by_uuid
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import get_app_subscription_events
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_metered_event import ApiAppMeteredEvent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_current import ApiAppSubscriptionCurrent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_daily import ApiAppSubscriptionDaily
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response_200 import GetAppSubscriptionEventsResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_metered_event import (
+    ApiAppMeteredEvent,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_current import (
+    ApiAppSubscriptionCurrent,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_daily import (
+    ApiAppSubscriptionDaily,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response_200 import (
+    GetAppSubscriptionEventsResponse200,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_app_subscription_dailies_sync_detailed(
@@ -37,7 +39,7 @@ def get_app_subscription_dailies_sync_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription dailies
 
@@ -57,11 +59,11 @@ def get_app_subscription_dailies_sync_detailed(
     Returns:
         Response[ApiAppSubscriptionDaily]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -73,53 +75,39 @@ def get_app_subscription_dailies_sync_detailed(
     Returns:
         Response[ApiAppSubscriptionDaily]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_dailies",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppSubscriptionDaily | None
-    if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
-        parsed = ApiAppSubscriptionDaily.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_dailies_sync(
@@ -131,7 +119,7 @@ def get_app_subscription_dailies_sync(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAppSubscriptionDaily | None:
     """Get app subscription dailies
 
@@ -151,11 +139,11 @@ def get_app_subscription_dailies_sync(
     Returns:
         ApiAppSubscriptionDaily
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -167,35 +155,39 @@ def get_app_subscription_dailies_sync(
     Returns:
         ApiAppSubscriptionDaily | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_dailies",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppSubscriptionDaily.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_dailies_asyncio_detailed(
@@ -207,7 +199,7 @@ def get_app_subscription_dailies_asyncio_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription dailies
 
@@ -227,11 +219,11 @@ def get_app_subscription_dailies_asyncio_detailed(
     Returns:
         Response[ApiAppSubscriptionDaily]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -243,53 +235,39 @@ def get_app_subscription_dailies_asyncio_detailed(
     Returns:
         Response[ApiAppSubscriptionDaily]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_dailies",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppSubscriptionDaily | None
-    if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
-        parsed = ApiAppSubscriptionDaily.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_dailies_asyncio(
@@ -301,7 +279,7 @@ def get_app_subscription_dailies_asyncio(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAppSubscriptionDaily | None:
     """Get app subscription dailies
 
@@ -321,11 +299,11 @@ def get_app_subscription_dailies_asyncio(
     Returns:
         ApiAppSubscriptionDaily
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -337,35 +315,39 @@ def get_app_subscription_dailies_asyncio(
     Returns:
         ApiAppSubscriptionDaily | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_dailies",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppSubscriptionDaily.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_currents_sync_detailed(
@@ -374,7 +356,7 @@ def get_app_subscription_currents_sync_detailed(
     merchant_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAppSubscriptionCurrent]:
     """Get app subscription currents
 
@@ -391,11 +373,11 @@ def get_app_subscription_currents_sync_detailed(
     Returns:
         Response[ApiAppSubscriptionCurrent]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -404,53 +386,36 @@ def get_app_subscription_currents_sync_detailed(
     Returns:
         Response[ApiAppSubscriptionCurrent]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_currents",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppSubscriptionCurrent | None
-    if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionCurrent:
-        parsed = ApiAppSubscriptionCurrent.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppSubscriptionCurrent]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_currents_sync(
@@ -459,7 +424,7 @@ def get_app_subscription_currents_sync(
     merchant_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAppSubscriptionCurrent | None:
     """Get app subscription currents
 
@@ -476,11 +441,11 @@ def get_app_subscription_currents_sync(
     Returns:
         ApiAppSubscriptionCurrent
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -489,35 +454,36 @@ def get_app_subscription_currents_sync(
     Returns:
         ApiAppSubscriptionCurrent | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_currents",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppSubscriptionCurrent.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppSubscriptionCurrent]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_currents_asyncio_detailed(
@@ -526,7 +492,7 @@ def get_app_subscription_currents_asyncio_detailed(
     merchant_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAppSubscriptionCurrent]:
     """Get app subscription currents
 
@@ -543,11 +509,11 @@ def get_app_subscription_currents_asyncio_detailed(
     Returns:
         Response[ApiAppSubscriptionCurrent]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -556,53 +522,36 @@ def get_app_subscription_currents_asyncio_detailed(
     Returns:
         Response[ApiAppSubscriptionCurrent]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_currents",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppSubscriptionCurrent | None
-    if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionCurrent:
-        parsed = ApiAppSubscriptionCurrent.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppSubscriptionCurrent]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_currents_asyncio(
@@ -611,7 +560,7 @@ def get_app_subscription_currents_asyncio(
     merchant_uuid: Union[Unset, str] = UNSET,
     developer_app_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAppSubscriptionCurrent | None:
     """Get app subscription currents
 
@@ -628,11 +577,11 @@ def get_app_subscription_currents_asyncio(
     Returns:
         ApiAppSubscriptionCurrent
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         page_size: Union[Unset, int]
@@ -641,35 +590,36 @@ def get_app_subscription_currents_asyncio(
     Returns:
         ApiAppSubscriptionCurrent | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_currents",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppSubscriptionCurrent.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppSubscriptionCurrent]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_events_sync_detailed(
@@ -681,7 +631,7 @@ def get_app_subscription_events_sync_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     app_subscription_daily_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetAppSubscriptionEventsResponse200]:
     """Get app subscription events
 
@@ -701,11 +651,11 @@ def get_app_subscription_events_sync_detailed(
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -717,53 +667,39 @@ def get_app_subscription_events_sync_detailed(
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "app_subscription_daily_uuid": serialize_argument(app_subscription_daily_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, app_subscription_daily_uuid=app_subscription_daily_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_events",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetAppSubscriptionEventsResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetAppSubscriptionEventsResponse200:
-        parsed = GetAppSubscriptionEventsResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetAppSubscriptionEventsResponse200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_events_sync(
@@ -775,7 +711,7 @@ def get_app_subscription_events_sync(
     end_date: Union[Unset, datetime.date] = UNSET,
     app_subscription_daily_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetAppSubscriptionEventsResponse200 | None:
     """Get app subscription events
 
@@ -795,11 +731,11 @@ def get_app_subscription_events_sync(
     Returns:
         GetAppSubscriptionEventsResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -811,35 +747,39 @@ def get_app_subscription_events_sync(
     Returns:
         GetAppSubscriptionEventsResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "app_subscription_daily_uuid": serialize_argument(app_subscription_daily_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, app_subscription_daily_uuid=app_subscription_daily_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_events",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetAppSubscriptionEventsResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetAppSubscriptionEventsResponse200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_events_asyncio_detailed(
@@ -851,7 +791,7 @@ def get_app_subscription_events_asyncio_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     app_subscription_daily_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetAppSubscriptionEventsResponse200]:
     """Get app subscription events
 
@@ -871,11 +811,11 @@ def get_app_subscription_events_asyncio_detailed(
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -887,53 +827,39 @@ def get_app_subscription_events_asyncio_detailed(
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "app_subscription_daily_uuid": serialize_argument(app_subscription_daily_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, app_subscription_daily_uuid=app_subscription_daily_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_events",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetAppSubscriptionEventsResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetAppSubscriptionEventsResponse200:
-        parsed = GetAppSubscriptionEventsResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[GetAppSubscriptionEventsResponse200]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_events_asyncio(
@@ -945,7 +871,7 @@ def get_app_subscription_events_asyncio(
     end_date: Union[Unset, datetime.date] = UNSET,
     app_subscription_daily_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> GetAppSubscriptionEventsResponse200 | None:
     """Get app subscription events
 
@@ -965,11 +891,11 @@ def get_app_subscription_events_asyncio(
     Returns:
         GetAppSubscriptionEventsResponse200
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -981,35 +907,39 @@ def get_app_subscription_events_asyncio(
     Returns:
         GetAppSubscriptionEventsResponse200 | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "app_subscription_daily_uuid": serialize_argument(app_subscription_daily_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, app_subscription_daily_uuid=app_subscription_daily_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_events",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetAppSubscriptionEventsResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[GetAppSubscriptionEventsResponse200]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_metered_events_sync_detailed(
@@ -1021,7 +951,7 @@ def get_app_metered_events_sync_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAppMeteredEvent]:
     """Get app metered events
 
@@ -1041,11 +971,11 @@ def get_app_metered_events_sync_detailed(
     Returns:
         Response[ApiAppMeteredEvent]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1057,53 +987,39 @@ def get_app_metered_events_sync_detailed(
     Returns:
         Response[ApiAppMeteredEvent]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_metered_events",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppMeteredEvent | None
-    if body_json and proxy_response.status_code == 200 and ApiAppMeteredEvent:
-        parsed = ApiAppMeteredEvent.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppMeteredEvent]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_metered_events_sync(
@@ -1115,7 +1031,7 @@ def get_app_metered_events_sync(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAppMeteredEvent | None:
     """Get app metered events
 
@@ -1135,11 +1051,11 @@ def get_app_metered_events_sync(
     Returns:
         ApiAppMeteredEvent
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1151,35 +1067,39 @@ def get_app_metered_events_sync(
     Returns:
         ApiAppMeteredEvent | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_metered_events",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppMeteredEvent.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppMeteredEvent]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_metered_events_asyncio_detailed(
@@ -1191,7 +1111,7 @@ def get_app_metered_events_asyncio_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAppMeteredEvent]:
     """Get app metered events
 
@@ -1211,11 +1131,11 @@ def get_app_metered_events_asyncio_detailed(
     Returns:
         Response[ApiAppMeteredEvent]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1227,53 +1147,39 @@ def get_app_metered_events_asyncio_detailed(
     Returns:
         Response[ApiAppMeteredEvent]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_metered_events",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppMeteredEvent | None
-    if body_json and proxy_response.status_code == 200 and ApiAppMeteredEvent:
-        parsed = ApiAppMeteredEvent.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppMeteredEvent]",
+        "billing_event_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_app_metered_events_asyncio(
@@ -1285,7 +1191,7 @@ def get_app_metered_events_asyncio(
     end_date: Union[Unset, datetime.date] = UNSET,
     billing_event_uuid: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAppMeteredEvent | None:
     """Get app metered events
 
@@ -1305,11 +1211,11 @@ def get_app_metered_events_asyncio(
     Returns:
         ApiAppMeteredEvent
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 merchant_uuid: Union[Unset, str]
         developer_app_uuid: Union[Unset, str]
         start_date: Union[Unset, datetime.date]
@@ -1321,41 +1227,43 @@ def get_app_metered_events_asyncio(
     Returns:
         ApiAppMeteredEvent | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "merchant_uuid": serialize_argument(merchant_uuid),
+        "developer_app_uuid": serialize_argument(developer_app_uuid),
+        "start_date": serialize_argument(start_date),
+        "end_date": serialize_argument(end_date),
+        "billing_event_uuid": serialize_argument(billing_event_uuid),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs(merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, start_date=start_date, end_date=end_date, billing_event_uuid=billing_event_uuid, page_size=page_size, page_number=page_number)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_metered_events",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppMeteredEvent.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppMeteredEvent]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_daily_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription daily by UUID
 
@@ -1369,70 +1277,44 @@ def get_app_subscription_daily_by_uuid_sync_detailed(
     Returns:
         Response[ApiAppSubscriptionDaily]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiAppSubscriptionDaily]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_daily_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_daily_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppSubscriptionDaily | None
-    if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
-        parsed = ApiAppSubscriptionDaily.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_app_subscription_daily_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_daily_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppSubscriptionDaily | None:
     """Get app subscription daily by UUID
 
     Args:
@@ -1445,51 +1327,45 @@ def get_app_subscription_daily_by_uuid_sync(
     Returns:
         ApiAppSubscriptionDaily
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiAppSubscriptionDaily | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_daily_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_daily_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppSubscriptionDaily.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_app_subscription_daily_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription daily by UUID
 
@@ -1503,70 +1379,44 @@ def get_app_subscription_daily_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiAppSubscriptionDaily]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiAppSubscriptionDaily]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_daily_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_daily_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiAppSubscriptionDaily | None
-    if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
-        parsed = ApiAppSubscriptionDaily.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_app_subscription_daily_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_daily_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppSubscriptionDaily | None:
     """Get app subscription daily by UUID
 
     Args:
@@ -1579,41 +1429,38 @@ def get_app_subscription_daily_by_uuid_asyncio(
     Returns:
         ApiAppSubscriptionDaily
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiAppSubscriptionDaily | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_daily_by_uuid._get_kwargs(uuid=uuid)
-
-    # Prepend base path to URL
-    path = "/billing-event" + kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_EVENT_DEV,
+        function_path="app_history.get_app_subscription_daily_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiAppSubscriptionDaily.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiAppSubscriptionDaily]",
+        "billing_event_dev",
+    )
+
+    return result  # type: ignore[return-value]

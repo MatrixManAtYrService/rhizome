@@ -9,42 +9,32 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-from http import HTTPStatus
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import create_billing_hierarchy
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import delete_billing_hierarchy_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_archetypes
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchies
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_by_uuid
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_child_nodes
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_children
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_children_of_entity
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_date_nodes_for_entity
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_merchant_children
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_parent_nodes
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_parents
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_billing_hierarchy_parents_of_entity
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import get_effective_billing_hierarchy
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy import move_merchant_billing_hierarchies
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy import ApiBillingHierarchy
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level import ApiBillingHierarchyLevel
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level_node import ApiBillingHierarchyLevelNode
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.get_billing_hierarchy_child_nodes_entity_types_item import GetBillingHierarchyChildNodesEntityTypesItem
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
-from typing import Any
-from typing import Union
 import datetime
-import json
+from typing import Union
+
+from stolon.client import StolonClient
+from stolon.models import OpenAPIService
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy import (
+    ApiBillingHierarchy,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level import (
+    ApiBillingHierarchyLevel,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_level_node import (
+    ApiBillingHierarchyLevelNode,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.get_billing_hierarchy_child_nodes_entity_types_item import (
+    GetBillingHierarchyChildNodesEntityTypesItem,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
+    ResponseError,
+)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.serialization import deserialize_result, serialize_argument
 
 
 def get_billing_hierarchy_children_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date,
-    exclude_merchants: Union[Unset, bool] = UNSET
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
 ) -> Response[ResponseError]:
     """Get immediate children of billing hierarchy
 
@@ -60,11 +50,11 @@ def get_billing_hierarchy_children_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         exclude_merchants: Union[Unset, bool]
@@ -72,61 +62,39 @@ def get_billing_hierarchy_children_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "exclude_merchants": serialize_argument(exclude_merchants),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date,
-    exclude_merchants: Union[Unset, bool] = UNSET
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
 ) -> ResponseError | None:
     """Get immediate children of billing hierarchy
 
@@ -142,11 +110,11 @@ def get_billing_hierarchy_children_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         exclude_merchants: Union[Unset, bool]
@@ -154,43 +122,39 @@ def get_billing_hierarchy_children_sync(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "exclude_merchants": serialize_argument(exclude_merchants),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date,
-    exclude_merchants: Union[Unset, bool] = UNSET
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
 ) -> Response[ResponseError]:
     """Get immediate children of billing hierarchy
 
@@ -206,11 +170,11 @@ def get_billing_hierarchy_children_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         exclude_merchants: Union[Unset, bool]
@@ -218,61 +182,39 @@ def get_billing_hierarchy_children_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "exclude_merchants": serialize_argument(exclude_merchants),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date,
-    exclude_merchants: Union[Unset, bool] = UNSET
+    *, client: StolonClient, uuid: str, date: datetime.date, exclude_merchants: Union[Unset, bool] = UNSET
 ) -> ResponseError | None:
     """Get immediate children of billing hierarchy
 
@@ -288,11 +230,11 @@ def get_billing_hierarchy_children_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         exclude_merchants: Union[Unset, bool]
@@ -300,43 +242,39 @@ def get_billing_hierarchy_children_asyncio(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "exclude_merchants": serialize_argument(exclude_merchants),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children._get_kwargs(uuid=uuid, date=date, exclude_merchants=exclude_merchants)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def move_merchant_billing_hierarchies_sync_detailed(
-    *,
-    client: StolonClient,
-    body: list[str],
-    new_parent_billing_entity_uuid: str,
-    date: datetime.date
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Move billing hierarchy merchants
 
@@ -352,11 +290,11 @@ def move_merchant_billing_hierarchies_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         new_parent_billing_entity_uuid: str
         date: datetime.date
@@ -364,61 +302,39 @@ def move_merchant_billing_hierarchies_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "new_parent_billing_entity_uuid": serialize_argument(new_parent_billing_entity_uuid),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs(body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.move_merchant_billing_hierarchies",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def move_merchant_billing_hierarchies_sync(
-    *,
-    client: StolonClient,
-    body: list[str],
-    new_parent_billing_entity_uuid: str,
-    date: datetime.date
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
 ) -> ResponseError | None:
     """Move billing hierarchy merchants
 
@@ -434,11 +350,11 @@ def move_merchant_billing_hierarchies_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         new_parent_billing_entity_uuid: str
         date: datetime.date
@@ -446,43 +362,39 @@ def move_merchant_billing_hierarchies_sync(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "new_parent_billing_entity_uuid": serialize_argument(new_parent_billing_entity_uuid),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs(body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.move_merchant_billing_hierarchies",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def move_merchant_billing_hierarchies_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: list[str],
-    new_parent_billing_entity_uuid: str,
-    date: datetime.date
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Move billing hierarchy merchants
 
@@ -498,11 +410,11 @@ def move_merchant_billing_hierarchies_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         new_parent_billing_entity_uuid: str
         date: datetime.date
@@ -510,61 +422,39 @@ def move_merchant_billing_hierarchies_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "new_parent_billing_entity_uuid": serialize_argument(new_parent_billing_entity_uuid),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs(body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.move_merchant_billing_hierarchies",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def move_merchant_billing_hierarchies_asyncio(
-    *,
-    client: StolonClient,
-    body: list[str],
-    new_parent_billing_entity_uuid: str,
-    date: datetime.date
+    *, client: StolonClient, body: list[str], new_parent_billing_entity_uuid: str, date: datetime.date
 ) -> ResponseError | None:
     """Move billing hierarchy merchants
 
@@ -580,11 +470,11 @@ def move_merchant_billing_hierarchies_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: list[str]
         new_parent_billing_entity_uuid: str
         date: datetime.date
@@ -592,41 +482,39 @@ def move_merchant_billing_hierarchies_asyncio(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "body": serialize_argument(body),
+        "new_parent_billing_entity_uuid": serialize_argument(new_parent_billing_entity_uuid),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = move_merchant_billing_hierarchies._get_kwargs(body=body, new_parent_billing_entity_uuid=new_parent_billing_entity_uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.move_merchant_billing_hierarchies",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiBillingHierarchy | ResponseError]:
     """Get a billing hierarchy by UUID
 
@@ -640,69 +528,45 @@ def get_billing_hierarchy_by_uuid_sync_detailed(
     Returns:
         Response[Union[ApiBillingHierarchy, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiBillingHierarchy | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiBillingHierarchy | ResponseError | None:
     """Get a billing hierarchy by UUID
 
@@ -716,44 +580,45 @@ def get_billing_hierarchy_by_uuid_sync(
     Returns:
         Union[ApiBillingHierarchy, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiBillingHierarchy | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiBillingHierarchy | ResponseError]:
     """Get a billing hierarchy by UUID
 
@@ -767,69 +632,45 @@ def get_billing_hierarchy_by_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiBillingHierarchy, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiBillingHierarchy | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> ApiBillingHierarchy | ResponseError | None:
     """Get a billing hierarchy by UUID
 
@@ -843,45 +684,45 @@ def get_billing_hierarchy_by_uuid_asyncio(
     Returns:
         Union[ApiBillingHierarchy, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiBillingHierarchy | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str
+    *, client: StolonClient, entityuuid: str, type_: str
 ) -> Response[ResponseError]:
     """Get hierarchy relationship effective-date nodes for billing entity
 
@@ -896,71 +737,46 @@ def get_billing_hierarchy_date_nodes_for_entity_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"entityuuid": serialize_argument(entityuuid), "type_": serialize_argument(type_)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_date_nodes_for_entity",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_date_nodes_for_entity_sync(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str
+    *, client: StolonClient, entityuuid: str, type_: str
 ) -> ResponseError | None:
     """Get hierarchy relationship effective-date nodes for billing entity
 
@@ -975,53 +791,46 @@ def get_billing_hierarchy_date_nodes_for_entity_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"entityuuid": serialize_argument(entityuuid), "type_": serialize_argument(type_)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_date_nodes_for_entity",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str
+    *, client: StolonClient, entityuuid: str, type_: str
 ) -> Response[ResponseError]:
     """Get hierarchy relationship effective-date nodes for billing entity
 
@@ -1036,71 +845,46 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"entityuuid": serialize_argument(entityuuid), "type_": serialize_argument(type_)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_date_nodes_for_entity",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_date_nodes_for_entity_asyncio(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str
+    *, client: StolonClient, entityuuid: str, type_: str
 ) -> ResponseError | None:
     """Get hierarchy relationship effective-date nodes for billing entity
 
@@ -1115,54 +899,46 @@ def get_billing_hierarchy_date_nodes_for_entity_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"entityuuid": serialize_argument(entityuuid), "type_": serialize_argument(type_)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_date_nodes_for_entity._get_kwargs(entityuuid=entityuuid, type_=type_)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_date_nodes_for_entity",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parent_nodes_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    hierarchy_type: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1178,11 +954,11 @@ def get_billing_hierarchy_parent_nodes_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -1190,61 +966,39 @@ def get_billing_hierarchy_parent_nodes_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parent_nodes",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevelNode | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
-        parsed = ApiBillingHierarchyLevelNode.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parent_nodes_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    hierarchy_type: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1260,11 +1014,11 @@ def get_billing_hierarchy_parent_nodes_sync(
     Returns:
         ApiBillingHierarchyLevelNode
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -1272,43 +1026,39 @@ def get_billing_hierarchy_parent_nodes_sync(
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parent_nodes",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevelNode.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parent_nodes_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    hierarchy_type: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1324,11 +1074,11 @@ def get_billing_hierarchy_parent_nodes_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -1336,61 +1086,39 @@ def get_billing_hierarchy_parent_nodes_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parent_nodes",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevelNode | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
-        parsed = ApiBillingHierarchyLevelNode.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parent_nodes_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    hierarchy_type: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get parent nodes of billing entity for specified hierarchy type
 
@@ -1406,11 +1134,11 @@ def get_billing_hierarchy_parent_nodes_asyncio(
     Returns:
         ApiBillingHierarchyLevelNode
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -1418,42 +1146,39 @@ def get_billing_hierarchy_parent_nodes_asyncio(
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parent_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parent_nodes",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevelNode.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_archetypes_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get billing entity archetypes
 
@@ -1468,72 +1193,45 @@ def get_archetypes_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_archetypes",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevel | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
-        parsed = ApiBillingHierarchyLevel.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_archetypes_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
-) -> ApiBillingHierarchyLevel | None:
+def get_archetypes_sync(*, client: StolonClient, uuid: str, date: datetime.date) -> ApiBillingHierarchyLevel | None:
     """Get billing entity archetypes
 
     Args:
@@ -1547,53 +1245,46 @@ def get_archetypes_sync(
     Returns:
         ApiBillingHierarchyLevel
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_archetypes",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevel.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_archetypes_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get billing entity archetypes
 
@@ -1608,72 +1299,45 @@ def get_archetypes_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_archetypes",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevel | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
-        parsed = ApiBillingHierarchyLevel.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_archetypes_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
-) -> ApiBillingHierarchyLevel | None:
+def get_archetypes_asyncio(*, client: StolonClient, uuid: str, date: datetime.date) -> ApiBillingHierarchyLevel | None:
     """Get billing entity archetypes
 
     Args:
@@ -1687,53 +1351,46 @@ def get_archetypes_asyncio(
     Returns:
         ApiBillingHierarchyLevel
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = get_archetypes._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_archetypes",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevel.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_billing_hierarchy_by_uuid_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> Response[ApiBillingHierarchy | ResponseError]:
     """Mark billing hierarchy as deleted
 
@@ -1748,71 +1405,46 @@ def delete_billing_hierarchy_by_uuid_sync_detailed(
     Returns:
         Response[Union[ApiBillingHierarchy, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchy | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.delete_billing_hierarchy_by_uuid",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_billing_hierarchy_by_uuid_sync(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> ApiBillingHierarchy | ResponseError | None:
     """Mark billing hierarchy as deleted
 
@@ -1827,46 +1459,46 @@ def delete_billing_hierarchy_by_uuid_sync(
     Returns:
         Union[ApiBillingHierarchy, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         ApiBillingHierarchy | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.delete_billing_hierarchy_by_uuid",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def delete_billing_hierarchy_by_uuid_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> Response[ApiBillingHierarchy | ResponseError]:
     """Mark billing hierarchy as deleted
 
@@ -1881,71 +1513,46 @@ def delete_billing_hierarchy_by_uuid_asyncio_detailed(
     Returns:
         Response[Union[ApiBillingHierarchy, ResponseError]]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         Response[ApiBillingHierarchy | ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.delete_billing_hierarchy_by_uuid",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: None | None
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def delete_billing_hierarchy_by_uuid_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str,
-    date: datetime.date
+    *, client: StolonClient, uuid: str, date: datetime.date
 ) -> ApiBillingHierarchy | ResponseError | None:
     """Mark billing hierarchy as deleted
 
@@ -1960,47 +1567,46 @@ def delete_billing_hierarchy_by_uuid_asyncio(
     Returns:
         Union[ApiBillingHierarchy, ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
 
     Returns:
         ApiBillingHierarchy | ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid), "date": serialize_argument(date)}
 
-    # Extract request parameters from generated function
-    kwargs = delete_billing_hierarchy_by_uuid._get_kwargs(uuid=uuid, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.delete_billing_hierarchy_by_uuid",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # No response model, return None
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[Union[ApiBillingHierarchy, ResponseError]]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_of_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Get hierarchy children of billing entity
 
@@ -2016,11 +1622,11 @@ def get_billing_hierarchy_children_of_entity_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -2028,61 +1634,39 @@ def get_billing_hierarchy_children_of_entity_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children_of_entity",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_of_entity_sync(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> ResponseError | None:
     """Get hierarchy children of billing entity
 
@@ -2098,11 +1682,11 @@ def get_billing_hierarchy_children_of_entity_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -2110,43 +1694,39 @@ def get_billing_hierarchy_children_of_entity_sync(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children_of_entity",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_of_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Get hierarchy children of billing entity
 
@@ -2162,11 +1742,11 @@ def get_billing_hierarchy_children_of_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -2174,61 +1754,39 @@ def get_billing_hierarchy_children_of_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children_of_entity",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_children_of_entity_asyncio(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> ResponseError | None:
     """Get hierarchy children of billing entity
 
@@ -2244,11 +1802,11 @@ def get_billing_hierarchy_children_of_entity_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -2256,43 +1814,39 @@ def get_billing_hierarchy_children_of_entity_asyncio(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_children_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_children_of_entity",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_effective_billing_hierarchy_sync_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
@@ -2308,11 +1862,11 @@ def get_effective_billing_hierarchy_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         type_: str
         date: datetime.date
@@ -2320,61 +1874,39 @@ def get_effective_billing_hierarchy_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_effective_billing_hierarchy",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_effective_billing_hierarchy_sync(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
 ) -> ResponseError | None:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
@@ -2390,11 +1922,11 @@ def get_effective_billing_hierarchy_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         type_: str
         date: datetime.date
@@ -2402,43 +1934,39 @@ def get_effective_billing_hierarchy_sync(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_effective_billing_hierarchy",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_effective_billing_hierarchy_asyncio_detailed(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
 ) -> Response[ResponseError]:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
@@ -2454,11 +1982,11 @@ def get_effective_billing_hierarchy_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         type_: str
         date: datetime.date
@@ -2466,61 +1994,39 @@ def get_effective_billing_hierarchy_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_effective_billing_hierarchy",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_effective_billing_hierarchy_asyncio(
-    *,
-    client: StolonClient,
-    billing_entity_uuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, billing_entity_uuid: str, type_: str, date: datetime.date
 ) -> ResponseError | None:
     """Get the billing hierarchy node effective for the billing entity on the as-of date
 
@@ -2536,11 +2042,11 @@ def get_effective_billing_hierarchy_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         type_: str
         date: datetime.date
@@ -2548,43 +2054,39 @@ def get_effective_billing_hierarchy_asyncio(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_effective_billing_hierarchy._get_kwargs(billing_entity_uuid=billing_entity_uuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_effective_billing_hierarchy",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchies_sync_detailed(
-    *,
-    client: StolonClient,
-    type_: str,
-    date: datetime.date,
-    name: str
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
 ) -> Response[ResponseError]:
     """Get billing hierarchies by name or entity uuid
 
@@ -2600,11 +2102,11 @@ def get_billing_hierarchies_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         date: datetime.date
         name: str
@@ -2612,61 +2114,39 @@ def get_billing_hierarchies_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchies",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchies_sync(
-    *,
-    client: StolonClient,
-    type_: str,
-    date: datetime.date,
-    name: str
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
 ) -> ResponseError | None:
     """Get billing hierarchies by name or entity uuid
 
@@ -2682,11 +2162,11 @@ def get_billing_hierarchies_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         date: datetime.date
         name: str
@@ -2694,43 +2174,39 @@ def get_billing_hierarchies_sync(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchies",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchies_asyncio_detailed(
-    *,
-    client: StolonClient,
-    type_: str,
-    date: datetime.date,
-    name: str
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
 ) -> Response[ResponseError]:
     """Get billing hierarchies by name or entity uuid
 
@@ -2746,11 +2222,11 @@ def get_billing_hierarchies_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         date: datetime.date
         name: str
@@ -2758,61 +2234,39 @@ def get_billing_hierarchies_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchies",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchies_asyncio(
-    *,
-    client: StolonClient,
-    type_: str,
-    date: datetime.date,
-    name: str
+    *, client: StolonClient, type_: str, date: datetime.date, name: str
 ) -> ResponseError | None:
     """Get billing hierarchies by name or entity uuid
 
@@ -2828,11 +2282,11 @@ def get_billing_hierarchies_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 type_: str
         date: datetime.date
         name: str
@@ -2840,41 +2294,39 @@ def get_billing_hierarchies_asyncio(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchies._get_kwargs(type_=type_, date=date, name=name)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchies",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parents_sync_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get parents of billing hierarchy
 
@@ -2888,70 +2340,44 @@ def get_billing_hierarchy_parents_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevel | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
-        parsed = ApiBillingHierarchyLevel.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_billing_hierarchy_parents_sync(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiBillingHierarchyLevel | None:
+def get_billing_hierarchy_parents_sync(*, client: StolonClient, uuid: str) -> ApiBillingHierarchyLevel | None:
     """Get parents of billing hierarchy
 
     Args:
@@ -2964,51 +2390,45 @@ def get_billing_hierarchy_parents_sync(
     Returns:
         ApiBillingHierarchyLevel
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevel.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parents_asyncio_detailed(
-    *,
-    client: StolonClient,
-    uuid: str
+    *, client: StolonClient, uuid: str
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get parents of billing hierarchy
 
@@ -3022,70 +2442,44 @@ def get_billing_hierarchy_parents_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevel | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
-        parsed = ApiBillingHierarchyLevel.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def get_billing_hierarchy_parents_asyncio(
-    *,
-    client: StolonClient,
-    uuid: str
-) -> ApiBillingHierarchyLevel | None:
+def get_billing_hierarchy_parents_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingHierarchyLevel | None:
     """Get parents of billing hierarchy
 
     Args:
@@ -3098,45 +2492,41 @@ def get_billing_hierarchy_parents_asyncio(
     Returns:
         ApiBillingHierarchyLevel
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
 
     Returns:
         ApiBillingHierarchyLevel | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"uuid": serialize_argument(uuid)}
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents._get_kwargs(uuid=uuid)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevel.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_child_nodes_sync_detailed(
@@ -3145,7 +2535,7 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -3162,11 +2552,11 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -3175,53 +2565,36 @@ def get_billing_hierarchy_child_nodes_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+        "entity_types": serialize_argument(entity_types),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_child_nodes",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevelNode | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
-        parsed = ApiBillingHierarchyLevelNode.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_child_nodes_sync(
@@ -3230,7 +2603,7 @@ def get_billing_hierarchy_child_nodes_sync(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -3247,11 +2620,11 @@ def get_billing_hierarchy_child_nodes_sync(
     Returns:
         ApiBillingHierarchyLevelNode
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -3260,35 +2633,36 @@ def get_billing_hierarchy_child_nodes_sync(
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+        "entity_types": serialize_argument(entity_types),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_child_nodes",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevelNode.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_child_nodes_asyncio_detailed(
@@ -3297,7 +2671,7 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> Response[ApiBillingHierarchyLevelNode]:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -3314,11 +2688,11 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -3327,53 +2701,36 @@ def get_billing_hierarchy_child_nodes_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevelNode]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+        "entity_types": serialize_argument(entity_types),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_child_nodes",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevelNode | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevelNode:
-        parsed = ApiBillingHierarchyLevelNode.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_child_nodes_asyncio(
@@ -3382,7 +2739,7 @@ def get_billing_hierarchy_child_nodes_asyncio(
     billing_entity_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET
+    entity_types: Union[Unset, list[GetBillingHierarchyChildNodesEntityTypesItem]] = UNSET,
 ) -> ApiBillingHierarchyLevelNode | None:
     """Get child nodes of billing entity for specified hierarchy type
 
@@ -3399,11 +2756,11 @@ def get_billing_hierarchy_child_nodes_asyncio(
     Returns:
         ApiBillingHierarchyLevelNode
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 billing_entity_uuid: str
         hierarchy_type: str
         date: datetime.date
@@ -3412,41 +2769,40 @@ def get_billing_hierarchy_child_nodes_asyncio(
     Returns:
         ApiBillingHierarchyLevelNode | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "billing_entity_uuid": serialize_argument(billing_entity_uuid),
+        "hierarchy_type": serialize_argument(hierarchy_type),
+        "date": serialize_argument(date),
+        "entity_types": serialize_argument(entity_types),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_child_nodes._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, entity_types=entity_types)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_child_nodes",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevelNode.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevelNode]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_billing_hierarchy_sync_detailed(
-    *,
-    client: StolonClient,
-    body: ApiBillingHierarchy
+    *, client: StolonClient, body: ApiBillingHierarchy
 ) -> Response[ResponseError]:
     """Create billing hierarchy
 
@@ -3460,70 +2816,44 @@ def create_billing_hierarchy_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBillingHierarchy
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.create_billing_hierarchy",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_billing_hierarchy_sync(
-    *,
-    client: StolonClient,
-    body: ApiBillingHierarchy
-) -> ResponseError | None:
+def create_billing_hierarchy_sync(*, client: StolonClient, body: ApiBillingHierarchy) -> ResponseError | None:
     """Create billing hierarchy
 
     Args:
@@ -3536,51 +2866,45 @@ def create_billing_hierarchy_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBillingHierarchy
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.create_billing_hierarchy",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def create_billing_hierarchy_asyncio_detailed(
-    *,
-    client: StolonClient,
-    body: ApiBillingHierarchy
+    *, client: StolonClient, body: ApiBillingHierarchy
 ) -> Response[ResponseError]:
     """Create billing hierarchy
 
@@ -3594,70 +2918,44 @@ def create_billing_hierarchy_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBillingHierarchy
 
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.create_billing_hierarchy",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
+    return result  # type: ignore[return-value]
 
 
-
-def create_billing_hierarchy_asyncio(
-    *,
-    client: StolonClient,
-    body: ApiBillingHierarchy
-) -> ResponseError | None:
+def create_billing_hierarchy_asyncio(*, client: StolonClient, body: ApiBillingHierarchy) -> ResponseError | None:
     """Create billing hierarchy
 
     Args:
@@ -3670,53 +2968,45 @@ def create_billing_hierarchy_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 body: ApiBillingHierarchy
 
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {"body": serialize_argument(body)}
 
-    # Extract request parameters from generated function
-    kwargs = create_billing_hierarchy._get_kwargs(body=body)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.create_billing_hierarchy",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parents_of_entity_sync_detailed(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get hierarchy parents of billing entity
 
@@ -3732,11 +3022,11 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -3744,61 +3034,39 @@ def get_billing_hierarchy_parents_of_entity_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents_of_entity",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevel | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
-        parsed = ApiBillingHierarchyLevel.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parents_of_entity_sync(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> ApiBillingHierarchyLevel | None:
     """Get hierarchy parents of billing entity
 
@@ -3814,11 +3082,11 @@ def get_billing_hierarchy_parents_of_entity_sync(
     Returns:
         ApiBillingHierarchyLevel
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -3826,43 +3094,39 @@ def get_billing_hierarchy_parents_of_entity_sync(
     Returns:
         ApiBillingHierarchyLevel | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents_of_entity",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevel.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> Response[ApiBillingHierarchyLevel]:
     """Get hierarchy parents of billing entity
 
@@ -3878,11 +3142,11 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -3890,61 +3154,39 @@ def get_billing_hierarchy_parents_of_entity_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyLevel]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents_of_entity",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ApiBillingHierarchyLevel | None
-    if body_json and proxy_response.status_code == 200 and ApiBillingHierarchyLevel:
-        parsed = ApiBillingHierarchyLevel.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_parents_of_entity_asyncio(
-    *,
-    client: StolonClient,
-    entityuuid: str,
-    type_: str,
-    date: datetime.date
+    *, client: StolonClient, entityuuid: str, type_: str, date: datetime.date
 ) -> ApiBillingHierarchyLevel | None:
     """Get hierarchy parents of billing entity
 
@@ -3960,11 +3202,11 @@ def get_billing_hierarchy_parents_of_entity_asyncio(
     Returns:
         ApiBillingHierarchyLevel
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 entityuuid: str
         type_: str
         date: datetime.date
@@ -3972,35 +3214,35 @@ def get_billing_hierarchy_parents_of_entity_asyncio(
     Returns:
         ApiBillingHierarchyLevel | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "entityuuid": serialize_argument(entityuuid),
+        "type_": serialize_argument(type_),
+        "date": serialize_argument(date),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_parents_of_entity._get_kwargs(entityuuid=entityuuid, type_=type_, date=date)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_parents_of_entity",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiBillingHierarchyLevel.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ApiBillingHierarchyLevel]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_merchant_children_sync_detailed(
@@ -4010,7 +3252,7 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
     date: datetime.date,
     name: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get immediate merchant children of billing hierarchy
 
@@ -4028,11 +3270,11 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         name: Union[Unset, str]
@@ -4042,53 +3284,37 @@ def get_billing_hierarchy_merchant_children_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_merchant_children",
+        variant="sync_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_merchant_children_sync(
@@ -4098,7 +3324,7 @@ def get_billing_hierarchy_merchant_children_sync(
     date: datetime.date,
     name: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get immediate merchant children of billing hierarchy
 
@@ -4116,11 +3342,11 @@ def get_billing_hierarchy_merchant_children_sync(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         name: Union[Unset, str]
@@ -4130,35 +3356,37 @@ def get_billing_hierarchy_merchant_children_sync(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_merchant_children",
+        variant="sync",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
 
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_merchant_children_asyncio_detailed(
@@ -4168,7 +3396,7 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
     date: datetime.date,
     name: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ResponseError]:
     """Get immediate merchant children of billing hierarchy
 
@@ -4186,11 +3414,11 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
     Returns:
         Response[ResponseError]
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         name: Union[Unset, str]
@@ -4200,53 +3428,37 @@ def get_billing_hierarchy_merchant_children_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_merchant_children",
+        variant="asyncio_detailed",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response into Response object (detailed variant)
-    import json
-    from http import HTTPStatus
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: ResponseError | None
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
-        headers=proxy_response.headers,
-        parsed=parsed,
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Response[ResponseError]",
+        "billing_bookkeeper_dev",
     )
 
-
+    return result  # type: ignore[return-value]
 
 
 def get_billing_hierarchy_merchant_children_asyncio(
@@ -4256,7 +3468,7 @@ def get_billing_hierarchy_merchant_children_asyncio(
     date: datetime.date,
     name: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET
+    page_number: Union[Unset, int] = UNSET,
 ) -> ResponseError | None:
     """Get immediate merchant children of billing hierarchy
 
@@ -4274,11 +3486,11 @@ def get_billing_hierarchy_merchant_children_asyncio(
     Returns:
         ResponseError
 
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
+    This function invokes the OpenAPI-generated client function on the stolon server,
+    enabling automatic token management, logging, and retry logic.
 
     Args:
-        client: StolonClient instance for proxying requests
+        client: StolonClient instance for invoking server-side functions
                 uuid: str
         date: datetime.date
         name: Union[Unset, str]
@@ -4288,31 +3500,34 @@ def get_billing_hierarchy_merchant_children_asyncio(
     Returns:
         ResponseError | None
     """
+    # Serialize arguments for transport
+    serialized_kwargs = {
+        "uuid": serialize_argument(uuid),
+        "date": serialize_argument(date),
+        "name": serialize_argument(name),
+        "page_size": serialize_argument(page_size),
+        "page_number": serialize_argument(page_number),
+    }
 
-    # Extract request parameters from generated function
-    kwargs = get_billing_hierarchy_merchant_children._get_kwargs(uuid=uuid, date=date, name=name, page_size=page_size, page_number=page_number)
-
-    # Use path directly from generated function
-    path = kwargs["url"]
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
+    # Invoke OpenAPI function on server
+    response = client.invoke_openapi(
+        service=OpenAPIService.BILLING_BOOKKEEPER_DEV,
+        function_path="billing_hierarchy.get_billing_hierarchy_merchant_children",
+        variant="asyncio",
         domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=path,
         environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
+        kwargs=serialized_kwargs,
     )
 
-    # Parse response body
-    import json
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
+    # Handle errors
+    if not response.success:
+        raise RuntimeError(f"OpenAPI invocation failed: {response.error}")
 
+    # Deserialize result
+    result = deserialize_result(
+        response.result,
+        "Optional[ResponseError]",
+        "billing_bookkeeper_dev",
+    )
+
+    return result  # type: ignore[return-value]
