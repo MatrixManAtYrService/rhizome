@@ -332,6 +332,41 @@ def _extract_status_code(result: object) -> int | None:
     return None
 
 
+def _deserialize_kwargs(func: object, kwargs: dict[str, object], service: OpenAPIService) -> dict[str, object]:
+    """Deserialize kwargs based on function signature."""
+    import inspect
+
+    from stolon.serialization import deserialize_argument
+
+    # Get function signature
+    sig = inspect.signature(func)  # type: ignore[arg-type]
+
+    deserialized: dict[str, object] = {}
+
+    for param_name, param_value in kwargs.items():
+        if param_name in sig.parameters:
+            param = sig.parameters[param_name]
+            # Get type hint as string
+            if param.annotation != inspect.Parameter.empty:
+                type_hint = str(param.annotation)
+                # Remove module prefixes to get just the class name
+                # (e.g., "stolon.openapi_generated...models.ModelName" -> "ModelName")
+                if "." in type_hint:
+                    parts = type_hint.split(".")
+                    type_hint = parts[-1].strip("'>")  # Handle forward references like "<class 'ModelName'>"
+
+                # Deserialize the parameter
+                deserialized[param_name] = deserialize_argument(param_value, type_hint, service.value)  # type: ignore[arg-type]
+            else:
+                # No type hint, pass as-is
+                deserialized[param_name] = param_value
+        else:
+            # Parameter not in signature, pass as-is
+            deserialized[param_name] = param_value
+
+    return deserialized
+
+
 async def _execute_openapi_call(
     func: object, auth_client: object, kwargs: dict[str, object], request: OpenAPIInvokeRequest
 ) -> OpenAPIInvokeResponse:
@@ -339,7 +374,10 @@ async def _execute_openapi_call(
     from stolon.serialization import serialize_result
 
     try:
-        result = func(client=auth_client, **kwargs)  # type: ignore[operator]
+        # Deserialize kwargs based on function signature
+        deserialized_kwargs = _deserialize_kwargs(func, kwargs, request.service)
+
+        result = func(client=auth_client, **deserialized_kwargs)  # type: ignore[operator]
 
         if asyncio.iscoroutine(result):  # type: ignore[arg-type]
             result = await result
