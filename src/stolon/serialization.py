@@ -140,6 +140,10 @@ def deserialize_argument(data: JsonValue, type_hint: str, service: str) -> objec
     if data is None:
         return None
 
+    # Strip Optional wrapper if present (Optional[X] is Union[X, None])
+    if type_hint.startswith("Optional[") and type_hint.endswith("]"):
+        type_hint = type_hint[9:-1]  # Extract X from Optional[X]
+
     if _is_primitive_type(type_hint):
         return data
 

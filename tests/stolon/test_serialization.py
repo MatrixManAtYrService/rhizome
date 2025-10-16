@@ -129,3 +129,80 @@ def test_deserialize_primitives() -> None:
     assert deserialize_argument(42, "int", "agreement_k8s_dev") == 42
     assert deserialize_argument(3.14, "float", "agreement_k8s_dev") == 3.14
     assert deserialize_argument(True, "bool", "agreement_k8s_dev") is True
+
+
+def test_deserialize_optional_model() -> None:
+    """Test that Optional[Model] types are properly deserialized."""
+    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+
+    # Create a dict representing an Acceptance model (with required fields)
+    acceptance_dict = {
+        "agreementId": "550e8400-e29b-41d4-a716-446655440000",
+        "signerName": "Test Signer",
+        "id": "550e8400-e29b-41d4-a716-446655440001",
+    }
+
+    # Deserialize with Optional wrapper
+    result = deserialize_argument(acceptance_dict, "Optional[Acceptance]", "agreement_k8s_dev")  # type: ignore[arg-type]
+
+    # Should be an Acceptance instance, not a dict
+    assert isinstance(result, Acceptance)
+    assert str(result.id) == "550e8400-e29b-41d4-a716-446655440001"
+    assert str(result.agreement_id) == "550e8400-e29b-41d4-a716-446655440000"
+    assert result.signer_name == "Test Signer"
+
+
+def test_deserialize_optional_list_of_models() -> None:
+    """Test that Optional[list[Model]] types are properly deserialized."""
+    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+
+    # Create list of dicts representing Acceptance models (with required fields)
+    acceptances_list = [
+        {
+            "agreementId": "550e8400-e29b-41d4-a716-446655440000",
+            "signerName": "Test Signer 1",
+            "id": "550e8400-e29b-41d4-a716-446655440002",
+        },
+        {
+            "agreementId": "550e8400-e29b-41d4-a716-446655440001",
+            "signerName": "Test Signer 2",
+            "id": "550e8400-e29b-41d4-a716-446655440003",
+        },
+    ]
+
+    # Deserialize with Optional[list[...]] wrapper
+    result = deserialize_argument(acceptances_list, 'Optional[list["Acceptance"]]', "agreement_k8s_dev")  # type: ignore[arg-type]
+
+    # Should be a list of Acceptance instances, not dicts
+    assert isinstance(result, list)
+    assert len(result) == 2  # type: ignore[arg-type]
+    assert all(isinstance(item, Acceptance) for item in result)  # type: ignore[arg-type]
+    # Type narrowing for accessing attributes
+    acceptance_list: list[Acceptance] = result  # type: ignore[assignment]
+    assert acceptance_list[0].signer_name == "Test Signer 1"
+    assert acceptance_list[1].signer_name == "Test Signer 2"
+
+
+def test_deserialize_list_of_models_without_optional() -> None:
+    """Test that list[Model] types work without Optional wrapper."""
+    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+
+    # Create list of dicts representing Acceptance models (with required fields)
+    acceptances_list = [
+        {
+            "agreementId": "550e8400-e29b-41d4-a716-446655440000",
+            "signerName": "Test Signer",
+            "id": "550e8400-e29b-41d4-a716-446655440004",
+        },
+    ]
+
+    # Deserialize without Optional wrapper
+    result = deserialize_argument(acceptances_list, 'list["Acceptance"]', "agreement_k8s_dev")  # type: ignore[arg-type]
+
+    # Should be a list of Acceptance instances
+    assert isinstance(result, list)
+    assert len(result) == 1  # type: ignore[arg-type]
+    assert isinstance(result[0], Acceptance)  # type: ignore[arg-type]
+    # Type narrowing for accessing attributes
+    acceptance_list: list[Acceptance] = result  # type: ignore[assignment]
+    assert acceptance_list[0].signer_name == "Test Signer"
