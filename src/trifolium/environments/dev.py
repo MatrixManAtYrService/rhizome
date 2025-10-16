@@ -15,10 +15,10 @@ from stolon.environments import base
 
 # Generated API imports - Agreement K8s (using proxied wrappers)
 from stolon.generated.agreement_k8s_dev.acceptance_controller_impl import (
-    get_bulk_acceptances_service_scope,
+    get_bulk_acceptances_service_scope_sync,
 )
 from stolon.generated.agreement_k8s_dev.agreement_controller import (
-    get_latest_agreement,
+    get_latest_agreement_sync_detailed,
 )
 
 # Generated API imports - Billing Bookkeeper (using wrappers that proxy through stolon)
@@ -51,6 +51,11 @@ from stolon.generated.billing_bookkeeper_dev.revenue_share_group import (
     create_revenue_share_group_sync_detailed,
     delete_revenue_share_group_by_uuid_sync,
 )
+
+# Generated API imports - Billing Event (using proxied wrappers)
+from stolon.generated.billing_event_dev.backfill_acceptance import (
+    create_4_sync_detailed as create_backfill_acceptance_sync_detailed,
+)
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models import (
     get_bulk_acceptances_service_scope_body,
     get_bulk_acceptances_service_scope_body_request_body,
@@ -72,17 +77,17 @@ from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.
     api_revenue_share_group,
 )
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
+    ApiBackfillAcceptance,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance_type import (
+    ApiBackfillAcceptanceType,
+)
 
 if TYPE_CHECKING:
     from rhizome.client import RhizomeClient
     from rhizome.environments.dev.billing_bookkeeper import DevBillingBookkeeper
     from stolon.client import StolonClient
-    from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client import (
-        AuthenticatedClient as AgreementAuthenticatedClient,
-    )
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client import (
-        AuthenticatedClient as BillingEventAuthenticatedClient,
-    )
 
 # Type aliases for agreement models (needed to avoid line-length issues with long import paths)
 GetBulkAcceptancesServiceScopeBody = get_bulk_acceptances_service_scope_body.GetBulkAcceptancesServiceScopeBody
@@ -945,10 +950,11 @@ class DevResellersAPI(base.Environment):
 
 class DevAgreementAPI(base.Environment):
     """
-    Agreement API wrapper for merchant terms acceptance.
+    Agreement API wrapper for merchant terms acceptance using proxied wrappers.
 
-    This class provides helper methods for checking and creating merchant
-    agreement acceptances, handling the agreement service at dev1.dev.clover.com.
+    This class uses the generated wrapper functions that automatically proxy
+    all requests through the stolon server, which handles authentication,
+    token management, and logging.
     """
 
     @property
@@ -961,93 +967,6 @@ class DevAgreementAPI(base.Environment):
         """Agreement service domain."""
         return "dev1.dev.clover.com"
 
-    def __init__(self, client: StolonClient) -> None:
-        """Initialize Agreement API.
-
-        Args:
-            client: Stolon client for HTTP requests
-        """
-        super().__init__(client)
-        self._authenticated_client: AgreementAuthenticatedClient | None = None
-        self._billing_event_client: BillingEventAuthenticatedClient | None = None
-
-    def _ensure_agreement_client_authenticated(self) -> AgreementAuthenticatedClient:
-        """
-        Ensure we have an authenticated client for the agreement API.
-
-        Returns:
-            Authenticated client for agreement service
-        """
-        if self._authenticated_client is None:
-            # Get authentication token via parent's method
-            self.ensure_authenticated()
-            assert self.handle is not None
-
-            # Import generated client
-            from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client import AuthenticatedClient
-
-            # Add /agreement path prefix to base URL
-            agreement_base_url = f"{self.handle.base_url}/agreement"
-
-            # Create event hooks using parent's _create_httpx_client infrastructure
-            # We need to extract the event_hooks from the parent's client
-            parent_client = self._create_httpx_client()
-            event_hooks = parent_client.event_hooks
-
-            # Create authenticated client with logging hooks and proper auth
-            self._authenticated_client = AuthenticatedClient(
-                base_url=agreement_base_url,
-                token=self.handle.token,
-                prefix="",  # Token goes in Cookie header
-                headers={
-                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
-                },
-                cookies={
-                    "internalSession": self.handle.token,
-                },
-                httpx_args={"event_hooks": event_hooks},
-            )
-
-        return self._authenticated_client
-
-    def _ensure_billing_event_client_authenticated(self) -> BillingEventAuthenticatedClient:
-        """
-        Ensure we have an authenticated client for the billing-event API.
-
-        Returns:
-            Authenticated client for billing-event service
-        """
-        if self._billing_event_client is None:
-            # Get authentication token via parent's method
-            self.ensure_authenticated()
-            assert self.handle is not None
-
-            # Import generated client
-            from stolon.openapi_generated.billing_event_dev.open_api_definition_client import AuthenticatedClient
-
-            # Add /billing-event path prefix to base URL
-            billing_event_base_url = f"{self.handle.base_url}/billing-event"
-
-            # Create event hooks using parent's _create_httpx_client infrastructure
-            parent_client = self._create_httpx_client()
-            event_hooks = parent_client.event_hooks
-
-            # Create authenticated client with logging hooks and proper auth
-            self._billing_event_client = AuthenticatedClient(
-                base_url=billing_event_base_url,
-                token=self.handle.token,
-                prefix="",  # Token goes in Cookie header
-                headers={
-                    "X-Clover-Appenv": f"{self.name}:{self.domain.split('.')[0]}",
-                },
-                cookies={
-                    "internalSession": self.handle.token,
-                },
-                httpx_args={"event_hooks": event_hooks},
-            )
-
-        return self._billing_event_client
-
     def has_merchant_accepted(self, merchant_uuid: str, agreement_type: str = "BILLING") -> Acceptance | None:
         """Check if merchant has accepted a specific agreement type.
 
@@ -1058,15 +977,14 @@ class DevAgreementAPI(base.Environment):
         Returns:
             Acceptance object if merchant has accepted, None otherwise
         """
-        client = self._ensure_agreement_client_authenticated()
-
         # Query bulk acceptances API - use additional_properties to set merchantId at top level
         # Browser sends: {"merchantId":["MERCHANT_UUID"]} not nested in requestBody
         bulk_request = GetBulkAcceptancesServiceScopeBody()
         bulk_request["merchantId"] = [merchant_uuid]
 
-        acceptances = get_bulk_acceptances_service_scope.sync(
-            client=client,
+        # Use proxied wrapper (automatically handles auth via stolon server)
+        acceptances = get_bulk_acceptances_service_scope_sync(
+            client=self.client,
             body=bulk_request,
         )
 
@@ -1109,13 +1027,10 @@ class DevAgreementAPI(base.Environment):
         if existing_acceptance:
             return existing_acceptance
 
-        # Create new acceptance
-        client = self._ensure_agreement_client_authenticated()
-
-        # Get the latest agreement for the specified type
-        agreement_response = get_latest_agreement.sync_detailed(
+        # Get the latest agreement for the specified type (using proxied wrapper)
+        agreement_response = get_latest_agreement_sync_detailed(
+            client=self.client,
             type_=agreement_type,
-            client=client,
         )
 
         if agreement_response.status_code != 200:
@@ -1134,27 +1049,10 @@ class DevAgreementAPI(base.Environment):
         if not latest_agreement.id or latest_agreement.id is UNSET:
             raise Exception(f"Latest {agreement_type} agreement has no ID")
 
-        # Create acceptance
+        # Create acceptance via billing-event backfill endpoint
+        # This is the correct way to programmatically create acceptances
         if signer_name is None:
             signer_name = f"Test User for {merchant_uuid}"
-
-        # Use the billing-event backfill endpoint instead of the agreement API
-        # This is the correct way to programmatically create acceptances
-        from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import (
-            create_4,
-        )
-
-        # fmt: off
-        from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (  # noqa: E501
-            ApiBackfillAcceptance,
-        )
-        from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance_type import (  # noqa: E501
-            ApiBackfillAcceptanceType,
-        )
-        # fmt: on
-
-        # Get authenticated client for billing-event service
-        billing_event_client = self._ensure_billing_event_client_authenticated()
 
         # Create the backfill acceptance model
         backfill_body = ApiBackfillAcceptance(
@@ -1165,9 +1063,9 @@ class DevAgreementAPI(base.Environment):
             comment=f"Acceptance created via trifolium for {merchant_uuid}",
         )
 
-        # Call the backfill API
-        backfill_response = create_4.sync_detailed(
-            client=billing_event_client,
+        # Call the backfill API (using proxied wrapper)
+        backfill_response = create_backfill_acceptance_sync_detailed(
+            client=self.client,
             body=backfill_body,
         )
 

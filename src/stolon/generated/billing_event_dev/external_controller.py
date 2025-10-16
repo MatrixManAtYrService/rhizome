@@ -78,6 +78,8 @@ def get_merchant_plan_history_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -142,6 +144,8 @@ def get_merchant_plan_history_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -236,6 +240,8 @@ def get_bulk_acceptances_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -330,6 +336,8 @@ def get_bulk_acceptances_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -394,6 +402,8 @@ def get_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -458,6 +468,8 @@ def get_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -536,6 +548,8 @@ def get_merchant_payments_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -614,6 +628,8 @@ def get_merchant_payments_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -678,6 +694,8 @@ def get_plan_meta_1_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -742,6 +760,8 @@ def get_plan_meta_1_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:

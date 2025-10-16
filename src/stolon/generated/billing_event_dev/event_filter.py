@@ -23,13 +23,13 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.e
     reseller_passes,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_event_filter import ApiEventFilter
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete3_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_3_response_200 import (
     Delete3Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes1_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes_1_response_200 import (
     MerchantPasses1Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.reseller_passes_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.reseller_passes_response_200 import (
     ResellerPassesResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -94,6 +94,8 @@ def merchant_passes_1_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: MerchantPasses1Response200 | None
     if body_json and proxy_response.status_code == 200 and MerchantPasses1Response200:
         parsed = MerchantPasses1Response200.from_dict(body_json)
     else:
@@ -224,6 +226,8 @@ def merchant_passes_1_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: MerchantPasses1Response200 | None
     if body_json and proxy_response.status_code == 200 and MerchantPasses1Response200:
         parsed = MerchantPasses1Response200.from_dict(body_json)
     else:
@@ -344,6 +348,8 @@ def create_3_sync_detailed(*, client: StolonClient, body: ApiEventFilter) -> Res
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiEventFilter | None
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
         parsed = ApiEventFilter.from_dict(body_json)
     else:
@@ -454,6 +460,8 @@ def create_3_asyncio_detailed(*, client: StolonClient, body: ApiEventFilter) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiEventFilter | None
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
         parsed = ApiEventFilter.from_dict(body_json)
     else:
@@ -568,6 +576,8 @@ def reseller_passes_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResellerPassesResponse200 | None
     if body_json and proxy_response.status_code == 200 and ResellerPassesResponse200:
         parsed = ResellerPassesResponse200.from_dict(body_json)
     else:
@@ -686,6 +696,8 @@ def reseller_passes_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResellerPassesResponse200 | None
     if body_json and proxy_response.status_code == 200 and ResellerPassesResponse200:
         parsed = ResellerPassesResponse200.from_dict(body_json)
     else:
@@ -800,6 +812,8 @@ def get_3_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiEvent
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiEventFilter | None
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
         parsed = ApiEventFilter.from_dict(body_json)
     else:
@@ -910,6 +924,8 @@ def get_3_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiEv
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiEventFilter | None
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
         parsed = ApiEventFilter.from_dict(body_json)
     else:
@@ -1020,6 +1036,8 @@ def delete_3_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete3Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete3Response200:
         parsed = Delete3Response200.from_dict(body_json)
     else:
@@ -1130,6 +1148,8 @@ def delete_3_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete3Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete3Response200:
         parsed = Delete3Response200.from_dict(body_json)
     else:
@@ -1237,6 +1257,8 @@ def get_event_filters_by_criteria_sync_detailed(*, client: StolonClient) -> Resp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiEventFilter | None
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
         parsed = ApiEventFilter.from_dict(body_json)
     else:
@@ -1341,6 +1363,8 @@ def get_event_filters_by_criteria_asyncio_detailed(*, client: StolonClient) -> R
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiEventFilter | None
     if body_json and proxy_response.status_code == 200 and ApiEventFilter:
         parsed = ApiEventFilter.from_dict(body_json)
     else:

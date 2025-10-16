@@ -55,6 +55,9 @@
                     <a class="function" href="#spec">spec</a>
             </li>
             <li>
+                    <a class="function" href="#wrappers">wrappers</a>
+            </li>
+            <li>
                     <a class="function" href="#main">main</a>
             </li>
     </ul>
@@ -221,8 +224,61 @@
 </span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="n">sync_spec</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
 </span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>
 </span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="n">app</span><span class="p">()</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="nd">@sync_app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="k">def</span><span class="w"> </span><span class="nf">wrappers</span><span class="p">(</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>    <span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment: dev, demo, or prod&quot;</span><span class="p">)],</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>    <span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Service name (e.g., billing-bookkeeper, agreement-k8s, billing-event)&quot;</span><span class="p">)],</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Regenerate proxied wrapper functions from existing OpenAPI clients.</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">    This command regenerates only the wrapper functions without fetching specs</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">    or regenerating the OpenAPI client. Use this when the OpenAPI client already</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="sd">    exists but you want to update the wrappers (e.g., after fixing the generator).</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="sd">    Available environments:</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="sd">      - dev:  Development environment (dev1.dev.clover.com)</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="sd">      - demo: Demo environment (demo.clover.com)</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="sd">      - prod: Production environment (www.clover.com)</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="sd">    Common services:</span>
+</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="sd">      - billing-bookkeeper</span>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="sd">      - billing-event</span>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="sd">      - agreement-k8s</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="sd">    Examples:</span>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a><span class="sd">      stolon sync wrappers --env dev --service billing-bookkeeper</span>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="sd">      stolon sync wrappers --env dev --service agreement-k8s</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">stolon.sync_spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_proxied_wrappers</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="c1"># Service name aliases</span>
+</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>    <span class="n">service_aliases</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>        <span class="s2">&quot;agreement&quot;</span><span class="p">:</span> <span class="s2">&quot;agreement-k8s&quot;</span><span class="p">,</span>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>    <span class="p">}</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>    <span class="n">actual_service</span> <span class="o">=</span> <span class="n">service_aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">service</span><span class="p">)</span>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>    <span class="c1"># Check if OpenAPI client exists</span>
+</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>    <span class="n">openapi_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/stolon/openapi_generated&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">actual_service</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">openapi_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>        <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ OpenAPI client not found at </span><span class="si">{</span><span class="n">openapi_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>        <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Run &#39;stolon sync spec --env </span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2"> --service </span><span class="si">{</span><span class="n">service</span><span class="si">}</span><span class="s2">&#39; first&quot;</span><span class="p">)</span>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔧 Regenerating wrappers for </span><span class="si">{</span><span class="n">actual_service</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   OpenAPI client: </span><span class="si">{</span><span class="n">openapi_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>    <span class="c1"># Generate proxied wrappers</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>    <span class="n">generate_proxied_wrappers</span><span class="p">(</span><span class="n">actual_service</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">openapi_path</span><span class="p">)</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Done! Wrappers regenerated at src/stolon/generated/</span><span class="si">{</span><span class="n">actual_service</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">)</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="n">app</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -508,6 +564,101 @@
 
 
                 </section>
+                <section id="wrappers">
+                            <input id="wrappers-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+                    <div class="decorator decorator-sync_app.command">@sync_app.command()</div>
+
+        <span class="def">def</span>
+        <span class="name">wrappers</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OptionInfo</span> <span class="nb">object</span><span class="o">&gt;</span><span class="p">]</span>,</span><span class="param">	<span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">typer</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OptionInfo</span> <span class="nb">object</span><span class="o">&gt;</span><span class="p">]</span></span><span class="return-annotation">) -> <span class="kc">None</span>:</span></span>
+
+                <label class="view-source-button" for="wrappers-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#wrappers"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="wrappers-145"><a href="#wrappers-145"><span class="linenos">145</span></a><span class="nd">@sync_app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+</span><span id="wrappers-146"><a href="#wrappers-146"><span class="linenos">146</span></a><span class="k">def</span><span class="w"> </span><span class="nf">wrappers</span><span class="p">(</span>
+</span><span id="wrappers-147"><a href="#wrappers-147"><span class="linenos">147</span></a>    <span class="n">env</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment: dev, demo, or prod&quot;</span><span class="p">)],</span>
+</span><span id="wrappers-148"><a href="#wrappers-148"><span class="linenos">148</span></a>    <span class="n">service</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s2">&quot;Service name (e.g., billing-bookkeeper, agreement-k8s, billing-event)&quot;</span><span class="p">)],</span>
+</span><span id="wrappers-149"><a href="#wrappers-149"><span class="linenos">149</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="wrappers-150"><a href="#wrappers-150"><span class="linenos">150</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Regenerate proxied wrapper functions from existing OpenAPI clients.</span>
+</span><span id="wrappers-151"><a href="#wrappers-151"><span class="linenos">151</span></a>
+</span><span id="wrappers-152"><a href="#wrappers-152"><span class="linenos">152</span></a><span class="sd">    This command regenerates only the wrapper functions without fetching specs</span>
+</span><span id="wrappers-153"><a href="#wrappers-153"><span class="linenos">153</span></a><span class="sd">    or regenerating the OpenAPI client. Use this when the OpenAPI client already</span>
+</span><span id="wrappers-154"><a href="#wrappers-154"><span class="linenos">154</span></a><span class="sd">    exists but you want to update the wrappers (e.g., after fixing the generator).</span>
+</span><span id="wrappers-155"><a href="#wrappers-155"><span class="linenos">155</span></a>
+</span><span id="wrappers-156"><a href="#wrappers-156"><span class="linenos">156</span></a><span class="sd">    Available environments:</span>
+</span><span id="wrappers-157"><a href="#wrappers-157"><span class="linenos">157</span></a><span class="sd">      - dev:  Development environment (dev1.dev.clover.com)</span>
+</span><span id="wrappers-158"><a href="#wrappers-158"><span class="linenos">158</span></a><span class="sd">      - demo: Demo environment (demo.clover.com)</span>
+</span><span id="wrappers-159"><a href="#wrappers-159"><span class="linenos">159</span></a><span class="sd">      - prod: Production environment (www.clover.com)</span>
+</span><span id="wrappers-160"><a href="#wrappers-160"><span class="linenos">160</span></a>
+</span><span id="wrappers-161"><a href="#wrappers-161"><span class="linenos">161</span></a><span class="sd">    Common services:</span>
+</span><span id="wrappers-162"><a href="#wrappers-162"><span class="linenos">162</span></a><span class="sd">      - billing-bookkeeper</span>
+</span><span id="wrappers-163"><a href="#wrappers-163"><span class="linenos">163</span></a><span class="sd">      - billing-event</span>
+</span><span id="wrappers-164"><a href="#wrappers-164"><span class="linenos">164</span></a><span class="sd">      - agreement-k8s</span>
+</span><span id="wrappers-165"><a href="#wrappers-165"><span class="linenos">165</span></a>
+</span><span id="wrappers-166"><a href="#wrappers-166"><span class="linenos">166</span></a><span class="sd">    Examples:</span>
+</span><span id="wrappers-167"><a href="#wrappers-167"><span class="linenos">167</span></a><span class="sd">      stolon sync wrappers --env dev --service billing-bookkeeper</span>
+</span><span id="wrappers-168"><a href="#wrappers-168"><span class="linenos">168</span></a><span class="sd">      stolon sync wrappers --env dev --service agreement-k8s</span>
+</span><span id="wrappers-169"><a href="#wrappers-169"><span class="linenos">169</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="wrappers-170"><a href="#wrappers-170"><span class="linenos">170</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="wrappers-171"><a href="#wrappers-171"><span class="linenos">171</span></a>
+</span><span id="wrappers-172"><a href="#wrappers-172"><span class="linenos">172</span></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">stolon.sync_spec</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_proxied_wrappers</span>
+</span><span id="wrappers-173"><a href="#wrappers-173"><span class="linenos">173</span></a>
+</span><span id="wrappers-174"><a href="#wrappers-174"><span class="linenos">174</span></a>    <span class="c1"># Service name aliases</span>
+</span><span id="wrappers-175"><a href="#wrappers-175"><span class="linenos">175</span></a>    <span class="n">service_aliases</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="wrappers-176"><a href="#wrappers-176"><span class="linenos">176</span></a>        <span class="s2">&quot;agreement&quot;</span><span class="p">:</span> <span class="s2">&quot;agreement-k8s&quot;</span><span class="p">,</span>
+</span><span id="wrappers-177"><a href="#wrappers-177"><span class="linenos">177</span></a>    <span class="p">}</span>
+</span><span id="wrappers-178"><a href="#wrappers-178"><span class="linenos">178</span></a>    <span class="n">actual_service</span> <span class="o">=</span> <span class="n">service_aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">service</span><span class="p">)</span>
+</span><span id="wrappers-179"><a href="#wrappers-179"><span class="linenos">179</span></a>
+</span><span id="wrappers-180"><a href="#wrappers-180"><span class="linenos">180</span></a>    <span class="c1"># Check if OpenAPI client exists</span>
+</span><span id="wrappers-181"><a href="#wrappers-181"><span class="linenos">181</span></a>    <span class="n">openapi_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/stolon/openapi_generated&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">actual_service</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="wrappers-182"><a href="#wrappers-182"><span class="linenos">182</span></a>
+</span><span id="wrappers-183"><a href="#wrappers-183"><span class="linenos">183</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">openapi_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="wrappers-184"><a href="#wrappers-184"><span class="linenos">184</span></a>        <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ OpenAPI client not found at </span><span class="si">{</span><span class="n">openapi_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="wrappers-185"><a href="#wrappers-185"><span class="linenos">185</span></a>        <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Run &#39;stolon sync spec --env </span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2"> --service </span><span class="si">{</span><span class="n">service</span><span class="si">}</span><span class="s2">&#39; first&quot;</span><span class="p">)</span>
+</span><span id="wrappers-186"><a href="#wrappers-186"><span class="linenos">186</span></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="wrappers-187"><a href="#wrappers-187"><span class="linenos">187</span></a>
+</span><span id="wrappers-188"><a href="#wrappers-188"><span class="linenos">188</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔧 Regenerating wrappers for </span><span class="si">{</span><span class="n">actual_service</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</span><span id="wrappers-189"><a href="#wrappers-189"><span class="linenos">189</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   OpenAPI client: </span><span class="si">{</span><span class="n">openapi_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="wrappers-190"><a href="#wrappers-190"><span class="linenos">190</span></a>
+</span><span id="wrappers-191"><a href="#wrappers-191"><span class="linenos">191</span></a>    <span class="c1"># Generate proxied wrappers</span>
+</span><span id="wrappers-192"><a href="#wrappers-192"><span class="linenos">192</span></a>    <span class="n">generate_proxied_wrappers</span><span class="p">(</span><span class="n">actual_service</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">openapi_path</span><span class="p">)</span>
+</span><span id="wrappers-193"><a href="#wrappers-193"><span class="linenos">193</span></a>
+</span><span id="wrappers-194"><a href="#wrappers-194"><span class="linenos">194</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="wrappers-195"><a href="#wrappers-195"><span class="linenos">195</span></a>    <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Done! Wrappers regenerated at src/stolon/generated/</span><span class="si">{</span><span class="n">actual_service</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Regenerate proxied wrapper functions from existing OpenAPI clients.</p>
+
+<p>This command regenerates only the wrapper functions without fetching specs
+or regenerating the OpenAPI client. Use this when the OpenAPI client already
+exists but you want to update the wrappers (e.g., after fixing the generator).</p>
+
+<p>Available environments:</p>
+
+<ul>
+<li>dev:  Development environment (dev1.dev.clover.com)</li>
+<li>demo: Demo environment (demo.clover.com)</li>
+<li>prod: Production environment (<a href="www.clover.com">www.clover.com</a>)</li>
+</ul>
+
+<p>Common services:</p>
+
+<ul>
+<li>billing-bookkeeper</li>
+<li>billing-event</li>
+<li>agreement-k8s</li>
+</ul>
+
+<p>Examples:
+  stolon sync wrappers --env dev --service billing-bookkeeper
+  stolon sync wrappers --env dev --service agreement-k8s</p>
+</div>
+
+
+                </section>
                 <section id="main">
                             <input id="main-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -519,8 +670,8 @@
 
     </div>
     <a class="headerlink" href="#main"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="main-145"><a href="#main-145"><span class="linenos">145</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="main-146"><a href="#main-146"><span class="linenos">146</span></a>    <span class="n">app</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="main-198"><a href="#main-198"><span class="linenos">198</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="main-199"><a href="#main-199"><span class="linenos">199</span></a>    <span class="n">app</span><span class="p">()</span>
 </span></pre></div>
 
 

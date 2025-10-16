@@ -35,16 +35,16 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.m
     retry_producer_failure,
     update_and_retry_consumer_failure,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response_200 import (
     AcknowledgeConsumerFailureResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response_200 import (
     AcknowledgeConsumerFailuresResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response_200 import (
     AcknowledgeProducerFailureResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response_200 import (
     AcknowledgeProducerFailuresResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_rates_params import (
@@ -68,32 +68,32 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import (
     ApiProducerFailureHistory,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response_200 import (
     GetConsumerFailureByUuidResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response_200 import (
     GetConsumerFailureHistoriesResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response_200 import (
     GetConsumerFailuresResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response_200 import (
     GetProducerFailureByUuidResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response_200 import (
     GetProducerFailuresResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.mlc_event import MlcEvent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response_200 import (
     ProduceAppRatesEventsResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response_200 import (
     RetryConsumerFailuresResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response_200 import (
     RetryProducerFailureResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response_200 import (
     UpdateAndRetryConsumerFailureResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -148,6 +148,8 @@ def get_consumer_source_topics_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -210,6 +212,8 @@ def get_consumer_source_topics_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -280,6 +284,8 @@ def play_manual_mlc_event_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -350,6 +356,8 @@ def play_manual_mlc_event_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -416,6 +424,8 @@ def update_and_retry_consumer_failure_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -527,6 +537,8 @@ def update_and_retry_consumer_failure_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -638,6 +650,8 @@ def retry_producer_failure_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -749,6 +763,8 @@ def retry_producer_failure_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -860,6 +876,8 @@ def acknowledge_producer_failure_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -971,6 +989,8 @@ def acknowledge_producer_failure_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1078,6 +1098,8 @@ def get_event_source_topics_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1140,6 +1162,8 @@ def get_event_source_topics_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1206,6 +1230,8 @@ def acknowledge_consumer_failure_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1317,6 +1343,8 @@ def acknowledge_consumer_failure_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1450,6 +1478,8 @@ def get_ignored_events_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1605,6 +1635,8 @@ def get_ignored_events_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1760,6 +1792,8 @@ def get_consumer_failures_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1915,6 +1949,8 @@ def get_consumer_failures_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2046,6 +2082,8 @@ def get_producer_failure_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2153,6 +2191,8 @@ def get_producer_failure_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2260,6 +2300,8 @@ def get_consumer_failure_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2367,6 +2409,8 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2498,6 +2542,8 @@ def get_producer_failures_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2653,6 +2699,8 @@ def get_producer_failures_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2808,6 +2856,8 @@ def get_producer_failure_histories_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2963,6 +3013,8 @@ def get_producer_failure_histories_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -3097,6 +3149,8 @@ def produce_app_rates_events_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ProduceAppRatesEventsResponse200 | None
     if body_json and proxy_response.status_code == 200 and ProduceAppRatesEventsResponse200:
         parsed = ProduceAppRatesEventsResponse200.from_dict(body_json)
     else:
@@ -3217,6 +3271,8 @@ def produce_app_rates_events_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ProduceAppRatesEventsResponse200 | None
     if body_json and proxy_response.status_code == 200 and ProduceAppRatesEventsResponse200:
         parsed = ProduceAppRatesEventsResponse200.from_dict(body_json)
     else:
@@ -3334,6 +3390,8 @@ def retry_consumer_failures_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -3441,6 +3499,8 @@ def retry_consumer_failures_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -3550,6 +3610,8 @@ def acknowledge_producer_failures_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -3661,6 +3723,8 @@ def acknowledge_producer_failures_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -3794,6 +3858,8 @@ def get_consumer_failure_histories_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -3949,6 +4015,8 @@ def get_consumer_failure_histories_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -4082,6 +4150,8 @@ def acknowledge_consumer_failures_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -4193,6 +4263,8 @@ def acknowledge_consumer_failures_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:

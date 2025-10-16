@@ -23,10 +23,10 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.m
     merchant_passes,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_managed_item import ApiManagedItem
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete2_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_2_response_200 import (
     Delete2Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response_200 import (
     MerchantPassesResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -85,6 +85,8 @@ def merchant_passes_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: MerchantPassesResponse200 | None
     if body_json and proxy_response.status_code == 200 and MerchantPassesResponse200:
         parsed = MerchantPassesResponse200.from_dict(body_json)
     else:
@@ -203,6 +205,8 @@ def merchant_passes_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: MerchantPassesResponse200 | None
     if body_json and proxy_response.status_code == 200 and MerchantPassesResponse200:
         parsed = MerchantPassesResponse200.from_dict(body_json)
     else:
@@ -317,6 +321,8 @@ def get_reseller_managed_item_sync_detailed(*, client: StolonClient, uuid: str) 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -427,6 +433,8 @@ def get_reseller_managed_item_asyncio_detailed(*, client: StolonClient, uuid: st
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -537,6 +545,8 @@ def create_2_sync_detailed(*, client: StolonClient, body: ApiManagedItem) -> Res
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -647,6 +657,8 @@ def create_2_asyncio_detailed(*, client: StolonClient, body: ApiManagedItem) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -757,6 +769,8 @@ def get_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManag
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -867,6 +881,8 @@ def get_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMa
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -977,6 +993,8 @@ def delete_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete2Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete2Response200:
         parsed = Delete2Response200.from_dict(body_json)
     else:
@@ -1087,6 +1105,8 @@ def delete_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete2Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete2Response200:
         parsed = Delete2Response200.from_dict(body_json)
     else:
@@ -1194,6 +1214,8 @@ def get_managed_items_by_criteria_sync_detailed(*, client: StolonClient) -> Resp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:
@@ -1298,6 +1320,8 @@ def get_managed_items_by_criteria_asyncio_detailed(*, client: StolonClient) -> R
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiManagedItem | None
     if body_json and proxy_response.status_code == 200 and ApiManagedItem:
         parsed = ApiManagedItem.from_dict(body_json)
     else:

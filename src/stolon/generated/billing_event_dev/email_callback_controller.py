@@ -78,6 +78,8 @@ def handle_notification_callback_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -146,6 +148,8 @@ def handle_notification_callback_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:

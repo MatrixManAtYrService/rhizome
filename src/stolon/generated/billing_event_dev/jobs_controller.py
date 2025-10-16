@@ -72,6 +72,8 @@ def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -132,6 +134,8 @@ def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -202,6 +206,8 @@ def get_failed_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -272,6 +278,8 @@ def get_failed_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -342,6 +350,8 @@ def get_succeeded_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -412,6 +422,8 @@ def get_succeeded_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -482,6 +494,8 @@ def get_processing_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -552,6 +566,8 @@ def get_processing_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -622,6 +638,8 @@ def get_enqueued_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -692,6 +710,8 @@ def get_enqueued_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -762,6 +782,8 @@ def get_scheduled_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -832,6 +854,8 @@ def get_scheduled_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:

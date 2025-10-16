@@ -23,19 +23,19 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.p
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_plan_meta_row import (
     ApiPlanMetaRow,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create1_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_1_response_200 import (
     Create1Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete1_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_1_response_200 import (
     Delete1Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get1_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_1_response_200 import (
     Get1Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response_200 import (
     GetPlanMetaResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_response_200 import (
     UpdateResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
@@ -92,6 +92,8 @@ def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRo
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: UpdateResponse200 | None
     if body_json and proxy_response.status_code == 200 and UpdateResponse200:
         parsed = UpdateResponse200.from_dict(body_json)
     else:
@@ -206,6 +208,8 @@ def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMet
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: UpdateResponse200 | None
     if body_json and proxy_response.status_code == 200 and UpdateResponse200:
         parsed = UpdateResponse200.from_dict(body_json)
     else:
@@ -318,6 +322,8 @@ def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Resp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Get1Response200 | None
     if body_json and proxy_response.status_code == 200 and Get1Response200:
         parsed = Get1Response200.from_dict(body_json)
     else:
@@ -428,6 +434,8 @@ def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1R
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Get1Response200 | None
     if body_json and proxy_response.status_code == 200 and Get1Response200:
         parsed = Get1Response200.from_dict(body_json)
     else:
@@ -538,6 +546,8 @@ def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete1Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete1Response200:
         parsed = Delete1Response200.from_dict(body_json)
     else:
@@ -648,6 +658,8 @@ def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete1Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete1Response200:
         parsed = Delete1Response200.from_dict(body_json)
     else:
@@ -758,6 +770,8 @@ def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Res
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Create1Response200 | None
     if body_json and proxy_response.status_code == 200 and Create1Response200:
         parsed = Create1Response200.from_dict(body_json)
     else:
@@ -868,6 +882,8 @@ def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Create1Response200 | None
     if body_json and proxy_response.status_code == 200 and Create1Response200:
         parsed = Create1Response200.from_dict(body_json)
     else:
@@ -982,6 +998,8 @@ def get_plan_meta_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetPlanMetaResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetPlanMetaResponse200:
         parsed = GetPlanMetaResponse200.from_dict(body_json)
     else:
@@ -1098,6 +1116,8 @@ def get_plan_meta_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetPlanMetaResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetPlanMetaResponse200:
         parsed = GetPlanMetaResponse200.from_dict(body_json)
     else:

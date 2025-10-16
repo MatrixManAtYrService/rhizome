@@ -80,6 +80,8 @@ def get_offboarding_by_merchant_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiMerchantOffboarding | None
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
         parsed = ApiMerchantOffboarding.from_dict(body_json)
     else:
@@ -194,6 +196,8 @@ def get_offboarding_by_merchant_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiMerchantOffboarding | None
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
         parsed = ApiMerchantOffboarding.from_dict(body_json)
     else:
@@ -322,6 +326,8 @@ def get_all_offboardings_by_step_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiMerchantOffboarding | None
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
         parsed = ApiMerchantOffboarding.from_dict(body_json)
     else:
@@ -462,6 +468,8 @@ def get_all_offboardings_by_step_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiMerchantOffboarding | None
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
         parsed = ApiMerchantOffboarding.from_dict(body_json)
     else:
@@ -591,6 +599,8 @@ def create_offboarding_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiMerchantOffboarding | None
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
         parsed = ApiMerchantOffboarding.from_dict(body_json)
     else:
@@ -709,6 +719,8 @@ def create_offboarding_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiMerchantOffboarding | None
     if body_json and proxy_response.status_code == 200 and ApiMerchantOffboarding:
         parsed = ApiMerchantOffboarding.from_dict(body_json)
     else:

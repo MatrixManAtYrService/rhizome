@@ -70,6 +70,8 @@ def job_exe_results_sync_detailed(*, client: StolonClient, request_uuid: str) ->
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -169,6 +171,8 @@ def job_exe_results_asyncio_detailed(*, client: StolonClient, request_uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -268,6 +272,8 @@ def query_job_1_sync_detailed(*, client: StolonClient, request_uuid: str) -> Res
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CheckResponse | None
     if body_json and proxy_response.status_code == 200 and CheckResponse:
         parsed = CheckResponse.from_dict(body_json)
     else:
@@ -374,6 +380,8 @@ def query_job_1_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CheckResponse | None
     if body_json and proxy_response.status_code == 200 and CheckResponse:
         parsed = CheckResponse.from_dict(body_json)
     else:
@@ -477,6 +485,8 @@ def check_job_execution_connection_sync_detailed(*, client: StolonClient) -> Res
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CheckResponse | None
     if body_json and proxy_response.status_code == 200 and CheckResponse:
         parsed = CheckResponse.from_dict(body_json)
     else:
@@ -577,6 +587,8 @@ def check_job_execution_connection_asyncio_detailed(*, client: StolonClient) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CheckResponse | None
     if body_json and proxy_response.status_code == 200 and CheckResponse:
         parsed = CheckResponse.from_dict(body_json)
     else:
@@ -680,6 +692,8 @@ def kill_job_1_sync_detailed(*, client: StolonClient, request_uuid: str) -> Resp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CheckResponse | None
     if body_json and proxy_response.status_code == 200 and CheckResponse:
         parsed = CheckResponse.from_dict(body_json)
     else:
@@ -786,6 +800,8 @@ def kill_job_1_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> R
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CheckResponse | None
     if body_json and proxy_response.status_code == 200 and CheckResponse:
         parsed = CheckResponse.from_dict(body_json)
     else:

@@ -22,14 +22,14 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.t
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_test_merchant_criteria import (
     ApiTestMerchantCriteria,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response_200 import (
     CreateResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_response_200 import (
     DeleteResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_response200 import GetResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_test_merchant_criteria_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_response_200 import GetResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_test_merchant_criteria_response_200 import (
     GetTestMerchantCriteriaResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
@@ -84,6 +84,8 @@ def delete_sync_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteR
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: DeleteResponse200 | None
     if body_json and proxy_response.status_code == 200 and DeleteResponse200:
         parsed = DeleteResponse200.from_dict(body_json)
     else:
@@ -194,6 +196,8 @@ def delete_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Dele
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: DeleteResponse200 | None
     if body_json and proxy_response.status_code == 200 and DeleteResponse200:
         parsed = DeleteResponse200.from_dict(body_json)
     else:
@@ -304,6 +308,8 @@ def create_sync_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CreateResponse200 | None
     if body_json and proxy_response.status_code == 200 and CreateResponse200:
         parsed = CreateResponse200.from_dict(body_json)
     else:
@@ -414,6 +420,8 @@ def create_asyncio_detailed(*, client: StolonClient, body: ApiTestMerchantCriter
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: CreateResponse200 | None
     if body_json and proxy_response.status_code == 200 and CreateResponse200:
         parsed = CreateResponse200.from_dict(body_json)
     else:
@@ -521,6 +529,8 @@ def get_test_merchant_criteria_sync_detailed(*, client: StolonClient) -> Respons
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetTestMerchantCriteriaResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetTestMerchantCriteriaResponse200:
         parsed = GetTestMerchantCriteriaResponse200.from_dict(body_json)
     else:
@@ -627,6 +637,8 @@ def get_test_merchant_criteria_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetTestMerchantCriteriaResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetTestMerchantCriteriaResponse200:
         parsed = GetTestMerchantCriteriaResponse200.from_dict(body_json)
     else:
@@ -734,6 +746,8 @@ def get_sync_detailed(*, client: StolonClient, uuid: str) -> Response[GetRespons
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetResponse200:
         parsed = GetResponse200.from_dict(body_json)
     else:
@@ -844,6 +858,8 @@ def get_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[GetResp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetResponse200:
         parsed = GetResponse200.from_dict(body_json)
     else:

@@ -22,13 +22,13 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.b
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
     ApiBackfillAcceptance,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create4_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_4_response_200 import (
     Create4Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete4_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_4_response_200 import (
     Delete4Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get4_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_4_response_200 import (
     Get4Response200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -87,6 +87,8 @@ def delete_4_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete4Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete4Response200:
         parsed = Delete4Response200.from_dict(body_json)
     else:
@@ -205,6 +207,8 @@ def delete_4_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Delete4Response200 | None
     if body_json and proxy_response.status_code == 200 and Delete4Response200:
         parsed = Delete4Response200.from_dict(body_json)
     else:
@@ -319,6 +323,8 @@ def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Get4Response200 | None
     if body_json and proxy_response.status_code == 200 and Get4Response200:
         parsed = Get4Response200.from_dict(body_json)
     else:
@@ -429,6 +435,8 @@ def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Respo
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Get4Response200 | None
     if body_json and proxy_response.status_code == 200 and Get4Response200:
         parsed = Get4Response200.from_dict(body_json)
     else:
@@ -543,6 +551,8 @@ def create_4_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Create4Response200 | None
     if body_json and proxy_response.status_code == 200 and Create4Response200:
         parsed = Create4Response200.from_dict(body_json)
     else:
@@ -661,6 +671,8 @@ def create_4_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Create4Response200 | None
     if body_json and proxy_response.status_code == 200 and Create4Response200:
         parsed = Create4Response200.from_dict(body_json)
     else:

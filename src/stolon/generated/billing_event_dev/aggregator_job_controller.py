@@ -66,6 +66,8 @@ def get_aggregator_status_sync_detailed(*, client: StolonClient, request_uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -165,6 +167,8 @@ def get_aggregator_status_asyncio_detailed(*, client: StolonClient, request_uuid
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:

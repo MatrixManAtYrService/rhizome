@@ -20,16 +20,16 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.p
     get_latest_plan_trials_for_merchants,
     get_plan_trials,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_active_plan_trial_for_merchant_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_active_plan_trial_for_merchant_response_200 import (
     GetActivePlanTrialForMerchantResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trial_for_merchant_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trial_for_merchant_response_200 import (
     GetLatestPlanTrialForMerchantResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trials_for_merchants_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trials_for_merchants_response_200 import (
     GetLatestPlanTrialsForMerchantsResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response_200 import (
     GetPlanTrialsResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -99,6 +99,8 @@ def get_plan_trials_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetPlanTrialsResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetPlanTrialsResponse200:
         parsed = GetPlanTrialsResponse200.from_dict(body_json)
     else:
@@ -239,6 +241,8 @@ def get_plan_trials_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetPlanTrialsResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetPlanTrialsResponse200:
         parsed = GetPlanTrialsResponse200.from_dict(body_json)
     else:
@@ -370,6 +374,8 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetLatestPlanTrialForMerchantResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialForMerchantResponse200:
         parsed = GetLatestPlanTrialForMerchantResponse200.from_dict(body_json)
     else:
@@ -492,6 +498,8 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetLatestPlanTrialForMerchantResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialForMerchantResponse200:
         parsed = GetLatestPlanTrialForMerchantResponse200.from_dict(body_json)
     else:
@@ -614,6 +622,8 @@ def get_active_plan_trial_for_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetActivePlanTrialForMerchantResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetActivePlanTrialForMerchantResponse200:
         parsed = GetActivePlanTrialForMerchantResponse200.from_dict(body_json)
     else:
@@ -736,6 +746,8 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetActivePlanTrialForMerchantResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetActivePlanTrialForMerchantResponse200:
         parsed = GetActivePlanTrialForMerchantResponse200.from_dict(body_json)
     else:
@@ -867,6 +879,8 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetLatestPlanTrialsForMerchantsResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialsForMerchantsResponse200:
         parsed = GetLatestPlanTrialsForMerchantsResponse200.from_dict(body_json)
     else:
@@ -1007,6 +1021,8 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetLatestPlanTrialsForMerchantsResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetLatestPlanTrialsForMerchantsResponse200:
         parsed = GetLatestPlanTrialsForMerchantsResponse200.from_dict(body_json)
     else:

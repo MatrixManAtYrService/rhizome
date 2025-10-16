@@ -71,6 +71,8 @@ def set_config_sync_detailed(*, client: StolonClient, key: str, body: str) -> Re
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -133,6 +135,8 @@ def set_config_asyncio_detailed(*, client: StolonClient, key: str, body: str) ->
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -190,6 +194,8 @@ def get_all_sync_detailed(*, client: StolonClient) -> Response[Any]:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -247,6 +253,8 @@ def get_all_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -307,6 +315,8 @@ def get_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -367,6 +377,8 @@ def get_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[A
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:

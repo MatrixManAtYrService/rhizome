@@ -388,6 +388,84 @@ def extract_model_names_from_type(type_annotation: str) -> set[str]:
     return models
 
 
+def _camel_to_snake_case(model_name: str) -> str:
+    """Convert CamelCase model name to snake_case module name.
+
+    Args:
+        model_name: CamelCase model name (e.g., "Create4Response200")
+
+    Returns:
+        snake_case module name (e.g., "create_4_response_200")
+    """
+    model_module = ""
+    prev_char = ""
+    for i, c in enumerate(model_name):
+        # Add underscore before uppercase letter (if previous wasn't uppercase)
+        if i > 0 and (c.isupper() and not prev_char.isupper() or c.isdigit() and not prev_char.isdigit()):
+            model_module += "_"
+        model_module += c.lower()
+        prev_char = c
+    return model_module
+
+
+def _add_stdlib_imports(imports: dict[str, str], full_type_string: str, service_underscore: str, env: str) -> None:
+    """Add standard library imports based on type annotations.
+
+    Args:
+        imports: Dictionary to add imports to
+        full_type_string: Combined string of all type annotations
+        service_underscore: Service name with underscores
+        env: Environment name
+    """
+    if "UUID" in full_type_string:
+        imports["uuid_UUID"] = "from uuid import UUID"
+    if "datetime" in full_type_string:
+        imports["datetime"] = "import datetime"
+    if "Union" in full_type_string:
+        imports["typing_Union"] = "from typing import Union"
+    if "Unset" in full_type_string or "UNSET" in full_type_string:
+        imports["types_Unset_UNSET"] = (
+            f"from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types "
+            f"import UNSET, Unset"
+        )
+
+
+def _add_model_imports(
+    imports: dict[str, str],
+    func_info: FunctionInfo,
+    return_type: str,
+    service_underscore: str,
+    env: str,
+) -> None:
+    """Add model imports based on type annotations.
+
+    Args:
+        imports: Dictionary to add imports to
+        func_info: Function metadata
+        return_type: Converted return type annotation
+        service_underscore: Service name with underscores
+        env: Environment name
+    """
+    # Extract model names from return type and parameters
+    model_names = extract_model_names_from_type(return_type)
+    for param in func_info.parameters:
+        model_names.update(extract_model_names_from_type(param.type_annotation))
+
+    # Skip Union and Unset - handled separately
+    skip_models = {"Union", "Unset"}
+
+    for model_name in model_names:
+        if model_name in skip_models:
+            continue
+
+        model_module = _camel_to_snake_case(model_name)
+        imports[f"model_{model_name}"] = (
+            f"from stolon.openapi_generated.{service_underscore}_{env}."
+            f"open_api_definition_client.models.{model_module} "
+            f"import {model_name}"
+        )
+
+
 def _build_imports(
     func_info: FunctionInfo,
     service: str,
@@ -418,6 +496,7 @@ def _build_imports(
             f"open_api_definition_client.api.{module_dir} "
             f"import {func_info.api_function_name}"
         ),
+        "json": "import json",
     }
 
     # Add Response and HTTPStatus imports for detailed variants
@@ -427,47 +506,15 @@ def _build_imports(
             f"from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types import Response"
         )
 
-    # Add JSON import (always needed)
-    imports["json"] = "import json"
-
     # Collect all type annotations and default values
     all_type_annotations = [return_type]
     all_type_annotations.extend(param.type_annotation for param in func_info.parameters)
     all_type_annotations.extend(param.default for param in func_info.parameters if param.default)
     full_type_string = " ".join(all_type_annotations)
 
-    # Add standard library imports if needed
-    if "UUID" in full_type_string:
-        imports["uuid_UUID"] = "from uuid import UUID"
-    if "datetime" in full_type_string:
-        imports["datetime"] = "import datetime"
-    if "Union" in full_type_string:
-        imports["typing_Union"] = "from typing import Union"
-    if "Unset" in full_type_string or "UNSET" in full_type_string:
-        imports["types_Unset_UNSET"] = (
-            f"from stolon.openapi_generated.{service_underscore}_{env}.open_api_definition_client.types "
-            f"import UNSET, Unset"
-        )
-
-    # Extract model names and add model imports
-    model_names = extract_model_names_from_type(return_type)
-    for param in func_info.parameters:
-        model_names.update(extract_model_names_from_type(param.type_annotation))
-
-    # Skip Union and Unset - handled separately above
-    skip_models = {"Union", "Unset"}
-
-    for model_name in model_names:
-        if model_name in skip_models:
-            continue
-
-        # Convert CamelCase to snake_case
-        model_module = "".join(["_" + c.lower() if c.isupper() else c for c in model_name]).lstrip("_")
-        imports[f"model_{model_name}"] = (
-            f"from stolon.openapi_generated.{service_underscore}_{env}."
-            f"open_api_definition_client.models.{model_module} "
-            f"import {model_name}"
-        )
+    # Add standard library and model imports
+    _add_stdlib_imports(imports, full_type_string, service_underscore, env)
+    _add_model_imports(imports, func_info, return_type, service_underscore, env)
 
     return imports
 
@@ -527,6 +574,8 @@ def _build_response_parsing(func_info: FunctionInfo, service: str, env: str) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: {func_info.response_model} | None
     if body_json and proxy_response.status_code == 200 and {func_info.response_model}:
         parsed = {func_info.response_model}.from_dict(body_json)
     else:

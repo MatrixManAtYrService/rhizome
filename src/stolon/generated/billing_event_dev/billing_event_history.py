@@ -18,7 +18,7 @@ from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.billing_event_history import (
     get_billing_event_history,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_billing_event_history_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_billing_event_history_response_200 import (
     GetBillingEventHistoryResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -99,6 +99,8 @@ def get_billing_event_history_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetBillingEventHistoryResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetBillingEventHistoryResponse200:
         parsed = GetBillingEventHistoryResponse200.from_dict(body_json)
     else:
@@ -261,6 +263,8 @@ def get_billing_event_history_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetBillingEventHistoryResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetBillingEventHistoryResponse200:
         parsed = GetBillingEventHistoryResponse200.from_dict(body_json)
     else:

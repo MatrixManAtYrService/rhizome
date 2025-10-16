@@ -31,7 +31,7 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_subscription_daily import (
     ApiAppSubscriptionDaily,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response200 import (
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response_200 import (
     GetAppSubscriptionEventsResponse200,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
@@ -116,6 +116,8 @@ def get_app_subscription_dailies_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubscriptionDaily | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
         parsed = ApiAppSubscriptionDaily.from_dict(body_json)
     else:
@@ -286,6 +288,8 @@ def get_app_subscription_dailies_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubscriptionDaily | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
         parsed = ApiAppSubscriptionDaily.from_dict(body_json)
     else:
@@ -441,6 +445,8 @@ def get_app_subscription_currents_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubscriptionCurrent | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionCurrent:
         parsed = ApiAppSubscriptionCurrent.from_dict(body_json)
     else:
@@ -581,6 +587,8 @@ def get_app_subscription_currents_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubscriptionCurrent | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionCurrent:
         parsed = ApiAppSubscriptionCurrent.from_dict(body_json)
     else:
@@ -736,6 +744,8 @@ def get_app_subscription_events_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetAppSubscriptionEventsResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetAppSubscriptionEventsResponse200:
         parsed = GetAppSubscriptionEventsResponse200.from_dict(body_json)
     else:
@@ -906,6 +916,8 @@ def get_app_subscription_events_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetAppSubscriptionEventsResponse200 | None
     if body_json and proxy_response.status_code == 200 and GetAppSubscriptionEventsResponse200:
         parsed = GetAppSubscriptionEventsResponse200.from_dict(body_json)
     else:
@@ -1076,6 +1088,8 @@ def get_app_metered_events_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppMeteredEvent | None
     if body_json and proxy_response.status_code == 200 and ApiAppMeteredEvent:
         parsed = ApiAppMeteredEvent.from_dict(body_json)
     else:
@@ -1246,6 +1260,8 @@ def get_app_metered_events_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppMeteredEvent | None
     if body_json and proxy_response.status_code == 200 and ApiAppMeteredEvent:
         parsed = ApiAppMeteredEvent.from_dict(body_json)
     else:
@@ -1388,6 +1404,8 @@ def get_app_subscription_daily_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubscriptionDaily | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
         parsed = ApiAppSubscriptionDaily.from_dict(body_json)
     else:
@@ -1500,6 +1518,8 @@ def get_app_subscription_daily_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubscriptionDaily | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubscriptionDaily:
         parsed = ApiAppSubscriptionDaily.from_dict(body_json)
     else:
