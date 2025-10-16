@@ -192,6 +192,37 @@ def ps() -> ProcessListResponse:
     return process_manager.list_processes()
 
 
+def _get_environment_instance(environment_name: str) -> Any:  # noqa: ANN401
+    """
+    Get environment instance from environment name.
+
+    Args:
+        environment_name: Environment name (e.g., "DevMeta")
+
+    Returns:
+        Environment instance
+
+    Raises:
+        ValueError: If environment not found
+    """
+    from rhizome.client import RhizomeClient
+    from rhizome.environments.environment_list import get_environment_enum_by_name
+
+    env_enum = get_environment_enum_by_name(environment_name)
+    if env_enum is None:
+        raise ValueError(f"Unknown environment: {environment_name}")
+
+    # Get the environment class
+    from rhizome.environments.environment_list import environment_type
+
+    env_class = environment_type.get(env_enum)
+    if not env_class:
+        raise ValueError(f"Unknown environment: {environment_name}")
+
+    # Create environment instance (needs a dummy client)
+    return env_class(RhizomeClient(data_in_logs=False))
+
+
 @app.post("/write_query")
 def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
     """
@@ -219,7 +250,6 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
     from sqlmodel import create_engine
 
     from rhizome.canned_queries import get_query, render_query
-    from rhizome.environments.environment_list import environment_type
 
     console = Console()
 
@@ -227,19 +257,8 @@ def write_query(request: WriteQueryRequest) -> WriteQueryResponse:
         # Get the canned query
         query = get_query(request.query_name)
 
-        # Get the environment class
-        env_class = environment_type.get(request.environment_name)  # type: ignore[arg-type]
-        if not env_class:
-            return WriteQueryResponse(
-                approved=False,
-                executed=False,
-                error=f"Unknown environment: {request.environment_name}",
-            )
-
-        # Create environment instance (needs a dummy client for now)
-        from rhizome.client import RhizomeClient
-
-        env = env_class(RhizomeClient(data_in_logs=False))
+        # Get environment instance
+        env = _get_environment_instance(request.environment_name)
 
         # Get RW database config
         db_config_rw = env.get_database_config_rw()
@@ -436,23 +455,11 @@ def execute_query(request: ExecuteQueryRequest) -> ExecuteQueryResponse:
 
     from sqlmodel import Session, create_engine
 
-    from rhizome.environments.environment_list import environment_type
     from rhizome.serialization import import_model_class
 
     try:
-        # Get the environment class
-        env_class = environment_type.get(request.environment_name)  # type: ignore[arg-type]
-        if not env_class:
-            return ExecuteQueryResponse(
-                success=False,
-                result=None,
-                error=f"Unknown environment: {request.environment_name}",
-            )
-
-        # Create environment instance (needs a dummy client)
-        from rhizome.client import RhizomeClient
-
-        env = env_class(RhizomeClient(data_in_logs=False))
+        # Get environment instance
+        env = _get_environment_instance(request.environment_name)
 
         # Get database config (read-only)
         db_config = env.get_database_config()

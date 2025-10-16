@@ -62,3 +62,41 @@ environment_type: dict[RhizomeEnvironment, type[Environment]] = {
     RhizomeEnvironment.na_prod_billing_event: NorthAmericaBillingEvent,
     RhizomeEnvironment.na_prod_meta: NorthAmericaMeta,
 }
+
+
+def get_environment_enum_by_name(env_name: str) -> RhizomeEnvironment | None:
+    """
+    Look up RhizomeEnvironment enum by environment instance name.
+
+    The environment instance name comes from the Environment.name property (e.g., "DevMeta"),
+    and we need to find the corresponding RhizomeEnvironment enum value.
+
+    Args:
+        env_name: The environment name from Environment.name property
+
+    Returns:
+        RhizomeEnvironment enum value, or None if not found
+
+    Examples:
+        >>> get_environment_enum_by_name("DevMeta")
+        RhizomeEnvironment.dev_meta
+        >>> get_environment_enum_by_name("NorthAmericaMeta")
+        RhizomeEnvironment.na_prod_meta
+    """
+    # Build reverse mapping from environment class name to enum
+    # This iterates through environment_type and calls env_class().name for each
+    # to create a mapping like {"DevMeta": RhizomeEnvironment.dev_meta, ...}
+
+    # Since we can't instantiate environment classes without a client, we'll use
+    # class names and string matching instead
+    name_to_enum: dict[str, RhizomeEnvironment] = {}
+
+    for enum_value, env_class in environment_type.items():
+        # Map class names to enums
+        # DevMeta -> dev_meta
+        # DemoBillingBookkeeper -> demo_billing_bookkeeper
+        # NorthAmericaMeta -> na_prod_meta
+        class_name = env_class.__name__
+        name_to_enum[class_name] = enum_value
+
+    return name_to_enum.get(env_name)
