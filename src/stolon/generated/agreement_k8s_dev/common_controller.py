@@ -9,18 +9,18 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.common_controller import (
-    validate_client_abort_exception,
-)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.common_controller import validate_client_abort_exception
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def validate_client_abort_exception_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def validate_client_abort_exception_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[Any]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -33,7 +33,7 @@ def validate_client_abort_exception_sync_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[Any]
@@ -43,7 +43,7 @@ def validate_client_abort_exception_sync_detailed(*, client: StolonClient) -> Re
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -53,6 +53,8 @@ def validate_client_abort_exception_sync_detailed(*, client: StolonClient) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -64,6 +66,8 @@ def validate_client_abort_exception_sync_detailed(*, client: StolonClient) -> Re
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -71,13 +75,18 @@ def validate_client_abort_exception_sync_detailed(*, client: StolonClient) -> Re
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def validate_client_abort_exception_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+
+
+def validate_client_abort_exception_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[Any]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -90,7 +99,7 @@ def validate_client_abort_exception_asyncio_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[Any]
@@ -100,7 +109,7 @@ def validate_client_abort_exception_asyncio_detailed(*, client: StolonClient) ->
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -110,6 +119,8 @@ def validate_client_abort_exception_asyncio_detailed(*, client: StolonClient) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -121,6 +132,8 @@ def validate_client_abort_exception_asyncio_detailed(*, client: StolonClient) ->
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -128,7 +141,8 @@ def validate_client_abort_exception_asyncio_detailed(*, client: StolonClient) ->
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+

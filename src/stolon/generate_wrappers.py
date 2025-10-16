@@ -401,7 +401,8 @@ def _camel_to_snake_case(model_name: str) -> str:
     prev_char = ""
     for i, c in enumerate(model_name):
         # Add underscore before uppercase letter (if previous wasn't uppercase)
-        if i > 0 and (c.isupper() and not prev_char.isupper() or c.isdigit() and not prev_char.isdigit()):
+        # Add underscore before digit only if previous was a lowercase letter
+        if i > 0 and (c.isupper() and not prev_char.isupper() or c.isdigit() and prev_char.islower()):
             model_module += "_"
         model_module += c.lower()
         prev_char = c
@@ -696,19 +697,16 @@ def generate_wrappers_for_service(
     if output_path is None:
         output_path = Path("src/stolon/generated") / f"{service.replace('-', '_')}_{env}"
 
-    # Domain mapping
+    # Domain mapping for runtime API calls
+    # Note: Some services use api* domains (like apidev1) for OpenAPI spec fetching,
+    # but runtime API calls always use the standard domains below
     domain_map = {
         "dev": "dev1.dev.clover.com",
-        "demo": "demo.clover.com",
+        "demo": "demo2.dev.clover.com",
         "prod": "www.clover.com",
-        "apidev": "apidev1.dev.clover.com",  # For agreement-k8s
     }
 
-    # Special case for agreement-k8s which uses apidev subdomain
-    if service == "agreement-k8s" and env == "dev":
-        domain = domain_map["apidev"]
-    else:
-        domain = domain_map.get(env, "dev1.dev.clover.com")
+    domain = domain_map.get(env, "dev1.dev.clover.com")
 
     # Discover all API functions
     functions = discover_api_functions(generated_client_path)

@@ -9,45 +9,40 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any, Union
-from uuid import UUID
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import (
-    create_acceptance,
-    create_bulk_acceptances,
-    delete_acceptance,
-    delete_acceptance_with_action,
-    get_acceptance,
-    get_acceptances,
-    get_acceptances_multiple_types,
-    get_bulk_acceptances_by_type_for_account_id_client_scope,
-    get_bulk_acceptances_service_scope,
-    get_latest_acceptance,
-    has_previously_accepted_agreements,
-)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import create_acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import create_bulk_acceptances
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import delete_acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import delete_acceptance_with_action
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_acceptances
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_acceptances_multiple_types
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_bulk_acceptances_by_type_for_account_id_client_scope
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_bulk_acceptances_service_scope
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import get_latest_acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import has_previously_accepted_agreements
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import (
-    AcceptanceQuery,
-)
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query_v2 import (
-    AcceptanceQueryV2,
-)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import AcceptanceQuery
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query_v2 import AcceptanceQueryV2
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_sort import AcceptanceSort
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.delete_acceptance_with_action_action import (
-    DeleteAcceptanceWithActionAction,
-)
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.get_bulk_acceptances_service_scope_body import (
-    GetBulkAcceptancesServiceScopeBody,
-)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.delete_acceptance_with_action_action import DeleteAcceptanceWithActionAction
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.get_bulk_acceptances_service_scope_body import GetBulkAcceptancesServiceScopeBody
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.pagination import Pagination
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+from uuid import UUID
+import json
 
 
 def create_bulk_acceptances_sync_detailed(
-    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: str,
+    body: list["Acceptance"],
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -78,7 +73,7 @@ def create_bulk_acceptances_sync_detailed(
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -88,6 +83,8 @@ def create_bulk_acceptances_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -99,6 +96,8 @@ def create_bulk_acceptances_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -106,14 +105,20 @@ def create_bulk_acceptances_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_bulk_acceptances_sync(
-    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: str,
+    body: list["Acceptance"],
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -143,8 +148,8 @@ def create_bulk_acceptances_sync(
     kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -157,8 +162,14 @@ def create_bulk_acceptances_sync(
     return None
 
 
+
+
 def create_bulk_acceptances_asyncio_detailed(
-    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: str,
+    body: list["Acceptance"],
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -189,7 +200,7 @@ def create_bulk_acceptances_asyncio_detailed(
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -199,6 +210,8 @@ def create_bulk_acceptances_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -210,6 +223,8 @@ def create_bulk_acceptances_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -217,14 +232,20 @@ def create_bulk_acceptances_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def create_bulk_acceptances_asyncio(
-    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: str,
+    body: list["Acceptance"],
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -254,8 +275,8 @@ def create_bulk_acceptances_asyncio(
     kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -266,10 +287,15 @@ def create_bulk_acceptances_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_acceptance_sync_detailed(
-    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         acceptance_id (UUID):
@@ -294,13 +320,11 @@ def get_acceptance_sync_detailed(
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(
-        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
-    )
+    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -310,6 +334,8 @@ def get_acceptance_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -321,6 +347,8 @@ def get_acceptance_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Acceptance | None
     if body_json and proxy_response.status_code == 200 and Acceptance:
         parsed = Acceptance.from_dict(body_json)
     else:
@@ -328,14 +356,19 @@ def get_acceptance_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_acceptance_sync(
-    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Acceptance | None:
     """Args:
         acceptance_id (UUID):
@@ -360,13 +393,11 @@ def get_acceptance_sync(
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(
-        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
-    )
+    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -376,7 +407,7 @@ def get_acceptance_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -386,8 +417,13 @@ def get_acceptance_sync(
     return None
 
 
+
+
 def get_acceptance_asyncio_detailed(
-    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         acceptance_id (UUID):
@@ -412,13 +448,11 @@ def get_acceptance_asyncio_detailed(
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(
-        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
-    )
+    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -428,6 +462,8 @@ def get_acceptance_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -439,6 +475,8 @@ def get_acceptance_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Acceptance | None
     if body_json and proxy_response.status_code == 200 and Acceptance:
         parsed = Acceptance.from_dict(body_json)
     else:
@@ -446,14 +484,19 @@ def get_acceptance_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_acceptance_asyncio(
-    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    include_template_parameters: Union[Unset, bool] = UNSET
 ) -> Acceptance | None:
     """Args:
         acceptance_id (UUID):
@@ -478,13 +521,11 @@ def get_acceptance_asyncio(
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(
-        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
-    )
+    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -494,7 +535,7 @@ def get_acceptance_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -504,8 +545,14 @@ def get_acceptance_asyncio(
     return None
 
 
+
+
 def has_previously_accepted_agreements_sync_detailed(
-    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: str,
+    x_clover_account_id: str
 ) -> Response[bool]:
     """Args:
         type_ (str):
@@ -532,13 +579,11 @@ def has_previously_accepted_agreements_sync_detailed(
         Response[bool]
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -548,6 +593,8 @@ def has_previously_accepted_agreements_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -559,6 +606,8 @@ def has_previously_accepted_agreements_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -566,14 +615,20 @@ def has_previously_accepted_agreements_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def has_previously_accepted_agreements_sync(
-    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: str,
+    x_clover_account_id: str
 ) -> bool | None:
     """Args:
         type_ (str):
@@ -600,13 +655,11 @@ def has_previously_accepted_agreements_sync(
         bool | None
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -619,8 +672,14 @@ def has_previously_accepted_agreements_sync(
     return None
 
 
+
+
 def has_previously_accepted_agreements_asyncio_detailed(
-    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: str,
+    x_clover_account_id: str
 ) -> Response[bool]:
     """Args:
         type_ (str):
@@ -647,13 +706,11 @@ def has_previously_accepted_agreements_asyncio_detailed(
         Response[bool]
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -663,6 +720,8 @@ def has_previously_accepted_agreements_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -674,6 +733,8 @@ def has_previously_accepted_agreements_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -681,14 +742,20 @@ def has_previously_accepted_agreements_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def has_previously_accepted_agreements_asyncio(
-    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: str,
+    x_clover_account_id: str
 ) -> bool | None:
     """Args:
         type_ (str):
@@ -715,13 +782,11 @@ def has_previously_accepted_agreements_asyncio(
         bool | None
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -732,6 +797,8 @@ def has_previously_accepted_agreements_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def delete_acceptance_with_action_sync_detailed(
@@ -739,7 +806,7 @@ def delete_acceptance_with_action_sync_detailed(
     client: StolonClient,
     acceptance_id: UUID,
     action: DeleteAcceptanceWithActionAction,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -766,13 +833,11 @@ def delete_acceptance_with_action_sync_detailed(
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = delete_acceptance_with_action._get_kwargs(
-        acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -782,6 +847,8 @@ def delete_acceptance_with_action_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -793,6 +860,8 @@ def delete_acceptance_with_action_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -800,10 +869,12 @@ def delete_acceptance_with_action_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def delete_acceptance_with_action_asyncio_detailed(
@@ -811,7 +882,7 @@ def delete_acceptance_with_action_asyncio_detailed(
     client: StolonClient,
     acceptance_id: UUID,
     action: DeleteAcceptanceWithActionAction,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -838,13 +909,11 @@ def delete_acceptance_with_action_asyncio_detailed(
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = delete_acceptance_with_action._get_kwargs(
-        acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -854,6 +923,8 @@ def delete_acceptance_with_action_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -865,6 +936,8 @@ def delete_acceptance_with_action_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -872,10 +945,12 @@ def delete_acceptance_with_action_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_acceptance_sync_detailed(
@@ -883,7 +958,7 @@ def get_latest_acceptance_sync_detailed(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         type_ (str):
@@ -910,13 +985,11 @@ def get_latest_acceptance_sync_detailed(
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -926,6 +999,8 @@ def get_latest_acceptance_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -937,6 +1012,8 @@ def get_latest_acceptance_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Acceptance | None
     if body_json and proxy_response.status_code == 200 and Acceptance:
         parsed = Acceptance.from_dict(body_json)
     else:
@@ -944,10 +1021,12 @@ def get_latest_acceptance_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_acceptance_sync(
@@ -955,7 +1034,7 @@ def get_latest_acceptance_sync(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> Acceptance | None:
     """Args:
         type_ (str):
@@ -982,13 +1061,11 @@ def get_latest_acceptance_sync(
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -998,7 +1075,7 @@ def get_latest_acceptance_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1008,12 +1085,14 @@ def get_latest_acceptance_sync(
     return None
 
 
+
+
 def get_latest_acceptance_asyncio_detailed(
     *,
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         type_ (str):
@@ -1040,13 +1119,11 @@ def get_latest_acceptance_asyncio_detailed(
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1056,6 +1133,8 @@ def get_latest_acceptance_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1067,6 +1146,8 @@ def get_latest_acceptance_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Acceptance | None
     if body_json and proxy_response.status_code == 200 and Acceptance:
         parsed = Acceptance.from_dict(body_json)
     else:
@@ -1074,10 +1155,12 @@ def get_latest_acceptance_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_acceptance_asyncio(
@@ -1085,7 +1168,7 @@ def get_latest_acceptance_asyncio(
     client: StolonClient,
     type_: str,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> Acceptance | None:
     """Args:
         type_ (str):
@@ -1112,13 +1195,11 @@ def get_latest_acceptance_asyncio(
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(
-        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
-    )
+    kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1128,7 +1209,7 @@ def get_latest_acceptance_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1136,6 +1217,8 @@ def get_latest_acceptance_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_acceptances_multiple_types_sync_detailed(
@@ -1145,7 +1228,7 @@ def get_acceptances_multiple_types_sync_detailed(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> Response[list["Acceptance"]]:
     """Args:
         query (AcceptanceQueryV2):
@@ -1176,17 +1259,11 @@ def get_acceptances_multiple_types_sync_detailed(
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(
-        query=query,
-        sort=sort,
-        pagination=pagination,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-    )
+    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1196,6 +1273,8 @@ def get_acceptances_multiple_types_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1207,6 +1286,8 @@ def get_acceptances_multiple_types_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1214,10 +1295,12 @@ def get_acceptances_multiple_types_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_acceptances_multiple_types_sync(
@@ -1227,7 +1310,7 @@ def get_acceptances_multiple_types_sync(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> list["Acceptance"] | None:
     """Args:
         query (AcceptanceQueryV2):
@@ -1258,17 +1341,11 @@ def get_acceptances_multiple_types_sync(
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(
-        query=query,
-        sort=sort,
-        pagination=pagination,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-    )
+    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1279,6 +1356,8 @@ def get_acceptances_multiple_types_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_acceptances_multiple_types_asyncio_detailed(
@@ -1288,7 +1367,7 @@ def get_acceptances_multiple_types_asyncio_detailed(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> Response[list["Acceptance"]]:
     """Args:
         query (AcceptanceQueryV2):
@@ -1319,17 +1398,11 @@ def get_acceptances_multiple_types_asyncio_detailed(
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(
-        query=query,
-        sort=sort,
-        pagination=pagination,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-    )
+    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1339,6 +1412,8 @@ def get_acceptances_multiple_types_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1350,6 +1425,8 @@ def get_acceptances_multiple_types_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1357,10 +1434,12 @@ def get_acceptances_multiple_types_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_acceptances_multiple_types_asyncio(
@@ -1370,7 +1449,7 @@ def get_acceptances_multiple_types_asyncio(
     sort: "AcceptanceSort",
     pagination: "Pagination",
     x_clover_merchant_id: Union[Unset, str] = UNSET,
-    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET
 ) -> list["Acceptance"] | None:
     """Args:
         query (AcceptanceQueryV2):
@@ -1401,17 +1480,11 @@ def get_acceptances_multiple_types_asyncio(
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs(
-        query=query,
-        sort=sort,
-        pagination=pagination,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-    )
+    kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1422,10 +1495,14 @@ def get_acceptances_multiple_types_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_bulk_acceptances_service_scope_sync_detailed(
-    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+    *,
+    client: StolonClient,
+    body: GetBulkAcceptancesServiceScopeBody
 ) -> Response[list["Acceptance"]]:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1452,7 +1529,7 @@ def get_bulk_acceptances_service_scope_sync_detailed(
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1462,6 +1539,8 @@ def get_bulk_acceptances_service_scope_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1473,6 +1552,8 @@ def get_bulk_acceptances_service_scope_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1480,14 +1561,18 @@ def get_bulk_acceptances_service_scope_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_bulk_acceptances_service_scope_sync(
-    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+    *,
+    client: StolonClient,
+    body: GetBulkAcceptancesServiceScopeBody
 ) -> list["Acceptance"] | None:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1513,8 +1598,8 @@ def get_bulk_acceptances_service_scope_sync(
     kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1527,8 +1612,12 @@ def get_bulk_acceptances_service_scope_sync(
     return None
 
 
+
+
 def get_bulk_acceptances_service_scope_asyncio_detailed(
-    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+    *,
+    client: StolonClient,
+    body: GetBulkAcceptancesServiceScopeBody
 ) -> Response[list["Acceptance"]]:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1555,7 +1644,7 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1565,6 +1654,8 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1576,6 +1667,8 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1583,14 +1676,18 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_bulk_acceptances_service_scope_asyncio(
-    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+    *,
+    client: StolonClient,
+    body: GetBulkAcceptancesServiceScopeBody
 ) -> list["Acceptance"] | None:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
@@ -1616,8 +1713,8 @@ def get_bulk_acceptances_service_scope_asyncio(
     kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1630,8 +1727,13 @@ def get_bulk_acceptances_service_scope_asyncio(
     return None
 
 
+
+
 def delete_acceptance_sync_detailed(
-    *, client: StolonClient, acceptance_id: UUID, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -1660,7 +1762,7 @@ def delete_acceptance_sync_detailed(
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1670,6 +1772,8 @@ def delete_acceptance_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1681,6 +1785,8 @@ def delete_acceptance_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1688,14 +1794,19 @@ def delete_acceptance_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def delete_acceptance_asyncio_detailed(
-    *, client: StolonClient, acceptance_id: UUID, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -1724,7 +1835,7 @@ def delete_acceptance_asyncio_detailed(
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1734,6 +1845,8 @@ def delete_acceptance_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1745,6 +1858,8 @@ def delete_acceptance_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1752,10 +1867,12 @@ def delete_acceptance_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
@@ -1765,7 +1882,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -1796,13 +1913,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
-        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
-    )
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1812,6 +1927,8 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1823,6 +1940,8 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1830,10 +1949,12 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
@@ -1843,7 +1964,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -1874,13 +1995,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
-        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
-    )
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1891,6 +2010,8 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
@@ -1900,7 +2021,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -1931,13 +2052,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
-        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
-    )
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -1947,6 +2066,8 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1958,6 +2079,8 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1965,10 +2088,12 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
@@ -1978,7 +2103,7 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     account_id: str,
     acceptance_query: "AcceptanceQuery",
     sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -2009,13 +2134,11 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
-        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
-    )
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2026,6 +2149,8 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def create_acceptance_sync_detailed(
@@ -2034,7 +2159,7 @@ def create_acceptance_sync_detailed(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2063,16 +2188,11 @@ def create_acceptance_sync_detailed(
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(
-        body=body,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2082,6 +2202,8 @@ def create_acceptance_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2093,6 +2215,8 @@ def create_acceptance_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Acceptance | None
     if body_json and proxy_response.status_code == 200 and Acceptance:
         parsed = Acceptance.from_dict(body_json)
     else:
@@ -2100,10 +2224,12 @@ def create_acceptance_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_acceptance_sync(
@@ -2112,7 +2238,7 @@ def create_acceptance_sync(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Acceptance | None:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2141,16 +2267,11 @@ def create_acceptance_sync(
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(
-        body=body,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2160,7 +2281,7 @@ def create_acceptance_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2170,13 +2291,15 @@ def create_acceptance_sync(
     return None
 
 
+
+
 def create_acceptance_asyncio_detailed(
     *,
     client: StolonClient,
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Acceptance]:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2205,16 +2328,11 @@ def create_acceptance_asyncio_detailed(
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(
-        body=body,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2224,6 +2342,8 @@ def create_acceptance_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2235,6 +2355,8 @@ def create_acceptance_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: Acceptance | None
     if body_json and proxy_response.status_code == 200 and Acceptance:
         parsed = Acceptance.from_dict(body_json)
     else:
@@ -2242,10 +2364,12 @@ def create_acceptance_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_acceptance_asyncio(
@@ -2254,7 +2378,7 @@ def create_acceptance_asyncio(
     body: Acceptance,
     x_clover_merchant_id: Union[Unset, str] = UNSET,
     x_clover_account_id: Union[Unset, str] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Acceptance | None:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
@@ -2283,16 +2407,11 @@ def create_acceptance_asyncio(
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs(
-        body=body,
-        x_clover_merchant_id=x_clover_merchant_id,
-        x_clover_account_id=x_clover_account_id,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2302,7 +2421,7 @@ def create_acceptance_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2312,12 +2431,14 @@ def create_acceptance_asyncio(
     return None
 
 
+
+
 def get_acceptances_sync_detailed(
     *,
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> Response[list["Acceptance"]]:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2344,13 +2465,11 @@ def get_acceptances_sync_detailed(
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(
-        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
-    )
+    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2360,6 +2479,8 @@ def get_acceptances_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2371,6 +2492,8 @@ def get_acceptances_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2378,10 +2501,12 @@ def get_acceptances_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_acceptances_sync(
@@ -2389,7 +2514,7 @@ def get_acceptances_sync(
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> list["Acceptance"] | None:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2416,13 +2541,11 @@ def get_acceptances_sync(
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(
-        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
-    )
+    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2435,12 +2558,14 @@ def get_acceptances_sync(
     return None
 
 
+
+
 def get_acceptances_asyncio_detailed(
     *,
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> Response[list["Acceptance"]]:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2467,13 +2592,11 @@ def get_acceptances_asyncio_detailed(
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(
-        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
-    )
+    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2483,6 +2606,8 @@ def get_acceptances_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2494,6 +2619,8 @@ def get_acceptances_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2501,10 +2628,12 @@ def get_acceptances_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_acceptances_asyncio(
@@ -2512,7 +2641,7 @@ def get_acceptances_asyncio(
     client: StolonClient,
     acceptance_query: "AcceptanceQuery",
     acceptance_sort: "AcceptanceSort",
-    pagination: "Pagination",
+    pagination: "Pagination"
 ) -> list["Acceptance"] | None:
     """Args:
         acceptance_query (AcceptanceQuery):
@@ -2539,13 +2668,11 @@ def get_acceptances_asyncio(
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs(
-        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
-    )
+    kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
 
     # Proxy request through stolon server
-    client.proxy_request(
-        domain="apidev1.dev.clover.com",
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -2556,3 +2683,4 @@ def get_acceptances_asyncio(
 
     # No response model, return None
     return None
+

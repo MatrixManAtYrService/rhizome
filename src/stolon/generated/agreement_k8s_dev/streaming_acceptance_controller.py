@@ -9,21 +9,20 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.streaming_acceptance_controller import (
-    get_all_acceptances,
-)
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import (
-    AcceptanceQuery,
-)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.streaming_acceptance_controller import get_all_acceptances
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import AcceptanceQuery
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_all_acceptances_sync_detailed(*, client: StolonClient, acceptance_query: "AcceptanceQuery") -> Response[Any]:
+def get_all_acceptances_sync_detailed(
+    *,
+    client: StolonClient,
+    acceptance_query: "AcceptanceQuery"
+) -> Response[Any]:
     """Args:
         acceptance_query (AcceptanceQuery):
 
@@ -49,7 +48,7 @@ def get_all_acceptances_sync_detailed(*, client: StolonClient, acceptance_query:
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -59,6 +58,8 @@ def get_all_acceptances_sync_detailed(*, client: StolonClient, acceptance_query:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -70,6 +71,8 @@ def get_all_acceptances_sync_detailed(*, client: StolonClient, acceptance_query:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -77,13 +80,19 @@ def get_all_acceptances_sync_detailed(*, client: StolonClient, acceptance_query:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_all_acceptances_asyncio_detailed(*, client: StolonClient, acceptance_query: "AcceptanceQuery") -> Response[Any]:
+
+
+def get_all_acceptances_asyncio_detailed(
+    *,
+    client: StolonClient,
+    acceptance_query: "AcceptanceQuery"
+) -> Response[Any]:
     """Args:
         acceptance_query (AcceptanceQuery):
 
@@ -109,7 +118,7 @@ def get_all_acceptances_asyncio_detailed(*, client: StolonClient, acceptance_que
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
-        domain="apidev1.dev.clover.com",
+        domain="dev1.dev.clover.com",
         method=kwargs["method"],
         path=kwargs["url"],
         environment_name="dev",
@@ -119,6 +128,8 @@ def get_all_acceptances_asyncio_detailed(*, client: StolonClient, acceptance_que
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -130,6 +141,8 @@ def get_all_acceptances_asyncio_detailed(*, client: StolonClient, acceptance_que
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -137,7 +150,8 @@ def get_all_acceptances_asyncio_detailed(*, client: StolonClient, acceptance_que
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
