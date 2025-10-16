@@ -9,29 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import (
-    create_fee_ctd,
-    get_fee_ctd_by_billing_entity,
-    get_fee_ctd_by_uuid,
-    update_fee_ctd,
-)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import create_fee_ctd
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import get_fee_ctd_by_billing_entity
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import get_fee_ctd_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_ctd import update_fee_ctd
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ctd import ApiFeeCtd
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ctd_extended import (
-    ApiFeeCtdExtended,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_ctd_extended import ApiFeeCtdExtended
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
 def get_fee_ctd_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiFeeCtdExtended | ResponseError]:
     """Get current-to-date (CTD) fee by UUID
 
@@ -55,14 +52,18 @@ def get_fee_ctd_by_uuid_sync_detailed(
     Returns:
         Response[ApiFeeCtdExtended | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -70,6 +71,8 @@ def get_fee_ctd_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -81,6 +84,8 @@ def get_fee_ctd_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -88,13 +93,19 @@ def get_fee_ctd_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExtended | ResponseError | None:
+
+
+def get_fee_ctd_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCtdExtended | ResponseError | None:
     """Get current-to-date (CTD) fee by UUID
 
     Args:
@@ -117,14 +128,18 @@ def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExt
     Returns:
         ApiFeeCtdExtended | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -133,10 +148,14 @@ def get_fee_ctd_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiFeeCtdExt
 
     # No response model, return None
     return None
+
+
 
 
 def get_fee_ctd_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiFeeCtdExtended | ResponseError]:
     """Get current-to-date (CTD) fee by UUID
 
@@ -160,14 +179,18 @@ def get_fee_ctd_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiFeeCtdExtended | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -175,6 +198,8 @@ def get_fee_ctd_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -186,6 +211,8 @@ def get_fee_ctd_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -193,13 +220,19 @@ def get_fee_ctd_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtdExtended | ResponseError | None:
+
+
+def get_fee_ctd_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiFeeCtdExtended | ResponseError | None:
     """Get current-to-date (CTD) fee by UUID
 
     Args:
@@ -222,14 +255,18 @@ def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtd
     Returns:
         ApiFeeCtdExtended | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_fee_ctd_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -238,10 +275,15 @@ def get_fee_ctd_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiFeeCtd
 
     # No response model, return None
     return None
+
+
 
 
 def update_fee_ctd_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiFeeCtd
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiFeeCtd
 ) -> Response[ApiFeeCtd | ResponseError]:
     """Update current-to-date (CTD) fee
 
@@ -267,14 +309,18 @@ def update_fee_ctd_sync_detailed(
     Returns:
         Response[ApiFeeCtd | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_fee_ctd._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -282,6 +328,8 @@ def update_fee_ctd_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -293,6 +341,8 @@ def update_fee_ctd_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -300,13 +350,20 @@ def update_fee_ctd_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_fee_ctd_sync(*, client: StolonClient, uuid: str, body: ApiFeeCtd) -> ApiFeeCtd | ResponseError | None:
+
+
+def update_fee_ctd_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiFeeCtd
+) -> ApiFeeCtd | ResponseError | None:
     """Update current-to-date (CTD) fee
 
     Args:
@@ -331,14 +388,18 @@ def update_fee_ctd_sync(*, client: StolonClient, uuid: str, body: ApiFeeCtd) -> 
     Returns:
         ApiFeeCtd | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_fee_ctd._get_kwargs(uuid=uuid, body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -347,10 +408,15 @@ def update_fee_ctd_sync(*, client: StolonClient, uuid: str, body: ApiFeeCtd) -> 
 
     # No response model, return None
     return None
+
+
 
 
 def update_fee_ctd_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiFeeCtd
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiFeeCtd
 ) -> Response[ApiFeeCtd | ResponseError]:
     """Update current-to-date (CTD) fee
 
@@ -376,14 +442,18 @@ def update_fee_ctd_asyncio_detailed(
     Returns:
         Response[ApiFeeCtd | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_fee_ctd._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -391,6 +461,8 @@ def update_fee_ctd_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -402,6 +474,8 @@ def update_fee_ctd_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -409,13 +483,20 @@ def update_fee_ctd_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_fee_ctd_asyncio(*, client: StolonClient, uuid: str, body: ApiFeeCtd) -> ApiFeeCtd | ResponseError | None:
+
+
+def update_fee_ctd_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiFeeCtd
+) -> ApiFeeCtd | ResponseError | None:
     """Update current-to-date (CTD) fee
 
     Args:
@@ -440,14 +521,18 @@ def update_fee_ctd_asyncio(*, client: StolonClient, uuid: str, body: ApiFeeCtd) 
     Returns:
         ApiFeeCtd | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_fee_ctd._get_kwargs(uuid=uuid, body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -458,7 +543,13 @@ def update_fee_ctd_asyncio(*, client: StolonClient, uuid: str, body: ApiFeeCtd) 
     return None
 
 
-def create_fee_ctd_sync_detailed(*, client: StolonClient, body: ApiFeeCtd) -> Response[ResponseError]:
+
+
+def create_fee_ctd_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiFeeCtd
+) -> Response[ResponseError]:
     """Create current-to-date (CTD) fee
 
     Args:
@@ -481,14 +572,18 @@ def create_fee_ctd_sync_detailed(*, client: StolonClient, body: ApiFeeCtd) -> Re
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_fee_ctd._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -496,6 +591,8 @@ def create_fee_ctd_sync_detailed(*, client: StolonClient, body: ApiFeeCtd) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -507,6 +604,8 @@ def create_fee_ctd_sync_detailed(*, client: StolonClient, body: ApiFeeCtd) -> Re
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -514,13 +613,19 @@ def create_fee_ctd_sync_detailed(*, client: StolonClient, body: ApiFeeCtd) -> Re
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_ctd_sync(*, client: StolonClient, body: ApiFeeCtd) -> ResponseError | None:
+
+
+def create_fee_ctd_sync(
+    *,
+    client: StolonClient,
+    body: ApiFeeCtd
+) -> ResponseError | None:
     """Create current-to-date (CTD) fee
 
     Args:
@@ -543,14 +648,18 @@ def create_fee_ctd_sync(*, client: StolonClient, body: ApiFeeCtd) -> ResponseErr
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_fee_ctd._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -558,7 +667,7 @@ def create_fee_ctd_sync(*, client: StolonClient, body: ApiFeeCtd) -> ResponseErr
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -568,7 +677,13 @@ def create_fee_ctd_sync(*, client: StolonClient, body: ApiFeeCtd) -> ResponseErr
     return None
 
 
-def create_fee_ctd_asyncio_detailed(*, client: StolonClient, body: ApiFeeCtd) -> Response[ResponseError]:
+
+
+def create_fee_ctd_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiFeeCtd
+) -> Response[ResponseError]:
     """Create current-to-date (CTD) fee
 
     Args:
@@ -591,14 +706,18 @@ def create_fee_ctd_asyncio_detailed(*, client: StolonClient, body: ApiFeeCtd) ->
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_fee_ctd._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -606,6 +725,8 @@ def create_fee_ctd_asyncio_detailed(*, client: StolonClient, body: ApiFeeCtd) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -617,6 +738,8 @@ def create_fee_ctd_asyncio_detailed(*, client: StolonClient, body: ApiFeeCtd) ->
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -624,13 +747,19 @@ def create_fee_ctd_asyncio_detailed(*, client: StolonClient, body: ApiFeeCtd) ->
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_fee_ctd_asyncio(*, client: StolonClient, body: ApiFeeCtd) -> ResponseError | None:
+
+
+def create_fee_ctd_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiFeeCtd
+) -> ResponseError | None:
     """Create current-to-date (CTD) fee
 
     Args:
@@ -653,14 +782,18 @@ def create_fee_ctd_asyncio(*, client: StolonClient, body: ApiFeeCtd) -> Response
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_fee_ctd._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -668,7 +801,7 @@ def create_fee_ctd_asyncio(*, client: StolonClient, body: ApiFeeCtd) -> Response
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -676,6 +809,8 @@ def create_fee_ctd_asyncio(*, client: StolonClient, body: ApiFeeCtd) -> Response
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_fee_ctd_by_billing_entity_sync_detailed(
@@ -685,7 +820,7 @@ def get_fee_ctd_by_billing_entity_sync_detailed(
     fee_category: Union[Unset, list[str]] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
-    exclude_zero_amounts: Union[Unset, bool] = UNSET,
+    exclude_zero_amounts: Union[Unset, bool] = UNSET
 ) -> Response[ResponseError]:
     """Get current-to-date fee(s) for a billing entity
 
@@ -717,20 +852,18 @@ def get_fee_ctd_by_billing_entity_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        currency=currency,
-        exclude_zero_amounts=exclude_zero_amounts,
-    )
+    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, currency=currency, exclude_zero_amounts=exclude_zero_amounts)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -738,6 +871,8 @@ def get_fee_ctd_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -749,6 +884,8 @@ def get_fee_ctd_by_billing_entity_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -756,10 +893,12 @@ def get_fee_ctd_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_ctd_by_billing_entity_sync(
@@ -769,7 +908,7 @@ def get_fee_ctd_by_billing_entity_sync(
     fee_category: Union[Unset, list[str]] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
-    exclude_zero_amounts: Union[Unset, bool] = UNSET,
+    exclude_zero_amounts: Union[Unset, bool] = UNSET
 ) -> ResponseError | None:
     """Get current-to-date fee(s) for a billing entity
 
@@ -801,20 +940,18 @@ def get_fee_ctd_by_billing_entity_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        currency=currency,
-        exclude_zero_amounts=exclude_zero_amounts,
-    )
+    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, currency=currency, exclude_zero_amounts=exclude_zero_amounts)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -822,7 +959,7 @@ def get_fee_ctd_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -832,6 +969,8 @@ def get_fee_ctd_by_billing_entity_sync(
     return None
 
 
+
+
 def get_fee_ctd_by_billing_entity_asyncio_detailed(
     *,
     client: StolonClient,
@@ -839,7 +978,7 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(
     fee_category: Union[Unset, list[str]] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
-    exclude_zero_amounts: Union[Unset, bool] = UNSET,
+    exclude_zero_amounts: Union[Unset, bool] = UNSET
 ) -> Response[ResponseError]:
     """Get current-to-date fee(s) for a billing entity
 
@@ -871,20 +1010,18 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        currency=currency,
-        exclude_zero_amounts=exclude_zero_amounts,
-    )
+    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, currency=currency, exclude_zero_amounts=exclude_zero_amounts)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -892,6 +1029,8 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -903,6 +1042,8 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -910,10 +1051,12 @@ def get_fee_ctd_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_fee_ctd_by_billing_entity_asyncio(
@@ -923,7 +1066,7 @@ def get_fee_ctd_by_billing_entity_asyncio(
     fee_category: Union[Unset, list[str]] = UNSET,
     fee_code: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
-    exclude_zero_amounts: Union[Unset, bool] = UNSET,
+    exclude_zero_amounts: Union[Unset, bool] = UNSET
 ) -> ResponseError | None:
     """Get current-to-date fee(s) for a billing entity
 
@@ -955,20 +1098,18 @@ def get_fee_ctd_by_billing_entity_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        currency=currency,
-        exclude_zero_amounts=exclude_zero_amounts,
-    )
+    kwargs = get_fee_ctd_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, currency=currency, exclude_zero_amounts=exclude_zero_amounts)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -976,7 +1117,7 @@ def get_fee_ctd_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -984,3 +1125,4 @@ def get_fee_ctd_by_billing_entity_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

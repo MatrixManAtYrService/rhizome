@@ -38,14 +38,18 @@ def validate_client_abort_exception_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = validate_client_abort_exception._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -104,14 +108,18 @@ def validate_client_abort_exception_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = validate_client_abort_exception._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),

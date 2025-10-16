@@ -9,39 +9,30 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import (
-    create_1,
-    delete_1,
-    get_1,
-    get_plan_meta,
-    update,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_plan_meta_row import (
-    ApiPlanMetaRow,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_1_response_200 import (
-    Create1Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_1_response_200 import (
-    Delete1Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_1_response_200 import (
-    Get1Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response_200 import (
-    GetPlanMetaResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_response_200 import (
-    UpdateResponse200,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import create_1
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import delete_1
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import get_1
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import get_plan_meta
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_meta import update
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_plan_meta_row import ApiPlanMetaRow
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_1_response_200 import Create1Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_1_response_200 import Delete1Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_1_response_200 import Get1Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_meta_response_200 import GetPlanMetaResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_response_200 import UpdateResponse200
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Response[UpdateResponse200]:
+def update_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPlanMetaRow
+) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -66,14 +57,18 @@ def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRo
     Returns:
         Response[UpdateResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = update._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -81,6 +76,8 @@ def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -101,13 +98,20 @@ def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRo
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_sync(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> UpdateResponse200 | None:
+
+
+def update_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPlanMetaRow
+) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -132,14 +136,18 @@ def update_sync(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Upd
     Returns:
         UpdateResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = update._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -147,7 +155,7 @@ def update_sync(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Upd
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -157,7 +165,14 @@ def update_sync(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Upd
     return None
 
 
-def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Response[UpdateResponse200]:
+
+
+def update_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPlanMetaRow
+) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -182,14 +197,18 @@ def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMet
     Returns:
         Response[UpdateResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = update._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -197,6 +216,8 @@ def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMet
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -217,13 +238,20 @@ def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMet
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_asyncio(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> UpdateResponse200 | None:
+
+
+def update_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPlanMetaRow
+) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -248,14 +276,18 @@ def update_asyncio(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> 
     Returns:
         UpdateResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = update._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -263,7 +295,7 @@ def update_asyncio(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -273,7 +305,13 @@ def update_asyncio(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> 
     return None
 
 
-def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Response200]:
+
+
+def get_1_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Get1Response200]:
     """Get plan meta row by UUID
 
     Args:
@@ -296,14 +334,18 @@ def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Resp
     Returns:
         Response[Get1Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -311,6 +353,8 @@ def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -331,13 +375,19 @@ def get_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Resp
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_1_sync(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
+
+
+def get_1_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Get1Response200 | None:
     """Get plan meta row by UUID
 
     Args:
@@ -360,14 +410,18 @@ def get_1_sync(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     Returns:
         Get1Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -375,7 +429,7 @@ def get_1_sync(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -385,7 +439,13 @@ def get_1_sync(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     return None
 
 
-def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1Response200]:
+
+
+def get_1_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Get1Response200]:
     """Get plan meta row by UUID
 
     Args:
@@ -408,14 +468,18 @@ def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1R
     Returns:
         Response[Get1Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -423,6 +487,8 @@ def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -443,13 +509,19 @@ def get_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Get1R
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_1_asyncio(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
+
+
+def get_1_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Get1Response200 | None:
     """Get plan meta row by UUID
 
     Args:
@@ -472,14 +544,18 @@ def get_1_asyncio(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     Returns:
         Get1Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -487,7 +563,7 @@ def get_1_asyncio(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -497,7 +573,13 @@ def get_1_asyncio(*, client: StolonClient, uuid: str) -> Get1Response200 | None:
     return None
 
 
-def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delete1Response200]:
+
+
+def delete_1_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Delete1Response200]:
     """Delete plan meta row by UUID
 
     Args:
@@ -520,14 +602,18 @@ def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
     Returns:
         Response[Delete1Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -535,6 +621,8 @@ def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -555,13 +643,19 @@ def delete_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_1_sync(*, client: StolonClient, uuid: str) -> Delete1Response200 | None:
+
+
+def delete_1_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Delete1Response200 | None:
     """Delete plan meta row by UUID
 
     Args:
@@ -584,14 +678,18 @@ def delete_1_sync(*, client: StolonClient, uuid: str) -> Delete1Response200 | No
     Returns:
         Delete1Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -599,7 +697,7 @@ def delete_1_sync(*, client: StolonClient, uuid: str) -> Delete1Response200 | No
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -609,7 +707,13 @@ def delete_1_sync(*, client: StolonClient, uuid: str) -> Delete1Response200 | No
     return None
 
 
-def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Delete1Response200]:
+
+
+def delete_1_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Delete1Response200]:
     """Delete plan meta row by UUID
 
     Args:
@@ -632,14 +736,18 @@ def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
     Returns:
         Response[Delete1Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -647,6 +755,8 @@ def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -667,13 +777,19 @@ def delete_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 | None:
+
+
+def delete_1_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Delete1Response200 | None:
     """Delete plan meta row by UUID
 
     Args:
@@ -696,14 +812,18 @@ def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 |
     Returns:
         Delete1Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_1._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -711,7 +831,7 @@ def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -721,7 +841,13 @@ def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 |
     return None
 
 
-def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Response[Create1Response200]:
+
+
+def create_1_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiPlanMetaRow
+) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -744,14 +870,18 @@ def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Res
     Returns:
         Response[Create1Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = create_1._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -759,6 +889,8 @@ def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -779,13 +911,19 @@ def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Res
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_1_sync(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Response200 | None:
+
+
+def create_1_sync(
+    *,
+    client: StolonClient,
+    body: ApiPlanMetaRow
+) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -808,14 +946,18 @@ def create_1_sync(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Respo
     Returns:
         Create1Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_1._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -823,7 +965,7 @@ def create_1_sync(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Respo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -833,7 +975,13 @@ def create_1_sync(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Respo
     return None
 
 
-def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Response[Create1Response200]:
+
+
+def create_1_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiPlanMetaRow
+) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -856,14 +1004,18 @@ def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> 
     Returns:
         Response[Create1Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = create_1._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -871,6 +1023,8 @@ def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -891,13 +1045,19 @@ def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_1_asyncio(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Response200 | None:
+
+
+def create_1_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiPlanMetaRow
+) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -920,14 +1080,18 @@ def create_1_asyncio(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Re
     Returns:
         Create1Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_1._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -935,7 +1099,7 @@ def create_1_asyncio(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Re
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -943,10 +1107,15 @@ def create_1_asyncio(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Re
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_meta_sync_detailed(
-    *, client: StolonClient, country: str, plan_uuid: str
+    *,
+    client: StolonClient,
+    country: str,
+    plan_uuid: str
 ) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
@@ -972,14 +1141,18 @@ def get_plan_meta_sync_detailed(
     Returns:
         Response[GetPlanMetaResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -987,6 +1160,8 @@ def get_plan_meta_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1007,13 +1182,20 @@ def get_plan_meta_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_meta_sync(*, client: StolonClient, country: str, plan_uuid: str) -> GetPlanMetaResponse200 | None:
+
+
+def get_plan_meta_sync(
+    *,
+    client: StolonClient,
+    country: str,
+    plan_uuid: str
+) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1038,14 +1220,18 @@ def get_plan_meta_sync(*, client: StolonClient, country: str, plan_uuid: str) ->
     Returns:
         GetPlanMetaResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1053,7 +1239,7 @@ def get_plan_meta_sync(*, client: StolonClient, country: str, plan_uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1061,10 +1247,15 @@ def get_plan_meta_sync(*, client: StolonClient, country: str, plan_uuid: str) ->
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_meta_asyncio_detailed(
-    *, client: StolonClient, country: str, plan_uuid: str
+    *,
+    client: StolonClient,
+    country: str,
+    plan_uuid: str
 ) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
@@ -1090,14 +1281,18 @@ def get_plan_meta_asyncio_detailed(
     Returns:
         Response[GetPlanMetaResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1105,6 +1300,8 @@ def get_plan_meta_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1125,13 +1322,20 @@ def get_plan_meta_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_meta_asyncio(*, client: StolonClient, country: str, plan_uuid: str) -> GetPlanMetaResponse200 | None:
+
+
+def get_plan_meta_asyncio(
+    *,
+    client: StolonClient,
+    country: str,
+    plan_uuid: str
+) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1156,14 +1360,18 @@ def get_plan_meta_asyncio(*, client: StolonClient, country: str, plan_uuid: str)
     Returns:
         GetPlanMetaResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1171,7 +1379,7 @@ def get_plan_meta_asyncio(*, client: StolonClient, country: str, plan_uuid: str)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1179,3 +1387,4 @@ def get_plan_meta_asyncio(*, client: StolonClient, country: str, plan_uuid: str)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

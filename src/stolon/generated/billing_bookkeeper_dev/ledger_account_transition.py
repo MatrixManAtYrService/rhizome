@@ -9,30 +9,27 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import create_ledger_account_transition
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import delete_ledger_account_transition_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import get_ledger_account_transition_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import get_ledger_account_transitions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import update_ledger_account_transition
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_transition import ApiLedgerAccountTransition
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_account_transition import (
-    create_ledger_account_transition,
-    delete_ledger_account_transition_by_uuid,
-    get_ledger_account_transition_by_uuid,
-    get_ledger_account_transitions,
-    update_ledger_account_transition,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_account_transition import (
-    ApiLedgerAccountTransition,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def create_ledger_account_transition_sync_detailed(
-    *, client: StolonClient, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    body: ApiLedgerAccountTransition
 ) -> Response[ApiLedgerAccountTransition]:
     """Create ledger account transition
 
@@ -56,14 +53,18 @@ def create_ledger_account_transition_sync_detailed(
     Returns:
         Response[ApiLedgerAccountTransition]
     """
+
     # Extract request parameters from generated function
     kwargs = create_ledger_account_transition._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -71,6 +72,8 @@ def create_ledger_account_transition_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -82,6 +85,8 @@ def create_ledger_account_transition_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerAccountTransition | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccountTransition:
         parsed = ApiLedgerAccountTransition.from_dict(body_json)
     else:
@@ -89,14 +94,18 @@ def create_ledger_account_transition_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_ledger_account_transition_sync(
-    *, client: StolonClient, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    body: ApiLedgerAccountTransition
 ) -> ApiLedgerAccountTransition | None:
     """Create ledger account transition
 
@@ -120,14 +129,18 @@ def create_ledger_account_transition_sync(
     Returns:
         ApiLedgerAccountTransition | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_ledger_account_transition._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -135,7 +148,7 @@ def create_ledger_account_transition_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -145,8 +158,12 @@ def create_ledger_account_transition_sync(
     return None
 
 
+
+
 def create_ledger_account_transition_asyncio_detailed(
-    *, client: StolonClient, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    body: ApiLedgerAccountTransition
 ) -> Response[ApiLedgerAccountTransition]:
     """Create ledger account transition
 
@@ -170,14 +187,18 @@ def create_ledger_account_transition_asyncio_detailed(
     Returns:
         Response[ApiLedgerAccountTransition]
     """
+
     # Extract request parameters from generated function
     kwargs = create_ledger_account_transition._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -185,6 +206,8 @@ def create_ledger_account_transition_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -196,6 +219,8 @@ def create_ledger_account_transition_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerAccountTransition | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccountTransition:
         parsed = ApiLedgerAccountTransition.from_dict(body_json)
     else:
@@ -203,14 +228,18 @@ def create_ledger_account_transition_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def create_ledger_account_transition_asyncio(
-    *, client: StolonClient, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    body: ApiLedgerAccountTransition
 ) -> ApiLedgerAccountTransition | None:
     """Create ledger account transition
 
@@ -234,14 +263,18 @@ def create_ledger_account_transition_asyncio(
     Returns:
         ApiLedgerAccountTransition | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_ledger_account_transition._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -249,7 +282,7 @@ def create_ledger_account_transition_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -259,8 +292,12 @@ def create_ledger_account_transition_asyncio(
     return None
 
 
+
+
 def delete_ledger_account_transition_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | str]:
     """Delete ledger account transition
 
@@ -284,14 +321,18 @@ def delete_ledger_account_transition_by_uuid_sync_detailed(
     Returns:
         Response[ResponseError | str]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -299,6 +340,8 @@ def delete_ledger_account_transition_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -310,6 +353,8 @@ def delete_ledger_account_transition_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -317,13 +362,19 @@ def delete_ledger_account_transition_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
+
+
+def delete_ledger_account_transition_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete ledger account transition
 
     Args:
@@ -346,14 +397,18 @@ def delete_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid:
     Returns:
         ResponseError | str | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -362,10 +417,14 @@ def delete_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid:
 
     # No response model, return None
     return None
+
+
 
 
 def delete_ledger_account_transition_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | str]:
     """Delete ledger account transition
 
@@ -389,14 +448,18 @@ def delete_ledger_account_transition_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError | str]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -404,6 +467,8 @@ def delete_ledger_account_transition_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -415,6 +480,8 @@ def delete_ledger_account_transition_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -422,13 +489,19 @@ def delete_ledger_account_transition_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_ledger_account_transition_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
+
+
+def delete_ledger_account_transition_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete ledger account transition
 
     Args:
@@ -451,14 +524,18 @@ def delete_ledger_account_transition_by_uuid_asyncio(*, client: StolonClient, uu
     Returns:
         ResponseError | str | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -467,6 +544,8 @@ def delete_ledger_account_transition_by_uuid_asyncio(*, client: StolonClient, uu
 
     # No response model, return None
     return None
+
+
 
 
 def get_ledger_account_transitions_sync_detailed(
@@ -476,7 +555,7 @@ def get_ledger_account_transitions_sync_detailed(
     action: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]:
     """Get ledger account transitions using the purpose value
 
@@ -508,16 +587,18 @@ def get_ledger_account_transitions_sync_detailed(
     Returns:
         Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs(
-        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_account_transitions._get_kwargs(date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -525,6 +606,8 @@ def get_ledger_account_transitions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -536,6 +619,8 @@ def get_ledger_account_transitions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -543,10 +628,12 @@ def get_ledger_account_transitions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_account_transitions_sync(
@@ -556,7 +643,7 @@ def get_ledger_account_transitions_sync(
     action: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None:
     """Get ledger account transitions using the purpose value
 
@@ -588,16 +675,18 @@ def get_ledger_account_transitions_sync(
     Returns:
         ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs(
-        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_account_transitions._get_kwargs(date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -608,6 +697,8 @@ def get_ledger_account_transitions_sync(
     return None
 
 
+
+
 def get_ledger_account_transitions_asyncio_detailed(
     *,
     client: StolonClient,
@@ -615,7 +706,7 @@ def get_ledger_account_transitions_asyncio_detailed(
     action: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]:
     """Get ledger account transitions using the purpose value
 
@@ -647,16 +738,18 @@ def get_ledger_account_transitions_asyncio_detailed(
     Returns:
         Response[ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs(
-        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_account_transitions._get_kwargs(date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -664,6 +757,8 @@ def get_ledger_account_transitions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -675,6 +770,8 @@ def get_ledger_account_transitions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -682,10 +779,12 @@ def get_ledger_account_transitions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_account_transitions_asyncio(
@@ -695,7 +794,7 @@ def get_ledger_account_transitions_asyncio(
     action: Union[Unset, str] = UNSET,
     ledger_account_key: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None:
     """Get ledger account transitions using the purpose value
 
@@ -727,16 +826,18 @@ def get_ledger_account_transitions_asyncio(
     Returns:
         ApiLedgerAccountTransition | list["ApiLedgerAccountTransition"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_account_transitions._get_kwargs(
-        date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_account_transitions._get_kwargs(date=date, action=action, ledger_account_key=ledger_account_key, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -747,8 +848,12 @@ def get_ledger_account_transitions_asyncio(
     return None
 
 
+
+
 def get_ledger_account_transition_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiLedgerAccountTransition]:
     """Get ledger account transition by UUID
 
@@ -772,14 +877,18 @@ def get_ledger_account_transition_by_uuid_sync_detailed(
     Returns:
         Response[ApiLedgerAccountTransition]
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -787,6 +896,8 @@ def get_ledger_account_transition_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -798,6 +909,8 @@ def get_ledger_account_transition_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerAccountTransition | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccountTransition:
         parsed = ApiLedgerAccountTransition.from_dict(body_json)
     else:
@@ -805,13 +918,19 @@ def get_ledger_account_transition_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLedgerAccountTransition | None:
+
+
+def get_ledger_account_transition_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerAccountTransition | None:
     """Get ledger account transition by UUID
 
     Args:
@@ -834,14 +953,18 @@ def get_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid: st
     Returns:
         ApiLedgerAccountTransition | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -849,7 +972,7 @@ def get_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -857,10 +980,14 @@ def get_ledger_account_transition_by_uuid_sync(*, client: StolonClient, uuid: st
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_ledger_account_transition_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiLedgerAccountTransition]:
     """Get ledger account transition by UUID
 
@@ -884,14 +1011,18 @@ def get_ledger_account_transition_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiLedgerAccountTransition]
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -899,6 +1030,8 @@ def get_ledger_account_transition_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -910,6 +1043,8 @@ def get_ledger_account_transition_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerAccountTransition | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccountTransition:
         parsed = ApiLedgerAccountTransition.from_dict(body_json)
     else:
@@ -917,14 +1052,18 @@ def get_ledger_account_transition_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_account_transition_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiLedgerAccountTransition | None:
     """Get ledger account transition by UUID
 
@@ -948,14 +1087,18 @@ def get_ledger_account_transition_by_uuid_asyncio(
     Returns:
         ApiLedgerAccountTransition | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_account_transition_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -963,7 +1106,7 @@ def get_ledger_account_transition_by_uuid_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -971,10 +1114,15 @@ def get_ledger_account_transition_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_ledger_account_transition_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiLedgerAccountTransition
 ) -> Response[ApiLedgerAccountTransition]:
     """Update ledger account transition
 
@@ -1000,14 +1148,18 @@ def update_ledger_account_transition_sync_detailed(
     Returns:
         Response[ApiLedgerAccountTransition]
     """
+
     # Extract request parameters from generated function
     kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1015,6 +1167,8 @@ def update_ledger_account_transition_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1026,6 +1180,8 @@ def update_ledger_account_transition_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerAccountTransition | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccountTransition:
         parsed = ApiLedgerAccountTransition.from_dict(body_json)
     else:
@@ -1033,14 +1189,19 @@ def update_ledger_account_transition_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_ledger_account_transition_sync(
-    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiLedgerAccountTransition
 ) -> ApiLedgerAccountTransition | None:
     """Update ledger account transition
 
@@ -1066,14 +1227,18 @@ def update_ledger_account_transition_sync(
     Returns:
         ApiLedgerAccountTransition | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1081,7 +1246,7 @@ def update_ledger_account_transition_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1091,8 +1256,13 @@ def update_ledger_account_transition_sync(
     return None
 
 
+
+
 def update_ledger_account_transition_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiLedgerAccountTransition
 ) -> Response[ApiLedgerAccountTransition]:
     """Update ledger account transition
 
@@ -1118,14 +1288,18 @@ def update_ledger_account_transition_asyncio_detailed(
     Returns:
         Response[ApiLedgerAccountTransition]
     """
+
     # Extract request parameters from generated function
     kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1133,6 +1307,8 @@ def update_ledger_account_transition_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1144,6 +1320,8 @@ def update_ledger_account_transition_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerAccountTransition | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerAccountTransition:
         parsed = ApiLedgerAccountTransition.from_dict(body_json)
     else:
@@ -1151,14 +1329,19 @@ def update_ledger_account_transition_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def update_ledger_account_transition_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiLedgerAccountTransition
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiLedgerAccountTransition
 ) -> ApiLedgerAccountTransition | None:
     """Update ledger account transition
 
@@ -1184,14 +1367,18 @@ def update_ledger_account_transition_asyncio(
     Returns:
         ApiLedgerAccountTransition | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_ledger_account_transition._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1199,7 +1386,7 @@ def update_ledger_account_transition_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1207,3 +1394,4 @@ def update_ledger_account_transition_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

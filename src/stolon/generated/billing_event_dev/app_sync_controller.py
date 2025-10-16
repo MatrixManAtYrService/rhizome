@@ -9,19 +9,19 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_sync_controller import (
-    sync_app_subscription_currents_from_cos,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_sync_controller import sync_app_subscription_currents_from_cos
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def sync_app_subscription_currents_from_cos_sync_detailed(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: str
 ) -> Response[Any]:
     """Args:
         merchant_uuid (str):
@@ -45,16 +45,18 @@ def sync_app_subscription_currents_from_cos_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
-    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -62,6 +64,8 @@ def sync_app_subscription_currents_from_cos_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -82,14 +86,19 @@ def sync_app_subscription_currents_from_cos_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def sync_app_subscription_currents_from_cos_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: str
 ) -> Response[Any]:
     """Args:
         merchant_uuid (str):
@@ -113,16 +122,18 @@ def sync_app_subscription_currents_from_cos_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
-    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -130,6 +141,8 @@ def sync_app_subscription_currents_from_cos_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -150,7 +163,8 @@ def sync_app_subscription_currents_from_cos_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+

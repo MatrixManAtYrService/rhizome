@@ -9,29 +9,31 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any, Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import (
-    calculate_tax,
-    get_developer_app,
-    get_developer_by_uuid,
-    get_ebb_common_merchant_model,
-    get_latest_acceptance,
-    get_merchant_address_by_uuid,
-    get_merchant_boarding_by_uuid,
-    get_merchant_by_uuid,
-    get_merchant_gateway_by_uuid,
-    get_merchant_plan_by_id,
-    get_merchant_properties_by_uuid,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import calculate_tax
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_developer_app
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_developer_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_ebb_common_merchant_model
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_latest_acceptance
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_merchant_address_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_merchant_boarding_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_merchant_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_merchant_gateway_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_merchant_plan_by_id
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.external_controller import get_merchant_properties_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
 def get_merchant_gateway_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -55,14 +57,18 @@ def get_merchant_gateway_by_uuid_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_gateway_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -70,6 +76,8 @@ def get_merchant_gateway_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -81,6 +89,8 @@ def get_merchant_gateway_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -88,14 +98,19 @@ def get_merchant_gateway_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_gateway_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -119,14 +134,18 @@ def get_merchant_gateway_by_uuid_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_gateway_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -134,6 +153,8 @@ def get_merchant_gateway_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -145,6 +166,8 @@ def get_merchant_gateway_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -152,14 +175,19 @@ def get_merchant_gateway_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_app_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -183,14 +211,18 @@ def get_developer_app_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_app._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -198,6 +230,8 @@ def get_developer_app_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -209,6 +243,8 @@ def get_developer_app_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -216,14 +252,19 @@ def get_developer_app_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_app_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -247,14 +288,18 @@ def get_developer_app_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_app._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -262,6 +307,8 @@ def get_developer_app_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -273,6 +320,8 @@ def get_developer_app_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -280,14 +329,19 @@ def get_developer_app_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ebb_common_merchant_model_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -311,14 +365,18 @@ def get_ebb_common_merchant_model_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_ebb_common_merchant_model._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -326,6 +384,8 @@ def get_ebb_common_merchant_model_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -337,6 +397,8 @@ def get_ebb_common_merchant_model_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -344,14 +406,19 @@ def get_ebb_common_merchant_model_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ebb_common_merchant_model_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -375,14 +442,18 @@ def get_ebb_common_merchant_model_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_ebb_common_merchant_model._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -390,6 +461,8 @@ def get_ebb_common_merchant_model_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -401,6 +474,8 @@ def get_ebb_common_merchant_model_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -408,10 +483,12 @@ def get_ebb_common_merchant_model_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_acceptance_sync_detailed(
@@ -420,7 +497,7 @@ def get_latest_acceptance_sync_detailed(
     agreement_type: str,
     merchant_uuid: str,
     owner_account_uuid: str,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         agreement_type (str):
@@ -448,19 +525,18 @@ def get_latest_acceptance_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(
-        agreement_type=agreement_type,
-        merchant_uuid=merchant_uuid,
-        owner_account_uuid=owner_account_uuid,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_latest_acceptance._get_kwargs(agreement_type=agreement_type, merchant_uuid=merchant_uuid, owner_account_uuid=owner_account_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -468,6 +544,8 @@ def get_latest_acceptance_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -479,6 +557,8 @@ def get_latest_acceptance_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -486,10 +566,12 @@ def get_latest_acceptance_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_acceptance_asyncio_detailed(
@@ -498,7 +580,7 @@ def get_latest_acceptance_asyncio_detailed(
     agreement_type: str,
     merchant_uuid: str,
     owner_account_uuid: str,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         agreement_type (str):
@@ -526,19 +608,18 @@ def get_latest_acceptance_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(
-        agreement_type=agreement_type,
-        merchant_uuid=merchant_uuid,
-        owner_account_uuid=owner_account_uuid,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_latest_acceptance._get_kwargs(agreement_type=agreement_type, merchant_uuid=merchant_uuid, owner_account_uuid=owner_account_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -546,6 +627,8 @@ def get_latest_acceptance_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -557,6 +640,8 @@ def get_latest_acceptance_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -564,14 +649,19 @@ def get_latest_acceptance_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -595,14 +685,18 @@ def get_developer_by_uuid_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -610,6 +704,8 @@ def get_developer_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -621,6 +717,8 @@ def get_developer_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -628,14 +726,19 @@ def get_developer_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -659,14 +762,18 @@ def get_developer_by_uuid_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -674,6 +781,8 @@ def get_developer_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -685,6 +794,8 @@ def get_developer_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -692,14 +803,19 @@ def get_developer_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_address_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -723,14 +839,18 @@ def get_merchant_address_by_uuid_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_address_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -738,6 +858,8 @@ def get_merchant_address_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -749,6 +871,8 @@ def get_merchant_address_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -756,14 +880,19 @@ def get_merchant_address_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_address_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -787,14 +916,18 @@ def get_merchant_address_by_uuid_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_address_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -802,6 +935,8 @@ def get_merchant_address_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -813,6 +948,8 @@ def get_merchant_address_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -820,10 +957,12 @@ def get_merchant_address_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def calculate_tax_sync_detailed(
@@ -834,7 +973,7 @@ def calculate_tax_sync_detailed(
     product_code: str,
     amount: str,
     currency: str,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         billing_entity_uuid (str):
@@ -866,21 +1005,18 @@ def calculate_tax_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
-    kwargs = calculate_tax._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        date=date,
-        product_code=product_code,
-        amount=amount,
-        currency=currency,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = calculate_tax._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date, product_code=product_code, amount=amount, currency=currency, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -888,6 +1024,8 @@ def calculate_tax_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -899,6 +1037,8 @@ def calculate_tax_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -906,10 +1046,12 @@ def calculate_tax_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def calculate_tax_asyncio_detailed(
@@ -920,7 +1062,7 @@ def calculate_tax_asyncio_detailed(
     product_code: str,
     amount: str,
     currency: str,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         billing_entity_uuid (str):
@@ -952,21 +1094,18 @@ def calculate_tax_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
-    kwargs = calculate_tax._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        date=date,
-        product_code=product_code,
-        amount=amount,
-        currency=currency,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = calculate_tax._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date, product_code=product_code, amount=amount, currency=currency, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -974,6 +1113,8 @@ def calculate_tax_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -985,6 +1126,8 @@ def calculate_tax_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -992,14 +1135,19 @@ def calculate_tax_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_boarding_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1023,14 +1171,18 @@ def get_merchant_boarding_by_uuid_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_boarding_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1038,6 +1190,8 @@ def get_merchant_boarding_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1049,6 +1203,8 @@ def get_merchant_boarding_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1056,14 +1212,19 @@ def get_merchant_boarding_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_boarding_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1087,14 +1248,18 @@ def get_merchant_boarding_by_uuid_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_boarding_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1102,6 +1267,8 @@ def get_merchant_boarding_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1113,6 +1280,8 @@ def get_merchant_boarding_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1120,14 +1289,19 @@ def get_merchant_boarding_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_plan_by_id_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1151,14 +1325,18 @@ def get_merchant_plan_by_id_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_plan_by_id._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1166,6 +1344,8 @@ def get_merchant_plan_by_id_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1177,6 +1357,8 @@ def get_merchant_plan_by_id_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1184,14 +1366,19 @@ def get_merchant_plan_by_id_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_plan_by_id_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1215,14 +1402,18 @@ def get_merchant_plan_by_id_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_plan_by_id._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1230,6 +1421,8 @@ def get_merchant_plan_by_id_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1241,6 +1434,8 @@ def get_merchant_plan_by_id_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1248,14 +1443,19 @@ def get_merchant_plan_by_id_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1279,14 +1479,18 @@ def get_merchant_by_uuid_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1294,6 +1498,8 @@ def get_merchant_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1305,6 +1511,8 @@ def get_merchant_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1312,14 +1520,19 @@ def get_merchant_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1343,14 +1556,18 @@ def get_merchant_by_uuid_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1358,6 +1575,8 @@ def get_merchant_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1369,6 +1588,8 @@ def get_merchant_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1376,14 +1597,19 @@ def get_merchant_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_properties_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1407,14 +1633,18 @@ def get_merchant_properties_by_uuid_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_properties_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1422,6 +1652,8 @@ def get_merchant_properties_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1433,6 +1665,8 @@ def get_merchant_properties_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1440,14 +1674,19 @@ def get_merchant_properties_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_properties_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         uuid (str):
@@ -1471,14 +1710,18 @@ def get_merchant_properties_by_uuid_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_properties_by_uuid._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1486,6 +1729,8 @@ def get_merchant_properties_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1497,6 +1742,8 @@ def get_merchant_properties_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1504,7 +1751,8 @@ def get_merchant_properties_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+

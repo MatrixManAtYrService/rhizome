@@ -9,27 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import (
-    create_revenue_action_type,
-    delete_revenue_action_type_by_uuid,
-    get_revenue_action_type_by_uuid,
-    get_revenue_action_types_by_action_type,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action_type import (
-    ApiRevenueActionType,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import create_revenue_action_type
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import delete_revenue_action_type_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import get_revenue_action_type_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.revenue_action_type import get_revenue_action_types_by_action_type
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_revenue_action_type import ApiRevenueActionType
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
-def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+def delete_revenue_action_type_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete revenue action type
 
     Args:
@@ -52,14 +51,18 @@ def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uu
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -67,6 +70,8 @@ def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uu
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -78,6 +83,8 @@ def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uu
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -85,13 +92,19 @@ def delete_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uu
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_revenue_action_type_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete revenue action type
 
     Args:
@@ -114,14 +127,18 @@ def delete_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -129,7 +146,7 @@ def delete_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -139,7 +156,13 @@ def delete_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) 
     return None
 
 
-def delete_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_revenue_action_type_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete revenue action type
 
     Args:
@@ -162,14 +185,18 @@ def delete_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient,
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -177,6 +204,8 @@ def delete_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient,
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -188,6 +217,8 @@ def delete_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient,
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -195,13 +226,19 @@ def delete_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient,
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_revenue_action_type_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete revenue action type
 
     Args:
@@ -224,14 +261,18 @@ def delete_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: st
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -239,7 +280,7 @@ def delete_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -249,7 +290,13 @@ def delete_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: st
     return None
 
 
-def get_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_revenue_action_type_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get revenue action type by UUID
 
     Args:
@@ -272,14 +319,18 @@ def get_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -287,6 +338,8 @@ def get_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -298,6 +351,8 @@ def get_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -305,13 +360,19 @@ def get_revenue_action_type_by_uuid_sync_detailed(*, client: StolonClient, uuid:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_revenue_action_type_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get revenue action type by UUID
 
     Args:
@@ -334,14 +395,18 @@ def get_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -349,7 +414,7 @@ def get_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -359,7 +424,13 @@ def get_revenue_action_type_by_uuid_sync(*, client: StolonClient, uuid: str) -> 
     return None
 
 
-def get_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_revenue_action_type_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get revenue action type by UUID
 
     Args:
@@ -382,14 +453,18 @@ def get_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uu
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -397,6 +472,8 @@ def get_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uu
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -408,6 +485,8 @@ def get_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uu
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -415,13 +494,19 @@ def get_revenue_action_type_by_uuid_asyncio_detailed(*, client: StolonClient, uu
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_revenue_action_type_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get revenue action type by UUID
 
     Args:
@@ -444,14 +529,18 @@ def get_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_type_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -459,7 +548,7 @@ def get_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -467,10 +556,14 @@ def get_revenue_action_type_by_uuid_asyncio(*, client: StolonClient, uuid: str) 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_revenue_action_type_sync_detailed(
-    *, client: StolonClient, body: ApiRevenueActionType
+    *,
+    client: StolonClient,
+    body: ApiRevenueActionType
 ) -> Response[ResponseError]:
     """Create revenue action type
 
@@ -494,14 +587,18 @@ def create_revenue_action_type_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_revenue_action_type._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -509,6 +606,8 @@ def create_revenue_action_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -520,6 +619,8 @@ def create_revenue_action_type_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -527,13 +628,19 @@ def create_revenue_action_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_revenue_action_type_sync(*, client: StolonClient, body: ApiRevenueActionType) -> ResponseError | None:
+
+
+def create_revenue_action_type_sync(
+    *,
+    client: StolonClient,
+    body: ApiRevenueActionType
+) -> ResponseError | None:
     """Create revenue action type
 
     Args:
@@ -556,14 +663,18 @@ def create_revenue_action_type_sync(*, client: StolonClient, body: ApiRevenueAct
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_revenue_action_type._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -571,7 +682,7 @@ def create_revenue_action_type_sync(*, client: StolonClient, body: ApiRevenueAct
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -579,10 +690,14 @@ def create_revenue_action_type_sync(*, client: StolonClient, body: ApiRevenueAct
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_revenue_action_type_asyncio_detailed(
-    *, client: StolonClient, body: ApiRevenueActionType
+    *,
+    client: StolonClient,
+    body: ApiRevenueActionType
 ) -> Response[ResponseError]:
     """Create revenue action type
 
@@ -606,14 +721,18 @@ def create_revenue_action_type_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_revenue_action_type._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -621,6 +740,8 @@ def create_revenue_action_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -632,6 +753,8 @@ def create_revenue_action_type_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -639,13 +762,19 @@ def create_revenue_action_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_revenue_action_type_asyncio(*, client: StolonClient, body: ApiRevenueActionType) -> ResponseError | None:
+
+
+def create_revenue_action_type_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiRevenueActionType
+) -> ResponseError | None:
     """Create revenue action type
 
     Args:
@@ -668,14 +797,18 @@ def create_revenue_action_type_asyncio(*, client: StolonClient, body: ApiRevenue
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_revenue_action_type._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -683,7 +816,7 @@ def create_revenue_action_type_asyncio(*, client: StolonClient, body: ApiRevenue
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -691,10 +824,14 @@ def create_revenue_action_type_asyncio(*, client: StolonClient, body: ApiRevenue
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_revenue_action_types_by_action_type_sync_detailed(
-    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get revenue action type by action type
 
@@ -718,14 +855,18 @@ def get_revenue_action_types_by_action_type_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -733,6 +874,8 @@ def get_revenue_action_types_by_action_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -744,6 +887,8 @@ def get_revenue_action_types_by_action_type_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -751,14 +896,18 @@ def get_revenue_action_types_by_action_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_revenue_action_types_by_action_type_sync(
-    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get revenue action type by action type
 
@@ -782,14 +931,18 @@ def get_revenue_action_types_by_action_type_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -797,7 +950,7 @@ def get_revenue_action_types_by_action_type_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -807,8 +960,12 @@ def get_revenue_action_types_by_action_type_sync(
     return None
 
 
+
+
 def get_revenue_action_types_by_action_type_asyncio_detailed(
-    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get revenue action type by action type
 
@@ -832,14 +989,18 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -847,6 +1008,8 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -858,6 +1021,8 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -865,14 +1030,18 @@ def get_revenue_action_types_by_action_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_revenue_action_types_by_action_type_asyncio(
-    *, client: StolonClient, type_: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    type_: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get revenue action type by action type
 
@@ -896,14 +1065,18 @@ def get_revenue_action_types_by_action_type_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_revenue_action_types_by_action_type._get_kwargs(type_=type_)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -911,7 +1084,7 @@ def get_revenue_action_types_by_action_type_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -919,3 +1092,4 @@ def get_revenue_action_types_by_action_type_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

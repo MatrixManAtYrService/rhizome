@@ -9,25 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import create_app_sub_action
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import get_app_sub_action_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import get_app_sub_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import get_unposted_app_sub_actions_by_billing_entity
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_sub_action import ApiAppSubAction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_sub_action import (
-    create_app_sub_action,
-    get_app_sub_action_by_uuid,
-    get_app_sub_actions,
-    get_unposted_app_sub_actions_by_billing_entity,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_sub_action import (
-    ApiAppSubAction,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppSubAction]:
+def get_app_sub_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiAppSubAction]:
     """Get app subscription action by UUID
 
     Args:
@@ -50,14 +51,18 @@ def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -65,6 +70,8 @@ def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -76,6 +83,8 @@ def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -83,13 +92,19 @@ def get_app_sub_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAppSubAction | None:
+
+
+def get_app_sub_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiAppSubAction | None:
     """Get app subscription action by UUID
 
     Args:
@@ -112,14 +127,18 @@ def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAp
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -127,7 +146,7 @@ def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -137,7 +156,13 @@ def get_app_sub_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiAp
     return None
 
 
-def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiAppSubAction]:
+
+
+def get_app_sub_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiAppSubAction]:
     """Get app subscription action by UUID
 
     Args:
@@ -160,14 +185,18 @@ def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -175,6 +204,8 @@ def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -186,6 +217,8 @@ def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -193,13 +226,19 @@ def get_app_sub_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiAppSubAction | None:
+
+
+def get_app_sub_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiAppSubAction | None:
     """Get app subscription action by UUID
 
     Args:
@@ -222,14 +261,18 @@ def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_sub_action_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -237,7 +280,7 @@ def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -247,7 +290,13 @@ def get_app_sub_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def create_app_sub_action_sync_detailed(*, client: StolonClient, body: ApiAppSubAction) -> Response[ApiAppSubAction]:
+
+
+def create_app_sub_action_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAppSubAction
+) -> Response[ApiAppSubAction]:
     """Create app subscription action
 
     Args:
@@ -270,14 +319,18 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient, body: ApiAppSub
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
     kwargs = create_app_sub_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -285,6 +338,8 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient, body: ApiAppSub
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -296,6 +351,8 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient, body: ApiAppSub
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -303,13 +360,19 @@ def create_app_sub_action_sync_detailed(*, client: StolonClient, body: ApiAppSub
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_sub_action_sync(*, client: StolonClient, body: ApiAppSubAction) -> ApiAppSubAction | None:
+
+
+def create_app_sub_action_sync(
+    *,
+    client: StolonClient,
+    body: ApiAppSubAction
+) -> ApiAppSubAction | None:
     """Create app subscription action
 
     Args:
@@ -332,14 +395,18 @@ def create_app_sub_action_sync(*, client: StolonClient, body: ApiAppSubAction) -
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_app_sub_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -347,7 +414,7 @@ def create_app_sub_action_sync(*, client: StolonClient, body: ApiAppSubAction) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -357,7 +424,13 @@ def create_app_sub_action_sync(*, client: StolonClient, body: ApiAppSubAction) -
     return None
 
 
-def create_app_sub_action_asyncio_detailed(*, client: StolonClient, body: ApiAppSubAction) -> Response[ApiAppSubAction]:
+
+
+def create_app_sub_action_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAppSubAction
+) -> Response[ApiAppSubAction]:
     """Create app subscription action
 
     Args:
@@ -380,14 +453,18 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient, body: ApiApp
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
     kwargs = create_app_sub_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -395,6 +472,8 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient, body: ApiApp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -406,6 +485,8 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient, body: ApiApp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -413,13 +494,19 @@ def create_app_sub_action_asyncio_detailed(*, client: StolonClient, body: ApiApp
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_sub_action_asyncio(*, client: StolonClient, body: ApiAppSubAction) -> ApiAppSubAction | None:
+
+
+def create_app_sub_action_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiAppSubAction
+) -> ApiAppSubAction | None:
     """Create app subscription action
 
     Args:
@@ -442,14 +529,18 @@ def create_app_sub_action_asyncio(*, client: StolonClient, body: ApiAppSubAction
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_app_sub_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -457,7 +548,7 @@ def create_app_sub_action_asyncio(*, client: StolonClient, body: ApiAppSubAction
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -465,10 +556,14 @@ def create_app_sub_action_asyncio(*, client: StolonClient, body: ApiAppSubAction
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiAppSubAction]:
     """Get unposted app subscription actions for billing entity
 
@@ -492,14 +587,18 @@ def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_sub_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -507,6 +606,8 @@ def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -518,6 +619,8 @@ def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -525,14 +628,18 @@ def get_unposted_app_sub_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_app_sub_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiAppSubAction | None:
     """Get unposted app subscription actions for billing entity
 
@@ -556,14 +663,18 @@ def get_unposted_app_sub_actions_by_billing_entity_sync(
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_sub_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -571,7 +682,7 @@ def get_unposted_app_sub_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -581,8 +692,12 @@ def get_unposted_app_sub_actions_by_billing_entity_sync(
     return None
 
 
+
+
 def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ApiAppSubAction]:
     """Get unposted app subscription actions for billing entity
 
@@ -606,14 +721,18 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_sub_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -621,6 +740,8 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -632,6 +753,8 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -639,14 +762,18 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_unposted_app_sub_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ApiAppSubAction | None:
     """Get unposted app subscription actions for billing entity
 
@@ -670,14 +797,18 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio(
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_sub_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -685,7 +816,7 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -693,6 +824,8 @@ def get_unposted_app_sub_actions_by_billing_entity_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_app_sub_actions_sync_detailed(
@@ -708,7 +841,7 @@ def get_app_sub_actions_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiAppSubAction]:
     """Get app subscription actions
 
@@ -752,26 +885,18 @@ def get_app_sub_actions_sync_detailed(
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_sub_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_subscription_uuid=app_subscription_uuid,
-        app_sub_action_type=app_sub_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_sub_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_sub_action_type=app_sub_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -779,6 +904,8 @@ def get_app_sub_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -790,6 +917,8 @@ def get_app_sub_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -797,10 +926,12 @@ def get_app_sub_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_app_sub_actions_sync(
@@ -816,7 +947,7 @@ def get_app_sub_actions_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiAppSubAction | None:
     """Get app subscription actions
 
@@ -860,26 +991,18 @@ def get_app_sub_actions_sync(
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_sub_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_subscription_uuid=app_subscription_uuid,
-        app_sub_action_type=app_sub_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_sub_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_sub_action_type=app_sub_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -887,7 +1010,7 @@ def get_app_sub_actions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -895,6 +1018,8 @@ def get_app_sub_actions_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_app_sub_actions_asyncio_detailed(
@@ -910,7 +1035,7 @@ def get_app_sub_actions_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiAppSubAction]:
     """Get app subscription actions
 
@@ -954,26 +1079,18 @@ def get_app_sub_actions_asyncio_detailed(
     Returns:
         Response[ApiAppSubAction]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_sub_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_subscription_uuid=app_subscription_uuid,
-        app_sub_action_type=app_sub_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_sub_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_sub_action_type=app_sub_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -981,6 +1098,8 @@ def get_app_sub_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -992,6 +1111,8 @@ def get_app_sub_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiAppSubAction | None
     if body_json and proxy_response.status_code == 200 and ApiAppSubAction:
         parsed = ApiAppSubAction.from_dict(body_json)
     else:
@@ -999,10 +1120,12 @@ def get_app_sub_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_app_sub_actions_asyncio(
@@ -1018,7 +1141,7 @@ def get_app_sub_actions_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiAppSubAction | None:
     """Get app subscription actions
 
@@ -1062,26 +1185,18 @@ def get_app_sub_actions_asyncio(
     Returns:
         ApiAppSubAction | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_sub_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_subscription_uuid=app_subscription_uuid,
-        app_sub_action_type=app_sub_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_sub_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_subscription_uuid=app_subscription_uuid, app_sub_action_type=app_sub_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1089,7 +1204,7 @@ def get_app_sub_actions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1097,3 +1212,4 @@ def get_app_sub_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

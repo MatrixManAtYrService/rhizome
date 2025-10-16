@@ -9,28 +9,25 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_specifier import (
-    create_misc_specifier,
-    delete_misc_specifier_by_uuid,
-    get_misc_specifier_by_uuid,
-    get_misc_specifiers_by_specifier,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_specifier import (
-    ApiMiscSpecifier,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_specifier import create_misc_specifier
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_specifier import delete_misc_specifier_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_specifier import get_misc_specifier_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.misc_specifier import get_misc_specifiers_by_specifier
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_misc_specifier import ApiMiscSpecifier
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
 def get_misc_specifiers_by_specifier_sync_detailed(
-    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    misc_specifier: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
@@ -54,14 +51,18 @@ def get_misc_specifiers_by_specifier_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -69,6 +70,8 @@ def get_misc_specifiers_by_specifier_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -80,6 +83,8 @@ def get_misc_specifiers_by_specifier_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -87,14 +92,18 @@ def get_misc_specifiers_by_specifier_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_specifiers_by_specifier_sync(
-    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    misc_specifier: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
@@ -118,14 +127,18 @@ def get_misc_specifiers_by_specifier_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -133,7 +146,7 @@ def get_misc_specifiers_by_specifier_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -143,8 +156,12 @@ def get_misc_specifiers_by_specifier_sync(
     return None
 
 
+
+
 def get_misc_specifiers_by_specifier_asyncio_detailed(
-    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    misc_specifier: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
@@ -168,14 +185,18 @@ def get_misc_specifiers_by_specifier_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -183,6 +204,8 @@ def get_misc_specifiers_by_specifier_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -194,6 +217,8 @@ def get_misc_specifiers_by_specifier_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -201,14 +226,18 @@ def get_misc_specifiers_by_specifier_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_misc_specifiers_by_specifier_asyncio(
-    *, client: StolonClient, misc_specifier: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    misc_specifier: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get miscellaneous specifiers optionally filtering by specifier value
 
@@ -232,14 +261,18 @@ def get_misc_specifiers_by_specifier_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifiers_by_specifier._get_kwargs(misc_specifier=misc_specifier)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -247,7 +280,7 @@ def get_misc_specifiers_by_specifier_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -257,7 +290,13 @@ def get_misc_specifiers_by_specifier_asyncio(
     return None
 
 
-def get_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_misc_specifier_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get misc specifier by UUID
 
     Args:
@@ -280,14 +319,18 @@ def get_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -295,6 +338,8 @@ def get_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -306,6 +351,8 @@ def get_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -313,13 +360,19 @@ def get_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_misc_specifier_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get misc specifier by UUID
 
     Args:
@@ -342,14 +395,18 @@ def get_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -357,7 +414,7 @@ def get_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -367,7 +424,13 @@ def get_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     return None
 
 
-def get_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_misc_specifier_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get misc specifier by UUID
 
     Args:
@@ -390,14 +453,18 @@ def get_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -405,6 +472,8 @@ def get_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -416,6 +485,8 @@ def get_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -423,13 +494,19 @@ def get_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_misc_specifier_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get misc specifier by UUID
 
     Args:
@@ -452,14 +529,18 @@ def get_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -467,7 +548,7 @@ def get_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -477,7 +558,13 @@ def get_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def create_misc_specifier_sync_detailed(*, client: StolonClient, body: ApiMiscSpecifier) -> Response[ResponseError]:
+
+
+def create_misc_specifier_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiMiscSpecifier
+) -> Response[ResponseError]:
     """Create miscellaneous specifier
 
     Args:
@@ -500,14 +587,18 @@ def create_misc_specifier_sync_detailed(*, client: StolonClient, body: ApiMiscSp
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_misc_specifier._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -515,6 +606,8 @@ def create_misc_specifier_sync_detailed(*, client: StolonClient, body: ApiMiscSp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -526,6 +619,8 @@ def create_misc_specifier_sync_detailed(*, client: StolonClient, body: ApiMiscSp
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -533,13 +628,19 @@ def create_misc_specifier_sync_detailed(*, client: StolonClient, body: ApiMiscSp
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_misc_specifier_sync(*, client: StolonClient, body: ApiMiscSpecifier) -> ResponseError | None:
+
+
+def create_misc_specifier_sync(
+    *,
+    client: StolonClient,
+    body: ApiMiscSpecifier
+) -> ResponseError | None:
     """Create miscellaneous specifier
 
     Args:
@@ -562,14 +663,18 @@ def create_misc_specifier_sync(*, client: StolonClient, body: ApiMiscSpecifier) 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_misc_specifier._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -577,7 +682,7 @@ def create_misc_specifier_sync(*, client: StolonClient, body: ApiMiscSpecifier) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -587,7 +692,13 @@ def create_misc_specifier_sync(*, client: StolonClient, body: ApiMiscSpecifier) 
     return None
 
 
-def create_misc_specifier_asyncio_detailed(*, client: StolonClient, body: ApiMiscSpecifier) -> Response[ResponseError]:
+
+
+def create_misc_specifier_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiMiscSpecifier
+) -> Response[ResponseError]:
     """Create miscellaneous specifier
 
     Args:
@@ -610,14 +721,18 @@ def create_misc_specifier_asyncio_detailed(*, client: StolonClient, body: ApiMis
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_misc_specifier._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -625,6 +740,8 @@ def create_misc_specifier_asyncio_detailed(*, client: StolonClient, body: ApiMis
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -636,6 +753,8 @@ def create_misc_specifier_asyncio_detailed(*, client: StolonClient, body: ApiMis
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -643,13 +762,19 @@ def create_misc_specifier_asyncio_detailed(*, client: StolonClient, body: ApiMis
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_misc_specifier_asyncio(*, client: StolonClient, body: ApiMiscSpecifier) -> ResponseError | None:
+
+
+def create_misc_specifier_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiMiscSpecifier
+) -> ResponseError | None:
     """Create miscellaneous specifier
 
     Args:
@@ -672,14 +797,18 @@ def create_misc_specifier_asyncio(*, client: StolonClient, body: ApiMiscSpecifie
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_misc_specifier._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -687,7 +816,7 @@ def create_misc_specifier_asyncio(*, client: StolonClient, body: ApiMiscSpecifie
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -697,7 +826,13 @@ def create_misc_specifier_asyncio(*, client: StolonClient, body: ApiMiscSpecifie
     return None
 
 
-def delete_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_misc_specifier_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete misc specifier
 
     Args:
@@ -720,14 +855,18 @@ def delete_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -735,6 +874,8 @@ def delete_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -746,6 +887,8 @@ def delete_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -753,13 +896,19 @@ def delete_misc_specifier_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_misc_specifier_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete misc specifier
 
     Args:
@@ -782,14 +931,18 @@ def delete_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Re
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -797,7 +950,7 @@ def delete_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Re
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -807,7 +960,13 @@ def delete_misc_specifier_by_uuid_sync(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def delete_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def delete_misc_specifier_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Delete misc specifier
 
     Args:
@@ -830,14 +989,18 @@ def delete_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -845,6 +1008,8 @@ def delete_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -856,6 +1021,8 @@ def delete_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -863,13 +1030,19 @@ def delete_misc_specifier_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_misc_specifier_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete misc specifier
 
     Args:
@@ -892,14 +1065,18 @@ def delete_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_misc_specifier_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -907,7 +1084,7 @@ def delete_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -915,3 +1092,4 @@ def delete_misc_specifier_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

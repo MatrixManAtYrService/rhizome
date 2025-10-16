@@ -9,17 +9,19 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.aggregator_job_controller import (
-    get_aggregator_status,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.aggregator_job_controller import get_aggregator_status
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def get_aggregator_status_sync_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
+def get_aggregator_status_sync_detailed(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -40,14 +42,18 @@ def get_aggregator_status_sync_detailed(*, client: StolonClient, request_uuid: s
     Returns:
         Response[str]
     """
+
     # Extract request parameters from generated function
     kwargs = get_aggregator_status._get_kwargs(request_uuid=request_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -55,6 +61,8 @@ def get_aggregator_status_sync_detailed(*, client: StolonClient, request_uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -75,13 +83,19 @@ def get_aggregator_status_sync_detailed(*, client: StolonClient, request_uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_aggregator_status_sync(*, client: StolonClient, request_uuid: str) -> str | None:
+
+
+def get_aggregator_status_sync(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -102,14 +116,18 @@ def get_aggregator_status_sync(*, client: StolonClient, request_uuid: str) -> st
     Returns:
         str | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_aggregator_status._get_kwargs(request_uuid=request_uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -120,7 +138,13 @@ def get_aggregator_status_sync(*, client: StolonClient, request_uuid: str) -> st
     return None
 
 
-def get_aggregator_status_asyncio_detailed(*, client: StolonClient, request_uuid: str) -> Response[str]:
+
+
+def get_aggregator_status_asyncio_detailed(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> Response[str]:
     """Args:
         request_uuid (str):
 
@@ -141,14 +165,18 @@ def get_aggregator_status_asyncio_detailed(*, client: StolonClient, request_uuid
     Returns:
         Response[str]
     """
+
     # Extract request parameters from generated function
     kwargs = get_aggregator_status._get_kwargs(request_uuid=request_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -156,6 +184,8 @@ def get_aggregator_status_asyncio_detailed(*, client: StolonClient, request_uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -176,13 +206,19 @@ def get_aggregator_status_asyncio_detailed(*, client: StolonClient, request_uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_aggregator_status_asyncio(*, client: StolonClient, request_uuid: str) -> str | None:
+
+
+def get_aggregator_status_asyncio(
+    *,
+    client: StolonClient,
+    request_uuid: str
+) -> str | None:
     """Args:
         request_uuid (str):
 
@@ -203,14 +239,18 @@ def get_aggregator_status_asyncio(*, client: StolonClient, request_uuid: str) ->
     Returns:
         str | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_aggregator_status._get_kwargs(request_uuid=request_uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -219,3 +259,4 @@ def get_aggregator_status_asyncio(*, client: StolonClient, request_uuid: str) ->
 
     # No response model, return None
     return None
+

@@ -9,40 +9,35 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import create_monetary_rule_set
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import create_monetary_rule_set_rule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import delete_monetary_rule_set
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import delete_monetary_rule_set_rule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_rule_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_rules
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_set_with_rules
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import get_monetary_rule_sets
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import set_monetary_rule_set_status
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import update_monetary_rule_set
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import update_monetary_rule_set_rule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set import ApiMonetaryRuleSet
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set_rule import ApiMonetaryRuleSetRule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.monetary_rule_set import (
-    create_monetary_rule_set,
-    create_monetary_rule_set_rule,
-    delete_monetary_rule_set,
-    delete_monetary_rule_set_rule,
-    get_monetary_rule_set_by_uuid,
-    get_monetary_rule_set_rule_by_uuid,
-    get_monetary_rule_set_rules,
-    get_monetary_rule_set_with_rules,
-    get_monetary_rule_sets,
-    set_monetary_rule_set_status,
-    update_monetary_rule_set,
-    update_monetary_rule_set_rule,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set import (
-    ApiMonetaryRuleSet,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_monetary_rule_set_rule import (
-    ApiMonetaryRuleSetRule,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_monetary_rule_set_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set by UUID
 
@@ -66,14 +61,18 @@ def get_monetary_rule_set_by_uuid_sync_detailed(
     Returns:
         Response[ApiMonetaryRuleSet | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -81,6 +80,8 @@ def get_monetary_rule_set_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -92,6 +93,8 @@ def get_monetary_rule_set_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -99,119 +102,18 @@ def get_monetary_rule_set_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_monetary_rule_set_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | ResponseError | None:
-    """Get monetary rule set by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ApiMonetaryRuleSet, ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiMonetaryRuleSet | ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
 
 
-def get_monetary_rule_set_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiMonetaryRuleSet | ResponseError]:
-    """Get monetary rule set by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ApiMonetaryRuleSet, ResponseError]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiMonetaryRuleSet | ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_monetary_rule_set_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+def get_monetary_rule_set_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set by UUID
 
@@ -235,14 +137,18 @@ def get_monetary_rule_set_by_uuid_asyncio(
     Returns:
         ApiMonetaryRuleSet | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -251,6 +157,135 @@ def get_monetary_rule_set_by_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
+
+
+def get_monetary_rule_set_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiMonetaryRuleSet | ResponseError]:
+    """Get monetary rule set by UUID
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ApiMonetaryRuleSet, ResponseError]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ApiMonetaryRuleSet | ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_monetary_rule_set_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
+    """Get monetary rule set by UUID
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ApiMonetaryRuleSet, ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ApiMonetaryRuleSet | ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = get_monetary_rule_set_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
 
 
 def get_monetary_rule_sets_sync_detailed(
@@ -259,7 +294,7 @@ def get_monetary_rule_sets_sync_detailed(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get monetary rule sets
 
@@ -289,16 +324,18 @@ def get_monetary_rule_sets_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs(
-        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_sets._get_kwargs(rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -306,6 +343,8 @@ def get_monetary_rule_sets_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -317,6 +356,8 @@ def get_monetary_rule_sets_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -324,10 +365,12 @@ def get_monetary_rule_sets_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_sets_sync(
@@ -336,7 +379,7 @@ def get_monetary_rule_sets_sync(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get monetary rule sets
 
@@ -366,16 +409,18 @@ def get_monetary_rule_sets_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs(
-        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_sets._get_kwargs(rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -383,7 +428,7 @@ def get_monetary_rule_sets_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -391,6 +436,8 @@ def get_monetary_rule_sets_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_monetary_rule_sets_asyncio_detailed(
@@ -399,7 +446,7 @@ def get_monetary_rule_sets_asyncio_detailed(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get monetary rule sets
 
@@ -429,16 +476,18 @@ def get_monetary_rule_sets_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs(
-        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_sets._get_kwargs(rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -446,6 +495,8 @@ def get_monetary_rule_sets_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -457,6 +508,8 @@ def get_monetary_rule_sets_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -464,10 +517,12 @@ def get_monetary_rule_sets_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_sets_asyncio(
@@ -476,7 +531,7 @@ def get_monetary_rule_sets_asyncio(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get monetary rule sets
 
@@ -506,16 +561,18 @@ def get_monetary_rule_sets_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_sets._get_kwargs(
-        rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_sets._get_kwargs(rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -523,7 +580,7 @@ def get_monetary_rule_sets_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -531,10 +588,14 @@ def get_monetary_rule_sets_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_monetary_rule_set_rule_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiMonetaryRuleSetRule | ResponseError]:
     """Get monetary rule set rule by UUID
 
@@ -558,14 +619,18 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
     Returns:
         Response[ApiMonetaryRuleSetRule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -573,6 +638,8 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -584,6 +651,8 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -591,14 +660,18 @@ def get_monetary_rule_set_rule_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_set_rule_by_uuid_sync(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiMonetaryRuleSetRule | ResponseError | None:
     """Get monetary rule set rule by UUID
 
@@ -622,14 +695,18 @@ def get_monetary_rule_set_rule_by_uuid_sync(
     Returns:
         ApiMonetaryRuleSetRule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -640,8 +717,12 @@ def get_monetary_rule_set_rule_by_uuid_sync(
     return None
 
 
+
+
 def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiMonetaryRuleSetRule | ResponseError]:
     """Get monetary rule set rule by UUID
 
@@ -665,14 +746,18 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiMonetaryRuleSetRule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -680,6 +765,8 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -691,6 +778,8 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -698,14 +787,18 @@ def get_monetary_rule_set_rule_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_monetary_rule_set_rule_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiMonetaryRuleSetRule | ResponseError | None:
     """Get monetary rule set rule by UUID
 
@@ -729,14 +822,18 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(
     Returns:
         ApiMonetaryRuleSetRule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_rule_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -745,10 +842,14 @@ def get_monetary_rule_set_rule_by_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def set_monetary_rule_set_status_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Set the status for the monetary rule set
 
@@ -772,14 +873,18 @@ def set_monetary_rule_set_status_sync_detailed(
     Returns:
         Response[ApiMonetaryRuleSet | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -787,6 +892,8 @@ def set_monetary_rule_set_status_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -798,6 +905,8 @@ def set_monetary_rule_set_status_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -805,13 +914,19 @@ def set_monetary_rule_set_status_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> ApiMonetaryRuleSet | ResponseError | None:
+
+
+def set_monetary_rule_set_status_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiMonetaryRuleSet | ResponseError | None:
     """Set the status for the monetary rule set
 
     Args:
@@ -834,14 +949,18 @@ def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> Api
     Returns:
         ApiMonetaryRuleSet | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -850,10 +969,14 @@ def set_monetary_rule_set_status_sync(*, client: StolonClient, uuid: str) -> Api
 
     # No response model, return None
     return None
+
+
 
 
 def set_monetary_rule_set_status_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Set the status for the monetary rule set
 
@@ -877,14 +1000,18 @@ def set_monetary_rule_set_status_asyncio_detailed(
     Returns:
         Response[ApiMonetaryRuleSet | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -892,6 +1019,8 @@ def set_monetary_rule_set_status_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -903,6 +1032,8 @@ def set_monetary_rule_set_status_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -910,14 +1041,18 @@ def set_monetary_rule_set_status_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def set_monetary_rule_set_status_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Set the status for the monetary rule set
 
@@ -941,14 +1076,18 @@ def set_monetary_rule_set_status_asyncio(
     Returns:
         ApiMonetaryRuleSet | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = set_monetary_rule_set_status._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -957,10 +1096,15 @@ def set_monetary_rule_set_status_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_monetary_rule_set_with_rules_sync_detailed(
-    *, client: StolonClient, uuid: str, as_of_date: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -986,14 +1130,18 @@ def get_monetary_rule_set_with_rules_sync_detailed(
     Returns:
         Response[ApiMonetaryRuleSet | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1001,6 +1149,8 @@ def get_monetary_rule_set_with_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1012,6 +1162,8 @@ def get_monetary_rule_set_with_rules_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1019,14 +1171,19 @@ def get_monetary_rule_set_with_rules_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_set_with_rules_sync(
-    *, client: StolonClient, uuid: str, as_of_date: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1052,14 +1209,18 @@ def get_monetary_rule_set_with_rules_sync(
     Returns:
         ApiMonetaryRuleSet | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1070,8 +1231,13 @@ def get_monetary_rule_set_with_rules_sync(
     return None
 
 
+
+
 def get_monetary_rule_set_with_rules_asyncio_detailed(
-    *, client: StolonClient, uuid: str, as_of_date: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
 ) -> Response[ApiMonetaryRuleSet | ResponseError]:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1097,14 +1263,18 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
     Returns:
         Response[ApiMonetaryRuleSet | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1112,6 +1282,8 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1123,6 +1295,8 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1130,14 +1304,19 @@ def get_monetary_rule_set_with_rules_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_monetary_rule_set_with_rules_asyncio(
-    *, client: StolonClient, uuid: str, as_of_date: str
+    *,
+    client: StolonClient,
+    uuid: str,
+    as_of_date: str
 ) -> ApiMonetaryRuleSet | ResponseError | None:
     """Get monetary rule set, with rules, by UUID and as-of date
 
@@ -1163,14 +1342,18 @@ def get_monetary_rule_set_with_rules_asyncio(
     Returns:
         ApiMonetaryRuleSet | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_monetary_rule_set_with_rules._get_kwargs(uuid=uuid, as_of_date=as_of_date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1181,8 +1364,12 @@ def get_monetary_rule_set_with_rules_asyncio(
     return None
 
 
+
+
 def create_monetary_rule_set_rule_sync_detailed(
-    *, client: StolonClient, body: ApiMonetaryRuleSetRule
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSetRule
 ) -> Response[ResponseError]:
     """Create monetary rule set rule
 
@@ -1206,14 +1393,18 @@ def create_monetary_rule_set_rule_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1221,6 +1412,8 @@ def create_monetary_rule_set_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1232,6 +1425,8 @@ def create_monetary_rule_set_rule_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1239,126 +1434,18 @@ def create_monetary_rule_set_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_rule_sync(*, client: StolonClient, body: ApiMonetaryRuleSetRule) -> ResponseError | None:
-    """Create monetary rule set rule
-
-    Args:
-        body (ApiMonetaryRuleSetRule):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiMonetaryRuleSetRule
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
 
 
-def create_monetary_rule_set_rule_asyncio_detailed(
-    *, client: StolonClient, body: ApiMonetaryRuleSetRule
-) -> Response[ResponseError]:
-    """Create monetary rule set rule
-
-    Args:
-        body (ApiMonetaryRuleSetRule):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiMonetaryRuleSetRule
-
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_monetary_rule_set_rule_asyncio(
-    *, client: StolonClient, body: ApiMonetaryRuleSetRule
+def create_monetary_rule_set_rule_sync(
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSetRule
 ) -> ResponseError | None:
     """Create monetary rule set rule
 
@@ -1382,14 +1469,18 @@ def create_monetary_rule_set_rule_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1397,7 +1488,7 @@ def create_monetary_rule_set_rule_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1405,6 +1496,142 @@ def create_monetary_rule_set_rule_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def create_monetary_rule_set_rule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSetRule
+) -> Response[ResponseError]:
+    """Create monetary rule set rule
+
+    Args:
+        body (ApiMonetaryRuleSetRule):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiMonetaryRuleSetRule
+
+    Returns:
+        Response[ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_monetary_rule_set_rule_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSetRule
+) -> ResponseError | None:
+    """Create monetary rule set rule
+
+    Args:
+        body (ApiMonetaryRuleSetRule):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiMonetaryRuleSetRule
+
+    Returns:
+        ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_monetary_rule_set_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
 
 
 def get_monetary_rule_set_rules_sync_detailed(
@@ -1414,7 +1641,7 @@ def get_monetary_rule_set_rules_sync_detailed(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get monetary rule set rules
 
@@ -1446,16 +1673,18 @@ def get_monetary_rule_set_rules_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs(
-        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_set_rules._get_kwargs(rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1463,6 +1692,8 @@ def get_monetary_rule_set_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1474,6 +1705,8 @@ def get_monetary_rule_set_rules_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1481,10 +1714,12 @@ def get_monetary_rule_set_rules_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_set_rules_sync(
@@ -1494,7 +1729,7 @@ def get_monetary_rule_set_rules_sync(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get monetary rule set rules
 
@@ -1526,16 +1761,18 @@ def get_monetary_rule_set_rules_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs(
-        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_set_rules._get_kwargs(rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1543,7 +1780,7 @@ def get_monetary_rule_set_rules_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1551,6 +1788,8 @@ def get_monetary_rule_set_rules_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_monetary_rule_set_rules_asyncio_detailed(
@@ -1560,7 +1799,7 @@ def get_monetary_rule_set_rules_asyncio_detailed(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get monetary rule set rules
 
@@ -1592,16 +1831,18 @@ def get_monetary_rule_set_rules_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs(
-        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_set_rules._get_kwargs(rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1609,6 +1850,8 @@ def get_monetary_rule_set_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1620,6 +1863,8 @@ def get_monetary_rule_set_rules_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1627,10 +1872,12 @@ def get_monetary_rule_set_rules_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_monetary_rule_set_rules_asyncio(
@@ -1640,7 +1887,7 @@ def get_monetary_rule_set_rules_asyncio(
     rule_uuid: Union[Unset, str] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get monetary rule set rules
 
@@ -1672,16 +1919,18 @@ def get_monetary_rule_set_rules_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_monetary_rule_set_rules._get_kwargs(
-        rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_monetary_rule_set_rules._get_kwargs(rule_set_uuid=rule_set_uuid, rule_uuid=rule_uuid, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1689,7 +1938,7 @@ def get_monetary_rule_set_rules_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1699,7 +1948,13 @@ def get_monetary_rule_set_rules_asyncio(
     return None
 
 
-def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_monetary_rule_set_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete monetary rule set
 
     Args:
@@ -1722,14 +1977,18 @@ def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1737,6 +1996,8 @@ def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1748,6 +2009,8 @@ def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1755,13 +2018,19 @@ def delete_monetary_rule_set_sync_detailed(*, client: StolonClient, uuid: str) -
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_monetary_rule_set_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete monetary rule set
 
     Args:
@@ -1784,14 +2053,18 @@ def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> Respons
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1802,7 +2075,13 @@ def delete_monetary_rule_set_sync(*, client: StolonClient, uuid: str) -> Respons
     return None
 
 
-def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_monetary_rule_set_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete monetary rule set
 
     Args:
@@ -1825,14 +2104,18 @@ def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1840,6 +2123,8 @@ def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1851,6 +2136,8 @@ def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1858,13 +2145,19 @@ def delete_monetary_rule_set_asyncio_detailed(*, client: StolonClient, uuid: str
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_monetary_rule_set_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete monetary rule set
 
     Args:
@@ -1887,14 +2180,18 @@ def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_monetary_rule_set._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1903,10 +2200,15 @@ def delete_monetary_rule_set_asyncio(*, client: StolonClient, uuid: str) -> Resp
 
     # No response model, return None
     return None
+
+
 
 
 def update_monetary_rule_set_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSet
 ) -> Response[ResponseError]:
     """Update monetary rule set
 
@@ -1932,14 +2234,18 @@ def update_monetary_rule_set_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1947,6 +2253,8 @@ def update_monetary_rule_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1958,6 +2266,8 @@ def update_monetary_rule_set_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1965,130 +2275,19 @@ def update_monetary_rule_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_monetary_rule_set_sync(*, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet) -> ResponseError | None:
-    """Update monetary rule set
-
-    Args:
-        uuid (str):
-        body (ApiMonetaryRuleSet):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-        body: ApiMonetaryRuleSet
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
 
 
-def update_monetary_rule_set_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet
-) -> Response[ResponseError]:
-    """Update monetary rule set
-
-    Args:
-        uuid (str):
-        body (ApiMonetaryRuleSet):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-        body: ApiMonetaryRuleSet
-
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def update_monetary_rule_set_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSet
+def update_monetary_rule_set_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSet
 ) -> ResponseError | None:
     """Update monetary rule set
 
@@ -2114,14 +2313,18 @@ def update_monetary_rule_set_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2129,7 +2332,7 @@ def update_monetary_rule_set_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2137,10 +2340,154 @@ def update_monetary_rule_set_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def update_monetary_rule_set_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSet
+) -> Response[ResponseError]:
+    """Update monetary rule set
+
+    Args:
+        uuid (str):
+        body (ApiMonetaryRuleSet):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+        body: ApiMonetaryRuleSet
+
+    Returns:
+        Response[ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def update_monetary_rule_set_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSet
+) -> ResponseError | None:
+    """Update monetary rule set
+
+    Args:
+        uuid (str):
+        body (ApiMonetaryRuleSet):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+        body: ApiMonetaryRuleSet
+
+    Returns:
+        ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = update_monetary_rule_set._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
 
 
 def create_monetary_rule_set_sync_detailed(
-    *, client: StolonClient, body: ApiMonetaryRuleSet
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSet
 ) -> Response[ResponseError]:
     """Create monetary rule set
 
@@ -2164,14 +2511,18 @@ def create_monetary_rule_set_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2179,6 +2530,8 @@ def create_monetary_rule_set_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2190,6 +2543,8 @@ def create_monetary_rule_set_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2197,13 +2552,19 @@ def create_monetary_rule_set_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_sync(*, client: StolonClient, body: ApiMonetaryRuleSet) -> ResponseError | None:
+
+
+def create_monetary_rule_set_sync(
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSet
+) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2226,14 +2587,18 @@ def create_monetary_rule_set_sync(*, client: StolonClient, body: ApiMonetaryRule
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2241,7 +2606,7 @@ def create_monetary_rule_set_sync(*, client: StolonClient, body: ApiMonetaryRule
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2249,10 +2614,14 @@ def create_monetary_rule_set_sync(*, client: StolonClient, body: ApiMonetaryRule
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_monetary_rule_set_asyncio_detailed(
-    *, client: StolonClient, body: ApiMonetaryRuleSet
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSet
 ) -> Response[ResponseError]:
     """Create monetary rule set
 
@@ -2276,14 +2645,18 @@ def create_monetary_rule_set_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2291,6 +2664,8 @@ def create_monetary_rule_set_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2302,6 +2677,8 @@ def create_monetary_rule_set_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2309,13 +2686,19 @@ def create_monetary_rule_set_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_monetary_rule_set_asyncio(*, client: StolonClient, body: ApiMonetaryRuleSet) -> ResponseError | None:
+
+
+def create_monetary_rule_set_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiMonetaryRuleSet
+) -> ResponseError | None:
     """Create monetary rule set
 
     Args:
@@ -2338,14 +2721,18 @@ def create_monetary_rule_set_asyncio(*, client: StolonClient, body: ApiMonetaryR
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_monetary_rule_set._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2353,7 +2740,7 @@ def create_monetary_rule_set_asyncio(*, client: StolonClient, body: ApiMonetaryR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2363,111 +2750,12 @@ def create_monetary_rule_set_asyncio(*, client: StolonClient, body: ApiMonetaryR
     return None
 
 
-def delete_monetary_rule_set_rule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
-    """Delete monetary rule set rule
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ResponseError, bool]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ResponseError | bool]
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
 
 
-def delete_monetary_rule_set_rule_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
-    """Delete monetary rule set rule
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ResponseError, bool]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ResponseError | bool | None
-    """
-    # Extract request parameters from generated function
-    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
-
-
-def delete_monetary_rule_set_rule_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+def delete_monetary_rule_set_rule_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | bool]:
     """Delete monetary rule set rule
 
@@ -2491,14 +2779,18 @@ def delete_monetary_rule_set_rule_asyncio_detailed(
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2506,6 +2798,8 @@ def delete_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2517,6 +2811,8 @@ def delete_monetary_rule_set_rule_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2524,13 +2820,19 @@ def delete_monetary_rule_set_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_monetary_rule_set_rule_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete monetary rule set rule
 
     Args:
@@ -2553,14 +2855,18 @@ def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2571,8 +2877,140 @@ def delete_monetary_rule_set_rule_asyncio(*, client: StolonClient, uuid: str) ->
     return None
 
 
+
+
+def delete_monetary_rule_set_rule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
+    """Delete monetary rule set rule
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Union[ResponseError, bool]]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError | bool]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def delete_monetary_rule_set_rule_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
+    """Delete monetary rule set rule
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Union[ResponseError, bool]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | bool | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = delete_monetary_rule_set_rule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # No response model, return None
+    return None
+
+
+
+
 def update_monetary_rule_set_rule_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSetRule
 ) -> Response[ResponseError]:
     """Update monetary rule set rule
 
@@ -2598,14 +3036,18 @@ def update_monetary_rule_set_rule_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2613,6 +3055,8 @@ def update_monetary_rule_set_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2624,6 +3068,8 @@ def update_monetary_rule_set_rule_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2631,14 +3077,19 @@ def update_monetary_rule_set_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_monetary_rule_set_rule_sync(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSetRule
 ) -> ResponseError | None:
     """Update monetary rule set rule
 
@@ -2664,14 +3115,18 @@ def update_monetary_rule_set_rule_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2679,7 +3134,7 @@ def update_monetary_rule_set_rule_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2689,8 +3144,13 @@ def update_monetary_rule_set_rule_sync(
     return None
 
 
+
+
 def update_monetary_rule_set_rule_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSetRule
 ) -> Response[ResponseError]:
     """Update monetary rule set rule
 
@@ -2716,14 +3176,18 @@ def update_monetary_rule_set_rule_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2731,6 +3195,8 @@ def update_monetary_rule_set_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2742,6 +3208,8 @@ def update_monetary_rule_set_rule_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2749,14 +3217,19 @@ def update_monetary_rule_set_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def update_monetary_rule_set_rule_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiMonetaryRuleSetRule
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiMonetaryRuleSetRule
 ) -> ResponseError | None:
     """Update monetary rule set rule
 
@@ -2782,14 +3255,18 @@ def update_monetary_rule_set_rule_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_monetary_rule_set_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2797,7 +3274,7 @@ def update_monetary_rule_set_rule_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2805,3 +3282,4 @@ def update_monetary_rule_set_rule_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

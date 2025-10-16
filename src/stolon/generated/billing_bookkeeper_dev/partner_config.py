@@ -9,58 +9,40 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import create_partner_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import delete_partner_config_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_cellular_billing_methods
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_invoice_methods
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_invoice_number_formats
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_partner_config_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_plan_billing_methods
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_post_methods
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_resolved_partner_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_settlement_methods
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import get_unresolved_partner_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import update_partner_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_billing_method import ApiCellularBillingMethod
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_method import ApiInvoiceMethod
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_number_format import ApiInvoiceNumberFormat
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_partner_config import ApiPartnerConfig
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_billing_method import ApiPlanBillingMethod
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_post_method import ApiPostMethod
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_resolved_partner_config import ApiResolvedPartnerConfig
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_method import ApiSettlementMethod
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.partner_config import (
-    create_partner_config,
-    delete_partner_config_by_uuid,
-    get_cellular_billing_methods,
-    get_invoice_methods,
-    get_invoice_number_formats,
-    get_partner_config_by_uuid,
-    get_plan_billing_methods,
-    get_post_methods,
-    get_resolved_partner_config,
-    get_settlement_methods,
-    get_unresolved_partner_config,
-    update_partner_config,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_billing_method import (
-    ApiCellularBillingMethod,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_method import (
-    ApiInvoiceMethod,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_number_format import (
-    ApiInvoiceNumberFormat,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_partner_config import (
-    ApiPartnerConfig,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_billing_method import (
-    ApiPlanBillingMethod,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_post_method import (
-    ApiPostMethod,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_resolved_partner_config import (
-    ApiResolvedPartnerConfig,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_method import (
-    ApiSettlementMethod,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_invoice_number_formats_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"]]:
     """Get the valid invoice number format values that can be configured.
 
@@ -76,19 +58,23 @@ def get_invoice_number_formats_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_number_formats._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -96,6 +82,8 @@ def get_invoice_number_formats_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -107,6 +95,8 @@ def get_invoice_number_formats_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -114,14 +104,17 @@ def get_invoice_number_formats_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_invoice_number_formats_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"] | None:
     """Get the valid invoice number format values that can be configured.
 
@@ -137,19 +130,23 @@ def get_invoice_number_formats_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_number_formats._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -160,8 +157,11 @@ def get_invoice_number_formats_sync(
     return None
 
 
+
+
 def get_invoice_number_formats_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"]]:
     """Get the valid invoice number format values that can be configured.
 
@@ -177,19 +177,23 @@ def get_invoice_number_formats_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_number_formats._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -197,6 +201,8 @@ def get_invoice_number_formats_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -208,6 +214,8 @@ def get_invoice_number_formats_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -215,14 +223,17 @@ def get_invoice_number_formats_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_invoice_number_formats_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"] | None:
     """Get the valid invoice number format values that can be configured.
 
@@ -238,19 +249,23 @@ def get_invoice_number_formats_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiInvoiceNumberFormat | list["ApiInvoiceNumberFormat"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_number_formats._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -259,10 +274,16 @@ def get_invoice_number_formats_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_resolved_partner_config_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> Response[ApiResolvedPartnerConfig | ResponseError]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
@@ -291,16 +312,18 @@ def get_resolved_partner_config_sync_detailed(
     Returns:
         Response[ApiResolvedPartnerConfig | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -308,6 +331,8 @@ def get_resolved_partner_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -319,6 +344,8 @@ def get_resolved_partner_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -326,14 +353,20 @@ def get_resolved_partner_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_resolved_partner_config_sync(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> ApiResolvedPartnerConfig | ResponseError | None:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
@@ -362,16 +395,18 @@ def get_resolved_partner_config_sync(
     Returns:
         ApiResolvedPartnerConfig | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -382,8 +417,14 @@ def get_resolved_partner_config_sync(
     return None
 
 
+
+
 def get_resolved_partner_config_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> Response[ApiResolvedPartnerConfig | ResponseError]:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
@@ -412,16 +453,18 @@ def get_resolved_partner_config_asyncio_detailed(
     Returns:
         Response[ApiResolvedPartnerConfig | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -429,6 +472,8 @@ def get_resolved_partner_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -440,6 +485,8 @@ def get_resolved_partner_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -447,14 +494,20 @@ def get_resolved_partner_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_resolved_partner_config_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> ApiResolvedPartnerConfig | ResponseError | None:
     """Get the partner configuration for a partner reseller or pseudo billing entity where the default
     values are resolved from parent entities in the specified schedule hierarchy.
@@ -483,16 +536,18 @@ def get_resolved_partner_config_asyncio(
     Returns:
         ApiResolvedPartnerConfig | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -503,7 +558,12 @@ def get_resolved_partner_config_asyncio(
     return None
 
 
-def get_invoice_methods_sync_detailed(*, client: StolonClient) -> Response[ResponseError | list["ApiInvoiceMethod"]]:
+
+
+def get_invoice_methods_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiInvoiceMethod"]]:
     """Get the valid invoice method values that can be configured.
 
     Raises:
@@ -518,19 +578,23 @@ def get_invoice_methods_sync_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiInvoiceMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -538,6 +602,8 @@ def get_invoice_methods_sync_detailed(*, client: StolonClient) -> Response[Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -549,6 +615,8 @@ def get_invoice_methods_sync_detailed(*, client: StolonClient) -> Response[Respo
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -556,13 +624,18 @@ def get_invoice_methods_sync_detailed(*, client: StolonClient) -> Response[Respo
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_invoice_methods_sync(*, client: StolonClient) -> ResponseError | list["ApiInvoiceMethod"] | None:
+
+
+def get_invoice_methods_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiInvoiceMethod"] | None:
     """Get the valid invoice method values that can be configured.
 
     Raises:
@@ -577,19 +650,23 @@ def get_invoice_methods_sync(*, client: StolonClient) -> ResponseError | list["A
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiInvoiceMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -600,7 +677,12 @@ def get_invoice_methods_sync(*, client: StolonClient) -> ResponseError | list["A
     return None
 
 
-def get_invoice_methods_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError | list["ApiInvoiceMethod"]]:
+
+
+def get_invoice_methods_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiInvoiceMethod"]]:
     """Get the valid invoice method values that can be configured.
 
     Raises:
@@ -615,19 +697,23 @@ def get_invoice_methods_asyncio_detailed(*, client: StolonClient) -> Response[Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiInvoiceMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -635,6 +721,8 @@ def get_invoice_methods_asyncio_detailed(*, client: StolonClient) -> Response[Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -646,6 +734,8 @@ def get_invoice_methods_asyncio_detailed(*, client: StolonClient) -> Response[Re
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -653,13 +743,18 @@ def get_invoice_methods_asyncio_detailed(*, client: StolonClient) -> Response[Re
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_invoice_methods_asyncio(*, client: StolonClient) -> ResponseError | list["ApiInvoiceMethod"] | None:
+
+
+def get_invoice_methods_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiInvoiceMethod"] | None:
     """Get the valid invoice method values that can be configured.
 
     Raises:
@@ -674,19 +769,23 @@ def get_invoice_methods_asyncio(*, client: StolonClient) -> ResponseError | list
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiInvoiceMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -695,10 +794,13 @@ def get_invoice_methods_asyncio(*, client: StolonClient) -> ResponseError | list
 
     # No response model, return None
     return None
+
+
 
 
 def get_settlement_methods_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiSettlementMethod | list["ApiSettlementMethod"]]:
     """Get the valid settlement method values that can be configured.
 
@@ -714,19 +816,23 @@ def get_settlement_methods_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiSettlementMethod | list["ApiSettlementMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -734,6 +840,8 @@ def get_settlement_methods_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -745,6 +853,8 @@ def get_settlement_methods_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -752,13 +862,18 @@ def get_settlement_methods_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_settlement_methods_sync(*, client: StolonClient) -> ApiSettlementMethod | list["ApiSettlementMethod"] | None:
+
+
+def get_settlement_methods_sync(
+    *,
+    client: StolonClient
+) -> ApiSettlementMethod | list["ApiSettlementMethod"] | None:
     """Get the valid settlement method values that can be configured.
 
     Raises:
@@ -773,19 +888,23 @@ def get_settlement_methods_sync(*, client: StolonClient) -> ApiSettlementMethod 
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiSettlementMethod | list["ApiSettlementMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -794,10 +913,13 @@ def get_settlement_methods_sync(*, client: StolonClient) -> ApiSettlementMethod 
 
     # No response model, return None
     return None
+
+
 
 
 def get_settlement_methods_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ApiSettlementMethod | list["ApiSettlementMethod"]]:
     """Get the valid settlement method values that can be configured.
 
@@ -813,19 +935,23 @@ def get_settlement_methods_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiSettlementMethod | list["ApiSettlementMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -833,6 +959,8 @@ def get_settlement_methods_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -844,6 +972,8 @@ def get_settlement_methods_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -851,13 +981,18 @@ def get_settlement_methods_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_settlement_methods_asyncio(*, client: StolonClient) -> ApiSettlementMethod | list["ApiSettlementMethod"] | None:
+
+
+def get_settlement_methods_asyncio(
+    *,
+    client: StolonClient
+) -> ApiSettlementMethod | list["ApiSettlementMethod"] | None:
     """Get the valid settlement method values that can be configured.
 
     Raises:
@@ -872,19 +1007,23 @@ def get_settlement_methods_asyncio(*, client: StolonClient) -> ApiSettlementMeth
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiSettlementMethod | list["ApiSettlementMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -895,8 +1034,13 @@ def get_settlement_methods_asyncio(*, client: StolonClient) -> ApiSettlementMeth
     return None
 
 
+
+
 def update_partner_config_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiPartnerConfig
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPartnerConfig
 ) -> Response[ApiPartnerConfig]:
     """Update a partner configuration
 
@@ -922,14 +1066,18 @@ def update_partner_config_sync_detailed(
     Returns:
         Response[ApiPartnerConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -937,6 +1085,8 @@ def update_partner_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -948,6 +1098,8 @@ def update_partner_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPartnerConfig | None
     if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
         parsed = ApiPartnerConfig.from_dict(body_json)
     else:
@@ -955,130 +1107,19 @@ def update_partner_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_partner_config_sync(*, client: StolonClient, uuid: str, body: ApiPartnerConfig) -> ApiPartnerConfig | None:
-    """Update a partner configuration
-
-    Args:
-        uuid (str):
-        body (ApiPartnerConfig):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiPartnerConfig
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-        body: ApiPartnerConfig
-
-    Returns:
-        ApiPartnerConfig | None
-    """
-    # Extract request parameters from generated function
-    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiPartnerConfig.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
 
 
-def update_partner_config_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiPartnerConfig
-) -> Response[ApiPartnerConfig]:
-    """Update a partner configuration
-
-    Args:
-        uuid (str):
-        body (ApiPartnerConfig):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiPartnerConfig]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-        body: ApiPartnerConfig
-
-    Returns:
-        Response[ApiPartnerConfig]
-    """
-    # Extract request parameters from generated function
-    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
-        parsed = ApiPartnerConfig.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def update_partner_config_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiPartnerConfig
+def update_partner_config_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPartnerConfig
 ) -> ApiPartnerConfig | None:
     """Update a partner configuration
 
@@ -1104,14 +1145,18 @@ def update_partner_config_asyncio(
     Returns:
         ApiPartnerConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1119,7 +1164,7 @@ def update_partner_config_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1129,7 +1174,153 @@ def update_partner_config_asyncio(
     return None
 
 
-def get_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPartnerConfig]:
+
+
+def update_partner_config_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPartnerConfig
+) -> Response[ApiPartnerConfig]:
+    """Update a partner configuration
+
+    Args:
+        uuid (str):
+        body (ApiPartnerConfig):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPartnerConfig]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+        body: ApiPartnerConfig
+
+    Returns:
+        Response[ApiPartnerConfig]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPartnerConfig | None
+    if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
+        parsed = ApiPartnerConfig.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def update_partner_config_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiPartnerConfig
+) -> ApiPartnerConfig | None:
+    """Update a partner configuration
+
+    Args:
+        uuid (str):
+        body (ApiPartnerConfig):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPartnerConfig
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+        body: ApiPartnerConfig
+
+    Returns:
+        ApiPartnerConfig | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = update_partner_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiPartnerConfig.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_partner_config_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiPartnerConfig]:
     """Get a partner configuration by UUID
 
     Args:
@@ -1152,14 +1343,18 @@ def get_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ApiPartnerConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = get_partner_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1167,6 +1362,8 @@ def get_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1178,6 +1375,8 @@ def get_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPartnerConfig | None
     if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
         parsed = ApiPartnerConfig.from_dict(body_json)
     else:
@@ -1185,13 +1384,19 @@ def get_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiPartnerConfig | None:
+
+
+def get_partner_config_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiPartnerConfig | None:
     """Get a partner configuration by UUID
 
     Args:
@@ -1214,14 +1419,18 @@ def get_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiPa
     Returns:
         ApiPartnerConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_partner_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1229,7 +1438,7 @@ def get_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiPa
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1239,7 +1448,13 @@ def get_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiPa
     return None
 
 
-def get_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiPartnerConfig]:
+
+
+def get_partner_config_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiPartnerConfig]:
     """Get a partner configuration by UUID
 
     Args:
@@ -1262,14 +1477,18 @@ def get_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ApiPartnerConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = get_partner_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1277,6 +1496,8 @@ def get_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1288,6 +1509,8 @@ def get_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPartnerConfig | None
     if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
         parsed = ApiPartnerConfig.from_dict(body_json)
     else:
@@ -1295,13 +1518,19 @@ def get_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiPartnerConfig | None:
+
+
+def get_partner_config_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiPartnerConfig | None:
     """Get a partner configuration by UUID
 
     Args:
@@ -1324,14 +1553,18 @@ def get_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     Returns:
         ApiPartnerConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_partner_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1339,7 +1572,7 @@ def get_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1347,6 +1580,8 @@ def get_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unresolved_partner_config_sync_detailed(
@@ -1356,7 +1591,7 @@ def get_unresolved_partner_config_sync_detailed(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiPartnerConfig | list["ApiPartnerConfig"]]:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1388,20 +1623,18 @@ def get_unresolved_partner_config_sync_detailed(
     Returns:
         Response[ApiPartnerConfig | list["ApiPartnerConfig"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1409,6 +1642,8 @@ def get_unresolved_partner_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1420,6 +1655,8 @@ def get_unresolved_partner_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1427,10 +1664,12 @@ def get_unresolved_partner_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unresolved_partner_config_sync(
@@ -1440,7 +1679,7 @@ def get_unresolved_partner_config_sync(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiPartnerConfig | list["ApiPartnerConfig"] | None:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1472,20 +1711,18 @@ def get_unresolved_partner_config_sync(
     Returns:
         ApiPartnerConfig | list["ApiPartnerConfig"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1496,6 +1733,8 @@ def get_unresolved_partner_config_sync(
     return None
 
 
+
+
 def get_unresolved_partner_config_asyncio_detailed(
     *,
     client: StolonClient,
@@ -1503,7 +1742,7 @@ def get_unresolved_partner_config_asyncio_detailed(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiPartnerConfig | list["ApiPartnerConfig"]]:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1535,20 +1774,18 @@ def get_unresolved_partner_config_asyncio_detailed(
     Returns:
         Response[ApiPartnerConfig | list["ApiPartnerConfig"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1556,6 +1793,8 @@ def get_unresolved_partner_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1567,6 +1806,8 @@ def get_unresolved_partner_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1574,10 +1815,12 @@ def get_unresolved_partner_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unresolved_partner_config_asyncio(
@@ -1587,7 +1830,7 @@ def get_unresolved_partner_config_asyncio(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiPartnerConfig | list["ApiPartnerConfig"] | None:
     """Get the unresolved partner configuration for a reseller or pseudo billing entity
 
@@ -1619,20 +1862,18 @@ def get_unresolved_partner_config_asyncio(
     Returns:
         ApiPartnerConfig | list["ApiPartnerConfig"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_partner_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_partner_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1643,118 +1884,12 @@ def get_unresolved_partner_config_asyncio(
     return None
 
 
-def create_partner_config_sync_detailed(*, client: StolonClient, body: ApiPartnerConfig) -> Response[ApiPartnerConfig]:
-    """Create a partner configuration
-
-    Args:
-        body (ApiPartnerConfig):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ApiPartnerConfig]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiPartnerConfig
-
-    Returns:
-        Response[ApiPartnerConfig]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_partner_config._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
-        parsed = ApiPartnerConfig.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
 
 
-def create_partner_config_sync(*, client: StolonClient, body: ApiPartnerConfig) -> ApiPartnerConfig | None:
-    """Create a partner configuration
-
-    Args:
-        body (ApiPartnerConfig):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ApiPartnerConfig
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiPartnerConfig
-
-    Returns:
-        ApiPartnerConfig | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_partner_config._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ApiPartnerConfig.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def create_partner_config_asyncio_detailed(
-    *, client: StolonClient, body: ApiPartnerConfig
+def create_partner_config_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiPartnerConfig
 ) -> Response[ApiPartnerConfig]:
     """Create a partner configuration
 
@@ -1778,14 +1913,18 @@ def create_partner_config_asyncio_detailed(
     Returns:
         Response[ApiPartnerConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = create_partner_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1793,6 +1932,8 @@ def create_partner_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1804,6 +1945,8 @@ def create_partner_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPartnerConfig | None
     if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
         parsed = ApiPartnerConfig.from_dict(body_json)
     else:
@@ -1811,13 +1954,19 @@ def create_partner_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_partner_config_asyncio(*, client: StolonClient, body: ApiPartnerConfig) -> ApiPartnerConfig | None:
+
+
+def create_partner_config_sync(
+    *,
+    client: StolonClient,
+    body: ApiPartnerConfig
+) -> ApiPartnerConfig | None:
     """Create a partner configuration
 
     Args:
@@ -1840,14 +1989,18 @@ def create_partner_config_asyncio(*, client: StolonClient, body: ApiPartnerConfi
     Returns:
         ApiPartnerConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_partner_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1855,7 +2008,7 @@ def create_partner_config_asyncio(*, client: StolonClient, body: ApiPartnerConfi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1865,8 +2018,145 @@ def create_partner_config_asyncio(*, client: StolonClient, body: ApiPartnerConfi
     return None
 
 
+
+
+def create_partner_config_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiPartnerConfig
+) -> Response[ApiPartnerConfig]:
+    """Create a partner configuration
+
+    Args:
+        body (ApiPartnerConfig):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ApiPartnerConfig]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiPartnerConfig
+
+    Returns:
+        Response[ApiPartnerConfig]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_partner_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPartnerConfig | None
+    if body_json and proxy_response.status_code == 200 and ApiPartnerConfig:
+        parsed = ApiPartnerConfig.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_partner_config_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiPartnerConfig
+) -> ApiPartnerConfig | None:
+    """Create a partner configuration
+
+    Args:
+        body (ApiPartnerConfig):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ApiPartnerConfig
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiPartnerConfig
+
+    Returns:
+        ApiPartnerConfig | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_partner_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ApiPartnerConfig.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
 def get_cellular_billing_methods_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ResponseError | list["ApiCellularBillingMethod"]]:
     """Get the valid cellular billing method values that can be configured.
 
@@ -1882,19 +2172,23 @@ def get_cellular_billing_methods_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiCellularBillingMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_cellular_billing_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1902,6 +2196,8 @@ def get_cellular_billing_methods_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1913,6 +2209,8 @@ def get_cellular_billing_methods_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1920,14 +2218,17 @@ def get_cellular_billing_methods_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_billing_methods_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ResponseError | list["ApiCellularBillingMethod"] | None:
     """Get the valid cellular billing method values that can be configured.
 
@@ -1943,19 +2244,23 @@ def get_cellular_billing_methods_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiCellularBillingMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_cellular_billing_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1966,8 +2271,11 @@ def get_cellular_billing_methods_sync(
     return None
 
 
+
+
 def get_cellular_billing_methods_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ResponseError | list["ApiCellularBillingMethod"]]:
     """Get the valid cellular billing method values that can be configured.
 
@@ -1983,19 +2291,23 @@ def get_cellular_billing_methods_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiCellularBillingMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_cellular_billing_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2003,6 +2315,8 @@ def get_cellular_billing_methods_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2014,6 +2328,8 @@ def get_cellular_billing_methods_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2021,14 +2337,17 @@ def get_cellular_billing_methods_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_cellular_billing_methods_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> ResponseError | list["ApiCellularBillingMethod"] | None:
     """Get the valid cellular billing method values that can be configured.
 
@@ -2044,19 +2363,23 @@ def get_cellular_billing_methods_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiCellularBillingMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_cellular_billing_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2065,10 +2388,13 @@ def get_cellular_billing_methods_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_plan_billing_methods_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ResponseError | list["ApiPlanBillingMethod"]]:
     """Get the valid plan billing method values that can be configured.
 
@@ -2084,19 +2410,23 @@ def get_plan_billing_methods_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiPlanBillingMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_billing_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2104,6 +2434,8 @@ def get_plan_billing_methods_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2115,6 +2447,8 @@ def get_plan_billing_methods_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2122,13 +2456,18 @@ def get_plan_billing_methods_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_billing_methods_sync(*, client: StolonClient) -> ResponseError | list["ApiPlanBillingMethod"] | None:
+
+
+def get_plan_billing_methods_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiPlanBillingMethod"] | None:
     """Get the valid plan billing method values that can be configured.
 
     Raises:
@@ -2143,19 +2482,23 @@ def get_plan_billing_methods_sync(*, client: StolonClient) -> ResponseError | li
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiPlanBillingMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_billing_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2164,10 +2507,13 @@ def get_plan_billing_methods_sync(*, client: StolonClient) -> ResponseError | li
 
     # No response model, return None
     return None
+
+
 
 
 def get_plan_billing_methods_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient
 ) -> Response[ResponseError | list["ApiPlanBillingMethod"]]:
     """Get the valid plan billing method values that can be configured.
 
@@ -2183,19 +2529,23 @@ def get_plan_billing_methods_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiPlanBillingMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_billing_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2203,6 +2553,8 @@ def get_plan_billing_methods_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2214,6 +2566,8 @@ def get_plan_billing_methods_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2221,13 +2575,18 @@ def get_plan_billing_methods_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_plan_billing_methods_asyncio(*, client: StolonClient) -> ResponseError | list["ApiPlanBillingMethod"] | None:
+
+
+def get_plan_billing_methods_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiPlanBillingMethod"] | None:
     """Get the valid plan billing method values that can be configured.
 
     Raises:
@@ -2242,19 +2601,23 @@ def get_plan_billing_methods_asyncio(*, client: StolonClient) -> ResponseError |
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiPlanBillingMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_billing_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2265,7 +2628,12 @@ def get_plan_billing_methods_asyncio(*, client: StolonClient) -> ResponseError |
     return None
 
 
-def get_post_methods_sync_detailed(*, client: StolonClient) -> Response[ResponseError | list["ApiPostMethod"]]:
+
+
+def get_post_methods_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiPostMethod"]]:
     """Get the valid post method values that can be configured.
 
     Raises:
@@ -2280,19 +2648,23 @@ def get_post_methods_sync_detailed(*, client: StolonClient) -> Response[Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiPostMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_post_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2300,6 +2672,8 @@ def get_post_methods_sync_detailed(*, client: StolonClient) -> Response[Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2311,6 +2685,8 @@ def get_post_methods_sync_detailed(*, client: StolonClient) -> Response[Response
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2318,13 +2694,18 @@ def get_post_methods_sync_detailed(*, client: StolonClient) -> Response[Response
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_post_methods_sync(*, client: StolonClient) -> ResponseError | list["ApiPostMethod"] | None:
+
+
+def get_post_methods_sync(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiPostMethod"] | None:
     """Get the valid post method values that can be configured.
 
     Raises:
@@ -2339,19 +2720,23 @@ def get_post_methods_sync(*, client: StolonClient) -> ResponseError | list["ApiP
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiPostMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_post_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2362,7 +2747,12 @@ def get_post_methods_sync(*, client: StolonClient) -> ResponseError | list["ApiP
     return None
 
 
-def get_post_methods_asyncio_detailed(*, client: StolonClient) -> Response[ResponseError | list["ApiPostMethod"]]:
+
+
+def get_post_methods_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ResponseError | list["ApiPostMethod"]]:
     """Get the valid post method values that can be configured.
 
     Raises:
@@ -2377,19 +2767,23 @@ def get_post_methods_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ResponseError | list["ApiPostMethod"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_post_methods._get_kwargs()
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2397,6 +2791,8 @@ def get_post_methods_asyncio_detailed(*, client: StolonClient) -> Response[Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2408,6 +2804,8 @@ def get_post_methods_asyncio_detailed(*, client: StolonClient) -> Response[Respo
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2415,13 +2813,18 @@ def get_post_methods_asyncio_detailed(*, client: StolonClient) -> Response[Respo
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_post_methods_asyncio(*, client: StolonClient) -> ResponseError | list["ApiPostMethod"] | None:
+
+
+def get_post_methods_asyncio(
+    *,
+    client: StolonClient
+) -> ResponseError | list["ApiPostMethod"] | None:
     """Get the valid post method values that can be configured.
 
     Raises:
@@ -2436,19 +2839,23 @@ def get_post_methods_asyncio(*, client: StolonClient) -> ResponseError | list["A
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ResponseError | list["ApiPostMethod"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_post_methods._get_kwargs()
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2459,7 +2866,13 @@ def get_post_methods_asyncio(*, client: StolonClient) -> ResponseError | list["A
     return None
 
 
-def delete_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | str]:
+
+
+def delete_partner_config_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete a partner configuration
 
     Args:
@@ -2482,14 +2895,18 @@ def delete_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ResponseError | str]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_partner_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2497,6 +2914,8 @@ def delete_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2508,6 +2927,8 @@ def delete_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2515,13 +2936,19 @@ def delete_partner_config_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
+
+
+def delete_partner_config_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a partner configuration
 
     Args:
@@ -2544,14 +2971,18 @@ def delete_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> Re
     Returns:
         ResponseError | str | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_partner_config_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2562,7 +2993,13 @@ def delete_partner_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def delete_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | str]:
+
+
+def delete_partner_config_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | str]:
     """Delete a partner configuration
 
     Args:
@@ -2585,14 +3022,18 @@ def delete_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     Returns:
         Response[ResponseError | str]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_partner_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2600,6 +3041,8 @@ def delete_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2611,6 +3054,8 @@ def delete_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2618,13 +3063,19 @@ def delete_partner_config_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
+
+
+def delete_partner_config_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a partner configuration
 
     Args:
@@ -2647,14 +3098,18 @@ def delete_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
     Returns:
         ResponseError | str | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_partner_config_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2663,3 +3118,4 @@ def delete_partner_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
 
     # No response model, return None
     return None
+

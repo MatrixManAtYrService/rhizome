@@ -9,38 +9,33 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import advance_billing_schedule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import create_billing_schedule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_archetype_schedule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_archetype_schedule_by_entity_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedule_by_billing_entity_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedule_by_entity_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedule_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_billing_schedules_by_next_billing_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import get_reseller_billing_schedule_by_billing_entity_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import set_billing_frequency_to_no_bill
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_schedule import ApiBillingSchedule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_set_billing_frequency_to_no_bill import ApiSetBillingFrequencyToNoBill
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_schedule import (
-    advance_billing_schedule,
-    create_billing_schedule,
-    get_archetype_schedule,
-    get_archetype_schedule_by_entity_uuid,
-    get_billing_schedule_by_billing_entity_uuid,
-    get_billing_schedule_by_entity_uuid,
-    get_billing_schedule_by_uuid,
-    get_billing_schedules_by_next_billing_date,
-    get_reseller_billing_schedule_by_billing_entity_uuid,
-    set_billing_frequency_to_no_bill,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_schedule import (
-    ApiBillingSchedule,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_set_billing_frequency_to_no_bill import (
-    ApiSetBillingFrequencyToNoBill,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def set_billing_frequency_to_no_bill_sync_detailed(
-    *, client: StolonClient, body: ApiSetBillingFrequencyToNoBill
+    *,
+    client: StolonClient,
+    body: ApiSetBillingFrequencyToNoBill
 ) -> Response[ResponseError]:
     """Set billing schedule frequency to NO_BILL
 
@@ -64,14 +59,18 @@ def set_billing_frequency_to_no_bill_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -79,6 +78,8 @@ def set_billing_frequency_to_no_bill_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -90,6 +91,8 @@ def set_billing_frequency_to_no_bill_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -97,14 +100,18 @@ def set_billing_frequency_to_no_bill_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def set_billing_frequency_to_no_bill_sync(
-    *, client: StolonClient, body: ApiSetBillingFrequencyToNoBill
+    *,
+    client: StolonClient,
+    body: ApiSetBillingFrequencyToNoBill
 ) -> ResponseError | None:
     """Set billing schedule frequency to NO_BILL
 
@@ -128,14 +135,18 @@ def set_billing_frequency_to_no_bill_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -143,7 +154,7 @@ def set_billing_frequency_to_no_bill_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -151,10 +162,14 @@ def set_billing_frequency_to_no_bill_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def set_billing_frequency_to_no_bill_asyncio_detailed(
-    *, client: StolonClient, body: ApiSetBillingFrequencyToNoBill
+    *,
+    client: StolonClient,
+    body: ApiSetBillingFrequencyToNoBill
 ) -> Response[ResponseError]:
     """Set billing schedule frequency to NO_BILL
 
@@ -178,14 +193,18 @@ def set_billing_frequency_to_no_bill_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -193,6 +212,8 @@ def set_billing_frequency_to_no_bill_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -204,6 +225,8 @@ def set_billing_frequency_to_no_bill_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -211,14 +234,18 @@ def set_billing_frequency_to_no_bill_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def set_billing_frequency_to_no_bill_asyncio(
-    *, client: StolonClient, body: ApiSetBillingFrequencyToNoBill
+    *,
+    client: StolonClient,
+    body: ApiSetBillingFrequencyToNoBill
 ) -> ResponseError | None:
     """Set billing schedule frequency to NO_BILL
 
@@ -242,14 +269,18 @@ def set_billing_frequency_to_no_bill_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = set_billing_frequency_to_no_bill._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -257,7 +288,7 @@ def set_billing_frequency_to_no_bill_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -265,10 +296,15 @@ def set_billing_frequency_to_no_bill_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_schedule_by_entity_uuid_sync_detailed(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
@@ -294,14 +330,18 @@ def get_billing_schedule_by_entity_uuid_sync_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -309,6 +349,8 @@ def get_billing_schedule_by_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -320,6 +362,8 @@ def get_billing_schedule_by_entity_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -327,14 +371,19 @@ def get_billing_schedule_by_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_schedule_by_entity_uuid_sync(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
@@ -360,14 +409,18 @@ def get_billing_schedule_by_entity_uuid_sync(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -376,10 +429,15 @@ def get_billing_schedule_by_entity_uuid_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_billing_schedule_by_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
@@ -405,14 +463,18 @@ def get_billing_schedule_by_entity_uuid_asyncio_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -420,6 +482,8 @@ def get_billing_schedule_by_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -431,6 +495,8 @@ def get_billing_schedule_by_entity_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -438,14 +504,19 @@ def get_billing_schedule_by_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_schedule_by_entity_uuid_asyncio(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by the COS entity UUID
 
@@ -471,14 +542,18 @@ def get_billing_schedule_by_entity_uuid_asyncio(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -487,10 +562,14 @@ def get_billing_schedule_by_entity_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_billing_schedule_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule by UUID
 
@@ -514,14 +593,18 @@ def get_billing_schedule_by_uuid_sync_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -529,6 +612,8 @@ def get_billing_schedule_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -540,6 +625,8 @@ def get_billing_schedule_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -547,119 +634,18 @@ def get_billing_schedule_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_schedule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingSchedule | ResponseError | None:
-    """Get a billing schedule by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[ApiBillingSchedule, ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ApiBillingSchedule | ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # No response model, return None
-    return None
 
 
-def get_billing_schedule_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
-) -> Response[ApiBillingSchedule | ResponseError]:
-    """Get a billing schedule by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[Union[ApiBillingSchedule, ResponseError]]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ApiBillingSchedule | ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and None:
-        parsed = None.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_billing_schedule_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+def get_billing_schedule_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule by UUID
 
@@ -683,14 +669,18 @@ def get_billing_schedule_by_uuid_asyncio(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -701,37 +691,47 @@ def get_billing_schedule_by_uuid_asyncio(
     return None
 
 
-def create_billing_schedule_sync_detailed(*, client: StolonClient, body: ApiBillingSchedule) -> Response[ResponseError]:
-    """Create billing schedule
+
+
+def get_billing_schedule_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiBillingSchedule | ResponseError]:
+    """Get a billing schedule by UUID
 
     Args:
-        body (ApiBillingSchedule):
+        uuid (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ResponseError]
+        Response[Union[ApiBillingSchedule, ResponseError]]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-                body: ApiBillingSchedule
+                uuid: str
 
     Returns:
-        Response[ResponseError]
+        Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = create_billing_schedule._get_kwargs(body=body)
+    kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -739,6 +739,8 @@ def create_billing_schedule_sync_detailed(*, client: StolonClient, body: ApiBill
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -750,69 +752,78 @@ def create_billing_schedule_sync_detailed(*, client: StolonClient, body: ApiBill
             pass
 
     # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
+    if body_json and proxy_response.status_code == 200 and None:
+        parsed = None.from_dict(body_json)
     else:
         parsed = None
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_schedule_sync(*, client: StolonClient, body: ApiBillingSchedule) -> ResponseError | None:
-    """Create billing schedule
+
+
+def get_billing_schedule_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingSchedule | ResponseError | None:
+    """Get a billing schedule by UUID
 
     Args:
-        body (ApiBillingSchedule):
+        uuid (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        ResponseError
+        Union[ApiBillingSchedule, ResponseError]
 
     This function wraps the generated OpenAPI client to proxy requests through
     the stolon server, enabling automatic token management and logging.
 
     Args:
         client: StolonClient instance for proxying requests
-                body: ApiBillingSchedule
+                uuid: str
 
     Returns:
-        ResponseError | None
+        ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = create_billing_schedule._get_kwargs(body=body)
+    kwargs = get_billing_schedule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
         timeout=30.0,
     )
 
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    # No response model, return None
     return None
 
 
-def create_billing_schedule_asyncio_detailed(
-    *, client: StolonClient, body: ApiBillingSchedule
+
+
+def create_billing_schedule_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiBillingSchedule
 ) -> Response[ResponseError]:
     """Create billing schedule
 
@@ -836,14 +847,18 @@ def create_billing_schedule_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_schedule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -851,6 +866,8 @@ def create_billing_schedule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -862,6 +879,8 @@ def create_billing_schedule_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -869,13 +888,19 @@ def create_billing_schedule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_billing_schedule_asyncio(*, client: StolonClient, body: ApiBillingSchedule) -> ResponseError | None:
+
+
+def create_billing_schedule_sync(
+    *,
+    client: StolonClient,
+    body: ApiBillingSchedule
+) -> ResponseError | None:
     """Create billing schedule
 
     Args:
@@ -898,14 +923,18 @@ def create_billing_schedule_asyncio(*, client: StolonClient, body: ApiBillingSch
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_schedule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -913,7 +942,7 @@ def create_billing_schedule_asyncio(*, client: StolonClient, body: ApiBillingSch
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -923,8 +952,147 @@ def create_billing_schedule_asyncio(*, client: StolonClient, body: ApiBillingSch
     return None
 
 
+
+
+def create_billing_schedule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiBillingSchedule
+) -> Response[ResponseError]:
+    """Create billing schedule
+
+    Args:
+        body (ApiBillingSchedule):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiBillingSchedule
+
+    Returns:
+        Response[ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_billing_schedule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_billing_schedule_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiBillingSchedule
+) -> ResponseError | None:
+    """Create billing schedule
+
+    Args:
+        body (ApiBillingSchedule):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiBillingSchedule
+
+    Returns:
+        ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_billing_schedule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
 def get_billing_schedule_by_billing_entity_uuid_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: datetime.date
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
@@ -950,14 +1118,18 @@ def get_billing_schedule_by_billing_entity_uuid_sync_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -965,6 +1137,8 @@ def get_billing_schedule_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -976,6 +1150,8 @@ def get_billing_schedule_by_billing_entity_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -983,14 +1159,19 @@ def get_billing_schedule_by_billing_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_schedule_by_billing_entity_uuid_sync(
-    *, client: StolonClient, billing_entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: datetime.date
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by billing entity UUID
 
@@ -1016,14 +1197,18 @@ def get_billing_schedule_by_billing_entity_uuid_sync(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1034,8 +1219,13 @@ def get_billing_schedule_by_billing_entity_uuid_sync(
     return None
 
 
+
+
 def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: datetime.date
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by billing entity UUID
 
@@ -1061,14 +1251,18 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1076,6 +1270,8 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1087,6 +1283,8 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1094,14 +1292,19 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_billing_schedule_by_billing_entity_uuid_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: datetime.date
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by billing entity UUID
 
@@ -1127,14 +1330,18 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_schedule_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1143,6 +1350,8 @@ def get_billing_schedule_by_billing_entity_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_billing_schedules_by_next_billing_date_sync_detailed(
@@ -1150,7 +1359,7 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(
     client: StolonClient,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing schedules by their next billing date
 
@@ -1178,16 +1387,18 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(
-        date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1195,6 +1406,8 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1206,6 +1419,8 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1213,10 +1428,12 @@ def get_billing_schedules_by_next_billing_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_schedules_by_next_billing_date_sync(
@@ -1224,7 +1441,7 @@ def get_billing_schedules_by_next_billing_date_sync(
     client: StolonClient,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing schedules by their next billing date
 
@@ -1252,16 +1469,18 @@ def get_billing_schedules_by_next_billing_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(
-        date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1269,7 +1488,7 @@ def get_billing_schedules_by_next_billing_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1279,12 +1498,14 @@ def get_billing_schedules_by_next_billing_date_sync(
     return None
 
 
+
+
 def get_billing_schedules_by_next_billing_date_asyncio_detailed(
     *,
     client: StolonClient,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing schedules by their next billing date
 
@@ -1312,16 +1533,18 @@ def get_billing_schedules_by_next_billing_date_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(
-        date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1329,6 +1552,8 @@ def get_billing_schedules_by_next_billing_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1340,6 +1565,8 @@ def get_billing_schedules_by_next_billing_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1347,10 +1574,12 @@ def get_billing_schedules_by_next_billing_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_schedules_by_next_billing_date_asyncio(
@@ -1358,7 +1587,7 @@ def get_billing_schedules_by_next_billing_date_asyncio(
     client: StolonClient,
     date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing schedules by their next billing date
 
@@ -1386,16 +1615,18 @@ def get_billing_schedules_by_next_billing_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(
-        date=date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_billing_schedules_by_next_billing_date._get_kwargs(date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1403,7 +1634,7 @@ def get_billing_schedules_by_next_billing_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1411,6 +1642,8 @@ def get_billing_schedules_by_next_billing_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
@@ -1420,7 +1653,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
     date: datetime.date,
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
@@ -1452,20 +1685,18 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(
-        r_id=r_id,
-        date=date,
-        billing_entity_uuid=billing_entity_uuid,
-        entity_uuid=entity_uuid,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id, date=date, billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1473,6 +1704,8 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1484,6 +1717,8 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1491,10 +1726,12 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
@@ -1504,7 +1741,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
     date: datetime.date,
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
@@ -1536,20 +1773,18 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(
-        r_id=r_id,
-        date=date,
-        billing_entity_uuid=billing_entity_uuid,
-        entity_uuid=entity_uuid,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id, date=date, billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1558,6 +1793,8 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
@@ -1567,7 +1804,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     date: datetime.date,
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
@@ -1599,20 +1836,18 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(
-        r_id=r_id,
-        date=date,
-        billing_entity_uuid=billing_entity_uuid,
-        entity_uuid=entity_uuid,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id, date=date, billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1620,6 +1855,8 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1631,6 +1868,8 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1638,10 +1877,12 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
@@ -1651,7 +1892,7 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
     date: datetime.date,
     billing_entity_uuid: Union[Unset, str] = UNSET,
     entity_uuid: Union[Unset, str] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for a billing entity by entity or billing entity UUID
 
@@ -1683,20 +1924,18 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(
-        r_id=r_id,
-        date=date,
-        billing_entity_uuid=billing_entity_uuid,
-        entity_uuid=entity_uuid,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_billing_schedule_by_billing_entity_uuid._get_kwargs(r_id=r_id, date=date, billing_entity_uuid=billing_entity_uuid, entity_uuid=entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1705,10 +1944,16 @@ def get_reseller_billing_schedule_by_billing_entity_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_archetype_schedule_by_entity_uuid_sync_detailed(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date, hierarchy_type: str
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date,
+    hierarchy_type: str
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
@@ -1736,16 +1981,18 @@ def get_archetype_schedule_by_entity_uuid_sync_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(
-        entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type
-    )
+    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1753,6 +2000,8 @@ def get_archetype_schedule_by_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1764,6 +2013,8 @@ def get_archetype_schedule_by_entity_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1771,14 +2022,20 @@ def get_archetype_schedule_by_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_archetype_schedule_by_entity_uuid_sync(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date, hierarchy_type: str
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date,
+    hierarchy_type: str
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
@@ -1806,16 +2063,18 @@ def get_archetype_schedule_by_entity_uuid_sync(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(
-        entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type
-    )
+    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1824,10 +2083,16 @@ def get_archetype_schedule_by_entity_uuid_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_archetype_schedule_by_entity_uuid_asyncio_detailed(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date, hierarchy_type: str
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date,
+    hierarchy_type: str
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
@@ -1855,16 +2120,18 @@ def get_archetype_schedule_by_entity_uuid_asyncio_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(
-        entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type
-    )
+    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1872,6 +2139,8 @@ def get_archetype_schedule_by_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1883,6 +2152,8 @@ def get_archetype_schedule_by_entity_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1890,14 +2161,20 @@ def get_archetype_schedule_by_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_archetype_schedule_by_entity_uuid_asyncio(
-    *, client: StolonClient, entity_uuid: str, date: datetime.date, hierarchy_type: str
+    *,
+    client: StolonClient,
+    entity_uuid: str,
+    date: datetime.date,
+    hierarchy_type: str
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype using the COS 13 character entity uuid
 
@@ -1925,16 +2202,18 @@ def get_archetype_schedule_by_entity_uuid_asyncio(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(
-        entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type
-    )
+    kwargs = get_archetype_schedule_by_entity_uuid._get_kwargs(entity_uuid=entity_uuid, date=date, hierarchy_type=hierarchy_type)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1945,7 +2224,13 @@ def get_archetype_schedule_by_entity_uuid_asyncio(
     return None
 
 
-def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def advance_billing_schedule_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Advance the billing schedule
 
     Args:
@@ -1968,14 +2253,18 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1983,6 +2272,8 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1994,6 +2285,8 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2001,13 +2294,19 @@ def advance_billing_schedule_sync_detailed(*, client: StolonClient, uuid: str) -
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def advance_billing_schedule_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Advance the billing schedule
 
     Args:
@@ -2030,14 +2329,18 @@ def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> Respons
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2045,7 +2348,7 @@ def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> Respons
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2055,7 +2358,13 @@ def advance_billing_schedule_sync(*, client: StolonClient, uuid: str) -> Respons
     return None
 
 
-def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def advance_billing_schedule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Advance the billing schedule
 
     Args:
@@ -2078,14 +2387,18 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2093,6 +2406,8 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2104,6 +2419,8 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2111,13 +2428,19 @@ def advance_billing_schedule_asyncio_detailed(*, client: StolonClient, uuid: str
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def advance_billing_schedule_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Advance the billing schedule
 
     Args:
@@ -2140,14 +2463,18 @@ def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> Resp
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = advance_billing_schedule._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2155,7 +2482,7 @@ def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> Resp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2163,10 +2490,15 @@ def advance_billing_schedule_asyncio(*, client: StolonClient, uuid: str) -> Resp
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_archetype_schedule_sync_detailed(
-    *, client: StolonClient, billing_hierarchy_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_hierarchy_uuid: str,
+    date: datetime.date
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype
 
@@ -2192,14 +2524,18 @@ def get_archetype_schedule_sync_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs(billing_hierarchy_uuid=billing_hierarchy_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2207,6 +2543,8 @@ def get_archetype_schedule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2218,6 +2556,8 @@ def get_archetype_schedule_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2225,14 +2565,19 @@ def get_archetype_schedule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_archetype_schedule_sync(
-    *, client: StolonClient, billing_hierarchy_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_hierarchy_uuid: str,
+    date: datetime.date
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype
 
@@ -2258,14 +2603,18 @@ def get_archetype_schedule_sync(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs(billing_hierarchy_uuid=billing_hierarchy_uuid, date=date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2276,8 +2625,13 @@ def get_archetype_schedule_sync(
     return None
 
 
+
+
 def get_archetype_schedule_asyncio_detailed(
-    *, client: StolonClient, billing_hierarchy_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_hierarchy_uuid: str,
+    date: datetime.date
 ) -> Response[ApiBillingSchedule | ResponseError]:
     """Get a billing schedule for the archetype
 
@@ -2303,14 +2657,18 @@ def get_archetype_schedule_asyncio_detailed(
     Returns:
         Response[ApiBillingSchedule | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs(billing_hierarchy_uuid=billing_hierarchy_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2318,6 +2676,8 @@ def get_archetype_schedule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2329,6 +2689,8 @@ def get_archetype_schedule_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -2336,14 +2698,19 @@ def get_archetype_schedule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_archetype_schedule_asyncio(
-    *, client: StolonClient, billing_hierarchy_uuid: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_hierarchy_uuid: str,
+    date: datetime.date
 ) -> ApiBillingSchedule | ResponseError | None:
     """Get a billing schedule for the archetype
 
@@ -2369,14 +2736,18 @@ def get_archetype_schedule_asyncio(
     Returns:
         ApiBillingSchedule | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_archetype_schedule._get_kwargs(billing_hierarchy_uuid=billing_hierarchy_uuid, date=date)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2385,3 +2756,4 @@ def get_archetype_schedule_asyncio(
 
     # No response model, return None
     return None
+

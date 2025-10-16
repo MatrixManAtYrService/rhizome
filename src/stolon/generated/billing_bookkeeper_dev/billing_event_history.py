@@ -9,27 +9,28 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_billing_event_history_by_entity
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_developer_billing_event_history
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_merchant_billing_event_history
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import get_reseller_billing_event_history
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event_history import (
-    get_billing_event_history,
-    get_billing_event_history_by_entity,
-    get_developer_billing_event_history,
-    get_merchant_billing_event_history,
-    get_reseller_billing_event_history,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_merchant_billing_event_history_sync_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
@@ -57,14 +58,18 @@ def get_merchant_billing_event_history_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -72,6 +77,8 @@ def get_merchant_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -83,6 +90,8 @@ def get_merchant_billing_event_history_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -90,14 +99,20 @@ def get_merchant_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_billing_event_history_sync(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for a merchant
 
@@ -125,14 +140,18 @@ def get_merchant_billing_event_history_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -140,7 +159,7 @@ def get_merchant_billing_event_history_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -150,8 +169,14 @@ def get_merchant_billing_event_history_sync(
     return None
 
 
+
+
 def get_merchant_billing_event_history_asyncio_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for a merchant
 
@@ -179,14 +204,18 @@ def get_merchant_billing_event_history_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -194,6 +223,8 @@ def get_merchant_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -205,6 +236,8 @@ def get_merchant_billing_event_history_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -212,14 +245,20 @@ def get_merchant_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_merchant_billing_event_history_asyncio(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for a merchant
 
@@ -247,14 +286,18 @@ def get_merchant_billing_event_history_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_merchant_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -262,7 +305,7 @@ def get_merchant_billing_event_history_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -270,6 +313,8 @@ def get_merchant_billing_event_history_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_event_history_sync_detailed(
@@ -280,7 +325,7 @@ def get_billing_event_history_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history records
 
@@ -314,21 +359,18 @@ def get_billing_event_history_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(
-        entity_uuid=entity_uuid,
-        event_uuid=event_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -336,6 +378,8 @@ def get_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -347,6 +391,8 @@ def get_billing_event_history_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -354,10 +400,12 @@ def get_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_event_history_sync(
@@ -368,7 +416,7 @@ def get_billing_event_history_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history records
 
@@ -402,21 +450,18 @@ def get_billing_event_history_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(
-        entity_uuid=entity_uuid,
-        event_uuid=event_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -424,7 +469,7 @@ def get_billing_event_history_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -432,6 +477,8 @@ def get_billing_event_history_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_event_history_asyncio_detailed(
@@ -442,7 +489,7 @@ def get_billing_event_history_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history records
 
@@ -476,21 +523,18 @@ def get_billing_event_history_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(
-        entity_uuid=entity_uuid,
-        event_uuid=event_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -498,6 +542,8 @@ def get_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -509,6 +555,8 @@ def get_billing_event_history_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -516,10 +564,12 @@ def get_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_event_history_asyncio(
@@ -530,7 +580,7 @@ def get_billing_event_history_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history records
 
@@ -564,21 +614,18 @@ def get_billing_event_history_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_billing_event_history._get_kwargs(
-        entity_uuid=entity_uuid,
-        event_uuid=event_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_billing_event_history._get_kwargs(entity_uuid=entity_uuid, event_uuid=event_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -586,7 +633,7 @@ def get_billing_event_history_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -594,10 +641,16 @@ def get_billing_event_history_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_billing_event_history_sync_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
@@ -625,14 +678,18 @@ def get_reseller_billing_event_history_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -640,6 +697,8 @@ def get_reseller_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -651,6 +710,8 @@ def get_reseller_billing_event_history_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -658,14 +719,20 @@ def get_reseller_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_billing_event_history_sync(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for a reseller
 
@@ -693,14 +760,18 @@ def get_reseller_billing_event_history_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -708,7 +779,7 @@ def get_reseller_billing_event_history_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -716,10 +787,16 @@ def get_reseller_billing_event_history_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_billing_event_history_asyncio_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for a reseller
 
@@ -747,14 +824,18 @@ def get_reseller_billing_event_history_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -762,6 +843,8 @@ def get_reseller_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -773,6 +856,8 @@ def get_reseller_billing_event_history_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -780,14 +865,20 @@ def get_reseller_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_billing_event_history_asyncio(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for a reseller
 
@@ -815,14 +906,18 @@ def get_reseller_billing_event_history_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -830,7 +925,7 @@ def get_reseller_billing_event_history_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -838,10 +933,16 @@ def get_reseller_billing_event_history_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_event_history_by_entity_sync_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
@@ -869,14 +970,18 @@ def get_billing_event_history_by_entity_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -884,6 +989,8 @@ def get_billing_event_history_by_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -895,6 +1002,8 @@ def get_billing_event_history_by_entity_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -902,14 +1011,20 @@ def get_billing_event_history_by_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_event_history_by_entity_sync(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
@@ -937,14 +1052,18 @@ def get_billing_event_history_by_entity_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -952,7 +1071,7 @@ def get_billing_event_history_by_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -960,10 +1079,16 @@ def get_billing_event_history_by_entity_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_event_history_by_entity_asyncio_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for an entity UUID
 
@@ -991,14 +1116,18 @@ def get_billing_event_history_by_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1006,6 +1135,8 @@ def get_billing_event_history_by_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1017,6 +1148,8 @@ def get_billing_event_history_by_entity_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1024,14 +1157,20 @@ def get_billing_event_history_by_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_event_history_by_entity_asyncio(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for an entity UUID
 
@@ -1059,14 +1198,18 @@ def get_billing_event_history_by_entity_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_event_history_by_entity._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1074,7 +1217,7 @@ def get_billing_event_history_by_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1082,10 +1225,16 @@ def get_billing_event_history_by_entity_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_developer_billing_event_history_sync_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for a developer
 
@@ -1113,14 +1262,18 @@ def get_developer_billing_event_history_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1128,6 +1281,8 @@ def get_developer_billing_event_history_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1139,6 +1294,8 @@ def get_developer_billing_event_history_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1146,14 +1303,20 @@ def get_developer_billing_event_history_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_billing_event_history_sync(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for a developer
 
@@ -1181,14 +1344,18 @@ def get_developer_billing_event_history_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1196,7 +1363,7 @@ def get_developer_billing_event_history_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1206,8 +1373,14 @@ def get_developer_billing_event_history_sync(
     return None
 
 
+
+
 def get_developer_billing_event_history_asyncio_detailed(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing event history for a developer
 
@@ -1235,14 +1408,18 @@ def get_developer_billing_event_history_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1250,6 +1427,8 @@ def get_developer_billing_event_history_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1261,6 +1440,8 @@ def get_developer_billing_event_history_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1268,14 +1449,20 @@ def get_developer_billing_event_history_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_developer_billing_event_history_asyncio(
-    *, client: StolonClient, uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing event history for a developer
 
@@ -1303,14 +1490,18 @@ def get_developer_billing_event_history_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_developer_billing_event_history._get_kwargs(uuid=uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1318,7 +1509,7 @@ def get_developer_billing_event_history_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1326,3 +1517,4 @@ def get_developer_billing_event_history_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

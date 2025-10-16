@@ -9,33 +9,30 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import apply_to_children
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import create_update_plan_pricing_abstraction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import get_plan_pricing_abstraction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import get_plan_pricing_abstraction_details
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import preview_plan_pricing_abstraction_for_create_or_update
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction import ApiPlanPricingAbstraction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction_details import ApiPlanPricingAbstractionDetails
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.plan_pricing_abstraction import (
-    apply_to_children,
-    create_update_plan_pricing_abstraction,
-    get_plan_pricing_abstraction,
-    get_plan_pricing_abstraction_details,
-    preview_plan_pricing_abstraction_for_create_or_update,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction import (
-    ApiPlanPricingAbstraction,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing_abstraction_details import (
-    ApiPlanPricingAbstractionDetails,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_plan_pricing_abstraction_sync_detailed(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Gets a plan pricing abstraction
 
@@ -63,14 +60,18 @@ def get_plan_pricing_abstraction_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -78,6 +79,8 @@ def get_plan_pricing_abstraction_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -89,6 +92,8 @@ def get_plan_pricing_abstraction_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -96,14 +101,20 @@ def get_plan_pricing_abstraction_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_abstraction_sync(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Gets a plan pricing abstraction
 
@@ -131,14 +142,18 @@ def get_plan_pricing_abstraction_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -146,7 +161,7 @@ def get_plan_pricing_abstraction_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -154,10 +169,16 @@ def get_plan_pricing_abstraction_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_abstraction_asyncio_detailed(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Gets a plan pricing abstraction
 
@@ -185,14 +206,18 @@ def get_plan_pricing_abstraction_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -200,6 +225,8 @@ def get_plan_pricing_abstraction_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -211,6 +238,8 @@ def get_plan_pricing_abstraction_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -218,14 +247,20 @@ def get_plan_pricing_abstraction_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_abstraction_asyncio(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Gets a plan pricing abstraction
 
@@ -253,14 +288,18 @@ def get_plan_pricing_abstraction_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -268,7 +307,7 @@ def get_plan_pricing_abstraction_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -276,10 +315,16 @@ def get_plan_pricing_abstraction_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_abstraction_details_sync_detailed(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> Response[ApiPlanPricingAbstractionDetails]:
     """Get details of a plan pricing abstraction
 
@@ -307,14 +352,18 @@ def get_plan_pricing_abstraction_details_sync_detailed(
     Returns:
         Response[ApiPlanPricingAbstractionDetails]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction_details._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -322,6 +371,8 @@ def get_plan_pricing_abstraction_details_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -333,6 +384,8 @@ def get_plan_pricing_abstraction_details_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricingAbstractionDetails | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstractionDetails:
         parsed = ApiPlanPricingAbstractionDetails.from_dict(body_json)
     else:
@@ -340,14 +393,20 @@ def get_plan_pricing_abstraction_details_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_abstraction_details_sync(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> ApiPlanPricingAbstractionDetails | None:
     """Get details of a plan pricing abstraction
 
@@ -375,14 +434,18 @@ def get_plan_pricing_abstraction_details_sync(
     Returns:
         ApiPlanPricingAbstractionDetails | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction_details._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -390,7 +453,7 @@ def get_plan_pricing_abstraction_details_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -400,8 +463,14 @@ def get_plan_pricing_abstraction_details_sync(
     return None
 
 
+
+
 def get_plan_pricing_abstraction_details_asyncio_detailed(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> Response[ApiPlanPricingAbstractionDetails]:
     """Get details of a plan pricing abstraction
 
@@ -429,14 +498,18 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
     Returns:
         Response[ApiPlanPricingAbstractionDetails]
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction_details._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -444,6 +517,8 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -455,6 +530,8 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricingAbstractionDetails | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricingAbstractionDetails:
         parsed = ApiPlanPricingAbstractionDetails.from_dict(body_json)
     else:
@@ -462,14 +539,20 @@ def get_plan_pricing_abstraction_details_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_plan_pricing_abstraction_details_asyncio(
-    *, client: StolonClient, date: datetime.date, currency: str, plan_uuid: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    date: datetime.date,
+    currency: str,
+    plan_uuid: Union[Unset, str] = UNSET
 ) -> ApiPlanPricingAbstractionDetails | None:
     """Get details of a plan pricing abstraction
 
@@ -497,14 +580,18 @@ def get_plan_pricing_abstraction_details_asyncio(
     Returns:
         ApiPlanPricingAbstractionDetails | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_plan_pricing_abstraction_details._get_kwargs(date=date, currency=currency, plan_uuid=plan_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -512,7 +599,7 @@ def get_plan_pricing_abstraction_details_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -522,8 +609,12 @@ def get_plan_pricing_abstraction_details_asyncio(
     return None
 
 
+
+
 def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
@@ -547,14 +638,18 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -562,6 +657,8 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -573,6 +670,8 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -580,14 +679,18 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_plan_pricing_abstraction_for_create_or_update_sync(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
@@ -611,14 +714,18 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -626,7 +733,7 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -634,10 +741,14 @@ def preview_plan_pricing_abstraction_for_create_or_update_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
@@ -661,14 +772,18 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -676,6 +791,8 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -687,6 +804,8 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -694,14 +813,18 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstraction
 
@@ -725,14 +848,18 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = preview_plan_pricing_abstraction_for_create_or_update._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -740,7 +867,7 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -748,10 +875,14 @@ def preview_plan_pricing_abstraction_for_create_or_update_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_update_plan_pricing_abstraction_sync_detailed(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
@@ -775,14 +906,18 @@ def create_update_plan_pricing_abstraction_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -790,6 +925,8 @@ def create_update_plan_pricing_abstraction_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -801,6 +938,8 @@ def create_update_plan_pricing_abstraction_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -808,14 +947,18 @@ def create_update_plan_pricing_abstraction_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_update_plan_pricing_abstraction_sync(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
@@ -839,14 +982,18 @@ def create_update_plan_pricing_abstraction_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -854,7 +1001,7 @@ def create_update_plan_pricing_abstraction_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -862,10 +1009,14 @@ def create_update_plan_pricing_abstraction_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_update_plan_pricing_abstraction_asyncio_detailed(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
@@ -889,14 +1040,18 @@ def create_update_plan_pricing_abstraction_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -904,6 +1059,8 @@ def create_update_plan_pricing_abstraction_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -915,6 +1072,8 @@ def create_update_plan_pricing_abstraction_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -922,14 +1081,18 @@ def create_update_plan_pricing_abstraction_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def create_update_plan_pricing_abstraction_asyncio(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save the plan pricing abstraction
 
@@ -953,14 +1116,18 @@ def create_update_plan_pricing_abstraction_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_plan_pricing_abstraction._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -968,7 +1135,7 @@ def create_update_plan_pricing_abstraction_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -976,10 +1143,14 @@ def create_update_plan_pricing_abstraction_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def apply_to_children_sync_detailed(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> Response[ResponseError]:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
@@ -1004,14 +1175,18 @@ def apply_to_children_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1019,6 +1194,8 @@ def apply_to_children_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1030,6 +1207,8 @@ def apply_to_children_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1037,13 +1216,19 @@ def apply_to_children_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_to_children_sync(*, client: StolonClient, body: ApiPlanPricingAbstraction) -> ResponseError | None:
+
+
+def apply_to_children_sync(
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
+) -> ResponseError | None:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
 
@@ -1067,14 +1252,18 @@ def apply_to_children_sync(*, client: StolonClient, body: ApiPlanPricingAbstract
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1082,7 +1271,7 @@ def apply_to_children_sync(*, client: StolonClient, body: ApiPlanPricingAbstract
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1090,10 +1279,14 @@ def apply_to_children_sync(*, client: StolonClient, body: ApiPlanPricingAbstract
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def apply_to_children_asyncio_detailed(
-    *, client: StolonClient, body: ApiPlanPricingAbstraction
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
 ) -> Response[ResponseError]:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
@@ -1118,14 +1311,18 @@ def apply_to_children_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1133,6 +1330,8 @@ def apply_to_children_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1144,6 +1343,8 @@ def apply_to_children_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1151,13 +1352,19 @@ def apply_to_children_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def apply_to_children_asyncio(*, client: StolonClient, body: ApiPlanPricingAbstraction) -> ResponseError | None:
+
+
+def apply_to_children_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiPlanPricingAbstraction
+) -> ResponseError | None:
     """Adds DEFAULT fee records for all children of the owner recursively.  This does NOT modify the
     abstraction.  If the passed abstraction is different than the actual, a 400 will be returned.
 
@@ -1181,14 +1388,18 @@ def apply_to_children_asyncio(*, client: StolonClient, body: ApiPlanPricingAbstr
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = apply_to_children._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1196,7 +1407,7 @@ def apply_to_children_asyncio(*, client: StolonClient, body: ApiPlanPricingAbstr
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1204,3 +1415,4 @@ def apply_to_children_asyncio(*, client: StolonClient, body: ApiPlanPricingAbstr
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

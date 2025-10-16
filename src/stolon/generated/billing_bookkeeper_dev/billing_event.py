@@ -9,23 +9,21 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event import (
-    post_billing_event,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event import (
-    ApiBillingEvent,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_handled_event import (
-    ApiHandledEvent,
-)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_event import post_billing_event
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event import ApiBillingEvent
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_handled_event import ApiHandledEvent
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def post_billing_event_sync_detailed(*, client: StolonClient, body: ApiBillingEvent) -> Response[ApiHandledEvent]:
+def post_billing_event_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
+) -> Response[ApiHandledEvent]:
     """Post a billing event
 
     Args:
@@ -48,14 +46,18 @@ def post_billing_event_sync_detailed(*, client: StolonClient, body: ApiBillingEv
     Returns:
         Response[ApiHandledEvent]
     """
+
     # Extract request parameters from generated function
     kwargs = post_billing_event._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -63,6 +65,8 @@ def post_billing_event_sync_detailed(*, client: StolonClient, body: ApiBillingEv
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -74,6 +78,8 @@ def post_billing_event_sync_detailed(*, client: StolonClient, body: ApiBillingEv
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiHandledEvent | None
     if body_json and proxy_response.status_code == 200 and ApiHandledEvent:
         parsed = ApiHandledEvent.from_dict(body_json)
     else:
@@ -81,13 +87,19 @@ def post_billing_event_sync_detailed(*, client: StolonClient, body: ApiBillingEv
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def post_billing_event_sync(*, client: StolonClient, body: ApiBillingEvent) -> ApiHandledEvent | None:
+
+
+def post_billing_event_sync(
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
+) -> ApiHandledEvent | None:
     """Post a billing event
 
     Args:
@@ -110,14 +122,18 @@ def post_billing_event_sync(*, client: StolonClient, body: ApiBillingEvent) -> A
     Returns:
         ApiHandledEvent | None
     """
+
     # Extract request parameters from generated function
     kwargs = post_billing_event._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -125,7 +141,7 @@ def post_billing_event_sync(*, client: StolonClient, body: ApiBillingEvent) -> A
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -135,7 +151,13 @@ def post_billing_event_sync(*, client: StolonClient, body: ApiBillingEvent) -> A
     return None
 
 
-def post_billing_event_asyncio_detailed(*, client: StolonClient, body: ApiBillingEvent) -> Response[ApiHandledEvent]:
+
+
+def post_billing_event_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
+) -> Response[ApiHandledEvent]:
     """Post a billing event
 
     Args:
@@ -158,14 +180,18 @@ def post_billing_event_asyncio_detailed(*, client: StolonClient, body: ApiBillin
     Returns:
         Response[ApiHandledEvent]
     """
+
     # Extract request parameters from generated function
     kwargs = post_billing_event._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -173,6 +199,8 @@ def post_billing_event_asyncio_detailed(*, client: StolonClient, body: ApiBillin
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -184,6 +212,8 @@ def post_billing_event_asyncio_detailed(*, client: StolonClient, body: ApiBillin
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiHandledEvent | None
     if body_json and proxy_response.status_code == 200 and ApiHandledEvent:
         parsed = ApiHandledEvent.from_dict(body_json)
     else:
@@ -191,13 +221,19 @@ def post_billing_event_asyncio_detailed(*, client: StolonClient, body: ApiBillin
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def post_billing_event_asyncio(*, client: StolonClient, body: ApiBillingEvent) -> ApiHandledEvent | None:
+
+
+def post_billing_event_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
+) -> ApiHandledEvent | None:
     """Post a billing event
 
     Args:
@@ -220,14 +256,18 @@ def post_billing_event_asyncio(*, client: StolonClient, body: ApiBillingEvent) -
     Returns:
         ApiHandledEvent | None
     """
+
     # Extract request parameters from generated function
     kwargs = post_billing_event._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -235,7 +275,7 @@ def post_billing_event_asyncio(*, client: StolonClient, body: ApiBillingEvent) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -243,3 +283,4 @@ def post_billing_event_asyncio(*, client: StolonClient, body: ApiBillingEvent) -
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

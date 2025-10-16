@@ -9,20 +9,22 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.server_config_controller import (
-    get_all,
-    get_config,
-    set_config,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.server_config_controller import get_all
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.server_config_controller import get_config
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.server_config_controller import set_config
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def set_config_sync_detailed(*, client: StolonClient, key: str, body: str) -> Response[Any]:
+def set_config_sync_detailed(
+    *,
+    client: StolonClient,
+    key: str,
+    body: str
+) -> Response[Any]:
     """Args:
         key (str):
         body (str):
@@ -45,14 +47,18 @@ def set_config_sync_detailed(*, client: StolonClient, key: str, body: str) -> Re
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = set_config._get_kwargs(key=key, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -60,6 +66,8 @@ def set_config_sync_detailed(*, client: StolonClient, key: str, body: str) -> Re
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -80,13 +88,20 @@ def set_config_sync_detailed(*, client: StolonClient, key: str, body: str) -> Re
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_config_asyncio_detailed(*, client: StolonClient, key: str, body: str) -> Response[Any]:
+
+
+def set_config_asyncio_detailed(
+    *,
+    client: StolonClient,
+    key: str,
+    body: str
+) -> Response[Any]:
     """Args:
         key (str):
         body (str):
@@ -109,14 +124,18 @@ def set_config_asyncio_detailed(*, client: StolonClient, key: str, body: str) ->
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = set_config._get_kwargs(key=key, body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -124,6 +143,8 @@ def set_config_asyncio_detailed(*, client: StolonClient, key: str, body: str) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -144,13 +165,18 @@ def set_config_asyncio_detailed(*, client: StolonClient, key: str, body: str) ->
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_all_sync_detailed(*, client: StolonClient) -> Response[Any]:
+
+
+def get_all_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[Any]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -163,19 +189,23 @@ def get_all_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_all._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -183,6 +213,8 @@ def get_all_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -203,13 +235,18 @@ def get_all_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_all_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+
+
+def get_all_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[Any]:
     """Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
@@ -222,19 +259,23 @@ def get_all_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_all._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -242,6 +283,8 @@ def get_all_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -262,13 +305,19 @@ def get_all_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]:
+
+
+def get_config_sync_detailed(
+    *,
+    client: StolonClient,
+    key: str
+) -> Response[Any]:
     """Args:
         key (str):
 
@@ -289,14 +338,18 @@ def get_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_config._get_kwargs(key=key)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -304,6 +357,8 @@ def get_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -324,13 +379,19 @@ def get_config_sync_detailed(*, client: StolonClient, key: str) -> Response[Any]
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[Any]:
+
+
+def get_config_asyncio_detailed(
+    *,
+    client: StolonClient,
+    key: str
+) -> Response[Any]:
     """Args:
         key (str):
 
@@ -351,14 +412,18 @@ def get_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[A
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_config._get_kwargs(key=key)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -366,6 +431,8 @@ def get_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[A
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -386,7 +453,8 @@ def get_config_asyncio_detailed(*, client: StolonClient, key: str) -> Response[A
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+

@@ -9,25 +9,20 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import create_update_rev_share_abstractions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import get_rev_share_abstraction_details
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import get_rev_share_abstractions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import preview_rev_share_abstraction_for_create_or_update
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_rev_share_abstraction import ApiRevShareAbstraction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.rev_share_abstraction import (
-    create_update_rev_share_abstractions,
-    get_rev_share_abstraction_details,
-    get_rev_share_abstractions,
-    preview_rev_share_abstraction_for_create_or_update,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_rev_share_abstraction import (
-    ApiRevShareAbstraction,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_rev_share_abstraction_details_sync_detailed(
@@ -37,7 +32,7 @@ def get_rev_share_abstraction_details_sync_detailed(
     currency: str,
     revenue_share_group: str,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
@@ -69,20 +64,18 @@ def get_rev_share_abstraction_details_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstraction_details._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -90,6 +83,8 @@ def get_rev_share_abstraction_details_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -101,6 +96,8 @@ def get_rev_share_abstraction_details_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -108,10 +105,12 @@ def get_rev_share_abstraction_details_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_rev_share_abstraction_details_sync(
@@ -121,7 +120,7 @@ def get_rev_share_abstraction_details_sync(
     currency: str,
     revenue_share_group: str,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get details of a rev share abstractions
 
@@ -153,20 +152,18 @@ def get_rev_share_abstraction_details_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstraction_details._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -174,7 +171,7 @@ def get_rev_share_abstraction_details_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -182,6 +179,8 @@ def get_rev_share_abstraction_details_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_rev_share_abstraction_details_asyncio_detailed(
@@ -191,7 +190,7 @@ def get_rev_share_abstraction_details_asyncio_detailed(
     currency: str,
     revenue_share_group: str,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get details of a rev share abstractions
 
@@ -223,20 +222,18 @@ def get_rev_share_abstraction_details_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstraction_details._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -244,6 +241,8 @@ def get_rev_share_abstraction_details_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -255,6 +254,8 @@ def get_rev_share_abstraction_details_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -262,10 +263,12 @@ def get_rev_share_abstraction_details_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_rev_share_abstraction_details_asyncio(
@@ -275,7 +278,7 @@ def get_rev_share_abstraction_details_asyncio(
     currency: str,
     revenue_share_group: str,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get details of a rev share abstractions
 
@@ -307,20 +310,18 @@ def get_rev_share_abstraction_details_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstraction_details._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstraction_details._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -328,7 +329,7 @@ def get_rev_share_abstraction_details_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -336,10 +337,14 @@ def get_rev_share_abstraction_details_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -363,14 +368,18 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -378,6 +387,8 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -389,6 +400,8 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -396,14 +409,18 @@ def preview_rev_share_abstraction_for_create_or_update_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_sync(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -427,14 +444,18 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -442,7 +463,7 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -450,10 +471,14 @@ def preview_rev_share_abstraction_for_create_or_update_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> Response[ResponseError]:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -477,14 +502,18 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -492,6 +521,8 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -503,6 +534,8 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -510,14 +543,18 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def preview_rev_share_abstraction_for_create_or_update_asyncio(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> ResponseError | None:
     """Returns a preview of bookkeeper records that would be created when creating/updating an abstractions
 
@@ -541,14 +578,18 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = preview_rev_share_abstraction_for_create_or_update._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -556,7 +597,7 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -564,10 +605,14 @@ def preview_rev_share_abstraction_for_create_or_update_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_update_rev_share_abstractions_sync_detailed(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
@@ -591,14 +636,18 @@ def create_update_rev_share_abstractions_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -606,6 +655,8 @@ def create_update_rev_share_abstractions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -617,6 +668,8 @@ def create_update_rev_share_abstractions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -624,14 +677,18 @@ def create_update_rev_share_abstractions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_update_rev_share_abstractions_sync(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
@@ -655,14 +712,18 @@ def create_update_rev_share_abstractions_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -670,7 +731,7 @@ def create_update_rev_share_abstractions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -680,8 +741,12 @@ def create_update_rev_share_abstractions_sync(
     return None
 
 
+
+
 def create_update_rev_share_abstractions_asyncio_detailed(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> Response[ResponseError]:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
@@ -705,14 +770,18 @@ def create_update_rev_share_abstractions_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -720,6 +789,8 @@ def create_update_rev_share_abstractions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -731,6 +802,8 @@ def create_update_rev_share_abstractions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -738,14 +811,18 @@ def create_update_rev_share_abstractions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def create_update_rev_share_abstractions_asyncio(
-    *, client: StolonClient, body: list["ApiRevShareAbstraction"]
+    *,
+    client: StolonClient,
+    body: list["ApiRevShareAbstraction"]
 ) -> ResponseError | None:
     """Create/update all bookkeeper records needed to save rev share abstractions
 
@@ -769,14 +846,18 @@ def create_update_rev_share_abstractions_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_update_rev_share_abstractions._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -784,7 +865,7 @@ def create_update_rev_share_abstractions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -792,6 +873,8 @@ def create_update_rev_share_abstractions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_rev_share_abstractions_sync_detailed(
@@ -801,7 +884,7 @@ def get_rev_share_abstractions_sync_detailed(
     currency: str,
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get rev share abstractions
 
@@ -833,20 +916,18 @@ def get_rev_share_abstractions_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstractions._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -854,6 +935,8 @@ def get_rev_share_abstractions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -865,6 +948,8 @@ def get_rev_share_abstractions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -872,10 +957,12 @@ def get_rev_share_abstractions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_rev_share_abstractions_sync(
@@ -885,7 +972,7 @@ def get_rev_share_abstractions_sync(
     currency: str,
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get rev share abstractions
 
@@ -917,20 +1004,18 @@ def get_rev_share_abstractions_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstractions._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -938,7 +1023,7 @@ def get_rev_share_abstractions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -948,6 +1033,8 @@ def get_rev_share_abstractions_sync(
     return None
 
 
+
+
 def get_rev_share_abstractions_asyncio_detailed(
     *,
     client: StolonClient,
@@ -955,7 +1042,7 @@ def get_rev_share_abstractions_asyncio_detailed(
     currency: str,
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> Response[ResponseError]:
     """Get rev share abstractions
 
@@ -987,20 +1074,18 @@ def get_rev_share_abstractions_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstractions._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1008,6 +1093,8 @@ def get_rev_share_abstractions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1019,6 +1106,8 @@ def get_rev_share_abstractions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1026,10 +1115,12 @@ def get_rev_share_abstractions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_rev_share_abstractions_asyncio(
@@ -1039,7 +1130,7 @@ def get_rev_share_abstractions_asyncio(
     currency: str,
     revenue_share_group: Union[Unset, str] = UNSET,
     developer_uuid: Union[Unset, str] = UNSET,
-    developer_app_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET
 ) -> ResponseError | None:
     """Get rev share abstractions
 
@@ -1071,20 +1162,18 @@ def get_rev_share_abstractions_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_rev_share_abstractions._get_kwargs(
-        date=date,
-        currency=currency,
-        revenue_share_group=revenue_share_group,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-    )
+    kwargs = get_rev_share_abstractions._get_kwargs(date=date, currency=currency, revenue_share_group=revenue_share_group, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1092,7 +1181,7 @@ def get_rev_share_abstractions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1100,3 +1189,4 @@ def get_rev_share_abstractions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

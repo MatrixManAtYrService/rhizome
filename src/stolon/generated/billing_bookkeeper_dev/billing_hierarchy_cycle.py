@@ -9,35 +9,32 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import create_billing_hierarchy_cycle
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import get_billing_hierarchy_cycle_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import populate_developer_cycle_entries_for_processing_group
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import populate_merchant_cycle_entries_for_processing_group
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import populate_reseller_cycle_entries_for_processing_group
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import purge_cycle_entries_by_processing_group_and_hierarchy_type
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_cycle import ApiBillingHierarchyCycle
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_hierarchy_cycle import (
-    create_billing_hierarchy_cycle,
-    get_billing_hierarchy_cycle_by_uuid,
-    get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date,
-    get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date,
-    get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date,
-    get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date,
-    populate_developer_cycle_entries_for_processing_group,
-    populate_merchant_cycle_entries_for_processing_group,
-    populate_reseller_cycle_entries_for_processing_group,
-    purge_cycle_entries_by_processing_group_and_hierarchy_type,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_hierarchy_cycle import (
-    ApiBillingHierarchyCycle,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def create_billing_hierarchy_cycle_sync_detailed(
-    *, client: StolonClient, body: ApiBillingHierarchyCycle
+    *,
+    client: StolonClient,
+    body: ApiBillingHierarchyCycle
 ) -> Response[ResponseError]:
     """Create billing hierarchy cycle entry
 
@@ -61,14 +58,18 @@ def create_billing_hierarchy_cycle_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -76,6 +77,8 @@ def create_billing_hierarchy_cycle_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -87,6 +90,8 @@ def create_billing_hierarchy_cycle_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -94,14 +99,18 @@ def create_billing_hierarchy_cycle_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_billing_hierarchy_cycle_sync(
-    *, client: StolonClient, body: ApiBillingHierarchyCycle
+    *,
+    client: StolonClient,
+    body: ApiBillingHierarchyCycle
 ) -> ResponseError | None:
     """Create billing hierarchy cycle entry
 
@@ -125,14 +134,18 @@ def create_billing_hierarchy_cycle_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -140,7 +153,7 @@ def create_billing_hierarchy_cycle_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -150,8 +163,12 @@ def create_billing_hierarchy_cycle_sync(
     return None
 
 
+
+
 def create_billing_hierarchy_cycle_asyncio_detailed(
-    *, client: StolonClient, body: ApiBillingHierarchyCycle
+    *,
+    client: StolonClient,
+    body: ApiBillingHierarchyCycle
 ) -> Response[ResponseError]:
     """Create billing hierarchy cycle entry
 
@@ -175,14 +192,18 @@ def create_billing_hierarchy_cycle_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -190,6 +211,8 @@ def create_billing_hierarchy_cycle_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -201,6 +224,8 @@ def create_billing_hierarchy_cycle_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -208,14 +233,18 @@ def create_billing_hierarchy_cycle_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def create_billing_hierarchy_cycle_asyncio(
-    *, client: StolonClient, body: ApiBillingHierarchyCycle
+    *,
+    client: StolonClient,
+    body: ApiBillingHierarchyCycle
 ) -> ResponseError | None:
     """Create billing hierarchy cycle entry
 
@@ -239,14 +268,18 @@ def create_billing_hierarchy_cycle_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_hierarchy_cycle._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -254,7 +287,7 @@ def create_billing_hierarchy_cycle_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -262,6 +295,8 @@ def create_billing_hierarchy_cycle_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
@@ -269,7 +304,7 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
@@ -297,16 +332,18 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -314,6 +351,8 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -325,6 +364,8 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -332,10 +373,12 @@ def populate_merchant_cycle_entries_for_processing_group_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def populate_merchant_cycle_entries_for_processing_group_sync(
@@ -343,7 +386,7 @@ def populate_merchant_cycle_entries_for_processing_group_sync(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
@@ -371,16 +414,18 @@ def populate_merchant_cycle_entries_for_processing_group_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -388,7 +433,7 @@ def populate_merchant_cycle_entries_for_processing_group_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -398,12 +443,14 @@ def populate_merchant_cycle_entries_for_processing_group_sync(
     return None
 
 
+
+
 def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
     *,
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
@@ -431,16 +478,18 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -448,6 +497,8 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -459,6 +510,8 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -466,10 +519,12 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def populate_merchant_cycle_entries_for_processing_group_asyncio(
@@ -477,7 +532,7 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Populate merchant billing hierarchy cycles entries for a processing group
 
@@ -505,16 +560,18 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_merchant_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -522,7 +579,7 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -530,6 +587,8 @@ def populate_merchant_cycle_entries_for_processing_group_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_detailed(
@@ -538,7 +597,7 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -568,16 +627,18 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -585,6 +646,8 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -596,6 +659,8 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -603,10 +668,12 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
@@ -615,7 +682,7 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -645,16 +712,18 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -662,7 +731,7 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -670,6 +739,8 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_detailed(
@@ -678,7 +749,7 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -708,16 +779,18 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -725,6 +798,8 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -736,6 +811,8 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -743,10 +820,12 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
@@ -755,7 +834,7 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for merchants by processing group UUID and cycle date
 
@@ -785,16 +864,18 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -802,7 +883,7 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -810,6 +891,8 @@ def get_merchant_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_detailed(
@@ -818,7 +901,7 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -848,16 +931,18 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -865,6 +950,8 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -876,6 +963,8 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -883,10 +972,12 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_deta
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
@@ -895,7 +986,7 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -925,16 +1016,18 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -942,7 +1035,7 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -950,6 +1043,8 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_detailed(
@@ -958,7 +1053,7 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -988,16 +1083,18 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1005,6 +1102,8 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1016,6 +1115,8 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1023,10 +1124,12 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_d
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
@@ -1035,7 +1138,7 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for resellers by processing group UUID and cycle date
 
@@ -1065,16 +1168,18 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1082,7 +1187,7 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1090,6 +1195,8 @@ def get_reseller_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
@@ -1098,7 +1205,7 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
     processing_group_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET
 ) -> Response[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1129,16 +1236,18 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
     Returns:
         Response[int]
     """
+
     # Extract request parameters from generated function
-    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
-    )
+    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1146,6 +1255,8 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1157,6 +1268,8 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1164,10 +1277,12 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
@@ -1176,7 +1291,7 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
     processing_group_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET
 ) -> int | None:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1207,16 +1322,18 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
     Returns:
         int | None
     """
+
     # Extract request parameters from generated function
-    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
-    )
+    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1227,13 +1344,15 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_sync(
     return None
 
 
+
+
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
     *,
     client: StolonClient,
     processing_group_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET
 ) -> Response[int]:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1264,16 +1383,18 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
     Returns:
         Response[int]
     """
+
     # Extract request parameters from generated function
-    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
-    )
+    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1281,6 +1402,8 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1292,6 +1415,8 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1299,10 +1424,12 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
@@ -1311,7 +1438,7 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
     processing_group_uuid: str,
     hierarchy_type: str,
     date: datetime.date,
-    page_size: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET
 ) -> int | None:
     """Purge billing hierarchy cycle entries for the processing group and hierarchy type where the cycle
     date is before the specified date
@@ -1342,16 +1469,18 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
     Returns:
         int | None
     """
+
     # Extract request parameters from generated function
-    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(
-        processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size
-    )
+    kwargs = purge_cycle_entries_by_processing_group_and_hierarchy_type._get_kwargs(processing_group_uuid=processing_group_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1360,6 +1489,8 @@ def purge_cycle_entries_by_processing_group_and_hierarchy_type_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
@@ -1368,7 +1499,7 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     cycle_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
@@ -1399,16 +1530,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1416,6 +1549,8 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1427,6 +1562,8 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1434,10 +1571,12 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(
@@ -1446,7 +1585,7 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     cycle_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
@@ -1477,16 +1616,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1494,7 +1635,7 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1502,6 +1643,8 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
@@ -1510,7 +1653,7 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     cycle_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
@@ -1541,16 +1684,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1558,6 +1703,8 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1569,6 +1716,8 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1576,10 +1725,12 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(
@@ -1588,7 +1739,7 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     cycle_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries by merchant, reseller, or developer billing entity UUID and/or
     cycle date
@@ -1619,16 +1770,18 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1636,7 +1789,7 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1646,8 +1799,12 @@ def get_cycle_entries_by_billing_entity_uuid_and_or_cycle_date_asyncio(
     return None
 
 
+
+
 def get_billing_hierarchy_cycle_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingHierarchyCycle | ResponseError]:
     """Get a billing hierarchy by UUID
 
@@ -1671,14 +1828,18 @@ def get_billing_hierarchy_cycle_by_uuid_sync_detailed(
     Returns:
         Response[ApiBillingHierarchyCycle | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_cycle_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1686,6 +1847,8 @@ def get_billing_hierarchy_cycle_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1697,6 +1860,8 @@ def get_billing_hierarchy_cycle_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1704,14 +1869,18 @@ def get_billing_hierarchy_cycle_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_billing_hierarchy_cycle_by_uuid_sync(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiBillingHierarchyCycle | ResponseError | None:
     """Get a billing hierarchy by UUID
 
@@ -1735,14 +1904,18 @@ def get_billing_hierarchy_cycle_by_uuid_sync(
     Returns:
         ApiBillingHierarchyCycle | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_cycle_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1753,8 +1926,12 @@ def get_billing_hierarchy_cycle_by_uuid_sync(
     return None
 
 
+
+
 def get_billing_hierarchy_cycle_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingHierarchyCycle | ResponseError]:
     """Get a billing hierarchy by UUID
 
@@ -1778,14 +1955,18 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiBillingHierarchyCycle | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_cycle_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1793,6 +1974,8 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1804,6 +1987,8 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1811,14 +1996,18 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_billing_hierarchy_cycle_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiBillingHierarchyCycle | ResponseError | None:
     """Get a billing hierarchy by UUID
 
@@ -1842,14 +2031,18 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio(
     Returns:
         ApiBillingHierarchyCycle | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_hierarchy_cycle_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1858,6 +2051,8 @@ def get_billing_hierarchy_cycle_by_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_detailed(
@@ -1866,7 +2061,7 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -1896,16 +2091,18 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1913,6 +2110,8 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1924,6 +2123,8 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1931,10 +2132,12 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync_det
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
@@ -1943,7 +2146,7 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -1973,16 +2176,18 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1990,7 +2195,7 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1998,6 +2203,8 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_detailed(
@@ -2006,7 +2213,7 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -2036,16 +2243,18 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2053,6 +2262,8 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2064,6 +2275,8 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2071,10 +2284,12 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio_
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
@@ -2083,7 +2298,7 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     processing_group_uuid: str,
     cycle_date: datetime.date,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get billing hierarchy cycle entries for developers by processing group UUID and cycle date
 
@@ -2113,16 +2328,18 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(
-        processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date._get_kwargs(processing_group_uuid=processing_group_uuid, cycle_date=cycle_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2130,7 +2347,7 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2138,6 +2355,8 @@ def get_developer_cycle_entries_by_processing_group_uuid_and_cycle_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
@@ -2145,7 +2364,7 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
@@ -2173,16 +2392,18 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2190,6 +2411,8 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2201,6 +2424,8 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2208,10 +2433,12 @@ def populate_reseller_cycle_entries_for_processing_group_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def populate_reseller_cycle_entries_for_processing_group_sync(
@@ -2219,7 +2446,7 @@ def populate_reseller_cycle_entries_for_processing_group_sync(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
@@ -2247,16 +2474,18 @@ def populate_reseller_cycle_entries_for_processing_group_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2264,7 +2493,7 @@ def populate_reseller_cycle_entries_for_processing_group_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2272,6 +2501,8 @@ def populate_reseller_cycle_entries_for_processing_group_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
@@ -2279,7 +2510,7 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
@@ -2307,16 +2538,18 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2324,6 +2557,8 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2335,6 +2570,8 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2342,10 +2579,12 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def populate_reseller_cycle_entries_for_processing_group_asyncio(
@@ -2353,7 +2592,7 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Populate reseller billing hierarchy cycles entries for a processing group
 
@@ -2381,16 +2620,18 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_reseller_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2398,7 +2639,7 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2406,6 +2647,8 @@ def populate_reseller_cycle_entries_for_processing_group_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def populate_developer_cycle_entries_for_processing_group_sync_detailed(
@@ -2413,7 +2656,7 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
@@ -2441,16 +2684,18 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2458,6 +2703,8 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2469,6 +2716,8 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2476,10 +2725,12 @@ def populate_developer_cycle_entries_for_processing_group_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def populate_developer_cycle_entries_for_processing_group_sync(
@@ -2487,7 +2738,7 @@ def populate_developer_cycle_entries_for_processing_group_sync(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Populate developer billing hierarchy cycles entries for a processing group
 
@@ -2515,16 +2766,18 @@ def populate_developer_cycle_entries_for_processing_group_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2532,7 +2785,7 @@ def populate_developer_cycle_entries_for_processing_group_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2542,12 +2795,14 @@ def populate_developer_cycle_entries_for_processing_group_sync(
     return None
 
 
+
+
 def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
     *,
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Populate developer billing hierarchy cycles entries for a processing group
 
@@ -2575,16 +2830,18 @@ def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2592,6 +2849,8 @@ def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2603,6 +2862,8 @@ def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2610,10 +2871,12 @@ def populate_developer_cycle_entries_for_processing_group_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def populate_developer_cycle_entries_for_processing_group_asyncio(
@@ -2621,7 +2884,7 @@ def populate_developer_cycle_entries_for_processing_group_asyncio(
     client: StolonClient,
     processing_group_uuid: str,
     chunk_size: Union[Unset, int] = UNSET,
-    chunk_number: Union[Unset, int] = UNSET,
+    chunk_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Populate developer billing hierarchy cycles entries for a processing group
 
@@ -2649,16 +2912,18 @@ def populate_developer_cycle_entries_for_processing_group_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(
-        processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number
-    )
+    kwargs = populate_developer_cycle_entries_for_processing_group._get_kwargs(processing_group_uuid=processing_group_uuid, chunk_size=chunk_size, chunk_number=chunk_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2666,7 +2931,7 @@ def populate_developer_cycle_entries_for_processing_group_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2674,3 +2939,4 @@ def populate_developer_cycle_entries_for_processing_group_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

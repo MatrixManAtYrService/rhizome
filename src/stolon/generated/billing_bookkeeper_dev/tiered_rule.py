@@ -9,32 +9,29 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import (
-    create_tiered_rule,
-    delete_tiered_rule_by_uuid,
-    get_tiered_rule_by_uuid,
-    get_tiered_rules,
-    set_tiered_rule_status,
-    update_tiered_rule,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule import (
-    ApiTieredRule,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule_set import (
-    ApiTieredRuleSet,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import create_tiered_rule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import delete_tiered_rule_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import get_tiered_rule_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import get_tiered_rules
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import set_tiered_rule_status
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tiered_rule import update_tiered_rule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule import ApiTieredRule
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tiered_rule_set import ApiTieredRuleSet
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
-def create_tiered_rule_sync_detailed(*, client: StolonClient, body: ApiTieredRuleSet) -> Response[ApiTieredRuleSet]:
+def create_tiered_rule_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiTieredRuleSet
+) -> Response[ApiTieredRuleSet]:
     """Create tiered rule
 
     Args:
@@ -57,14 +54,18 @@ def create_tiered_rule_sync_detailed(*, client: StolonClient, body: ApiTieredRul
     Returns:
         Response[ApiTieredRuleSet]
     """
+
     # Extract request parameters from generated function
     kwargs = create_tiered_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -72,6 +73,8 @@ def create_tiered_rule_sync_detailed(*, client: StolonClient, body: ApiTieredRul
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -83,6 +86,8 @@ def create_tiered_rule_sync_detailed(*, client: StolonClient, body: ApiTieredRul
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRuleSet | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRuleSet:
         parsed = ApiTieredRuleSet.from_dict(body_json)
     else:
@@ -90,13 +95,19 @@ def create_tiered_rule_sync_detailed(*, client: StolonClient, body: ApiTieredRul
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_tiered_rule_sync(*, client: StolonClient, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
+
+
+def create_tiered_rule_sync(
+    *,
+    client: StolonClient,
+    body: ApiTieredRuleSet
+) -> ApiTieredRuleSet | None:
     """Create tiered rule
 
     Args:
@@ -119,14 +130,18 @@ def create_tiered_rule_sync(*, client: StolonClient, body: ApiTieredRuleSet) -> 
     Returns:
         ApiTieredRuleSet | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_tiered_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -134,7 +149,7 @@ def create_tiered_rule_sync(*, client: StolonClient, body: ApiTieredRuleSet) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -144,7 +159,13 @@ def create_tiered_rule_sync(*, client: StolonClient, body: ApiTieredRuleSet) -> 
     return None
 
 
-def create_tiered_rule_asyncio_detailed(*, client: StolonClient, body: ApiTieredRuleSet) -> Response[ApiTieredRuleSet]:
+
+
+def create_tiered_rule_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiTieredRuleSet
+) -> Response[ApiTieredRuleSet]:
     """Create tiered rule
 
     Args:
@@ -167,14 +188,18 @@ def create_tiered_rule_asyncio_detailed(*, client: StolonClient, body: ApiTiered
     Returns:
         Response[ApiTieredRuleSet]
     """
+
     # Extract request parameters from generated function
     kwargs = create_tiered_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -182,6 +207,8 @@ def create_tiered_rule_asyncio_detailed(*, client: StolonClient, body: ApiTiered
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -193,6 +220,8 @@ def create_tiered_rule_asyncio_detailed(*, client: StolonClient, body: ApiTiered
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRuleSet | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRuleSet:
         parsed = ApiTieredRuleSet.from_dict(body_json)
     else:
@@ -200,13 +229,19 @@ def create_tiered_rule_asyncio_detailed(*, client: StolonClient, body: ApiTiered
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_tiered_rule_asyncio(*, client: StolonClient, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
+
+
+def create_tiered_rule_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiTieredRuleSet
+) -> ApiTieredRuleSet | None:
     """Create tiered rule
 
     Args:
@@ -229,14 +264,18 @@ def create_tiered_rule_asyncio(*, client: StolonClient, body: ApiTieredRuleSet) 
     Returns:
         ApiTieredRuleSet | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_tiered_rule._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -244,7 +283,7 @@ def create_tiered_rule_asyncio(*, client: StolonClient, body: ApiTieredRuleSet) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -252,10 +291,15 @@ def create_tiered_rule_asyncio(*, client: StolonClient, body: ApiTieredRuleSet) 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_tiered_rules_sync_detailed(
-    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiTieredRule]:
     """Get tiered rules
 
@@ -281,14 +325,18 @@ def get_tiered_rules_sync_detailed(
     Returns:
         Response[ApiTieredRule]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -296,6 +344,8 @@ def get_tiered_rules_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -307,6 +357,8 @@ def get_tiered_rules_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRule | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRule:
         parsed = ApiTieredRule.from_dict(body_json)
     else:
@@ -314,14 +366,19 @@ def get_tiered_rules_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_tiered_rules_sync(
-    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiTieredRule | None:
     """Get tiered rules
 
@@ -347,14 +404,18 @@ def get_tiered_rules_sync(
     Returns:
         ApiTieredRule | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -362,7 +423,7 @@ def get_tiered_rules_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -372,8 +433,13 @@ def get_tiered_rules_sync(
     return None
 
 
+
+
 def get_tiered_rules_asyncio_detailed(
-    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiTieredRule]:
     """Get tiered rules
 
@@ -399,14 +465,18 @@ def get_tiered_rules_asyncio_detailed(
     Returns:
         Response[ApiTieredRule]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -414,6 +484,8 @@ def get_tiered_rules_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -425,6 +497,8 @@ def get_tiered_rules_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRule | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRule:
         parsed = ApiTieredRule.from_dict(body_json)
     else:
@@ -432,14 +506,19 @@ def get_tiered_rules_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_tiered_rules_asyncio(
-    *, client: StolonClient, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiTieredRule | None:
     """Get tiered rules
 
@@ -465,14 +544,18 @@ def get_tiered_rules_asyncio(
     Returns:
         ApiTieredRule | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rules._get_kwargs(page_size=page_size, page_number=page_number)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -480,7 +563,7 @@ def get_tiered_rules_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -490,7 +573,13 @@ def get_tiered_rules_asyncio(
     return None
 
 
-def set_tiered_rule_status_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRule]:
+
+
+def set_tiered_rule_status_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTieredRule]:
     """Set the status for the tiered rule
 
     Args:
@@ -513,14 +602,18 @@ def set_tiered_rule_status_sync_detailed(*, client: StolonClient, uuid: str) -> 
     Returns:
         Response[ApiTieredRule]
     """
+
     # Extract request parameters from generated function
     kwargs = set_tiered_rule_status._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -528,6 +621,8 @@ def set_tiered_rule_status_sync_detailed(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -539,6 +634,8 @@ def set_tiered_rule_status_sync_detailed(*, client: StolonClient, uuid: str) -> 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRule | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRule:
         parsed = ApiTieredRule.from_dict(body_json)
     else:
@@ -546,13 +643,19 @@ def set_tiered_rule_status_sync_detailed(*, client: StolonClient, uuid: str) -> 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_tiered_rule_status_sync(*, client: StolonClient, uuid: str) -> ApiTieredRule | None:
+
+
+def set_tiered_rule_status_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTieredRule | None:
     """Set the status for the tiered rule
 
     Args:
@@ -575,14 +678,18 @@ def set_tiered_rule_status_sync(*, client: StolonClient, uuid: str) -> ApiTiered
     Returns:
         ApiTieredRule | None
     """
+
     # Extract request parameters from generated function
     kwargs = set_tiered_rule_status._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -590,7 +697,7 @@ def set_tiered_rule_status_sync(*, client: StolonClient, uuid: str) -> ApiTiered
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -600,7 +707,13 @@ def set_tiered_rule_status_sync(*, client: StolonClient, uuid: str) -> ApiTiered
     return None
 
 
-def set_tiered_rule_status_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRule]:
+
+
+def set_tiered_rule_status_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTieredRule]:
     """Set the status for the tiered rule
 
     Args:
@@ -623,14 +736,18 @@ def set_tiered_rule_status_asyncio_detailed(*, client: StolonClient, uuid: str) 
     Returns:
         Response[ApiTieredRule]
     """
+
     # Extract request parameters from generated function
     kwargs = set_tiered_rule_status._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -638,6 +755,8 @@ def set_tiered_rule_status_asyncio_detailed(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -649,6 +768,8 @@ def set_tiered_rule_status_asyncio_detailed(*, client: StolonClient, uuid: str) 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRule | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRule:
         parsed = ApiTieredRule.from_dict(body_json)
     else:
@@ -656,13 +777,19 @@ def set_tiered_rule_status_asyncio_detailed(*, client: StolonClient, uuid: str) 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def set_tiered_rule_status_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredRule | None:
+
+
+def set_tiered_rule_status_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTieredRule | None:
     """Set the status for the tiered rule
 
     Args:
@@ -685,14 +812,18 @@ def set_tiered_rule_status_asyncio(*, client: StolonClient, uuid: str) -> ApiTie
     Returns:
         ApiTieredRule | None
     """
+
     # Extract request parameters from generated function
     kwargs = set_tiered_rule_status._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -700,7 +831,7 @@ def set_tiered_rule_status_asyncio(*, client: StolonClient, uuid: str) -> ApiTie
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -710,7 +841,13 @@ def set_tiered_rule_status_asyncio(*, client: StolonClient, uuid: str) -> ApiTie
     return None
 
 
-def delete_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_tiered_rule_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete tiered rule
 
     Args:
@@ -733,14 +870,18 @@ def delete_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -748,6 +889,8 @@ def delete_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -759,6 +902,8 @@ def delete_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -766,13 +911,19 @@ def delete_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_tiered_rule_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete tiered rule
 
     Args:
@@ -795,14 +946,18 @@ def delete_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -813,7 +968,13 @@ def delete_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     return None
 
 
-def delete_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_tiered_rule_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete tiered rule
 
     Args:
@@ -836,14 +997,18 @@ def delete_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -851,6 +1016,8 @@ def delete_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -862,6 +1029,8 @@ def delete_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -869,13 +1038,19 @@ def delete_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_tiered_rule_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete tiered rule
 
     Args:
@@ -898,14 +1073,18 @@ def delete_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -916,7 +1095,13 @@ def delete_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def get_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
+
+
+def get_tiered_rule_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTieredRuleSet]:
     """Get tiered rule by UUID
 
     Args:
@@ -939,14 +1124,18 @@ def get_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
     Returns:
         Response[ApiTieredRuleSet]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -954,6 +1143,8 @@ def get_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -965,6 +1156,8 @@ def get_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRuleSet | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRuleSet:
         parsed = ApiTieredRuleSet.from_dict(body_json)
     else:
@@ -972,13 +1165,19 @@ def get_tiered_rule_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
+
+
+def get_tiered_rule_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTieredRuleSet | None:
     """Get tiered rule by UUID
 
     Args:
@@ -1001,14 +1200,18 @@ def get_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTiere
     Returns:
         ApiTieredRuleSet | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1016,7 +1219,7 @@ def get_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTiere
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1026,7 +1229,13 @@ def get_tiered_rule_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTiere
     return None
 
 
-def get_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTieredRuleSet]:
+
+
+def get_tiered_rule_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTieredRuleSet]:
     """Get tiered rule by UUID
 
     Args:
@@ -1049,14 +1258,18 @@ def get_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ApiTieredRuleSet]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1064,6 +1277,8 @@ def get_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1075,6 +1290,8 @@ def get_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRuleSet | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRuleSet:
         parsed = ApiTieredRuleSet.from_dict(body_json)
     else:
@@ -1082,13 +1299,19 @@ def get_tiered_rule_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTieredRuleSet | None:
+
+
+def get_tiered_rule_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTieredRuleSet | None:
     """Get tiered rule by UUID
 
     Args:
@@ -1111,14 +1334,18 @@ def get_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
     Returns:
         ApiTieredRuleSet | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tiered_rule_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1126,7 +1353,7 @@ def get_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1134,10 +1361,15 @@ def get_tiered_rule_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_tiered_rule_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiTieredRuleSet
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiTieredRuleSet
 ) -> Response[ApiTieredRuleSet]:
     """Update tiered rule
 
@@ -1163,14 +1395,18 @@ def update_tiered_rule_sync_detailed(
     Returns:
         Response[ApiTieredRuleSet]
     """
+
     # Extract request parameters from generated function
     kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1178,6 +1414,8 @@ def update_tiered_rule_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1189,6 +1427,8 @@ def update_tiered_rule_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRuleSet | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRuleSet:
         parsed = ApiTieredRuleSet.from_dict(body_json)
     else:
@@ -1196,13 +1436,20 @@ def update_tiered_rule_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_tiered_rule_sync(*, client: StolonClient, uuid: str, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
+
+
+def update_tiered_rule_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiTieredRuleSet
+) -> ApiTieredRuleSet | None:
     """Update tiered rule
 
     Args:
@@ -1227,14 +1474,18 @@ def update_tiered_rule_sync(*, client: StolonClient, uuid: str, body: ApiTieredR
     Returns:
         ApiTieredRuleSet | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1242,7 +1493,7 @@ def update_tiered_rule_sync(*, client: StolonClient, uuid: str, body: ApiTieredR
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1250,10 +1501,15 @@ def update_tiered_rule_sync(*, client: StolonClient, uuid: str, body: ApiTieredR
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_tiered_rule_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiTieredRuleSet
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiTieredRuleSet
 ) -> Response[ApiTieredRuleSet]:
     """Update tiered rule
 
@@ -1279,14 +1535,18 @@ def update_tiered_rule_asyncio_detailed(
     Returns:
         Response[ApiTieredRuleSet]
     """
+
     # Extract request parameters from generated function
     kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1294,6 +1554,8 @@ def update_tiered_rule_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1305,6 +1567,8 @@ def update_tiered_rule_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTieredRuleSet | None
     if body_json and proxy_response.status_code == 200 and ApiTieredRuleSet:
         parsed = ApiTieredRuleSet.from_dict(body_json)
     else:
@@ -1312,13 +1576,20 @@ def update_tiered_rule_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str, body: ApiTieredRuleSet) -> ApiTieredRuleSet | None:
+
+
+def update_tiered_rule_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiTieredRuleSet
+) -> ApiTieredRuleSet | None:
     """Update tiered rule
 
     Args:
@@ -1343,14 +1614,18 @@ def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str, body: ApiTier
     Returns:
         ApiTieredRuleSet | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_tiered_rule._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1358,7 +1633,7 @@ def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str, body: ApiTier
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1366,3 +1641,4 @@ def update_tiered_rule_asyncio(*, client: StolonClient, uuid: str, body: ApiTier
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

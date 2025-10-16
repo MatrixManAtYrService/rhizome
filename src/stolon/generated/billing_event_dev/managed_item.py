@@ -9,31 +9,29 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import (
-    create_2,
-    delete_2,
-    get_2,
-    get_managed_items_by_criteria,
-    get_reseller_managed_item,
-    merchant_passes,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import create_2
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import delete_2
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import get_2
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import get_managed_items_by_criteria
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import get_reseller_managed_item
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import merchant_passes
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_managed_item import ApiManagedItem
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_2_response_200 import (
-    Delete2Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response_200 import (
-    MerchantPassesResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_2_response_200 import Delete2Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response_200 import MerchantPassesResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
 def merchant_passes_sync_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[MerchantPassesResponse200]:
     """Check if merchant meets criteria
 
@@ -59,14 +57,18 @@ def merchant_passes_sync_detailed(
     Returns:
         Response[MerchantPassesResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -74,6 +76,8 @@ def merchant_passes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -94,14 +98,19 @@ def merchant_passes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def merchant_passes_sync(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> MerchantPassesResponse200 | None:
     """Check if merchant meets criteria
 
@@ -127,14 +136,18 @@ def merchant_passes_sync(
     Returns:
         MerchantPassesResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -142,7 +155,7 @@ def merchant_passes_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -152,8 +165,13 @@ def merchant_passes_sync(
     return None
 
 
+
+
 def merchant_passes_asyncio_detailed(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[MerchantPassesResponse200]:
     """Check if merchant meets criteria
 
@@ -179,14 +197,18 @@ def merchant_passes_asyncio_detailed(
     Returns:
         Response[MerchantPassesResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -194,6 +216,8 @@ def merchant_passes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -214,14 +238,19 @@ def merchant_passes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def merchant_passes_asyncio(
-    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> MerchantPassesResponse200 | None:
     """Check if merchant meets criteria
 
@@ -247,14 +276,18 @@ def merchant_passes_asyncio(
     Returns:
         MerchantPassesResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -262,7 +295,7 @@ def merchant_passes_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -272,7 +305,13 @@ def merchant_passes_asyncio(
     return None
 
 
-def get_reseller_managed_item_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
+
+
+def get_reseller_managed_item_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiManagedItem]:
     """Get managed item record for this reseller.
 
     Args:
@@ -295,14 +334,18 @@ def get_reseller_managed_item_sync_detailed(*, client: StolonClient, uuid: str) 
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_managed_item._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -310,6 +353,8 @@ def get_reseller_managed_item_sync_detailed(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -330,13 +375,19 @@ def get_reseller_managed_item_sync_detailed(*, client: StolonClient, uuid: str) 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_reseller_managed_item_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
+
+
+def get_reseller_managed_item_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiManagedItem | None:
     """Get managed item record for this reseller.
 
     Args:
@@ -359,14 +410,18 @@ def get_reseller_managed_item_sync(*, client: StolonClient, uuid: str) -> ApiMan
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_managed_item._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -374,7 +429,7 @@ def get_reseller_managed_item_sync(*, client: StolonClient, uuid: str) -> ApiMan
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -384,7 +439,13 @@ def get_reseller_managed_item_sync(*, client: StolonClient, uuid: str) -> ApiMan
     return None
 
 
-def get_reseller_managed_item_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
+
+
+def get_reseller_managed_item_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiManagedItem]:
     """Get managed item record for this reseller.
 
     Args:
@@ -407,14 +468,18 @@ def get_reseller_managed_item_asyncio_detailed(*, client: StolonClient, uuid: st
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_managed_item._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -422,6 +487,8 @@ def get_reseller_managed_item_asyncio_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -442,13 +509,19 @@ def get_reseller_managed_item_asyncio_detailed(*, client: StolonClient, uuid: st
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_reseller_managed_item_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
+
+
+def get_reseller_managed_item_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiManagedItem | None:
     """Get managed item record for this reseller.
 
     Args:
@@ -471,14 +544,18 @@ def get_reseller_managed_item_asyncio(*, client: StolonClient, uuid: str) -> Api
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_managed_item._get_kwargs(uuid=uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -486,7 +563,7 @@ def get_reseller_managed_item_asyncio(*, client: StolonClient, uuid: str) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -496,7 +573,13 @@ def get_reseller_managed_item_asyncio(*, client: StolonClient, uuid: str) -> Api
     return None
 
 
-def create_2_sync_detailed(*, client: StolonClient, body: ApiManagedItem) -> Response[ApiManagedItem]:
+
+
+def create_2_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiManagedItem
+) -> Response[ApiManagedItem]:
     """Create managed item
 
     Args:
@@ -519,14 +602,18 @@ def create_2_sync_detailed(*, client: StolonClient, body: ApiManagedItem) -> Res
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = create_2._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -534,6 +621,8 @@ def create_2_sync_detailed(*, client: StolonClient, body: ApiManagedItem) -> Res
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -554,13 +643,19 @@ def create_2_sync_detailed(*, client: StolonClient, body: ApiManagedItem) -> Res
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_2_sync(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedItem | None:
+
+
+def create_2_sync(
+    *,
+    client: StolonClient,
+    body: ApiManagedItem
+) -> ApiManagedItem | None:
     """Create managed item
 
     Args:
@@ -583,14 +678,18 @@ def create_2_sync(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedIt
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_2._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -598,7 +697,7 @@ def create_2_sync(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedIt
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -608,7 +707,13 @@ def create_2_sync(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedIt
     return None
 
 
-def create_2_asyncio_detailed(*, client: StolonClient, body: ApiManagedItem) -> Response[ApiManagedItem]:
+
+
+def create_2_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiManagedItem
+) -> Response[ApiManagedItem]:
     """Create managed item
 
     Args:
@@ -631,14 +736,18 @@ def create_2_asyncio_detailed(*, client: StolonClient, body: ApiManagedItem) -> 
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = create_2._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -646,6 +755,8 @@ def create_2_asyncio_detailed(*, client: StolonClient, body: ApiManagedItem) -> 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -666,13 +777,19 @@ def create_2_asyncio_detailed(*, client: StolonClient, body: ApiManagedItem) -> 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_2_asyncio(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedItem | None:
+
+
+def create_2_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiManagedItem
+) -> ApiManagedItem | None:
     """Create managed item
 
     Args:
@@ -695,14 +812,18 @@ def create_2_asyncio(*, client: StolonClient, body: ApiManagedItem) -> ApiManage
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_2._get_kwargs(body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -710,7 +831,7 @@ def create_2_asyncio(*, client: StolonClient, body: ApiManagedItem) -> ApiManage
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -720,7 +841,13 @@ def create_2_asyncio(*, client: StolonClient, body: ApiManagedItem) -> ApiManage
     return None
 
 
-def get_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
+
+
+def get_2_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiManagedItem]:
     """Get managed item by UUID
 
     Args:
@@ -743,14 +870,18 @@ def get_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManag
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = get_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -758,6 +889,8 @@ def get_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManag
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -778,13 +911,19 @@ def get_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManag
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_2_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
+
+
+def get_2_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiManagedItem | None:
     """Get managed item by UUID
 
     Args:
@@ -807,14 +946,18 @@ def get_2_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -822,7 +965,7 @@ def get_2_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -832,7 +975,13 @@ def get_2_sync(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     return None
 
 
-def get_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiManagedItem]:
+
+
+def get_2_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiManagedItem]:
     """Get managed item by UUID
 
     Args:
@@ -855,14 +1004,18 @@ def get_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMa
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = get_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -870,6 +1023,8 @@ def get_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMa
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -890,13 +1045,19 @@ def get_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiMa
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_2_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
+
+
+def get_2_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiManagedItem | None:
     """Get managed item by UUID
 
     Args:
@@ -919,14 +1080,18 @@ def get_2_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -934,7 +1099,7 @@ def get_2_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -944,7 +1109,13 @@ def get_2_asyncio(*, client: StolonClient, uuid: str) -> ApiManagedItem | None:
     return None
 
 
-def delete_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delete2Response200]:
+
+
+def delete_2_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Delete2Response200]:
     """Delete managed item by UUID
 
     Args:
@@ -967,14 +1138,18 @@ def delete_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
     Returns:
         Response[Delete2Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -982,6 +1157,8 @@ def delete_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1002,13 +1179,19 @@ def delete_2_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Delet
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_2_sync(*, client: StolonClient, uuid: str) -> Delete2Response200 | None:
+
+
+def delete_2_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Delete2Response200 | None:
     """Delete managed item by UUID
 
     Args:
@@ -1031,14 +1214,18 @@ def delete_2_sync(*, client: StolonClient, uuid: str) -> Delete2Response200 | No
     Returns:
         Delete2Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1046,7 +1233,7 @@ def delete_2_sync(*, client: StolonClient, uuid: str) -> Delete2Response200 | No
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1056,7 +1243,13 @@ def delete_2_sync(*, client: StolonClient, uuid: str) -> Delete2Response200 | No
     return None
 
 
-def delete_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Delete2Response200]:
+
+
+def delete_2_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Delete2Response200]:
     """Delete managed item by UUID
 
     Args:
@@ -1079,14 +1272,18 @@ def delete_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
     Returns:
         Response[Delete2Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1094,6 +1291,8 @@ def delete_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1114,13 +1313,19 @@ def delete_2_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[De
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_2_asyncio(*, client: StolonClient, uuid: str) -> Delete2Response200 | None:
+
+
+def delete_2_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Delete2Response200 | None:
     """Delete managed item by UUID
 
     Args:
@@ -1143,14 +1348,18 @@ def delete_2_asyncio(*, client: StolonClient, uuid: str) -> Delete2Response200 |
     Returns:
         Delete2Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_2._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1158,7 +1367,7 @@ def delete_2_asyncio(*, client: StolonClient, uuid: str) -> Delete2Response200 |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1168,7 +1377,12 @@ def delete_2_asyncio(*, client: StolonClient, uuid: str) -> Delete2Response200 |
     return None
 
 
-def get_managed_items_by_criteria_sync_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
+
+
+def get_managed_items_by_criteria_sync_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiManagedItem]:
     """Get managed items by criteria
 
     Raises:
@@ -1183,19 +1397,23 @@ def get_managed_items_by_criteria_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = get_managed_items_by_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1203,6 +1421,8 @@ def get_managed_items_by_criteria_sync_detailed(*, client: StolonClient) -> Resp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1223,13 +1443,18 @@ def get_managed_items_by_criteria_sync_detailed(*, client: StolonClient) -> Resp
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_managed_items_by_criteria_sync(*, client: StolonClient) -> ApiManagedItem | None:
+
+
+def get_managed_items_by_criteria_sync(
+    *,
+    client: StolonClient
+) -> ApiManagedItem | None:
     """Get managed items by criteria
 
     Raises:
@@ -1244,19 +1469,23 @@ def get_managed_items_by_criteria_sync(*, client: StolonClient) -> ApiManagedIte
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_managed_items_by_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1264,7 +1493,7 @@ def get_managed_items_by_criteria_sync(*, client: StolonClient) -> ApiManagedIte
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1274,7 +1503,12 @@ def get_managed_items_by_criteria_sync(*, client: StolonClient) -> ApiManagedIte
     return None
 
 
-def get_managed_items_by_criteria_asyncio_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
+
+
+def get_managed_items_by_criteria_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[ApiManagedItem]:
     """Get managed items by criteria
 
     Raises:
@@ -1289,19 +1523,23 @@ def get_managed_items_by_criteria_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[ApiManagedItem]
     """
+
     # Extract request parameters from generated function
     kwargs = get_managed_items_by_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1309,6 +1547,8 @@ def get_managed_items_by_criteria_asyncio_detailed(*, client: StolonClient) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1329,13 +1569,18 @@ def get_managed_items_by_criteria_asyncio_detailed(*, client: StolonClient) -> R
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_managed_items_by_criteria_asyncio(*, client: StolonClient) -> ApiManagedItem | None:
+
+
+def get_managed_items_by_criteria_asyncio(
+    *,
+    client: StolonClient
+) -> ApiManagedItem | None:
     """Get managed items by criteria
 
     Raises:
@@ -1350,19 +1595,23 @@ def get_managed_items_by_criteria_asyncio(*, client: StolonClient) -> ApiManaged
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         ApiManagedItem | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_managed_items_by_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1370,7 +1619,7 @@ def get_managed_items_by_criteria_asyncio(*, client: StolonClient) -> ApiManaged
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1378,3 +1627,4 @@ def get_managed_items_by_criteria_asyncio(*, client: StolonClient) -> ApiManaged
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

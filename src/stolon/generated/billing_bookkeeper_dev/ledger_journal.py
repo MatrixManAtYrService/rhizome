@@ -9,28 +9,21 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journal_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journals_by_journal_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journals_by_ledger_account_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import get_ledger_journals_by_ref_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal import ApiLedgerJournal
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal_projection import ApiLedgerJournalProjection
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.ledger_journal import (
-    get_ledger_journal_by_uuid,
-    get_ledger_journals_by_journal_date,
-    get_ledger_journals_by_ledger_account_uuid,
-    get_ledger_journals_by_ref_uuid,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal import (
-    ApiLedgerJournal,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_ledger_journal_projection import (
-    ApiLedgerJournalProjection,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_ledger_journals_by_journal_date_sync_detailed(
@@ -41,7 +34,7 @@ def get_ledger_journals_by_journal_date_sync_detailed(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError | list["ApiLedgerJournalProjection"]]:
     """Get ledger journal entries for the specified journal date range
 
@@ -75,21 +68,18 @@ def get_ledger_journals_by_journal_date_sync_detailed(
     Returns:
         Response[ResponseError | list["ApiLedgerJournalProjection"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
-        min_date=min_date,
-        max_date=max_date,
-        ledger_account_uuid=ledger_account_uuid,
-        currency=currency,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -97,6 +87,8 @@ def get_ledger_journals_by_journal_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -108,6 +100,8 @@ def get_ledger_journals_by_journal_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -115,10 +109,12 @@ def get_ledger_journals_by_journal_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_journals_by_journal_date_sync(
@@ -129,7 +125,7 @@ def get_ledger_journals_by_journal_date_sync(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | list["ApiLedgerJournalProjection"] | None:
     """Get ledger journal entries for the specified journal date range
 
@@ -163,21 +159,18 @@ def get_ledger_journals_by_journal_date_sync(
     Returns:
         ResponseError | list["ApiLedgerJournalProjection"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
-        min_date=min_date,
-        max_date=max_date,
-        ledger_account_uuid=ledger_account_uuid,
-        currency=currency,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -188,6 +181,8 @@ def get_ledger_journals_by_journal_date_sync(
     return None
 
 
+
+
 def get_ledger_journals_by_journal_date_asyncio_detailed(
     *,
     client: StolonClient,
@@ -196,7 +191,7 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError | list["ApiLedgerJournalProjection"]]:
     """Get ledger journal entries for the specified journal date range
 
@@ -230,21 +225,18 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
     Returns:
         Response[ResponseError | list["ApiLedgerJournalProjection"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
-        min_date=min_date,
-        max_date=max_date,
-        ledger_account_uuid=ledger_account_uuid,
-        currency=currency,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -252,6 +244,8 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -263,6 +257,8 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -270,10 +266,12 @@ def get_ledger_journals_by_journal_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_journals_by_journal_date_asyncio(
@@ -284,7 +282,7 @@ def get_ledger_journals_by_journal_date_asyncio(
     ledger_account_uuid: Union[Unset, str] = UNSET,
     currency: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | list["ApiLedgerJournalProjection"] | None:
     """Get ledger journal entries for the specified journal date range
 
@@ -318,21 +316,18 @@ def get_ledger_journals_by_journal_date_asyncio(
     Returns:
         ResponseError | list["ApiLedgerJournalProjection"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_journal_date._get_kwargs(
-        min_date=min_date,
-        max_date=max_date,
-        ledger_account_uuid=ledger_account_uuid,
-        currency=currency,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ledger_journals_by_journal_date._get_kwargs(min_date=min_date, max_date=max_date, ledger_account_uuid=ledger_account_uuid, currency=currency, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -341,6 +336,8 @@ def get_ledger_journals_by_journal_date_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
@@ -349,7 +346,7 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -380,16 +377,18 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
-        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -397,6 +396,8 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -408,6 +409,8 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -415,10 +418,12 @@ def get_ledger_journals_by_ledger_account_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_journals_by_ledger_account_uuid_sync(
@@ -427,7 +432,7 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -458,16 +463,18 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
-        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -476,6 +483,8 @@ def get_ledger_journals_by_ledger_account_uuid_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
@@ -484,7 +493,7 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -515,16 +524,18 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
-        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -532,6 +543,8 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -543,6 +556,8 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -550,10 +565,12 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_journals_by_ledger_account_uuid_asyncio(
@@ -562,7 +579,7 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
     ledger_acct_uuid: str,
     journal_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries using the UUID of the ledger account that the journal entries are for and
     optionally the journal date
@@ -593,16 +610,18 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(
-        ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ledger_account_uuid._get_kwargs(ledger_acct_uuid=ledger_acct_uuid, journal_date=journal_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -611,10 +630,16 @@ def get_ledger_journals_by_ledger_account_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_ledger_journals_by_ref_uuid_sync_detailed(
-    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    ref_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries for the specified reference UUID
 
@@ -642,16 +667,18 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
-        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -659,6 +686,8 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -670,6 +699,8 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -677,14 +708,20 @@ def get_ledger_journals_by_ref_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ledger_journals_by_ref_uuid_sync(
-    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    ref_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries for the specified reference UUID
 
@@ -712,16 +749,18 @@ def get_ledger_journals_by_ref_uuid_sync(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
-        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -732,8 +771,14 @@ def get_ledger_journals_by_ref_uuid_sync(
     return None
 
 
+
+
 def get_ledger_journals_by_ref_uuid_asyncio_detailed(
-    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    ref_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiLedgerJournal | list["ApiLedgerJournal"]]:
     """Get ledger journal entries for the specified reference UUID
 
@@ -761,16 +806,18 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
     Returns:
         Response[ApiLedgerJournal | list["ApiLedgerJournal"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
-        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -778,6 +825,8 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -789,6 +838,8 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -796,14 +847,20 @@ def get_ledger_journals_by_ref_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_ledger_journals_by_ref_uuid_asyncio(
-    *, client: StolonClient, ref_uuid: str, page_size: Union[Unset, int] = UNSET, page_number: Union[Unset, int] = UNSET
+    *,
+    client: StolonClient,
+    ref_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiLedgerJournal | list["ApiLedgerJournal"] | None:
     """Get ledger journal entries for the specified reference UUID
 
@@ -831,16 +888,18 @@ def get_ledger_journals_by_ref_uuid_asyncio(
     Returns:
         ApiLedgerJournal | list["ApiLedgerJournal"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(
-        ref_uuid=ref_uuid, page_size=page_size, page_number=page_number
-    )
+    kwargs = get_ledger_journals_by_ref_uuid._get_kwargs(ref_uuid=ref_uuid, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -851,7 +910,13 @@ def get_ledger_journals_by_ref_uuid_asyncio(
     return None
 
 
-def get_ledger_journal_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerJournal]:
+
+
+def get_ledger_journal_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerJournal]:
     """Get ledger journal entry by UUID
 
     Args:
@@ -874,14 +939,18 @@ def get_ledger_journal_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ApiLedgerJournal]
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -889,6 +958,8 @@ def get_ledger_journal_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -900,6 +971,8 @@ def get_ledger_journal_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerJournal | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerJournal:
         parsed = ApiLedgerJournal.from_dict(body_json)
     else:
@@ -907,13 +980,19 @@ def get_ledger_journal_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_journal_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLedgerJournal | None:
+
+
+def get_ledger_journal_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerJournal | None:
     """Get ledger journal entry by UUID
 
     Args:
@@ -936,14 +1015,18 @@ def get_ledger_journal_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLe
     Returns:
         ApiLedgerJournal | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -951,7 +1034,7 @@ def get_ledger_journal_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLe
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -961,7 +1044,13 @@ def get_ledger_journal_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiLe
     return None
 
 
-def get_ledger_journal_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiLedgerJournal]:
+
+
+def get_ledger_journal_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiLedgerJournal]:
     """Get ledger journal entry by UUID
 
     Args:
@@ -984,14 +1073,18 @@ def get_ledger_journal_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ApiLedgerJournal]
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -999,6 +1092,8 @@ def get_ledger_journal_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1010,6 +1105,8 @@ def get_ledger_journal_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiLedgerJournal | None
     if body_json and proxy_response.status_code == 200 and ApiLedgerJournal:
         parsed = ApiLedgerJournal.from_dict(body_json)
     else:
@@ -1017,13 +1114,19 @@ def get_ledger_journal_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_ledger_journal_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiLedgerJournal | None:
+
+
+def get_ledger_journal_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiLedgerJournal | None:
     """Get ledger journal entry by UUID
 
     Args:
@@ -1046,14 +1149,18 @@ def get_ledger_journal_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     Returns:
         ApiLedgerJournal | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_ledger_journal_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1061,7 +1168,7 @@ def get_ledger_journal_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1069,3 +1176,4 @@ def get_ledger_journal_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Ap
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

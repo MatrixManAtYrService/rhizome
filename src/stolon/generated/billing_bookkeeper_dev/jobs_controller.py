@@ -9,23 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Any, Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import (
-    get_enqueued_jobs,
-    get_failed_jobs,
-    get_job,
-    get_processing_jobs,
-    get_scheduled_jobs,
-    get_succeeded_jobs,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_enqueued_jobs
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_failed_jobs
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_job
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_processing_jobs
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_scheduled_jobs
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.jobs_controller import get_succeeded_jobs
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
-def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+def get_job_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Any]:
     """Args:
         uuid (str):
 
@@ -46,14 +49,18 @@ def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_job._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -61,6 +68,8 @@ def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -72,6 +81,8 @@ def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -79,13 +90,19 @@ def get_job_sync_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any]:
+
+
+def get_job_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[Any]:
     """Args:
         uuid (str):
 
@@ -106,14 +123,18 @@ def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_job._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -121,6 +142,8 @@ def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -132,6 +155,8 @@ def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -139,10 +164,12 @@ def get_job_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Any
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_failed_jobs_sync_detailed(
@@ -150,7 +177,7 @@ def get_failed_jobs_sync_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -176,14 +203,18 @@ def get_failed_jobs_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_failed_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -191,6 +222,8 @@ def get_failed_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -202,6 +235,8 @@ def get_failed_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -209,10 +244,12 @@ def get_failed_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_failed_jobs_asyncio_detailed(
@@ -220,7 +257,7 @@ def get_failed_jobs_asyncio_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -246,14 +283,18 @@ def get_failed_jobs_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_failed_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -261,6 +302,8 @@ def get_failed_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -272,6 +315,8 @@ def get_failed_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -279,10 +324,12 @@ def get_failed_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_succeeded_jobs_sync_detailed(
@@ -290,7 +337,7 @@ def get_succeeded_jobs_sync_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -316,14 +363,18 @@ def get_succeeded_jobs_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_succeeded_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -331,6 +382,8 @@ def get_succeeded_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -342,6 +395,8 @@ def get_succeeded_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -349,10 +404,12 @@ def get_succeeded_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_succeeded_jobs_asyncio_detailed(
@@ -360,7 +417,7 @@ def get_succeeded_jobs_asyncio_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -386,14 +443,18 @@ def get_succeeded_jobs_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_succeeded_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -401,6 +462,8 @@ def get_succeeded_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -412,6 +475,8 @@ def get_succeeded_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -419,10 +484,12 @@ def get_succeeded_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_processing_jobs_sync_detailed(
@@ -430,7 +497,7 @@ def get_processing_jobs_sync_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -456,14 +523,18 @@ def get_processing_jobs_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_processing_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -471,6 +542,8 @@ def get_processing_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -482,6 +555,8 @@ def get_processing_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -489,10 +564,12 @@ def get_processing_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_processing_jobs_asyncio_detailed(
@@ -500,7 +577,7 @@ def get_processing_jobs_asyncio_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -526,14 +603,18 @@ def get_processing_jobs_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_processing_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -541,6 +622,8 @@ def get_processing_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -552,6 +635,8 @@ def get_processing_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -559,10 +644,12 @@ def get_processing_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_enqueued_jobs_sync_detailed(
@@ -570,7 +657,7 @@ def get_enqueued_jobs_sync_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -596,14 +683,18 @@ def get_enqueued_jobs_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_enqueued_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -611,6 +702,8 @@ def get_enqueued_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -622,6 +715,8 @@ def get_enqueued_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -629,10 +724,12 @@ def get_enqueued_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_enqueued_jobs_asyncio_detailed(
@@ -640,7 +737,7 @@ def get_enqueued_jobs_asyncio_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -666,14 +763,18 @@ def get_enqueued_jobs_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_enqueued_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -681,6 +782,8 @@ def get_enqueued_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -692,6 +795,8 @@ def get_enqueued_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -699,10 +804,12 @@ def get_enqueued_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_scheduled_jobs_sync_detailed(
@@ -710,7 +817,7 @@ def get_scheduled_jobs_sync_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -736,14 +843,18 @@ def get_scheduled_jobs_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_scheduled_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -751,6 +862,8 @@ def get_scheduled_jobs_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -762,6 +875,8 @@ def get_scheduled_jobs_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -769,10 +884,12 @@ def get_scheduled_jobs_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_scheduled_jobs_asyncio_detailed(
@@ -780,7 +897,7 @@ def get_scheduled_jobs_asyncio_detailed(
     client: StolonClient,
     is_ascending: Union[Unset, bool] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[Any]:
     """Args:
         is_ascending (Union[Unset, bool]):
@@ -806,14 +923,18 @@ def get_scheduled_jobs_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_scheduled_jobs._get_kwargs(is_ascending=is_ascending, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -821,6 +942,8 @@ def get_scheduled_jobs_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -832,6 +955,8 @@ def get_scheduled_jobs_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -839,7 +964,8 @@ def get_scheduled_jobs_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+

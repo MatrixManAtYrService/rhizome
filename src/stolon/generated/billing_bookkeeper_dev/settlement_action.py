@@ -9,30 +9,28 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import (
-    get_reseller_settlement_action_by_uuid,
-    get_reseller_settlement_actions,
-    get_settlement_action_by_uuid,
-    get_settlement_actions,
-    get_settlement_actions_by_settlement_uuids,
-    perform_settlement_action,
-    perform_settlement_actions,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action import (
-    ApiSettlementAction,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action_request import (
-    ApiSettlementActionRequest,
-)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_reseller_settlement_action_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_reseller_settlement_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_settlement_action_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_settlement_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import get_settlement_actions_by_settlement_uuids
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import perform_settlement_action
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.settlement_action import perform_settlement_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action import ApiSettlementAction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_settlement_action_request import ApiSettlementActionRequest
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def get_reseller_settlement_actions_sync_detailed(
-    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: str,
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -60,16 +58,18 @@ def get_reseller_settlement_actions_sync_detailed(
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(
-        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -77,6 +77,8 @@ def get_reseller_settlement_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -88,6 +90,8 @@ def get_reseller_settlement_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -95,14 +99,20 @@ def get_reseller_settlement_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_settlement_actions_sync(
-    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: str,
+    x_clover_appenv: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -130,16 +140,18 @@ def get_reseller_settlement_actions_sync(
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(
-        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -148,10 +160,16 @@ def get_reseller_settlement_actions_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_reseller_settlement_actions_asyncio_detailed(
-    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: str,
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -179,16 +197,18 @@ def get_reseller_settlement_actions_asyncio_detailed(
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(
-        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -196,6 +216,8 @@ def get_reseller_settlement_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -207,6 +229,8 @@ def get_reseller_settlement_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -214,14 +238,20 @@ def get_reseller_settlement_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_settlement_actions_asyncio(
-    *, client: StolonClient, r_id: str, settlement_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    settlement_uuid: str,
+    x_clover_appenv: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -249,16 +279,18 @@ def get_reseller_settlement_actions_asyncio(
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_settlement_actions._get_kwargs(
-        r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_settlement_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -269,7 +301,13 @@ def get_reseller_settlement_actions_asyncio(
     return None
 
 
-def get_settlement_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiSettlementAction]:
+
+
+def get_settlement_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
     Args:
@@ -292,14 +330,18 @@ def get_settlement_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -307,6 +349,8 @@ def get_settlement_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -318,6 +362,8 @@ def get_settlement_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -325,13 +371,19 @@ def get_settlement_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_settlement_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiSettlementAction | None:
+
+
+def get_settlement_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
     Args:
@@ -354,14 +406,18 @@ def get_settlement_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -369,7 +425,7 @@ def get_settlement_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -379,7 +435,13 @@ def get_settlement_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Ap
     return None
 
 
-def get_settlement_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiSettlementAction]:
+
+
+def get_settlement_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
     Args:
@@ -402,14 +464,18 @@ def get_settlement_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -417,6 +483,8 @@ def get_settlement_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -428,6 +496,8 @@ def get_settlement_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -435,13 +505,19 @@ def get_settlement_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_settlement_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiSettlementAction | None:
+
+
+def get_settlement_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
     Args:
@@ -464,14 +540,18 @@ def get_settlement_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -479,7 +559,7 @@ def get_settlement_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -487,10 +567,14 @@ def get_settlement_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) ->
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_settlement_actions_sync_detailed(
-    *, client: StolonClient, settlement_uuid: str
+    *,
+    client: StolonClient,
+    settlement_uuid: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -514,14 +598,18 @@ def get_settlement_actions_sync_detailed(
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -529,6 +617,8 @@ def get_settlement_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -540,6 +630,8 @@ def get_settlement_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -547,14 +639,18 @@ def get_settlement_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_settlement_actions_sync(
-    *, client: StolonClient, settlement_uuid: str
+    *,
+    client: StolonClient,
+    settlement_uuid: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -578,14 +674,18 @@ def get_settlement_actions_sync(
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -594,10 +694,14 @@ def get_settlement_actions_sync(
 
     # No response model, return None
     return None
+
+
 
 
 def get_settlement_actions_asyncio_detailed(
-    *, client: StolonClient, settlement_uuid: str
+    *,
+    client: StolonClient,
+    settlement_uuid: str
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions
 
@@ -621,14 +725,18 @@ def get_settlement_actions_asyncio_detailed(
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -636,6 +744,8 @@ def get_settlement_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -647,6 +757,8 @@ def get_settlement_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -654,14 +766,18 @@ def get_settlement_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_settlement_actions_asyncio(
-    *, client: StolonClient, settlement_uuid: str
+    *,
+    client: StolonClient,
+    settlement_uuid: str
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions
 
@@ -685,14 +801,18 @@ def get_settlement_actions_asyncio(
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions._get_kwargs(settlement_uuid=settlement_uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -701,10 +821,15 @@ def get_settlement_actions_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def perform_settlement_actions_sync_detailed(
-    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: list["ApiSettlementActionRequest"],
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Perform settlement actions for a collection of settlement requests
 
@@ -730,14 +855,18 @@ def perform_settlement_actions_sync_detailed(
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -745,6 +874,8 @@ def perform_settlement_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -756,6 +887,8 @@ def perform_settlement_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -763,14 +896,19 @@ def perform_settlement_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def perform_settlement_actions_sync(
-    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: list["ApiSettlementActionRequest"],
+    x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Perform settlement actions for a collection of settlement requests
 
@@ -796,14 +934,18 @@ def perform_settlement_actions_sync(
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -811,7 +953,7 @@ def perform_settlement_actions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -819,10 +961,15 @@ def perform_settlement_actions_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def perform_settlement_actions_asyncio_detailed(
-    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: list["ApiSettlementActionRequest"],
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Perform settlement actions for a collection of settlement requests
 
@@ -848,14 +995,18 @@ def perform_settlement_actions_asyncio_detailed(
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -863,6 +1014,8 @@ def perform_settlement_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -874,6 +1027,8 @@ def perform_settlement_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -881,14 +1036,19 @@ def perform_settlement_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def perform_settlement_actions_asyncio(
-    *, client: StolonClient, body: list["ApiSettlementActionRequest"], x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: list["ApiSettlementActionRequest"],
+    x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Perform settlement actions for a collection of settlement requests
 
@@ -914,14 +1074,18 @@ def perform_settlement_actions_asyncio(
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_actions._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -929,7 +1093,7 @@ def perform_settlement_actions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -937,10 +1101,16 @@ def perform_settlement_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_settlement_action_by_uuid_sync_detailed(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
@@ -968,14 +1138,18 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -983,6 +1157,8 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -994,6 +1170,8 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -1001,14 +1179,20 @@ def get_reseller_settlement_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_settlement_action_by_uuid_sync(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
@@ -1036,14 +1220,18 @@ def get_reseller_settlement_action_by_uuid_sync(
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1051,7 +1239,7 @@ def get_reseller_settlement_action_by_uuid_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1059,10 +1247,16 @@ def get_reseller_settlement_action_by_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_settlement_action_by_uuid_asyncio_detailed(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Get a settlement action by UUID
 
@@ -1090,14 +1284,18 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1105,6 +1303,8 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1116,6 +1316,8 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -1123,14 +1325,20 @@ def get_reseller_settlement_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_settlement_action_by_uuid_asyncio(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Get a settlement action by UUID
 
@@ -1158,14 +1366,18 @@ def get_reseller_settlement_action_by_uuid_asyncio(
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_reseller_settlement_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1173,7 +1385,7 @@ def get_reseller_settlement_action_by_uuid_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1181,10 +1393,14 @@ def get_reseller_settlement_action_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_settlement_actions_by_settlement_uuids_sync_detailed(
-    *, client: StolonClient, settlement_uuids: list[str]
+    *,
+    client: StolonClient,
+    settlement_uuids: list[str]
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions by settlement UUIDs
 
@@ -1208,14 +1424,18 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1223,6 +1443,8 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1234,6 +1456,8 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1241,14 +1465,18 @@ def get_settlement_actions_by_settlement_uuids_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_settlement_actions_by_settlement_uuids_sync(
-    *, client: StolonClient, settlement_uuids: list[str]
+    *,
+    client: StolonClient,
+    settlement_uuids: list[str]
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions by settlement UUIDs
 
@@ -1272,14 +1500,18 @@ def get_settlement_actions_by_settlement_uuids_sync(
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1290,8 +1522,12 @@ def get_settlement_actions_by_settlement_uuids_sync(
     return None
 
 
+
+
 def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
-    *, client: StolonClient, settlement_uuids: list[str]
+    *,
+    client: StolonClient,
+    settlement_uuids: list[str]
 ) -> Response[ApiSettlementAction | list["ApiSettlementAction"]]:
     """Get settlement actions by settlement UUIDs
 
@@ -1315,14 +1551,18 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
     Returns:
         Response[ApiSettlementAction | list["ApiSettlementAction"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1330,6 +1570,8 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1341,6 +1583,8 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1348,14 +1592,18 @@ def get_settlement_actions_by_settlement_uuids_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_settlement_actions_by_settlement_uuids_asyncio(
-    *, client: StolonClient, settlement_uuids: list[str]
+    *,
+    client: StolonClient,
+    settlement_uuids: list[str]
 ) -> ApiSettlementAction | list["ApiSettlementAction"] | None:
     """Get settlement actions by settlement UUIDs
 
@@ -1379,14 +1627,18 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
     Returns:
         ApiSettlementAction | list["ApiSettlementAction"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_settlement_actions_by_settlement_uuids._get_kwargs(settlement_uuids=settlement_uuids)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1397,8 +1649,13 @@ def get_settlement_actions_by_settlement_uuids_asyncio(
     return None
 
 
+
+
 def perform_settlement_action_sync_detailed(
-    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: ApiSettlementActionRequest,
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Perform a settlement action
 
@@ -1424,14 +1681,18 @@ def perform_settlement_action_sync_detailed(
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1439,6 +1700,8 @@ def perform_settlement_action_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1450,6 +1713,8 @@ def perform_settlement_action_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -1457,14 +1722,19 @@ def perform_settlement_action_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def perform_settlement_action_sync(
-    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: ApiSettlementActionRequest,
+    x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Perform a settlement action
 
@@ -1490,14 +1760,18 @@ def perform_settlement_action_sync(
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1505,7 +1779,7 @@ def perform_settlement_action_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1515,8 +1789,13 @@ def perform_settlement_action_sync(
     return None
 
 
+
+
 def perform_settlement_action_asyncio_detailed(
-    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: ApiSettlementActionRequest,
+    x_clover_appenv: str
 ) -> Response[ApiSettlementAction]:
     """Perform a settlement action
 
@@ -1542,14 +1821,18 @@ def perform_settlement_action_asyncio_detailed(
     Returns:
         Response[ApiSettlementAction]
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1557,6 +1840,8 @@ def perform_settlement_action_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1568,6 +1853,8 @@ def perform_settlement_action_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiSettlementAction | None
     if body_json and proxy_response.status_code == 200 and ApiSettlementAction:
         parsed = ApiSettlementAction.from_dict(body_json)
     else:
@@ -1575,14 +1862,19 @@ def perform_settlement_action_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def perform_settlement_action_asyncio(
-    *, client: StolonClient, body: ApiSettlementActionRequest, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    body: ApiSettlementActionRequest,
+    x_clover_appenv: str
 ) -> ApiSettlementAction | None:
     """Perform a settlement action
 
@@ -1608,14 +1900,18 @@ def perform_settlement_action_asyncio(
     Returns:
         ApiSettlementAction | None
     """
+
     # Extract request parameters from generated function
     kwargs = perform_settlement_action._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1623,7 +1919,7 @@ def perform_settlement_action_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1631,3 +1927,4 @@ def perform_settlement_action_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

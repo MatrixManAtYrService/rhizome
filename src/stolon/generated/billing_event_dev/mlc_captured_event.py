@@ -9,19 +9,16 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.mlc_captured_event import get_mlc_captured_events
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_mlc_captured_events_response_200 import GetMlcCapturedEventsResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.mlc_captured_event import (
-    get_mlc_captured_events,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_mlc_captured_events_response_200 import (
-    GetMlcCapturedEventsResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_mlc_captured_events_sync_detailed(
@@ -32,7 +29,7 @@ def get_mlc_captured_events_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetMlcCapturedEventsResponse200]:
     """Get captured MLC events
 
@@ -66,21 +63,18 @@ def get_mlc_captured_events_sync_detailed(
     Returns:
         Response[GetMlcCapturedEventsResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs(
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_mlc_captured_events._get_kwargs(merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -88,6 +82,8 @@ def get_mlc_captured_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -108,10 +104,12 @@ def get_mlc_captured_events_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_mlc_captured_events_sync(
@@ -122,7 +120,7 @@ def get_mlc_captured_events_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetMlcCapturedEventsResponse200 | None:
     """Get captured MLC events
 
@@ -156,21 +154,18 @@ def get_mlc_captured_events_sync(
     Returns:
         GetMlcCapturedEventsResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs(
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_mlc_captured_events._get_kwargs(merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -178,7 +173,7 @@ def get_mlc_captured_events_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -186,6 +181,8 @@ def get_mlc_captured_events_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_mlc_captured_events_asyncio_detailed(
@@ -196,7 +193,7 @@ def get_mlc_captured_events_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetMlcCapturedEventsResponse200]:
     """Get captured MLC events
 
@@ -230,21 +227,18 @@ def get_mlc_captured_events_asyncio_detailed(
     Returns:
         Response[GetMlcCapturedEventsResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs(
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_mlc_captured_events._get_kwargs(merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -252,6 +246,8 @@ def get_mlc_captured_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -272,10 +268,12 @@ def get_mlc_captured_events_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_mlc_captured_events_asyncio(
@@ -286,7 +284,7 @@ def get_mlc_captured_events_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetMlcCapturedEventsResponse200 | None:
     """Get captured MLC events
 
@@ -320,21 +318,18 @@ def get_mlc_captured_events_asyncio(
     Returns:
         GetMlcCapturedEventsResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs(
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_mlc_captured_events._get_kwargs(merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -342,7 +337,7 @@ def get_mlc_captured_events_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -350,3 +345,4 @@ def get_mlc_captured_events_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

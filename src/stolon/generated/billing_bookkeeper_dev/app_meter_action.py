@@ -9,139 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import create_app_meter_action
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import get_app_meter_action_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import get_app_meter_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import get_unposted_app_meter_actions_by_billing_entity
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_meter_action import ApiAppMeterAction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.app_meter_action import (
-    create_app_meter_action,
-    get_app_meter_action_by_uuid,
-    get_app_meter_actions,
-    get_unposted_app_meter_actions_by_billing_entity,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_app_meter_action import (
-    ApiAppMeterAction,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_app_meter_action_sync_detailed(*, client: StolonClient, body: ApiAppMeterAction) -> Response[ResponseError]:
-    """Create app metered action
-
-    Args:
-        body (ApiAppMeterAction):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiAppMeterAction
-
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_app_meter_action._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_app_meter_action_sync(*, client: StolonClient, body: ApiAppMeterAction) -> ResponseError | None:
-    """Create app metered action
-
-    Args:
-        body (ApiAppMeterAction):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiAppMeterAction
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_app_meter_action._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def create_app_meter_action_asyncio_detailed(
-    *, client: StolonClient, body: ApiAppMeterAction
+def create_app_meter_action_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAppMeterAction
 ) -> Response[ResponseError]:
     """Create app metered action
 
@@ -165,14 +52,18 @@ def create_app_meter_action_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_app_meter_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -180,6 +71,8 @@ def create_app_meter_action_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -191,6 +84,8 @@ def create_app_meter_action_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -198,13 +93,19 @@ def create_app_meter_action_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_app_meter_action_asyncio(*, client: StolonClient, body: ApiAppMeterAction) -> ResponseError | None:
+
+
+def create_app_meter_action_sync(
+    *,
+    client: StolonClient,
+    body: ApiAppMeterAction
+) -> ResponseError | None:
     """Create app metered action
 
     Args:
@@ -227,14 +128,18 @@ def create_app_meter_action_asyncio(*, client: StolonClient, body: ApiAppMeterAc
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_app_meter_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -242,7 +147,7 @@ def create_app_meter_action_asyncio(*, client: StolonClient, body: ApiAppMeterAc
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -250,6 +155,142 @@ def create_app_meter_action_asyncio(*, client: StolonClient, body: ApiAppMeterAc
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def create_app_meter_action_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAppMeterAction
+) -> Response[ResponseError]:
+    """Create app metered action
+
+    Args:
+        body (ApiAppMeterAction):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiAppMeterAction
+
+    Returns:
+        Response[ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_app_meter_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_app_meter_action_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiAppMeterAction
+) -> ResponseError | None:
+    """Create app metered action
+
+    Args:
+        body (ApiAppMeterAction):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiAppMeterAction
+
+    Returns:
+        ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_app_meter_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
 
 
 def get_app_meter_actions_sync_detailed(
@@ -265,7 +306,7 @@ def get_app_meter_actions_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get app metered actions
 
@@ -309,26 +350,18 @@ def get_app_meter_actions_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_meter_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_metered_uuid=app_metered_uuid,
-        app_meter_action_type=app_meter_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_meter_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_metered_uuid=app_metered_uuid, app_meter_action_type=app_meter_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -336,6 +369,8 @@ def get_app_meter_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -347,6 +382,8 @@ def get_app_meter_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -354,10 +391,12 @@ def get_app_meter_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_app_meter_actions_sync(
@@ -373,7 +412,7 @@ def get_app_meter_actions_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get app metered actions
 
@@ -417,26 +456,18 @@ def get_app_meter_actions_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_meter_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_metered_uuid=app_metered_uuid,
-        app_meter_action_type=app_meter_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_meter_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_metered_uuid=app_metered_uuid, app_meter_action_type=app_meter_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -444,7 +475,7 @@ def get_app_meter_actions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -452,6 +483,8 @@ def get_app_meter_actions_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_app_meter_actions_asyncio_detailed(
@@ -467,7 +500,7 @@ def get_app_meter_actions_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get app metered actions
 
@@ -511,26 +544,18 @@ def get_app_meter_actions_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_meter_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_metered_uuid=app_metered_uuid,
-        app_meter_action_type=app_meter_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_meter_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_metered_uuid=app_metered_uuid, app_meter_action_type=app_meter_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -538,6 +563,8 @@ def get_app_meter_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -549,6 +576,8 @@ def get_app_meter_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -556,10 +585,12 @@ def get_app_meter_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_app_meter_actions_asyncio(
@@ -575,7 +606,7 @@ def get_app_meter_actions_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get app metered actions
 
@@ -619,26 +650,18 @@ def get_app_meter_actions_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_app_meter_actions._get_kwargs(
-        plan_uuid=plan_uuid,
-        developer_app_uuid=developer_app_uuid,
-        app_metered_uuid=app_metered_uuid,
-        app_meter_action_type=app_meter_action_type,
-        billing_entity_uuid=billing_entity_uuid,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_app_meter_actions._get_kwargs(plan_uuid=plan_uuid, developer_app_uuid=developer_app_uuid, app_metered_uuid=app_metered_uuid, app_meter_action_type=app_meter_action_type, billing_entity_uuid=billing_entity_uuid, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -646,7 +669,7 @@ def get_app_meter_actions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -654,10 +677,14 @@ def get_app_meter_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted app metered actions for billing entity
 
@@ -681,14 +708,18 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -696,6 +727,8 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -707,6 +740,8 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -714,14 +749,18 @@ def get_unposted_app_meter_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_app_meter_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted app metered actions for billing entity
 
@@ -745,14 +784,18 @@ def get_unposted_app_meter_actions_by_billing_entity_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -760,7 +803,7 @@ def get_unposted_app_meter_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -770,8 +813,12 @@ def get_unposted_app_meter_actions_by_billing_entity_sync(
     return None
 
 
+
+
 def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted app metered actions for billing entity
 
@@ -795,14 +842,18 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -810,6 +861,8 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -821,6 +874,8 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -828,14 +883,18 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_unposted_app_meter_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted app metered actions for billing entity
 
@@ -859,14 +918,18 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_app_meter_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -874,7 +937,7 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -884,7 +947,13 @@ def get_unposted_app_meter_actions_by_billing_entity_asyncio(
     return None
 
 
-def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_app_meter_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get app metered action by UUID
 
     Args:
@@ -907,14 +976,18 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -922,6 +995,8 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -933,6 +1008,8 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -940,13 +1017,19 @@ def get_app_meter_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: st
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_app_meter_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get app metered action by UUID
 
     Args:
@@ -969,14 +1052,18 @@ def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Res
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -984,7 +1071,7 @@ def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Res
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -994,7 +1081,13 @@ def get_app_meter_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Res
     return None
 
 
-def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_app_meter_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get app metered action by UUID
 
     Args:
@@ -1017,14 +1110,18 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1032,6 +1129,8 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1043,6 +1142,8 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1050,13 +1151,19 @@ def get_app_meter_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid:
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_app_meter_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get app metered action by UUID
 
     Args:
@@ -1079,14 +1186,18 @@ def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_app_meter_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1094,7 +1205,7 @@ def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1102,3 +1213,4 @@ def get_app_meter_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

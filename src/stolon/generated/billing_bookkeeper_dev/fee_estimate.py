@@ -9,27 +9,21 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import (
-    compute_fee_estimate_for_merchant,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event import (
-    ApiBillingEvent,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_estimate import (
-    ApiFeeEstimate,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.fee_estimate import compute_fee_estimate_for_merchant
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_event import ApiBillingEvent
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_fee_estimate import ApiFeeEstimate
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
 def compute_fee_estimate_for_merchant_sync_detailed(
-    *, client: StolonClient, body: ApiBillingEvent
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
 ) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -53,14 +47,18 @@ def compute_fee_estimate_for_merchant_sync_detailed(
     Returns:
         Response[ApiFeeEstimate | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -68,6 +66,8 @@ def compute_fee_estimate_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -79,6 +79,8 @@ def compute_fee_estimate_for_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -86,14 +88,18 @@ def compute_fee_estimate_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def compute_fee_estimate_for_merchant_sync(
-    *, client: StolonClient, body: ApiBillingEvent
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
 ) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -117,14 +123,18 @@ def compute_fee_estimate_for_merchant_sync(
     Returns:
         ApiFeeEstimate | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -135,8 +145,12 @@ def compute_fee_estimate_for_merchant_sync(
     return None
 
 
+
+
 def compute_fee_estimate_for_merchant_asyncio_detailed(
-    *, client: StolonClient, body: ApiBillingEvent
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
 ) -> Response[ApiFeeEstimate | ResponseError]:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -160,14 +174,18 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
     Returns:
         Response[ApiFeeEstimate | ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -175,6 +193,8 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -186,6 +206,8 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -193,14 +215,18 @@ def compute_fee_estimate_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def compute_fee_estimate_for_merchant_asyncio(
-    *, client: StolonClient, body: ApiBillingEvent
+    *,
+    client: StolonClient,
+    body: ApiBillingEvent
 ) -> ApiFeeEstimate | ResponseError | None:
     """Compute billing estimated fees for a merchant billing entity UUID
 
@@ -224,14 +250,18 @@ def compute_fee_estimate_for_merchant_asyncio(
     Returns:
         ApiFeeEstimate | ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = compute_fee_estimate_for_merchant._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -240,3 +270,4 @@ def compute_fee_estimate_for_merchant_asyncio(
 
     # No response model, return None
     return None
+

@@ -9,34 +9,32 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_billing_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_cycle_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_posting_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import advance_settlement_date
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import create_processing_group_dates
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import get_processing_group_dates_by_billing_entity_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import get_processing_group_dates_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import list_processing_group_dates
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import resolve_processing_group_dates_for_child
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_processing_group_dates import ApiProcessingGroupDates
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.processing_group_dates import (
-    advance_billing_date,
-    advance_cycle_date,
-    advance_posting_date,
-    advance_settlement_date,
-    create_processing_group_dates,
-    get_processing_group_dates_by_billing_entity_uuid,
-    get_processing_group_dates_by_uuid,
-    list_processing_group_dates,
-    resolve_processing_group_dates_for_child,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_processing_group_dates import (
-    ApiProcessingGroupDates,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def resolve_processing_group_dates_for_child_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -63,14 +61,18 @@ def resolve_processing_group_dates_for_child_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -78,6 +80,8 @@ def resolve_processing_group_dates_for_child_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -89,6 +93,8 @@ def resolve_processing_group_dates_for_child_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -96,14 +102,19 @@ def resolve_processing_group_dates_for_child_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def resolve_processing_group_dates_for_child_sync(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -130,14 +141,18 @@ def resolve_processing_group_dates_for_child_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -145,7 +160,7 @@ def resolve_processing_group_dates_for_child_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -155,8 +170,13 @@ def resolve_processing_group_dates_for_child_sync(
     return None
 
 
+
+
 def resolve_processing_group_dates_for_child_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -183,14 +203,18 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -198,6 +222,8 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -209,6 +235,8 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -216,14 +244,19 @@ def resolve_processing_group_dates_for_child_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def resolve_processing_group_dates_for_child_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Resolves the processing group that a child billing entity belongs to and returns the processing
     group's dates
@@ -250,14 +283,18 @@ def resolve_processing_group_dates_for_child_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_processing_group_dates_for_child._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -265,7 +302,7 @@ def resolve_processing_group_dates_for_child_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -273,6 +310,8 @@ def resolve_processing_group_dates_for_child_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def list_processing_group_dates_sync_detailed(
@@ -281,7 +320,7 @@ def list_processing_group_dates_sync_detailed(
     name: Union[Unset, str] = UNSET,
     hierarchy_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Lists processing group dates
 
@@ -311,16 +350,18 @@ def list_processing_group_dates_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs(
-        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
-    )
+    kwargs = list_processing_group_dates._get_kwargs(name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -328,6 +369,8 @@ def list_processing_group_dates_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -339,6 +382,8 @@ def list_processing_group_dates_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -346,10 +391,12 @@ def list_processing_group_dates_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def list_processing_group_dates_sync(
@@ -358,7 +405,7 @@ def list_processing_group_dates_sync(
     name: Union[Unset, str] = UNSET,
     hierarchy_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Lists processing group dates
 
@@ -388,16 +435,18 @@ def list_processing_group_dates_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs(
-        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
-    )
+    kwargs = list_processing_group_dates._get_kwargs(name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -405,7 +454,7 @@ def list_processing_group_dates_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -413,6 +462,8 @@ def list_processing_group_dates_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def list_processing_group_dates_asyncio_detailed(
@@ -421,7 +472,7 @@ def list_processing_group_dates_asyncio_detailed(
     name: Union[Unset, str] = UNSET,
     hierarchy_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Lists processing group dates
 
@@ -451,16 +502,18 @@ def list_processing_group_dates_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs(
-        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
-    )
+    kwargs = list_processing_group_dates._get_kwargs(name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -468,6 +521,8 @@ def list_processing_group_dates_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -479,6 +534,8 @@ def list_processing_group_dates_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -486,10 +543,12 @@ def list_processing_group_dates_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def list_processing_group_dates_asyncio(
@@ -498,7 +557,7 @@ def list_processing_group_dates_asyncio(
     name: Union[Unset, str] = UNSET,
     hierarchy_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Lists processing group dates
 
@@ -528,16 +587,18 @@ def list_processing_group_dates_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = list_processing_group_dates._get_kwargs(
-        name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number
-    )
+    kwargs = list_processing_group_dates._get_kwargs(name=name, hierarchy_type=hierarchy_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -545,7 +606,7 @@ def list_processing_group_dates_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -555,7 +616,13 @@ def list_processing_group_dates_asyncio(
     return None
 
 
-def get_processing_group_dates_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_processing_group_dates_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get processing group dates by UUID
 
     Args:
@@ -578,14 +645,18 @@ def get_processing_group_dates_by_uuid_sync_detailed(*, client: StolonClient, uu
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -593,6 +664,8 @@ def get_processing_group_dates_by_uuid_sync_detailed(*, client: StolonClient, uu
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -604,6 +677,8 @@ def get_processing_group_dates_by_uuid_sync_detailed(*, client: StolonClient, uu
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -611,13 +686,19 @@ def get_processing_group_dates_by_uuid_sync_detailed(*, client: StolonClient, uu
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_processing_group_dates_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get processing group dates by UUID
 
     Args:
@@ -640,14 +721,18 @@ def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -655,7 +740,7 @@ def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -665,7 +750,13 @@ def get_processing_group_dates_by_uuid_sync(*, client: StolonClient, uuid: str) 
     return None
 
 
-def get_processing_group_dates_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_processing_group_dates_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get processing group dates by UUID
 
     Args:
@@ -688,14 +779,18 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(*, client: StolonClient,
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -703,6 +798,8 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(*, client: StolonClient,
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -714,6 +811,8 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(*, client: StolonClient,
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -721,13 +820,19 @@ def get_processing_group_dates_by_uuid_asyncio_detailed(*, client: StolonClient,
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_processing_group_dates_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get processing group dates by UUID
 
     Args:
@@ -750,14 +855,18 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_processing_group_dates_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -765,7 +874,7 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -773,6 +882,8 @@ def get_processing_group_dates_by_uuid_asyncio(*, client: StolonClient, uuid: st
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_posting_date_sync_detailed(
@@ -780,7 +891,7 @@ def advance_posting_date_sync_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    posting_date: Union[Unset, datetime.date] = UNSET,
+    posting_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
@@ -808,16 +919,18 @@ def advance_posting_date_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
-    )
+    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -825,6 +938,8 @@ def advance_posting_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -836,6 +951,8 @@ def advance_posting_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -843,10 +960,12 @@ def advance_posting_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_posting_date_sync(
@@ -854,7 +973,7 @@ def advance_posting_date_sync(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    posting_date: Union[Unset, datetime.date] = UNSET,
+    posting_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance posting date for a processing group
 
@@ -882,16 +1001,18 @@ def advance_posting_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
-    )
+    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -899,7 +1020,7 @@ def advance_posting_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -907,6 +1028,8 @@ def advance_posting_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_posting_date_asyncio_detailed(
@@ -914,7 +1037,7 @@ def advance_posting_date_asyncio_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    posting_date: Union[Unset, datetime.date] = UNSET,
+    posting_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance posting date for a processing group
 
@@ -942,16 +1065,18 @@ def advance_posting_date_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
-    )
+    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -959,6 +1084,8 @@ def advance_posting_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -970,6 +1097,8 @@ def advance_posting_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -977,10 +1106,12 @@ def advance_posting_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_posting_date_asyncio(
@@ -988,7 +1119,7 @@ def advance_posting_date_asyncio(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    posting_date: Union[Unset, datetime.date] = UNSET,
+    posting_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance posting date for a processing group
 
@@ -1016,16 +1147,18 @@ def advance_posting_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_posting_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date
-    )
+    kwargs = advance_posting_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, posting_date=posting_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1033,7 +1166,7 @@ def advance_posting_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1041,6 +1174,8 @@ def advance_posting_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
@@ -1048,7 +1183,7 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: Union[Unset, str] = UNSET,
-    include_name: Union[Unset, bool] = UNSET,
+    include_name: Union[Unset, bool] = UNSET
 ) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
@@ -1076,16 +1211,18 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
-    )
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1093,6 +1230,8 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1104,6 +1243,8 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1111,10 +1252,12 @@ def get_processing_group_dates_by_billing_entity_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_sync(
@@ -1122,7 +1265,7 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: Union[Unset, str] = UNSET,
-    include_name: Union[Unset, bool] = UNSET,
+    include_name: Union[Unset, bool] = UNSET
 ) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
@@ -1150,16 +1293,18 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
-    )
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1167,7 +1312,7 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1175,6 +1320,8 @@ def get_processing_group_dates_by_billing_entity_uuid_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
@@ -1182,7 +1329,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: Union[Unset, str] = UNSET,
-    include_name: Union[Unset, bool] = UNSET,
+    include_name: Union[Unset, bool] = UNSET
 ) -> Response[ResponseError]:
     """Get processing group dates by billing entity UUID
 
@@ -1210,16 +1357,18 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
-    )
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1227,6 +1376,8 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1238,6 +1389,8 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1245,10 +1398,12 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_processing_group_dates_by_billing_entity_uuid_asyncio(
@@ -1256,7 +1411,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: Union[Unset, str] = UNSET,
-    include_name: Union[Unset, bool] = UNSET,
+    include_name: Union[Unset, bool] = UNSET
 ) -> ResponseError | None:
     """Get processing group dates by billing entity UUID
 
@@ -1284,16 +1439,18 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name
-    )
+    kwargs = get_processing_group_dates_by_billing_entity_uuid._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, include_name=include_name)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1301,7 +1458,7 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1309,10 +1466,14 @@ def get_processing_group_dates_by_billing_entity_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_processing_group_dates_sync_detailed(
-    *, client: StolonClient, body: ApiProcessingGroupDates
+    *,
+    client: StolonClient,
+    body: ApiProcessingGroupDates
 ) -> Response[ResponseError]:
     """Create processing group dates
 
@@ -1336,14 +1497,18 @@ def create_processing_group_dates_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_processing_group_dates._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1351,6 +1516,8 @@ def create_processing_group_dates_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1362,6 +1529,8 @@ def create_processing_group_dates_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1369,126 +1538,18 @@ def create_processing_group_dates_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_processing_group_dates_sync(*, client: StolonClient, body: ApiProcessingGroupDates) -> ResponseError | None:
-    """Create processing group dates
-
-    Args:
-        body (ApiProcessingGroupDates):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiProcessingGroupDates
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = create_processing_group_dates._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
 
 
-def create_processing_group_dates_asyncio_detailed(
-    *, client: StolonClient, body: ApiProcessingGroupDates
-) -> Response[ResponseError]:
-    """Create processing group dates
-
-    Args:
-        body (ApiProcessingGroupDates):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                body: ApiProcessingGroupDates
-
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = create_processing_group_dates._get_kwargs(body=body)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def create_processing_group_dates_asyncio(
-    *, client: StolonClient, body: ApiProcessingGroupDates
+def create_processing_group_dates_sync(
+    *,
+    client: StolonClient,
+    body: ApiProcessingGroupDates
 ) -> ResponseError | None:
     """Create processing group dates
 
@@ -1512,14 +1573,18 @@ def create_processing_group_dates_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_processing_group_dates._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1527,7 +1592,7 @@ def create_processing_group_dates_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1535,6 +1600,142 @@ def create_processing_group_dates_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def create_processing_group_dates_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiProcessingGroupDates
+) -> Response[ResponseError]:
+    """Create processing group dates
+
+    Args:
+        body (ApiProcessingGroupDates):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiProcessingGroupDates
+
+    Returns:
+        Response[ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_processing_group_dates._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def create_processing_group_dates_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiProcessingGroupDates
+) -> ResponseError | None:
+    """Create processing group dates
+
+    Args:
+        body (ApiProcessingGroupDates):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                body: ApiProcessingGroupDates
+
+    Returns:
+        ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = create_processing_group_dates._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
 
 
 def advance_billing_date_sync_detailed(
@@ -1542,7 +1743,7 @@ def advance_billing_date_sync_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    billing_date: Union[Unset, datetime.date] = UNSET,
+    billing_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
@@ -1570,16 +1771,18 @@ def advance_billing_date_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
-    )
+    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1587,6 +1790,8 @@ def advance_billing_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1598,6 +1803,8 @@ def advance_billing_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1605,10 +1812,12 @@ def advance_billing_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_billing_date_sync(
@@ -1616,7 +1825,7 @@ def advance_billing_date_sync(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    billing_date: Union[Unset, datetime.date] = UNSET,
+    billing_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance billing date for a processing group
 
@@ -1644,16 +1853,18 @@ def advance_billing_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
-    )
+    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1661,7 +1872,7 @@ def advance_billing_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1669,6 +1880,8 @@ def advance_billing_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_billing_date_asyncio_detailed(
@@ -1676,7 +1889,7 @@ def advance_billing_date_asyncio_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    billing_date: Union[Unset, datetime.date] = UNSET,
+    billing_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance billing date for a processing group
 
@@ -1704,16 +1917,18 @@ def advance_billing_date_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
-    )
+    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1721,6 +1936,8 @@ def advance_billing_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1732,6 +1949,8 @@ def advance_billing_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1739,10 +1958,12 @@ def advance_billing_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_billing_date_asyncio(
@@ -1750,7 +1971,7 @@ def advance_billing_date_asyncio(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    billing_date: Union[Unset, datetime.date] = UNSET,
+    billing_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance billing date for a processing group
 
@@ -1778,16 +1999,18 @@ def advance_billing_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_billing_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date
-    )
+    kwargs = advance_billing_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, billing_date=billing_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1795,7 +2018,7 @@ def advance_billing_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1803,6 +2026,8 @@ def advance_billing_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_settlement_date_sync_detailed(
@@ -1810,7 +2035,7 @@ def advance_settlement_date_sync_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    settlement_date: Union[Unset, datetime.date] = UNSET,
+    settlement_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
@@ -1838,16 +2063,18 @@ def advance_settlement_date_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
-    )
+    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1855,6 +2082,8 @@ def advance_settlement_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1866,6 +2095,8 @@ def advance_settlement_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1873,10 +2104,12 @@ def advance_settlement_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_settlement_date_sync(
@@ -1884,7 +2117,7 @@ def advance_settlement_date_sync(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    settlement_date: Union[Unset, datetime.date] = UNSET,
+    settlement_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance settlement date for a processing group
 
@@ -1912,16 +2145,18 @@ def advance_settlement_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
-    )
+    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1929,7 +2164,7 @@ def advance_settlement_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1937,6 +2172,8 @@ def advance_settlement_date_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_settlement_date_asyncio_detailed(
@@ -1944,7 +2181,7 @@ def advance_settlement_date_asyncio_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    settlement_date: Union[Unset, datetime.date] = UNSET,
+    settlement_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance settlement date for a processing group
 
@@ -1972,16 +2209,18 @@ def advance_settlement_date_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
-    )
+    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1989,6 +2228,8 @@ def advance_settlement_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2000,6 +2241,8 @@ def advance_settlement_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2007,10 +2250,12 @@ def advance_settlement_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_settlement_date_asyncio(
@@ -2018,7 +2263,7 @@ def advance_settlement_date_asyncio(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    settlement_date: Union[Unset, datetime.date] = UNSET,
+    settlement_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance settlement date for a processing group
 
@@ -2046,16 +2291,18 @@ def advance_settlement_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_settlement_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date
-    )
+    kwargs = advance_settlement_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, settlement_date=settlement_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2063,7 +2310,7 @@ def advance_settlement_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2071,6 +2318,8 @@ def advance_settlement_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def advance_cycle_date_sync_detailed(
@@ -2078,7 +2327,7 @@ def advance_cycle_date_sync_detailed(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    cycle_date: Union[Unset, datetime.date] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
@@ -2106,16 +2355,18 @@ def advance_cycle_date_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
-    )
+    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2123,6 +2374,8 @@ def advance_cycle_date_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2134,6 +2387,8 @@ def advance_cycle_date_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2141,10 +2396,12 @@ def advance_cycle_date_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_cycle_date_sync(
@@ -2152,7 +2409,7 @@ def advance_cycle_date_sync(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    cycle_date: Union[Unset, datetime.date] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance cycle date for a processing group
 
@@ -2180,16 +2437,18 @@ def advance_cycle_date_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
-    )
+    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2197,7 +2456,7 @@ def advance_cycle_date_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2207,12 +2466,14 @@ def advance_cycle_date_sync(
     return None
 
 
+
+
 def advance_cycle_date_asyncio_detailed(
     *,
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    cycle_date: Union[Unset, datetime.date] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Advance cycle date for a processing group
 
@@ -2240,16 +2501,18 @@ def advance_cycle_date_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
-    )
+    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2257,6 +2520,8 @@ def advance_cycle_date_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2268,6 +2533,8 @@ def advance_cycle_date_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2275,10 +2542,12 @@ def advance_cycle_date_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def advance_cycle_date_asyncio(
@@ -2286,7 +2555,7 @@ def advance_cycle_date_asyncio(
     client: StolonClient,
     billing_entity_uuid: str,
     hierarchy_type: str,
-    cycle_date: Union[Unset, datetime.date] = UNSET,
+    cycle_date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Advance cycle date for a processing group
 
@@ -2314,16 +2583,18 @@ def advance_cycle_date_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = advance_cycle_date._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date
-    )
+    kwargs = advance_cycle_date._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, cycle_date=cycle_date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2331,7 +2602,7 @@ def advance_cycle_date_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2339,3 +2610,4 @@ def advance_cycle_date_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

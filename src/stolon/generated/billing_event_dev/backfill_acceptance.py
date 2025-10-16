@@ -9,33 +9,27 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import (
-    create_4,
-    delete_4,
-    get_4,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
-    ApiBackfillAcceptance,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_4_response_200 import (
-    Create4Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_4_response_200 import (
-    Delete4Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_4_response_200 import (
-    Get4Response200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import create_4
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import delete_4
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import get_4
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import ApiBackfillAcceptance
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_4_response_200 import Create4Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_4_response_200 import Delete4Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_4_response_200 import Get4Response200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
 def delete_4_sync_detailed(
-    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -61,14 +55,18 @@ def delete_4_sync_detailed(
     Returns:
         Response[Delete4Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -76,6 +74,8 @@ def delete_4_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -96,14 +96,19 @@ def delete_4_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def delete_4_sync(
-    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -129,14 +134,18 @@ def delete_4_sync(
     Returns:
         Delete4Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -144,7 +153,7 @@ def delete_4_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -154,8 +163,13 @@ def delete_4_sync(
     return None
 
 
+
+
 def delete_4_asyncio_detailed(
-    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -181,14 +195,18 @@ def delete_4_asyncio_detailed(
     Returns:
         Response[Delete4Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -196,6 +214,8 @@ def delete_4_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -216,14 +236,19 @@ def delete_4_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def delete_4_asyncio(
-    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    acceptance_id: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
@@ -249,14 +274,18 @@ def delete_4_asyncio(
     Returns:
         Delete4Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -264,7 +293,7 @@ def delete_4_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -274,7 +303,13 @@ def delete_4_asyncio(
     return None
 
 
-def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Get4Response200]:
+
+
+def get_4_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: str
+) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -297,14 +332,18 @@ def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response
     Returns:
         Response[Get4Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -312,6 +351,8 @@ def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -332,13 +373,19 @@ def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_4_sync(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 | None:
+
+
+def get_4_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: str
+) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -361,14 +408,18 @@ def get_4_sync(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 |
     Returns:
         Get4Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -376,7 +427,7 @@ def get_4_sync(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 |
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -386,7 +437,13 @@ def get_4_sync(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 |
     return None
 
 
-def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Get4Response200]:
+
+
+def get_4_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: str
+) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -409,14 +466,18 @@ def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Respo
     Returns:
         Response[Get4Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -424,6 +485,8 @@ def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Respo
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -444,13 +507,19 @@ def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Respo
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_4_asyncio(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 | None:
+
+
+def get_4_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: str
+) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -473,14 +542,18 @@ def get_4_asyncio(*, client: StolonClient, merchant_uuid: str) -> Get4Response20
     Returns:
         Get4Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -488,7 +561,7 @@ def get_4_asyncio(*, client: StolonClient, merchant_uuid: str) -> Get4Response20
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -496,10 +569,15 @@ def get_4_asyncio(*, client: StolonClient, merchant_uuid: str) -> Get4Response20
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_4_sync_detailed(
-    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiBackfillAcceptance,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
@@ -525,14 +603,18 @@ def create_4_sync_detailed(
     Returns:
         Response[Create4Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -540,6 +622,8 @@ def create_4_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -560,14 +644,19 @@ def create_4_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_4_sync(
-    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiBackfillAcceptance,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
@@ -593,14 +682,18 @@ def create_4_sync(
     Returns:
         Create4Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -608,7 +701,7 @@ def create_4_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -618,8 +711,13 @@ def create_4_sync(
     return None
 
 
+
+
 def create_4_asyncio_detailed(
-    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiBackfillAcceptance,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
@@ -645,14 +743,18 @@ def create_4_asyncio_detailed(
     Returns:
         Response[Create4Response200]
     """
+
     # Extract request parameters from generated function
     kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -660,6 +762,8 @@ def create_4_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -680,14 +784,19 @@ def create_4_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def create_4_asyncio(
-    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiBackfillAcceptance,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
@@ -713,14 +822,18 @@ def create_4_asyncio(
     Returns:
         Create4Response200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -728,7 +841,7 @@ def create_4_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -736,3 +849,4 @@ def create_4_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

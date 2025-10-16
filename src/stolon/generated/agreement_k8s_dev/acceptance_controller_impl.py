@@ -68,14 +68,18 @@ def create_bulk_acceptances_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -144,14 +148,18 @@ def create_bulk_acceptances_sync(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -195,14 +203,18 @@ def create_bulk_acceptances_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -271,14 +283,18 @@ def create_bulk_acceptances_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -319,14 +335,18 @@ def get_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -392,14 +412,18 @@ def get_acceptance_sync(
     Returns:
         Acceptance | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -447,14 +471,18 @@ def get_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -520,14 +548,18 @@ def get_acceptance_asyncio(
     Returns:
         Acceptance | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id, include_template_parameters=include_template_parameters)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -578,14 +610,18 @@ def has_previously_accepted_agreements_sync_detailed(
     Returns:
         Response[bool]
     """
+
     # Extract request parameters from generated function
     kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -654,14 +690,18 @@ def has_previously_accepted_agreements_sync(
     Returns:
         bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -705,14 +745,18 @@ def has_previously_accepted_agreements_asyncio_detailed(
     Returns:
         Response[bool]
     """
+
     # Extract request parameters from generated function
     kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -781,14 +825,18 @@ def has_previously_accepted_agreements_asyncio(
     Returns:
         bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -832,14 +880,18 @@ def delete_acceptance_with_action_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -908,14 +960,18 @@ def delete_acceptance_with_action_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -984,14 +1040,18 @@ def get_latest_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
     """
+
     # Extract request parameters from generated function
     kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1060,14 +1120,18 @@ def get_latest_acceptance_sync(
     Returns:
         Acceptance | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1118,14 +1182,18 @@ def get_latest_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
     """
+
     # Extract request parameters from generated function
     kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1194,14 +1262,18 @@ def get_latest_acceptance_asyncio(
     Returns:
         Acceptance | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_latest_acceptance._get_kwargs(type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1258,14 +1330,18 @@ def get_acceptances_multiple_types_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1340,14 +1416,18 @@ def get_acceptances_multiple_types_sync(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1397,14 +1477,18 @@ def get_acceptances_multiple_types_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1479,14 +1563,18 @@ def get_acceptances_multiple_types_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances_multiple_types._get_kwargs(query=query, sort=sort, pagination=pagination, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1524,14 +1612,18 @@ def get_bulk_acceptances_service_scope_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1594,14 +1686,18 @@ def get_bulk_acceptances_service_scope_sync(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1639,14 +1735,18 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1709,14 +1809,18 @@ def get_bulk_acceptances_service_scope_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1757,14 +1861,18 @@ def delete_acceptance_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1830,14 +1938,18 @@ def delete_acceptance_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1912,14 +2024,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1994,14 +2110,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2051,14 +2171,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2133,14 +2257,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2187,14 +2315,18 @@ def create_acceptance_sync_detailed(
     Returns:
         Response[Acceptance]
     """
+
     # Extract request parameters from generated function
     kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2266,14 +2398,18 @@ def create_acceptance_sync(
     Returns:
         Acceptance | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2327,14 +2463,18 @@ def create_acceptance_asyncio_detailed(
     Returns:
         Response[Acceptance]
     """
+
     # Extract request parameters from generated function
     kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2406,14 +2546,18 @@ def create_acceptance_asyncio(
     Returns:
         Acceptance | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_acceptance._get_kwargs(body=body, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2464,14 +2608,18 @@ def get_acceptances_sync_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2540,14 +2688,18 @@ def get_acceptances_sync(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2591,14 +2743,18 @@ def get_acceptances_asyncio_detailed(
     Returns:
         Response[list["Acceptance"]]
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2667,14 +2823,18 @@ def get_acceptances_asyncio(
     Returns:
         list["Acceptance"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_acceptances._get_kwargs(acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination)
+
+    # Prepend base path to URL
+    path = "/agreement" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),

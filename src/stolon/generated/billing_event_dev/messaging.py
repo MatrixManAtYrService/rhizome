@@ -9,98 +9,59 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failure
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_consumer_failures
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_producer_failure
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import acknowledge_producer_failures
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failure_by_uuid
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failure_histories
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_failures
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_consumer_source_topics
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_event_source_topics
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_ignored_events
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failure_by_uuid
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failure_histories
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import get_producer_failures
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import play_manual_mlc_event
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import produce_app_rates_events
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import retry_consumer_failures
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import retry_producer_failure
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import update_and_retry_consumer_failure
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response_200 import AcknowledgeConsumerFailureResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response_200 import AcknowledgeConsumerFailuresResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response_200 import AcknowledgeProducerFailureResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response_200 import AcknowledgeProducerFailuresResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_rates_params import ApiAppRatesParams
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure import ApiConsumerFailure
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure_history import ApiConsumerFailureHistory
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_event_ignored import ApiEventIgnored
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_message_failure_update_response import ApiMessageFailureUpdateResponse
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure import ApiProducerFailure
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import ApiProducerFailureHistory
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response_200 import GetConsumerFailureByUuidResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response_200 import GetConsumerFailureHistoriesResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response_200 import GetConsumerFailuresResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response_200 import GetProducerFailureByUuidResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response_200 import GetProducerFailuresResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.mlc_event import MlcEvent
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response_200 import ProduceAppRatesEventsResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response_200 import RetryConsumerFailuresResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response_200 import RetryProducerFailureResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response_200 import UpdateAndRetryConsumerFailureResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Any, Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.messaging import (
-    acknowledge_consumer_failure,
-    acknowledge_consumer_failures,
-    acknowledge_producer_failure,
-    acknowledge_producer_failures,
-    get_consumer_failure_by_uuid,
-    get_consumer_failure_histories,
-    get_consumer_failures,
-    get_consumer_source_topics,
-    get_event_source_topics,
-    get_ignored_events,
-    get_producer_failure_by_uuid,
-    get_producer_failure_histories,
-    get_producer_failures,
-    play_manual_mlc_event,
-    produce_app_rates_events,
-    retry_consumer_failures,
-    retry_producer_failure,
-    update_and_retry_consumer_failure,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failure_response_200 import (
-    AcknowledgeConsumerFailureResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_consumer_failures_response_200 import (
-    AcknowledgeConsumerFailuresResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failure_response_200 import (
-    AcknowledgeProducerFailureResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.acknowledge_producer_failures_response_200 import (
-    AcknowledgeProducerFailuresResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_app_rates_params import (
-    ApiAppRatesParams,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure import (
-    ApiConsumerFailure,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_consumer_failure_history import (
-    ApiConsumerFailureHistory,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_event_ignored import (
-    ApiEventIgnored,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_message_failure_update_response import (
-    ApiMessageFailureUpdateResponse,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure import (
-    ApiProducerFailure,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_producer_failure_history import (
-    ApiProducerFailureHistory,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_by_uuid_response_200 import (
-    GetConsumerFailureByUuidResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failure_histories_response_200 import (
-    GetConsumerFailureHistoriesResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_consumer_failures_response_200 import (
-    GetConsumerFailuresResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failure_by_uuid_response_200 import (
-    GetProducerFailureByUuidResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_producer_failures_response_200 import (
-    GetProducerFailuresResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.mlc_event import MlcEvent
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.produce_app_rates_events_response_200 import (
-    ProduceAppRatesEventsResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_consumer_failures_response_200 import (
-    RetryConsumerFailuresResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.retry_producer_failure_response_200 import (
-    RetryProducerFailureResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.update_and_retry_consumer_failure_response_200 import (
-    UpdateAndRetryConsumerFailureResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_consumer_source_topics_sync_detailed(
-    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -122,14 +83,18 @@ def get_consumer_source_topics_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_consumer_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -137,6 +102,8 @@ def get_consumer_source_topics_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -157,14 +124,18 @@ def get_consumer_source_topics_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_source_topics_asyncio_detailed(
-    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -186,14 +157,18 @@ def get_consumer_source_topics_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_consumer_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -201,6 +176,8 @@ def get_consumer_source_topics_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -221,10 +198,12 @@ def get_consumer_source_topics_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def play_manual_mlc_event_sync_detailed(
@@ -232,7 +211,7 @@ def play_manual_mlc_event_sync_detailed(
     client: StolonClient,
     body: MlcEvent,
     force: Union[Unset, bool] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         force (Union[Unset, bool]):
@@ -258,14 +237,18 @@ def play_manual_mlc_event_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = play_manual_mlc_event._get_kwargs(body=body, force=force, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -273,6 +256,8 @@ def play_manual_mlc_event_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -293,10 +278,12 @@ def play_manual_mlc_event_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def play_manual_mlc_event_asyncio_detailed(
@@ -304,7 +291,7 @@ def play_manual_mlc_event_asyncio_detailed(
     client: StolonClient,
     body: MlcEvent,
     force: Union[Unset, bool] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         force (Union[Unset, bool]):
@@ -330,14 +317,18 @@ def play_manual_mlc_event_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = play_manual_mlc_event._get_kwargs(body=body, force=force, x_clover_appenv=x_clover_appenv)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -345,6 +336,8 @@ def play_manual_mlc_event_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -365,14 +358,19 @@ def play_manual_mlc_event_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_and_retry_consumer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiConsumerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]:
     """Retry a consumer failure with an edited payload
 
@@ -398,14 +396,18 @@ def update_and_retry_consumer_failure_sync_detailed(
     Returns:
         Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -413,6 +415,8 @@ def update_and_retry_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -433,14 +437,19 @@ def update_and_retry_consumer_failure_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_and_retry_consumer_failure_sync(
-    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiConsumerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None:
     """Retry a consumer failure with an edited payload
 
@@ -466,14 +475,18 @@ def update_and_retry_consumer_failure_sync(
     Returns:
         ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -484,8 +497,13 @@ def update_and_retry_consumer_failure_sync(
     return None
 
 
+
+
 def update_and_retry_consumer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiConsumerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]:
     """Retry a consumer failure with an edited payload
 
@@ -511,14 +529,18 @@ def update_and_retry_consumer_failure_asyncio_detailed(
     Returns:
         Response[ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -526,6 +548,8 @@ def update_and_retry_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -546,14 +570,19 @@ def update_and_retry_consumer_failure_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def update_and_retry_consumer_failure_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiConsumerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiConsumerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None:
     """Retry a consumer failure with an edited payload
 
@@ -579,14 +608,18 @@ def update_and_retry_consumer_failure_asyncio(
     Returns:
         ApiMessageFailureUpdateResponse | UpdateAndRetryConsumerFailureResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_and_retry_consumer_failure._get_kwargs(uuid=uuid, body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -595,10 +628,15 @@ def update_and_retry_consumer_failure_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def retry_producer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiProducerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]:
     """Retry a single producer failure
 
@@ -624,14 +662,18 @@ def retry_producer_failure_sync_detailed(
     Returns:
         Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -639,6 +681,8 @@ def retry_producer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -659,14 +703,19 @@ def retry_producer_failure_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def retry_producer_failure_sync(
-    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiProducerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None:
     """Retry a single producer failure
 
@@ -692,14 +741,18 @@ def retry_producer_failure_sync(
     Returns:
         ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -710,8 +763,13 @@ def retry_producer_failure_sync(
     return None
 
 
+
+
 def retry_producer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiProducerFailureHistory
 ) -> Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]:
     """Retry a single producer failure
 
@@ -737,14 +795,18 @@ def retry_producer_failure_asyncio_detailed(
     Returns:
         Response[ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -752,6 +814,8 @@ def retry_producer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -772,14 +836,19 @@ def retry_producer_failure_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def retry_producer_failure_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiProducerFailureHistory
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiProducerFailureHistory
 ) -> ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None:
     """Retry a single producer failure
 
@@ -805,14 +874,18 @@ def retry_producer_failure_asyncio(
     Returns:
         ApiMessageFailureUpdateResponse | RetryProducerFailureResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = retry_producer_failure._get_kwargs(uuid=uuid, body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -821,10 +894,15 @@ def retry_producer_failure_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def acknowledge_producer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -850,14 +928,18 @@ def acknowledge_producer_failure_sync_detailed(
     Returns:
         Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -865,6 +947,8 @@ def acknowledge_producer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -885,14 +969,19 @@ def acknowledge_producer_failure_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def acknowledge_producer_failure_sync(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -918,14 +1007,18 @@ def acknowledge_producer_failure_sync(
     Returns:
         AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -936,8 +1029,13 @@ def acknowledge_producer_failure_sync(
     return None
 
 
+
+
 def acknowledge_producer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -963,14 +1061,18 @@ def acknowledge_producer_failure_asyncio_detailed(
     Returns:
         Response[AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -978,6 +1080,8 @@ def acknowledge_producer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -998,14 +1102,19 @@ def acknowledge_producer_failure_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def acknowledge_producer_failure_asyncio(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a producer failure which deletes the failure and moves it to producer failure history
 
@@ -1031,14 +1140,18 @@ def acknowledge_producer_failure_asyncio(
     Returns:
         AcknowledgeProducerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failure._get_kwargs(uuid=uuid, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1047,10 +1160,14 @@ def acknowledge_producer_failure_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_event_source_topics_sync_detailed(
-    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -1072,14 +1189,18 @@ def get_event_source_topics_sync_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_event_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1087,6 +1208,8 @@ def get_event_source_topics_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1107,14 +1230,18 @@ def get_event_source_topics_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_event_source_topics_asyncio_detailed(
-    *, client: StolonClient, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[Any]:
     """Args:
         x_clover_appenv (Union[Unset, str]):
@@ -1136,14 +1263,18 @@ def get_event_source_topics_asyncio_detailed(
     Returns:
         Response[Any]
     """
+
     # Extract request parameters from generated function
     kwargs = get_event_source_topics._get_kwargs(x_clover_appenv=x_clover_appenv)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1151,6 +1282,8 @@ def get_event_source_topics_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1171,14 +1304,19 @@ def get_event_source_topics_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def acknowledge_consumer_failure_sync_detailed(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1204,14 +1342,18 @@ def acknowledge_consumer_failure_sync_detailed(
     Returns:
         Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1219,6 +1361,8 @@ def acknowledge_consumer_failure_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1239,14 +1383,19 @@ def acknowledge_consumer_failure_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def acknowledge_consumer_failure_sync(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1272,14 +1421,18 @@ def acknowledge_consumer_failure_sync(
     Returns:
         AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1290,8 +1443,13 @@ def acknowledge_consumer_failure_sync(
     return None
 
 
+
+
 def acknowledge_consumer_failure_asyncio_detailed(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1317,14 +1475,18 @@ def acknowledge_consumer_failure_asyncio_detailed(
     Returns:
         Response[AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1332,6 +1494,8 @@ def acknowledge_consumer_failure_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1352,14 +1516,19 @@ def acknowledge_consumer_failure_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def acknowledge_consumer_failure_asyncio(
-    *, client: StolonClient, uuid: str, comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    uuid: str,
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None:
     """Acknowledges a consumer failure which deletes the failure and moves it to consumer failure history
 
@@ -1385,14 +1554,18 @@ def acknowledge_consumer_failure_asyncio(
     Returns:
         AcknowledgeConsumerFailureResponse200 | ApiMessageFailureUpdateResponse | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failure._get_kwargs(uuid=uuid, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1401,6 +1574,8 @@ def acknowledge_consumer_failure_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_ignored_events_sync_detailed(
@@ -1411,7 +1586,7 @@ def get_ignored_events_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
     """Get ignored events
 
@@ -1445,21 +1620,18 @@ def get_ignored_events_sync_detailed(
     Returns:
         Response[ApiEventIgnored | list["ApiEventIgnored"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1467,6 +1639,8 @@ def get_ignored_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1487,10 +1661,12 @@ def get_ignored_events_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ignored_events_sync(
@@ -1501,7 +1677,7 @@ def get_ignored_events_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
     """Get ignored events
 
@@ -1535,21 +1711,18 @@ def get_ignored_events_sync(
     Returns:
         ApiEventIgnored | list["ApiEventIgnored"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1560,6 +1733,8 @@ def get_ignored_events_sync(
     return None
 
 
+
+
 def get_ignored_events_asyncio_detailed(
     *,
     client: StolonClient,
@@ -1568,7 +1743,7 @@ def get_ignored_events_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiEventIgnored | list["ApiEventIgnored"]]:
     """Get ignored events
 
@@ -1602,21 +1777,18 @@ def get_ignored_events_asyncio_detailed(
     Returns:
         Response[ApiEventIgnored | list["ApiEventIgnored"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1624,6 +1796,8 @@ def get_ignored_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1644,10 +1818,12 @@ def get_ignored_events_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_ignored_events_asyncio(
@@ -1658,7 +1834,7 @@ def get_ignored_events_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiEventIgnored | list["ApiEventIgnored"] | None:
     """Get ignored events
 
@@ -1692,21 +1868,18 @@ def get_ignored_events_asyncio(
     Returns:
         ApiEventIgnored | list["ApiEventIgnored"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_ignored_events._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_ignored_events._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1715,6 +1888,8 @@ def get_ignored_events_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_consumer_failures_sync_detailed(
@@ -1725,7 +1900,7 @@ def get_consumer_failures_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -1759,21 +1934,18 @@ def get_consumer_failures_sync_detailed(
     Returns:
         Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1781,6 +1953,8 @@ def get_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1801,10 +1975,12 @@ def get_consumer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_failures_sync(
@@ -1815,7 +1991,7 @@ def get_consumer_failures_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
@@ -1849,21 +2025,18 @@ def get_consumer_failures_sync(
     Returns:
         GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1874,6 +2047,8 @@ def get_consumer_failures_sync(
     return None
 
 
+
+
 def get_consumer_failures_asyncio_detailed(
     *,
     client: StolonClient,
@@ -1882,7 +2057,7 @@ def get_consumer_failures_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]:
     """Get a consumer failures
 
@@ -1916,21 +2091,18 @@ def get_consumer_failures_asyncio_detailed(
     Returns:
         Response[GetConsumerFailuresResponse200 | list["ApiConsumerFailure"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1938,6 +2110,8 @@ def get_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1958,10 +2132,12 @@ def get_consumer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_failures_asyncio(
@@ -1972,7 +2148,7 @@ def get_consumer_failures_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None:
     """Get a consumer failures
 
@@ -2006,21 +2182,18 @@ def get_consumer_failures_asyncio(
     Returns:
         GetConsumerFailuresResponse200 | list["ApiConsumerFailure"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2029,10 +2202,14 @@ def get_consumer_failures_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_producer_failure_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]:
     """Get a messaging producer failure by UUID
 
@@ -2056,14 +2233,18 @@ def get_producer_failure_by_uuid_sync_detailed(
     Returns:
         Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2071,6 +2252,8 @@ def get_producer_failure_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2091,14 +2274,18 @@ def get_producer_failure_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_producer_failure_by_uuid_sync(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiProducerFailure | GetProducerFailureByUuidResponse200 | None:
     """Get a messaging producer failure by UUID
 
@@ -2122,14 +2309,18 @@ def get_producer_failure_by_uuid_sync(
     Returns:
         ApiProducerFailure | GetProducerFailureByUuidResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2140,8 +2331,12 @@ def get_producer_failure_by_uuid_sync(
     return None
 
 
+
+
 def get_producer_failure_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]:
     """Get a messaging producer failure by UUID
 
@@ -2165,14 +2360,18 @@ def get_producer_failure_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiProducerFailure | GetProducerFailureByUuidResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2180,6 +2379,8 @@ def get_producer_failure_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2200,14 +2401,18 @@ def get_producer_failure_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_producer_failure_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiProducerFailure | GetProducerFailureByUuidResponse200 | None:
     """Get a messaging producer failure by UUID
 
@@ -2231,14 +2436,18 @@ def get_producer_failure_by_uuid_asyncio(
     Returns:
         ApiProducerFailure | GetProducerFailureByUuidResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_producer_failure_by_uuid._get_kwargs(uuid=uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2247,10 +2456,14 @@ def get_producer_failure_by_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_consumer_failure_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]:
     """Get a messaging consumer failure by UUID
 
@@ -2274,14 +2487,18 @@ def get_consumer_failure_by_uuid_sync_detailed(
     Returns:
         Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2289,6 +2506,8 @@ def get_consumer_failure_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2309,14 +2528,18 @@ def get_consumer_failure_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_failure_by_uuid_sync(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None:
     """Get a messaging consumer failure by UUID
 
@@ -2340,14 +2563,18 @@ def get_consumer_failure_by_uuid_sync(
     Returns:
         ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2358,8 +2585,12 @@ def get_consumer_failure_by_uuid_sync(
     return None
 
 
+
+
 def get_consumer_failure_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]:
     """Get a messaging consumer failure by UUID
 
@@ -2383,14 +2614,18 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiConsumerFailure | GetConsumerFailureByUuidResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2398,6 +2633,8 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2418,14 +2655,18 @@ def get_consumer_failure_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_consumer_failure_by_uuid_asyncio(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None:
     """Get a messaging consumer failure by UUID
 
@@ -2449,14 +2690,18 @@ def get_consumer_failure_by_uuid_asyncio(
     Returns:
         ApiConsumerFailure | GetConsumerFailureByUuidResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_consumer_failure_by_uuid._get_kwargs(uuid=uuid)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2465,6 +2710,8 @@ def get_consumer_failure_by_uuid_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_producer_failures_sync_detailed(
@@ -2475,7 +2722,7 @@ def get_producer_failures_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]:
     """Get a producer failures
 
@@ -2509,21 +2756,18 @@ def get_producer_failures_sync_detailed(
     Returns:
         Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2531,6 +2775,8 @@ def get_producer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2551,10 +2797,12 @@ def get_producer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_producer_failures_sync(
@@ -2565,7 +2813,7 @@ def get_producer_failures_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None:
     """Get a producer failures
 
@@ -2599,21 +2847,18 @@ def get_producer_failures_sync(
     Returns:
         GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2624,6 +2869,8 @@ def get_producer_failures_sync(
     return None
 
 
+
+
 def get_producer_failures_asyncio_detailed(
     *,
     client: StolonClient,
@@ -2632,7 +2879,7 @@ def get_producer_failures_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]:
     """Get a producer failures
 
@@ -2666,21 +2913,18 @@ def get_producer_failures_asyncio_detailed(
     Returns:
         Response[GetProducerFailuresResponse200 | list["ApiProducerFailure"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2688,6 +2932,8 @@ def get_producer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2708,10 +2954,12 @@ def get_producer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_producer_failures_asyncio(
@@ -2722,7 +2970,7 @@ def get_producer_failures_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None:
     """Get a producer failures
 
@@ -2756,21 +3004,18 @@ def get_producer_failures_asyncio(
     Returns:
         GetProducerFailuresResponse200 | list["ApiProducerFailure"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failures._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failures._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2779,6 +3024,8 @@ def get_producer_failures_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_producer_failure_histories_sync_detailed(
@@ -2789,7 +3036,7 @@ def get_producer_failure_histories_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]:
     """Get producer failure histories
 
@@ -2823,21 +3070,18 @@ def get_producer_failure_histories_sync_detailed(
     Returns:
         Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2845,6 +3089,8 @@ def get_producer_failure_histories_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2865,10 +3111,12 @@ def get_producer_failure_histories_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_producer_failure_histories_sync(
@@ -2879,7 +3127,7 @@ def get_producer_failure_histories_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None:
     """Get producer failure histories
 
@@ -2913,21 +3161,18 @@ def get_producer_failure_histories_sync(
     Returns:
         ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2938,6 +3183,8 @@ def get_producer_failure_histories_sync(
     return None
 
 
+
+
 def get_producer_failure_histories_asyncio_detailed(
     *,
     client: StolonClient,
@@ -2946,7 +3193,7 @@ def get_producer_failure_histories_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]:
     """Get producer failure histories
 
@@ -2980,21 +3227,18 @@ def get_producer_failure_histories_asyncio_detailed(
     Returns:
         Response[ApiProducerFailureHistory | list["ApiProducerFailureHistory"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3002,6 +3246,8 @@ def get_producer_failure_histories_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3022,10 +3268,12 @@ def get_producer_failure_histories_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_producer_failure_histories_asyncio(
@@ -3036,7 +3284,7 @@ def get_producer_failure_histories_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None:
     """Get producer failure histories
 
@@ -3070,21 +3318,18 @@ def get_producer_failure_histories_asyncio(
     Returns:
         ApiProducerFailureHistory | list["ApiProducerFailureHistory"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_producer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_producer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3093,10 +3338,15 @@ def get_producer_failure_histories_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def produce_app_rates_events_sync_detailed(
-    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiAppRatesParams,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3123,14 +3373,18 @@ def produce_app_rates_events_sync_detailed(
     Returns:
         Response[ProduceAppRatesEventsResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3138,6 +3392,8 @@ def produce_app_rates_events_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3158,14 +3414,19 @@ def produce_app_rates_events_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def produce_app_rates_events_sync(
-    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiAppRatesParams,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> ProduceAppRatesEventsResponse200 | None:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3192,14 +3453,18 @@ def produce_app_rates_events_sync(
     Returns:
         ProduceAppRatesEventsResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3207,7 +3472,7 @@ def produce_app_rates_events_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3217,8 +3482,13 @@ def produce_app_rates_events_sync(
     return None
 
 
+
+
 def produce_app_rates_events_asyncio_detailed(
-    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiAppRatesParams,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[ProduceAppRatesEventsResponse200]:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3245,14 +3515,18 @@ def produce_app_rates_events_asyncio_detailed(
     Returns:
         Response[ProduceAppRatesEventsResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3260,6 +3534,8 @@ def produce_app_rates_events_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3280,14 +3556,19 @@ def produce_app_rates_events_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def produce_app_rates_events_asyncio(
-    *, client: StolonClient, body: ApiAppRatesParams, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: ApiAppRatesParams,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> ProduceAppRatesEventsResponse200 | None:
     """Produces app rates billing events for developer uuids and/or app uuids in the body.  These app rates
     events are used to configure bookkeeper for app billing.
@@ -3314,14 +3595,18 @@ def produce_app_rates_events_asyncio(
     Returns:
         ProduceAppRatesEventsResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = produce_app_rates_events._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3329,7 +3614,7 @@ def produce_app_rates_events_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3339,8 +3624,12 @@ def produce_app_rates_events_asyncio(
     return None
 
 
+
+
 def retry_consumer_failures_sync_detailed(
-    *, client: StolonClient, body: list[str]
+    *,
+    client: StolonClient,
+    body: list[str]
 ) -> Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -3364,14 +3653,18 @@ def retry_consumer_failures_sync_detailed(
     Returns:
         Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3379,6 +3672,8 @@ def retry_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3399,14 +3694,18 @@ def retry_consumer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def retry_consumer_failures_sync(
-    *, client: StolonClient, body: list[str]
+    *,
+    client: StolonClient,
+    body: list[str]
 ) -> RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -3430,14 +3729,18 @@ def retry_consumer_failures_sync(
     Returns:
         RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs(body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3448,8 +3751,12 @@ def retry_consumer_failures_sync(
     return None
 
 
+
+
 def retry_consumer_failures_asyncio_detailed(
-    *, client: StolonClient, body: list[str]
+    *,
+    client: StolonClient,
+    body: list[str]
 ) -> Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Retry consumer failures
 
@@ -3473,14 +3780,18 @@ def retry_consumer_failures_asyncio_detailed(
     Returns:
         Response[RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3488,6 +3799,8 @@ def retry_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3508,14 +3821,18 @@ def retry_consumer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def retry_consumer_failures_asyncio(
-    *, client: StolonClient, body: list[str]
+    *,
+    client: StolonClient,
+    body: list[str]
 ) -> RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Retry consumer failures
 
@@ -3539,14 +3856,18 @@ def retry_consumer_failures_asyncio(
     Returns:
         RetryConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = retry_consumer_failures._get_kwargs(body=body)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3555,10 +3876,15 @@ def retry_consumer_failures_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def acknowledge_producer_failures_sync_detailed(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3584,14 +3910,18 @@ def acknowledge_producer_failures_sync_detailed(
     Returns:
         Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3599,6 +3929,8 @@ def acknowledge_producer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3619,14 +3951,19 @@ def acknowledge_producer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def acknowledge_producer_failures_sync(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3652,14 +3989,18 @@ def acknowledge_producer_failures_sync(
     Returns:
         AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3670,8 +4011,13 @@ def acknowledge_producer_failures_sync(
     return None
 
 
+
+
 def acknowledge_producer_failures_asyncio_detailed(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3697,14 +4043,18 @@ def acknowledge_producer_failures_asyncio_detailed(
     Returns:
         Response[AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3712,6 +4062,8 @@ def acknowledge_producer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3732,14 +4084,19 @@ def acknowledge_producer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def acknowledge_producer_failures_asyncio(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges producer failures which deletes the failures and moves them to Producer failure history
 
@@ -3765,14 +4122,18 @@ def acknowledge_producer_failures_asyncio(
     Returns:
         AcknowledgeProducerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_producer_failures._get_kwargs(body=body, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3781,6 +4142,8 @@ def acknowledge_producer_failures_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def get_consumer_failure_histories_sync_detailed(
@@ -3791,7 +4154,7 @@ def get_consumer_failure_histories_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -3825,21 +4188,18 @@ def get_consumer_failure_histories_sync_detailed(
     Returns:
         Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3847,6 +4207,8 @@ def get_consumer_failure_histories_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3867,10 +4229,12 @@ def get_consumer_failure_histories_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_failure_histories_sync(
@@ -3881,7 +4245,7 @@ def get_consumer_failure_histories_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -3915,21 +4279,18 @@ def get_consumer_failure_histories_sync(
     Returns:
         GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3940,6 +4301,8 @@ def get_consumer_failure_histories_sync(
     return None
 
 
+
+
 def get_consumer_failure_histories_asyncio_detailed(
     *,
     client: StolonClient,
@@ -3948,7 +4311,7 @@ def get_consumer_failure_histories_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]:
     """Get consumer failure histories
 
@@ -3982,21 +4345,18 @@ def get_consumer_failure_histories_asyncio_detailed(
     Returns:
         Response[GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -4004,6 +4364,8 @@ def get_consumer_failure_histories_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -4024,10 +4386,12 @@ def get_consumer_failure_histories_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_consumer_failure_histories_asyncio(
@@ -4038,7 +4402,7 @@ def get_consumer_failure_histories_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None:
     """Get consumer failure histories
 
@@ -4072,21 +4436,18 @@ def get_consumer_failure_histories_asyncio(
     Returns:
         GetConsumerFailureHistoriesResponse200 | list["ApiConsumerFailureHistory"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_consumer_failure_histories._get_kwargs(
-        topic=topic,
-        reference_id=reference_id,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_consumer_failure_histories._get_kwargs(topic=topic, reference_id=reference_id, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -4095,10 +4456,15 @@ def get_consumer_failure_histories_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def acknowledge_consumer_failures_sync_detailed(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4124,14 +4490,18 @@ def acknowledge_consumer_failures_sync_detailed(
     Returns:
         Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -4139,6 +4509,8 @@ def acknowledge_consumer_failures_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -4159,14 +4531,19 @@ def acknowledge_consumer_failures_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def acknowledge_consumer_failures_sync(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4192,14 +4569,18 @@ def acknowledge_consumer_failures_sync(
     Returns:
         AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -4210,8 +4591,13 @@ def acknowledge_consumer_failures_sync(
     return None
 
 
+
+
 def acknowledge_consumer_failures_asyncio_detailed(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4237,14 +4623,18 @@ def acknowledge_consumer_failures_asyncio_detailed(
     Returns:
         Response[AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"]]
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -4252,6 +4642,8 @@ def acknowledge_consumer_failures_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -4272,14 +4664,19 @@ def acknowledge_consumer_failures_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def acknowledge_consumer_failures_asyncio(
-    *, client: StolonClient, body: list[str], comment: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    body: list[str],
+    comment: Union[Unset, str] = UNSET
 ) -> AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None:
     """Acknowledges consumer failures which deletes the failures and moves them to consumer failure history
 
@@ -4305,14 +4702,18 @@ def acknowledge_consumer_failures_asyncio(
     Returns:
         AcknowledgeConsumerFailuresResponse200 | list["ApiMessageFailureUpdateResponse"] | None
     """
+
     # Extract request parameters from generated function
     kwargs = acknowledge_consumer_failures._get_kwargs(body=body, comment=comment)
 
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -4321,3 +4722,4 @@ def acknowledge_consumer_failures_asyncio(
 
     # No response model, return None
     return None
+

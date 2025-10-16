@@ -9,30 +9,23 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import create_billing_entity_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import delete_billing_entity_config_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import get_billing_entity_config_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import get_resolved_billing_entity_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import get_unresolved_billing_entity_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import update_billing_entity_config
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity_config import ApiBillingEntityConfig
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_resolved_billing_entity_config import ApiResolvedBillingEntityConfig
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.billing_entity_config import (
-    create_billing_entity_config,
-    delete_billing_entity_config_by_uuid,
-    get_billing_entity_config_by_uuid,
-    get_resolved_billing_entity_config,
-    get_unresolved_billing_entity_config,
-    update_billing_entity_config,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_billing_entity_config import (
-    ApiBillingEntityConfig,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_resolved_billing_entity_config import (
-    ApiResolvedBillingEntityConfig,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_unresolved_billing_entity_config_sync_detailed(
@@ -42,7 +35,7 @@ def get_unresolved_billing_entity_config_sync_detailed(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -74,20 +67,18 @@ def get_unresolved_billing_entity_config_sync_detailed(
     Returns:
         Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -95,6 +86,8 @@ def get_unresolved_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -106,6 +99,8 @@ def get_unresolved_billing_entity_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -113,10 +108,12 @@ def get_unresolved_billing_entity_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unresolved_billing_entity_config_sync(
@@ -126,7 +123,7 @@ def get_unresolved_billing_entity_config_sync(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -158,20 +155,18 @@ def get_unresolved_billing_entity_config_sync(
     Returns:
         ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -182,6 +177,8 @@ def get_unresolved_billing_entity_config_sync(
     return None
 
 
+
+
 def get_unresolved_billing_entity_config_asyncio_detailed(
     *,
     client: StolonClient,
@@ -189,7 +186,7 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -221,20 +218,18 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
     Returns:
         Response[ApiBillingEntityConfig | list["ApiBillingEntityConfig"]]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -242,6 +237,8 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -253,6 +250,8 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -260,10 +259,12 @@ def get_unresolved_billing_entity_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unresolved_billing_entity_config_asyncio(
@@ -273,7 +274,7 @@ def get_unresolved_billing_entity_config_asyncio(
     hierarchy_type: str,
     date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None:
     """Get the unresolved billing entity configuration for a billing entity
 
@@ -305,20 +306,18 @@ def get_unresolved_billing_entity_config_asyncio(
     Returns:
         ApiBillingEntityConfig | list["ApiBillingEntityConfig"] | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_unresolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        hierarchy_type=hierarchy_type,
-        date=date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_unresolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -327,10 +326,14 @@ def get_unresolved_billing_entity_config_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def create_billing_entity_config_sync_detailed(
-    *, client: StolonClient, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    body: ApiBillingEntityConfig
 ) -> Response[ApiBillingEntityConfig]:
     """Create a billing entity configuration
 
@@ -354,14 +357,18 @@ def create_billing_entity_config_sync_detailed(
     Returns:
         Response[ApiBillingEntityConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -369,6 +376,8 @@ def create_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -380,6 +389,8 @@ def create_billing_entity_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiBillingEntityConfig | None
     if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
         parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
@@ -387,14 +398,18 @@ def create_billing_entity_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_billing_entity_config_sync(
-    *, client: StolonClient, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    body: ApiBillingEntityConfig
 ) -> ApiBillingEntityConfig | None:
     """Create a billing entity configuration
 
@@ -418,14 +433,18 @@ def create_billing_entity_config_sync(
     Returns:
         ApiBillingEntityConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -433,7 +452,7 @@ def create_billing_entity_config_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -441,10 +460,14 @@ def create_billing_entity_config_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    body: ApiBillingEntityConfig
 ) -> Response[ApiBillingEntityConfig]:
     """Create a billing entity configuration
 
@@ -468,14 +491,18 @@ def create_billing_entity_config_asyncio_detailed(
     Returns:
         Response[ApiBillingEntityConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -483,6 +510,8 @@ def create_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -494,6 +523,8 @@ def create_billing_entity_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiBillingEntityConfig | None
     if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
         parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
@@ -501,14 +532,18 @@ def create_billing_entity_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_billing_entity_config_asyncio(
-    *, client: StolonClient, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    body: ApiBillingEntityConfig
 ) -> ApiBillingEntityConfig | None:
     """Create a billing entity configuration
 
@@ -532,14 +567,18 @@ def create_billing_entity_config_asyncio(
     Returns:
         ApiBillingEntityConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_billing_entity_config._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -547,7 +586,7 @@ def create_billing_entity_config_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -555,10 +594,14 @@ def create_billing_entity_config_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_entity_config_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingEntityConfig]:
     """Get a billing entity configuration by UUID
 
@@ -582,14 +625,18 @@ def get_billing_entity_config_by_uuid_sync_detailed(
     Returns:
         Response[ApiBillingEntityConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -597,6 +644,8 @@ def get_billing_entity_config_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -608,6 +657,8 @@ def get_billing_entity_config_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiBillingEntityConfig | None
     if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
         parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
@@ -615,13 +666,19 @@ def get_billing_entity_config_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiBillingEntityConfig | None:
+
+
+def get_billing_entity_config_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntityConfig | None:
     """Get a billing entity configuration by UUID
 
     Args:
@@ -644,14 +701,18 @@ def get_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str) -
     Returns:
         ApiBillingEntityConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -659,7 +720,7 @@ def get_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -667,10 +728,14 @@ def get_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str) -
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_billing_entity_config_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ApiBillingEntityConfig]:
     """Get a billing entity configuration by UUID
 
@@ -694,14 +759,18 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
     Returns:
         Response[ApiBillingEntityConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -709,6 +778,8 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -720,6 +791,8 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiBillingEntityConfig | None
     if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
         parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
@@ -727,13 +800,19 @@ def get_billing_entity_config_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiBillingEntityConfig | None:
+
+
+def get_billing_entity_config_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiBillingEntityConfig | None:
     """Get a billing entity configuration by UUID
 
     Args:
@@ -756,14 +835,18 @@ def get_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str
     Returns:
         ApiBillingEntityConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -771,7 +854,7 @@ def get_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -779,10 +862,15 @@ def get_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_billing_entity_config_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiBillingEntityConfig
 ) -> Response[ApiBillingEntityConfig]:
     """Update a billing entity configuration
 
@@ -808,14 +896,18 @@ def update_billing_entity_config_sync_detailed(
     Returns:
         Response[ApiBillingEntityConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -823,6 +915,8 @@ def update_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -834,6 +928,8 @@ def update_billing_entity_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiBillingEntityConfig | None
     if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
         parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
@@ -841,14 +937,19 @@ def update_billing_entity_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_billing_entity_config_sync(
-    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiBillingEntityConfig
 ) -> ApiBillingEntityConfig | None:
     """Update a billing entity configuration
 
@@ -874,14 +975,18 @@ def update_billing_entity_config_sync(
     Returns:
         ApiBillingEntityConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -889,7 +994,7 @@ def update_billing_entity_config_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -899,8 +1004,13 @@ def update_billing_entity_config_sync(
     return None
 
 
+
+
 def update_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiBillingEntityConfig
 ) -> Response[ApiBillingEntityConfig]:
     """Update a billing entity configuration
 
@@ -926,14 +1036,18 @@ def update_billing_entity_config_asyncio_detailed(
     Returns:
         Response[ApiBillingEntityConfig]
     """
+
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -941,6 +1055,8 @@ def update_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -952,6 +1068,8 @@ def update_billing_entity_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiBillingEntityConfig | None
     if body_json and proxy_response.status_code == 200 and ApiBillingEntityConfig:
         parsed = ApiBillingEntityConfig.from_dict(body_json)
     else:
@@ -959,14 +1077,19 @@ def update_billing_entity_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def update_billing_entity_config_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiBillingEntityConfig
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiBillingEntityConfig
 ) -> ApiBillingEntityConfig | None:
     """Update a billing entity configuration
 
@@ -992,14 +1115,18 @@ def update_billing_entity_config_asyncio(
     Returns:
         ApiBillingEntityConfig | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_billing_entity_config._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1007,7 +1134,7 @@ def update_billing_entity_config_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1017,8 +1144,14 @@ def update_billing_entity_config_asyncio(
     return None
 
 
+
+
 def get_resolved_billing_entity_config_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> Response[ApiResolvedBillingEntityConfig | ResponseError]:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1047,16 +1180,18 @@ def get_resolved_billing_entity_config_sync_detailed(
     Returns:
         Response[ApiResolvedBillingEntityConfig | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1064,6 +1199,8 @@ def get_resolved_billing_entity_config_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1075,6 +1212,8 @@ def get_resolved_billing_entity_config_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1082,14 +1221,20 @@ def get_resolved_billing_entity_config_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_resolved_billing_entity_config_sync(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> ApiResolvedBillingEntityConfig | ResponseError | None:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1118,16 +1263,18 @@ def get_resolved_billing_entity_config_sync(
     Returns:
         ApiResolvedBillingEntityConfig | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1138,8 +1285,14 @@ def get_resolved_billing_entity_config_sync(
     return None
 
 
+
+
 def get_resolved_billing_entity_config_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> Response[ApiResolvedBillingEntityConfig | ResponseError]:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1168,16 +1321,18 @@ def get_resolved_billing_entity_config_asyncio_detailed(
     Returns:
         Response[ApiResolvedBillingEntityConfig | ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1185,6 +1340,8 @@ def get_resolved_billing_entity_config_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1196,6 +1353,8 @@ def get_resolved_billing_entity_config_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1203,14 +1362,20 @@ def get_resolved_billing_entity_config_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_resolved_billing_entity_config_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str, hierarchy_type: str, date: datetime.date
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    hierarchy_type: str,
+    date: datetime.date
 ) -> ApiResolvedBillingEntityConfig | ResponseError | None:
     """Get the billing entity configuration for a billing entity where the default values are resolved from
     parent entities in the specified schedule hierarchy.
@@ -1239,16 +1404,18 @@ def get_resolved_billing_entity_config_asyncio(
     Returns:
         ApiResolvedBillingEntityConfig | ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_resolved_billing_entity_config._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date
-    )
+    kwargs = get_resolved_billing_entity_config._get_kwargs(billing_entity_uuid=billing_entity_uuid, hierarchy_type=hierarchy_type, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1257,10 +1424,14 @@ def get_resolved_billing_entity_config_asyncio(
 
     # No response model, return None
     return None
+
+
 
 
 def delete_billing_entity_config_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | str]:
     """Delete a billing entity configuration
 
@@ -1284,14 +1455,18 @@ def delete_billing_entity_config_by_uuid_sync_detailed(
     Returns:
         Response[ResponseError | str]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1299,6 +1474,8 @@ def delete_billing_entity_config_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1310,6 +1487,8 @@ def delete_billing_entity_config_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1317,13 +1496,19 @@ def delete_billing_entity_config_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
+
+
+def delete_billing_entity_config_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a billing entity configuration
 
     Args:
@@ -1346,14 +1531,18 @@ def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str
     Returns:
         ResponseError | str | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1362,10 +1551,14 @@ def delete_billing_entity_config_by_uuid_sync(*, client: StolonClient, uuid: str
 
     # No response model, return None
     return None
+
+
 
 
 def delete_billing_entity_config_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError | str]:
     """Delete a billing entity configuration
 
@@ -1389,14 +1582,18 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError | str]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1404,6 +1601,8 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1415,6 +1614,8 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -1422,13 +1623,19 @@ def delete_billing_entity_config_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | str | None:
+
+
+def delete_billing_entity_config_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | str | None:
     """Delete a billing entity configuration
 
     Args:
@@ -1451,14 +1658,18 @@ def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: 
     Returns:
         ResponseError | str | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_billing_entity_config_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1467,3 +1678,4 @@ def delete_billing_entity_config_by_uuid_asyncio(*, client: StolonClient, uuid: 
 
     # No response model, return None
     return None
+

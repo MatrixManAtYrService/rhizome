@@ -9,30 +9,27 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import create_cellular_action_fee_code
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import delete_cellular_action_fee_code_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import get_cellular_action_fee_code_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import get_cellular_action_fee_codes
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import update_cellular_action_fee_code
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action_fee_code import ApiCellularActionFeeCode
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.cellular_action_fee_code import (
-    create_cellular_action_fee_code,
-    delete_cellular_action_fee_code_by_uuid,
-    get_cellular_action_fee_code_by_uuid,
-    get_cellular_action_fee_codes,
-    update_cellular_action_fee_code,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_action_fee_code import (
-    ApiCellularActionFeeCode,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def create_cellular_action_fee_code_sync_detailed(
-    *, client: StolonClient, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    body: ApiCellularActionFeeCode
 ) -> Response[ResponseError]:
     """Create cellular action fee code mapping
 
@@ -56,14 +53,18 @@ def create_cellular_action_fee_code_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -71,6 +72,8 @@ def create_cellular_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -82,6 +85,8 @@ def create_cellular_action_fee_code_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -89,14 +94,18 @@ def create_cellular_action_fee_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_cellular_action_fee_code_sync(
-    *, client: StolonClient, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    body: ApiCellularActionFeeCode
 ) -> ResponseError | None:
     """Create cellular action fee code mapping
 
@@ -120,14 +129,18 @@ def create_cellular_action_fee_code_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -135,7 +148,7 @@ def create_cellular_action_fee_code_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -143,10 +156,14 @@ def create_cellular_action_fee_code_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_cellular_action_fee_code_asyncio_detailed(
-    *, client: StolonClient, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    body: ApiCellularActionFeeCode
 ) -> Response[ResponseError]:
     """Create cellular action fee code mapping
 
@@ -170,14 +187,18 @@ def create_cellular_action_fee_code_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -185,6 +206,8 @@ def create_cellular_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -196,6 +219,8 @@ def create_cellular_action_fee_code_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -203,14 +228,18 @@ def create_cellular_action_fee_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def create_cellular_action_fee_code_asyncio(
-    *, client: StolonClient, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    body: ApiCellularActionFeeCode
 ) -> ResponseError | None:
     """Create cellular action fee code mapping
 
@@ -234,14 +263,18 @@ def create_cellular_action_fee_code_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_cellular_action_fee_code._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -249,7 +282,7 @@ def create_cellular_action_fee_code_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -257,10 +290,14 @@ def create_cellular_action_fee_code_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def delete_cellular_action_fee_code_by_uuid_sync_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError]:
     """Delete cellular action fee code mapping
 
@@ -284,14 +321,18 @@ def delete_cellular_action_fee_code_by_uuid_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -299,6 +340,8 @@ def delete_cellular_action_fee_code_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -310,6 +353,8 @@ def delete_cellular_action_fee_code_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -317,13 +362,19 @@ def delete_cellular_action_fee_code_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_cellular_action_fee_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete cellular action fee code mapping
 
     Args:
@@ -346,14 +397,18 @@ def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -361,7 +416,7 @@ def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -369,10 +424,14 @@ def delete_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError]:
     """Delete cellular action fee code mapping
 
@@ -396,14 +455,18 @@ def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -411,6 +474,8 @@ def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -422,6 +487,8 @@ def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -429,13 +496,19 @@ def delete_cellular_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def delete_cellular_action_fee_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Delete cellular action fee code mapping
 
     Args:
@@ -458,14 +531,18 @@ def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uui
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -473,7 +550,7 @@ def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uui
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -481,10 +558,15 @@ def delete_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uui
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_cellular_action_fee_code_sync_detailed(
-    *, client: StolonClient, uuid: str, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiCellularActionFeeCode
 ) -> Response[ResponseError]:
     """Update cellular action fee code mapping
 
@@ -510,14 +592,18 @@ def update_cellular_action_fee_code_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -525,6 +611,8 @@ def update_cellular_action_fee_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -536,6 +624,8 @@ def update_cellular_action_fee_code_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -543,14 +633,19 @@ def update_cellular_action_fee_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def update_cellular_action_fee_code_sync(
-    *, client: StolonClient, uuid: str, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiCellularActionFeeCode
 ) -> ResponseError | None:
     """Update cellular action fee code mapping
 
@@ -576,14 +671,18 @@ def update_cellular_action_fee_code_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -591,7 +690,7 @@ def update_cellular_action_fee_code_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -599,10 +698,15 @@ def update_cellular_action_fee_code_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def update_cellular_action_fee_code_asyncio_detailed(
-    *, client: StolonClient, uuid: str, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiCellularActionFeeCode
 ) -> Response[ResponseError]:
     """Update cellular action fee code mapping
 
@@ -628,14 +732,18 @@ def update_cellular_action_fee_code_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid, body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -643,6 +751,8 @@ def update_cellular_action_fee_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -654,6 +764,8 @@ def update_cellular_action_fee_code_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -661,14 +773,19 @@ def update_cellular_action_fee_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def update_cellular_action_fee_code_asyncio(
-    *, client: StolonClient, uuid: str, body: ApiCellularActionFeeCode
+    *,
+    client: StolonClient,
+    uuid: str,
+    body: ApiCellularActionFeeCode
 ) -> ResponseError | None:
     """Update cellular action fee code mapping
 
@@ -694,14 +811,18 @@ def update_cellular_action_fee_code_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = update_cellular_action_fee_code._get_kwargs(uuid=uuid, body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -709,7 +830,7 @@ def update_cellular_action_fee_code_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -719,118 +840,12 @@ def update_cellular_action_fee_code_asyncio(
     return None
 
 
-def get_cellular_action_fee_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
-    """Get cellular action fee code mapping by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[ResponseError]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        Response[ResponseError]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and ResponseError:
-        parsed = ResponseError.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
 
 
-def get_cellular_action_fee_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
-    """Get cellular action fee code mapping by UUID
-
-    Args:
-        uuid (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ResponseError
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-                uuid: str
-
-    Returns:
-        ResponseError | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return ResponseError.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
-    *, client: StolonClient, uuid: str
+def get_cellular_action_fee_code_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
 ) -> Response[ResponseError]:
     """Get cellular action fee code mapping by UUID
 
@@ -854,14 +869,18 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -869,6 +888,8 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -880,6 +901,8 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -887,13 +910,19 @@ def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_cellular_action_fee_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get cellular action fee code mapping by UUID
 
     Args:
@@ -916,14 +945,18 @@ def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: 
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -931,7 +964,7 @@ def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -939,6 +972,142 @@ def get_cellular_action_fee_code_by_uuid_asyncio(*, client: StolonClient, uuid: 
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
+
+
+def get_cellular_action_fee_code_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
+    """Get cellular action fee code mapping by UUID
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[ResponseError]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        Response[ResponseError]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
+    if body_json and proxy_response.status_code == 200 and ResponseError:
+        parsed = ResponseError.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_cellular_action_fee_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
+    """Get cellular action fee code mapping by UUID
+
+    Args:
+        uuid (str):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        ResponseError
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                uuid: str
+
+    Returns:
+        ResponseError | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = get_cellular_action_fee_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return ResponseError.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
 
 
 def get_cellular_action_fee_codes_sync_detailed(
@@ -951,7 +1120,7 @@ def get_cellular_action_fee_codes_sync_detailed(
     fee_code: Union[Unset, str] = UNSET,
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get cellular action fee codes
 
@@ -989,23 +1158,18 @@ def get_cellular_action_fee_codes_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_fee_codes._get_kwargs(
-        date=date,
-        plan_uuids=plan_uuids,
-        carrier=carrier,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        cellular_action_type=cellular_action_type,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_cellular_action_fee_codes._get_kwargs(date=date, plan_uuids=plan_uuids, carrier=carrier, fee_category=fee_category, fee_code=fee_code, cellular_action_type=cellular_action_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1013,6 +1177,8 @@ def get_cellular_action_fee_codes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1024,6 +1190,8 @@ def get_cellular_action_fee_codes_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1031,10 +1199,12 @@ def get_cellular_action_fee_codes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_action_fee_codes_sync(
@@ -1047,7 +1217,7 @@ def get_cellular_action_fee_codes_sync(
     fee_code: Union[Unset, str] = UNSET,
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get cellular action fee codes
 
@@ -1085,23 +1255,18 @@ def get_cellular_action_fee_codes_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_fee_codes._get_kwargs(
-        date=date,
-        plan_uuids=plan_uuids,
-        carrier=carrier,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        cellular_action_type=cellular_action_type,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_cellular_action_fee_codes._get_kwargs(date=date, plan_uuids=plan_uuids, carrier=carrier, fee_category=fee_category, fee_code=fee_code, cellular_action_type=cellular_action_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1109,7 +1274,7 @@ def get_cellular_action_fee_codes_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1117,6 +1282,8 @@ def get_cellular_action_fee_codes_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_action_fee_codes_asyncio_detailed(
@@ -1129,7 +1296,7 @@ def get_cellular_action_fee_codes_asyncio_detailed(
     fee_code: Union[Unset, str] = UNSET,
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get cellular action fee codes
 
@@ -1167,23 +1334,18 @@ def get_cellular_action_fee_codes_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_fee_codes._get_kwargs(
-        date=date,
-        plan_uuids=plan_uuids,
-        carrier=carrier,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        cellular_action_type=cellular_action_type,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_cellular_action_fee_codes._get_kwargs(date=date, plan_uuids=plan_uuids, carrier=carrier, fee_category=fee_category, fee_code=fee_code, cellular_action_type=cellular_action_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1191,6 +1353,8 @@ def get_cellular_action_fee_codes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1202,6 +1366,8 @@ def get_cellular_action_fee_codes_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1209,10 +1375,12 @@ def get_cellular_action_fee_codes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_action_fee_codes_asyncio(
@@ -1225,7 +1393,7 @@ def get_cellular_action_fee_codes_asyncio(
     fee_code: Union[Unset, str] = UNSET,
     cellular_action_type: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get cellular action fee codes
 
@@ -1263,23 +1431,18 @@ def get_cellular_action_fee_codes_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_action_fee_codes._get_kwargs(
-        date=date,
-        plan_uuids=plan_uuids,
-        carrier=carrier,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        cellular_action_type=cellular_action_type,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_cellular_action_fee_codes._get_kwargs(date=date, plan_uuids=plan_uuids, carrier=carrier, fee_category=fee_category, fee_code=fee_code, cellular_action_type=cellular_action_type, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1287,7 +1450,7 @@ def get_cellular_action_fee_codes_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1295,3 +1458,4 @@ def get_cellular_action_fee_codes_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

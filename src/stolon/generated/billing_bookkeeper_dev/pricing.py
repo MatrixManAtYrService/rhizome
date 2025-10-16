@@ -9,33 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing_for_merchant
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_cellular_pricing_for_reseller
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing_for_merchant
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_misc_pricing_for_reseller
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing_for_merchant
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import get_plan_pricing_for_reseller
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_pricing import ApiCellularPricing
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing import ApiPlanPricing
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.pricing import (
-    get_cellular_pricing,
-    get_cellular_pricing_for_merchant,
-    get_cellular_pricing_for_reseller,
-    get_misc_pricing,
-    get_misc_pricing_for_merchant,
-    get_misc_pricing_for_reseller,
-    get_plan_pricing,
-    get_plan_pricing_for_merchant,
-    get_plan_pricing_for_reseller,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_cellular_pricing import (
-    ApiCellularPricing,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_plan_pricing import (
-    ApiPlanPricing,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_cellular_pricing_sync_detailed(
@@ -48,7 +41,7 @@ def get_cellular_pricing_sync_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
@@ -86,23 +79,18 @@ def get_cellular_pricing_sync_detailed(
     Returns:
         Response[ApiCellularPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs(
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing._get_kwargs(currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -110,6 +98,8 @@ def get_cellular_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -121,6 +111,8 @@ def get_cellular_pricing_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiCellularPricing | None
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
         parsed = ApiCellularPricing.from_dict(body_json)
     else:
@@ -128,10 +120,12 @@ def get_cellular_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_pricing_sync(
@@ -144,7 +138,7 @@ def get_cellular_pricing_sync(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
@@ -182,23 +176,18 @@ def get_cellular_pricing_sync(
     Returns:
         ApiCellularPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs(
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing._get_kwargs(currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -206,7 +195,7 @@ def get_cellular_pricing_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -214,6 +203,8 @@ def get_cellular_pricing_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_asyncio_detailed(
@@ -226,7 +217,7 @@ def get_cellular_pricing_asyncio_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
@@ -264,23 +255,18 @@ def get_cellular_pricing_asyncio_detailed(
     Returns:
         Response[ApiCellularPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs(
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing._get_kwargs(currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -288,6 +274,8 @@ def get_cellular_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -299,6 +287,8 @@ def get_cellular_pricing_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiCellularPricing | None
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
         parsed = ApiCellularPricing.from_dict(body_json)
     else:
@@ -306,10 +296,12 @@ def get_cellular_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_pricing_asyncio(
@@ -322,7 +314,7 @@ def get_cellular_pricing_asyncio(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested cellular carriers, currency, billing method, and as-of date
 
@@ -360,23 +352,18 @@ def get_cellular_pricing_asyncio(
     Returns:
         ApiCellularPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing._get_kwargs(
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing._get_kwargs(currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -384,7 +371,7 @@ def get_cellular_pricing_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -392,6 +379,8 @@ def get_cellular_pricing_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_misc_pricing_sync_detailed(
@@ -403,7 +392,7 @@ def get_misc_pricing_sync_detailed(
     reseller_uuid: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
@@ -439,22 +428,18 @@ def get_misc_pricing_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs(
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing._get_kwargs(currency=currency, misc_specifiers=misc_specifiers, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -462,6 +447,8 @@ def get_misc_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -473,6 +460,8 @@ def get_misc_pricing_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -480,10 +469,12 @@ def get_misc_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_pricing_sync(
@@ -495,7 +486,7 @@ def get_misc_pricing_sync(
     reseller_uuid: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
@@ -531,22 +522,18 @@ def get_misc_pricing_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs(
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing._get_kwargs(currency=currency, misc_specifiers=misc_specifiers, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -554,7 +541,7 @@ def get_misc_pricing_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -562,6 +549,8 @@ def get_misc_pricing_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_misc_pricing_asyncio_detailed(
@@ -573,7 +562,7 @@ def get_misc_pricing_asyncio_detailed(
     reseller_uuid: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
@@ -609,22 +598,18 @@ def get_misc_pricing_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs(
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing._get_kwargs(currency=currency, misc_specifiers=misc_specifiers, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -632,6 +617,8 @@ def get_misc_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -643,6 +630,8 @@ def get_misc_pricing_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -650,10 +639,12 @@ def get_misc_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_pricing_asyncio(
@@ -665,7 +656,7 @@ def get_misc_pricing_asyncio(
     reseller_uuid: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get pricing for the requested miscellaneous fee specifiers, currency, and as-of date
 
@@ -701,22 +692,18 @@ def get_misc_pricing_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing._get_kwargs(
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing._get_kwargs(currency=currency, misc_specifiers=misc_specifiers, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -724,7 +711,7 @@ def get_misc_pricing_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -732,6 +719,8 @@ def get_misc_pricing_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_for_merchant_sync_detailed(
@@ -743,7 +732,7 @@ def get_plan_pricing_for_merchant_sync_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
@@ -780,22 +769,18 @@ def get_plan_pricing_for_merchant_sync_detailed(
     Returns:
         Response[ApiPlanPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -803,6 +788,8 @@ def get_plan_pricing_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -814,6 +801,8 @@ def get_plan_pricing_for_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricing | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
         parsed = ApiPlanPricing.from_dict(body_json)
     else:
@@ -821,10 +810,12 @@ def get_plan_pricing_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_for_merchant_sync(
@@ -836,7 +827,7 @@ def get_plan_pricing_for_merchant_sync(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
@@ -873,22 +864,18 @@ def get_plan_pricing_for_merchant_sync(
     Returns:
         ApiPlanPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -896,7 +883,7 @@ def get_plan_pricing_for_merchant_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -904,6 +891,8 @@ def get_plan_pricing_for_merchant_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_for_merchant_asyncio_detailed(
@@ -915,7 +904,7 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
@@ -952,22 +941,18 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
     Returns:
         Response[ApiPlanPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -975,6 +960,8 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -986,6 +973,8 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricing | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
         parsed = ApiPlanPricing.from_dict(body_json)
     else:
@@ -993,10 +982,12 @@ def get_plan_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_for_merchant_asyncio(
@@ -1008,7 +999,7 @@ def get_plan_pricing_for_merchant_asyncio(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant and merchant plans, currency, billing method, and as-of
     date
@@ -1045,22 +1036,18 @@ def get_plan_pricing_for_merchant_asyncio(
     Returns:
         ApiPlanPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_merchant._get_kwargs(uuid=uuid, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1068,7 +1055,7 @@ def get_plan_pricing_for_merchant_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1076,6 +1063,8 @@ def get_plan_pricing_for_merchant_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_misc_pricing_for_merchant_sync_detailed(
@@ -1086,7 +1075,7 @@ def get_misc_pricing_for_merchant_sync_detailed(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1120,21 +1109,18 @@ def get_misc_pricing_for_merchant_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1142,6 +1128,8 @@ def get_misc_pricing_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1153,6 +1141,8 @@ def get_misc_pricing_for_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1160,10 +1150,12 @@ def get_misc_pricing_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_pricing_for_merchant_sync(
@@ -1174,7 +1166,7 @@ def get_misc_pricing_for_merchant_sync(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1208,21 +1200,18 @@ def get_misc_pricing_for_merchant_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1230,7 +1219,7 @@ def get_misc_pricing_for_merchant_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1238,6 +1227,8 @@ def get_misc_pricing_for_merchant_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_misc_pricing_for_merchant_asyncio_detailed(
@@ -1248,7 +1239,7 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1282,21 +1273,18 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1304,6 +1292,8 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1315,6 +1305,8 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1322,10 +1314,12 @@ def get_misc_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_pricing_for_merchant_asyncio(
@@ -1336,7 +1330,7 @@ def get_misc_pricing_for_merchant_asyncio(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get pricing for the requested merchant and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1370,21 +1364,18 @@ def get_misc_pricing_for_merchant_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1392,7 +1383,7 @@ def get_misc_pricing_for_merchant_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1400,6 +1391,8 @@ def get_misc_pricing_for_merchant_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_misc_pricing_for_reseller_sync_detailed(
@@ -1410,7 +1403,7 @@ def get_misc_pricing_for_reseller_sync_detailed(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1444,21 +1437,18 @@ def get_misc_pricing_for_reseller_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1466,6 +1456,8 @@ def get_misc_pricing_for_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1477,6 +1469,8 @@ def get_misc_pricing_for_reseller_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1484,10 +1478,12 @@ def get_misc_pricing_for_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_pricing_for_reseller_sync(
@@ -1498,7 +1494,7 @@ def get_misc_pricing_for_reseller_sync(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1532,21 +1528,18 @@ def get_misc_pricing_for_reseller_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1554,7 +1547,7 @@ def get_misc_pricing_for_reseller_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1562,6 +1555,8 @@ def get_misc_pricing_for_reseller_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_misc_pricing_for_reseller_asyncio_detailed(
@@ -1572,7 +1567,7 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1606,21 +1601,18 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1628,6 +1620,8 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1639,6 +1633,8 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1646,10 +1642,12 @@ def get_misc_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_misc_pricing_for_reseller_asyncio(
@@ -1660,7 +1658,7 @@ def get_misc_pricing_for_reseller_asyncio(
     misc_specifiers: list[str],
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get pricing for the requested reseller and miscellaneous fee specifiers, currency, and as-of date
 
@@ -1694,21 +1692,18 @@ def get_misc_pricing_for_reseller_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_misc_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        misc_specifiers=misc_specifiers,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_misc_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, misc_specifiers=misc_specifiers, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1716,7 +1711,7 @@ def get_misc_pricing_for_reseller_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1724,6 +1719,8 @@ def get_misc_pricing_for_reseller_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_for_reseller_sync_detailed(
@@ -1735,7 +1732,7 @@ def get_plan_pricing_for_reseller_sync_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
@@ -1772,22 +1769,18 @@ def get_plan_pricing_for_reseller_sync_detailed(
     Returns:
         Response[ApiPlanPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1795,6 +1788,8 @@ def get_plan_pricing_for_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1806,6 +1801,8 @@ def get_plan_pricing_for_reseller_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricing | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
         parsed = ApiPlanPricing.from_dict(body_json)
     else:
@@ -1813,10 +1810,12 @@ def get_plan_pricing_for_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_for_reseller_sync(
@@ -1828,7 +1827,7 @@ def get_plan_pricing_for_reseller_sync(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiPlanPricing | None:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
@@ -1865,22 +1864,18 @@ def get_plan_pricing_for_reseller_sync(
     Returns:
         ApiPlanPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1888,7 +1883,7 @@ def get_plan_pricing_for_reseller_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1896,6 +1891,8 @@ def get_plan_pricing_for_reseller_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_for_reseller_asyncio_detailed(
@@ -1907,7 +1904,7 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
@@ -1944,22 +1941,18 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
     Returns:
         Response[ApiPlanPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1967,6 +1960,8 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1978,6 +1973,8 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricing | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
         parsed = ApiPlanPricing.from_dict(body_json)
     else:
@@ -1985,10 +1982,12 @@ def get_plan_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_for_reseller_asyncio(
@@ -2000,7 +1999,7 @@ def get_plan_pricing_for_reseller_asyncio(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiPlanPricing | None:
     """Get plan pricing for the requested reseller and merchant plans, currency, billing method, and as-of
     date
@@ -2037,22 +2036,18 @@ def get_plan_pricing_for_reseller_asyncio(
     Returns:
         ApiPlanPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        plan_uuids=plan_uuids,
-        currency=currency,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing_for_reseller._get_kwargs(r_id=r_id, plan_uuids=plan_uuids, currency=currency, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2060,7 +2055,7 @@ def get_plan_pricing_for_reseller_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2068,6 +2063,8 @@ def get_plan_pricing_for_reseller_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_sync_detailed(
@@ -2080,7 +2077,7 @@ def get_plan_pricing_sync_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
@@ -2118,23 +2115,18 @@ def get_plan_pricing_sync_detailed(
     Returns:
         Response[ApiPlanPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs(
-        plan_uuids=plan_uuids,
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing._get_kwargs(plan_uuids=plan_uuids, currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2142,6 +2134,8 @@ def get_plan_pricing_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2153,6 +2147,8 @@ def get_plan_pricing_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricing | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
         parsed = ApiPlanPricing.from_dict(body_json)
     else:
@@ -2160,10 +2156,12 @@ def get_plan_pricing_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_sync(
@@ -2176,7 +2174,7 @@ def get_plan_pricing_sync(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
@@ -2214,23 +2212,18 @@ def get_plan_pricing_sync(
     Returns:
         ApiPlanPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs(
-        plan_uuids=plan_uuids,
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing._get_kwargs(plan_uuids=plan_uuids, currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2238,7 +2231,7 @@ def get_plan_pricing_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2246,6 +2239,8 @@ def get_plan_pricing_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_plan_pricing_asyncio_detailed(
@@ -2258,7 +2253,7 @@ def get_plan_pricing_asyncio_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiPlanPricing]:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
@@ -2296,23 +2291,18 @@ def get_plan_pricing_asyncio_detailed(
     Returns:
         Response[ApiPlanPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs(
-        plan_uuids=plan_uuids,
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing._get_kwargs(plan_uuids=plan_uuids, currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2320,6 +2310,8 @@ def get_plan_pricing_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2331,6 +2323,8 @@ def get_plan_pricing_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiPlanPricing | None
     if body_json and proxy_response.status_code == 200 and ApiPlanPricing:
         parsed = ApiPlanPricing.from_dict(body_json)
     else:
@@ -2338,10 +2332,12 @@ def get_plan_pricing_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_pricing_asyncio(
@@ -2354,7 +2350,7 @@ def get_plan_pricing_asyncio(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiPlanPricing | None:
     """Get plan pricing for the requested merchant plans, currency, billing method, and as-of date
 
@@ -2392,23 +2388,18 @@ def get_plan_pricing_asyncio(
     Returns:
         ApiPlanPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_pricing._get_kwargs(
-        plan_uuids=plan_uuids,
-        currency=currency,
-        merchant_uuid=merchant_uuid,
-        reseller_uuid=reseller_uuid,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_plan_pricing._get_kwargs(plan_uuids=plan_uuids, currency=currency, merchant_uuid=merchant_uuid, reseller_uuid=reseller_uuid, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2416,7 +2407,7 @@ def get_plan_pricing_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2424,6 +2415,8 @@ def get_plan_pricing_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_for_merchant_sync_detailed(
@@ -2435,7 +2428,7 @@ def get_cellular_pricing_for_merchant_sync_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -2472,22 +2465,18 @@ def get_cellular_pricing_for_merchant_sync_detailed(
     Returns:
         Response[ApiCellularPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2495,6 +2484,8 @@ def get_cellular_pricing_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2506,6 +2497,8 @@ def get_cellular_pricing_for_merchant_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiCellularPricing | None
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
         parsed = ApiCellularPricing.from_dict(body_json)
     else:
@@ -2513,10 +2506,12 @@ def get_cellular_pricing_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_pricing_for_merchant_sync(
@@ -2528,7 +2523,7 @@ def get_cellular_pricing_for_merchant_sync(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -2565,22 +2560,18 @@ def get_cellular_pricing_for_merchant_sync(
     Returns:
         ApiCellularPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2588,7 +2579,7 @@ def get_cellular_pricing_for_merchant_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2596,6 +2587,8 @@ def get_cellular_pricing_for_merchant_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_for_merchant_asyncio_detailed(
@@ -2607,7 +2600,7 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -2644,22 +2637,18 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     Returns:
         Response[ApiCellularPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2667,6 +2656,8 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2678,6 +2669,8 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiCellularPricing | None
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
         parsed = ApiCellularPricing.from_dict(body_json)
     else:
@@ -2685,10 +2678,12 @@ def get_cellular_pricing_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_pricing_for_merchant_asyncio(
@@ -2700,7 +2695,7 @@ def get_cellular_pricing_for_merchant_asyncio(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested merchant and cellular carriers, currency, billing method, and
     as-of date
@@ -2737,22 +2732,18 @@ def get_cellular_pricing_for_merchant_asyncio(
     Returns:
         ApiCellularPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_merchant._get_kwargs(
-        uuid=uuid,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_merchant._get_kwargs(uuid=uuid, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2760,7 +2751,7 @@ def get_cellular_pricing_for_merchant_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2768,6 +2759,8 @@ def get_cellular_pricing_for_merchant_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_for_reseller_sync_detailed(
@@ -2779,7 +2772,7 @@ def get_cellular_pricing_for_reseller_sync_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -2816,22 +2809,18 @@ def get_cellular_pricing_for_reseller_sync_detailed(
     Returns:
         Response[ApiCellularPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2839,6 +2828,8 @@ def get_cellular_pricing_for_reseller_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2850,6 +2841,8 @@ def get_cellular_pricing_for_reseller_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiCellularPricing | None
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
         parsed = ApiCellularPricing.from_dict(body_json)
     else:
@@ -2857,10 +2850,12 @@ def get_cellular_pricing_for_reseller_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_pricing_for_reseller_sync(
@@ -2872,7 +2867,7 @@ def get_cellular_pricing_for_reseller_sync(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -2909,22 +2904,18 @@ def get_cellular_pricing_for_reseller_sync(
     Returns:
         ApiCellularPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2932,7 +2923,7 @@ def get_cellular_pricing_for_reseller_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2940,6 +2931,8 @@ def get_cellular_pricing_for_reseller_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_cellular_pricing_for_reseller_asyncio_detailed(
@@ -2951,7 +2944,7 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ApiCellularPricing]:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -2988,22 +2981,18 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     Returns:
         Response[ApiCellularPricing]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3011,6 +3000,8 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -3022,6 +3013,8 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiCellularPricing | None
     if body_json and proxy_response.status_code == 200 and ApiCellularPricing:
         parsed = ApiCellularPricing.from_dict(body_json)
     else:
@@ -3029,10 +3022,12 @@ def get_cellular_pricing_for_reseller_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_cellular_pricing_for_reseller_asyncio(
@@ -3044,7 +3039,7 @@ def get_cellular_pricing_for_reseller_asyncio(
     billing_method: Union[Unset, str] = UNSET,
     rule_aliases: Union[Unset, list[str]] = UNSET,
     date: Union[Unset, datetime.date] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ApiCellularPricing | None:
     """Get cellular pricing for the requested reseller and cellular carriers, currency, billing method, and
     as-of date
@@ -3081,22 +3076,18 @@ def get_cellular_pricing_for_reseller_asyncio(
     Returns:
         ApiCellularPricing | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_cellular_pricing_for_reseller._get_kwargs(
-        r_id=r_id,
-        currency=currency,
-        carriers=carriers,
-        billing_method=billing_method,
-        rule_aliases=rule_aliases,
-        date=date,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_cellular_pricing_for_reseller._get_kwargs(r_id=r_id, currency=currency, carriers=carriers, billing_method=billing_method, rule_aliases=rule_aliases, date=date, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -3104,7 +3095,7 @@ def get_cellular_pricing_for_reseller_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -3112,3 +3103,4 @@ def get_cellular_pricing_for_reseller_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

@@ -9,33 +9,27 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import (
-    create,
-    delete,
-    get,
-    get_test_merchant_criteria,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_test_merchant_criteria import (
-    ApiTestMerchantCriteria,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response_200 import (
-    CreateResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_response_200 import (
-    DeleteResponse200,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import create
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import delete
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import get
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.test_merchant_criteria import get_test_merchant_criteria
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_test_merchant_criteria import ApiTestMerchantCriteria
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response_200 import CreateResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.delete_response_200 import DeleteResponse200
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_response_200 import GetResponse200
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_test_merchant_criteria_response_200 import (
-    GetTestMerchantCriteriaResponse200,
-)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_test_merchant_criteria_response_200 import GetTestMerchantCriteriaResponse200
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def delete_sync_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteResponse200]:
+def delete_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[DeleteResponse200]:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -58,14 +52,18 @@ def delete_sync_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteR
     Returns:
         Response[DeleteResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -73,6 +71,8 @@ def delete_sync_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteR
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -93,13 +93,19 @@ def delete_sync_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteR
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_sync(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
+
+
+def delete_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> DeleteResponse200 | None:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -122,14 +128,18 @@ def delete_sync(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
     Returns:
         DeleteResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -137,7 +147,7 @@ def delete_sync(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -147,7 +157,13 @@ def delete_sync(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
     return None
 
 
-def delete_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[DeleteResponse200]:
+
+
+def delete_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[DeleteResponse200]:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -170,14 +186,18 @@ def delete_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Dele
     Returns:
         Response[DeleteResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = delete._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -185,6 +205,8 @@ def delete_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Dele
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -205,13 +227,19 @@ def delete_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Dele
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_asyncio(*, client: StolonClient, uuid: str) -> DeleteResponse200 | None:
+
+
+def delete_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> DeleteResponse200 | None:
     """Delete test merchant criteria by UUID
 
     Args:
@@ -234,14 +262,18 @@ def delete_asyncio(*, client: StolonClient, uuid: str) -> DeleteResponse200 | No
     Returns:
         DeleteResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -249,7 +281,7 @@ def delete_asyncio(*, client: StolonClient, uuid: str) -> DeleteResponse200 | No
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -259,7 +291,13 @@ def delete_asyncio(*, client: StolonClient, uuid: str) -> DeleteResponse200 | No
     return None
 
 
-def create_sync_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Response[CreateResponse200]:
+
+
+def create_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiTestMerchantCriteria
+) -> Response[CreateResponse200]:
     """Create test merchant criteria
 
     Args:
@@ -282,14 +320,18 @@ def create_sync_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria)
     Returns:
         Response[CreateResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = create._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -297,6 +339,8 @@ def create_sync_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -317,13 +361,19 @@ def create_sync_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_sync(*, client: StolonClient, body: ApiTestMerchantCriteria) -> CreateResponse200 | None:
+
+
+def create_sync(
+    *,
+    client: StolonClient,
+    body: ApiTestMerchantCriteria
+) -> CreateResponse200 | None:
     """Create test merchant criteria
 
     Args:
@@ -346,14 +396,18 @@ def create_sync(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Creat
     Returns:
         CreateResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = create._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -361,7 +415,7 @@ def create_sync(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Creat
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -371,7 +425,13 @@ def create_sync(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Creat
     return None
 
 
-def create_asyncio_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Response[CreateResponse200]:
+
+
+def create_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiTestMerchantCriteria
+) -> Response[CreateResponse200]:
     """Create test merchant criteria
 
     Args:
@@ -394,14 +454,18 @@ def create_asyncio_detailed(*, client: StolonClient, body: ApiTestMerchantCriter
     Returns:
         Response[CreateResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = create._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -409,6 +473,8 @@ def create_asyncio_detailed(*, client: StolonClient, body: ApiTestMerchantCriter
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -429,13 +495,19 @@ def create_asyncio_detailed(*, client: StolonClient, body: ApiTestMerchantCriter
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_asyncio(*, client: StolonClient, body: ApiTestMerchantCriteria) -> CreateResponse200 | None:
+
+
+def create_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiTestMerchantCriteria
+) -> CreateResponse200 | None:
     """Create test merchant criteria
 
     Args:
@@ -458,14 +530,18 @@ def create_asyncio(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Cr
     Returns:
         CreateResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = create._get_kwargs(body=body)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -473,7 +549,7 @@ def create_asyncio(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Cr
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -483,114 +559,11 @@ def create_asyncio(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Cr
     return None
 
 
-def get_test_merchant_criteria_sync_detailed(*, client: StolonClient) -> Response[GetTestMerchantCriteriaResponse200]:
-    """Get test merchant criteria
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[GetTestMerchantCriteriaResponse200]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
 
 
-    Returns:
-        Response[GetTestMerchantCriteriaResponse200]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_test_merchant_criteria._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    # Explicit type annotation to help type checkers infer the Response[T] generic
-    parsed: GetTestMerchantCriteriaResponse200 | None
-    if body_json and proxy_response.status_code == 200 and GetTestMerchantCriteriaResponse200:
-        parsed = GetTestMerchantCriteriaResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_test_merchant_criteria_sync(*, client: StolonClient) -> GetTestMerchantCriteriaResponse200 | None:
-    """Get test merchant criteria
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetTestMerchantCriteriaResponse200
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        GetTestMerchantCriteriaResponse200 | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_test_merchant_criteria._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetTestMerchantCriteriaResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_test_merchant_criteria_asyncio_detailed(
-    *, client: StolonClient
+def get_test_merchant_criteria_sync_detailed(
+    *,
+    client: StolonClient
 ) -> Response[GetTestMerchantCriteriaResponse200]:
     """Get test merchant criteria
 
@@ -606,19 +579,23 @@ def get_test_merchant_criteria_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         Response[GetTestMerchantCriteriaResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get_test_merchant_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -626,6 +603,8 @@ def get_test_merchant_criteria_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -646,13 +625,18 @@ def get_test_merchant_criteria_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_test_merchant_criteria_asyncio(*, client: StolonClient) -> GetTestMerchantCriteriaResponse200 | None:
+
+
+def get_test_merchant_criteria_sync(
+    *,
+    client: StolonClient
+) -> GetTestMerchantCriteriaResponse200 | None:
     """Get test merchant criteria
 
     Raises:
@@ -667,19 +651,23 @@ def get_test_merchant_criteria_asyncio(*, client: StolonClient) -> GetTestMercha
 
     Args:
         client: StolonClient instance for proxying requests
-
+        
 
     Returns:
         GetTestMerchantCriteriaResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_test_merchant_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -687,7 +675,7 @@ def get_test_merchant_criteria_asyncio(*, client: StolonClient) -> GetTestMercha
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -697,7 +685,139 @@ def get_test_merchant_criteria_asyncio(*, client: StolonClient) -> GetTestMercha
     return None
 
 
-def get_sync_detailed(*, client: StolonClient, uuid: str) -> Response[GetResponse200]:
+
+
+def get_test_merchant_criteria_asyncio_detailed(
+    *,
+    client: StolonClient
+) -> Response[GetTestMerchantCriteriaResponse200]:
+    """Get test merchant criteria
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[GetTestMerchantCriteriaResponse200]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        Response[GetTestMerchantCriteriaResponse200]
+    """
+
+    # Extract request parameters from generated function
+    kwargs = get_test_merchant_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
+    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: GetTestMerchantCriteriaResponse200 | None
+    if body_json and proxy_response.status_code == 200 and GetTestMerchantCriteriaResponse200:
+        parsed = GetTestMerchantCriteriaResponse200.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+
+
+def get_test_merchant_criteria_asyncio(
+    *,
+    client: StolonClient
+) -> GetTestMerchantCriteriaResponse200 | None:
+    """Get test merchant criteria
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        GetTestMerchantCriteriaResponse200
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+        
+
+    Returns:
+        GetTestMerchantCriteriaResponse200 | None
+    """
+
+    # Extract request parameters from generated function
+    kwargs = get_test_merchant_criteria._get_kwargs()
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=path,
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+    import json
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return GetTestMerchantCriteriaResponse200.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+
+
+def get_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[GetResponse200]:
     """Get test merchant criteria by UUID
 
     Args:
@@ -720,14 +840,18 @@ def get_sync_detailed(*, client: StolonClient, uuid: str) -> Response[GetRespons
     Returns:
         Response[GetResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -735,6 +859,8 @@ def get_sync_detailed(*, client: StolonClient, uuid: str) -> Response[GetRespons
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -755,13 +881,19 @@ def get_sync_detailed(*, client: StolonClient, uuid: str) -> Response[GetRespons
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_sync(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
+
+
+def get_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> GetResponse200 | None:
     """Get test merchant criteria by UUID
 
     Args:
@@ -784,14 +916,18 @@ def get_sync(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     Returns:
         GetResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -799,7 +935,7 @@ def get_sync(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -809,7 +945,13 @@ def get_sync(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     return None
 
 
-def get_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[GetResponse200]:
+
+
+def get_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[GetResponse200]:
     """Get test merchant criteria by UUID
 
     Args:
@@ -832,14 +974,18 @@ def get_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[GetResp
     Returns:
         Response[GetResponse200]
     """
+
     # Extract request parameters from generated function
     kwargs = get._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -847,6 +993,8 @@ def get_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[GetResp
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -867,13 +1015,19 @@ def get_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[GetResp
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_asyncio(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
+
+
+def get_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> GetResponse200 | None:
     """Get test merchant criteria by UUID
 
     Args:
@@ -896,14 +1050,18 @@ def get_asyncio(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     Returns:
         GetResponse200 | None
     """
+
     # Extract request parameters from generated function
     kwargs = get._get_kwargs(uuid=uuid)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -911,7 +1069,7 @@ def get_asyncio(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -919,3 +1077,4 @@ def get_asyncio(*, client: StolonClient, uuid: str) -> GetResponse200 | None:
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

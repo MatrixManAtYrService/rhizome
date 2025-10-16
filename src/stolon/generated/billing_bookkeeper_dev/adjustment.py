@@ -9,24 +9,22 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjustment import (
-    create_adjustment,
-    reseller_create_adjustment,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjustment import (
-    ApiAdjustment,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjustment import create_adjustment
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjustment import reseller_create_adjustment
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjustment import ApiAdjustment
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def create_adjustment_sync_detailed(*, client: StolonClient, body: ApiAdjustment) -> Response[ResponseError]:
+def create_adjustment_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAdjustment
+) -> Response[ResponseError]:
     """Create adjustment
 
     Args:
@@ -49,14 +47,18 @@ def create_adjustment_sync_detailed(*, client: StolonClient, body: ApiAdjustment
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -64,6 +66,8 @@ def create_adjustment_sync_detailed(*, client: StolonClient, body: ApiAdjustment
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -75,6 +79,8 @@ def create_adjustment_sync_detailed(*, client: StolonClient, body: ApiAdjustment
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -82,13 +88,19 @@ def create_adjustment_sync_detailed(*, client: StolonClient, body: ApiAdjustment
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjustment_sync(*, client: StolonClient, body: ApiAdjustment) -> ResponseError | None:
+
+
+def create_adjustment_sync(
+    *,
+    client: StolonClient,
+    body: ApiAdjustment
+) -> ResponseError | None:
     """Create adjustment
 
     Args:
@@ -111,14 +123,18 @@ def create_adjustment_sync(*, client: StolonClient, body: ApiAdjustment) -> Resp
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -126,7 +142,7 @@ def create_adjustment_sync(*, client: StolonClient, body: ApiAdjustment) -> Resp
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -136,7 +152,13 @@ def create_adjustment_sync(*, client: StolonClient, body: ApiAdjustment) -> Resp
     return None
 
 
-def create_adjustment_asyncio_detailed(*, client: StolonClient, body: ApiAdjustment) -> Response[ResponseError]:
+
+
+def create_adjustment_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAdjustment
+) -> Response[ResponseError]:
     """Create adjustment
 
     Args:
@@ -159,14 +181,18 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient, body: ApiAdjustm
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -174,6 +200,8 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient, body: ApiAdjustm
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -185,6 +213,8 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient, body: ApiAdjustm
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -192,13 +222,19 @@ def create_adjustment_asyncio_detailed(*, client: StolonClient, body: ApiAdjustm
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjustment_asyncio(*, client: StolonClient, body: ApiAdjustment) -> ResponseError | None:
+
+
+def create_adjustment_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiAdjustment
+) -> ResponseError | None:
     """Create adjustment
 
     Args:
@@ -221,14 +257,18 @@ def create_adjustment_asyncio(*, client: StolonClient, body: ApiAdjustment) -> R
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjustment._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -236,7 +276,7 @@ def create_adjustment_asyncio(*, client: StolonClient, body: ApiAdjustment) -> R
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -244,10 +284,16 @@ def create_adjustment_asyncio(*, client: StolonClient, body: ApiAdjustment) -> R
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def reseller_create_adjustment_sync_detailed(
-    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    body: ApiAdjustment,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Create adjustment for an entity that reseller can access
 
@@ -275,14 +321,18 @@ def reseller_create_adjustment_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -290,6 +340,8 @@ def reseller_create_adjustment_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -301,6 +353,8 @@ def reseller_create_adjustment_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -308,14 +362,20 @@ def reseller_create_adjustment_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def reseller_create_adjustment_sync(
-    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    body: ApiAdjustment,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Create adjustment for an entity that reseller can access
 
@@ -343,14 +403,18 @@ def reseller_create_adjustment_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -358,7 +422,7 @@ def reseller_create_adjustment_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -368,8 +432,14 @@ def reseller_create_adjustment_sync(
     return None
 
 
+
+
 def reseller_create_adjustment_asyncio_detailed(
-    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    body: ApiAdjustment,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Create adjustment for an entity that reseller can access
 
@@ -397,14 +467,18 @@ def reseller_create_adjustment_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -412,6 +486,8 @@ def reseller_create_adjustment_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -423,6 +499,8 @@ def reseller_create_adjustment_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -430,14 +508,20 @@ def reseller_create_adjustment_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def reseller_create_adjustment_asyncio(
-    *, client: StolonClient, r_id: str, body: ApiAdjustment, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    body: ApiAdjustment,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Create adjustment for an entity that reseller can access
 
@@ -465,14 +549,18 @@ def reseller_create_adjustment_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = reseller_create_adjustment._get_kwargs(r_id=r_id, body=body, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -480,7 +568,7 @@ def reseller_create_adjustment_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -488,3 +576,4 @@ def reseller_create_adjustment_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

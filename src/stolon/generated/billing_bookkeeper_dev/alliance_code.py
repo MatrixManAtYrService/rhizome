@@ -9,29 +9,26 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import create_invoice_alliance_code
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import get_invoice_alliance_code_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import get_invoice_alliance_codes
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import resolve_invoice_alliance_code
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_alliance_code import ApiInvoiceAllianceCode
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.alliance_code import (
-    create_invoice_alliance_code,
-    get_invoice_alliance_code_by_uuid,
-    get_invoice_alliance_codes,
-    resolve_invoice_alliance_code,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_invoice_alliance_code import (
-    ApiInvoiceAllianceCode,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def create_invoice_alliance_code_sync_detailed(
-    *, client: StolonClient, body: ApiInvoiceAllianceCode
+    *,
+    client: StolonClient,
+    body: ApiInvoiceAllianceCode
 ) -> Response[ResponseError]:
     """Create invoice alliance codes
 
@@ -55,14 +52,18 @@ def create_invoice_alliance_code_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_invoice_alliance_code._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -70,6 +71,8 @@ def create_invoice_alliance_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -81,6 +84,8 @@ def create_invoice_alliance_code_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -88,13 +93,19 @@ def create_invoice_alliance_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_invoice_alliance_code_sync(*, client: StolonClient, body: ApiInvoiceAllianceCode) -> ResponseError | None:
+
+
+def create_invoice_alliance_code_sync(
+    *,
+    client: StolonClient,
+    body: ApiInvoiceAllianceCode
+) -> ResponseError | None:
     """Create invoice alliance codes
 
     Args:
@@ -117,14 +128,18 @@ def create_invoice_alliance_code_sync(*, client: StolonClient, body: ApiInvoiceA
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_invoice_alliance_code._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -132,7 +147,7 @@ def create_invoice_alliance_code_sync(*, client: StolonClient, body: ApiInvoiceA
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -140,10 +155,14 @@ def create_invoice_alliance_code_sync(*, client: StolonClient, body: ApiInvoiceA
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def create_invoice_alliance_code_asyncio_detailed(
-    *, client: StolonClient, body: ApiInvoiceAllianceCode
+    *,
+    client: StolonClient,
+    body: ApiInvoiceAllianceCode
 ) -> Response[ResponseError]:
     """Create invoice alliance codes
 
@@ -167,14 +186,18 @@ def create_invoice_alliance_code_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_invoice_alliance_code._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -182,6 +205,8 @@ def create_invoice_alliance_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -193,6 +218,8 @@ def create_invoice_alliance_code_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -200,13 +227,19 @@ def create_invoice_alliance_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_invoice_alliance_code_asyncio(*, client: StolonClient, body: ApiInvoiceAllianceCode) -> ResponseError | None:
+
+
+def create_invoice_alliance_code_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiInvoiceAllianceCode
+) -> ResponseError | None:
     """Create invoice alliance codes
 
     Args:
@@ -229,14 +262,18 @@ def create_invoice_alliance_code_asyncio(*, client: StolonClient, body: ApiInvoi
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_invoice_alliance_code._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -244,7 +281,7 @@ def create_invoice_alliance_code_asyncio(*, client: StolonClient, body: ApiInvoi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -254,7 +291,13 @@ def create_invoice_alliance_code_asyncio(*, client: StolonClient, body: ApiInvoi
     return None
 
 
-def get_invoice_alliance_code_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_invoice_alliance_code_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -277,14 +320,18 @@ def get_invoice_alliance_code_by_uuid_sync_detailed(*, client: StolonClient, uui
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_alliance_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -292,6 +339,8 @@ def get_invoice_alliance_code_by_uuid_sync_detailed(*, client: StolonClient, uui
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -303,6 +352,8 @@ def get_invoice_alliance_code_by_uuid_sync_detailed(*, client: StolonClient, uui
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -310,13 +361,19 @@ def get_invoice_alliance_code_by_uuid_sync_detailed(*, client: StolonClient, uui
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_invoice_alliance_code_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_invoice_alliance_code_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -339,14 +396,18 @@ def get_invoice_alliance_code_by_uuid_sync(*, client: StolonClient, uuid: str) -
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_alliance_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -354,7 +415,7 @@ def get_invoice_alliance_code_by_uuid_sync(*, client: StolonClient, uuid: str) -
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -364,7 +425,13 @@ def get_invoice_alliance_code_by_uuid_sync(*, client: StolonClient, uuid: str) -
     return None
 
 
-def get_invoice_alliance_code_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_invoice_alliance_code_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -387,14 +454,18 @@ def get_invoice_alliance_code_by_uuid_asyncio_detailed(*, client: StolonClient, 
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_alliance_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -402,6 +473,8 @@ def get_invoice_alliance_code_by_uuid_asyncio_detailed(*, client: StolonClient, 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -413,6 +486,8 @@ def get_invoice_alliance_code_by_uuid_asyncio_detailed(*, client: StolonClient, 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -420,13 +495,19 @@ def get_invoice_alliance_code_by_uuid_asyncio_detailed(*, client: StolonClient, 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_invoice_alliance_code_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_invoice_alliance_code_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get invoice alliance code definition by UUID
 
     Args:
@@ -449,14 +530,18 @@ def get_invoice_alliance_code_by_uuid_asyncio(*, client: StolonClient, uuid: str
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_invoice_alliance_code_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -464,7 +549,7 @@ def get_invoice_alliance_code_by_uuid_asyncio(*, client: StolonClient, uuid: str
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -472,6 +557,8 @@ def get_invoice_alliance_code_by_uuid_asyncio(*, client: StolonClient, uuid: str
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_invoice_alliance_codes_sync_detailed(
@@ -480,7 +567,7 @@ def get_invoice_alliance_codes_sync_detailed(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     alliance_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get invoice alliance codes
 
@@ -510,19 +597,18 @@ def get_invoice_alliance_codes_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        alliance_code=alliance_code,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_invoice_alliance_codes._get_kwargs(billing_entity_uuid=billing_entity_uuid, alliance_code=alliance_code, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -530,6 +616,8 @@ def get_invoice_alliance_codes_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -541,6 +629,8 @@ def get_invoice_alliance_codes_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -548,10 +638,12 @@ def get_invoice_alliance_codes_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_invoice_alliance_codes_sync(
@@ -560,7 +652,7 @@ def get_invoice_alliance_codes_sync(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     alliance_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get invoice alliance codes
 
@@ -590,19 +682,18 @@ def get_invoice_alliance_codes_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        alliance_code=alliance_code,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_invoice_alliance_codes._get_kwargs(billing_entity_uuid=billing_entity_uuid, alliance_code=alliance_code, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -610,7 +701,7 @@ def get_invoice_alliance_codes_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -618,6 +709,8 @@ def get_invoice_alliance_codes_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_invoice_alliance_codes_asyncio_detailed(
@@ -626,7 +719,7 @@ def get_invoice_alliance_codes_asyncio_detailed(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     alliance_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get invoice alliance codes
 
@@ -656,19 +749,18 @@ def get_invoice_alliance_codes_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        alliance_code=alliance_code,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_invoice_alliance_codes._get_kwargs(billing_entity_uuid=billing_entity_uuid, alliance_code=alliance_code, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -676,6 +768,8 @@ def get_invoice_alliance_codes_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -687,6 +781,8 @@ def get_invoice_alliance_codes_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -694,10 +790,12 @@ def get_invoice_alliance_codes_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_invoice_alliance_codes_asyncio(
@@ -706,7 +804,7 @@ def get_invoice_alliance_codes_asyncio(
     billing_entity_uuid: Union[Unset, str] = UNSET,
     alliance_code: Union[Unset, str] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get invoice alliance codes
 
@@ -736,19 +834,18 @@ def get_invoice_alliance_codes_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_invoice_alliance_codes._get_kwargs(
-        billing_entity_uuid=billing_entity_uuid,
-        alliance_code=alliance_code,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_invoice_alliance_codes._get_kwargs(billing_entity_uuid=billing_entity_uuid, alliance_code=alliance_code, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -756,7 +853,7 @@ def get_invoice_alliance_codes_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -764,10 +861,15 @@ def get_invoice_alliance_codes_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def resolve_invoice_alliance_code_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -793,14 +895,18 @@ def resolve_invoice_alliance_code_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -808,6 +914,8 @@ def resolve_invoice_alliance_code_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -819,6 +927,8 @@ def resolve_invoice_alliance_code_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -826,14 +936,19 @@ def resolve_invoice_alliance_code_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def resolve_invoice_alliance_code_sync(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -859,14 +974,18 @@ def resolve_invoice_alliance_code_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -874,7 +993,7 @@ def resolve_invoice_alliance_code_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -884,8 +1003,13 @@ def resolve_invoice_alliance_code_sync(
     return None
 
 
+
+
 def resolve_invoice_alliance_code_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> Response[ResponseError]:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -911,14 +1035,18 @@ def resolve_invoice_alliance_code_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -926,6 +1054,8 @@ def resolve_invoice_alliance_code_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -937,6 +1067,8 @@ def resolve_invoice_alliance_code_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -944,14 +1076,19 @@ def resolve_invoice_alliance_code_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def resolve_invoice_alliance_code_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str, date: Union[Unset, datetime.date] = UNSET
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str,
+    date: Union[Unset, datetime.date] = UNSET
 ) -> ResponseError | None:
     """Resolve the invoice alliance code definition that applies for the specified billing entity
 
@@ -977,14 +1114,18 @@ def resolve_invoice_alliance_code_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = resolve_invoice_alliance_code._get_kwargs(billing_entity_uuid=billing_entity_uuid, date=date)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -992,7 +1133,7 @@ def resolve_invoice_alliance_code_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1000,3 +1141,4 @@ def resolve_invoice_alliance_code_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

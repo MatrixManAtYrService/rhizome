@@ -9,26 +9,24 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import (
-    create_tier_detail,
-    delete_tier_detail_by_uuid,
-    get_tier_detail_by_uuid,
-    get_tier_details,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tier_detail import (
-    ApiTierDetail,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import create_tier_detail
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import delete_tier_detail_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import get_tier_detail_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.tier_detail import get_tier_details
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_tier_detail import ApiTierDetail
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
 from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from typing import Any
+import json
 
 
-def delete_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+def delete_tier_detail_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete tiered detail
 
     Args:
@@ -51,14 +49,18 @@ def delete_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tier_detail_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -66,6 +68,8 @@ def delete_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -77,6 +81,8 @@ def delete_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -84,13 +90,19 @@ def delete_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_tier_detail_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete tiered detail
 
     Args:
@@ -113,14 +125,18 @@ def delete_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tier_detail_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -131,7 +147,13 @@ def delete_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respo
     return None
 
 
-def delete_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError | bool]:
+
+
+def delete_tier_detail_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError | bool]:
     """Delete tiered detail
 
     Args:
@@ -154,14 +176,18 @@ def delete_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     Returns:
         Response[ResponseError | bool]
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tier_detail_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -169,6 +195,8 @@ def delete_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -180,6 +208,8 @@ def delete_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: None | None
     if body_json and proxy_response.status_code == 200 and None:
         parsed = None.from_dict(body_json)
     else:
@@ -187,13 +217,19 @@ def delete_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: s
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def delete_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | bool | None:
+
+
+def delete_tier_detail_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | bool | None:
     """Delete tiered detail
 
     Args:
@@ -216,14 +252,18 @@ def delete_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     Returns:
         ResponseError | bool | None
     """
+
     # Extract request parameters from generated function
     kwargs = delete_tier_detail_by_uuid._get_kwargs(uuid=uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
-    client.proxy_request(
+    proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -234,7 +274,13 @@ def delete_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Re
     return None
 
 
-def create_tier_detail_sync_detailed(*, client: StolonClient, body: ApiTierDetail) -> Response[ApiTierDetail]:
+
+
+def create_tier_detail_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiTierDetail
+) -> Response[ApiTierDetail]:
     """Create tier detail
 
     Args:
@@ -257,14 +303,18 @@ def create_tier_detail_sync_detailed(*, client: StolonClient, body: ApiTierDetai
     Returns:
         Response[ApiTierDetail]
     """
+
     # Extract request parameters from generated function
     kwargs = create_tier_detail._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -272,6 +322,8 @@ def create_tier_detail_sync_detailed(*, client: StolonClient, body: ApiTierDetai
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -283,6 +335,8 @@ def create_tier_detail_sync_detailed(*, client: StolonClient, body: ApiTierDetai
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTierDetail | None
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
         parsed = ApiTierDetail.from_dict(body_json)
     else:
@@ -290,13 +344,19 @@ def create_tier_detail_sync_detailed(*, client: StolonClient, body: ApiTierDetai
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_tier_detail_sync(*, client: StolonClient, body: ApiTierDetail) -> ApiTierDetail | None:
+
+
+def create_tier_detail_sync(
+    *,
+    client: StolonClient,
+    body: ApiTierDetail
+) -> ApiTierDetail | None:
     """Create tier detail
 
     Args:
@@ -319,14 +379,18 @@ def create_tier_detail_sync(*, client: StolonClient, body: ApiTierDetail) -> Api
     Returns:
         ApiTierDetail | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_tier_detail._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -334,7 +398,7 @@ def create_tier_detail_sync(*, client: StolonClient, body: ApiTierDetail) -> Api
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -344,7 +408,13 @@ def create_tier_detail_sync(*, client: StolonClient, body: ApiTierDetail) -> Api
     return None
 
 
-def create_tier_detail_asyncio_detailed(*, client: StolonClient, body: ApiTierDetail) -> Response[ApiTierDetail]:
+
+
+def create_tier_detail_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiTierDetail
+) -> Response[ApiTierDetail]:
     """Create tier detail
 
     Args:
@@ -367,14 +437,18 @@ def create_tier_detail_asyncio_detailed(*, client: StolonClient, body: ApiTierDe
     Returns:
         Response[ApiTierDetail]
     """
+
     # Extract request parameters from generated function
     kwargs = create_tier_detail._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -382,6 +456,8 @@ def create_tier_detail_asyncio_detailed(*, client: StolonClient, body: ApiTierDe
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -393,6 +469,8 @@ def create_tier_detail_asyncio_detailed(*, client: StolonClient, body: ApiTierDe
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTierDetail | None
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
         parsed = ApiTierDetail.from_dict(body_json)
     else:
@@ -400,13 +478,19 @@ def create_tier_detail_asyncio_detailed(*, client: StolonClient, body: ApiTierDe
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_tier_detail_asyncio(*, client: StolonClient, body: ApiTierDetail) -> ApiTierDetail | None:
+
+
+def create_tier_detail_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiTierDetail
+) -> ApiTierDetail | None:
     """Create tier detail
 
     Args:
@@ -429,14 +513,18 @@ def create_tier_detail_asyncio(*, client: StolonClient, body: ApiTierDetail) -> 
     Returns:
         ApiTierDetail | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_tier_detail._get_kwargs(body=body)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -444,7 +532,7 @@ def create_tier_detail_asyncio(*, client: StolonClient, body: ApiTierDetail) -> 
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -454,7 +542,13 @@ def create_tier_detail_asyncio(*, client: StolonClient, body: ApiTierDetail) -> 
     return None
 
 
-def get_tier_details_sync_detailed(*, client: StolonClient, rule_uuid: str) -> Response[ApiTierDetail]:
+
+
+def get_tier_details_sync_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: str
+) -> Response[ApiTierDetail]:
     """Get tier details
 
     Args:
@@ -477,14 +571,18 @@ def get_tier_details_sync_detailed(*, client: StolonClient, rule_uuid: str) -> R
     Returns:
         Response[ApiTierDetail]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -492,6 +590,8 @@ def get_tier_details_sync_detailed(*, client: StolonClient, rule_uuid: str) -> R
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -503,6 +603,8 @@ def get_tier_details_sync_detailed(*, client: StolonClient, rule_uuid: str) -> R
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTierDetail | None
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
         parsed = ApiTierDetail.from_dict(body_json)
     else:
@@ -510,13 +612,19 @@ def get_tier_details_sync_detailed(*, client: StolonClient, rule_uuid: str) -> R
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tier_details_sync(*, client: StolonClient, rule_uuid: str) -> ApiTierDetail | None:
+
+
+def get_tier_details_sync(
+    *,
+    client: StolonClient,
+    rule_uuid: str
+) -> ApiTierDetail | None:
     """Get tier details
 
     Args:
@@ -539,14 +647,18 @@ def get_tier_details_sync(*, client: StolonClient, rule_uuid: str) -> ApiTierDet
     Returns:
         ApiTierDetail | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -554,7 +666,7 @@ def get_tier_details_sync(*, client: StolonClient, rule_uuid: str) -> ApiTierDet
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -564,7 +676,13 @@ def get_tier_details_sync(*, client: StolonClient, rule_uuid: str) -> ApiTierDet
     return None
 
 
-def get_tier_details_asyncio_detailed(*, client: StolonClient, rule_uuid: str) -> Response[ApiTierDetail]:
+
+
+def get_tier_details_asyncio_detailed(
+    *,
+    client: StolonClient,
+    rule_uuid: str
+) -> Response[ApiTierDetail]:
     """Get tier details
 
     Args:
@@ -587,14 +705,18 @@ def get_tier_details_asyncio_detailed(*, client: StolonClient, rule_uuid: str) -
     Returns:
         Response[ApiTierDetail]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -602,6 +724,8 @@ def get_tier_details_asyncio_detailed(*, client: StolonClient, rule_uuid: str) -
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -613,6 +737,8 @@ def get_tier_details_asyncio_detailed(*, client: StolonClient, rule_uuid: str) -
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTierDetail | None
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
         parsed = ApiTierDetail.from_dict(body_json)
     else:
@@ -620,13 +746,19 @@ def get_tier_details_asyncio_detailed(*, client: StolonClient, rule_uuid: str) -
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tier_details_asyncio(*, client: StolonClient, rule_uuid: str) -> ApiTierDetail | None:
+
+
+def get_tier_details_asyncio(
+    *,
+    client: StolonClient,
+    rule_uuid: str
+) -> ApiTierDetail | None:
     """Get tier details
 
     Args:
@@ -649,14 +781,18 @@ def get_tier_details_asyncio(*, client: StolonClient, rule_uuid: str) -> ApiTier
     Returns:
         ApiTierDetail | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_details._get_kwargs(rule_uuid=rule_uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -664,7 +800,7 @@ def get_tier_details_asyncio(*, client: StolonClient, rule_uuid: str) -> ApiTier
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -674,7 +810,13 @@ def get_tier_details_asyncio(*, client: StolonClient, rule_uuid: str) -> ApiTier
     return None
 
 
-def get_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTierDetail]:
+
+
+def get_tier_detail_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTierDetail]:
     """Get tier detail by UUID
 
     Args:
@@ -697,14 +839,18 @@ def get_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
     Returns:
         Response[ApiTierDetail]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_detail_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -712,6 +858,8 @@ def get_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -723,6 +871,8 @@ def get_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTierDetail | None
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
         parsed = ApiTierDetail.from_dict(body_json)
     else:
@@ -730,13 +880,19 @@ def get_tier_detail_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) ->
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTierDetail | None:
+
+
+def get_tier_detail_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTierDetail | None:
     """Get tier detail by UUID
 
     Args:
@@ -759,14 +915,18 @@ def get_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTierD
     Returns:
         ApiTierDetail | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_detail_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -774,7 +934,7 @@ def get_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTierD
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -784,7 +944,13 @@ def get_tier_detail_by_uuid_sync(*, client: StolonClient, uuid: str) -> ApiTierD
     return None
 
 
-def get_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ApiTierDetail]:
+
+
+def get_tier_detail_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ApiTierDetail]:
     """Get tier detail by UUID
 
     Args:
@@ -807,14 +973,18 @@ def get_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
     Returns:
         Response[ApiTierDetail]
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_detail_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -822,6 +992,8 @@ def get_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -833,6 +1005,8 @@ def get_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ApiTierDetail | None
     if body_json and proxy_response.status_code == 200 and ApiTierDetail:
         parsed = ApiTierDetail.from_dict(body_json)
     else:
@@ -840,13 +1014,19 @@ def get_tier_detail_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str)
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTierDetail | None:
+
+
+def get_tier_detail_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ApiTierDetail | None:
     """Get tier detail by UUID
 
     Args:
@@ -869,14 +1049,18 @@ def get_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
     Returns:
         ApiTierDetail | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_tier_detail_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -884,7 +1068,7 @@ def get_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -892,3 +1076,4 @@ def get_tier_detail_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ApiTi
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

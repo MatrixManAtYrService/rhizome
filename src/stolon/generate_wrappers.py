@@ -615,6 +615,7 @@ def generate_wrapper_code(
     service: str,
     env: str,
     domain: str,
+    base_path: str = "",
 ) -> tuple[dict[str, str], str]:
     """Generate wrapper function code for a single API function.
 
@@ -623,6 +624,7 @@ def generate_wrapper_code(
         service: Service name (e.g., "billing_bookkeeper")
         env: Environment name (e.g., "dev")
         domain: Domain for the environment (e.g., "dev1.dev.clover.com")
+        base_path: Base path to prepend to all API paths (e.g., "/agreement")
 
     Returns:
         Tuple of (imports_dict, function_code)
@@ -639,6 +641,22 @@ def generate_wrapper_code(
     imports = _build_imports(func_info, service, env, return_type, module_dir)
     param_str, call_param_str = _build_function_params(func_info)
     response_parsing = _build_response_parsing(func_info, service, env)
+
+    # Build path construction logic
+    if base_path:
+        path_construction = f'''
+    # Extract request parameters from generated function
+    kwargs = {func_info.api_function_name}._get_kwargs({call_param_str})
+
+    # Prepend base path to URL
+    path = "{base_path}" + kwargs["url"]'''
+    else:
+        path_construction = f'''
+    # Extract request parameters from generated function
+    kwargs = {func_info.api_function_name}._get_kwargs({call_param_str})
+
+    # Use path directly from generated function
+    path = kwargs["url"]'''
 
     # Build complete function code
     function_code = f'''
@@ -657,14 +675,13 @@ def {func_info.api_function_name}_{func_info.variant}(
     Returns:
         {return_type}
     """
-    # Extract request parameters from generated function
-    kwargs = {func_info.api_function_name}._get_kwargs({call_param_str})
+{path_construction}
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="{domain}",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="{env}",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -706,7 +723,15 @@ def generate_wrappers_for_service(
         "prod": "www.clover.com",
     }
 
+    # Base path mapping for services that use context path prefixes
+    # These paths are prepended to all API paths from the OpenAPI spec
+    base_path_map = {
+        "agreement-k8s": "/agreement",
+        "billing-event": "/billing-event",
+    }
+
     domain = domain_map.get(env, "dev1.dev.clover.com")
+    base_path = base_path_map.get(service, "")
 
     # Discover all API functions
     functions = discover_api_functions(generated_client_path)
@@ -735,7 +760,7 @@ def generate_wrappers_for_service(
 
         # Generate each function
         for func_info in module_functions:
-            imports, func_code = generate_wrapper_code(func_info, service, env, domain)
+            imports, func_code = generate_wrapper_code(func_info, service, env, domain, base_path)
             # Merge imports (dict ensures deduplication)
             all_imports.update(imports)
             function_codes.append(func_code)

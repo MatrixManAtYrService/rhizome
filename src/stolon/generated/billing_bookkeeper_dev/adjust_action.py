@@ -9,28 +9,23 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+from http import HTTPStatus
+from stolon.client import StolonClient
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import create_adjust_action
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_adjust_action_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_adjust_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_reseller_adjust_actions
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_reseller_unposted_adjust_actions_by_billing_entity
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_resellers_adjust_action_by_uuid
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import get_unposted_adjust_actions_by_billing_entity
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjust_action import ApiAdjustAction
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import ResponseError
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
 import datetime
 import json
-from http import HTTPStatus
-from typing import Union
-
-from stolon.client import StolonClient
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.api.adjust_action import (
-    create_adjust_action,
-    get_adjust_action_by_uuid,
-    get_adjust_actions,
-    get_reseller_adjust_actions,
-    get_reseller_unposted_adjust_actions_by_billing_entity,
-    get_resellers_adjust_action_by_uuid,
-    get_unposted_adjust_actions_by_billing_entity,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.api_adjust_action import (
-    ApiAdjustAction,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.models.response_error import (
-    ResponseError,
-)
-from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_adjust_actions_sync_detailed(
@@ -47,7 +42,7 @@ def get_adjust_actions_sync_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get adjustment actions
 
@@ -93,27 +88,18 @@ def get_adjust_actions_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs(
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_adjust_actions._get_kwargs(settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -121,6 +107,8 @@ def get_adjust_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -132,6 +120,8 @@ def get_adjust_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -139,10 +129,12 @@ def get_adjust_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_adjust_actions_sync(
@@ -159,7 +151,7 @@ def get_adjust_actions_sync(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get adjustment actions
 
@@ -205,27 +197,18 @@ def get_adjust_actions_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs(
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_adjust_actions._get_kwargs(settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -233,7 +216,7 @@ def get_adjust_actions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -241,6 +224,8 @@ def get_adjust_actions_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_adjust_actions_asyncio_detailed(
@@ -257,7 +242,7 @@ def get_adjust_actions_asyncio_detailed(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> Response[ResponseError]:
     """Get adjustment actions
 
@@ -303,27 +288,18 @@ def get_adjust_actions_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs(
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_adjust_actions._get_kwargs(settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -331,6 +307,8 @@ def get_adjust_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -342,6 +320,8 @@ def get_adjust_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -349,10 +329,12 @@ def get_adjust_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_adjust_actions_asyncio(
@@ -369,7 +351,7 @@ def get_adjust_actions_asyncio(
     start_date: Union[Unset, datetime.date] = UNSET,
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
-    page_number: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET
 ) -> ResponseError | None:
     """Get adjustment actions
 
@@ -415,27 +397,18 @@ def get_adjust_actions_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_adjust_actions._get_kwargs(
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-    )
+    kwargs = get_adjust_actions._get_kwargs(settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -443,7 +416,7 @@ def get_adjust_actions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -451,10 +424,16 @@ def get_adjust_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    billing_entity_uuid: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -482,16 +461,18 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -499,6 +480,8 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -510,6 +493,8 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -517,14 +502,20 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    billing_entity_uuid: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -552,16 +543,18 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -569,7 +562,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -577,10 +570,16 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    billing_entity_uuid: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -608,16 +607,18 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -625,6 +626,8 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -636,6 +639,8 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -643,14 +648,20 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, r_id: str, billing_entity_uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    billing_entity_uuid: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity for resellers
 
@@ -678,16 +689,18 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(
-        r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_reseller_unposted_adjust_actions_by_billing_entity._get_kwargs(r_id=r_id, billing_entity_uuid=billing_entity_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -695,7 +708,7 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -705,7 +718,13 @@ def get_reseller_unposted_adjust_actions_by_billing_entity_asyncio(
     return None
 
 
-def create_adjust_action_sync_detailed(*, client: StolonClient, body: ApiAdjustAction) -> Response[ResponseError]:
+
+
+def create_adjust_action_sync_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAdjustAction
+) -> Response[ResponseError]:
     """Create adjustment action
 
     Args:
@@ -728,14 +747,18 @@ def create_adjust_action_sync_detailed(*, client: StolonClient, body: ApiAdjustA
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjust_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -743,6 +766,8 @@ def create_adjust_action_sync_detailed(*, client: StolonClient, body: ApiAdjustA
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -754,6 +779,8 @@ def create_adjust_action_sync_detailed(*, client: StolonClient, body: ApiAdjustA
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -761,13 +788,19 @@ def create_adjust_action_sync_detailed(*, client: StolonClient, body: ApiAdjustA
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjust_action_sync(*, client: StolonClient, body: ApiAdjustAction) -> ResponseError | None:
+
+
+def create_adjust_action_sync(
+    *,
+    client: StolonClient,
+    body: ApiAdjustAction
+) -> ResponseError | None:
     """Create adjustment action
 
     Args:
@@ -790,14 +823,18 @@ def create_adjust_action_sync(*, client: StolonClient, body: ApiAdjustAction) ->
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjust_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -805,7 +842,7 @@ def create_adjust_action_sync(*, client: StolonClient, body: ApiAdjustAction) ->
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -815,7 +852,13 @@ def create_adjust_action_sync(*, client: StolonClient, body: ApiAdjustAction) ->
     return None
 
 
-def create_adjust_action_asyncio_detailed(*, client: StolonClient, body: ApiAdjustAction) -> Response[ResponseError]:
+
+
+def create_adjust_action_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: ApiAdjustAction
+) -> Response[ResponseError]:
     """Create adjustment action
 
     Args:
@@ -838,14 +881,18 @@ def create_adjust_action_asyncio_detailed(*, client: StolonClient, body: ApiAdju
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjust_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -853,6 +900,8 @@ def create_adjust_action_asyncio_detailed(*, client: StolonClient, body: ApiAdju
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -864,6 +913,8 @@ def create_adjust_action_asyncio_detailed(*, client: StolonClient, body: ApiAdju
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -871,13 +922,19 @@ def create_adjust_action_asyncio_detailed(*, client: StolonClient, body: ApiAdju
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def create_adjust_action_asyncio(*, client: StolonClient, body: ApiAdjustAction) -> ResponseError | None:
+
+
+def create_adjust_action_asyncio(
+    *,
+    client: StolonClient,
+    body: ApiAdjustAction
+) -> ResponseError | None:
     """Create adjustment action
 
     Args:
@@ -900,14 +957,18 @@ def create_adjust_action_asyncio(*, client: StolonClient, body: ApiAdjustAction)
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = create_adjust_action._get_kwargs(body=body)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -915,7 +976,7 @@ def create_adjust_action_asyncio(*, client: StolonClient, body: ApiAdjustAction)
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -923,10 +984,14 @@ def create_adjust_action_asyncio(*, client: StolonClient, body: ApiAdjustAction)
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity
 
@@ -950,14 +1015,18 @@ def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_adjust_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -965,6 +1034,8 @@ def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -976,6 +1047,8 @@ def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -983,14 +1056,18 @@ def get_unposted_adjust_actions_by_billing_entity_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_unposted_adjust_actions_by_billing_entity_sync(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity
 
@@ -1014,14 +1091,18 @@ def get_unposted_adjust_actions_by_billing_entity_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_adjust_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1029,7 +1110,7 @@ def get_unposted_adjust_actions_by_billing_entity_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1039,8 +1120,12 @@ def get_unposted_adjust_actions_by_billing_entity_sync(
     return None
 
 
+
+
 def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> Response[ResponseError]:
     """Get unposted adjustment actions for billing entity
 
@@ -1064,14 +1149,18 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_adjust_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1079,6 +1168,8 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1090,6 +1181,8 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1097,14 +1190,18 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_unposted_adjust_actions_by_billing_entity_asyncio(
-    *, client: StolonClient, billing_entity_uuid: str
+    *,
+    client: StolonClient,
+    billing_entity_uuid: str
 ) -> ResponseError | None:
     """Get unposted adjustment actions for billing entity
 
@@ -1128,14 +1225,18 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_unposted_adjust_actions_by_billing_entity._get_kwargs(billing_entity_uuid=billing_entity_uuid)
 
+    # Use path directly from generated function
+    path = kwargs["url"]
+
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1143,7 +1244,7 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1153,7 +1254,13 @@ def get_unposted_adjust_actions_by_billing_entity_asyncio(
     return None
 
 
-def get_adjust_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_adjust_action_by_uuid_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get adjustment action by UUID
 
     Args:
@@ -1176,14 +1283,18 @@ def get_adjust_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_adjust_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1191,6 +1302,8 @@ def get_adjust_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1202,6 +1315,8 @@ def get_adjust_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1209,13 +1324,19 @@ def get_adjust_action_by_uuid_sync_detailed(*, client: StolonClient, uuid: str) 
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_adjust_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_adjust_action_by_uuid_sync(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get adjustment action by UUID
 
     Args:
@@ -1238,14 +1359,18 @@ def get_adjust_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respon
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_adjust_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1253,7 +1378,7 @@ def get_adjust_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respon
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1263,7 +1388,13 @@ def get_adjust_action_by_uuid_sync(*, client: StolonClient, uuid: str) -> Respon
     return None
 
 
-def get_adjust_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResponseError]:
+
+
+def get_adjust_action_by_uuid_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> Response[ResponseError]:
     """Get adjustment action by UUID
 
     Args:
@@ -1286,14 +1417,18 @@ def get_adjust_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_adjust_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1301,6 +1436,8 @@ def get_adjust_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1312,6 +1449,8 @@ def get_adjust_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1319,13 +1458,19 @@ def get_adjust_action_by_uuid_asyncio_detailed(*, client: StolonClient, uuid: st
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
-def get_adjust_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> ResponseError | None:
+
+
+def get_adjust_action_by_uuid_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str
+) -> ResponseError | None:
     """Get adjustment action by UUID
 
     Args:
@@ -1348,14 +1493,18 @@ def get_adjust_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Res
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_adjust_action_by_uuid._get_kwargs(uuid=uuid)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1363,7 +1512,7 @@ def get_adjust_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Res
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1371,6 +1520,8 @@ def get_adjust_action_by_uuid_asyncio(*, client: StolonClient, uuid: str) -> Res
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_adjust_actions_sync_detailed(
@@ -1389,7 +1540,7 @@ def get_reseller_adjust_actions_sync_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get adjustment actions for resellers
 
@@ -1439,29 +1590,18 @@ def get_reseller_adjust_actions_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(
-        r_id=r_id,
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1469,6 +1609,8 @@ def get_reseller_adjust_actions_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1480,6 +1622,8 @@ def get_reseller_adjust_actions_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1487,10 +1631,12 @@ def get_reseller_adjust_actions_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_adjust_actions_sync(
@@ -1509,7 +1655,7 @@ def get_reseller_adjust_actions_sync(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get adjustment actions for resellers
 
@@ -1559,29 +1705,18 @@ def get_reseller_adjust_actions_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(
-        r_id=r_id,
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1589,7 +1724,7 @@ def get_reseller_adjust_actions_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1597,6 +1732,8 @@ def get_reseller_adjust_actions_sync(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_reseller_adjust_actions_asyncio_detailed(
@@ -1615,7 +1752,7 @@ def get_reseller_adjust_actions_asyncio_detailed(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get adjustment actions for resellers
 
@@ -1665,29 +1802,18 @@ def get_reseller_adjust_actions_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(
-        r_id=r_id,
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1695,6 +1821,8 @@ def get_reseller_adjust_actions_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1706,6 +1834,8 @@ def get_reseller_adjust_actions_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1713,10 +1843,12 @@ def get_reseller_adjust_actions_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_reseller_adjust_actions_asyncio(
@@ -1735,7 +1867,7 @@ def get_reseller_adjust_actions_asyncio(
     end_date: Union[Unset, datetime.date] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get adjustment actions for resellers
 
@@ -1785,29 +1917,18 @@ def get_reseller_adjust_actions_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_reseller_adjust_actions._get_kwargs(
-        r_id=r_id,
-        settlement_uuid=settlement_uuid,
-        billing_entity_uuid=billing_entity_uuid,
-        adjust_reason=adjust_reason,
-        developer_uuid=developer_uuid,
-        developer_app_uuid=developer_app_uuid,
-        adjust_action_type=adjust_action_type,
-        fee_category=fee_category,
-        fee_code=fee_code,
-        start_date=start_date,
-        end_date=end_date,
-        page_size=page_size,
-        page_number=page_number,
-        x_clover_appenv=x_clover_appenv,
-    )
+    kwargs = get_reseller_adjust_actions._get_kwargs(r_id=r_id, settlement_uuid=settlement_uuid, billing_entity_uuid=billing_entity_uuid, adjust_reason=adjust_reason, developer_uuid=developer_uuid, developer_app_uuid=developer_app_uuid, adjust_action_type=adjust_action_type, fee_category=fee_category, fee_code=fee_code, start_date=start_date, end_date=end_date, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1815,7 +1936,7 @@ def get_reseller_adjust_actions_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1823,10 +1944,16 @@ def get_reseller_adjust_actions_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_resellers_adjust_action_by_uuid_sync_detailed(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1854,14 +1981,18 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1869,6 +2000,8 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1880,6 +2013,8 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -1887,14 +2022,20 @@ def get_resellers_adjust_action_by_uuid_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_resellers_adjust_action_by_uuid_sync(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1922,14 +2063,18 @@ def get_resellers_adjust_action_by_uuid_sync(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1937,7 +2082,7 @@ def get_resellers_adjust_action_by_uuid_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1947,8 +2092,14 @@ def get_resellers_adjust_action_by_uuid_sync(
     return None
 
 
+
+
 def get_resellers_adjust_action_by_uuid_asyncio_detailed(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> Response[ResponseError]:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -1976,14 +2127,18 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
     Returns:
         Response[ResponseError]
     """
+
     # Extract request parameters from generated function
     kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1991,6 +2146,8 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_bookkeeper_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -2002,6 +2159,8 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
             pass
 
     # Parse response using generated function's parser
+    # Explicit type annotation to help type checkers infer the Response[T] generic
+    parsed: ResponseError | None
     if body_json and proxy_response.status_code == 200 and ResponseError:
         parsed = ResponseError.from_dict(body_json)
     else:
@@ -2009,14 +2168,20 @@ def get_resellers_adjust_action_by_uuid_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_resellers_adjust_action_by_uuid_asyncio(
-    *, client: StolonClient, r_id: str, uuid: str, x_clover_appenv: str
+    *,
+    client: StolonClient,
+    r_id: str,
+    uuid: str,
+    x_clover_appenv: str
 ) -> ResponseError | None:
     """Get adjustment action by UUID for entity that reseller can access
 
@@ -2044,14 +2209,18 @@ def get_resellers_adjust_action_by_uuid_asyncio(
     Returns:
         ResponseError | None
     """
+
     # Extract request parameters from generated function
     kwargs = get_resellers_adjust_action_by_uuid._get_kwargs(r_id=r_id, uuid=uuid, x_clover_appenv=x_clover_appenv)
+
+    # Use path directly from generated function
+    path = kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -2059,7 +2228,7 @@ def get_resellers_adjust_action_by_uuid_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -2067,3 +2236,4 @@ def get_resellers_adjust_action_by_uuid_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+

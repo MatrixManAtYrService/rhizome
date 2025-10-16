@@ -9,30 +9,21 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
-import json
 from http import HTTPStatus
-from typing import Union
-
 from stolon.client import StolonClient
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_trial import (
-    get_active_plan_trial_for_merchant,
-    get_latest_plan_trial_for_merchant,
-    get_latest_plan_trials_for_merchants,
-    get_plan_trials,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_active_plan_trial_for_merchant_response_200 import (
-    GetActivePlanTrialForMerchantResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trial_for_merchant_response_200 import (
-    GetLatestPlanTrialForMerchantResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trials_for_merchants_response_200 import (
-    GetLatestPlanTrialsForMerchantsResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response_200 import (
-    GetPlanTrialsResponse200,
-)
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_active_plan_trial_for_merchant
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_latest_plan_trial_for_merchant
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_latest_plan_trials_for_merchants
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_trial import get_plan_trials
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_active_plan_trial_for_merchant_response_200 import GetActivePlanTrialForMerchantResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trial_for_merchant_response_200 import GetLatestPlanTrialForMerchantResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_latest_plan_trials_for_merchants_response_200 import GetLatestPlanTrialsForMerchantsResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response_200 import GetPlanTrialsResponse200
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Unset
+from typing import Any
+from typing import Union
+import json
 
 
 def get_plan_trials_sync_detailed(
@@ -41,7 +32,7 @@ def get_plan_trials_sync_detailed(
     merchant_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetPlanTrialsResponse200]:
     """Get plan trials
 
@@ -71,16 +62,18 @@ def get_plan_trials_sync_detailed(
     Returns:
         Response[GetPlanTrialsResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(
-        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -88,6 +81,8 @@ def get_plan_trials_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -108,10 +103,12 @@ def get_plan_trials_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_trials_sync(
@@ -120,7 +117,7 @@ def get_plan_trials_sync(
     merchant_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetPlanTrialsResponse200 | None:
     """Get plan trials
 
@@ -150,16 +147,18 @@ def get_plan_trials_sync(
     Returns:
         GetPlanTrialsResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(
-        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -167,7 +166,7 @@ def get_plan_trials_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -177,13 +176,15 @@ def get_plan_trials_sync(
     return None
 
 
+
+
 def get_plan_trials_asyncio_detailed(
     *,
     client: StolonClient,
     merchant_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetPlanTrialsResponse200]:
     """Get plan trials
 
@@ -213,16 +214,18 @@ def get_plan_trials_asyncio_detailed(
     Returns:
         Response[GetPlanTrialsResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(
-        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -230,6 +233,8 @@ def get_plan_trials_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -250,10 +255,12 @@ def get_plan_trials_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_plan_trials_asyncio(
@@ -262,7 +269,7 @@ def get_plan_trials_asyncio(
     merchant_uuid: str,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetPlanTrialsResponse200 | None:
     """Get plan trials
 
@@ -292,16 +299,18 @@ def get_plan_trials_asyncio(
     Returns:
         GetPlanTrialsResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(
-        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -309,7 +318,7 @@ def get_plan_trials_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -319,8 +328,13 @@ def get_plan_trials_asyncio(
     return None
 
 
+
+
 def get_latest_plan_trial_for_merchant_sync_detailed(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetLatestPlanTrialForMerchantResponse200]:
     """Get latest plan trial
 
@@ -346,16 +360,18 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
     Returns:
         Response[GetLatestPlanTrialForMerchantResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -363,6 +379,8 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -383,14 +401,19 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_plan_trial_for_merchant_sync(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetLatestPlanTrialForMerchantResponse200 | None:
     """Get latest plan trial
 
@@ -416,16 +439,18 @@ def get_latest_plan_trial_for_merchant_sync(
     Returns:
         GetLatestPlanTrialForMerchantResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -433,7 +458,7 @@ def get_latest_plan_trial_for_merchant_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -443,8 +468,13 @@ def get_latest_plan_trial_for_merchant_sync(
     return None
 
 
+
+
 def get_latest_plan_trial_for_merchant_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetLatestPlanTrialForMerchantResponse200]:
     """Get latest plan trial
 
@@ -470,16 +500,18 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
     Returns:
         Response[GetLatestPlanTrialForMerchantResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -487,6 +519,8 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -507,14 +541,19 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_latest_plan_trial_for_merchant_asyncio(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetLatestPlanTrialForMerchantResponse200 | None:
     """Get latest plan trial
 
@@ -540,16 +579,18 @@ def get_latest_plan_trial_for_merchant_asyncio(
     Returns:
         GetLatestPlanTrialForMerchantResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -557,7 +598,7 @@ def get_latest_plan_trial_for_merchant_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -567,8 +608,13 @@ def get_latest_plan_trial_for_merchant_asyncio(
     return None
 
 
+
+
 def get_active_plan_trial_for_merchant_sync_detailed(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetActivePlanTrialForMerchantResponse200]:
     """Get active merchant plan trial
 
@@ -594,16 +640,18 @@ def get_active_plan_trial_for_merchant_sync_detailed(
     Returns:
         Response[GetActivePlanTrialForMerchantResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -611,6 +659,8 @@ def get_active_plan_trial_for_merchant_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -631,14 +681,19 @@ def get_active_plan_trial_for_merchant_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_active_plan_trial_for_merchant_sync(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetActivePlanTrialForMerchantResponse200 | None:
     """Get active merchant plan trial
 
@@ -664,16 +719,18 @@ def get_active_plan_trial_for_merchant_sync(
     Returns:
         GetActivePlanTrialForMerchantResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -681,7 +738,7 @@ def get_active_plan_trial_for_merchant_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -691,8 +748,13 @@ def get_active_plan_trial_for_merchant_sync(
     return None
 
 
+
+
 def get_active_plan_trial_for_merchant_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetActivePlanTrialForMerchantResponse200]:
     """Get active merchant plan trial
 
@@ -718,16 +780,18 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
     Returns:
         Response[GetActivePlanTrialForMerchantResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -735,6 +799,8 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -755,14 +821,19 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
 
 
+
+
 def get_active_plan_trial_for_merchant_asyncio(
-    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetActivePlanTrialForMerchantResponse200 | None:
     """Get active merchant plan trial
 
@@ -788,16 +859,18 @@ def get_active_plan_trial_for_merchant_asyncio(
     Returns:
         GetActivePlanTrialForMerchantResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
-        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -805,7 +878,7 @@ def get_active_plan_trial_for_merchant_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -813,6 +886,8 @@ def get_active_plan_trial_for_merchant_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
+
 
 
 def get_latest_plan_trials_for_merchants_sync_detailed(
@@ -821,7 +896,7 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
     merchant_uuids: Union[Unset, list[str]] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetLatestPlanTrialsForMerchantsResponse200]:
     """get Latest Trials for a List of Merchants
 
@@ -851,16 +926,18 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
     Returns:
         Response[GetLatestPlanTrialsForMerchantsResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
-        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -868,6 +945,8 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -888,10 +967,12 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_plan_trials_for_merchants_sync(
@@ -900,7 +981,7 @@ def get_latest_plan_trials_for_merchants_sync(
     merchant_uuids: Union[Unset, list[str]] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetLatestPlanTrialsForMerchantsResponse200 | None:
     """get Latest Trials for a List of Merchants
 
@@ -930,16 +1011,18 @@ def get_latest_plan_trials_for_merchants_sync(
     Returns:
         GetLatestPlanTrialsForMerchantsResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
-        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -947,7 +1030,7 @@ def get_latest_plan_trials_for_merchants_sync(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -957,13 +1040,15 @@ def get_latest_plan_trials_for_merchants_sync(
     return None
 
 
+
+
 def get_latest_plan_trials_for_merchants_asyncio_detailed(
     *,
     client: StolonClient,
     merchant_uuids: Union[Unset, list[str]] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetLatestPlanTrialsForMerchantsResponse200]:
     """get Latest Trials for a List of Merchants
 
@@ -993,16 +1078,18 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
     Returns:
         Response[GetLatestPlanTrialsForMerchantsResponse200]
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
-        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1010,6 +1097,8 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
     )
 
     # Parse response into Response object (detailed variant)
+    import json
+    from http import HTTPStatus
     from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
     # Parse body if JSON
@@ -1030,10 +1119,12 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
 
     return Response(
         status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        content=proxy_response.body.encode('utf-8') if proxy_response.body else b'',
         headers=proxy_response.headers,
         parsed=parsed,
     )
+
+
 
 
 def get_latest_plan_trials_for_merchants_asyncio(
@@ -1042,7 +1133,7 @@ def get_latest_plan_trials_for_merchants_asyncio(
     merchant_uuids: Union[Unset, list[str]] = UNSET,
     page_size: Union[Unset, int] = UNSET,
     page_number: Union[Unset, int] = UNSET,
-    x_clover_appenv: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetLatestPlanTrialsForMerchantsResponse200 | None:
     """get Latest Trials for a List of Merchants
 
@@ -1072,16 +1163,18 @@ def get_latest_plan_trials_for_merchants_asyncio(
     Returns:
         GetLatestPlanTrialsForMerchantsResponse200 | None
     """
+
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
-        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
-    )
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv)
+
+    # Prepend base path to URL
+    path = "/billing-event" + kwargs["url"]
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
         domain="dev1.dev.clover.com",
         method=kwargs["method"],
-        path=kwargs["url"],
+        path=path,
         environment_name="dev",
         json_body=kwargs.get("json"),
         params=kwargs.get("params"),
@@ -1089,7 +1182,7 @@ def get_latest_plan_trials_for_merchants_asyncio(
     )
 
     # Parse response body
-
+    import json
     if proxy_response.body and proxy_response.status_code == 200:
         try:
             body_json = json.loads(proxy_response.body)
@@ -1097,3 +1190,4 @@ def get_latest_plan_trials_for_merchants_asyncio(
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
     return None
+
