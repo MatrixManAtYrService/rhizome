@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant_offboarding import (
@@ -21,10 +22,15 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.m
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_merchant_offboarding import (
     ApiMerchantOffboarding,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_offboarding_request import (
+    CreateOffboardingRequest,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_offboarding_by_merchant_uuid_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+def get_offboarding_by_merchant_uuid_sync_detailed(
+    *, client: StolonClient, merchant_uuid: str
+) -> Response[ApiMerchantOffboarding]:
     """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
     explicit id
 
@@ -43,13 +49,13 @@ def get_offboarding_by_merchant_uuid_sync_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         Response[ApiMerchantOffboarding]
     """
     # Extract request parameters from generated function
-    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
+    kwargs = get_offboarding_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -87,7 +93,7 @@ def get_offboarding_by_merchant_uuid_sync_detailed(*, client: StolonClient) -> R
     )
 
 
-def get_offboarding_by_merchant_uuid_sync(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+def get_offboarding_by_merchant_uuid_sync(*, client: StolonClient, merchant_uuid: str) -> ApiMerchantOffboarding | None:
     """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
     explicit id
 
@@ -106,13 +112,13 @@ def get_offboarding_by_merchant_uuid_sync(*, client: StolonClient) -> ApiMerchan
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         ApiMerchantOffboarding | None
     """
     # Extract request parameters from generated function
-    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
+    kwargs = get_offboarding_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -136,7 +142,9 @@ def get_offboarding_by_merchant_uuid_sync(*, client: StolonClient) -> ApiMerchan
     return None
 
 
-def get_offboarding_by_merchant_uuid_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+def get_offboarding_by_merchant_uuid_asyncio_detailed(
+    *, client: StolonClient, merchant_uuid: str
+) -> Response[ApiMerchantOffboarding]:
     """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
     explicit id
 
@@ -155,13 +163,13 @@ def get_offboarding_by_merchant_uuid_asyncio_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         Response[ApiMerchantOffboarding]
     """
     # Extract request parameters from generated function
-    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
+    kwargs = get_offboarding_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -199,7 +207,9 @@ def get_offboarding_by_merchant_uuid_asyncio_detailed(*, client: StolonClient) -
     )
 
 
-def get_offboarding_by_merchant_uuid_asyncio(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+def get_offboarding_by_merchant_uuid_asyncio(
+    *, client: StolonClient, merchant_uuid: str
+) -> ApiMerchantOffboarding | None:
     """Get offboarding, gets latest offboarding step or the offboarding by the step parameter or the
     explicit id
 
@@ -218,13 +228,13 @@ def get_offboarding_by_merchant_uuid_asyncio(*, client: StolonClient) -> ApiMerc
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         ApiMerchantOffboarding | None
     """
     # Extract request parameters from generated function
-    kwargs = get_offboarding_by_merchant_uuid._get_kwargs()
+    kwargs = get_offboarding_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -248,7 +258,14 @@ def get_offboarding_by_merchant_uuid_asyncio(*, client: StolonClient) -> ApiMerc
     return None
 
 
-def get_all_offboardings_by_step_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+def get_all_offboardings_by_step_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[ApiMerchantOffboarding]:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -269,13 +286,18 @@ def get_all_offboardings_by_step_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        page_number: Union[Unset, int]
+        page_size: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ApiMerchantOffboarding]
     """
     # Extract request parameters from generated function
-    kwargs = get_all_offboardings_by_step._get_kwargs()
+    kwargs = get_all_offboardings_by_step._get_kwargs(
+        merchant_uuid=merchant_uuid, page_number=page_number, page_size=page_size, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -313,7 +335,14 @@ def get_all_offboardings_by_step_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def get_all_offboardings_by_step_sync(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+def get_all_offboardings_by_step_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> ApiMerchantOffboarding | None:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -334,13 +363,18 @@ def get_all_offboardings_by_step_sync(*, client: StolonClient) -> ApiMerchantOff
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        page_number: Union[Unset, int]
+        page_size: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         ApiMerchantOffboarding | None
     """
     # Extract request parameters from generated function
-    kwargs = get_all_offboardings_by_step._get_kwargs()
+    kwargs = get_all_offboardings_by_step._get_kwargs(
+        merchant_uuid=merchant_uuid, page_number=page_number, page_size=page_size, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -364,7 +398,14 @@ def get_all_offboardings_by_step_sync(*, client: StolonClient) -> ApiMerchantOff
     return None
 
 
-def get_all_offboardings_by_step_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+def get_all_offboardings_by_step_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[ApiMerchantOffboarding]:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -385,13 +426,18 @@ def get_all_offboardings_by_step_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        page_number: Union[Unset, int]
+        page_size: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ApiMerchantOffboarding]
     """
     # Extract request parameters from generated function
-    kwargs = get_all_offboardings_by_step._get_kwargs()
+    kwargs = get_all_offboardings_by_step._get_kwargs(
+        merchant_uuid=merchant_uuid, page_number=page_number, page_size=page_size, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -429,7 +475,14 @@ def get_all_offboardings_by_step_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def get_all_offboardings_by_step_asyncio(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+def get_all_offboardings_by_step_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> ApiMerchantOffboarding | None:
     """get all offboardings by step and option merchant uuid
 
     Args:
@@ -450,13 +503,18 @@ def get_all_offboardings_by_step_asyncio(*, client: StolonClient) -> ApiMerchant
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        page_number: Union[Unset, int]
+        page_size: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         ApiMerchantOffboarding | None
     """
     # Extract request parameters from generated function
-    kwargs = get_all_offboardings_by_step._get_kwargs()
+    kwargs = get_all_offboardings_by_step._get_kwargs(
+        merchant_uuid=merchant_uuid, page_number=page_number, page_size=page_size, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -480,7 +538,9 @@ def get_all_offboardings_by_step_asyncio(*, client: StolonClient) -> ApiMerchant
     return None
 
 
-def create_offboarding_sync_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+def create_offboarding_sync_detailed(
+    *, client: StolonClient, body: CreateOffboardingRequest, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[ApiMerchantOffboarding]:
     """Create offboarding
 
     Args:
@@ -499,13 +559,14 @@ def create_offboarding_sync_detailed(*, client: StolonClient) -> Response[ApiMer
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateOffboardingRequest
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ApiMerchantOffboarding]
     """
     # Extract request parameters from generated function
-    kwargs = create_offboarding._get_kwargs()
+    kwargs = create_offboarding._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -543,7 +604,9 @@ def create_offboarding_sync_detailed(*, client: StolonClient) -> Response[ApiMer
     )
 
 
-def create_offboarding_sync(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+def create_offboarding_sync(
+    *, client: StolonClient, body: CreateOffboardingRequest, x_clover_appenv: Union[Unset, str] = UNSET
+) -> ApiMerchantOffboarding | None:
     """Create offboarding
 
     Args:
@@ -562,13 +625,14 @@ def create_offboarding_sync(*, client: StolonClient) -> ApiMerchantOffboarding |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateOffboardingRequest
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         ApiMerchantOffboarding | None
     """
     # Extract request parameters from generated function
-    kwargs = create_offboarding._get_kwargs()
+    kwargs = create_offboarding._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -592,7 +656,9 @@ def create_offboarding_sync(*, client: StolonClient) -> ApiMerchantOffboarding |
     return None
 
 
-def create_offboarding_asyncio_detailed(*, client: StolonClient) -> Response[ApiMerchantOffboarding]:
+def create_offboarding_asyncio_detailed(
+    *, client: StolonClient, body: CreateOffboardingRequest, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[ApiMerchantOffboarding]:
     """Create offboarding
 
     Args:
@@ -611,13 +677,14 @@ def create_offboarding_asyncio_detailed(*, client: StolonClient) -> Response[Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateOffboardingRequest
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ApiMerchantOffboarding]
     """
     # Extract request parameters from generated function
-    kwargs = create_offboarding._get_kwargs()
+    kwargs = create_offboarding._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -655,7 +722,9 @@ def create_offboarding_asyncio_detailed(*, client: StolonClient) -> Response[Api
     )
 
 
-def create_offboarding_asyncio(*, client: StolonClient) -> ApiMerchantOffboarding | None:
+def create_offboarding_asyncio(
+    *, client: StolonClient, body: CreateOffboardingRequest, x_clover_appenv: Union[Unset, str] = UNSET
+) -> ApiMerchantOffboarding | None:
     """Create offboarding
 
     Args:
@@ -674,13 +743,14 @@ def create_offboarding_asyncio(*, client: StolonClient) -> ApiMerchantOffboardin
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CreateOffboardingRequest
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         ApiMerchantOffboarding | None
     """
     # Extract request parameters from generated function
-    kwargs = create_offboarding._get_kwargs()
+    kwargs = create_offboarding._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

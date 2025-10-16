@@ -141,5 +141,58 @@ def spec(
     sync_spec(env=env, service=service, overwrite=overwrite)
 
 
+@sync_app.command()
+def wrappers(
+    env: Annotated[str, typer.Option(help="Environment: dev, demo, or prod")],
+    service: Annotated[str, typer.Option(help="Service name (e.g., billing-bookkeeper, agreement-k8s, billing-event)")],
+) -> None:
+    """Regenerate proxied wrapper functions from existing OpenAPI clients.
+
+    This command regenerates only the wrapper functions without fetching specs
+    or regenerating the OpenAPI client. Use this when the OpenAPI client already
+    exists but you want to update the wrappers (e.g., after fixing the generator).
+
+    Available environments:
+      - dev:  Development environment (dev1.dev.clover.com)
+      - demo: Demo environment (demo.clover.com)
+      - prod: Production environment (www.clover.com)
+
+    Common services:
+      - billing-bookkeeper
+      - billing-event
+      - agreement-k8s
+
+    Examples:
+      stolon sync wrappers --env dev --service billing-bookkeeper
+      stolon sync wrappers --env dev --service agreement-k8s
+    """
+    from pathlib import Path
+
+    from stolon.sync_spec import generate_proxied_wrappers
+
+    # Service name aliases
+    service_aliases = {
+        "agreement": "agreement-k8s",
+    }
+    actual_service = service_aliases.get(service, service)
+
+    # Check if OpenAPI client exists
+    openapi_path = Path("src/stolon/openapi_generated") / f"{actual_service.replace('-', '_')}_{env}"
+
+    if not openapi_path.exists():
+        typer.echo(f"❌ OpenAPI client not found at {openapi_path}")
+        typer.echo(f"   Run 'stolon sync spec --env {env} --service {service}' first")
+        raise typer.Exit(1)
+
+    typer.echo(f"🔧 Regenerating wrappers for {actual_service} ({env})")
+    typer.echo(f"   OpenAPI client: {openapi_path}")
+
+    # Generate proxied wrappers
+    generate_proxied_wrappers(actual_service, env, openapi_path)
+
+    typer.echo("")
+    typer.echo(f"✅ Done! Wrappers regenerated at src/stolon/generated/{actual_service.replace('-', '_')}_{env}/")
+
+
 def main() -> None:
     app()

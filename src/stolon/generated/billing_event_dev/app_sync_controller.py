@@ -20,7 +20,9 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.a
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def sync_app_subscription_currents_from_cos_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Any]:
+def sync_app_subscription_currents_from_cos_sync_detailed(
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: str
+) -> Response[Any]:
     """Args:
         merchant_uuid (str):
         x_clover_appenv (str):
@@ -38,12 +40,15 @@ def sync_app_subscription_currents_from_cos_sync_detailed(*, client: StolonClien
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -82,7 +87,7 @@ def sync_app_subscription_currents_from_cos_sync_detailed(*, client: StolonClien
 
 
 def sync_app_subscription_currents_from_cos_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: str
 ) -> Response[Any]:
     """Args:
         merchant_uuid (str):
@@ -101,12 +106,15 @@ def sync_app_subscription_currents_from_cos_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = sync_app_subscription_currents_from_cos._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

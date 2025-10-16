@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.app_history import (
@@ -32,10 +34,20 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_app_subscription_events_response200 import (
     GetAppSubscriptionEventsResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_app_subscription_dailies_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionDaily]:
+def get_app_subscription_dailies_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription dailies
 
     Args:
@@ -59,13 +71,27 @@ def get_app_subscription_dailies_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAppSubscriptionDaily]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs()
+    kwargs = get_app_subscription_dailies._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -103,7 +129,17 @@ def get_app_subscription_dailies_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def get_app_subscription_dailies_sync(*, client: StolonClient) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_dailies_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAppSubscriptionDaily | None:
     """Get app subscription dailies
 
     Args:
@@ -127,13 +163,27 @@ def get_app_subscription_dailies_sync(*, client: StolonClient) -> ApiAppSubscrip
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAppSubscriptionDaily | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs()
+    kwargs = get_app_subscription_dailies._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -157,7 +207,17 @@ def get_app_subscription_dailies_sync(*, client: StolonClient) -> ApiAppSubscrip
     return None
 
 
-def get_app_subscription_dailies_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionDaily]:
+def get_app_subscription_dailies_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAppSubscriptionDaily]:
     """Get app subscription dailies
 
     Args:
@@ -181,13 +241,27 @@ def get_app_subscription_dailies_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAppSubscriptionDaily]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs()
+    kwargs = get_app_subscription_dailies._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -225,7 +299,17 @@ def get_app_subscription_dailies_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def get_app_subscription_dailies_asyncio(*, client: StolonClient) -> ApiAppSubscriptionDaily | None:
+def get_app_subscription_dailies_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAppSubscriptionDaily | None:
     """Get app subscription dailies
 
     Args:
@@ -249,13 +333,27 @@ def get_app_subscription_dailies_asyncio(*, client: StolonClient) -> ApiAppSubsc
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAppSubscriptionDaily | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_dailies._get_kwargs()
+    kwargs = get_app_subscription_dailies._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -279,7 +377,14 @@ def get_app_subscription_dailies_asyncio(*, client: StolonClient) -> ApiAppSubsc
     return None
 
 
-def get_app_subscription_currents_sync_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionCurrent]:
+def get_app_subscription_currents_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAppSubscriptionCurrent]:
     """Get app subscription currents
 
     Args:
@@ -300,13 +405,18 @@ def get_app_subscription_currents_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAppSubscriptionCurrent]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs()
+    kwargs = get_app_subscription_currents._get_kwargs(
+        merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -344,7 +454,14 @@ def get_app_subscription_currents_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def get_app_subscription_currents_sync(*, client: StolonClient) -> ApiAppSubscriptionCurrent | None:
+def get_app_subscription_currents_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAppSubscriptionCurrent | None:
     """Get app subscription currents
 
     Args:
@@ -365,13 +482,18 @@ def get_app_subscription_currents_sync(*, client: StolonClient) -> ApiAppSubscri
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAppSubscriptionCurrent | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs()
+    kwargs = get_app_subscription_currents._get_kwargs(
+        merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -395,7 +517,14 @@ def get_app_subscription_currents_sync(*, client: StolonClient) -> ApiAppSubscri
     return None
 
 
-def get_app_subscription_currents_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppSubscriptionCurrent]:
+def get_app_subscription_currents_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAppSubscriptionCurrent]:
     """Get app subscription currents
 
     Args:
@@ -416,13 +545,18 @@ def get_app_subscription_currents_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAppSubscriptionCurrent]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs()
+    kwargs = get_app_subscription_currents._get_kwargs(
+        merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -460,7 +594,14 @@ def get_app_subscription_currents_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def get_app_subscription_currents_asyncio(*, client: StolonClient) -> ApiAppSubscriptionCurrent | None:
+def get_app_subscription_currents_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAppSubscriptionCurrent | None:
     """Get app subscription currents
 
     Args:
@@ -481,13 +622,18 @@ def get_app_subscription_currents_asyncio(*, client: StolonClient) -> ApiAppSubs
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAppSubscriptionCurrent | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_currents._get_kwargs()
+    kwargs = get_app_subscription_currents._get_kwargs(
+        merchant_uuid=merchant_uuid, developer_app_uuid=developer_app_uuid, page_size=page_size, page_number=page_number
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -511,130 +657,16 @@ def get_app_subscription_currents_asyncio(*, client: StolonClient) -> ApiAppSubs
     return None
 
 
-def get_app_subscription_events_sync_detailed(*, client: StolonClient) -> Response[GetAppSubscriptionEventsResponse200]:
-    """Get app subscription events
-
-    Args:
-        merchant_uuid (Union[Unset, str]):
-        developer_app_uuid (Union[Unset, str]):
-        start_date (Union[Unset, datetime.date]):
-        end_date (Union[Unset, datetime.date]):
-        app_subscription_daily_uuid (Union[Unset, str]):
-        page_size (Union[Unset, int]):
-        page_number (Union[Unset, int]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Response[GetAppSubscriptionEventsResponse200]
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        Response[GetAppSubscriptionEventsResponse200]
-    """
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response into Response object (detailed variant)
-    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
-
-    # Parse body if JSON
-    body_json = None
-    if proxy_response.body:
-        try:
-            body_json = json.loads(proxy_response.body)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse response using generated function's parser
-    if body_json and proxy_response.status_code == 200 and GetAppSubscriptionEventsResponse200:
-        parsed = GetAppSubscriptionEventsResponse200.from_dict(body_json)
-    else:
-        parsed = None
-
-    return Response(
-        status_code=HTTPStatus(proxy_response.status_code),
-        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
-        headers=proxy_response.headers,
-        parsed=parsed,
-    )
-
-
-def get_app_subscription_events_sync(*, client: StolonClient) -> GetAppSubscriptionEventsResponse200 | None:
-    """Get app subscription events
-
-    Args:
-        merchant_uuid (Union[Unset, str]):
-        developer_app_uuid (Union[Unset, str]):
-        start_date (Union[Unset, datetime.date]):
-        end_date (Union[Unset, datetime.date]):
-        app_subscription_daily_uuid (Union[Unset, str]):
-        page_size (Union[Unset, int]):
-        page_number (Union[Unset, int]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetAppSubscriptionEventsResponse200
-
-    This function wraps the generated OpenAPI client to proxy requests through
-    the stolon server, enabling automatic token management and logging.
-
-    Args:
-        client: StolonClient instance for proxying requests
-
-
-    Returns:
-        GetAppSubscriptionEventsResponse200 | None
-    """
-    # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs()
-
-    # Proxy request through stolon server
-    proxy_response = client.proxy_request(
-        domain="dev1.dev.clover.com",
-        method=kwargs["method"],
-        path=kwargs["url"],
-        environment_name="dev",
-        json_body=kwargs.get("json"),
-        params=kwargs.get("params"),
-        timeout=30.0,
-    )
-
-    # Parse response body
-
-    if proxy_response.body and proxy_response.status_code == 200:
-        try:
-            body_json = json.loads(proxy_response.body)
-            return GetAppSubscriptionEventsResponse200.from_dict(body_json)
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
-    return None
-
-
-def get_app_subscription_events_asyncio_detailed(
-    *, client: StolonClient
+def get_app_subscription_events_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    app_subscription_daily_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[GetAppSubscriptionEventsResponse200]:
     """Get app subscription events
 
@@ -659,13 +691,27 @@ def get_app_subscription_events_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        app_subscription_daily_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[GetAppSubscriptionEventsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs()
+    kwargs = get_app_subscription_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        app_subscription_daily_uuid=app_subscription_daily_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -703,7 +749,17 @@ def get_app_subscription_events_asyncio_detailed(
     )
 
 
-def get_app_subscription_events_asyncio(*, client: StolonClient) -> GetAppSubscriptionEventsResponse200 | None:
+def get_app_subscription_events_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    app_subscription_daily_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> GetAppSubscriptionEventsResponse200 | None:
     """Get app subscription events
 
     Args:
@@ -727,13 +783,27 @@ def get_app_subscription_events_asyncio(*, client: StolonClient) -> GetAppSubscr
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        app_subscription_daily_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         GetAppSubscriptionEventsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_subscription_events._get_kwargs()
+    kwargs = get_app_subscription_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        app_subscription_daily_uuid=app_subscription_daily_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -757,7 +827,187 @@ def get_app_subscription_events_asyncio(*, client: StolonClient) -> GetAppSubscr
     return None
 
 
-def get_app_metered_events_sync_detailed(*, client: StolonClient) -> Response[ApiAppMeteredEvent]:
+def get_app_subscription_events_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    app_subscription_daily_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[GetAppSubscriptionEventsResponse200]:
+    """Get app subscription events
+
+    Args:
+        merchant_uuid (Union[Unset, str]):
+        developer_app_uuid (Union[Unset, str]):
+        start_date (Union[Unset, datetime.date]):
+        end_date (Union[Unset, datetime.date]):
+        app_subscription_daily_uuid (Union[Unset, str]):
+        page_size (Union[Unset, int]):
+        page_number (Union[Unset, int]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[GetAppSubscriptionEventsResponse200]
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        app_subscription_daily_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+
+    Returns:
+        Response[GetAppSubscriptionEventsResponse200]
+    """
+    # Extract request parameters from generated function
+    kwargs = get_app_subscription_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        app_subscription_daily_uuid=app_subscription_daily_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response into Response object (detailed variant)
+    from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+
+    # Parse body if JSON
+    body_json = None
+    if proxy_response.body:
+        try:
+            body_json = json.loads(proxy_response.body)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse response using generated function's parser
+    if body_json and proxy_response.status_code == 200 and GetAppSubscriptionEventsResponse200:
+        parsed = GetAppSubscriptionEventsResponse200.from_dict(body_json)
+    else:
+        parsed = None
+
+    return Response(
+        status_code=HTTPStatus(proxy_response.status_code),
+        content=proxy_response.body.encode("utf-8") if proxy_response.body else b"",
+        headers=proxy_response.headers,
+        parsed=parsed,
+    )
+
+
+def get_app_subscription_events_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    app_subscription_daily_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> GetAppSubscriptionEventsResponse200 | None:
+    """Get app subscription events
+
+    Args:
+        merchant_uuid (Union[Unset, str]):
+        developer_app_uuid (Union[Unset, str]):
+        start_date (Union[Unset, datetime.date]):
+        end_date (Union[Unset, datetime.date]):
+        app_subscription_daily_uuid (Union[Unset, str]):
+        page_size (Union[Unset, int]):
+        page_number (Union[Unset, int]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        GetAppSubscriptionEventsResponse200
+
+    This function wraps the generated OpenAPI client to proxy requests through
+    the stolon server, enabling automatic token management and logging.
+
+    Args:
+        client: StolonClient instance for proxying requests
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        app_subscription_daily_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+
+    Returns:
+        GetAppSubscriptionEventsResponse200 | None
+    """
+    # Extract request parameters from generated function
+    kwargs = get_app_subscription_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        app_subscription_daily_uuid=app_subscription_daily_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
+
+    # Proxy request through stolon server
+    proxy_response = client.proxy_request(
+        domain="dev1.dev.clover.com",
+        method=kwargs["method"],
+        path=kwargs["url"],
+        environment_name="dev",
+        json_body=kwargs.get("json"),
+        params=kwargs.get("params"),
+        timeout=30.0,
+    )
+
+    # Parse response body
+
+    if proxy_response.body and proxy_response.status_code == 200:
+        try:
+            body_json = json.loads(proxy_response.body)
+            return GetAppSubscriptionEventsResponse200.from_dict(body_json)
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    return None
+
+
+def get_app_metered_events_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAppMeteredEvent]:
     """Get app metered events
 
     Args:
@@ -781,13 +1031,27 @@ def get_app_metered_events_sync_detailed(*, client: StolonClient) -> Response[Ap
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAppMeteredEvent]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs()
+    kwargs = get_app_metered_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -825,7 +1089,17 @@ def get_app_metered_events_sync_detailed(*, client: StolonClient) -> Response[Ap
     )
 
 
-def get_app_metered_events_sync(*, client: StolonClient) -> ApiAppMeteredEvent | None:
+def get_app_metered_events_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAppMeteredEvent | None:
     """Get app metered events
 
     Args:
@@ -849,13 +1123,27 @@ def get_app_metered_events_sync(*, client: StolonClient) -> ApiAppMeteredEvent |
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAppMeteredEvent | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs()
+    kwargs = get_app_metered_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -879,7 +1167,17 @@ def get_app_metered_events_sync(*, client: StolonClient) -> ApiAppMeteredEvent |
     return None
 
 
-def get_app_metered_events_asyncio_detailed(*, client: StolonClient) -> Response[ApiAppMeteredEvent]:
+def get_app_metered_events_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[ApiAppMeteredEvent]:
     """Get app metered events
 
     Args:
@@ -903,13 +1201,27 @@ def get_app_metered_events_asyncio_detailed(*, client: StolonClient) -> Response
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAppMeteredEvent]
     """
     # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs()
+    kwargs = get_app_metered_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -947,7 +1259,17 @@ def get_app_metered_events_asyncio_detailed(*, client: StolonClient) -> Response
     )
 
 
-def get_app_metered_events_asyncio(*, client: StolonClient) -> ApiAppMeteredEvent | None:
+def get_app_metered_events_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    developer_app_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    billing_event_uuid: Union[Unset, str] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiAppMeteredEvent | None:
     """Get app metered events
 
     Args:
@@ -971,13 +1293,27 @@ def get_app_metered_events_asyncio(*, client: StolonClient) -> ApiAppMeteredEven
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        developer_app_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        billing_event_uuid: Union[Unset, str]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAppMeteredEvent | None
     """
     # Extract request parameters from generated function
-    kwargs = get_app_metered_events._get_kwargs()
+    kwargs = get_app_metered_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        developer_app_uuid=developer_app_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        billing_event_uuid=billing_event_uuid,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

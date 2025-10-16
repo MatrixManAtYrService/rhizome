@@ -19,6 +19,9 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.t
     get,
     get_test_merchant_criteria,
 )
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_test_merchant_criteria import (
+    ApiTestMerchantCriteria,
+)
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create_response200 import (
     CreateResponse200,
 )
@@ -252,7 +255,7 @@ def delete_asyncio(*, client: StolonClient, uuid: str) -> DeleteResponse200 | No
     return None
 
 
-def create_sync_detailed(*, client: StolonClient) -> Response[CreateResponse200]:
+def create_sync_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Response[CreateResponse200]:
     """Create test merchant criteria
 
     Args:
@@ -270,13 +273,13 @@ def create_sync_detailed(*, client: StolonClient) -> Response[CreateResponse200]
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTestMerchantCriteria
 
     Returns:
         Response[CreateResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = create._get_kwargs()
+    kwargs = create._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -314,7 +317,7 @@ def create_sync_detailed(*, client: StolonClient) -> Response[CreateResponse200]
     )
 
 
-def create_sync(*, client: StolonClient) -> CreateResponse200 | None:
+def create_sync(*, client: StolonClient, body: ApiTestMerchantCriteria) -> CreateResponse200 | None:
     """Create test merchant criteria
 
     Args:
@@ -332,13 +335,13 @@ def create_sync(*, client: StolonClient) -> CreateResponse200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTestMerchantCriteria
 
     Returns:
         CreateResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = create._get_kwargs()
+    kwargs = create._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -362,7 +365,7 @@ def create_sync(*, client: StolonClient) -> CreateResponse200 | None:
     return None
 
 
-def create_asyncio_detailed(*, client: StolonClient) -> Response[CreateResponse200]:
+def create_asyncio_detailed(*, client: StolonClient, body: ApiTestMerchantCriteria) -> Response[CreateResponse200]:
     """Create test merchant criteria
 
     Args:
@@ -380,13 +383,13 @@ def create_asyncio_detailed(*, client: StolonClient) -> Response[CreateResponse2
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTestMerchantCriteria
 
     Returns:
         Response[CreateResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = create._get_kwargs()
+    kwargs = create._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -424,7 +427,7 @@ def create_asyncio_detailed(*, client: StolonClient) -> Response[CreateResponse2
     )
 
 
-def create_asyncio(*, client: StolonClient) -> CreateResponse200 | None:
+def create_asyncio(*, client: StolonClient, body: ApiTestMerchantCriteria) -> CreateResponse200 | None:
     """Create test merchant criteria
 
     Args:
@@ -442,13 +445,13 @@ def create_asyncio(*, client: StolonClient) -> CreateResponse200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiTestMerchantCriteria
 
     Returns:
         CreateResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = create._get_kwargs()
+    kwargs = create._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

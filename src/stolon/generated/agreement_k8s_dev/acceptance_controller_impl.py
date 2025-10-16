@@ -11,7 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Union
 from uuid import UUID
 
 from stolon.client import StolonClient
@@ -29,13 +29,26 @@ from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.a
     has_previously_accepted_agreements,
 )
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance import Acceptance
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import (
+    AcceptanceQuery,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query_v2 import (
+    AcceptanceQueryV2,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_sort import AcceptanceSort
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.delete_acceptance_with_action_action import (
     DeleteAcceptanceWithActionAction,
 )
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.get_bulk_acceptances_service_scope_body import (
+    GetBulkAcceptancesServiceScopeBody,
+)
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.pagination import Pagination
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def create_bulk_acceptances_sync_detailed(*, client: StolonClient, type_: str) -> Response[list["Acceptance"]]:
+def create_bulk_acceptances_sync_detailed(
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
         x_clover_appenv (Union[Unset, str]):
@@ -54,12 +67,14 @@ def create_bulk_acceptances_sync_detailed(*, client: StolonClient, type_: str) -
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        body: list["Acceptance"]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_)
+    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -97,7 +112,9 @@ def create_bulk_acceptances_sync_detailed(*, client: StolonClient, type_: str) -
     )
 
 
-def create_bulk_acceptances_sync(*, client: StolonClient, type_: str) -> list["Acceptance"] | None:
+def create_bulk_acceptances_sync(
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
         x_clover_appenv (Union[Unset, str]):
@@ -116,12 +133,14 @@ def create_bulk_acceptances_sync(*, client: StolonClient, type_: str) -> list["A
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        body: list["Acceptance"]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_)
+    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -138,7 +157,9 @@ def create_bulk_acceptances_sync(*, client: StolonClient, type_: str) -> list["A
     return None
 
 
-def create_bulk_acceptances_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[list["Acceptance"]]:
+def create_bulk_acceptances_asyncio_detailed(
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
         x_clover_appenv (Union[Unset, str]):
@@ -157,12 +178,14 @@ def create_bulk_acceptances_asyncio_detailed(*, client: StolonClient, type_: str
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        body: list["Acceptance"]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_)
+    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -200,7 +223,9 @@ def create_bulk_acceptances_asyncio_detailed(*, client: StolonClient, type_: str
     )
 
 
-def create_bulk_acceptances_asyncio(*, client: StolonClient, type_: str) -> list["Acceptance"] | None:
+def create_bulk_acceptances_asyncio(
+    *, client: StolonClient, type_: str, body: list["Acceptance"], x_clover_appenv: Union[Unset, str] = UNSET
+) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
         x_clover_appenv (Union[Unset, str]):
@@ -219,12 +244,14 @@ def create_bulk_acceptances_asyncio(*, client: StolonClient, type_: str) -> list
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        body: list["Acceptance"]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = create_bulk_acceptances._get_kwargs(type_=type_)
+    kwargs = create_bulk_acceptances._get_kwargs(type_=type_, body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -241,7 +268,9 @@ def create_bulk_acceptances_asyncio(*, client: StolonClient, type_: str) -> list
     return None
 
 
-def get_acceptance_sync_detailed(*, client: StolonClient, acceptance_id: UUID) -> Response[Acceptance]:
+def get_acceptance_sync_detailed(
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+) -> Response[Acceptance]:
     """Args:
         acceptance_id (UUID):
         include_template_parameters (Union[Unset, bool]):
@@ -259,12 +288,15 @@ def get_acceptance_sync_detailed(*, client: StolonClient, acceptance_id: UUID) -
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
+        include_template_parameters: Union[Unset, bool]
 
     Returns:
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = get_acceptance._get_kwargs(
+        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -302,7 +334,9 @@ def get_acceptance_sync_detailed(*, client: StolonClient, acceptance_id: UUID) -
     )
 
 
-def get_acceptance_sync(*, client: StolonClient, acceptance_id: UUID) -> Acceptance | None:
+def get_acceptance_sync(
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+) -> Acceptance | None:
     """Args:
         acceptance_id (UUID):
         include_template_parameters (Union[Unset, bool]):
@@ -320,12 +354,15 @@ def get_acceptance_sync(*, client: StolonClient, acceptance_id: UUID) -> Accepta
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
+        include_template_parameters: Union[Unset, bool]
 
     Returns:
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = get_acceptance._get_kwargs(
+        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -349,7 +386,9 @@ def get_acceptance_sync(*, client: StolonClient, acceptance_id: UUID) -> Accepta
     return None
 
 
-def get_acceptance_asyncio_detailed(*, client: StolonClient, acceptance_id: UUID) -> Response[Acceptance]:
+def get_acceptance_asyncio_detailed(
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+) -> Response[Acceptance]:
     """Args:
         acceptance_id (UUID):
         include_template_parameters (Union[Unset, bool]):
@@ -367,12 +406,15 @@ def get_acceptance_asyncio_detailed(*, client: StolonClient, acceptance_id: UUID
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
+        include_template_parameters: Union[Unset, bool]
 
     Returns:
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = get_acceptance._get_kwargs(
+        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -410,7 +452,9 @@ def get_acceptance_asyncio_detailed(*, client: StolonClient, acceptance_id: UUID
     )
 
 
-def get_acceptance_asyncio(*, client: StolonClient, acceptance_id: UUID) -> Acceptance | None:
+def get_acceptance_asyncio(
+    *, client: StolonClient, acceptance_id: UUID, include_template_parameters: Union[Unset, bool] = UNSET
+) -> Acceptance | None:
     """Args:
         acceptance_id (UUID):
         include_template_parameters (Union[Unset, bool]):
@@ -428,12 +472,15 @@ def get_acceptance_asyncio(*, client: StolonClient, acceptance_id: UUID) -> Acce
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
+        include_template_parameters: Union[Unset, bool]
 
     Returns:
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptance._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = get_acceptance._get_kwargs(
+        acceptance_id=acceptance_id, include_template_parameters=include_template_parameters
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -457,7 +504,9 @@ def get_acceptance_asyncio(*, client: StolonClient, acceptance_id: UUID) -> Acce
     return None
 
 
-def has_previously_accepted_agreements_sync_detailed(*, client: StolonClient, type_: str) -> Response[bool]:
+def has_previously_accepted_agreements_sync_detailed(
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+) -> Response[bool]:
     """Args:
         type_ (str):
         x_clover_merchant_id (str):
@@ -476,12 +525,16 @@ def has_previously_accepted_agreements_sync_detailed(*, client: StolonClient, ty
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: str
+        x_clover_account_id: str
 
     Returns:
         Response[bool]
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_)
+    kwargs = has_previously_accepted_agreements._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -519,7 +572,9 @@ def has_previously_accepted_agreements_sync_detailed(*, client: StolonClient, ty
     )
 
 
-def has_previously_accepted_agreements_sync(*, client: StolonClient, type_: str) -> bool | None:
+def has_previously_accepted_agreements_sync(
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+) -> bool | None:
     """Args:
         type_ (str):
         x_clover_merchant_id (str):
@@ -538,12 +593,16 @@ def has_previously_accepted_agreements_sync(*, client: StolonClient, type_: str)
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: str
+        x_clover_account_id: str
 
     Returns:
         bool | None
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_)
+    kwargs = has_previously_accepted_agreements._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -560,7 +619,9 @@ def has_previously_accepted_agreements_sync(*, client: StolonClient, type_: str)
     return None
 
 
-def has_previously_accepted_agreements_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[bool]:
+def has_previously_accepted_agreements_asyncio_detailed(
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+) -> Response[bool]:
     """Args:
         type_ (str):
         x_clover_merchant_id (str):
@@ -579,12 +640,16 @@ def has_previously_accepted_agreements_asyncio_detailed(*, client: StolonClient,
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: str
+        x_clover_account_id: str
 
     Returns:
         Response[bool]
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_)
+    kwargs = has_previously_accepted_agreements._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -622,7 +687,9 @@ def has_previously_accepted_agreements_asyncio_detailed(*, client: StolonClient,
     )
 
 
-def has_previously_accepted_agreements_asyncio(*, client: StolonClient, type_: str) -> bool | None:
+def has_previously_accepted_agreements_asyncio(
+    *, client: StolonClient, type_: str, x_clover_merchant_id: str, x_clover_account_id: str
+) -> bool | None:
     """Args:
         type_ (str):
         x_clover_merchant_id (str):
@@ -641,12 +708,16 @@ def has_previously_accepted_agreements_asyncio(*, client: StolonClient, type_: s
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: str
+        x_clover_account_id: str
 
     Returns:
         bool | None
     """
     # Extract request parameters from generated function
-    kwargs = has_previously_accepted_agreements._get_kwargs(type_=type_)
+    kwargs = has_previously_accepted_agreements._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -664,7 +735,11 @@ def has_previously_accepted_agreements_asyncio(*, client: StolonClient, type_: s
 
 
 def delete_acceptance_with_action_sync_detailed(
-    *, client: StolonClient, acceptance_id: UUID, action: DeleteAcceptanceWithActionAction
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    action: DeleteAcceptanceWithActionAction,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -685,12 +760,15 @@ def delete_acceptance_with_action_sync_detailed(
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
         action: DeleteAcceptanceWithActionAction
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action)
+    kwargs = delete_acceptance_with_action._get_kwargs(
+        acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -729,7 +807,11 @@ def delete_acceptance_with_action_sync_detailed(
 
 
 def delete_acceptance_with_action_asyncio_detailed(
-    *, client: StolonClient, acceptance_id: UUID, action: DeleteAcceptanceWithActionAction
+    *,
+    client: StolonClient,
+    acceptance_id: UUID,
+    action: DeleteAcceptanceWithActionAction,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
@@ -750,12 +832,15 @@ def delete_acceptance_with_action_asyncio_detailed(
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
         action: DeleteAcceptanceWithActionAction
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = delete_acceptance_with_action._get_kwargs(acceptance_id=acceptance_id, action=action)
+    kwargs = delete_acceptance_with_action._get_kwargs(
+        acceptance_id=acceptance_id, action=action, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -793,7 +878,13 @@ def delete_acceptance_with_action_asyncio_detailed(
     )
 
 
-def get_latest_acceptance_sync_detailed(*, client: StolonClient, type_: str) -> Response[Acceptance]:
+def get_latest_acceptance_sync_detailed(
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> Response[Acceptance]:
     """Args:
         type_ (str):
         x_clover_merchant_id (Union[Unset, str]):
@@ -812,12 +903,16 @@ def get_latest_acceptance_sync_detailed(*, client: StolonClient, type_: str) -> 
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_)
+    kwargs = get_latest_acceptance._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -855,7 +950,13 @@ def get_latest_acceptance_sync_detailed(*, client: StolonClient, type_: str) -> 
     )
 
 
-def get_latest_acceptance_sync(*, client: StolonClient, type_: str) -> Acceptance | None:
+def get_latest_acceptance_sync(
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> Acceptance | None:
     """Args:
         type_ (str):
         x_clover_merchant_id (Union[Unset, str]):
@@ -874,12 +975,16 @@ def get_latest_acceptance_sync(*, client: StolonClient, type_: str) -> Acceptanc
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_)
+    kwargs = get_latest_acceptance._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -903,7 +1008,13 @@ def get_latest_acceptance_sync(*, client: StolonClient, type_: str) -> Acceptanc
     return None
 
 
-def get_latest_acceptance_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[Acceptance]:
+def get_latest_acceptance_asyncio_detailed(
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> Response[Acceptance]:
     """Args:
         type_ (str):
         x_clover_merchant_id (Union[Unset, str]):
@@ -922,12 +1033,16 @@ def get_latest_acceptance_asyncio_detailed(*, client: StolonClient, type_: str) 
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_)
+    kwargs = get_latest_acceptance._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -965,7 +1080,13 @@ def get_latest_acceptance_asyncio_detailed(*, client: StolonClient, type_: str) 
     )
 
 
-def get_latest_acceptance_asyncio(*, client: StolonClient, type_: str) -> Acceptance | None:
+def get_latest_acceptance_asyncio(
+    *,
+    client: StolonClient,
+    type_: str,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> Acceptance | None:
     """Args:
         type_ (str):
         x_clover_merchant_id (Union[Unset, str]):
@@ -984,12 +1105,16 @@ def get_latest_acceptance_asyncio(*, client: StolonClient, type_: str) -> Accept
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_acceptance._get_kwargs(type_=type_)
+    kwargs = get_latest_acceptance._get_kwargs(
+        type_=type_, x_clover_merchant_id=x_clover_merchant_id, x_clover_account_id=x_clover_account_id
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1013,7 +1138,15 @@ def get_latest_acceptance_asyncio(*, client: StolonClient, type_: str) -> Accept
     return None
 
 
-def get_acceptances_multiple_types_sync_detailed(*, client: StolonClient) -> Response[list["Acceptance"]]:
+def get_acceptances_multiple_types_sync_detailed(
+    *,
+    client: StolonClient,
+    query: "AcceptanceQueryV2",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> Response[list["Acceptance"]]:
     """Args:
         query (AcceptanceQueryV2):
         sort (AcceptanceSort):
@@ -1033,13 +1166,23 @@ def get_acceptances_multiple_types_sync_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                query: "AcceptanceQueryV2"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs()
+    kwargs = get_acceptances_multiple_types._get_kwargs(
+        query=query,
+        sort=sort,
+        pagination=pagination,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1077,7 +1220,15 @@ def get_acceptances_multiple_types_sync_detailed(*, client: StolonClient) -> Res
     )
 
 
-def get_acceptances_multiple_types_sync(*, client: StolonClient) -> list["Acceptance"] | None:
+def get_acceptances_multiple_types_sync(
+    *,
+    client: StolonClient,
+    query: "AcceptanceQueryV2",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> list["Acceptance"] | None:
     """Args:
         query (AcceptanceQueryV2):
         sort (AcceptanceSort):
@@ -1097,13 +1248,23 @@ def get_acceptances_multiple_types_sync(*, client: StolonClient) -> list["Accept
 
     Args:
         client: StolonClient instance for proxying requests
-
+                query: "AcceptanceQueryV2"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs()
+    kwargs = get_acceptances_multiple_types._get_kwargs(
+        query=query,
+        sort=sort,
+        pagination=pagination,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1120,7 +1281,15 @@ def get_acceptances_multiple_types_sync(*, client: StolonClient) -> list["Accept
     return None
 
 
-def get_acceptances_multiple_types_asyncio_detailed(*, client: StolonClient) -> Response[list["Acceptance"]]:
+def get_acceptances_multiple_types_asyncio_detailed(
+    *,
+    client: StolonClient,
+    query: "AcceptanceQueryV2",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> Response[list["Acceptance"]]:
     """Args:
         query (AcceptanceQueryV2):
         sort (AcceptanceSort):
@@ -1140,13 +1309,23 @@ def get_acceptances_multiple_types_asyncio_detailed(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                query: "AcceptanceQueryV2"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs()
+    kwargs = get_acceptances_multiple_types._get_kwargs(
+        query=query,
+        sort=sort,
+        pagination=pagination,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1184,7 +1363,15 @@ def get_acceptances_multiple_types_asyncio_detailed(*, client: StolonClient) -> 
     )
 
 
-def get_acceptances_multiple_types_asyncio(*, client: StolonClient) -> list["Acceptance"] | None:
+def get_acceptances_multiple_types_asyncio(
+    *,
+    client: StolonClient,
+    query: "AcceptanceQueryV2",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+) -> list["Acceptance"] | None:
     """Args:
         query (AcceptanceQueryV2):
         sort (AcceptanceSort):
@@ -1204,13 +1391,23 @@ def get_acceptances_multiple_types_asyncio(*, client: StolonClient) -> list["Acc
 
     Args:
         client: StolonClient instance for proxying requests
-
+                query: "AcceptanceQueryV2"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances_multiple_types._get_kwargs()
+    kwargs = get_acceptances_multiple_types._get_kwargs(
+        query=query,
+        sort=sort,
+        pagination=pagination,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1227,7 +1424,9 @@ def get_acceptances_multiple_types_asyncio(*, client: StolonClient) -> list["Acc
     return None
 
 
-def get_bulk_acceptances_service_scope_sync_detailed(*, client: StolonClient) -> Response[list["Acceptance"]]:
+def get_bulk_acceptances_service_scope_sync_detailed(
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+) -> Response[list["Acceptance"]]:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
 
@@ -1243,13 +1442,13 @@ def get_bulk_acceptances_service_scope_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs()
+    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1287,7 +1486,9 @@ def get_bulk_acceptances_service_scope_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def get_bulk_acceptances_service_scope_sync(*, client: StolonClient) -> list["Acceptance"] | None:
+def get_bulk_acceptances_service_scope_sync(
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+) -> list["Acceptance"] | None:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
 
@@ -1303,13 +1504,13 @@ def get_bulk_acceptances_service_scope_sync(*, client: StolonClient) -> list["Ac
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs()
+    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1326,7 +1527,9 @@ def get_bulk_acceptances_service_scope_sync(*, client: StolonClient) -> list["Ac
     return None
 
 
-def get_bulk_acceptances_service_scope_asyncio_detailed(*, client: StolonClient) -> Response[list["Acceptance"]]:
+def get_bulk_acceptances_service_scope_asyncio_detailed(
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+) -> Response[list["Acceptance"]]:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
 
@@ -1342,13 +1545,13 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs()
+    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1386,7 +1589,9 @@ def get_bulk_acceptances_service_scope_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def get_bulk_acceptances_service_scope_asyncio(*, client: StolonClient) -> list["Acceptance"] | None:
+def get_bulk_acceptances_service_scope_asyncio(
+    *, client: StolonClient, body: GetBulkAcceptancesServiceScopeBody
+) -> list["Acceptance"] | None:
     """Args:
         body (GetBulkAcceptancesServiceScopeBody):
 
@@ -1402,13 +1607,13 @@ def get_bulk_acceptances_service_scope_asyncio(*, client: StolonClient) -> list[
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: GetBulkAcceptancesServiceScopeBody
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_service_scope._get_kwargs()
+    kwargs = get_bulk_acceptances_service_scope._get_kwargs(body=body)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1425,7 +1630,9 @@ def get_bulk_acceptances_service_scope_asyncio(*, client: StolonClient) -> list[
     return None
 
 
-def delete_acceptance_sync_detailed(*, client: StolonClient, acceptance_id: UUID) -> Response[Any]:
+def delete_acceptance_sync_detailed(
+    *, client: StolonClient, acceptance_id: UUID, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
         x_clover_appenv (Union[Unset, str]):
@@ -1443,12 +1650,13 @@ def delete_acceptance_sync_detailed(*, client: StolonClient, acceptance_id: UUID
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1486,7 +1694,9 @@ def delete_acceptance_sync_detailed(*, client: StolonClient, acceptance_id: UUID
     )
 
 
-def delete_acceptance_asyncio_detailed(*, client: StolonClient, acceptance_id: UUID) -> Response[Any]:
+def delete_acceptance_asyncio_detailed(
+    *, client: StolonClient, acceptance_id: UUID, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         acceptance_id (UUID):
         x_clover_appenv (Union[Unset, str]):
@@ -1504,12 +1714,13 @@ def delete_acceptance_asyncio_detailed(*, client: StolonClient, acceptance_id: U
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: UUID
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = delete_acceptance._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1548,7 +1759,13 @@ def delete_acceptance_asyncio_detailed(*, client: StolonClient, acceptance_id: U
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
-    *, client: StolonClient, type_: str
+    *,
+    client: StolonClient,
+    type_: str,
+    account_id: str,
+    acceptance_query: "AcceptanceQuery",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -1570,12 +1787,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        account_id: str
+        acceptance_query: "AcceptanceQuery"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_)
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
+        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1614,7 +1837,13 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync_detailed(
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
-    *, client: StolonClient, type_: str
+    *,
+    client: StolonClient,
+    type_: str,
+    account_id: str,
+    acceptance_query: "AcceptanceQuery",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -1636,12 +1865,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        account_id: str
+        acceptance_query: "AcceptanceQuery"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_)
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
+        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1659,7 +1894,13 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_sync(
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
-    *, client: StolonClient, type_: str
+    *,
+    client: StolonClient,
+    type_: str,
+    account_id: str,
+    acceptance_query: "AcceptanceQuery",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
 ) -> Response[list["Acceptance"]]:
     """Args:
         type_ (str):
@@ -1681,12 +1922,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        account_id: str
+        acceptance_query: "AcceptanceQuery"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_)
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
+        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1725,7 +1972,13 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio_detailed(
 
 
 def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
-    *, client: StolonClient, type_: str
+    *,
+    client: StolonClient,
+    type_: str,
+    account_id: str,
+    acceptance_query: "AcceptanceQuery",
+    sort: "AcceptanceSort",
+    pagination: "Pagination",
 ) -> list["Acceptance"] | None:
     """Args:
         type_ (str):
@@ -1747,12 +2000,18 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        account_id: str
+        acceptance_query: "AcceptanceQuery"
+        sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(type_=type_)
+    kwargs = get_bulk_acceptances_by_type_for_account_id_client_scope._get_kwargs(
+        type_=type_, account_id=account_id, acceptance_query=acceptance_query, sort=sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1769,7 +2028,14 @@ def get_bulk_acceptances_by_type_for_account_id_client_scope_asyncio(
     return None
 
 
-def create_acceptance_sync_detailed(*, client: StolonClient) -> Response[Acceptance]:
+def create_acceptance_sync_detailed(
+    *,
+    client: StolonClient,
+    body: Acceptance,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Acceptance]:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
         x_clover_account_id (Union[Unset, str]):
@@ -1788,13 +2054,21 @@ def create_acceptance_sync_detailed(*, client: StolonClient) -> Response[Accepta
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Acceptance
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs()
+    kwargs = create_acceptance._get_kwargs(
+        body=body,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1832,7 +2106,14 @@ def create_acceptance_sync_detailed(*, client: StolonClient) -> Response[Accepta
     )
 
 
-def create_acceptance_sync(*, client: StolonClient) -> Acceptance | None:
+def create_acceptance_sync(
+    *,
+    client: StolonClient,
+    body: Acceptance,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Acceptance | None:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
         x_clover_account_id (Union[Unset, str]):
@@ -1851,13 +2132,21 @@ def create_acceptance_sync(*, client: StolonClient) -> Acceptance | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Acceptance
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs()
+    kwargs = create_acceptance._get_kwargs(
+        body=body,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1881,7 +2170,14 @@ def create_acceptance_sync(*, client: StolonClient) -> Acceptance | None:
     return None
 
 
-def create_acceptance_asyncio_detailed(*, client: StolonClient) -> Response[Acceptance]:
+def create_acceptance_asyncio_detailed(
+    *,
+    client: StolonClient,
+    body: Acceptance,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Acceptance]:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
         x_clover_account_id (Union[Unset, str]):
@@ -1900,13 +2196,21 @@ def create_acceptance_asyncio_detailed(*, client: StolonClient) -> Response[Acce
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Acceptance
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Acceptance]
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs()
+    kwargs = create_acceptance._get_kwargs(
+        body=body,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1944,7 +2248,14 @@ def create_acceptance_asyncio_detailed(*, client: StolonClient) -> Response[Acce
     )
 
 
-def create_acceptance_asyncio(*, client: StolonClient) -> Acceptance | None:
+def create_acceptance_asyncio(
+    *,
+    client: StolonClient,
+    body: Acceptance,
+    x_clover_merchant_id: Union[Unset, str] = UNSET,
+    x_clover_account_id: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Acceptance | None:
     """Args:
         x_clover_merchant_id (Union[Unset, str]):
         x_clover_account_id (Union[Unset, str]):
@@ -1963,13 +2274,21 @@ def create_acceptance_asyncio(*, client: StolonClient) -> Acceptance | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Acceptance
+        x_clover_merchant_id: Union[Unset, str]
+        x_clover_account_id: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Acceptance | None
     """
     # Extract request parameters from generated function
-    kwargs = create_acceptance._get_kwargs()
+    kwargs = create_acceptance._get_kwargs(
+        body=body,
+        x_clover_merchant_id=x_clover_merchant_id,
+        x_clover_account_id=x_clover_account_id,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1993,7 +2312,13 @@ def create_acceptance_asyncio(*, client: StolonClient) -> Acceptance | None:
     return None
 
 
-def get_acceptances_sync_detailed(*, client: StolonClient) -> Response[list["Acceptance"]]:
+def get_acceptances_sync_detailed(
+    *,
+    client: StolonClient,
+    acceptance_query: "AcceptanceQuery",
+    acceptance_sort: "AcceptanceSort",
+    pagination: "Pagination",
+) -> Response[list["Acceptance"]]:
     """Args:
         acceptance_query (AcceptanceQuery):
         acceptance_sort (AcceptanceSort):
@@ -2011,13 +2336,17 @@ def get_acceptances_sync_detailed(*, client: StolonClient) -> Response[list["Acc
 
     Args:
         client: StolonClient instance for proxying requests
-
+                acceptance_query: "AcceptanceQuery"
+        acceptance_sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs()
+    kwargs = get_acceptances._get_kwargs(
+        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2055,7 +2384,13 @@ def get_acceptances_sync_detailed(*, client: StolonClient) -> Response[list["Acc
     )
 
 
-def get_acceptances_sync(*, client: StolonClient) -> list["Acceptance"] | None:
+def get_acceptances_sync(
+    *,
+    client: StolonClient,
+    acceptance_query: "AcceptanceQuery",
+    acceptance_sort: "AcceptanceSort",
+    pagination: "Pagination",
+) -> list["Acceptance"] | None:
     """Args:
         acceptance_query (AcceptanceQuery):
         acceptance_sort (AcceptanceSort):
@@ -2073,13 +2408,17 @@ def get_acceptances_sync(*, client: StolonClient) -> list["Acceptance"] | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                acceptance_query: "AcceptanceQuery"
+        acceptance_sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs()
+    kwargs = get_acceptances._get_kwargs(
+        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -2096,7 +2435,13 @@ def get_acceptances_sync(*, client: StolonClient) -> list["Acceptance"] | None:
     return None
 
 
-def get_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[list["Acceptance"]]:
+def get_acceptances_asyncio_detailed(
+    *,
+    client: StolonClient,
+    acceptance_query: "AcceptanceQuery",
+    acceptance_sort: "AcceptanceSort",
+    pagination: "Pagination",
+) -> Response[list["Acceptance"]]:
     """Args:
         acceptance_query (AcceptanceQuery):
         acceptance_sort (AcceptanceSort):
@@ -2114,13 +2459,17 @@ def get_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[list["
 
     Args:
         client: StolonClient instance for proxying requests
-
+                acceptance_query: "AcceptanceQuery"
+        acceptance_sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         Response[list["Acceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs()
+    kwargs = get_acceptances._get_kwargs(
+        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2158,7 +2507,13 @@ def get_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[list["
     )
 
 
-def get_acceptances_asyncio(*, client: StolonClient) -> list["Acceptance"] | None:
+def get_acceptances_asyncio(
+    *,
+    client: StolonClient,
+    acceptance_query: "AcceptanceQuery",
+    acceptance_sort: "AcceptanceSort",
+    pagination: "Pagination",
+) -> list["Acceptance"] | None:
     """Args:
         acceptance_query (AcceptanceQuery):
         acceptance_sort (AcceptanceSort):
@@ -2176,13 +2531,17 @@ def get_acceptances_asyncio(*, client: StolonClient) -> list["Acceptance"] | Non
 
     Args:
         client: StolonClient instance for proxying requests
-
+                acceptance_query: "AcceptanceQuery"
+        acceptance_sort: "AcceptanceSort"
+        pagination: "Pagination"
 
     Returns:
         list["Acceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_acceptances._get_kwargs()
+    kwargs = get_acceptances._get_kwargs(
+        acceptance_query=acceptance_query, acceptance_sort=acceptance_sort, pagination=pagination
+    )
 
     # Proxy request through stolon server
     client.proxy_request(

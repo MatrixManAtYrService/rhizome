@@ -11,7 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.external_controller import (
@@ -21,10 +21,15 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.e
     get_merchant_plan_history,
     get_plan_meta_1,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_bulk_acceptances_sort import (
+    GetBulkAcceptancesSort,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_merchant_plan_history_sync_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
+def get_merchant_plan_history_sync_detailed(
+    *, client: StolonClient, m_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -42,12 +47,13 @@ def get_merchant_plan_history_sync_detailed(*, client: StolonClient, m_id: str) 
     Args:
         client: StolonClient instance for proxying requests
                 m_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_plan_history._get_kwargs(m_id=m_id)
+    kwargs = get_merchant_plan_history._get_kwargs(m_id=m_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -85,7 +91,9 @@ def get_merchant_plan_history_sync_detailed(*, client: StolonClient, m_id: str) 
     )
 
 
-def get_merchant_plan_history_asyncio_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
+def get_merchant_plan_history_asyncio_detailed(
+    *, client: StolonClient, m_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -103,12 +111,13 @@ def get_merchant_plan_history_asyncio_detailed(*, client: StolonClient, m_id: st
     Args:
         client: StolonClient instance for proxying requests
                 m_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_plan_history._get_kwargs(m_id=m_id)
+    kwargs = get_merchant_plan_history._get_kwargs(m_id=m_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -146,7 +155,18 @@ def get_merchant_plan_history_asyncio_detailed(*, client: StolonClient, m_id: st
     )
 
 
-def get_bulk_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_bulk_acceptances_sync_detailed(
+    *,
+    client: StolonClient,
+    agreement_type: Union[Unset, str] = "BILLING",
+    include_deleted: Union[Unset, bool] = False,
+    include_template: Union[Unset, bool] = False,
+    sort: Union[Unset, GetBulkAcceptancesSort] = GetBulkAcceptancesSort.CREATEDTIME,
+    page_size: Union[Unset, int] = 100,
+    page_number: Union[Unset, int] = 0,
+    merchant_uuids: list[str],
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Any]:
     """Args:
         agreement_type (Union[Unset, str]):  Default: 'BILLING'.
         include_deleted (Union[Unset, bool]):  Default: False.
@@ -169,13 +189,29 @@ def get_bulk_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]
 
     Args:
         client: StolonClient instance for proxying requests
-
+                agreement_type: Union[Unset, str]
+        include_deleted: Union[Unset, bool]
+        include_template: Union[Unset, bool]
+        sort: Union[Unset, GetBulkAcceptancesSort]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        merchant_uuids: list[str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances._get_kwargs()
+    kwargs = get_bulk_acceptances._get_kwargs(
+        agreement_type=agreement_type,
+        include_deleted=include_deleted,
+        include_template=include_template,
+        sort=sort,
+        page_size=page_size,
+        page_number=page_number,
+        merchant_uuids=merchant_uuids,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -213,7 +249,18 @@ def get_bulk_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]
     )
 
 
-def get_bulk_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_bulk_acceptances_asyncio_detailed(
+    *,
+    client: StolonClient,
+    agreement_type: Union[Unset, str] = "BILLING",
+    include_deleted: Union[Unset, bool] = False,
+    include_template: Union[Unset, bool] = False,
+    sort: Union[Unset, GetBulkAcceptancesSort] = GetBulkAcceptancesSort.CREATEDTIME,
+    page_size: Union[Unset, int] = 100,
+    page_number: Union[Unset, int] = 0,
+    merchant_uuids: list[str],
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Any]:
     """Args:
         agreement_type (Union[Unset, str]):  Default: 'BILLING'.
         include_deleted (Union[Unset, bool]):  Default: False.
@@ -236,13 +283,29 @@ def get_bulk_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[A
 
     Args:
         client: StolonClient instance for proxying requests
-
+                agreement_type: Union[Unset, str]
+        include_deleted: Union[Unset, bool]
+        include_template: Union[Unset, bool]
+        sort: Union[Unset, GetBulkAcceptancesSort]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        merchant_uuids: list[str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_bulk_acceptances._get_kwargs()
+    kwargs = get_bulk_acceptances._get_kwargs(
+        agreement_type=agreement_type,
+        include_deleted=include_deleted,
+        include_template=include_template,
+        sort=sort,
+        page_size=page_size,
+        page_number=page_number,
+        merchant_uuids=merchant_uuids,
+        x_clover_appenv=x_clover_appenv,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -280,7 +343,9 @@ def get_bulk_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[A
     )
 
 
-def get_merchant_sync_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
+def get_merchant_sync_detailed(
+    *, client: StolonClient, m_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -298,12 +363,13 @@ def get_merchant_sync_detailed(*, client: StolonClient, m_id: str) -> Response[A
     Args:
         client: StolonClient instance for proxying requests
                 m_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant._get_kwargs(m_id=m_id)
+    kwargs = get_merchant._get_kwargs(m_id=m_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -341,7 +407,9 @@ def get_merchant_sync_detailed(*, client: StolonClient, m_id: str) -> Response[A
     )
 
 
-def get_merchant_asyncio_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
+def get_merchant_asyncio_detailed(
+    *, client: StolonClient, m_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -359,12 +427,13 @@ def get_merchant_asyncio_detailed(*, client: StolonClient, m_id: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 m_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant._get_kwargs(m_id=m_id)
+    kwargs = get_merchant._get_kwargs(m_id=m_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -402,7 +471,15 @@ def get_merchant_asyncio_detailed(*, client: StolonClient, m_id: str) -> Respons
     )
 
 
-def get_merchant_payments_sync_detailed(*, client: StolonClient, m_uuid: str) -> Response[Any]:
+def get_merchant_payments_sync_detailed(
+    *,
+    client: StolonClient,
+    m_uuid: str,
+    start_date: Union[Unset, str] = UNSET,
+    end_date: Union[Unset, str] = UNSET,
+    expand: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Any]:
     """Args:
         m_uuid (str):
         start_date (Union[Unset, str]):
@@ -423,12 +500,18 @@ def get_merchant_payments_sync_detailed(*, client: StolonClient, m_uuid: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 m_uuid: str
+        start_date: Union[Unset, str]
+        end_date: Union[Unset, str]
+        expand: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_payments._get_kwargs(m_uuid=m_uuid)
+    kwargs = get_merchant_payments._get_kwargs(
+        m_uuid=m_uuid, start_date=start_date, end_date=end_date, expand=expand, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -466,7 +549,15 @@ def get_merchant_payments_sync_detailed(*, client: StolonClient, m_uuid: str) ->
     )
 
 
-def get_merchant_payments_asyncio_detailed(*, client: StolonClient, m_uuid: str) -> Response[Any]:
+def get_merchant_payments_asyncio_detailed(
+    *,
+    client: StolonClient,
+    m_uuid: str,
+    start_date: Union[Unset, str] = UNSET,
+    end_date: Union[Unset, str] = UNSET,
+    expand: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[Any]:
     """Args:
         m_uuid (str):
         start_date (Union[Unset, str]):
@@ -487,12 +578,18 @@ def get_merchant_payments_asyncio_detailed(*, client: StolonClient, m_uuid: str)
     Args:
         client: StolonClient instance for proxying requests
                 m_uuid: str
+        start_date: Union[Unset, str]
+        end_date: Union[Unset, str]
+        expand: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_payments._get_kwargs(m_uuid=m_uuid)
+    kwargs = get_merchant_payments._get_kwargs(
+        m_uuid=m_uuid, start_date=start_date, end_date=end_date, expand=expand, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -530,7 +627,9 @@ def get_merchant_payments_asyncio_detailed(*, client: StolonClient, m_uuid: str)
     )
 
 
-def get_plan_meta_1_sync_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
+def get_plan_meta_1_sync_detailed(
+    *, client: StolonClient, m_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -548,12 +647,13 @@ def get_plan_meta_1_sync_detailed(*, client: StolonClient, m_id: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 m_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_meta_1._get_kwargs(m_id=m_id)
+    kwargs = get_plan_meta_1._get_kwargs(m_id=m_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -591,7 +691,9 @@ def get_plan_meta_1_sync_detailed(*, client: StolonClient, m_id: str) -> Respons
     )
 
 
-def get_plan_meta_1_asyncio_detailed(*, client: StolonClient, m_id: str) -> Response[Any]:
+def get_plan_meta_1_asyncio_detailed(
+    *, client: StolonClient, m_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         m_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -609,12 +711,13 @@ def get_plan_meta_1_asyncio_detailed(*, client: StolonClient, m_id: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 m_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_meta_1._get_kwargs(m_id=m_id)
+    kwargs = get_plan_meta_1._get_kwargs(m_id=m_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

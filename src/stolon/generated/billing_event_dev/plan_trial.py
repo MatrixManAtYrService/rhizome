@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.plan_trial import (
@@ -31,10 +32,17 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_plan_trials_response200 import (
     GetPlanTrialsResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_plan_trials_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[GetPlanTrialsResponse200]:
+def get_plan_trials_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[GetPlanTrialsResponse200]:
     """Get plan trials
 
     Args:
@@ -56,12 +64,17 @@ def get_plan_trials_sync_detailed(*, client: StolonClient, merchant_uuid: str) -
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetPlanTrialsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_plan_trials._get_kwargs(
+        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -99,7 +112,14 @@ def get_plan_trials_sync_detailed(*, client: StolonClient, merchant_uuid: str) -
     )
 
 
-def get_plan_trials_sync(*, client: StolonClient, merchant_uuid: str) -> GetPlanTrialsResponse200 | None:
+def get_plan_trials_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> GetPlanTrialsResponse200 | None:
     """Get plan trials
 
     Args:
@@ -121,12 +141,17 @@ def get_plan_trials_sync(*, client: StolonClient, merchant_uuid: str) -> GetPlan
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetPlanTrialsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_plan_trials._get_kwargs(
+        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -150,7 +175,14 @@ def get_plan_trials_sync(*, client: StolonClient, merchant_uuid: str) -> GetPlan
     return None
 
 
-def get_plan_trials_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[GetPlanTrialsResponse200]:
+def get_plan_trials_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[GetPlanTrialsResponse200]:
     """Get plan trials
 
     Args:
@@ -172,12 +204,17 @@ def get_plan_trials_asyncio_detailed(*, client: StolonClient, merchant_uuid: str
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetPlanTrialsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_plan_trials._get_kwargs(
+        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -215,7 +252,14 @@ def get_plan_trials_asyncio_detailed(*, client: StolonClient, merchant_uuid: str
     )
 
 
-def get_plan_trials_asyncio(*, client: StolonClient, merchant_uuid: str) -> GetPlanTrialsResponse200 | None:
+def get_plan_trials_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> GetPlanTrialsResponse200 | None:
     """Get plan trials
 
     Args:
@@ -237,12 +281,17 @@ def get_plan_trials_asyncio(*, client: StolonClient, merchant_uuid: str) -> GetP
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetPlanTrialsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_trials._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_plan_trials._get_kwargs(
+        merchant_uuid=merchant_uuid, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -267,7 +316,7 @@ def get_plan_trials_asyncio(*, client: StolonClient, merchant_uuid: str) -> GetP
 
 
 def get_latest_plan_trial_for_merchant_sync_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetLatestPlanTrialForMerchantResponse200]:
     """Get latest plan trial
 
@@ -288,12 +337,15 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetLatestPlanTrialForMerchantResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -332,7 +384,7 @@ def get_latest_plan_trial_for_merchant_sync_detailed(
 
 
 def get_latest_plan_trial_for_merchant_sync(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetLatestPlanTrialForMerchantResponse200 | None:
     """Get latest plan trial
 
@@ -353,12 +405,15 @@ def get_latest_plan_trial_for_merchant_sync(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetLatestPlanTrialForMerchantResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -383,7 +438,7 @@ def get_latest_plan_trial_for_merchant_sync(
 
 
 def get_latest_plan_trial_for_merchant_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetLatestPlanTrialForMerchantResponse200]:
     """Get latest plan trial
 
@@ -404,12 +459,15 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetLatestPlanTrialForMerchantResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -448,7 +506,7 @@ def get_latest_plan_trial_for_merchant_asyncio_detailed(
 
 
 def get_latest_plan_trial_for_merchant_asyncio(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetLatestPlanTrialForMerchantResponse200 | None:
     """Get latest plan trial
 
@@ -469,12 +527,15 @@ def get_latest_plan_trial_for_merchant_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetLatestPlanTrialForMerchantResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_latest_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -499,7 +560,7 @@ def get_latest_plan_trial_for_merchant_asyncio(
 
 
 def get_active_plan_trial_for_merchant_sync_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetActivePlanTrialForMerchantResponse200]:
     """Get active merchant plan trial
 
@@ -520,12 +581,15 @@ def get_active_plan_trial_for_merchant_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetActivePlanTrialForMerchantResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -564,7 +628,7 @@ def get_active_plan_trial_for_merchant_sync_detailed(
 
 
 def get_active_plan_trial_for_merchant_sync(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetActivePlanTrialForMerchantResponse200 | None:
     """Get active merchant plan trial
 
@@ -585,12 +649,15 @@ def get_active_plan_trial_for_merchant_sync(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetActivePlanTrialForMerchantResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -615,7 +682,7 @@ def get_active_plan_trial_for_merchant_sync(
 
 
 def get_active_plan_trial_for_merchant_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> Response[GetActivePlanTrialForMerchantResponse200]:
     """Get active merchant plan trial
 
@@ -636,12 +703,15 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetActivePlanTrialForMerchantResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -680,7 +750,7 @@ def get_active_plan_trial_for_merchant_asyncio_detailed(
 
 
 def get_active_plan_trial_for_merchant_asyncio(
-    *, client: StolonClient, merchant_uuid: str
+    *, client: StolonClient, merchant_uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
 ) -> GetActivePlanTrialForMerchantResponse200 | None:
     """Get active merchant plan trial
 
@@ -701,12 +771,15 @@ def get_active_plan_trial_for_merchant_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetActivePlanTrialForMerchantResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_active_plan_trial_for_merchant._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_active_plan_trial_for_merchant._get_kwargs(
+        merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -731,7 +804,12 @@ def get_active_plan_trial_for_merchant_asyncio(
 
 
 def get_latest_plan_trials_for_merchants_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuids: Union[Unset, list[str]] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[GetLatestPlanTrialsForMerchantsResponse200]:
     """get Latest Trials for a List of Merchants
 
@@ -753,13 +831,18 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: Union[Unset, list[str]]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetLatestPlanTrialsForMerchantsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs()
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
+        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -798,7 +881,12 @@ def get_latest_plan_trials_for_merchants_sync_detailed(
 
 
 def get_latest_plan_trials_for_merchants_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuids: Union[Unset, list[str]] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> GetLatestPlanTrialsForMerchantsResponse200 | None:
     """get Latest Trials for a List of Merchants
 
@@ -820,13 +908,18 @@ def get_latest_plan_trials_for_merchants_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: Union[Unset, list[str]]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetLatestPlanTrialsForMerchantsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs()
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
+        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -851,7 +944,12 @@ def get_latest_plan_trials_for_merchants_sync(
 
 
 def get_latest_plan_trials_for_merchants_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuids: Union[Unset, list[str]] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> Response[GetLatestPlanTrialsForMerchantsResponse200]:
     """get Latest Trials for a List of Merchants
 
@@ -873,13 +971,18 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: Union[Unset, list[str]]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[GetLatestPlanTrialsForMerchantsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs()
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
+        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -918,7 +1021,12 @@ def get_latest_plan_trials_for_merchants_asyncio_detailed(
 
 
 def get_latest_plan_trials_for_merchants_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuids: Union[Unset, list[str]] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
 ) -> GetLatestPlanTrialsForMerchantsResponse200 | None:
     """get Latest Trials for a List of Merchants
 
@@ -940,13 +1048,18 @@ def get_latest_plan_trials_for_merchants_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuids: Union[Unset, list[str]]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         GetLatestPlanTrialsForMerchantsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_plan_trials_for_merchants._get_kwargs()
+    kwargs = get_latest_plan_trials_for_merchants._get_kwargs(
+        merchant_uuids=merchant_uuids, page_size=page_size, page_number=page_number, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

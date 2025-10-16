@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 from uuid import UUID
 
 from stolon.client import StolonClient
@@ -24,10 +25,12 @@ from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.a
 )
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.agreement import Agreement
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.agreements import Agreements
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_latest_agreement_sync_detailed(*, client: StolonClient, type_: str) -> Response[Agreement]:
+def get_latest_agreement_sync_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[Agreement]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -45,12 +48,13 @@ def get_latest_agreement_sync_detailed(*, client: StolonClient, type_: str) -> R
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[Agreement]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -88,7 +92,9 @@ def get_latest_agreement_sync_detailed(*, client: StolonClient, type_: str) -> R
     )
 
 
-def get_latest_agreement_sync(*, client: StolonClient, type_: str) -> Agreement | None:
+def get_latest_agreement_sync(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Agreement | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -106,12 +112,13 @@ def get_latest_agreement_sync(*, client: StolonClient, type_: str) -> Agreement 
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Agreement | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -135,7 +142,9 @@ def get_latest_agreement_sync(*, client: StolonClient, type_: str) -> Agreement 
     return None
 
 
-def get_latest_agreement_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[Agreement]:
+def get_latest_agreement_asyncio_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[Agreement]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -153,12 +162,13 @@ def get_latest_agreement_asyncio_detailed(*, client: StolonClient, type_: str) -
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[Agreement]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -196,7 +206,9 @@ def get_latest_agreement_asyncio_detailed(*, client: StolonClient, type_: str) -
     )
 
 
-def get_latest_agreement_asyncio(*, client: StolonClient, type_: str) -> Agreement | None:
+def get_latest_agreement_asyncio(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Agreement | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -214,12 +226,13 @@ def get_latest_agreement_asyncio(*, client: StolonClient, type_: str) -> Agreeme
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Agreement | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -243,7 +256,7 @@ def get_latest_agreement_asyncio(*, client: StolonClient, type_: str) -> Agreeme
     return None
 
 
-def create_agreement_sync_detailed(*, client: StolonClient) -> Response[Agreement]:
+def create_agreement_sync_detailed(*, client: StolonClient, body: Agreement) -> Response[Agreement]:
     """Args:
         body (Agreement):
 
@@ -259,13 +272,13 @@ def create_agreement_sync_detailed(*, client: StolonClient) -> Response[Agreemen
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Agreement
 
     Returns:
         Response[Agreement]
     """
     # Extract request parameters from generated function
-    kwargs = create_agreement._get_kwargs()
+    kwargs = create_agreement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -303,7 +316,7 @@ def create_agreement_sync_detailed(*, client: StolonClient) -> Response[Agreemen
     )
 
 
-def create_agreement_sync(*, client: StolonClient) -> Agreement | None:
+def create_agreement_sync(*, client: StolonClient, body: Agreement) -> Agreement | None:
     """Args:
         body (Agreement):
 
@@ -319,13 +332,13 @@ def create_agreement_sync(*, client: StolonClient) -> Agreement | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Agreement
 
     Returns:
         Agreement | None
     """
     # Extract request parameters from generated function
-    kwargs = create_agreement._get_kwargs()
+    kwargs = create_agreement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -349,7 +362,7 @@ def create_agreement_sync(*, client: StolonClient) -> Agreement | None:
     return None
 
 
-def create_agreement_asyncio_detailed(*, client: StolonClient) -> Response[Agreement]:
+def create_agreement_asyncio_detailed(*, client: StolonClient, body: Agreement) -> Response[Agreement]:
     """Args:
         body (Agreement):
 
@@ -365,13 +378,13 @@ def create_agreement_asyncio_detailed(*, client: StolonClient) -> Response[Agree
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Agreement
 
     Returns:
         Response[Agreement]
     """
     # Extract request parameters from generated function
-    kwargs = create_agreement._get_kwargs()
+    kwargs = create_agreement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -409,7 +422,7 @@ def create_agreement_asyncio_detailed(*, client: StolonClient) -> Response[Agree
     )
 
 
-def create_agreement_asyncio(*, client: StolonClient) -> Agreement | None:
+def create_agreement_asyncio(*, client: StolonClient, body: Agreement) -> Agreement | None:
     """Args:
         body (Agreement):
 
@@ -425,13 +438,13 @@ def create_agreement_asyncio(*, client: StolonClient) -> Agreement | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: Agreement
 
     Returns:
         Agreement | None
     """
     # Extract request parameters from generated function
-    kwargs = create_agreement._get_kwargs()
+    kwargs = create_agreement._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -455,7 +468,9 @@ def create_agreement_asyncio(*, client: StolonClient) -> Agreement | None:
     return None
 
 
-def get_latest_agreement_as_html_sync_detailed(*, client: StolonClient, type_: str) -> Response[str]:
+def get_latest_agreement_as_html_sync_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -473,12 +488,13 @@ def get_latest_agreement_as_html_sync_detailed(*, client: StolonClient, type_: s
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[str]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -516,7 +532,9 @@ def get_latest_agreement_as_html_sync_detailed(*, client: StolonClient, type_: s
     )
 
 
-def get_latest_agreement_as_html_sync(*, client: StolonClient, type_: str) -> str | None:
+def get_latest_agreement_as_html_sync(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -534,12 +552,13 @@ def get_latest_agreement_as_html_sync(*, client: StolonClient, type_: str) -> st
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         str | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -556,7 +575,9 @@ def get_latest_agreement_as_html_sync(*, client: StolonClient, type_: str) -> st
     return None
 
 
-def get_latest_agreement_as_html_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[str]:
+def get_latest_agreement_as_html_asyncio_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -574,12 +595,13 @@ def get_latest_agreement_as_html_asyncio_detailed(*, client: StolonClient, type_
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[str]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -617,7 +639,9 @@ def get_latest_agreement_as_html_asyncio_detailed(*, client: StolonClient, type_
     )
 
 
-def get_latest_agreement_as_html_asyncio(*, client: StolonClient, type_: str) -> str | None:
+def get_latest_agreement_as_html_asyncio(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -635,12 +659,13 @@ def get_latest_agreement_as_html_asyncio(*, client: StolonClient, type_: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         str | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_html._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -657,7 +682,9 @@ def get_latest_agreement_as_html_asyncio(*, client: StolonClient, type_: str) ->
     return None
 
 
-def get_latest_agreement_as_text_sync_detailed(*, client: StolonClient, type_: str) -> Response[str]:
+def get_latest_agreement_as_text_sync_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -675,12 +702,13 @@ def get_latest_agreement_as_text_sync_detailed(*, client: StolonClient, type_: s
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[str]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -718,7 +746,9 @@ def get_latest_agreement_as_text_sync_detailed(*, client: StolonClient, type_: s
     )
 
 
-def get_latest_agreement_as_text_sync(*, client: StolonClient, type_: str) -> str | None:
+def get_latest_agreement_as_text_sync(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -736,12 +766,13 @@ def get_latest_agreement_as_text_sync(*, client: StolonClient, type_: str) -> st
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         str | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -758,7 +789,9 @@ def get_latest_agreement_as_text_sync(*, client: StolonClient, type_: str) -> st
     return None
 
 
-def get_latest_agreement_as_text_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[str]:
+def get_latest_agreement_as_text_asyncio_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[str]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -776,12 +809,13 @@ def get_latest_agreement_as_text_asyncio_detailed(*, client: StolonClient, type_
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[str]
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -819,7 +853,9 @@ def get_latest_agreement_as_text_asyncio_detailed(*, client: StolonClient, type_
     )
 
 
-def get_latest_agreement_as_text_asyncio(*, client: StolonClient, type_: str) -> str | None:
+def get_latest_agreement_as_text_asyncio(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> str | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -837,12 +873,13 @@ def get_latest_agreement_as_text_asyncio(*, client: StolonClient, type_: str) ->
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         str | None
     """
     # Extract request parameters from generated function
-    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_)
+    kwargs = get_latest_agreement_as_text._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -1071,7 +1108,9 @@ def get_agreement_asyncio(*, client: StolonClient, agreement_id: UUID) -> Agreem
     return None
 
 
-def get_agreements_sync_detailed(*, client: StolonClient, type_: str) -> Response[Agreements]:
+def get_agreements_sync_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[Agreements]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1089,12 +1128,13 @@ def get_agreements_sync_detailed(*, client: StolonClient, type_: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[Agreements]
     """
     # Extract request parameters from generated function
-    kwargs = get_agreements._get_kwargs(type_=type_)
+    kwargs = get_agreements._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1132,7 +1172,9 @@ def get_agreements_sync_detailed(*, client: StolonClient, type_: str) -> Respons
     )
 
 
-def get_agreements_sync(*, client: StolonClient, type_: str) -> Agreements | None:
+def get_agreements_sync(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Agreements | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1150,12 +1192,13 @@ def get_agreements_sync(*, client: StolonClient, type_: str) -> Agreements | Non
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Agreements | None
     """
     # Extract request parameters from generated function
-    kwargs = get_agreements._get_kwargs(type_=type_)
+    kwargs = get_agreements._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1179,7 +1222,9 @@ def get_agreements_sync(*, client: StolonClient, type_: str) -> Agreements | Non
     return None
 
 
-def get_agreements_asyncio_detailed(*, client: StolonClient, type_: str) -> Response[Agreements]:
+def get_agreements_asyncio_detailed(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Response[Agreements]:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1197,12 +1242,13 @@ def get_agreements_asyncio_detailed(*, client: StolonClient, type_: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Response[Agreements]
     """
     # Extract request parameters from generated function
-    kwargs = get_agreements._get_kwargs(type_=type_)
+    kwargs = get_agreements._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1240,7 +1286,9 @@ def get_agreements_asyncio_detailed(*, client: StolonClient, type_: str) -> Resp
     )
 
 
-def get_agreements_asyncio(*, client: StolonClient, type_: str) -> Agreements | None:
+def get_agreements_asyncio(
+    *, client: StolonClient, type_: str, accept_language: Union[Unset, str] = UNSET
+) -> Agreements | None:
     """Args:
         type_ (str):
         accept_language (Union[Unset, str]):
@@ -1258,12 +1306,13 @@ def get_agreements_asyncio(*, client: StolonClient, type_: str) -> Agreements | 
     Args:
         client: StolonClient instance for proxying requests
                 type_: str
+        accept_language: Union[Unset, str]
 
     Returns:
         Agreements | None
     """
     # Extract request parameters from generated function
-    kwargs = get_agreements._get_kwargs(type_=type_)
+    kwargs = get_agreements._get_kwargs(type_=type_, accept_language=accept_language)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

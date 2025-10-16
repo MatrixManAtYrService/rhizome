@@ -35,11 +35,37 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.j
     memo,
     query_job,
 )
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_abbs_transition_job_params import (
+    ApiAbbsTransitionJobParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptances_job_params import (
+    ApiBackfillAcceptancesJobParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_base_job_params import (
+    ApiBaseJobParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_cellular_job_params import (
+    ApiCellularJobParams,
+)
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_job_response import ApiJobResponse
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_migrate_merchants_job_params import (
+    ApiMigrateMerchantsJobParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_no_op_job_params import (
+    ApiNoOpJobParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.app_event_job_params import (
+    AppEventJobParams,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.process_offboarding_records_job_params import (
+    ProcessOffboardingRecordsJobParams,
+)
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def enqueue_process_app_metered_events_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_app_metered_events_job_sync_detailed(
+    *, client: StolonClient, body: AppEventJobParams
+) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -55,13 +81,13 @@ def enqueue_process_app_metered_events_job_sync_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: AppEventJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_metered_events_job._get_kwargs()
+    kwargs = enqueue_process_app_metered_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -99,7 +125,9 @@ def enqueue_process_app_metered_events_job_sync_detailed(*, client: StolonClient
     )
 
 
-def enqueue_process_app_metered_events_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_app_metered_events_job_asyncio_detailed(
+    *, client: StolonClient, body: AppEventJobParams
+) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -115,13 +143,13 @@ def enqueue_process_app_metered_events_job_asyncio_detailed(*, client: StolonCli
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: AppEventJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_metered_events_job._get_kwargs()
+    kwargs = enqueue_process_app_metered_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -159,7 +187,9 @@ def enqueue_process_app_metered_events_job_asyncio_detailed(*, client: StolonCli
     )
 
 
-def enqueue_process_app_rate_events_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_app_rate_events_job_sync_detailed(
+    *, client: StolonClient, body: AppEventJobParams
+) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -175,13 +205,13 @@ def enqueue_process_app_rate_events_job_sync_detailed(*, client: StolonClient) -
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: AppEventJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_rate_events_job._get_kwargs()
+    kwargs = enqueue_process_app_rate_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -219,7 +249,9 @@ def enqueue_process_app_rate_events_job_sync_detailed(*, client: StolonClient) -
     )
 
 
-def enqueue_process_app_rate_events_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_app_rate_events_job_asyncio_detailed(
+    *, client: StolonClient, body: AppEventJobParams
+) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -235,13 +267,13 @@ def enqueue_process_app_rate_events_job_asyncio_detailed(*, client: StolonClient
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: AppEventJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_rate_events_job._get_kwargs()
+    kwargs = enqueue_process_app_rate_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -279,7 +311,9 @@ def enqueue_process_app_rate_events_job_asyncio_detailed(*, client: StolonClient
     )
 
 
-def enqueue_plan_advance_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_plan_advance_events_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -297,13 +331,13 @@ def enqueue_plan_advance_events_job_sync_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_plan_advance_events_job._get_kwargs()
+    kwargs = enqueue_plan_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -341,7 +375,7 @@ def enqueue_plan_advance_events_job_sync_detailed(*, client: StolonClient) -> Re
     )
 
 
-def enqueue_plan_advance_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_plan_advance_events_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -359,13 +393,13 @@ def enqueue_plan_advance_events_job_sync(*, client: StolonClient) -> ApiJobRespo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_plan_advance_events_job._get_kwargs()
+    kwargs = enqueue_plan_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -389,7 +423,9 @@ def enqueue_plan_advance_events_job_sync(*, client: StolonClient) -> ApiJobRespo
     return None
 
 
-def enqueue_plan_advance_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_plan_advance_events_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -407,13 +443,13 @@ def enqueue_plan_advance_events_job_asyncio_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_plan_advance_events_job._get_kwargs()
+    kwargs = enqueue_plan_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -451,7 +487,7 @@ def enqueue_plan_advance_events_job_asyncio_detailed(*, client: StolonClient) ->
     )
 
 
-def enqueue_plan_advance_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_plan_advance_events_job_asyncio(*, client: StolonClient, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Enqueues the job to generate plan advance and plan arrears events.
 
     Args:
@@ -469,13 +505,13 @@ def enqueue_plan_advance_events_job_asyncio(*, client: StolonClient) -> ApiJobRe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_plan_advance_events_job._get_kwargs()
+    kwargs = enqueue_plan_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -499,7 +535,9 @@ def enqueue_plan_advance_events_job_asyncio(*, client: StolonClient) -> ApiJobRe
     return None
 
 
-def enqueue_payment_transaction_sync_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_payment_transaction_sync_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -517,13 +555,13 @@ def enqueue_payment_transaction_sync_job_sync_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_payment_transaction_sync_job._get_kwargs()
+    kwargs = enqueue_payment_transaction_sync_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -561,7 +599,7 @@ def enqueue_payment_transaction_sync_job_sync_detailed(*, client: StolonClient) 
     )
 
 
-def enqueue_payment_transaction_sync_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_payment_transaction_sync_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -579,13 +617,13 @@ def enqueue_payment_transaction_sync_job_sync(*, client: StolonClient) -> ApiJob
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_payment_transaction_sync_job._get_kwargs()
+    kwargs = enqueue_payment_transaction_sync_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -609,7 +647,9 @@ def enqueue_payment_transaction_sync_job_sync(*, client: StolonClient) -> ApiJob
     return None
 
 
-def enqueue_payment_transaction_sync_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_payment_transaction_sync_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -627,13 +667,13 @@ def enqueue_payment_transaction_sync_job_asyncio_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_payment_transaction_sync_job._get_kwargs()
+    kwargs = enqueue_payment_transaction_sync_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -671,7 +711,9 @@ def enqueue_payment_transaction_sync_job_asyncio_detailed(*, client: StolonClien
     )
 
 
-def enqueue_payment_transaction_sync_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_payment_transaction_sync_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ApiJobResponse | None:
     """Enqueues the job to synchronize payment transaction data.
 
     Args:
@@ -689,13 +731,13 @@ def enqueue_payment_transaction_sync_job_asyncio(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_payment_transaction_sync_job._get_kwargs()
+    kwargs = enqueue_payment_transaction_sync_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -943,7 +985,7 @@ def kill_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespon
     return None
 
 
-def memo_sync_detailed(*, client: StolonClient, heading: str) -> Response[ApiJobResponse]:
+def memo_sync_detailed(*, client: StolonClient, heading: str, body: ApiBaseJobParams) -> Response[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -963,12 +1005,13 @@ def memo_sync_detailed(*, client: StolonClient, heading: str) -> Response[ApiJob
     Args:
         client: StolonClient instance for proxying requests
                 heading: str
+        body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = memo._get_kwargs(heading=heading)
+    kwargs = memo._get_kwargs(heading=heading, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1006,7 +1049,7 @@ def memo_sync_detailed(*, client: StolonClient, heading: str) -> Response[ApiJob
     )
 
 
-def memo_sync(*, client: StolonClient, heading: str) -> ApiJobResponse | None:
+def memo_sync(*, client: StolonClient, heading: str, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1026,12 +1069,13 @@ def memo_sync(*, client: StolonClient, heading: str) -> ApiJobResponse | None:
     Args:
         client: StolonClient instance for proxying requests
                 heading: str
+        body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = memo._get_kwargs(heading=heading)
+    kwargs = memo._get_kwargs(heading=heading, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1055,7 +1099,7 @@ def memo_sync(*, client: StolonClient, heading: str) -> ApiJobResponse | None:
     return None
 
 
-def memo_asyncio_detailed(*, client: StolonClient, heading: str) -> Response[ApiJobResponse]:
+def memo_asyncio_detailed(*, client: StolonClient, heading: str, body: ApiBaseJobParams) -> Response[ApiJobResponse]:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1075,12 +1119,13 @@ def memo_asyncio_detailed(*, client: StolonClient, heading: str) -> Response[Api
     Args:
         client: StolonClient instance for proxying requests
                 heading: str
+        body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = memo._get_kwargs(heading=heading)
+    kwargs = memo._get_kwargs(heading=heading, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1118,7 +1163,7 @@ def memo_asyncio_detailed(*, client: StolonClient, heading: str) -> Response[Api
     )
 
 
-def memo_asyncio(*, client: StolonClient, heading: str) -> ApiJobResponse | None:
+def memo_asyncio(*, client: StolonClient, heading: str, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Billing Event may post a memo to the bookkeeper via a job.
 
     Args:
@@ -1138,12 +1183,13 @@ def memo_asyncio(*, client: StolonClient, heading: str) -> ApiJobResponse | None
     Args:
         client: StolonClient instance for proxying requests
                 heading: str
+        body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = memo._get_kwargs(heading=heading)
+    kwargs = memo._get_kwargs(heading=heading, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1379,7 +1425,9 @@ def exec_pending_event_catchup_job_asyncio(*, client: StolonClient) -> ApiJobRes
     return None
 
 
-def enqueue_process_app_sub_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_process_app_sub_events_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1397,13 +1445,13 @@ def enqueue_process_app_sub_events_job_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_sub_events_job._get_kwargs()
+    kwargs = enqueue_process_app_sub_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1441,7 +1489,7 @@ def enqueue_process_app_sub_events_job_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def enqueue_process_app_sub_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_process_app_sub_events_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1459,13 +1507,13 @@ def enqueue_process_app_sub_events_job_sync(*, client: StolonClient) -> ApiJobRe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_sub_events_job._get_kwargs()
+    kwargs = enqueue_process_app_sub_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1489,7 +1537,9 @@ def enqueue_process_app_sub_events_job_sync(*, client: StolonClient) -> ApiJobRe
     return None
 
 
-def enqueue_process_app_sub_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_process_app_sub_events_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1507,13 +1557,13 @@ def enqueue_process_app_sub_events_job_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_sub_events_job._get_kwargs()
+    kwargs = enqueue_process_app_sub_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1551,7 +1601,9 @@ def enqueue_process_app_sub_events_job_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_process_app_sub_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_process_app_sub_events_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ApiJobResponse | None:
     """Enqueues daily job for processing app subscription events that occurred throughout the day
 
     Args:
@@ -1569,13 +1621,13 @@ def enqueue_process_app_sub_events_job_asyncio(*, client: StolonClient) -> ApiJo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_sub_events_job._get_kwargs()
+    kwargs = enqueue_process_app_sub_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1599,7 +1651,9 @@ def enqueue_process_app_sub_events_job_asyncio(*, client: StolonClient) -> ApiJo
     return None
 
 
-def enqueue_process_app_subscription_events_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_app_subscription_events_job_sync_detailed(
+    *, client: StolonClient, body: AppEventJobParams
+) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -1615,13 +1669,13 @@ def enqueue_process_app_subscription_events_job_sync_detailed(*, client: StolonC
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: AppEventJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_subscription_events_job._get_kwargs()
+    kwargs = enqueue_process_app_subscription_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1659,7 +1713,9 @@ def enqueue_process_app_subscription_events_job_sync_detailed(*, client: StolonC
     )
 
 
-def enqueue_process_app_subscription_events_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_app_subscription_events_job_asyncio_detailed(
+    *, client: StolonClient, body: AppEventJobParams
+) -> Response[Any]:
     """Args:
         body (AppEventJobParams):
 
@@ -1675,13 +1731,13 @@ def enqueue_process_app_subscription_events_job_asyncio_detailed(*, client: Stol
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: AppEventJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_subscription_events_job._get_kwargs()
+    kwargs = enqueue_process_app_subscription_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1939,7 +1995,9 @@ def query_job_asyncio(*, client: StolonClient, request_uuid: str) -> ApiJobRespo
     return None
 
 
-def enqueue_process_active_offboarding_records_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_active_offboarding_records_sync_detailed(
+    *, client: StolonClient, body: ProcessOffboardingRecordsJobParams
+) -> Response[Any]:
     """Args:
         body (ProcessOffboardingRecordsJobParams):
 
@@ -1955,13 +2013,13 @@ def enqueue_process_active_offboarding_records_sync_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ProcessOffboardingRecordsJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_active_offboarding_records._get_kwargs()
+    kwargs = enqueue_process_active_offboarding_records._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1999,7 +2057,9 @@ def enqueue_process_active_offboarding_records_sync_detailed(*, client: StolonCl
     )
 
 
-def enqueue_process_active_offboarding_records_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_process_active_offboarding_records_asyncio_detailed(
+    *, client: StolonClient, body: ProcessOffboardingRecordsJobParams
+) -> Response[Any]:
     """Args:
         body (ProcessOffboardingRecordsJobParams):
 
@@ -2015,13 +2075,13 @@ def enqueue_process_active_offboarding_records_asyncio_detailed(*, client: Stolo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ProcessOffboardingRecordsJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_active_offboarding_records._get_kwargs()
+    kwargs = enqueue_process_active_offboarding_records._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2059,7 +2119,7 @@ def enqueue_process_active_offboarding_records_asyncio_detailed(*, client: Stolo
     )
 
 
-def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_no_op_job_sync_detailed(*, client: StolonClient, body: ApiNoOpJobParams) -> Response[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2077,13 +2137,13 @@ def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobR
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2121,7 +2181,7 @@ def enqueue_no_op_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobR
     )
 
 
-def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_no_op_job_sync(*, client: StolonClient, body: ApiNoOpJobParams) -> ApiJobResponse | None:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2139,13 +2199,13 @@ def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2169,7 +2229,7 @@ def enqueue_no_op_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
     return None
 
 
-def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient, body: ApiNoOpJobParams) -> Response[ApiJobResponse]:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2187,13 +2247,13 @@ def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJ
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2231,7 +2291,7 @@ def enqueue_no_op_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJ
     )
 
 
-def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_no_op_job_asyncio(*, client: StolonClient, body: ApiNoOpJobParams) -> ApiJobResponse | None:
     """Enqueues the No-Op job for execution.
 
     Args:
@@ -2249,13 +2309,13 @@ def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiNoOpJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_no_op_job._get_kwargs()
+    kwargs = enqueue_no_op_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2279,7 +2339,9 @@ def enqueue_no_op_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
     return None
 
 
-def enqueue_cellular_arrears_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_cellular_arrears_job_sync_detailed(
+    *, client: StolonClient, body: ApiCellularJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2297,13 +2359,13 @@ def enqueue_cellular_arrears_job_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_cellular_arrears_job._get_kwargs()
+    kwargs = enqueue_cellular_arrears_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2341,7 +2403,7 @@ def enqueue_cellular_arrears_job_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def enqueue_cellular_arrears_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_cellular_arrears_job_sync(*, client: StolonClient, body: ApiCellularJobParams) -> ApiJobResponse | None:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2359,13 +2421,13 @@ def enqueue_cellular_arrears_job_sync(*, client: StolonClient) -> ApiJobResponse
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_cellular_arrears_job._get_kwargs()
+    kwargs = enqueue_cellular_arrears_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2389,7 +2451,9 @@ def enqueue_cellular_arrears_job_sync(*, client: StolonClient) -> ApiJobResponse
     return None
 
 
-def enqueue_cellular_arrears_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_cellular_arrears_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiCellularJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2407,13 +2471,13 @@ def enqueue_cellular_arrears_job_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_cellular_arrears_job._get_kwargs()
+    kwargs = enqueue_cellular_arrears_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2451,7 +2515,7 @@ def enqueue_cellular_arrears_job_asyncio_detailed(*, client: StolonClient) -> Re
     )
 
 
-def enqueue_cellular_arrears_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_cellular_arrears_job_asyncio(*, client: StolonClient, body: ApiCellularJobParams) -> ApiJobResponse | None:
     """Enqueues job to process cellular billing.
 
     Args:
@@ -2469,13 +2533,13 @@ def enqueue_cellular_arrears_job_asyncio(*, client: StolonClient) -> ApiJobRespo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiCellularJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_cellular_arrears_job._get_kwargs()
+    kwargs = enqueue_cellular_arrears_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2499,7 +2563,9 @@ def enqueue_cellular_arrears_job_asyncio(*, client: StolonClient) -> ApiJobRespo
     return None
 
 
-def enqueue_create_backfill_acceptances_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_create_backfill_acceptances_job_sync_detailed(
+    *, client: StolonClient, body: ApiBackfillAcceptancesJobParams
+) -> Response[ApiJobResponse]:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2517,13 +2583,13 @@ def enqueue_create_backfill_acceptances_job_sync_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptancesJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs()
+    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2561,7 +2627,9 @@ def enqueue_create_backfill_acceptances_job_sync_detailed(*, client: StolonClien
     )
 
 
-def enqueue_create_backfill_acceptances_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_create_backfill_acceptances_job_sync(
+    *, client: StolonClient, body: ApiBackfillAcceptancesJobParams
+) -> ApiJobResponse | None:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2579,13 +2647,13 @@ def enqueue_create_backfill_acceptances_job_sync(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptancesJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs()
+    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2609,7 +2677,9 @@ def enqueue_create_backfill_acceptances_job_sync(*, client: StolonClient) -> Api
     return None
 
 
-def enqueue_create_backfill_acceptances_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_create_backfill_acceptances_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackfillAcceptancesJobParams
+) -> Response[ApiJobResponse]:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2627,13 +2697,13 @@ def enqueue_create_backfill_acceptances_job_asyncio_detailed(*, client: StolonCl
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptancesJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs()
+    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2671,7 +2741,9 @@ def enqueue_create_backfill_acceptances_job_asyncio_detailed(*, client: StolonCl
     )
 
 
-def enqueue_create_backfill_acceptances_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_create_backfill_acceptances_job_asyncio(
+    *, client: StolonClient, body: ApiBackfillAcceptancesJobParams
+) -> ApiJobResponse | None:
     """Creates backfill acceptances in bulk.
 
     Args:
@@ -2689,13 +2761,13 @@ def enqueue_create_backfill_acceptances_job_asyncio(*, client: StolonClient) -> 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptancesJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs()
+    kwargs = enqueue_create_backfill_acceptances_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2719,7 +2791,9 @@ def enqueue_create_backfill_acceptances_job_asyncio(*, client: StolonClient) -> 
     return None
 
 
-def enqueue_migrate_merchants_job_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_migrate_merchants_job_sync_detailed(
+    *, client: StolonClient, body: ApiMigrateMerchantsJobParams
+) -> Response[Any]:
     """Enqueues the job to migrate merchants.
 
     Args:
@@ -2737,13 +2811,13 @@ def enqueue_migrate_merchants_job_sync_detailed(*, client: StolonClient) -> Resp
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMigrateMerchantsJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_migrate_merchants_job._get_kwargs()
+    kwargs = enqueue_migrate_merchants_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2781,7 +2855,9 @@ def enqueue_migrate_merchants_job_sync_detailed(*, client: StolonClient) -> Resp
     )
 
 
-def enqueue_migrate_merchants_job_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def enqueue_migrate_merchants_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiMigrateMerchantsJobParams
+) -> Response[Any]:
     """Enqueues the job to migrate merchants.
 
     Args:
@@ -2799,13 +2875,13 @@ def enqueue_migrate_merchants_job_asyncio_detailed(*, client: StolonClient) -> R
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiMigrateMerchantsJobParams
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_migrate_merchants_job._get_kwargs()
+    kwargs = enqueue_migrate_merchants_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2843,7 +2919,9 @@ def enqueue_migrate_merchants_job_asyncio_detailed(*, client: StolonClient) -> R
     )
 
 
-def enqueue_abbs_transition_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_abbs_transition_job_sync_detailed(
+    *, client: StolonClient, body: ApiAbbsTransitionJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -2861,13 +2939,13 @@ def enqueue_abbs_transition_job_sync_detailed(*, client: StolonClient) -> Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAbbsTransitionJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_abbs_transition_job._get_kwargs()
+    kwargs = enqueue_abbs_transition_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2905,7 +2983,9 @@ def enqueue_abbs_transition_job_sync_detailed(*, client: StolonClient) -> Respon
     )
 
 
-def enqueue_abbs_transition_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_abbs_transition_job_sync(
+    *, client: StolonClient, body: ApiAbbsTransitionJobParams
+) -> ApiJobResponse | None:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -2923,13 +3003,13 @@ def enqueue_abbs_transition_job_sync(*, client: StolonClient) -> ApiJobResponse 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAbbsTransitionJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_abbs_transition_job._get_kwargs()
+    kwargs = enqueue_abbs_transition_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -2953,7 +3033,9 @@ def enqueue_abbs_transition_job_sync(*, client: StolonClient) -> ApiJobResponse 
     return None
 
 
-def enqueue_abbs_transition_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_abbs_transition_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiAbbsTransitionJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -2971,13 +3053,13 @@ def enqueue_abbs_transition_job_asyncio_detailed(*, client: StolonClient) -> Res
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAbbsTransitionJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_abbs_transition_job._get_kwargs()
+    kwargs = enqueue_abbs_transition_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3015,7 +3097,9 @@ def enqueue_abbs_transition_job_asyncio_detailed(*, client: StolonClient) -> Res
     )
 
 
-def enqueue_abbs_transition_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_abbs_transition_job_asyncio(
+    *, client: StolonClient, body: ApiAbbsTransitionJobParams
+) -> ApiJobResponse | None:
     """Enqueues the ABBS Transition Job.
 
     Args:
@@ -3033,13 +3117,13 @@ def enqueue_abbs_transition_job_asyncio(*, client: StolonClient) -> ApiJobRespon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiAbbsTransitionJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_abbs_transition_job._get_kwargs()
+    kwargs = enqueue_abbs_transition_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3275,7 +3359,9 @@ def exec_pending_event_stale_cleanup_job_asyncio(*, client: StolonClient) -> Api
     return None
 
 
-def enqueue_app_sub_advance_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_app_sub_advance_events_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3293,13 +3379,13 @@ def enqueue_app_sub_advance_events_job_sync_detailed(*, client: StolonClient) ->
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_app_sub_advance_events_job._get_kwargs()
+    kwargs = enqueue_app_sub_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3337,7 +3423,7 @@ def enqueue_app_sub_advance_events_job_sync_detailed(*, client: StolonClient) ->
     )
 
 
-def enqueue_app_sub_advance_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_app_sub_advance_events_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3355,13 +3441,13 @@ def enqueue_app_sub_advance_events_job_sync(*, client: StolonClient) -> ApiJobRe
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_app_sub_advance_events_job._get_kwargs()
+    kwargs = enqueue_app_sub_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3385,7 +3471,9 @@ def enqueue_app_sub_advance_events_job_sync(*, client: StolonClient) -> ApiJobRe
     return None
 
 
-def enqueue_app_sub_advance_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_app_sub_advance_events_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3403,13 +3491,13 @@ def enqueue_app_sub_advance_events_job_asyncio_detailed(*, client: StolonClient)
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_app_sub_advance_events_job._get_kwargs()
+    kwargs = enqueue_app_sub_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3447,7 +3535,9 @@ def enqueue_app_sub_advance_events_job_asyncio_detailed(*, client: StolonClient)
     )
 
 
-def enqueue_app_sub_advance_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_app_sub_advance_events_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ApiJobResponse | None:
     """Enqueues the job to generate app subscription advance events.
 
     Args:
@@ -3465,13 +3555,13 @@ def enqueue_app_sub_advance_events_job_asyncio(*, client: StolonClient) -> ApiJo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_app_sub_advance_events_job._get_kwargs()
+    kwargs = enqueue_app_sub_advance_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3495,7 +3585,9 @@ def enqueue_app_sub_advance_events_job_asyncio(*, client: StolonClient) -> ApiJo
     return None
 
 
-def enqueue_process_app_meter_events_job_sync_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_process_app_meter_events_job_sync_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -3513,13 +3605,13 @@ def enqueue_process_app_meter_events_job_sync_detailed(*, client: StolonClient) 
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_meter_events_job._get_kwargs()
+    kwargs = enqueue_process_app_meter_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3557,7 +3649,7 @@ def enqueue_process_app_meter_events_job_sync_detailed(*, client: StolonClient) 
     )
 
 
-def enqueue_process_app_meter_events_job_sync(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_process_app_meter_events_job_sync(*, client: StolonClient, body: ApiBaseJobParams) -> ApiJobResponse | None:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -3575,13 +3667,13 @@ def enqueue_process_app_meter_events_job_sync(*, client: StolonClient) -> ApiJob
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_meter_events_job._get_kwargs()
+    kwargs = enqueue_process_app_meter_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3605,7 +3697,9 @@ def enqueue_process_app_meter_events_job_sync(*, client: StolonClient) -> ApiJob
     return None
 
 
-def enqueue_process_app_meter_events_job_asyncio_detailed(*, client: StolonClient) -> Response[ApiJobResponse]:
+def enqueue_process_app_meter_events_job_asyncio_detailed(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> Response[ApiJobResponse]:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -3623,13 +3717,13 @@ def enqueue_process_app_meter_events_job_asyncio_detailed(*, client: StolonClien
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         Response[ApiJobResponse]
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_meter_events_job._get_kwargs()
+    kwargs = enqueue_process_app_meter_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -3667,7 +3761,9 @@ def enqueue_process_app_meter_events_job_asyncio_detailed(*, client: StolonClien
     )
 
 
-def enqueue_process_app_meter_events_job_asyncio(*, client: StolonClient) -> ApiJobResponse | None:
+def enqueue_process_app_meter_events_job_asyncio(
+    *, client: StolonClient, body: ApiBaseJobParams
+) -> ApiJobResponse | None:
     """Enqueues daily job for processing app metered events that occurred throughout the day
 
     Args:
@@ -3685,13 +3781,13 @@ def enqueue_process_app_meter_events_job_asyncio(*, client: StolonClient) -> Api
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBaseJobParams
 
     Returns:
         ApiJobResponse | None
     """
     # Extract request parameters from generated function
-    kwargs = enqueue_process_app_meter_events_job._get_kwargs()
+    kwargs = enqueue_process_app_meter_events_job._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

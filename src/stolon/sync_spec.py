@@ -132,7 +132,7 @@ def _generate_client_from_spec(
             spec_file.unlink()
 
 
-def _generate_proxied_wrappers(service: str, env: str, openapi_path: Path) -> None:
+def generate_proxied_wrappers(service: str, env: str, openapi_path: Path) -> None:
     """Generate proxied wrapper functions for the generated client.
 
     Args:
@@ -228,7 +228,7 @@ def sync_spec(env: str, service: str, *, overwrite: bool = False) -> None:
     typer.echo(f"✅ OpenAPI client generated at {openapi_output_path}")
 
     # Generate proxied wrappers
-    _generate_proxied_wrappers(actual_service, env, openapi_output_path)
+    generate_proxied_wrappers(actual_service, env, openapi_output_path)
 
     typer.echo("")
     typer.echo("🎉 Done! You can now:")

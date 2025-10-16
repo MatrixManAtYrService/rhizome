@@ -11,16 +11,21 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
-from typing import Any
+from typing import Any, Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.email_callback_controller import (
     handle_notification_callback,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.callback_message import (
+    CallbackMessage,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def handle_notification_callback_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def handle_notification_callback_sync_detailed(
+    *, client: StolonClient, body: CallbackMessage, callback_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         callback_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -38,13 +43,17 @@ def handle_notification_callback_sync_detailed(*, client: StolonClient) -> Respo
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CallbackMessage
+        callback_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = handle_notification_callback._get_kwargs()
+    kwargs = handle_notification_callback._get_kwargs(
+        body=body, callback_id=callback_id, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -82,7 +91,9 @@ def handle_notification_callback_sync_detailed(*, client: StolonClient) -> Respo
     )
 
 
-def handle_notification_callback_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def handle_notification_callback_asyncio_detailed(
+    *, client: StolonClient, body: CallbackMessage, callback_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Any]:
     """Args:
         callback_id (str):
         x_clover_appenv (Union[Unset, str]):
@@ -100,13 +111,17 @@ def handle_notification_callback_asyncio_detailed(*, client: StolonClient) -> Re
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: CallbackMessage
+        callback_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = handle_notification_callback._get_kwargs()
+    kwargs = handle_notification_callback._get_kwargs(
+        body=body, callback_id=callback_id, x_clover_appenv=x_clover_appenv
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

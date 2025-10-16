@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.merchant import (
@@ -29,11 +31,18 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_merchant_evolution import (
     ApiMerchantEvolution,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
 def get_merchant_acceptances_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    agreement_type: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]:
     """Get merchant acceptances
 
@@ -57,13 +66,25 @@ def get_merchant_acceptances_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
+        agreement_type: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_acceptances._get_kwargs()
+    kwargs = get_merchant_acceptances._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        agreement_type=agreement_type,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -102,7 +123,14 @@ def get_merchant_acceptances_sync_detailed(
 
 
 def get_merchant_acceptances_sync(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    agreement_type: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None:
     """Get merchant acceptances
 
@@ -126,13 +154,25 @@ def get_merchant_acceptances_sync(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
+        agreement_type: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_acceptances._get_kwargs()
+    kwargs = get_merchant_acceptances._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        agreement_type=agreement_type,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -150,7 +190,14 @@ def get_merchant_acceptances_sync(
 
 
 def get_merchant_acceptances_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    agreement_type: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]:
     """Get merchant acceptances
 
@@ -174,13 +221,25 @@ def get_merchant_acceptances_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
+        agreement_type: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiMerchantAcceptance | list["ApiMerchantAcceptance"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_acceptances._get_kwargs()
+    kwargs = get_merchant_acceptances._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        agreement_type=agreement_type,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -219,7 +278,14 @@ def get_merchant_acceptances_asyncio_detailed(
 
 
 def get_merchant_acceptances_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    agreement_type: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None:
     """Get merchant acceptances
 
@@ -243,13 +309,25 @@ def get_merchant_acceptances_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
+        agreement_type: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiMerchantAcceptance | list["ApiMerchantAcceptance"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_acceptances._get_kwargs()
+    kwargs = get_merchant_acceptances._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        agreement_type=agreement_type,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -267,7 +345,13 @@ def get_merchant_acceptances_asyncio(
 
 
 def get_as_of_merchant_data_by_merchant_uuid_sync_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAsOfMerchant | list["ApiAsOfMerchant"]]:
     """Get as-of data for the specified merchant UUID
 
@@ -291,12 +375,22 @@ def get_as_of_merchant_data_by_merchant_uuid_sync_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAsOfMerchant | list["ApiAsOfMerchant"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -335,7 +429,13 @@ def get_as_of_merchant_data_by_merchant_uuid_sync_detailed(
 
 
 def get_as_of_merchant_data_by_merchant_uuid_sync(
-    *, client: StolonClient, merchant_uuid: str
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAsOfMerchant | list["ApiAsOfMerchant"] | None:
     """Get as-of data for the specified merchant UUID
 
@@ -359,12 +459,22 @@ def get_as_of_merchant_data_by_merchant_uuid_sync(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAsOfMerchant | list["ApiAsOfMerchant"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -382,7 +492,13 @@ def get_as_of_merchant_data_by_merchant_uuid_sync(
 
 
 def get_as_of_merchant_data_by_merchant_uuid_asyncio_detailed(
-    *, client: StolonClient, merchant_uuid: str
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiAsOfMerchant | list["ApiAsOfMerchant"]]:
     """Get as-of data for the specified merchant UUID
 
@@ -406,12 +522,22 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio_detailed(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiAsOfMerchant | list["ApiAsOfMerchant"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -450,7 +576,13 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio_detailed(
 
 
 def get_as_of_merchant_data_by_merchant_uuid_asyncio(
-    *, client: StolonClient, merchant_uuid: str
+    *,
+    client: StolonClient,
+    merchant_uuid: str,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiAsOfMerchant | list["ApiAsOfMerchant"] | None:
     """Get as-of data for the specified merchant UUID
 
@@ -474,12 +606,22 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio(
     Args:
         client: StolonClient instance for proxying requests
                 merchant_uuid: str
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiAsOfMerchant | list["ApiAsOfMerchant"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(merchant_uuid=merchant_uuid)
+    kwargs = get_as_of_merchant_data_by_merchant_uuid._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -497,7 +639,13 @@ def get_as_of_merchant_data_by_merchant_uuid_asyncio(
 
 
 def get_merchant_evolutions_sync_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]:
     """Get merchant evolution data
 
@@ -520,13 +668,23 @@ def get_merchant_evolutions_sync_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_evolutions._get_kwargs()
+    kwargs = get_merchant_evolutions._get_kwargs(
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -564,7 +722,15 @@ def get_merchant_evolutions_sync_detailed(
     )
 
 
-def get_merchant_evolutions_sync(*, client: StolonClient) -> ApiMerchantEvolution | list["ApiMerchantEvolution"] | None:
+def get_merchant_evolutions_sync(
+    *,
+    client: StolonClient,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> ApiMerchantEvolution | list["ApiMerchantEvolution"] | None:
     """Get merchant evolution data
 
     Args:
@@ -586,13 +752,23 @@ def get_merchant_evolutions_sync(*, client: StolonClient) -> ApiMerchantEvolutio
 
     Args:
         client: StolonClient instance for proxying requests
-
+                reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiMerchantEvolution | list["ApiMerchantEvolution"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_evolutions._get_kwargs()
+    kwargs = get_merchant_evolutions._get_kwargs(
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -610,7 +786,13 @@ def get_merchant_evolutions_sync(*, client: StolonClient) -> ApiMerchantEvolutio
 
 
 def get_merchant_evolutions_asyncio_detailed(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]:
     """Get merchant evolution data
 
@@ -633,13 +815,23 @@ def get_merchant_evolutions_asyncio_detailed(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[ApiMerchantEvolution | list["ApiMerchantEvolution"]]
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_evolutions._get_kwargs()
+    kwargs = get_merchant_evolutions._get_kwargs(
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -678,7 +870,13 @@ def get_merchant_evolutions_asyncio_detailed(
 
 
 def get_merchant_evolutions_asyncio(
-    *, client: StolonClient
+    *,
+    client: StolonClient,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
 ) -> ApiMerchantEvolution | list["ApiMerchantEvolution"] | None:
     """Get merchant evolution data
 
@@ -701,13 +899,23 @@ def get_merchant_evolutions_asyncio(
 
     Args:
         client: StolonClient instance for proxying requests
-
+                reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         ApiMerchantEvolution | list["ApiMerchantEvolution"] | None
     """
     # Extract request parameters from generated function
-    kwargs = get_merchant_evolutions._get_kwargs()
+    kwargs = get_merchant_evolutions._get_kwargs(
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     client.proxy_request(
@@ -953,7 +1161,7 @@ def get_merchant_evolution_by_merchant_uuid_asyncio(
 
 
 def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
-    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str, x_clover_appenv: str
 ) -> Response[ApiMerchantEvolution]:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -976,13 +1184,14 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
         client: StolonClient instance for proxying requests
                 reseller_uuid: str
         merchant_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ApiMerchantEvolution]
     """
     # Extract request parameters from generated function
     kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
-        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -1022,7 +1231,7 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync_detailed(
 
 
 def get_resellers_merchant_evolution_by_merchant_uuid_sync(
-    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str, x_clover_appenv: str
 ) -> ApiMerchantEvolution | None:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1045,13 +1254,14 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync(
         client: StolonClient instance for proxying requests
                 reseller_uuid: str
         merchant_uuid: str
+        x_clover_appenv: str
 
     Returns:
         ApiMerchantEvolution | None
     """
     # Extract request parameters from generated function
     kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
-        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -1077,7 +1287,7 @@ def get_resellers_merchant_evolution_by_merchant_uuid_sync(
 
 
 def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
-    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str, x_clover_appenv: str
 ) -> Response[ApiMerchantEvolution]:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1100,13 +1310,14 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
         client: StolonClient instance for proxying requests
                 reseller_uuid: str
         merchant_uuid: str
+        x_clover_appenv: str
 
     Returns:
         Response[ApiMerchantEvolution]
     """
     # Extract request parameters from generated function
     kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
-        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server
@@ -1146,7 +1357,7 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio_detailed(
 
 
 def get_resellers_merchant_evolution_by_merchant_uuid_asyncio(
-    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str
+    *, client: StolonClient, reseller_uuid: str, merchant_uuid: str, x_clover_appenv: str
 ) -> ApiMerchantEvolution | None:
     """Get a reseller's merchant evolution data for the specified reseller UUID and merchant UUID
 
@@ -1169,13 +1380,14 @@ def get_resellers_merchant_evolution_by_merchant_uuid_asyncio(
         client: StolonClient instance for proxying requests
                 reseller_uuid: str
         merchant_uuid: str
+        x_clover_appenv: str
 
     Returns:
         ApiMerchantEvolution | None
     """
     # Extract request parameters from generated function
     kwargs = get_resellers_merchant_evolution_by_merchant_uuid._get_kwargs(
-        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid
+        reseller_uuid=reseller_uuid, merchant_uuid=merchant_uuid, x_clover_appenv=x_clover_appenv
     )
 
     # Proxy request through stolon server

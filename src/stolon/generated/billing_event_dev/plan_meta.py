@@ -20,6 +20,9 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.p
     get_plan_meta,
     update,
 )
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_plan_meta_row import (
+    ApiPlanMetaRow,
+)
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create1_response200 import (
     Create1Response200,
 )
@@ -38,7 +41,7 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
 
 
-def update_sync_detailed(*, client: StolonClient, uuid: str) -> Response[UpdateResponse200]:
+def update_sync_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -58,12 +61,13 @@ def update_sync_detailed(*, client: StolonClient, uuid: str) -> Response[UpdateR
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPlanMetaRow
 
     Returns:
         Response[UpdateResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid)
+    kwargs = update._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -101,7 +105,7 @@ def update_sync_detailed(*, client: StolonClient, uuid: str) -> Response[UpdateR
     )
 
 
-def update_sync(*, client: StolonClient, uuid: str) -> UpdateResponse200 | None:
+def update_sync(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -121,12 +125,13 @@ def update_sync(*, client: StolonClient, uuid: str) -> UpdateResponse200 | None:
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPlanMetaRow
 
     Returns:
         UpdateResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid)
+    kwargs = update._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -150,7 +155,7 @@ def update_sync(*, client: StolonClient, uuid: str) -> UpdateResponse200 | None:
     return None
 
 
-def update_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[UpdateResponse200]:
+def update_asyncio_detailed(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> Response[UpdateResponse200]:
     """Update plan meta row by UUID
 
     Args:
@@ -170,12 +175,13 @@ def update_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Upda
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPlanMetaRow
 
     Returns:
         Response[UpdateResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid)
+    kwargs = update._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -213,7 +219,7 @@ def update_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[Upda
     )
 
 
-def update_asyncio(*, client: StolonClient, uuid: str) -> UpdateResponse200 | None:
+def update_asyncio(*, client: StolonClient, uuid: str, body: ApiPlanMetaRow) -> UpdateResponse200 | None:
     """Update plan meta row by UUID
 
     Args:
@@ -233,12 +239,13 @@ def update_asyncio(*, client: StolonClient, uuid: str) -> UpdateResponse200 | No
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        body: ApiPlanMetaRow
 
     Returns:
         UpdateResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = update._get_kwargs(uuid=uuid)
+    kwargs = update._get_kwargs(uuid=uuid, body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -702,7 +709,7 @@ def delete_1_asyncio(*, client: StolonClient, uuid: str) -> Delete1Response200 |
     return None
 
 
-def create_1_sync_detailed(*, client: StolonClient) -> Response[Create1Response200]:
+def create_1_sync_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -720,13 +727,13 @@ def create_1_sync_detailed(*, client: StolonClient) -> Response[Create1Response2
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanMetaRow
 
     Returns:
         Response[Create1Response200]
     """
     # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs()
+    kwargs = create_1._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -764,7 +771,7 @@ def create_1_sync_detailed(*, client: StolonClient) -> Response[Create1Response2
     )
 
 
-def create_1_sync(*, client: StolonClient) -> Create1Response200 | None:
+def create_1_sync(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -782,13 +789,13 @@ def create_1_sync(*, client: StolonClient) -> Create1Response200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanMetaRow
 
     Returns:
         Create1Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs()
+    kwargs = create_1._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -812,7 +819,7 @@ def create_1_sync(*, client: StolonClient) -> Create1Response200 | None:
     return None
 
 
-def create_1_asyncio_detailed(*, client: StolonClient) -> Response[Create1Response200]:
+def create_1_asyncio_detailed(*, client: StolonClient, body: ApiPlanMetaRow) -> Response[Create1Response200]:
     """create plan meta
 
     Args:
@@ -830,13 +837,13 @@ def create_1_asyncio_detailed(*, client: StolonClient) -> Response[Create1Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanMetaRow
 
     Returns:
         Response[Create1Response200]
     """
     # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs()
+    kwargs = create_1._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -874,7 +881,7 @@ def create_1_asyncio_detailed(*, client: StolonClient) -> Response[Create1Respon
     )
 
 
-def create_1_asyncio(*, client: StolonClient) -> Create1Response200 | None:
+def create_1_asyncio(*, client: StolonClient, body: ApiPlanMetaRow) -> Create1Response200 | None:
     """create plan meta
 
     Args:
@@ -892,13 +899,13 @@ def create_1_asyncio(*, client: StolonClient) -> Create1Response200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiPlanMetaRow
 
     Returns:
         Create1Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = create_1._get_kwargs()
+    kwargs = create_1._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -922,7 +929,9 @@ def create_1_asyncio(*, client: StolonClient) -> Create1Response200 | None:
     return None
 
 
-def get_plan_meta_sync_detailed(*, client: StolonClient) -> Response[GetPlanMetaResponse200]:
+def get_plan_meta_sync_detailed(
+    *, client: StolonClient, country: str, plan_uuid: str
+) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -941,13 +950,14 @@ def get_plan_meta_sync_detailed(*, client: StolonClient) -> Response[GetPlanMeta
 
     Args:
         client: StolonClient instance for proxying requests
-
+                country: str
+        plan_uuid: str
 
     Returns:
         Response[GetPlanMetaResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs()
+    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -985,7 +995,7 @@ def get_plan_meta_sync_detailed(*, client: StolonClient) -> Response[GetPlanMeta
     )
 
 
-def get_plan_meta_sync(*, client: StolonClient) -> GetPlanMetaResponse200 | None:
+def get_plan_meta_sync(*, client: StolonClient, country: str, plan_uuid: str) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1004,13 +1014,14 @@ def get_plan_meta_sync(*, client: StolonClient) -> GetPlanMetaResponse200 | None
 
     Args:
         client: StolonClient instance for proxying requests
-
+                country: str
+        plan_uuid: str
 
     Returns:
         GetPlanMetaResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs()
+    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1034,7 +1045,9 @@ def get_plan_meta_sync(*, client: StolonClient) -> GetPlanMetaResponse200 | None
     return None
 
 
-def get_plan_meta_asyncio_detailed(*, client: StolonClient) -> Response[GetPlanMetaResponse200]:
+def get_plan_meta_asyncio_detailed(
+    *, client: StolonClient, country: str, plan_uuid: str
+) -> Response[GetPlanMetaResponse200]:
     """Get plan meta
 
     Args:
@@ -1053,13 +1066,14 @@ def get_plan_meta_asyncio_detailed(*, client: StolonClient) -> Response[GetPlanM
 
     Args:
         client: StolonClient instance for proxying requests
-
+                country: str
+        plan_uuid: str
 
     Returns:
         Response[GetPlanMetaResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs()
+    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -1097,7 +1111,7 @@ def get_plan_meta_asyncio_detailed(*, client: StolonClient) -> Response[GetPlanM
     )
 
 
-def get_plan_meta_asyncio(*, client: StolonClient) -> GetPlanMetaResponse200 | None:
+def get_plan_meta_asyncio(*, client: StolonClient, country: str, plan_uuid: str) -> GetPlanMetaResponse200 | None:
     """Get plan meta
 
     Args:
@@ -1116,13 +1130,14 @@ def get_plan_meta_asyncio(*, client: StolonClient) -> GetPlanMetaResponse200 | N
 
     Args:
         client: StolonClient instance for proxying requests
-
+                country: str
+        plan_uuid: str
 
     Returns:
         GetPlanMetaResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_plan_meta._get_kwargs()
+    kwargs = get_plan_meta._get_kwargs(country=country, plan_uuid=plan_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

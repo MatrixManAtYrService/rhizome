@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.event_filter import (
@@ -31,10 +32,16 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.reseller_passes_response200 import (
     ResellerPassesResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def merchant_passes_1_sync_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPasses1Response200]:
+def merchant_passes_1_sync_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[MerchantPasses1Response200]:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -55,12 +62,14 @@ def merchant_passes_1_sync_detailed(*, client: StolonClient, uuid: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        reseller_uuid: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[MerchantPasses1Response200]
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes_1._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes_1._get_kwargs(uuid=uuid, reseller_uuid=reseller_uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -98,7 +107,13 @@ def merchant_passes_1_sync_detailed(*, client: StolonClient, uuid: str) -> Respo
     )
 
 
-def merchant_passes_1_sync(*, client: StolonClient, uuid: str) -> MerchantPasses1Response200 | None:
+def merchant_passes_1_sync(
+    *,
+    client: StolonClient,
+    uuid: str,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> MerchantPasses1Response200 | None:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -119,12 +134,14 @@ def merchant_passes_1_sync(*, client: StolonClient, uuid: str) -> MerchantPasses
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        reseller_uuid: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         MerchantPasses1Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes_1._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes_1._get_kwargs(uuid=uuid, reseller_uuid=reseller_uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -148,7 +165,13 @@ def merchant_passes_1_sync(*, client: StolonClient, uuid: str) -> MerchantPasses
     return None
 
 
-def merchant_passes_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPasses1Response200]:
+def merchant_passes_1_asyncio_detailed(
+    *,
+    client: StolonClient,
+    uuid: str,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> Response[MerchantPasses1Response200]:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -169,12 +192,14 @@ def merchant_passes_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        reseller_uuid: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[MerchantPasses1Response200]
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes_1._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes_1._get_kwargs(uuid=uuid, reseller_uuid=reseller_uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -212,7 +237,13 @@ def merchant_passes_1_asyncio_detailed(*, client: StolonClient, uuid: str) -> Re
     )
 
 
-def merchant_passes_1_asyncio(*, client: StolonClient, uuid: str) -> MerchantPasses1Response200 | None:
+def merchant_passes_1_asyncio(
+    *,
+    client: StolonClient,
+    uuid: str,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    x_clover_appenv: Union[Unset, str] = UNSET,
+) -> MerchantPasses1Response200 | None:
     """Check if merchant meets criteria to continue with event processing
 
     Args:
@@ -233,12 +264,14 @@ def merchant_passes_1_asyncio(*, client: StolonClient, uuid: str) -> MerchantPas
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        reseller_uuid: Union[Unset, str]
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         MerchantPasses1Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes_1._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes_1._get_kwargs(uuid=uuid, reseller_uuid=reseller_uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -262,7 +295,7 @@ def merchant_passes_1_asyncio(*, client: StolonClient, uuid: str) -> MerchantPas
     return None
 
 
-def create_3_sync_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
+def create_3_sync_detailed(*, client: StolonClient, body: ApiEventFilter) -> Response[ApiEventFilter]:
     """Create event filter
 
     Args:
@@ -280,13 +313,13 @@ def create_3_sync_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiEventFilter
 
     Returns:
         Response[ApiEventFilter]
     """
     # Extract request parameters from generated function
-    kwargs = create_3._get_kwargs()
+    kwargs = create_3._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -324,7 +357,7 @@ def create_3_sync_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
     )
 
 
-def create_3_sync(*, client: StolonClient) -> ApiEventFilter | None:
+def create_3_sync(*, client: StolonClient, body: ApiEventFilter) -> ApiEventFilter | None:
     """Create event filter
 
     Args:
@@ -342,13 +375,13 @@ def create_3_sync(*, client: StolonClient) -> ApiEventFilter | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiEventFilter
 
     Returns:
         ApiEventFilter | None
     """
     # Extract request parameters from generated function
-    kwargs = create_3._get_kwargs()
+    kwargs = create_3._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -372,7 +405,7 @@ def create_3_sync(*, client: StolonClient) -> ApiEventFilter | None:
     return None
 
 
-def create_3_asyncio_detailed(*, client: StolonClient) -> Response[ApiEventFilter]:
+def create_3_asyncio_detailed(*, client: StolonClient, body: ApiEventFilter) -> Response[ApiEventFilter]:
     """Create event filter
 
     Args:
@@ -390,13 +423,13 @@ def create_3_asyncio_detailed(*, client: StolonClient) -> Response[ApiEventFilte
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiEventFilter
 
     Returns:
         Response[ApiEventFilter]
     """
     # Extract request parameters from generated function
-    kwargs = create_3._get_kwargs()
+    kwargs = create_3._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -434,7 +467,7 @@ def create_3_asyncio_detailed(*, client: StolonClient) -> Response[ApiEventFilte
     )
 
 
-def create_3_asyncio(*, client: StolonClient) -> ApiEventFilter | None:
+def create_3_asyncio(*, client: StolonClient, body: ApiEventFilter) -> ApiEventFilter | None:
     """Create event filter
 
     Args:
@@ -452,13 +485,13 @@ def create_3_asyncio(*, client: StolonClient) -> ApiEventFilter | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiEventFilter
 
     Returns:
         ApiEventFilter | None
     """
     # Extract request parameters from generated function
-    kwargs = create_3._get_kwargs()
+    kwargs = create_3._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -482,7 +515,9 @@ def create_3_asyncio(*, client: StolonClient) -> ApiEventFilter | None:
     return None
 
 
-def reseller_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Response[ResellerPassesResponse200]:
+def reseller_passes_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[ResellerPassesResponse200]:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -502,12 +537,13 @@ def reseller_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ResellerPassesResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = reseller_passes._get_kwargs(uuid=uuid)
+    kwargs = reseller_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -545,7 +581,9 @@ def reseller_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Respons
     )
 
 
-def reseller_passes_sync(*, client: StolonClient, uuid: str) -> ResellerPassesResponse200 | None:
+def reseller_passes_sync(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> ResellerPassesResponse200 | None:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -565,12 +603,13 @@ def reseller_passes_sync(*, client: StolonClient, uuid: str) -> ResellerPassesRe
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         ResellerPassesResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = reseller_passes._get_kwargs(uuid=uuid)
+    kwargs = reseller_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -594,7 +633,9 @@ def reseller_passes_sync(*, client: StolonClient, uuid: str) -> ResellerPassesRe
     return None
 
 
-def reseller_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[ResellerPassesResponse200]:
+def reseller_passes_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[ResellerPassesResponse200]:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -614,12 +655,13 @@ def reseller_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[ResellerPassesResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = reseller_passes._get_kwargs(uuid=uuid)
+    kwargs = reseller_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -657,7 +699,9 @@ def reseller_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
 
-def reseller_passes_asyncio(*, client: StolonClient, uuid: str) -> ResellerPassesResponse200 | None:
+def reseller_passes_asyncio(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> ResellerPassesResponse200 | None:
     """Check if reseller is involved in EBB processing.
 
     Args:
@@ -677,12 +721,13 @@ def reseller_passes_asyncio(*, client: StolonClient, uuid: str) -> ResellerPasse
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         ResellerPassesResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = reseller_passes._get_kwargs(uuid=uuid)
+    kwargs = reseller_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

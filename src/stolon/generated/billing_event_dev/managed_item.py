@@ -11,6 +11,7 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.managed_item import (
@@ -28,10 +29,12 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.merchant_passes_response200 import (
     MerchantPassesResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def merchant_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPassesResponse200]:
+def merchant_passes_sync_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[MerchantPassesResponse200]:
     """Check if merchant meets criteria
 
     Args:
@@ -51,12 +54,13 @@ def merchant_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Respons
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[MerchantPassesResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -94,7 +98,9 @@ def merchant_passes_sync_detailed(*, client: StolonClient, uuid: str) -> Respons
     )
 
 
-def merchant_passes_sync(*, client: StolonClient, uuid: str) -> MerchantPassesResponse200 | None:
+def merchant_passes_sync(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> MerchantPassesResponse200 | None:
     """Check if merchant meets criteria
 
     Args:
@@ -114,12 +120,13 @@ def merchant_passes_sync(*, client: StolonClient, uuid: str) -> MerchantPassesRe
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         MerchantPassesResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -143,7 +150,9 @@ def merchant_passes_sync(*, client: StolonClient, uuid: str) -> MerchantPassesRe
     return None
 
 
-def merchant_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Response[MerchantPassesResponse200]:
+def merchant_passes_asyncio_detailed(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[MerchantPassesResponse200]:
     """Check if merchant meets criteria
 
     Args:
@@ -163,12 +172,13 @@ def merchant_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Resp
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[MerchantPassesResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -206,7 +216,9 @@ def merchant_passes_asyncio_detailed(*, client: StolonClient, uuid: str) -> Resp
     )
 
 
-def merchant_passes_asyncio(*, client: StolonClient, uuid: str) -> MerchantPassesResponse200 | None:
+def merchant_passes_asyncio(
+    *, client: StolonClient, uuid: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> MerchantPassesResponse200 | None:
     """Check if merchant meets criteria
 
     Args:
@@ -226,12 +238,13 @@ def merchant_passes_asyncio(*, client: StolonClient, uuid: str) -> MerchantPasse
     Args:
         client: StolonClient instance for proxying requests
                 uuid: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         MerchantPassesResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = merchant_passes._get_kwargs(uuid=uuid)
+    kwargs = merchant_passes._get_kwargs(uuid=uuid, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -475,7 +488,7 @@ def get_reseller_managed_item_asyncio(*, client: StolonClient, uuid: str) -> Api
     return None
 
 
-def create_2_sync_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
+def create_2_sync_detailed(*, client: StolonClient, body: ApiManagedItem) -> Response[ApiManagedItem]:
     """Create managed item
 
     Args:
@@ -493,13 +506,13 @@ def create_2_sync_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiManagedItem
 
     Returns:
         Response[ApiManagedItem]
     """
     # Extract request parameters from generated function
-    kwargs = create_2._get_kwargs()
+    kwargs = create_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -537,7 +550,7 @@ def create_2_sync_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
     )
 
 
-def create_2_sync(*, client: StolonClient) -> ApiManagedItem | None:
+def create_2_sync(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedItem | None:
     """Create managed item
 
     Args:
@@ -555,13 +568,13 @@ def create_2_sync(*, client: StolonClient) -> ApiManagedItem | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiManagedItem
 
     Returns:
         ApiManagedItem | None
     """
     # Extract request parameters from generated function
-    kwargs = create_2._get_kwargs()
+    kwargs = create_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -585,7 +598,7 @@ def create_2_sync(*, client: StolonClient) -> ApiManagedItem | None:
     return None
 
 
-def create_2_asyncio_detailed(*, client: StolonClient) -> Response[ApiManagedItem]:
+def create_2_asyncio_detailed(*, client: StolonClient, body: ApiManagedItem) -> Response[ApiManagedItem]:
     """Create managed item
 
     Args:
@@ -603,13 +616,13 @@ def create_2_asyncio_detailed(*, client: StolonClient) -> Response[ApiManagedIte
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiManagedItem
 
     Returns:
         Response[ApiManagedItem]
     """
     # Extract request parameters from generated function
-    kwargs = create_2._get_kwargs()
+    kwargs = create_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -647,7 +660,7 @@ def create_2_asyncio_detailed(*, client: StolonClient) -> Response[ApiManagedIte
     )
 
 
-def create_2_asyncio(*, client: StolonClient) -> ApiManagedItem | None:
+def create_2_asyncio(*, client: StolonClient, body: ApiManagedItem) -> ApiManagedItem | None:
     """Create managed item
 
     Args:
@@ -665,13 +678,13 @@ def create_2_asyncio(*, client: StolonClient) -> ApiManagedItem | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiManagedItem
 
     Returns:
         ApiManagedItem | None
     """
     # Extract request parameters from generated function
-    kwargs = create_2._get_kwargs()
+    kwargs = create_2._get_kwargs(body=body)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

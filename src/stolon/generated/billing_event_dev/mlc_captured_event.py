@@ -9,8 +9,10 @@ The underlying OpenAPI client is in stolon.openapi_generated - DO NOT EDIT those
 These wrapper files in stolon.generated can be customized if needed.
 """
 
+import datetime
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.mlc_captured_event import (
@@ -19,10 +21,19 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.m
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get_mlc_captured_events_response200 import (
     GetMlcCapturedEventsResponse200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def get_mlc_captured_events_sync_detailed(*, client: StolonClient) -> Response[GetMlcCapturedEventsResponse200]:
+def get_mlc_captured_events_sync_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[GetMlcCapturedEventsResponse200]:
     """Get captured MLC events
 
     Args:
@@ -45,13 +56,25 @@ def get_mlc_captured_events_sync_detailed(*, client: StolonClient) -> Response[G
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[GetMlcCapturedEventsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs()
+    kwargs = get_mlc_captured_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -89,7 +112,16 @@ def get_mlc_captured_events_sync_detailed(*, client: StolonClient) -> Response[G
     )
 
 
-def get_mlc_captured_events_sync(*, client: StolonClient) -> GetMlcCapturedEventsResponse200 | None:
+def get_mlc_captured_events_sync(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> GetMlcCapturedEventsResponse200 | None:
     """Get captured MLC events
 
     Args:
@@ -112,13 +144,25 @@ def get_mlc_captured_events_sync(*, client: StolonClient) -> GetMlcCapturedEvent
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         GetMlcCapturedEventsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs()
+    kwargs = get_mlc_captured_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -142,7 +186,16 @@ def get_mlc_captured_events_sync(*, client: StolonClient) -> GetMlcCapturedEvent
     return None
 
 
-def get_mlc_captured_events_asyncio_detailed(*, client: StolonClient) -> Response[GetMlcCapturedEventsResponse200]:
+def get_mlc_captured_events_asyncio_detailed(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> Response[GetMlcCapturedEventsResponse200]:
     """Get captured MLC events
 
     Args:
@@ -165,13 +218,25 @@ def get_mlc_captured_events_asyncio_detailed(*, client: StolonClient) -> Respons
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         Response[GetMlcCapturedEventsResponse200]
     """
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs()
+    kwargs = get_mlc_captured_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -209,7 +274,16 @@ def get_mlc_captured_events_asyncio_detailed(*, client: StolonClient) -> Respons
     )
 
 
-def get_mlc_captured_events_asyncio(*, client: StolonClient) -> GetMlcCapturedEventsResponse200 | None:
+def get_mlc_captured_events_asyncio(
+    *,
+    client: StolonClient,
+    merchant_uuid: Union[Unset, str] = UNSET,
+    reseller_uuid: Union[Unset, str] = UNSET,
+    start_date: Union[Unset, datetime.date] = UNSET,
+    end_date: Union[Unset, datetime.date] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+    page_number: Union[Unset, int] = UNSET,
+) -> GetMlcCapturedEventsResponse200 | None:
     """Get captured MLC events
 
     Args:
@@ -232,13 +306,25 @@ def get_mlc_captured_events_asyncio(*, client: StolonClient) -> GetMlcCapturedEv
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: Union[Unset, str]
+        reseller_uuid: Union[Unset, str]
+        start_date: Union[Unset, datetime.date]
+        end_date: Union[Unset, datetime.date]
+        page_size: Union[Unset, int]
+        page_number: Union[Unset, int]
 
     Returns:
         GetMlcCapturedEventsResponse200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_mlc_captured_events._get_kwargs()
+    kwargs = get_mlc_captured_events._get_kwargs(
+        merchant_uuid=merchant_uuid,
+        reseller_uuid=reseller_uuid,
+        start_date=start_date,
+        end_date=end_date,
+        page_size=page_size,
+        page_number=page_number,
+    )
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

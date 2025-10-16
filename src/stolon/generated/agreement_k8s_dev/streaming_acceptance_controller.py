@@ -17,10 +17,13 @@ from stolon.client import StolonClient
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.streaming_acceptance_controller import (
     get_all_acceptances,
 )
+from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models.acceptance_query import (
+    AcceptanceQuery,
+)
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.types import Response
 
 
-def get_all_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]:
+def get_all_acceptances_sync_detailed(*, client: StolonClient, acceptance_query: "AcceptanceQuery") -> Response[Any]:
     """Args:
         acceptance_query (AcceptanceQuery):
 
@@ -36,13 +39,13 @@ def get_all_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                acceptance_query: "AcceptanceQuery"
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_all_acceptances._get_kwargs()
+    kwargs = get_all_acceptances._get_kwargs(acceptance_query=acceptance_query)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -80,7 +83,7 @@ def get_all_acceptances_sync_detailed(*, client: StolonClient) -> Response[Any]:
     )
 
 
-def get_all_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[Any]:
+def get_all_acceptances_asyncio_detailed(*, client: StolonClient, acceptance_query: "AcceptanceQuery") -> Response[Any]:
     """Args:
         acceptance_query (AcceptanceQuery):
 
@@ -96,13 +99,13 @@ def get_all_acceptances_asyncio_detailed(*, client: StolonClient) -> Response[An
 
     Args:
         client: StolonClient instance for proxying requests
-
+                acceptance_query: "AcceptanceQuery"
 
     Returns:
         Response[Any]
     """
     # Extract request parameters from generated function
-    kwargs = get_all_acceptances._get_kwargs()
+    kwargs = get_all_acceptances._get_kwargs(acceptance_query=acceptance_query)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(

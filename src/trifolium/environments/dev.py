@@ -13,6 +13,14 @@ from typing import TYPE_CHECKING, Any
 from rhizome.environments.dev.billing_event import DevBillingEvent as BillingEvent
 from stolon.environments import base
 
+# Generated API imports - Agreement K8s (using proxied wrappers)
+from stolon.generated.agreement_k8s_dev.acceptance_controller_impl import (
+    get_bulk_acceptances_service_scope,
+)
+from stolon.generated.agreement_k8s_dev.agreement_controller import (
+    get_latest_agreement,
+)
+
 # Generated API imports - Billing Bookkeeper (using wrappers that proxy through stolon)
 from stolon.generated.billing_bookkeeper_dev.alliance_code import (
     create_invoice_alliance_code_sync_detailed,
@@ -42,14 +50,6 @@ from stolon.generated.billing_bookkeeper_dev.processing_group_dates import (
 from stolon.generated.billing_bookkeeper_dev.revenue_share_group import (
     create_revenue_share_group_sync_detailed,
     delete_revenue_share_group_by_uuid_sync,
-)
-
-# Generated API imports - Agreement K8s (using openapi_generated for models and raw API)
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.acceptance_controller_impl import (
-    get_bulk_acceptances_service_scope,
-)
-from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.api.agreement_controller import (
-    get_latest_agreement,
 )
 from stolon.openapi_generated.agreement_k8s_dev.open_api_definition_client.models import (
     get_bulk_acceptances_service_scope_body,

@@ -11,12 +11,16 @@ These wrapper files in stolon.generated can be customized if needed.
 
 import json
 from http import HTTPStatus
+from typing import Union
 
 from stolon.client import StolonClient
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.api.backfill_acceptance import (
     create_4,
     delete_4,
     get_4,
+)
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.api_backfill_acceptance import (
+    ApiBackfillAcceptance,
 )
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.create4_response200 import (
     Create4Response200,
@@ -27,10 +31,12 @@ from stolon.openapi_generated.billing_event_dev.open_api_definition_client.model
 from stolon.openapi_generated.billing_event_dev.open_api_definition_client.models.get4_response200 import (
     Get4Response200,
 )
-from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import Response
+from stolon.openapi_generated.billing_event_dev.open_api_definition_client.types import UNSET, Response, Unset
 
 
-def delete_4_sync_detailed(*, client: StolonClient, acceptance_id: str) -> Response[Delete4Response200]:
+def delete_4_sync_detailed(
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -50,12 +56,13 @@ def delete_4_sync_detailed(*, client: StolonClient, acceptance_id: str) -> Respo
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Delete4Response200]
     """
     # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -93,7 +100,9 @@ def delete_4_sync_detailed(*, client: StolonClient, acceptance_id: str) -> Respo
     )
 
 
-def delete_4_sync(*, client: StolonClient, acceptance_id: str) -> Delete4Response200 | None:
+def delete_4_sync(
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -113,12 +122,13 @@ def delete_4_sync(*, client: StolonClient, acceptance_id: str) -> Delete4Respons
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Delete4Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -142,7 +152,9 @@ def delete_4_sync(*, client: StolonClient, acceptance_id: str) -> Delete4Respons
     return None
 
 
-def delete_4_asyncio_detailed(*, client: StolonClient, acceptance_id: str) -> Response[Delete4Response200]:
+def delete_4_asyncio_detailed(
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Delete4Response200]:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -162,12 +174,13 @@ def delete_4_asyncio_detailed(*, client: StolonClient, acceptance_id: str) -> Re
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Delete4Response200]
     """
     # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -205,7 +218,9 @@ def delete_4_asyncio_detailed(*, client: StolonClient, acceptance_id: str) -> Re
     )
 
 
-def delete_4_asyncio(*, client: StolonClient, acceptance_id: str) -> Delete4Response200 | None:
+def delete_4_asyncio(
+    *, client: StolonClient, acceptance_id: str, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Delete4Response200 | None:
     """Delete backfilled acceptance by acceptance UUID
 
     Args:
@@ -225,12 +240,13 @@ def delete_4_asyncio(*, client: StolonClient, acceptance_id: str) -> Delete4Resp
     Args:
         client: StolonClient instance for proxying requests
                 acceptance_id: str
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Delete4Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id)
+    kwargs = delete_4._get_kwargs(acceptance_id=acceptance_id, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -254,7 +270,7 @@ def delete_4_asyncio(*, client: StolonClient, acceptance_id: str) -> Delete4Resp
     return None
 
 
-def get_4_sync_detailed(*, client: StolonClient) -> Response[Get4Response200]:
+def get_4_sync_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -272,13 +288,13 @@ def get_4_sync_detailed(*, client: StolonClient) -> Response[Get4Response200]:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         Response[Get4Response200]
     """
     # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs()
+    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -316,7 +332,7 @@ def get_4_sync_detailed(*, client: StolonClient) -> Response[Get4Response200]:
     )
 
 
-def get_4_sync(*, client: StolonClient) -> Get4Response200 | None:
+def get_4_sync(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -334,13 +350,13 @@ def get_4_sync(*, client: StolonClient) -> Get4Response200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         Get4Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs()
+    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -364,7 +380,7 @@ def get_4_sync(*, client: StolonClient) -> Get4Response200 | None:
     return None
 
 
-def get_4_asyncio_detailed(*, client: StolonClient) -> Response[Get4Response200]:
+def get_4_asyncio_detailed(*, client: StolonClient, merchant_uuid: str) -> Response[Get4Response200]:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -382,13 +398,13 @@ def get_4_asyncio_detailed(*, client: StolonClient) -> Response[Get4Response200]
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         Response[Get4Response200]
     """
     # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs()
+    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -426,7 +442,7 @@ def get_4_asyncio_detailed(*, client: StolonClient) -> Response[Get4Response200]
     )
 
 
-def get_4_asyncio(*, client: StolonClient) -> Get4Response200 | None:
+def get_4_asyncio(*, client: StolonClient, merchant_uuid: str) -> Get4Response200 | None:
     """Retrieve backfilled acceptances by merchant ID and agreement type
 
     Args:
@@ -444,13 +460,13 @@ def get_4_asyncio(*, client: StolonClient) -> Get4Response200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                merchant_uuid: str
 
     Returns:
         Get4Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = get_4._get_kwargs()
+    kwargs = get_4._get_kwargs(merchant_uuid=merchant_uuid)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -474,7 +490,9 @@ def get_4_asyncio(*, client: StolonClient) -> Get4Response200 | None:
     return None
 
 
-def create_4_sync_detailed(*, client: StolonClient) -> Response[Create4Response200]:
+def create_4_sync_detailed(
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -493,13 +511,14 @@ def create_4_sync_detailed(*, client: StolonClient) -> Response[Create4Response2
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptance
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Create4Response200]
     """
     # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs()
+    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -537,7 +556,9 @@ def create_4_sync_detailed(*, client: StolonClient) -> Response[Create4Response2
     )
 
 
-def create_4_sync(*, client: StolonClient) -> Create4Response200 | None:
+def create_4_sync(
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -556,13 +577,14 @@ def create_4_sync(*, client: StolonClient) -> Create4Response200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptance
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Create4Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs()
+    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -586,7 +608,9 @@ def create_4_sync(*, client: StolonClient) -> Create4Response200 | None:
     return None
 
 
-def create_4_asyncio_detailed(*, client: StolonClient) -> Response[Create4Response200]:
+def create_4_asyncio_detailed(
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Response[Create4Response200]:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -605,13 +629,14 @@ def create_4_asyncio_detailed(*, client: StolonClient) -> Response[Create4Respon
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptance
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Response[Create4Response200]
     """
     # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs()
+    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
@@ -649,7 +674,9 @@ def create_4_asyncio_detailed(*, client: StolonClient) -> Response[Create4Respon
     )
 
 
-def create_4_asyncio(*, client: StolonClient) -> Create4Response200 | None:
+def create_4_asyncio(
+    *, client: StolonClient, body: ApiBackfillAcceptance, x_clover_appenv: Union[Unset, str] = UNSET
+) -> Create4Response200 | None:
     """Create acceptance passthrough to Agreement Service
 
     Args:
@@ -668,13 +695,14 @@ def create_4_asyncio(*, client: StolonClient) -> Create4Response200 | None:
 
     Args:
         client: StolonClient instance for proxying requests
-
+                body: ApiBackfillAcceptance
+        x_clover_appenv: Union[Unset, str]
 
     Returns:
         Create4Response200 | None
     """
     # Extract request parameters from generated function
-    kwargs = create_4._get_kwargs()
+    kwargs = create_4._get_kwargs(body=body, x_clover_appenv=x_clover_appenv)
 
     # Proxy request through stolon server
     proxy_response = client.proxy_request(
